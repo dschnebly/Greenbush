@@ -31,6 +31,15 @@ namespace GreenBushIEP.Reports.Owner {
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
         
         /// <summary>
+        /// statusDD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect statusDD;
+        
+        /// <summary>
         /// startDate control.
         /// </summary>
         /// <remarks>

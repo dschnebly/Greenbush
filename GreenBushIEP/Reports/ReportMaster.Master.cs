@@ -28,6 +28,11 @@ namespace GreenBushIEP.Report
 
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == HttpContext.Current.User.Identity.Name);
 			if (user.RoleID == student)
 			{
@@ -44,6 +49,17 @@ namespace GreenBushIEP.Report
 				return UserLevel;
 			}
 
+		}
+
+		public static void StudentStatusList(HtmlSelect statusDD)
+		{
+
+			var statusList = db.tblStatusCodes.ToList();
+			//statusList.Insert(0, new tblStatusCode() { StatusCode = "All" });
+			statusDD.DataSource = statusList;
+			statusDD.DataTextField = "StatusCode";
+			statusDD.DataValueField = "StatusCode";
+			statusDD.DataBind();
 		}
 
 		public static void StatusList(HtmlSelect statusDD)

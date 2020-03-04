@@ -4498,6 +4498,8 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnZip;
             
+            private global::System.Data.DataColumn columnStatusCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportStudentsByBuildingDataTable() {
@@ -4645,6 +4647,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn StatusCodeColumn {
+                get {
+                    return this.columnStatusCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -4680,7 +4690,7 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD, string ContactName, string Email, string AddressLine, string DistrictName, string City, string StudentState, string Zip) {
+            public up_ReportStudentsByBuildingRow Addup_ReportStudentsByBuildingRow(string StudentFirstName, string StudentLastName, System.DateTime DateCreated, string BuildingID, string BuildingName, string USD, string ContactName, string Email, string AddressLine, string DistrictName, string City, string StudentState, string Zip, string StatusCode) {
                 up_ReportStudentsByBuildingRow rowup_ReportStudentsByBuildingRow = ((up_ReportStudentsByBuildingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StudentFirstName,
@@ -4696,7 +4706,8 @@ namespace GreenBushIEP.Reports {
                         DistrictName,
                         City,
                         StudentState,
-                        Zip};
+                        Zip,
+                        StatusCode};
                 rowup_ReportStudentsByBuildingRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportStudentsByBuildingRow);
                 return rowup_ReportStudentsByBuildingRow;
@@ -4740,6 +4751,7 @@ namespace GreenBushIEP.Reports {
                 this.columnCity = base.Columns["City"];
                 this.columnStudentState = base.Columns["StudentState"];
                 this.columnZip = base.Columns["Zip"];
+                this.columnStatusCode = base.Columns["StatusCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -4773,6 +4785,8 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnStudentState);
                 this.columnZip = new global::System.Data.DataColumn("Zip", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnZip);
+                this.columnStatusCode = new global::System.Data.DataColumn("StatusCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnStatusCode);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnUserID}, true));
                 this.columnStudentFirstName.MaxLength = 255;
@@ -4802,6 +4816,8 @@ namespace GreenBushIEP.Reports {
                 this.columnStudentState.MaxLength = 50;
                 this.columnZip.ReadOnly = true;
                 this.columnZip.MaxLength = 10;
+                this.columnStatusCode.ReadOnly = true;
+                this.columnStatusCode.MaxLength = 1;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8582,6 +8598,23 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string StatusCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentsByBuilding.StatusCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'StatusCode\' in table \'up_ReportStudentsByBuilding\' is DBNul" +
+                                "l.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentsByBuilding.StatusCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsStudentFirstNameNull() {
                 return this.IsNull(this.tableup_ReportStudentsByBuilding.StudentFirstNameColumn);
             }
@@ -8698,6 +8731,18 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetZipNull() {
                 this[this.tableup_ReportStudentsByBuilding.ZipColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsStatusCodeNull() {
+                return this.IsNull(this.tableup_ReportStudentsByBuilding.StatusCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetStatusCodeNull() {
+                this[this.tableup_ReportStudentsByBuilding.StatusCodeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -11406,6 +11451,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("City", "City");
             tableMapping.ColumnMappings.Add("StudentState", "StudentState");
             tableMapping.ColumnMappings.Add("Zip", "Zip");
+            tableMapping.ColumnMappings.Add("StatusCode", "StatusCode");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
@@ -11429,13 +11475,14 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BuildingId", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReportStartDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ReportEndDate", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 23, 3, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StatusCode", global::System.Data.SqlDbType.VarChar, 8000, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable dataTable, string Usd, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual int Fill(IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable dataTable, string Usd, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate, string StatusCode) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((Usd == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -11460,6 +11507,12 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             }
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((StatusCode == null)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(StatusCode));
             }
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
@@ -11472,7 +11525,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable GetData(string Usd, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate) {
+        public virtual IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable GetData(string Usd, string BuildingId, global::System.Nullable<global::System.DateTime> ReportStartDate, global::System.Nullable<global::System.DateTime> ReportEndDate, string StatusCode) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((Usd == null)) {
                 this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
@@ -11497,6 +11550,12 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             }
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((StatusCode == null)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(StatusCode));
             }
             IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportStudentsByBuildingDataTable();
             this.Adapter.Fill(dataTable);
