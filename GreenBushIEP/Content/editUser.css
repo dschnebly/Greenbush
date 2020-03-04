@@ -6,95 +6,63 @@
 .btn-file {
     position: relative;
     overflow: hidden;
+    top: 30px;
+    left: 15px;
 }
 
-    .btn-file input[type=file] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 100%;
-        min-height: 100%;
-        font-size: 100px;
-        text-align: right;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: white;
-        cursor: inherit;
-        display: block;
-    }
-
-.multiselect-container {
-    position: absolute;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+#submitForm {
+    width: 100%;
 }
 
-    .multiselect-container .input-group {
-        margin: 5px;
-    }
-
-    .multiselect-container > li {
-        padding: 0;
-    }
-
-        .multiselect-container > li > a.multiselect-all label {
-            font-weight: bold;
-        }
-
-        .multiselect-container > li > label.multiselect-group {
-            margin: 0;
-            padding: 3px 20px 3px 10px;
-            height: 100%;
-            font-weight: bold;
-        }
-
-        .multiselect-container > li > a > label {
-            margin: 0;
-            height: 100%;
-            cursor: pointer;
-            font-weight: normal;
-        }
-
-            .multiselect-container > li > a > label.radio,
-            .multiselect-container > li > a > label.checkbox {
-                margin: 0;
-            }
-
-            .multiselect-container > li > a > label > input[type="checkbox"] {
-                margin-bottom: 5px;
-            }
-
-.btn-group > .btn-group:nth-child(2) > .multiselect.btn {
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
-}
-
-.dropdown-menu > li > a {
-    padding: 6px 40px;
-}
-
-.dropdown-toggle {
-    padding: 10px 16px;
-    font-size: 18px;
-    line-height: 1.33;
-    border-radius: 0; /* 6px; */
-}
-
-.dropdown-toggle {
-    font-size: 14px;
+#buildingIds {
     min-height: 49px;
 }
 
-.search-choice span {
-    line-height: 2.7;
-    font-size: 14px;
+.form-group {
+    padding: 0 20px 20px;
 }
 
-li.search-field input[type="text"] {
-    height: 49px !important;
+#misDistrict {
+    min-height: 49px;
+    display: none;
 }
+
+#resetpassword {
+    font-size: 18px;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.breadcrumb .active {
+    font-size: 20px;
+}
+
+.chosen-container-multi .chosen-choices li.search-choice {
+    padding-top: 12px !important;
+}
+
+.dropdown-menu {
+    padding: 0 10px;
+    margin-bottom: 30px;
+}
+
+    .dropdown-menu li {
+        padding: 1px 0px;
+    }
 
 .ajax-loader {
     background-color: rgba(255,255,255,0.7);
