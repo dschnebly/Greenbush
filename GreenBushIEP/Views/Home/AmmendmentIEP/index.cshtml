@@ -848,18 +848,11 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
                 <div class="student-information">
-                    @if (Model.isCreator)
-                    {
-                        <a href="/Manage/EditStudent/@(Model.student.UserID.ToString())" title="Edit an existing student" data-ftrans="slide">
-                            <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
-                        </a>
-                    }
-                    else
-                    {
+                    <a href="/Manage/EditStudent/@(Model.student.UserID.ToString())" title="Edit an existing student" data-ftrans="slide">
                         <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
-                    }
+                    </a>
                     <div class="student-identity edit-student">
-                        <h3 style="margin-bottom:0;">@(Model.student.FirstName + " " + Model.student.LastName)</h3>
+                        <h3>@(Model.student.FirstName + " " + Model.student.LastName)</h3>
                         <input type="hidden" name="studentBirthDate" id="studentBirthDate" value="@(Model.birthDate.ToString("MM/dd/yyyy"))" />
                         <span class="student-city">@(Model.student.City != null ? @Model.student.City.ToTitleCase() : "" ), @(Model.student.State != null ? Model.student.State.ToUpper() : "KS" )</span>
                     </div>

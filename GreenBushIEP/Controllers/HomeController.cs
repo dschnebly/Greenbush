@@ -1063,7 +1063,6 @@ namespace GreenbushIep.Controllers
                 model.birthDate = info.DateOfBirth;
                 model.isDoc = district.DOC;
                 model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
-                model.isCreator = currentUser.UserID == info.CreatedBy;
 
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID);
                 if (theIEP.current != null)
