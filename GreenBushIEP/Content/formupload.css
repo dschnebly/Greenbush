@@ -1,20 +1,52 @@
 ﻿label.file-upload {
-	position: relative;
-	overflow: hidden;
+    position: relative;
+    overflow: hidden;
 }
 
-	label.file-upload input[type=file] {
-		position: absolute;
-		top: 0;
-		right: 0;
-		min-width: 100%;
-		min-height: 100%;
-		font-size: 100px;
-		text-align: right;
-		filter: alpha(opacity=0);
-		opacity: 0;
-		outline: 0;
-		background: #fff;
-		cursor: inherit;
-		display: block;
-	}
+    label.file-upload input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: 0;
+        background: #fff;
+        cursor: inherit;
+        display: block;
+    }
+
+.formStudentName {
+    display: inline-block;
+    opacity: 0.8;
+    margin-bottom: 0;
+}
+
+#backtoportal {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#myModalLabel {
+    font-size: 30px;
+}
+
+#sectionB, #sectionA {
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+table {
+    width: 90%;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+#sectionC {
+    padding-top: 25px;
+}
