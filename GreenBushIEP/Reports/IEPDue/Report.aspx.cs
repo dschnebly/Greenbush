@@ -14,6 +14,11 @@ namespace GreenBushIEP.Reports.IEPDue
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD);
@@ -48,7 +53,7 @@ namespace GreenBushIEP.Reports.IEPDue
 			{
 				if (li.Selected)
 				{
-					teacherNames += string.Format("{0}, ", li.Text);
+					teacherNames += string.Format("{0},", li.Text);
 				}
 			}
 

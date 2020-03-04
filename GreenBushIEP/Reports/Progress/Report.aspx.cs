@@ -14,6 +14,11 @@ namespace GreenBushIEP.Reports.ProgressReport
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.StatusList(this.statusDD);
@@ -68,7 +73,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			{
 				if (li.Selected)
 				{
-					providerNames += string.Format("{0}, ", li.Text);
+					providerNames += string.Format("{0},", li.Text);
 				}
 			}
 

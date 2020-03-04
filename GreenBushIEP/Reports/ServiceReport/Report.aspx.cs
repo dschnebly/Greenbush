@@ -12,8 +12,15 @@ namespace GreenBushIEP.Reports.ServiceReport
 {
 	public partial class Report : System.Web.UI.Page
 	{
+
 		protected void Page_Load(object sender, EventArgs e)
 		{
+
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);

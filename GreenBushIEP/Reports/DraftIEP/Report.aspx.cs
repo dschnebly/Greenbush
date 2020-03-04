@@ -14,6 +14,11 @@ namespace GreenBushIEP.Reports.DraftIEP
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				
@@ -50,7 +55,7 @@ namespace GreenBushIEP.Reports.DraftIEP
 			{
 				if (li.Selected)
 				{
-					teacherNames += string.Format("{0}, ", li.Text);
+					teacherNames += string.Format("{0},", li.Text);
 				}
 			}
 

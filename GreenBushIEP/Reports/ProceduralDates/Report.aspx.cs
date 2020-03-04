@@ -14,6 +14,11 @@ namespace GreenBushIEP.Reports.ProceduralDates
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{				
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
@@ -47,7 +52,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			{
 				if (li.Selected)
 				{
-					teacherNames += string.Format("{0}, ", li.Text);
+					teacherNames += string.Format("{0},", li.Text);
 				}
 			}
 

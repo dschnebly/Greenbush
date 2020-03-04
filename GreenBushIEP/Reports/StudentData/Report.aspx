@@ -28,6 +28,16 @@
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
+				<label for="statusDD">Student Status</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="statusDD" runat="server" class="chosen-select" data-placeholder="Select Status" multiple="true">
+					<option value="">Select</option>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
 				<label for="startDate">Start Date</label>
 			</div>
 			<div class="col-md-6" >

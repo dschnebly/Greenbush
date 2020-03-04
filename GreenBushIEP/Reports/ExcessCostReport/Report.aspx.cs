@@ -14,6 +14,11 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);

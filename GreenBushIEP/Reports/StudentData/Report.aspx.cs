@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -14,11 +15,16 @@ namespace GreenBushIEP.Reports.Owner
 	{
 		protected void Page_Load(object sender, EventArgs e)
 		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
+
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
-
+				GreenBushIEP.Report.ReportMaster.StudentStatusList(this.statusDD);
 			}
 		}
 
@@ -42,7 +48,19 @@ namespace GreenBushIEP.Reports.Owner
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
 
+			string statusCodes = "";
 
+			if (statusDD.Value != "All")
+			{
+				foreach (ListItem li in statusDD.Items)
+				{
+					if (li.Selected)
+					{
+						statusCodes += string.Format("{0},", li.Text);
+					}
+				}
+			}
+			
 			DateTime? startDate = null;
 			DateTime? endDate = null;
 
@@ -52,7 +70,7 @@ namespace GreenBushIEP.Reports.Owner
 			if (!string.IsNullOrEmpty(this.endDate.Value))
 				endDate = DateTime.Parse(this.endDate.Value);
 
-			DataTable dt = GetData(districtFilter, buildingFilter, startDate, endDate);
+			DataTable dt = GetData(districtFilter, buildingFilter, startDate, endDate, statusCodes);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -79,37 +97,35 @@ namespace GreenBushIEP.Reports.Owner
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtIds, string buildingID, DateTime? startDate, DateTime? endDate)
+		private DataTable GetData(string districtIds, string buildingID, DateTime? startDate, DateTime? endDate, string statusCodes)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("DateCreated", typeof(DateTime));
-			dt.Columns.Add("BuildingID", typeof(string));
-			dt.Columns.Add("UserID", typeof(int));
-			dt.Columns.Add("BuildingName", typeof(string));
-			dt.Columns.Add("USD", typeof(string));
-			dt.Columns.Add("DistrictName", typeof(string));
-			dt.Columns.Add("ContactName", typeof(string));
-			dt.Columns.Add("Email", typeof(string));
-			dt.Columns.Add("AddressLine", typeof(string));
-			dt.Columns.Add("City", typeof(string));
-			dt.Columns.Add("StudentState", typeof(string));
-			dt.Columns.Add("Zip", typeof(string));
+			DataSet ds = new DataSet();
 
 
-			using (var ctx = new IndividualizedEducationProgramEntities())
+			using (var context = new IndividualizedEducationProgramEntities())
 			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportStudentsByBuilding(districtIds, buildingID, startDate, endDate);
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportStudentsByBuilding", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
+					
+					cmd.Parameters.Add("@Usd", SqlDbType.VarChar, 8000).Value = districtIds;
+					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
+					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;					
+					cmd.Parameters.Add("@StatusCode", SqlDbType.VarChar, 8000).Value = statusCodes;
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.DateCreated, cs.BuildingID
-						, cs.UserID, cs.BuildingName, cs.USD, cs.DistrictName, cs.ContactName, cs.Email, cs.AddressLine, 
-						cs.City, cs.StudentState, cs.Zip);
+
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
+			return ds.Tables[0];
+
 		}
 	}
 }
