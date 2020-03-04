@@ -48,6 +48,14 @@
     margin-top: 3px;
 }
 
+#modal-studentPlanning .modal-dialog {
+    margin: 0 auto;
+}
+
+#dismissIEPPlan .glyphicon-remove-circle {
+    font-size: 30px;
+}
+
 .modal-header .close {
     margin-top: 4px;
 }
@@ -190,10 +198,6 @@
 }
 
 .isIntelligenceConcern.noConcerns {
-    display: none;
-}
-
-.isAcademicPerformanceConcern.noConcerns {
     display: none;
 }
 

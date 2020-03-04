@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Edit this User";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    bool isOwner = ViewBag.RoleName == "Level 5";
 }
 
 @section stylesheets {
@@ -25,14 +26,14 @@
 
             <ul class="breadcrumb">
                 <li>@Html.ActionLink((string)(ViewBag.RoleName + " Portal").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                <li class="active" style="font-size: 20px;">@ViewBag.Title</li>
+                <li class="active">@ViewBag.Title</li>
             </ul>
 
             <div class="col-md-10">
                 <div class="input-group">
                     <img src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.user.ImageURL.ToString())" alt="" title="" class="img-circle pull-left" height="100" width="100" id="avatarImage" />
                     <div class="input-group">
-                        <span class="btn btn-default btn-file" style="top: 30px; left: 15px;">
+                        <span class="btn btn-default btn-file">
                             Browse <input type="file" name="adminpersona" id="adminpersona" accept="image/gif, image/jpeg, image/png">
                         </span>
                     </div>
@@ -40,7 +41,7 @@
             </div>
         </div>
 
-        <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+        <div class="alert alert-info hidden" role="alert" id="alertMessage">
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
         </div>
@@ -119,12 +120,12 @@
                         <span class="input-group-addon">
                             <i class="fa fa-user-secret" title="User Password" aria-hidden="true"></i>
                         </span>
-                        <input type="password" name="password" class="form-control text-box single-line" disabled="disabled" required="required" value="@( new string('*', Model.user.Password.Length))">
+                        <input type="password" name="password" class="form-control text-box single-line" required="required" @(!isOwner ? "disabled='disabled'" : String.Empty) value="@( new string('*', Model.user.Password.Length))">
                     </div>
                 </div>
                 <div class="col-md-2">
                     <div class="input-group">
-                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" style="font-size:18px" data-toggle="modal" data-target="#confirmPassword">Reset Password</a>
+                        <a id="resetpassword" class="btn btn-warning btn-lg" href="#" role="button" data-toggle="modal" data-target="#confirmPassword">Reset Password</a>
                     </div>
                 </div>
             </div>
@@ -136,7 +137,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-home" title="User District" aria-hidden="true"></i>
                     </span>
-                    <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="min-height: 49px; display: none;">
+                    <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple">
                         @if (Model.districts != null)
                         {
                             foreach (var district in Model.districts)
@@ -155,7 +156,7 @@
                     <span class="input-group-addon">
                         <i class="fa fa-building" title="User Building" aria-hidden="true"></i>
                     </span>
-                    <select id="buildingIds" Name="buildingIds" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect" style="min-height: 49px;">
+                    <select id="buildingIds" Name="buildingIds" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect">
                         @if (Model.buildings != null)
                         {
                             foreach (var building in Model.buildings)
@@ -167,15 +168,15 @@
                 </div>
             </div>
         </div>
-        <div class="form-group" style="padding: 0 20px 20px;">
-            <button type="submit" class="btn btn-info btn-lg" id="submitForm" data_ftrans="slide reverse" style="width: 100%;">
+        <div class="form-group">
+            <button type="submit" class="btn btn-info btn-lg" id="submitForm" data_ftrans="slide reverse">
                 <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Update</span>
             </button>
         </div>
     </div>
     <br />
 
-    <div class="ajax-loader" style="visibility: hidden;">
+    <div class="ajax-loader hidden">
         <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
     </div>
 
