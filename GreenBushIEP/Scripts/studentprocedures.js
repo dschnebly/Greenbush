@@ -498,7 +498,6 @@ function getUrlParameter(sParam) {
     }
 }
 
-
 function printModule(divOverride) {	
 	var stid = getUrlParameter('stid');
 	var iepId = $("#studentIEPId").val();
@@ -514,7 +513,6 @@ function printModule(divOverride) {
 
 	window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;		   	
 }
-
 
 function createDateString(newDate) {
     var dateArr = newDate.split('-');
@@ -1177,7 +1175,6 @@ $("#myonoffswitch3").click(function (event) {
     }
 });
 
-
 // Attach Event
 // MedicationID
 $("#myonoffswitch4").click(function (event) {
@@ -1235,5 +1232,3 @@ $("#truefalseSwitchIntelligenceNoConcern").click(function (event) {
         $('.isIntelligenceConcern').removeClass("noConcerns").fadeIn();
     }
 });
-
-
