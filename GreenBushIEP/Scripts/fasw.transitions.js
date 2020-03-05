@@ -23,7 +23,6 @@
  *			Thu May 31 19:00:00 2012 -0400
  */
 function ft(params) {
-
     var ol = document.addEventListener ? "DOMContentLoaded" : "load"; //on load event
     var navB = params.navB || ""; //backbrowser button effect, default empty
     var but = params.but || true; //Allow transitions on input type button

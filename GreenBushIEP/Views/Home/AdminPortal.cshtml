@@ -8,22 +8,19 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/admin.css")
-	@Styles.Render("~/Content/chosen.css")
+    @Styles.Render("~/Content/chosen.css")
 }
 
 <div class="container">
     <h2>@ViewBag.Title</h2>
-
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newAdmin.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
-
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - the current list of managed teachers in Greenbush IEP</small>
     </h3>
-
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -37,40 +34,45 @@
             </div>
         </div>
     </div>
-
     <div class="row">
-		<div class="col-xs-12 col-md-2 pull-left">
+        <div class="col-xs-12 col-md-2 pull-left">
             <div class="form-group">
-                <label for="filterActive">Filter Student by Active</label>
+                <label for="filterActive">Active Status</label>
                 <div class="input-group">
-
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="filterActive" id="filterActive">
                         <option value="0">All</option>
-						<option value="1" selected>Active</option>
-						<option value="2">Inactive</option>                        
+                        <option value="1" selected>Active</option>
+                        <option value="2">Inactive</option>
                     </select>
                 </div>
             </div>
         </div>
-		<div class="col-xs-12 col-md-2 pull-left">
+        <div class="col-xs-12 col-md-2 pull-left">
             <div class="form-group">
-                <label for="filterName">Filter by Name</label>
+                <label for="filterName">Name</label>
                 <div class="input-group">
-                    <span class="input-group-addon danger"><span class="fa fa-search"></span></span>					
-					 <select class="form-control chosen-select" name="filterName" id="filterName">
+                    <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
+                    <select class="form-control chosen-select" name="filterName" id="filterName">
                         <option value="-1">All Users</option>
-						  @foreach (var user in Model.members)
-						  {
-							   <option value=@user.UserID>@user.LastName, @user.FirstName @user.MiddleName  </option>
-						  }
-					</select>
+                        @if (Model.districts.Count > 0)
+                        {
+                            foreach (var user in Model.members)
+                            {
+                                <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
+                            }
+                        }
+                        else
+                        {
+                            <option>Currently no users are assigned to you</option>
+                        }
+                    </select>
                 </div>
             </div>
         </div>
         <div class="col-xs-12 col-md-3 pull-left">
             <div class="form-group">
-                <label for="userDistricts">Filter by District</label>
+                <label for="userDistricts">District</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="userDistricts" id="userDistricts">
@@ -92,7 +94,7 @@
         </div>
         <div class="col-xs-12 col-md-3 pull-left">
             <div class="form-group">
-                <label for="userBuildings">Filter by Building</label>
+                <label for="userBuildings">Building</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="userBuildings" id="userBuildings">
@@ -114,7 +116,7 @@
         </div>
         <div class="col-xs-12 col-md-2 pull-left">
             <div class="form-group">
-                <label for="userRoles">Filter by Role</label>
+                <label for="userRoles">Role</label>
                 <div class="input-group">
                     <span class="input-group-addon danger"><span class="fa fa-user"></span></span>
                     <select class="form-control" name="userRoles" id="userRoles">
@@ -127,40 +129,52 @@
             </div>
         </div>
     </div>
-
     <div class="alert alert-info hidden" role="alert" id="alertMessage">
         <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
     </div>
+    <div>
+        @if (Model.members.Count > 0)
+            {
+            <div class="list-group list-group-root well">
 
-    @{
-        if (Model.members.Count > 0)
-        {
-            <div class="just-padding">
-                <div class="list-group list-group-root well">
+                @for (int i = 0; i < Model.members.Count; i++)
+                {
+                    var user = Model.members[i];
 
-                    @foreach (var user in Model.members)
-                    {
-                        <div class="list-group-item" data-id="@(user.UserID)" data-isActive="@(user.RoleID == "5" ? user.hasIEP ? 1: 2 : 0)">
+                    <div class="list-group-item" data-id="@(user.UserID)">
 
-                            @if (user.RoleID == "4") //Teacher
-                            {
+                        @switch (user.RoleID)
+                        {
+                            case "4": //Teacher
                                 <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                    <text>@user.FirstName.ToTitleCase() @user.MiddleName @user.LastName.ToTitleCase()</text>
+                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                 </a>
-                            }
-                            else if (user.RoleID == "6") //Nurse
-                            {
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                        <span class="fa fa-building-o" aria-hidden="true"></span>
+                                    </button>
+                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                            case "6": //Nurse
                                 <i class="fa fa-magnet" aria-hidden="true"></i>
                                 <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                    <text>@user.FirstName.ToTitleCase() @user.MiddleName @user.LastName.ToTitleCase()</text>
+                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                 </a>
-                            }
-                            else
-                            {
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                        <span class="fa fa-building-o" aria-hidden="true"></span>
+                                    </button>
+                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                            default:
                                 <i class="fa fa-child" aria-hidden="true"></i>
-                                <text>@user.FirstName.ToTitleCase() @user.MiddleName @user.LastName.ToTitleCase()</text>
+                                <text>@user.FirstName @user.MiddleName  @user.LastName</text>
 
                                 if (user.hasIEP)
                                 {
@@ -168,24 +182,33 @@
                                         <span class="glyphicon glyphicon-log-out"></span>
                                     </a>
                                 }
+                                else
+                                {
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
+                                        <span class="glyphicon glyphicon-unchecked"></span>
+                                    </button>
+                                }
 
                                 <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
                                     <span class="glyphicon glyphicon-folder-open"></span>
                                 </a>
-                                <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                            }
 
-                        </div>
-                    }
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                    <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                        }
 
-                </div>
+                    </div>
+                }
+
             </div>
         }
-    }
-
-    <div class="ajax-loader">
-        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
     </div>
+</div>
+<div class="ajax-loader visible">
+    <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
 </div>
 
 <!-- Modal -->
