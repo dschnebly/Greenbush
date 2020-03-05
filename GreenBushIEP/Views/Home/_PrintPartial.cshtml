@@ -3025,11 +3025,16 @@
 
 @if (@Model.studentDetails.printProgressReport)
 {
-	<div>
+	<div>		
     @if (Model.studentGoals.Count > 0)
 	{
 		foreach (var studentGoal in Model.studentGoals)
 		{
+			if (Model.studentDetails.printProgressGoals.Count() > 0 && !Model.studentDetails.printProgressGoals.Contains(studentGoal.goalID))
+			{
+				continue;   // Skip this goal for the print out					
+			}
+
 			var needsIN = (Model.studentGoals.IndexOf(studentGoal) == Model.studentGoals.Count - 1) ? "in" : String.Empty;
 
 			var sgText = "";
@@ -3037,7 +3042,7 @@
 			var progQ2 = "";
 			var progQ3 = "";
 			var progQ4 = "";
-						
+
 			switch (studentGoal.Module)
 			{
 				case "1": { sgText = "Health"; break; }
@@ -3050,7 +3055,7 @@
 				case "8": { sgText = "Math"; break; }
 				case "9": { sgText = "Written Language"; break; }
 			} //end switch
-		
+
 			switch (studentGoal.Progress_Quarter1)
 			{
 				case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
@@ -3078,7 +3083,7 @@
 				case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
 				case "3": { progQ4 = "Goal Met (indicate date)"; break; }
 			} //end switch
-			            
+
             <div>   
 					<h3 style="text-align:center;font-size:13pt;font-weight:bold">@(studentGoal.Title)</h3>
 					<label>Goal Type: </label><span>&nbsp;@(sgText)</span><br />

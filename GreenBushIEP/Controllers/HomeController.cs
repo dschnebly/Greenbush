@@ -2410,9 +2410,9 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult PrintIEPSection(int stid, int iepId, string section)
+		[HttpGet]
+		[Authorize]
+		public ActionResult PrintIEPSection(int stid, int iepId, string section, string goalsToPrint)
         {
             var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
@@ -2483,7 +2483,10 @@ namespace GreenbushIep.Controllers
                         }
                     case "Progress":
                         {
-                            theIEP.studentDetails.printProgressReport = true;
+							if(!string.IsNullOrEmpty(goalsToPrint))
+								theIEP.studentDetails.printProgressGoals = goalsToPrint.Split(',').Select(Int32.Parse).ToList();
+
+							theIEP.studentDetails.printProgressReport = true;
                             break;
                         }
 

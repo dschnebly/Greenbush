@@ -43,12 +43,15 @@
                     <div class="panel-group" id="accordion@(studentGoal.goal.Title)">
                         <div class="panel panel-default">
                             <div class="panel-heading">
+								
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
                                         <input type="hidden" name="GoalId" value="@(studentGoal.goal.goalID)" />
                                         <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
                                     </a>
+									<span class="pull-right small">Include in Print? <input type="checkbox" style="vertical-align:bottom" data-val=@(studentGoal.goal.goalID) name="printGoal" checked/></span>
                                 </h4>
+								
                             </div>
                             <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
                                 <div class="panel-body">
