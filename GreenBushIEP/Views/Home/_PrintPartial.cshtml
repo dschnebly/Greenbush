@@ -3030,7 +3030,7 @@
 	{
 		foreach (var studentGoal in Model.studentGoals)
 		{
-			if (Model.studentDetails.printProgressGoals.Count() > 0 && !Model.studentDetails.printProgressGoals.Contains(studentGoal.goalID))
+			if (!Model.studentDetails.isArchive && Model.studentDetails.printProgressGoals.Count() > 0 && !Model.studentDetails.printProgressGoals.Contains(studentGoal.goalID))
 			{
 				continue;   // Skip this goal for the print out					
 			}

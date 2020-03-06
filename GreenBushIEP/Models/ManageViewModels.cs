@@ -665,7 +665,9 @@ namespace GreenBushIEP.Models
             printServices = false;
             printNotice = false;
             printProgressReport = false;
-        }
+			isArchive = false;
+
+		}
 
         public tblUser teacher { get; set; }
         public tblStudentInfo student { get; set; }
@@ -691,8 +693,9 @@ namespace GreenBushIEP.Models
         public string placementCodeDesc { get; set; }
         public string edStatusCodeDesc { get; set; }
         public bool isDOC { get; set; }
+		public bool isArchive{ get; set; }
 
-        public bool printStudentInfo { get; set; }
+		public bool printStudentInfo { get; set; }
         public bool printIEPDetails { get; set; }
         public bool printHealth { get; set; }
         public bool printMotor { get; set; }
