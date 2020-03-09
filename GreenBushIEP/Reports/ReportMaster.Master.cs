@@ -209,6 +209,7 @@ namespace GreenBushIEP.Report
 		{
 			var statuses = new List<SelectListItem>();
 			statuses.Add(new SelectListItem() { Value = IEPStatus.ACTIVE, Text = IEPStatus.ACTIVE });
+			statuses.Add(new SelectListItem() { Value = "AMENDED", Text = "AMENDED" });
 			statuses.Add(new SelectListItem() { Value = IEPStatus.AMENDMENT, Text = IEPStatus.AMENDMENT });
 			statuses.Add(new SelectListItem() { Value = IEPStatus.ANNUAL, Text = IEPStatus.ANNUAL });
 			statuses.Add(new SelectListItem() { Value = IEPStatus.ARCHIVE, Text = IEPStatus.ARCHIVE });

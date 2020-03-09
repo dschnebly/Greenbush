@@ -648,6 +648,7 @@ namespace GreenBushIEP.Models
             teacherBuilding = new tblBuilding();
             neighborhoodBuilding = new tblBuilding();
             reevalDates = new List<tblArchiveEvaluationDate>();
+			printProgressGoals = new List<int>();
             printStudentInfo = false;
             printIEPDetails = false;
             printHealth = false;
@@ -664,12 +665,15 @@ namespace GreenBushIEP.Models
             printServices = false;
             printNotice = false;
             printProgressReport = false;
-        }
+			isArchive = false;
+
+		}
 
         public tblUser teacher { get; set; }
         public tblStudentInfo student { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public List<tblArchiveEvaluationDate> reevalDates { get; set; }
+		public List<int> printProgressGoals { get; set; }
 
         public string ethnicity { get; set; }
         public string gender { get; set; }
@@ -689,8 +693,9 @@ namespace GreenBushIEP.Models
         public string placementCodeDesc { get; set; }
         public string edStatusCodeDesc { get; set; }
         public bool isDOC { get; set; }
+		public bool isArchive{ get; set; }
 
-        public bool printStudentInfo { get; set; }
+		public bool printStudentInfo { get; set; }
         public bool printIEPDetails { get; set; }
         public bool printHealth { get; set; }
         public bool printMotor { get; set; }

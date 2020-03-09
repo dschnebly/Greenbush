@@ -2401,9 +2401,9 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult PrintIEPSection(int stid, int iepId, string section)
+		[HttpGet]
+		[Authorize]
+		public ActionResult PrintIEPSection(int stid, int iepId, string section, string goalsToPrint)
         {
             var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
@@ -2474,7 +2474,10 @@ namespace GreenbushIep.Controllers
                         }
                     case "Progress":
                         {
-                            theIEP.studentDetails.printProgressReport = true;
+							if(!string.IsNullOrEmpty(goalsToPrint))
+								theIEP.studentDetails.printProgressGoals = goalsToPrint.Split(',').Select(Int32.Parse).ToList();
+
+							theIEP.studentDetails.printProgressReport = true;
                             break;
                         }
 
@@ -3980,7 +3983,7 @@ namespace GreenbushIep.Controllers
 					theIEP.studentDetails.printServices = true;
 					theIEP.studentDetails.printNotice = true;
 					theIEP.studentDetails.printProgressReport = false;
-
+					theIEP.studentDetails.isArchive = true;
 					theIEP.isServerRender = true;
 				}
 
@@ -3996,6 +3999,41 @@ namespace GreenbushIep.Controllers
 				var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
 				var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
 				var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+
+				//print progress report separately
+				if (theIEP != null)
+				{
+					theIEP.studentDetails.printStudentInfo = false;
+					theIEP.studentDetails.printIEPDetails = false;
+					theIEP.studentDetails.printHealth = false;
+					theIEP.studentDetails.printMotor = false;
+					theIEP.studentDetails.printComm = false;
+					theIEP.studentDetails.printSocial = false;
+					theIEP.studentDetails.printGeneral = false;
+					theIEP.studentDetails.printAcademic = false;
+					theIEP.studentDetails.printAcc = false;
+					theIEP.studentDetails.printBehavior = false;
+					theIEP.studentDetails.printTrans = false;
+					theIEP.studentDetails.printOther = false;
+					theIEP.studentDetails.printGoals = false;
+					theIEP.studentDetails.printServices = false;
+					theIEP.studentDetails.printNotice = false;
+					theIEP.studentDetails.printProgressReport = true;
+					theIEP.studentDetails.isArchive = true;
+					theIEP.isServerRender = true;
+				}
+
+				data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+
+				result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
+				result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+				doc = new HtmlDocument();
+				doc.OptionWriteEmptyNodes = true;
+				doc.OptionFixNestedTags = true;
+				doc.LoadHtml(result);
+
+				var progressModuleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
+				var progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
 
 				success = true;
 

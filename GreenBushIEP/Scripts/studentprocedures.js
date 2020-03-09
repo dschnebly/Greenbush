@@ -510,7 +510,17 @@ function getUrlParameter(sParam) {
 function printModule(divOverride) {	
 	var stid = getUrlParameter('stid');
 	var iepId = $("#studentIEPId").val();
-	window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride;		   	
+	var getGoalsToPrint = "";
+
+	if (divOverride.toLowerCase() == "progress") {
+		var idList = [];
+		$.each($("input[name='printGoal']:checked"), function () {
+			idList.push($(this).attr('data-val'));
+		});
+		getGoalsToPrint = idList;//JSON.stringify(idList);
+	}
+
+	window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;		   	
 }
 
 function createDateString(newDate) {
