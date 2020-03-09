@@ -1,12 +1,8 @@
 ﻿using GreenBushIEP.Models;
 using Microsoft.Reporting.WebForms;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace GreenBushIEP.Reports.ServiceReport
 {
@@ -39,6 +35,9 @@ namespace GreenBushIEP.Reports.ServiceReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
+
+			string teacherIds = "-1";
+
 			string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(this.ServiceType);
 
 			string buildingID = this.buildingDD.Value;
@@ -54,7 +53,14 @@ namespace GreenBushIEP.Reports.ServiceReport
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
-			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate);
+
+			if (user.RoleID == "4" || user.RoleID == "6")
+			{
+				//limit report
+				teacherIds = user.UserID.ToString();
+			}			
+
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -82,13 +88,13 @@ namespace GreenBushIEP.Reports.ServiceReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("StudentFirstName", typeof(string));
 			dt.Columns.Add("StudentLastName", typeof(string));
 			dt.Columns.Add("ServiceType", typeof(string));
-			dt.Columns.Add("Provider", typeof(string));			
+			dt.Columns.Add("Provider", typeof(string));
 			dt.Columns.Add("Frequency", typeof(int));
 			dt.Columns.Add("Location", typeof(string));
 			dt.Columns.Add("DaysPerWeek", typeof(byte));
@@ -100,7 +106,7 @@ namespace GreenBushIEP.Reports.ServiceReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate);
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider
