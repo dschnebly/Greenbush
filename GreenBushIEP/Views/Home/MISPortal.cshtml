@@ -15,7 +15,7 @@
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" alt="My Avatar">
         </a>
     </div>
     <h3>
@@ -212,7 +212,7 @@
                                         </button>
                                     }
 
-                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
+                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
                                         <span class="glyphicon glyphicon-folder-open"></span>
                                     </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
@@ -236,13 +236,13 @@
 
 <!-- Modal -->
 <div class="modal-dialog">
-    <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog">
         <div class="modal-dialog">
             <div class="modal-content">
                 @Html.Hidden("id", Model.user.UserID.ToString())
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                    <h4 class="modal-title custom_align" id="Heading">Assign this User to Buildings</h4>
+                    <h4 class="modal-title custom_align">Assign this User to Buildings</h4>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12 district-selection">
@@ -278,7 +278,7 @@
 </div>
 <!-- end modal -->
 <!-- Modal -->
-<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             @Html.Hidden("id", Model.user.UserID.ToString())
@@ -305,13 +305,13 @@
 </div>
 <!-- end modal -->
 <!-- Modal -->
-<div class="modal fadeInUp" id="initIEP" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+<div class="modal fadeInUp" id="initIEP" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             @Html.Hidden("id", Model.user.UserID.ToString())
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Begin this student's IEP</h4>
+                <h4 class="modal-title custom_align">Begin this student's IEP</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
