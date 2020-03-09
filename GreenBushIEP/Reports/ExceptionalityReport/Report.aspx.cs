@@ -38,8 +38,8 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string serviceIds = "";		
-			
+			string serviceIds = "";
+			string teacherIds = "-1";
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
@@ -48,7 +48,13 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
-			
+
+			if (user.RoleID == "4" || user.RoleID == "6")
+			{
+				//limit report
+				teacherIds = user.UserID.ToString();
+			}
+
 			foreach (ListItem li in ServiceType.Items)
 			{
 				if (li.Selected)
@@ -61,7 +67,8 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
-			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate);
+
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 
 			ReportDataSource rds2 = null;
@@ -88,7 +95,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
 		{
 			DataTable dt = new DataTable();
 			dt.Columns.Add("StudentFirstName", typeof(string));
@@ -108,7 +115,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate);
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,
