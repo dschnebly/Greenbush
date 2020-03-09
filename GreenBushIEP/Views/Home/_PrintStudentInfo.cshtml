@@ -420,20 +420,33 @@
 				} //end switch
 
 
-				foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
-				{
-					switch (ep.evaluationProcedureID)
-					{
-						case 1: { evalText += "Written Observation, "; break; }
-						case 2: { evalText += "Written Performance, "; break; }
-						case 3: { evalText += "Oral Performance, "; break; }
-						case 4: { evalText += "Criterion-Referenced Test, "; break; }
-						case 5: { evalText += "Time Sample, "; break; }
-						case 6: { evalText += "Demonstration/Performance, "; break; }
-						case 7: { evalText += "Other, "; break; }
+				//foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
+				//{
+				//	switch (ep.evaluationProcedureID)
+				//	{
+				//		case 1: { evalText += " Written Observation, "; break; }
+				//		case 2: { evalText += " Written Performance, "; break; }
+				//		case 3: { evalText += " Oral Performance, "; break; }
+				//		case 4: { evalText += " Criterion-Referenced Test, "; break; }
+				//		case 5: { evalText += " Time Sample, "; break; }
+				//		case 6: { evalText += " Demonstration/Performance, "; break; }
 
-					} //end switch
-				}
+				//		case 8: { evalText += " Progress Monitoring,"; break; }
+				//		case 7:
+				//		{
+
+				//			if (!string.IsNullOrEmpty(ep.OtherDescription))
+				//			{
+				//				evalText += " Other: " + ep.OtherDescription + ",";
+				//			}
+				//			else
+				//			{
+				//				evalText += " Other,";
+				//			}
+				//			break;
+				//		}
+				//	} //end switch
+				//}
 
 				<div>
 					<div>
@@ -460,7 +473,37 @@
 							</div>
 							<div class="form-group">
 								<label>Evaluation Procedure</label>
-								<p>@evalText.Trim().TrimEnd(',')</p>
+								@*<p>@evalText.Trim().TrimEnd(',')</p>*@
+								<p>
+								@foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
+								{
+									switch (ep.evaluationProcedureID)
+									{
+										case 1: { evalText = "Written Observation"; break; }
+										case 2: { evalText = "Written Performance"; break; }
+										case 3: { evalText = "Oral Performance"; break; }
+										case 4: { evalText = "Criterion-Referenced Test"; break; }
+										case 5: { evalText = "Time Sample"; break; }
+										case 6: { evalText = "Demonstration/Performance"; break; }
+										case 8: { evalText = "Progress Monitoring"; break; }
+										case 7:
+											{
+
+												if (!string.IsNullOrEmpty(ep.OtherDescription))
+												{
+													evalText = "Other: " + ep.OtherDescription;
+												}
+												else
+												{
+													evalText = "Other";
+												}
+												break;
+											}
+									} //end switch
+									@evalText<br />
+								}
+								</p>
+
 							</div>
 						</div> <!--end panel default-->
 					</div><!--end panel group-->
