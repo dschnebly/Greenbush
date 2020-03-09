@@ -59,10 +59,19 @@
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
     });
 	
+    // Attach Event
+    // fires when the user clicks the button to view student info
     $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
         var stid = getUrlParameter('stid');
         var iepId = $("#studentIEPId").val();
         window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
+    });
+
+    // Attach Event
+    // fires when the user clicks the button to see the student forms
+    $('#viewForms').not('.bound').addClass('bound').on("click", function (e) {
+        var stid = getUrlParameter('stid');
+        location.href = "/Home/IEPFormModule?studentId=" + stid;
     });
 
     $('.navbar-toggle').click(function () {
