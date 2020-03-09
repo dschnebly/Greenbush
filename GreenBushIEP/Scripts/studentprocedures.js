@@ -1,8 +1,10 @@
-﻿$(function () {
+﻿nction() {
 
-    if ($('ul#iepStatusList li').length === 0) {
-        $('ul#iepStatusList').hide();
+    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+        $("#modal-studentPlanning").modal('show');
     }
+
 
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
@@ -12,6 +14,10 @@
     $('.tooltip-help').on('click', function () {
         $('[data-toggle="tooltip"]').tooltip('toggle');
     });
+
+    if ($('ul#iepStatusList li').length === 0) {
+        $('ul#iepStatusList').hide();
+    }
 
     $('#modal-studentTeamGoals').on('hidden.bs.modal', function () {
         $('[data-toggle="tooltip"]').tooltip('hide');
@@ -30,10 +36,6 @@
     });
     /* end tooltips */
 
-    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
-    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
-        $("#modal-studentPlanning").modal('show');
-    }
 
     // Attach Event
     // fires when the "form" evaluation consent button was clicked. *if the teacher wants to reprint the consent form
@@ -55,10 +57,10 @@
     // fires when the user prints the IEP
     $('#printIEP').not('.bound').addClass('bound').on("click", function (e) {
         var stid = getUrlParameter('stid');
-        var iepId = $("#studentIEPId").val();		        
+        var iepId = $("#studentIEPId").val();
         window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
     });
-	
+
     // Attach Event
     // fires when the user clicks the button to view student info
     $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
@@ -128,8 +130,7 @@
         if (dayStart === 0 || dayStart === 6) {
             $("#IEPBeginDate").addClass("date-error");
             return alert("Please select a Weekday for the Annual Initiation Date.");
-        }
-        else {
+        } else {
             $("#IEPBeginDate").removeClass("date-error");
         }
 
@@ -140,7 +141,12 @@
         $.ajax({
             type: 'GET',
             url: '/Home/UpdateIEPDates',
-            data: { Stid: stId, IepId: iepId, IEPStartDate: startDate, IEPMeetingDate: meetingDate },
+            data: {
+                Stid: stId,
+                IepId: iepId,
+                IEPStartDate: startDate,
+                IEPMeetingDate: meetingDate
+            },
             dataType: 'json',
             success: function (data) {
                 if (data.Result === 'success') {
@@ -217,7 +223,9 @@
     // Attach Event
     // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
     $("#makeIEPActive").on("click", function () {
-        if ($("#makeIEPActive").hasClass("disabled")) { return false; } // the link is disabled.
+        if ($("#makeIEPActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled.
 
         var answer = confirm("Are you sure you want to make this IEP Active?");
         if (answer) {
@@ -230,7 +238,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateIEPStatusToActive',
-                data: { Stid: stId, IEPid: iepId },
+                data: {
+                    Stid: stId,
+                    IEPid: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -251,7 +262,9 @@
     // Attach Event
     // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
     $("#makeIEPAmendment").on("click", function () {
-        if ($("#makeIEPAmendment").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPAmendment").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to make an Amendment to this IEP?");
         if (answer) {
@@ -264,7 +277,11 @@
             $.ajax({
                 type: 'GET',
                 url: '/Manage/CreateIEPAmendment',
-                data: { Stid: stId, IepId: iepId, amend: true },
+                data: {
+                    Stid: stId,
+                    IepId: iepId,
+                    amend: true
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -289,7 +306,9 @@
     // Attach Event
     // if the user is an MIS or ADMIN the Initiation Date is today or later AND then when they click the url button..
     $("#makeIEPAnnual").on("click", function () {
-        if ($("#makeIEPAnnual").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPAnnual").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to make an Annual IEP?");
         if (answer) {
@@ -302,7 +321,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Manage/CreateIEPAnnual',
-                data: { Stid: stId, IepId: iepId },
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -327,7 +349,9 @@
     // Attach Event
     // if the user is the OWNER or MIS and they choose to make the iep Inactive
     $("#makeIEPInActive").on("click", function () {
-        if ($("#makeIEPInActive").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPInActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to set this DRAFT to inactive?");
         if (answer) {
@@ -340,7 +364,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateIEPStatusToInActive',
-                data: { Stid: stId, IepId: iepId },
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -364,7 +391,9 @@
     // Attach Event
     // if the iep is an amendment and they make it active
     $("#makeIEPAmendmentActive").on("click", function () {
-        if ($("#makeIEPAmendmentActive").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPAmendmentActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
         if (answer) {
@@ -377,7 +406,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateIEPAmendmentToActive',
-                data: { Stid: stId, IepId: iepId },
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -399,7 +431,9 @@
     });
 
     $("#makeIEPAnnualActive").on("click", function () {
-        if ($("#makeIEPAnnualActive").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPAnnualActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to set this ANNUAL to active?");
         if (answer) {
@@ -412,7 +446,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateIEPAnnualToActive',
-                data: { Stid: stId, IepId: iepId },
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -436,7 +473,9 @@
     // Attach Event
     // if the owner or mis reverts the draft back to active
     $("#revertToDraft").on("click", function () {
-        if ($("#makeIEPInActive").hasClass("disabled")) { return false; } // the link is disabled
+        if ($("#makeIEPInActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled
 
         var answer = confirm("Are you sure you want to revert this IEP from ACTIVE to DRAFT?");
         if (answer) {
@@ -449,7 +488,10 @@
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateRevertIEPtoDraft',
-                data: { Stid: stId, IepId: iepId },
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
@@ -486,8 +528,7 @@ function getParameterByName(name, url) {
 $('input[type=radio][name=optionsExtendedSchoolYear]').change(function () {
     if (this.value === 'option1') {
         $('#form').css('display', 'block');
-    }
-    else {
+    } else {
         $('#form').css('display', 'none');
     }
 });
@@ -507,20 +548,20 @@ function getUrlParameter(sParam) {
     }
 }
 
-function printModule(divOverride) {	
-	var stid = getUrlParameter('stid');
-	var iepId = $("#studentIEPId").val();
-	var getGoalsToPrint = "";
+function printModule(divOverride) {
+    var stid = getUrlParameter('stid');
+    var iepId = $("#studentIEPId").val();
+    var getGoalsToPrint = "";
 
-	if (divOverride.toLowerCase() == "progress") {
-		var idList = [];
-		$.each($("input[name='printGoal']:checked"), function () {
-			idList.push($(this).attr('data-val'));
-		});
-		getGoalsToPrint = idList;//JSON.stringify(idList);
-	}
+    if (divOverride.toLowerCase() == "progress") {
+        var idList = [];
+        $.each($("input[name='printGoal']:checked"), function () {
+            idList.push($(this).attr('data-val'));
+        });
+        getGoalsToPrint = idList; //JSON.stringify(idList);
+    }
 
-	window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;		   	
+    window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;
 }
 
 function createDateString(newDate) {
@@ -555,7 +596,9 @@ function formatDate(date) {
 var moduleFormSerialize = '';
 
 // Prevents the user from using the back button
-window.history.pushState({ page: 1 }, "", "");
+window.history.pushState({
+    page: 1
+}, "", "");
 
 window.onpopstate = function (event) {
 
@@ -573,7 +616,8 @@ window.onpopstate = function (event) {
 /** fixing the bootstrap modal overlay bug and setting up events. **/
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
-    var modals = $(".modal").get(), element = null;
+    var modals = $(".modal").get(),
+        element = null;
 
     for (var i = 0, length = modals.length; i < length; i++) {
         $(modals[i]).css("height", "0");
@@ -596,6 +640,7 @@ $(window).on('shown.bs.modal', function (e) {
     });
 });
 
+// Checks for changes that are not yet saved and send the user a message
 $('#moduleSection').on('hide.bs.modal', function (e) {
     if ($("#moduleSection form").serialize() !== moduleFormSerialize) {
         if (!confirm("If your leave this module now the changes you made will NOT be saved.")) {
@@ -639,8 +684,7 @@ $('#saveplan').on('click', function () {
         success: function (data) {
             if (data.result === "success") {
                 window.location.href = "/Home/StudentProcedures?stid=" + stId + "&iepID=" + iepId;
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -668,14 +712,16 @@ $("#dismissIEPPlan").on("click", function () {
     $.ajax({
         type: 'GET',
         url: '/Home/dismissPlanning',
-        data: { studentId: stId, iepId: iepId },
+        data: {
+            studentId: stId,
+            iepId: iepId
+        },
         dataType: 'json',
         async: false,
         success: function (data) {
             if (data.result === "success") {
                 window.location.href = "/Home/StudentProcedures?stid=" + data.message + "&iepID=" + iepId;
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -932,14 +978,17 @@ $(".module-section").on("click", function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/LoadModuleSection',
-        data: { studentId: stId, iepId: iepId, view: ModuleView },
+        data: {
+            studentId: stId,
+            iepId: iepId,
+            view: ModuleView
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -967,14 +1016,16 @@ $(".goal-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/StudentGoals',
-        data: { studentId: stId, IEPid: iepId },
+        data: {
+            studentId: stId,
+            IEPid: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -1002,14 +1053,16 @@ $(".service-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/StudentServices',
-        data: { studentId: stId, IEPid: iepId },
+        data: {
+            studentId: stId,
+            IEPid: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -1037,14 +1090,16 @@ $(".accom-mod-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/Accommodations',
-        data: { studentId: stId, IEPid: iepId },
+        data: {
+            studentId: stId,
+            IEPid: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -1072,14 +1127,16 @@ $(".other-considerations-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/OtherConsiderations',
-        data: { studentId: stId, IEPid: iepId },
+        data: {
+            studentId: stId,
+            IEPid: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -1107,14 +1164,16 @@ $(".behavior-plan-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/BehaviorPlan',
-        data: { studentId: stId, iepID: iepId },
+        data: {
+            studentId: stId,
+            iepID: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
@@ -1142,14 +1201,16 @@ $(".transition-section").on('click', function (e) {
     $.ajax({
         type: 'GET',
         url: '/Home/StudentTransition',
-        data: { studentId: stId, IEPid: iepId },
+        data: {
+            studentId: stId,
+            IEPid: iepId
+        },
         dataType: 'html',
         success: function (data) {
             if (data.length !== 0) {
                 $("#module-form-section").html(data);
                 $('#moduleSection').modal('show');
-            }
-            else {
+            } else {
                 $("#alertMessage .moreinfo").html('Server Error');
                 $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                     $("#alertMessage").slideUp(500);
