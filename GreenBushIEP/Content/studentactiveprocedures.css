@@ -619,7 +619,7 @@
                 cursor: default;
             }
 
-        #studentPlanBtn, #printStudentInfo, #printIEP {
+        #studentPlanBtn, #printStudentInfo, #printIEP, #viewForms {
             font-size: 16px;
             margin: 3px 0 3px 3px;
         }
