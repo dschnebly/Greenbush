@@ -285,9 +285,6 @@
     padding-left: 5px;
 }
 
-@-moz-document url-prefix() {
-}
-
 @media (min-width: 768px) {
     .modal-fullscreen .modal-dialog {
         width: 750px;

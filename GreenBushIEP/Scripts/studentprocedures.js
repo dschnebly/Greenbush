@@ -1,4 +1,4 @@
-﻿nction() {
+﻿$(function() {
 
     // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
     if ($("#modal-studentPlanning").hasClass('needsPlan')) {
@@ -553,7 +553,7 @@ function printModule(divOverride) {
     var iepId = $("#studentIEPId").val();
     var getGoalsToPrint = "";
 
-    if (divOverride.toLowerCase() == "progress") {
+    if (divOverride.toLowerCase() === "progress") {
         var idList = [];
         $.each($("input[name='printGoal']:checked"), function () {
             idList.push($(this).attr('data-val'));
