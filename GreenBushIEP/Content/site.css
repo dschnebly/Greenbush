@@ -7,6 +7,11 @@
     border: none !important;
 }
 
+.control-label {
+    position: relative;
+    top: 1vh;
+}
+
 .vertical-center {
     height: 100%;
     width: 100%;
@@ -47,6 +52,14 @@
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+.slideOutLeft {
+    -webkit-animation-name: slideOutLeft;
+    animation-name: slideOutLeft;
+    animation-duration: 1.2s;
+    -webkit-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 }
 
 footer {
@@ -599,6 +612,32 @@ tbody > tr {
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
+
+@-webkit-keyframes slideOutLeft {
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(-200%, 0, 0);
+        transform: translate3d(-200%, 0, 0);
+    }
+}
+
+@keyframes slideOutLeft {
+    from {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+    }
+
+    to {
+        visibility: hidden;
+        -webkit-transform: translate3d(-200%, 0, 0);
+        transform: translate3d(-200%, 0, 0);
+    }
+}
 
 
 /* Medium Devices, Desktops */

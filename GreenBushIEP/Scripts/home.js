@@ -7,8 +7,7 @@
 
         if ($('input[type="submit"]').val() === "continue") {
             window.location = $('input[type="submit"]').attr("action");
-        }
-        else if (emailfield.val() !== "" && passwordfield.val() !== "") {
+        } else if (emailfield.val() !== "" && passwordfield.val() !== "") {
             var requestData = {
                 Email: emailfield.val(),
                 Password: passwordfield.val()
@@ -28,9 +27,10 @@
 
                         $(".panel-default").addClass('slideOutLeft');
                         $(".jumbotron").fadeOut();
-                        setTimeout(function () { window.location = data.portal; }, 500);
-                    }
-                    else {
+                        setTimeout(function () {
+                            window.location = data.portal;
+                        }, 500);
+                    } else {
                         $("#output").removeClass(' alert alert-success');
                         $("#output").addClass("alert alert-danger animated fadeInUp").html("Incorrect username or password.");
                     }
@@ -40,8 +40,7 @@
                     $("#output").addClass("alert alert-danger animated fadeInUp").html("Incorrect username or password.");
                 }
             });
-        }
-        else {
+        } else {
             $("#output").removeClass(' alert alert-success');
             $("#output").addClass("alert alert-danger animated fadeInUp").html("Incorrect username or password.");
         }
