@@ -125,6 +125,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = admin)]
+        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult AdminPortal(int? userId)
         {
 

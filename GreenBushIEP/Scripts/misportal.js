@@ -118,34 +118,10 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
+
                         var results = data.Message;
-
-                        // blow away the building list 
-                        $("#userBuildings").empty();
-
-                        // hide all the users in the list.
-                        var filterCollection = $(".list-group-root").find(".list-group-item");
-
-                        $("#userBuildings").append("<option value='-1'>All Buildings</option>");
-                        console.log(results);
-                        if (results.selectedBuilding.length > 0) {
-                            $.each(results.buildings, function (index, value) {
-                                $("#userBuildings").append("<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>");
-                            });
-                        }
-
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data("id") === value.UserID) {
-                                        $(filterValue).removeClass("hidden");
-                                        return false;
-                                    }
-                                    else {
-                                        $(filterValue).addClass("hidden");
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
                     } else {
                         alert("doh");
@@ -187,33 +163,10 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
+
                         var results = data.Message;
-
-                        // blow away the building list 
-                        $("#userBuildings").empty();
-
-                        // hide all the users in the list.
-                        var filterCollection = $(".list-group-root").find(".list-group-item");
-
-                        $("#userBuildings").append("<option value='-1'>All Buildings</option>");
-                        if (results.buildings.length > 0) {
-                            $.each(results.buildings, function (index, value) {
-                                $("#userBuildings").append("<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>");
-                            });
-                        }
-
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data("id") === value.UserID) {
-                                        $(filterValue).removeClass("hidden");
-                                        return false;
-                                    }
-                                    else {
-                                        $(filterValue).addClass("hidden");
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
                     } else {
                         alert("doh");
@@ -254,22 +207,9 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $(".list-group-root").find(".list-group-item");
-
                         var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data("id") === value.UserID) {
-                                        $(filterValue).removeClass("hidden");
-                                        return false;
-                                    }
-                                    else {
-                                        $(filterValue).addClass("hidden");
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
                     } else {
                         alert("doh");
@@ -310,22 +250,9 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $(".list-group-root").find(".list-group-item");
-
                         var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data("id") === value.UserID) {
-                                        $(filterValue).removeClass("hidden");
-                                        return false;
-                                    }
-                                    else {
-                                        $(filterValue).addClass("hidden");
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
                     } else {
                         alert("doh");
@@ -372,25 +299,9 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $(".list-group-root").find(".list-group-item");
-
-                        var i = filterCollection.length;
-                        while (i >= 0) {
-                            $(filterCollection[i]).addClass("hidden");
-                            i--;
-                        }
-
                         var results = data.Message;
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data("id") === value.UserID) {
-                                        $(filterValue).removeClass("hidden");
-                                        return false;
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
                     } else {
                         alert("doh");
@@ -625,6 +536,25 @@
         };
     new ft(params);
 });
+
+function filterList(members) {
+    var container = document.querySelector(".list-group-root");
+
+    // hide all the users in the list.
+    var filterCollection = container.querySelectorAll(".list-group-item");
+    var i = filterCollection.length - 1;
+    while (i >= 0) {
+        filterCollection[i].classList.add("hidden");
+        i--;
+    }
+
+    var i = members.length - 1;
+    while (i >= 0) {
+        var matchFound = container.querySelectorAll("div[data-id='" + members[i].UserID + "']");
+        matchFound[0].classList.remove("hidden");
+        i--;
+    }
+}
 
 jQuery.fn.extend({
     listrap: function () {
