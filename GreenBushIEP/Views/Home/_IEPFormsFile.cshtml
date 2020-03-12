@@ -310,7 +310,13 @@
                 <div align="left">
                     <div class="col-md-12 ">						
                         @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel
-					   , new ViewDataDictionary { { "teamEval", Model.teamEval }, { "summaryPerf", Model.summaryPerformance }, { "conferenceSummary", Model.conferenceSummary } })
+					   , new ViewDataDictionary {
+						   { "teamEval", Model.teamEval },
+						   { "summaryPerf", Model.summaryPerformance },
+						   { "conferenceSummary", Model.conferenceSummary },
+						   { "formAmend", Model.formAmend }
+
+					   })
                     </div>
                 </div>
             </div>

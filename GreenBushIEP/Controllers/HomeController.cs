@@ -2312,6 +2312,10 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.conferenceSummary = db.tblFormConferenceSummaries.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "IEPAmendment")
+			{
+				viewModel.formAmend = db.tblFormIEPAmendment_.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
 			viewModel.fileModel = fileViewModel;
@@ -4229,6 +4233,33 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
+			else if (formName == "IEP Amendment Form")
+			{
+				var formAmend = db.tblFormIEPAmendment_.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendment_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment_();
+
+				formAmend.StudentId = sid;
+				formAmend.AgreeToAmmend = GetCheckboxSingleInputValue("AgreeToAmmend", checkboxes);
+				formAmend.DisagreeToAmmend = GetCheckboxSingleInputValue("DisagreeToAmmend", checkboxes);
+				formAmend.ConveneMeeting = GetCheckboxSingleInputValue("ConveneMeeting", checkboxes);
+				formAmend.DoNotConveneMeeting = GetCheckboxSingleInputValue("DoNotConveneMeeting", checkboxes);
+				formAmend.Description = GetInputValue("Description", spans);
+
+				if (formAmend.FormIEPAmendment_Id == 0)
+				{
+					formAmend.CreatedBy = currentUser.UserID;
+					formAmend.Create_Date = DateTime.Now;
+					formAmend.ModifiedBy = currentUser.UserID;
+					formAmend.Update_Date = DateTime.Now;
+					db.tblFormIEPAmendment_.Add(formAmend);
+				}
+				else
+				{
+					formAmend.ModifiedBy = currentUser.UserID;
+					formAmend.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
 		}
 
         private string GetInputValue(string inputName, List<HtmlNode> inputs)
@@ -4283,6 +4314,27 @@ namespace GreenbushIep.Controllers
 
         }
 
-        #endregion
-    }
+		private bool GetCheckboxSingleInputValue(string inputName, List<HtmlNode> checkboxes)
+		{
+			
+			var valYes = "";
+			
+
+			var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+			if (input != null)
+			{
+				valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+			}
+						
+			if (valYes == "Y")
+				return true;
+			else
+				return false;
+
+			
+
+		}
+
+		#endregion
+	}
 }
