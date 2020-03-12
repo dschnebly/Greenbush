@@ -9,841 +9,11 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/jquery-ui.min.css")
-    <style>
-        hr {
-            border-top: 1px solid #ddd;
-        }
-
-        .transition-page {
-            position: relative;
-        }
-
-        .student-information {
-            text-align: center;
-        }
-
-        .student-details {
-            height: 205px;
-        }
-
-        .student-image img {
-            clear: both;
-            margin: auto;
-            position: relative;
-        }
-
-        .user-details .user-info-block {
-            width: 100%;
-            position: absolute;
-            top: 55px;
-            background: rgb(255, 255, 255);
-            z-index: 0;
-            padding-top: 35px;
-        }
-
-        .user-info-block .user-heading {
-            width: 100%;
-            text-align: center;
-            margin: 10px 0 0;
-        }
-
-        .user-info-block .navigation {
-            float: left;
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            list-style: none;
-            border-bottom: 1px solid #428BCA;
-            border-top: 1px solid #428BCA;
-        }
-
-        .navigation li {
-            float: left;
-            margin: 0;
-            padding: 0;
-        }
-
-            .navigation li a {
-                float: left;
-                font-size: 21px;
-                padding: 10px 10px 5px 10px;
-            }
-
-        .user-info-block .user-body {
-            float: left;
-            padding: 5%;
-            width: inherit;
-        }
-
-        .tooltip-help, .print-module {
-            margin-right: 10px;
-            -webkit-appearance: none;
-            padding: 0;
-            cursor: pointer;
-            background: transparent;
-            border: 0;
-            float: right;
-            font-size: 21px;
-            font-weight: bold;
-            line-height: 1;
-            color: #000;
-            text-shadow: 0 1px 0 #fff;
-            filter: alpha(opacity=20);
-            opacity: .2;
-            margin-top: 3px;
-        }
-
-        .modal-header .close {
-            margin-top: 4px;
-        }
-
-        .yesConsentOverlay {
-            display: none;
-        }
-
-        .noConsentOverlay {
-            position: absolute;
-            opacity: 0.6;
-            background: #fff;
-            height: 95%;
-            width: 100%;
-            z-index: 10;
-        }
-
-            .noConsentOverlay .container div label {
-                font-size: 30px;
-                margin-top: 15%;
-                color: #000;
-            }
-
-                .noConsentOverlay .container div label input[type=checkbox] {
-                    /* Double-sized Checkboxes */
-                    -ms-transform: scale(2); /* IE */
-                    -moz-transform: scale(2); /* FF */
-                    -webkit-transform: scale(2); /* Safari and Chrome */
-                    -o-transform: scale(2); /* Opera */
-                    margin: 0;
-                    position: relative;
-                    bottom: 2px;
-                }
-
-        .btn-group-primary .dropdown-menu {
-            background-color: #214680 !important;
-        }
-
-            .btn-group-primary .dropdown-menu li > a {
-                color: #fff;
-                font-size: 12px;
-            }
-
-                .btn-group-primary .dropdown-menu li > a:hover,
-                .btn-group-primary .dropdown-menu li > a:focus {
-                    background-color: #214680 !important;
-                    color: #ffffff;
-                    text-decoration: underline;
-                }
-
-        .btn-bordered-warning:focus,
-        .btn-bordered-warning:hover {
-            color: #337ab7;
-        }
-
-        #student-goals {
-            margin: 40px 0;
-        }
-
-        .widgetDisabled {
-            opacity: 0.65;
-        }
-
-        .needsAttention {
-            border-color: #a00000 !important;
-            border-width: 1px;
-        }
-
-        .needsAttentionIcon {
-            color: #a00000;
-            font-size: 25px;
-            top: 2px;
-            margin-top: -20px;
-        }
-
-        dt {
-            padding: 8px 0 0 0;
-            font-size: 16px;
-            display: inline-block;
-        }
-
-        dd {
-            display: inline;
-        }
-
-        .alert-danger-iep {
-            font-size: 8px;
-            padding: 3px 4px;
-            vertical-align: top;
-            color: #fff;
-            background-color: #b94a48;
-            border-color: #fff;
-        }
-
-        #parentConsent {
-            font-size: 35px;
-        }
-
-        .iep, .iep > .well {
-            background-color: #B6C391 !important;
-        }
-
-            .iep > .well label {
-                color: #fff;
-            }
-
-        .filter, .filter > .well .options button {
-            border: 1px solid #45906D;
-            position: relative;
-        }
-
-            .filter > .well {
-                background-color: transparent;
-            }
-
-        .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
-            margin-bottom: 5px;
-            visibility: visible;
-        }
-
-        .funkyradio div {
-            clear: both;
-            overflow: hidden;
-        }
-
-        .funkyradio label {
-            width: 100%;
-            border-radius: 3px;
-            border: 1px solid #D1D3D4;
-            font-weight: normal;
-            display: inline-block !important;
-            padding-left: 50px !important;
-            text-indent: 0px !important;
-            line-height: 110% !important;
-            padding-top: 8px;
-            padding-bottom: 8px;
-        }
-
-        .funkyradio input[type="radio"]:empty,
-        .funkyradio input[type="checkbox"]:empty {
-            display: none;
-        }
-
-            .funkyradio input[type="radio"]:empty ~ label,
-            .funkyradio input[type="checkbox"]:empty ~ label {
-                position: relative;
-                line-height: 2.5em;
-                text-indent: 3.25em;
-                /*margin-top: 2em;*/
-                cursor: pointer;
-                -webkit-user-select: none;
-                -moz-user-select: none;
-                -ms-user-select: none;
-                user-select: none;
-            }
-
-                .funkyradio input[type="radio"]:empty ~ label:before,
-                .funkyradio input[type="checkbox"]:empty ~ label:before {
-                    position: absolute;
-                    display: block;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    content: '';
-                    width: 2.5em;
-                    background: #D1D3D4;
-                    border-radius: 3px 0 0 3px;
-                }
-
-        .funkyradio input[type="radio"]:hover:not(:checked) ~ label,
-        .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
-            color: #888;
-        }
-
-            .funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
-            .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
-                content: '\2714';
-                text-indent: .9em;
-                color: #C2C2C2;
-                padding-top: 8px;
-            }
-
-        .funkyradio input[type="radio"]:checked ~ label,
-        .funkyradio input[type="checkbox"]:checked ~ label {
-            color: #777;
-        }
-
-            .funkyradio input[type="radio"]:checked ~ label:before,
-            .funkyradio input[type="checkbox"]:checked ~ label:before {
-                content: '\2714';
-                text-indent: .9em;
-                color: #333;
-                background-color: #ccc;
-                line-height: 2;
-                display: inline-block;
-                vertical-align: middle;
-            }
-
-        .funkyradio input[type="radio"]:focus ~ label:before,
-        .funkyradio input[type="checkbox"]:focus ~ label:before {
-            box-shadow: 0 0 0 3px #999;
-        }
-
-        .funkyradio-default input[type="radio"]:checked ~ label:before,
-        .funkyradio-default input[type="checkbox"]:checked ~ label:before {
-            color: #333;
-            background-color: #ccc;
-        }
-
-        .funkyradio-primary input[type="radio"]:checked ~ label:before,
-        .funkyradio-primary input[type="checkbox"]:checked ~ label:before {
-            color: #fff;
-            background-color: #337ab7;
-        }
-
-        .funkyradio-success input[type="radio"]:checked ~ label:before,
-        .funkyradio-success input[type="checkbox"]:checked ~ label:before {
-            color: #fff;
-            background-color: #5cb85c;
-        }
-
-        .funkyradio-danger input[type="radio"]:checked ~ label:before,
-        .funkyradio-danger input[type="checkbox"]:checked ~ label:before {
-            color: #fff;
-            background-color: #d9534f;
-        }
-
-        .funkyradio-warning input[type="radio"]:checked ~ label:before,
-        .funkyradio-warning input[type="checkbox"]:checked ~ label:before {
-            color: #fff;
-            background-color: #f0ad4e;
-        }
-
-        .funkyradio-info input[type="radio"]:checked ~ label:before,
-        .funkyradio-info input[type="checkbox"]:checked ~ label:before {
-            color: #fff;
-            background-color: #5bc0de;
-        }
-
-
-        #moduleSection .checkbox label {
-            font-size: 16px;
-            padding-bottom: 10px;
-        }
-
-            #moduleSection .checkbox label:after,
-            #moduleSection .radio label:after {
-                content: '';
-                display: table;
-                clear: both;
-            }
-
-        #moduleSection .form-check .checkbox {
-            line-height: 25px;
-        }
-
-        #moduleSection .checkbox .cr,
-        #moduleSection .radio .cr {
-            position: relative;
-            display: inline-block;
-            border: 1px solid #a9a9a9;
-            border-radius: .25em;
-            width: 1.3em;
-            height: 1.3em;
-            float: left;
-            margin-right: .5em;
-        }
-
-        #moduleSection .radio .cr {
-            border-radius: 50%;
-        }
-
-            #moduleSection .checkbox .cr .cr-icon,
-            #moduleSection .radio .cr .cr-icon {
-                position: absolute;
-                font-size: .8em;
-                line-height: 0;
-                top: 50%;
-                left: 20%;
-            }
-
-            #moduleSection .radio .cr .cr-icon {
-                margin-left: 0.04em;
-            }
-
-        #moduleSection .checkbox label input[type="checkbox"],
-        #moduleSection .radio label input[type="radio"] {
-            display: none;
-        }
-
-            #moduleSection .checkbox label input[type="checkbox"] + .cr > .cr-icon,
-            #moduleSection .radio label input[type="radio"] + .cr > .cr-icon {
-                transform: scale(3) rotateZ(-20deg);
-                opacity: 0;
-                transition: all .3s ease-in;
-            }
-
-            #moduleSection .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
-            #moduleSection .radio label input[type="radio"]:checked + .cr > .cr-icon {
-                transform: scale(1) rotateZ(0deg);
-                opacity: 1;
-            }
-
-            #moduleSection .checkbox label input[type="checkbox"]:disabled + .cr,
-            #moduleSection .radio label input[type="radio"]:disabled + .cr {
-                opacity: .5;
-            }
-
-
-
-        .transition-page-scaleUpCenter {
-            -webkit-animation: scaleUpCenter .4s ease-out both;
-            animation: scaleUpCenter .4s ease-out both;
-        }
-
-        .transition-page-scaleDownCenter {
-            -webkit-animation: scaleDownCenter .4s ease-in both;
-            animation: scaleDownCenter .4s ease-in both;
-        }
-
-        .fade-scale {
-            -webkit-transform: scale(0.7);
-            -moz-transform: scale(0.7);
-            -ms-transform: scale(0.7);
-            transform: scale(0.7);
-            opacity: 0;
-            -webkit-transition: all 0.3s;
-            -moz-transition: all 0.3s;
-            transition: all 0.3s;
-        }
-
-            .fade-scale.in {
-                -webkit-transform: scale(1);
-                -moz-transform: scale(1);
-                -ms-transform: scale(1);
-                transform: scale(1);
-                opacity: 1;
-            }
-
-        input[type=date] {
-            margin-right: 20px;
-        }
-
-        .date-error {
-            height: 35px;
-            border-color: red;
-            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-            box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
-        }
-
-        .formbtn {
-            min-width: 85px;
-        }
-
-        .btn-secondary {
-            background-color: #ccc;
-            color: #4b4f56;
-        }
-
-            .btn-secondary i {
-                color: #4b4f56;
-            }
-
-            .btn-secondary:hover {
-                color: #fff;
-            }
-
-                .btn-secondary:hover i {
-                    color: #fff;
-                }
-
-
-        /**** Vertically Centers the Modal Popup ****/
-        body.modal-open .modal {
-            display: flex !important;
-            height: 100%;
-        }
-
-            body.modal-open .modal .modal-dialog {
-                margin: auto;
-            }
-        /**** Ends Modal Popup Vertical Fix ****/
-
-        .modal-fullscreen {
-            background: transparent;
-        }
-
-            .modal-fullscreen .modal-content {
-                background: transparent;
-                border: 0;
-                -webkit-box-shadow: none;
-                box-shadow: none;
-            }
-
-        .modal-backdrop.modal-backdrop-fullscreen {
-            background: #ffffff;
-        }
-
-            .modal-backdrop.modal-backdrop-fullscreen.in {
-                opacity: .97;
-                filter: alpha(opacity=97);
-            }
-
-        .modal-fullscreen .modal-dialog {
-            margin: 0;
-            margin-right: auto;
-            margin-left: auto;
-            width: 100%;
-        }
-
-        #sortable {
-            list-style-type: none;
-        }
-
-            #sortable li {
-                float: left;
-                min-width: 255px;
-                min-height: 276px;
-                margin: 0 20px 20px 0;
-                position: relative;
-                height: 0;
-            }
-
-        .hero-widget {
-            text-align: center;
-            padding-top: 40px;
-        }
-
-            .hero-widget .icon {
-                display: block;
-                font-size: 78px;
-                line-height: 96px;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-
-            .hero-widget label {
-                font-size: 18px;
-            }
-
-            .hero-widget .options {
-                margin-top: 10px;
-            }
-
-        .well {
-            border: 0;
-            bottom: 0;
-        }
-
-        .modal-backdrop {
-            background-color: #FFFFFF;
-        }
-
-        .print-media-only {
-            display: none;
-        }
-
-        .isHealthConcern.noConcerns {
-            display: none;
-        }
-
-        .isMotorConcern.noConcerns {
-            display: none;
-        }
-
-        .isCommunicationConcern.noConcerns {
-            display: none;
-        }
-
-        .isSocialConcern.noConcerns {
-            display: none;
-        }
-
-        .isIntelligenceConcern.noConcerns {
-            display: none;
-        }
-
-        .isAcademicPerformanceConcern.noConcerns {
-            display: none;
-        }
-
-        .isReadingConcern.noConcerns {
-            display: none;
-        }
-
-        .isMathConcern.noConcerns {
-            display: none;
-        }
-
-        .isWrittenConcern.noConcerns {
-            display: none;
-        }
-
-        .btn-bordered-warning {
-            color: #337ab7;
-            background: #FFFFFF;
-            border: 2px solid #337ab7;
-            font-weight: bold;
-        }
-
-            .btn-bordered-warning:hover {
-                color: #337ab7;
-                cursor: default;
-            }
-
-        .ajax-loader {
-            visibility: hidden;
-            background-color: rgba(255,255,255,0.7);
-            position: absolute;
-            z-index: 100 !important;
-            width: 108%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-            .ajax-loader img {
-                position: fixed; /* or absolute */
-                top: 45%;
-                left: 40%;
-            }
-
-        .completed-loader-hidden {
-            visibility: hidden;
-        }
-
-        .completed-loader-visible {
-            visibility: visible;
-        }
-
-        .completed-loader {
-            background-color: rgba(255,255,255,0.4);
-            position: absolute;
-            z-index: 100 !important;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-            .completed-loader .completed-checkbox label {
-                position: fixed;
-                top: 28px;
-                left: 45%;
-                font-size: 110% !important;
-                font-weight: bold;
-            }
-
-            .completed-loader .completed-label {
-                position: relative;
-                top: -3px;
-                color: green;
-            }
-
-        #missingIEPDates {
-            visibility: hidden;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(255, 255, 255, 0.55);
-        }
-
-        #IEPBeginDate.NoDates, #IEPMeetingDate.NoDates {
-            border: solid red 2px;
-        }
-
-        .module-completed:before {
-            content: "\e013";
-            font-family: "Glyphicons Halflings";
-            position: absolute;
-            font-size: 152pt;
-            color: rgba(0,0,0,0.15);
-            top: -20px;
-            left: 15px;
-        }
-
-        @@-moz-document url-prefix() {
-            fieldset {
-                display: table-cell;
-            }
-        }
-
-        @@-webkit-keyframes scaleUpCenter {
-            from {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-            }
-        }
-
-        @@keyframes scaleUpCenter {
-            from {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-                transform: scale(.7);
-            }
-        }
-
-        @@-webkit-keyframes scaleDownCenter {
-            from {
-            }
-
-            to {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-            }
-        }
-
-        @@keyframes scaleDownCenter {
-            from {
-            }
-
-            to {
-                opacity: 0;
-                -webkit-transform: scale(.7);
-                transform: scale(.7);
-            }
-        }
-
-        .animated {
-            -webkit-animation-duration: 1s;
-            animation-duration: 1s;
-            -webkit-animation-fill-mode: both;
-            animation-fill-mode: both;
-        }
-
-        @@-webkit-keyframes pulse {
-            from {
-                -webkit-transform: scale3d(1, 1, 1);
-                transform: scale3d(1, 1, 1);
-            }
-
-            50% {
-                -webkit-transform: scale3d(2.5, 2.5, 2.5);
-                transform: scale3d(2.5, 2.5, 2.5);
-            }
-
-            to {
-                -webkit-transform: scale3d(1, 1, 1);
-                transform: scale3d(1, 1, 1);
-            }
-        }
-
-        @@keyframes pulse {
-            from {
-                -webkit-transform: scale3d(1, 1, 1);
-                transform: scale3d(1, 1, 1);
-            }
-
-            50% {
-                -webkit-transform: scale3d(2.5, 2.5, 2.5);
-                transform: scale3d(2.5, 2.5, 2.5);
-            }
-
-            to {
-                -webkit-transform: scale3d(1, 1, 1);
-                transform: scale3d(1, 1, 1);
-            }
-        }
-
-        .pulse {
-            -webkit-animation-name: pulse;
-            animation-name: pulse;
-        }
-
-        @@media (min-width: 768px) {
-            .modal-fullscreen .modal-dialog {
-                width: 750px;
-            }
-
-            .modal-lg {
-                width: 900px;
-            }
-        }
-
-        @@media (min-width: 992px) {
-            .modal-fullscreen .modal-dialog {
-                width: 970px;
-            }
-
-            .col-md-4 {
-                width: 32% !important;
-            }
-        }
-
-        @@media (min-width: 1200px) {
-            .modal-fullscreen .modal-dialog {
-                width: 1170px;
-            }
-        }
-
-        @@media print {
-            html, body {
-                height: 99%;
-            }
-
-            .transition-page .container .row:not(.print-media-only) {
-                visibility: collapse;
-            }
-
-            .print-media-only {
-                display: block;
-                margin-bottom: 10px;
-            }
-
-            h2 {
-                display: none;
-            }
-
-            .close, .tooltip-help {
-                display: none;
-            }
-
-            .modal,
-            .modal * {
-                overflow: visible !important;
-            }
-
-            .modal {
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-            }
-
-            .modal-dialog {
-                width: 100% !important;
-                margin: 0;
-            }
-
-            .modal-backdrop {
-                background-color: white;
-                opacity: 1 !important;
-            }
-
-            .modal-header, .modal-footer {
-                border: 0;
-            }
-
-            div {
-                float: none !important;
-                position: static !important;
-                display: inline;
-                box-sizing: content-box !important;
-            }
-        }
-    </style>
+    @Styles.Render("~/Content/studentprocedures.css")
 }
 
 <div class="transition-page">
-    <div class="container" style="overflow:hidden; margin: 4em auto 5em auto">
+    <div class="container transition-container">
         <input type="hidden" name="studentIEPId" id="studentIEPId" value="@(Model.studentIEP.current.IEPid)" />
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
@@ -859,12 +29,12 @@
                 </div>
             </div>
             <div class="col-md-2 pull-right">
-                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" style="font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"></a>
+                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="user-info-block" style="padding-top: 12px; padding-bottom: 12px;">
+                <div class="user-info-block">
                     <ul class="navigation">
                         <li class="pull-right">
                             @if (ViewBag.UserRoleId != "6")
@@ -881,7 +51,7 @@
                                     hideStudentPlanBtn = "";
                                 }
 
-                                <button type="button" class="btn btn-primary btn-lg @(hideStudentPlanBtn)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" style="font-size: 16px; margin: 3px 0 3px 3px;"><i class="fa fa-print"></i> Student Plan</button>
+                            <button type="button" class="btn btn-primary btn-lg @(hideStudentPlanBtn)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning" ><i class="fa fa-print"></i> Student Plan</button>
                             }
 
                             <button type="button" class="btn btn-primary btn-lg" id="viewForms"><i class="fa fa-folder"></i> Student Forms</button>
@@ -892,7 +62,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="margin-top: 16px;">
+        <div class="row iepState">
             <div class="col-md-3">
                 @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now)
                 {
@@ -915,7 +85,7 @@
                             }
                             @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
                             { // teacher permissions removed in 10/24/2019 due to seeing teachers able to make ieps active.
-                                <li class="list-group-item" style="border-top: 1px solid #337ab7;"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
                             @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
                             {
@@ -953,7 +123,7 @@
                 </div>
                 <div class="form-group col-md-6">
                     <label for="IEPMeetingDate">Meeting Date:&nbsp;&nbsp;</label>
-                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; max-width: 135px; padding-left: 5px;" @((Model.studentIEP.iepStatusType != IEPStatus.DRAFT && Model.studentIEP.iepStatusType != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
+                    <input type="text" name="IEPMeetingDate" id="IEPMeetingDate" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" @((Model.studentIEP.iepStatusType != IEPStatus.DRAFT && Model.studentIEP.iepStatusType != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
                 </div>
             </div>
             @if (Model.studentIEP.iepStatusType == IEPStatus.DRAFT || Model.studentIEP.iepStatusType == IEPStatus.AMENDMENT)
@@ -1065,7 +235,7 @@
                 <li class="ui-state-default filter planning iep" id="ServiceWidget">
                     <div class="hero-widget well @(Model.studentIEP.isServiceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-handshake-o" aria-hidden="true" style="top: 15px;"></i>
+                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Services</label>
@@ -1078,7 +248,7 @@
                 <li class="ui-state-default filter planning iep" id="OtherWidget">
                     <div class="hero-widget well @(Model.studentIEP.isOtherCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="glyphicon glyphicon-blackboard" aria-hidden="true" style="top: 15px;"></i>
+                            <i class="glyphicon glyphicon-blackboard" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Other Considerations</label>
@@ -1122,7 +292,7 @@
                     <div class="hero-widget well @(Model.studentIEP.isBehaviorCompleted ? "module-completed" : string.Empty ) @(Model.needsBehaviorPlan && !Model.studentIEP.isBehaviorCompleted ? "needsAttention" : string.Empty)">
                         <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.needsBehaviorPlan && !Model.studentIEP.isBehaviorCompleted ? string.Empty : "hidden" )" aria-hidden="true"></i>
                         <div class="icon">
-                            <i class="glyphicon glyphicon-road" aria-hidden="true" style="top: 15px;"></i>
+                            <i class="glyphicon glyphicon-road" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Behavior Plan</label>
@@ -1135,7 +305,7 @@
                 <li class="ui-state-default filter planning @((Model.studentAge > 13 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
                     <div class="hero-widget well @(Model.studentIEP.isTransitionCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="glyphicon glyphicon-random" aria-hidden="true" style="top: 15px;"></i>
+                            <i class="glyphicon glyphicon-random" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Transition</label>
@@ -1160,85 +330,86 @@
                     </div>
                 </li>
             </ul>
-            <div id="missingIEPDates" style="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visibility: visible;" : String.Empty)"></div>
+            <div id="missingIEPDates" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visible" : String.Empty)"></div>
         </div>
+    </div>
 
-        <!-- Modal fullscreen Student Planning -->
-        <div id="modal-studentPlanning" class="modal modal-fullscreen fade-scale @((Model.hasplan) ? String.Empty : "needsPlan" )" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
-            <div class="modal-dialog" style="margin: 0 auto;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" id="dismissIEPPlan"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-                    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-                    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-key" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Planning - <span style="font-size: 16px;"> @(Model.student.FirstName) @(Model.student.LastName)</span></h4>
-                </div>
-                <div class="modal-body">
+    <!-- Modal fullscreen Student Planning -->
+    <div id="modal-studentPlanning" class="modal modal-fullscreen fade-scale @((Model.hasplan) ? String.Empty : "needsPlan" )" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
+        <div class="modal-dialog" style="margin: 0 auto;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" id="dismissIEPPlan"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+                <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+                <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-key" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Planning - <span style="font-size: 16px;"> @(Model.student.FirstName) @(Model.student.LastName)</span></h4>
+            </div>
+            <div class="modal-body">
 
-                    @using (Html.BeginForm("Home", "StudentPlanning", new { }, FormMethod.Post, new { id = "thePlan" }))
-                    {
-                        @Html.AntiForgeryToken()
-                        @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
-                        @Html.Hidden("iepId", Model.studentIEP.current.IEPid)
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>
+                @using (Html.BeginForm("Home", "StudentPlanning", new { }, FormMethod.Post, new { id = "thePlan" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
+                    @Html.Hidden("iepId", Model.studentIEP.current.IEPid)
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="glyphicon glyphicon-heart"></i> Health</h5>
 
-                                <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
-                                <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                    <input type="checkbox" name="HealthNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchHealthConcerns" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
-                                    <label class="truefalseswitch-label" for="truefalseSwitchHealthConcerns">
-                                        <span class="truefalseswitch-inner"></span>
-                                        <span class="truefalseswitch-switch"></span>
-                                    </label>
-                                </div>
-                                <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="HealthProgressTowardGenEd" @(Model.studentPlan.HealthProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Supports</label>
-                                </div>
-                                <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
-                                    <label><input type="checkbox" name="HealthDiagnosis" @(Model.studentPlan.HealthDiagnosis ? "checked" : String.Empty ) />Concerns that Impact Ability to Learn or Access to General Curriculum</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date:</h6>
-                                    <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="0" @(Model.studentPlan.HealthHearingResult == 0 ? "checked" : String.Empty)>Fail</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthHearingResult" value="-1" @(Model.studentPlan.HealthHearingResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
-                                </div>
-                            </div>
-                            <div class="col-md-3 ">
-                                <div>
-                                    <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date:</h6>
-                                    <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="0" @(Model.studentPlan.HealthVisionResult == 0 ? "checked" : String.Empty)>Fail</label>
-                                </div>
-                                <div class="radio">
-                                    <label><input type="radio" name="HealthVisionResult" value="-1" @(Model.studentPlan.HealthVisionResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a Health Care Plan?</label>&nbsp;&nbsp;
-                            <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
-                                <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="falsetrueswitch-checkbox" @(Model.studentPlan.HealthCarePlan ? "checked" : String.Empty ) />
-                                <label class="falsetrueswitch-label" for="HealthCarePlan">
-                                    <span class="falsetrueswitch-inner"></span>
-                                    <span class="falsetrueswitch-switch"></span>
+                            <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
+                            <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                                <input type="checkbox" name="HealthNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchHealthConcerns" @(Model.studentPlan.HealthNoConcern ? "checked" : String.Empty )>
+                                <label class="truefalseswitch-label" for="truefalseSwitchHealthConcerns">
+                                    <span class="truefalseswitch-inner"></span>
+                                    <span class="truefalseswitch-switch"></span>
                                 </label>
                             </div>
+                            <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="HealthProgressTowardGenEd" @(Model.studentPlan.HealthProgressTowardGenEd ? "checked" : String.Empty ) />Progressing with General Education Supports</label>
+                            </div>
+                            <div class="checkbox isHealthConcern @(Model.studentPlan.HealthNoConcern ? "noConcerns" : String.Empty )">
+                                <label><input type="checkbox" name="HealthDiagnosis" @(Model.studentPlan.HealthDiagnosis ? "checked" : String.Empty ) />Concerns that Impact Ability to Learn or Access to General Curriculum</label>
+                            </div>
                         </div>
-                        <hr />
+                        <div class="col-md-3 ">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Hearing Screening Date:</h6>
+                                <input type="text" name="HealthHearingDate" id="HealthHearingDate" value="@(Model.studentPlan.HealthHearingDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="1" @(Model.studentPlan.HealthHearingResult == 1 ? "checked" : String.Empty)>Pass</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="0" @(Model.studentPlan.HealthHearingResult == 0 ? "checked" : String.Empty)>Fail</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthHearingResult" value="-1" @(Model.studentPlan.HealthHearingResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
+                            </div>
+                        </div>
+                        <div class="col-md-3 ">
+                            <div>
+                                <h6 style="font-weight:bold; font-size: 18px;">Vision Screening Date:</h6>
+                                <input type="text" name="HealthVisionDate" id="HealthVisionDate" value="@(Model.studentPlan.HealthVisionDate.ToString("MM/dd/yyyy"))" placeholder="MM/DD/YYYY" min="2015-01-01" max="2024-01-01" />
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="1" @(Model.studentPlan.HealthVisionResult == 1 ? "checked" : String.Empty)>Pass</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="0" @(Model.studentPlan.HealthVisionResult == 0 ? "checked" : String.Empty)>Fail</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="HealthVisionResult" value="-1" @(Model.studentPlan.HealthVisionResult == -1 ? "checked" : String.Empty)>Screening Attempted with Inconclusive Results</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a Health Care Plan?</label>&nbsp;&nbsp;
+                        <div class="falsetrueswitch" style="display: inline-block; vertical-align: middle;">
+                            <input type="checkbox" name="HealthCarePlan" id="HealthCarePlan" class="falsetrueswitch-checkbox" @(Model.studentPlan.HealthCarePlan ? "checked" : String.Empty ) />
+                            <label class="falsetrueswitch-label" for="HealthCarePlan">
+                                <span class="falsetrueswitch-inner"></span>
+                                <span class="falsetrueswitch-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <hr />
 
                         <div class="row">
                             <div class="col-md-4">
@@ -1475,23 +646,22 @@
                         <div class="modal-footer">
                             <button id="saveplan" type="button" class="btn btn-default btn-lg">Save Plan</button>
                         </div>
-                    }
-                </div>
+                }
             </div>
         </div>
-        <!-- End fullscreen Module studentPlanning-->
-        <!-- Modal fullscreen IEP Module Section -->
-        <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
-            <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
-        </div>
-        <!-- End fullscreen IEP Module Section-->
-        <div class="ajax-loader" style="visibility: hidden;">
-            <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-            <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
-            <strong class="failure hidden"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
-        </div>
-        <div class="needDates-loader" style="visibility: hidden;"></div>
     </div>
+    <!-- End fullscreen Module studentPlanning-->
+    <!-- Modal fullscreen IEP Module Section -->
+    <div id="moduleSection" class="modal modal-fullscreen fade-scale" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false" style="background-color: #fff;">
+        <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
+    </div>
+    <!-- End fullscreen IEP Module Section-->
+    <div class="ajax-loader hidden">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+        <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
+        <strong class="failure hidden"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
+    </div>
+    <div class="needDates-loader hidden"></div>
 </div>
 
 <!-- loading the file even though it's an ajax call -->
