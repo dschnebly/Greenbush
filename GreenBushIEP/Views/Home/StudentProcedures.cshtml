@@ -51,12 +51,12 @@
                                     hideStudentPlanBtn = "";
                                 }
 
-                                <button type="button" class="btn btn-primary btn-lg @(hideStudentPlanBtn)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning"><i class="fa fa-print"></i> Student Plan</button>
+                                <button type="button" class="btn btn-primary btn-lg pull-right @(hideStudentPlanBtn)" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning"><i class="fa fa-print"></i> Student Plan</button>
                             }
 
-                            <button type="button" class="btn btn-primary btn-lg" id="viewForms"><i class="fa fa-folder"></i> Student Forms</button>
-                            <button type="button" class="btn btn-primary btn-lg" id="printStudentInfo"><i class="fa fa-print"></i> Print Student Info</button>
-                            <button type="button" class="btn btn-primary btn-lg" id="printIEP"><i class="fa fa-print"></i> Print This IEP</button>
+                            <button type="button" class="btn btn-primary btn-lg pull-right" id="viewForms"><i class="fa fa-folder"></i> Student Forms</button>
+                            <button type="button" class="btn btn-primary btn-lg pull-right" id="printStudentInfo"><i class="fa fa-print"></i> Print Student Info</button>
+                            <button type="button" class="btn btn-primary btn-lg pull-right" id="printIEP"><i class="fa fa-print"></i> Print This IEP</button>
                         </li>
                     </ul>
                 </div>
@@ -661,6 +661,9 @@
     </div>
     <div class="needDates-loader hidden"></div>
 </div>
+
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/studentprocedures.js"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")

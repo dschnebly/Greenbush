@@ -10,7 +10,6 @@
     @Styles.Render("~/Content/misportal.css")
     @Styles.Render("~/Content/chosen.css")
 }
-
 <div class="container">
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
@@ -134,6 +133,9 @@
                 </div>
             </div>
         </div>
+        <div class="ajax-loader">
+            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+        </div>
         <div>
             @if (Model.members.Count > 0)
             {
@@ -230,10 +232,6 @@
         </div>
     </div>
 </div>
-<div class="ajax-loader visible">
-    <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-</div>
-
 <!-- Modal -->
 <div class="modal-dialog">
     <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog">

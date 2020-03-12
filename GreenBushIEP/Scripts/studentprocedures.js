@@ -5,7 +5,6 @@
         $("#modal-studentPlanning").modal('show');
     }
 
-
     /* tooltips */
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'

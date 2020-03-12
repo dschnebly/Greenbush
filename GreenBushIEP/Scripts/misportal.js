@@ -76,7 +76,13 @@
                     async: false,
                     success: function (data) {
                         if (data.Result === "success") {
-                            window.location.href = window.location.href;
+                            var container = document.querySelector(".list-group-root");
+                            var matchFound = container.querySelectorAll("div[data-id='" + userId + "']");
+                            if (matchFound[0] != null) {
+                                var button = matchFound[0].querySelector("button");
+                                $(button).replaceWith("<a href='/Home/StudentProcedures?stid=" + userId + "' title='Launch the IEP for this student' role='button' data-ftrans='slide' class='btn btn-info btn-action pull-right startIEP'><span class='glyphicon glyphicon-log-out'></span></a>");
+                            }
+                            //window.location.href = window.location.href;
                         } else {
                             alert(data.Message);
                         }
@@ -536,6 +542,10 @@
         };
     new ft(params);
 });
+
+window.addEventListener('load', function () {
+    $(".ajax-loader").hide();
+})
 
 function filterList(members) {
     var container = document.querySelector(".list-group-root");
