@@ -2,6 +2,10 @@
     border-top: 1px solid #ddd;
 }
 
+h3 {
+    margin-bottom: 0;
+}
+
 .transition-page {
     position: relative;
 }
@@ -24,13 +28,62 @@
     border-top: 1px solid #428BCA;
 }
 
-.navigation li {
+.user-info-block {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.user-details .user-info-block {
+    width: 100%;
+    position: absolute;
+    top: 55px;
+    background: rgb(255, 255, 255);
+    z-index: 0;
+    padding-top: 35px;
+}
+
+.user-info-block .user-heading {
+    width: 100%;
+    text-align: center;
+    margin: 10px 0 0;
+}
+
+.user-info-block .navigation {
     float: left;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid #428BCA;
+    border-top: 1px solid #428BCA;
+}
+
+.navigation li {
     margin: 0;
     padding: 0;
 }
 
-.tooltip-help {
+    .navigation li a {
+        float: left;
+        font-size: 21px;
+        padding: 10px 10px 5px 10px;
+    }
+
+.user-info-block .user-body {
+    float: left;
+    padding: 5%;
+    width: inherit;
+}
+
+.StudentIEPInfoBar {
+    margin-top: 15px;
+}
+
+.iepState {
+    margin-top: 15px;
+}
+
+.tooltip-help, .print-module {
     margin-right: 10px;
     -webkit-appearance: none;
     padding: 0;
@@ -48,30 +101,88 @@
     margin-top: 3px;
 }
 
-#modal-studentPlanning .modal-dialog {
-    margin: 0 auto;
-}
-
-#dismissIEPPlan .glyphicon-remove-circle {
-    font-size: 30px;
-}
-
 .modal-header .close {
     margin-top: 4px;
 }
 
-.container {
+.yesConsentOverlay {
+    display: none;
+}
+
+.transition-container {
     overflow: hidden;
     margin: 4em auto 5em auto;
 }
+
+#IEPBeginDate, #IEPMeetingDate {
+    height: 35px;
+    max-width: 135px;
+    padding-left: 5px;
+}
+
+#backtoportal {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.noConsentOverlay {
+    position: absolute;
+    opacity: 0.6;
+    background: #fff;
+    height: 95%;
+    width: 100%;
+    z-index: 10;
+}
+
+    .noConsentOverlay .container div label {
+        font-size: 30px;
+        margin-top: 15%;
+        color: #000;
+    }
+
+        .noConsentOverlay .container div label input[type=checkbox] {
+            /* Double-sized Checkboxes */
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FF */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+            margin: 0;
+            position: relative;
+            bottom: 2px;
+        }
+
+.btn-group-primary .dropdown-menu {
+    background-color: #214680 !important;
+}
+
+    .btn-group-primary .dropdown-menu li > a {
+        color: #fff;
+        font-size: 12px;
+    }
+
+        .btn-group-primary .dropdown-menu li > a:hover,
+        .btn-group-primary .dropdown-menu li > a:focus {
+            background-color: #214680 !important;
+            color: #ffffff;
+            text-decoration: underline;
+        }
 
 .btn-bordered-warning:focus,
 .btn-bordered-warning:hover {
     color: #337ab7;
 }
 
+#student-goals {
+    margin: 40px 0;
+}
+
 .widgetDisabled {
     opacity: 0.65;
+}
+
+.needsAttention {
+    border-color: #a00000 !important;
+    border-width: 1px;
 }
 
 .needsAttentionIcon {
@@ -79,6 +190,29 @@
     font-size: 25px;
     top: 2px;
     margin-top: -20px;
+}
+
+dt {
+    padding: 8px 0 0 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+dd {
+    display: inline;
+}
+
+.alert-danger-iep {
+    font-size: 8px;
+    padding: 3px 4px;
+    vertical-align: top;
+    color: #fff;
+    background-color: #b94a48;
+    border-color: #fff;
+}
+
+#parentConsent {
+    font-size: 35px;
 }
 
 .iep, .iep > .well {
@@ -98,10 +232,59 @@
         background-color: transparent;
     }
 
-.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"] {
+.radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
     margin-bottom: 5px;
     visibility: visible;
 }
+
+.funkyradio div {
+    clear: both;
+    overflow: hidden;
+}
+
+.funkyradio label {
+    width: 100%;
+    border-radius: 3px;
+    border: 1px solid #D1D3D4;
+    font-weight: normal;
+    display: inline-block !important;
+    padding-left: 50px !important;
+    text-indent: 0 !important;
+    line-height: 110% !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.funkyradio input[type="radio"]:empty,
+.funkyradio input[type="checkbox"]:empty {
+    display: none;
+}
+
+    .funkyradio input[type="radio"]:empty ~ label,
+    .funkyradio input[type="checkbox"]:empty ~ label {
+        position: relative;
+        line-height: 2.5em;
+        text-indent: 3.25em;
+        /*margin-top: 2em;*/
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+        .funkyradio input[type="radio"]:empty ~ label:before,
+        .funkyradio input[type="checkbox"]:empty ~ label:before {
+            position: absolute;
+            display: block;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            content: '';
+            width: 2.5em;
+            background: #D1D3D4;
+            border-radius: 3px 0 0 3px;
+        }
 
 .funkyradio input[type="radio"]:hover:not(:checked) ~ label,
 .funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
@@ -116,6 +299,144 @@
         padding-top: 8px;
     }
 
+.funkyradio input[type="radio"]:checked ~ label,
+.funkyradio input[type="checkbox"]:checked ~ label {
+    color: #777;
+}
+
+    .funkyradio input[type="radio"]:checked ~ label:before,
+    .funkyradio input[type="checkbox"]:checked ~ label:before {
+        content: '\2714';
+        text-indent: .9em;
+        color: #333;
+        background-color: #ccc;
+        line-height: 2;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+.funkyradio input[type="radio"]:focus ~ label:before,
+.funkyradio input[type="checkbox"]:focus ~ label:before {
+    box-shadow: 0 0 0 3px #999;
+}
+
+.funkyradio-default input[type="radio"]:checked ~ label:before,
+.funkyradio-default input[type="checkbox"]:checked ~ label:before {
+    color: #333;
+    background-color: #ccc;
+}
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before,
+.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #337ab7;
+}
+
+.funkyradio-success input[type="radio"]:checked ~ label:before,
+.funkyradio-success input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #5cb85c;
+}
+
+.funkyradio-danger input[type="radio"]:checked ~ label:before,
+.funkyradio-danger input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #d9534f;
+}
+
+.funkyradio-warning input[type="radio"]:checked ~ label:before,
+.funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #f0ad4e;
+}
+
+.funkyradio-info input[type="radio"]:checked ~ label:before,
+.funkyradio-info input[type="checkbox"]:checked ~ label:before {
+    color: #fff;
+    background-color: #5bc0de;
+}
+
+
+#moduleSection .checkbox label {
+    font-size: 16px;
+    padding-bottom: 10px;
+}
+
+    #moduleSection .checkbox label:after,
+    #moduleSection .radio label:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+#moduleSection .form-check .checkbox {
+    line-height: 25px;
+}
+
+#moduleSection .checkbox .cr,
+#moduleSection .radio .cr {
+    position: relative;
+    display: inline-block;
+    border: 1px solid #a9a9a9;
+    border-radius: .25em;
+    width: 1.3em;
+    height: 1.3em;
+    /*float: left;*/
+    margin-right: .5em;
+}
+
+#moduleSection .radio .cr {
+    border-radius: 50%;
+}
+
+    #moduleSection .checkbox .cr .cr-icon,
+    #moduleSection .radio .cr .cr-icon {
+        position: absolute;
+        font-size: .8em;
+        line-height: 0;
+        top: 50%;
+        left: 20%;
+    }
+
+    #moduleSection .radio .cr .cr-icon {
+        margin-left: 0.04em;
+    }
+
+#moduleSection .checkbox label input[type="checkbox"],
+#moduleSection .radio label input[type="radio"] {
+    display: none;
+}
+
+    #moduleSection .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+    #moduleSection .radio label input[type="radio"] + .cr > .cr-icon {
+        transform: scale(3) rotateZ(-20deg);
+        opacity: 0;
+        transition: all .3s ease-in;
+    }
+
+    #moduleSection .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+    #moduleSection .radio label input[type="radio"]:checked + .cr > .cr-icon {
+        transform: scale(1) rotateZ(0deg);
+        opacity: 1;
+    }
+
+    #moduleSection .checkbox label input[type="checkbox"]:disabled + .cr,
+    #moduleSection .radio label input[type="radio"]:disabled + .cr {
+        opacity: .5;
+    }
+
+
+
+.transition-page-scaleUpCenter {
+    -webkit-animation: scaleUpCenter .4s ease-out both;
+    animation: scaleUpCenter .4s ease-out both;
+}
+
+.transition-page-scaleDownCenter {
+    -webkit-animation: scaleDownCenter .4s ease-in both;
+    animation: scaleDownCenter .4s ease-in both;
+}
+
 .fade-scale {
     -webkit-transform: scale(0.7);
     -moz-transform: scale(0.7);
@@ -127,20 +448,84 @@
     transition: all 0.3s;
 }
 
+    .fade-scale.in {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+
+input[type=date] {
+    margin-right: 20px;
+}
+
+.date-error {
+    height: 35px;
+    border-color: red;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+.formbtn {
+    min-width: 85px;
+}
+
+.btn-secondary {
+    background-color: #ccc;
+    color: #4b4f56;
+}
+
+    .btn-secondary i {
+        color: #4b4f56;
+    }
+
+    .btn-secondary:hover {
+        color: #fff;
+    }
+
+        .btn-secondary:hover i {
+            color: #fff;
+        }
+
 
 /**** Vertically Centers the Modal Popup ****/
+body.modal-open .modal {
+    display: flex !important;
+    height: 100%;
+}
+
+    body.modal-open .modal .modal-dialog {
+        margin: auto;
+    }
 /**** Ends Modal Popup Vertical Fix ****/
 
 .modal-fullscreen {
     background: transparent;
 }
 
-    .modal-fullscreen .modal-dialog {
-        margin: 0;
-        margin-right: auto;
-        margin-left: auto;
-        width: 100%;
+    .modal-fullscreen .modal-content {
+        background: transparent;
+        border: 0;
+        -webkit-box-shadow: none;
+        box-shadow: none;
     }
+
+.modal-backdrop.modal-backdrop-fullscreen {
+    background: #ffffff;
+}
+
+    .modal-backdrop.modal-backdrop-fullscreen.in {
+        opacity: .97;
+        filter: alpha(opacity=97);
+    }
+
+.modal-fullscreen .modal-dialog {
+    margin: 0;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+}
 
 #sortable {
     list-style-type: none;
@@ -168,6 +553,10 @@
         text-align: center;
     }
 
+        .hero-widget .icon i {
+            top: 15px;
+        }
+
     .hero-widget label {
         font-size: 18px;
     }
@@ -179,6 +568,14 @@
 .well {
     border: 0;
     bottom: 0;
+}
+
+.modal-backdrop {
+    background-color: #FFFFFF;
+}
+
+.print-media-only {
+    display: none;
 }
 
 .isHealthConcern.noConcerns {
@@ -201,6 +598,22 @@
     display: none;
 }
 
+.isAcademicPerformanceConcern.noConcerns {
+    display: none;
+}
+
+.isReadingConcern.noConcerns {
+    display: none;
+}
+
+.isMathConcern.noConcerns {
+    display: none;
+}
+
+.isWrittenConcern.noConcerns {
+    display: none;
+}
+
 .btn-bordered-warning {
     color: #337ab7;
     background: #FFFFFF;
@@ -212,6 +625,11 @@
         color: #337ab7;
         cursor: default;
     }
+
+#studentPlanBtn, #printStudentInfo, #printIEP, #viewForms {
+    font-size: 16px;
+    margin: 3px 0 3px 3px;
+}
 
 .ajax-loader {
     visibility: hidden;
@@ -232,12 +650,68 @@
         left: 40%;
     }
 
+.completed-loader-hidden {
+    visibility: hidden;
+}
+
+.completed-loader-visible {
+    visibility: visible;
+}
+
+.completed-loader {
+    background-color: rgba(255,255,255,0.4);
+    position: absolute;
+    z-index: 100 !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+    .completed-loader .completed-checkbox label {
+        position: fixed;
+        top: 28px;
+        left: 45%;
+        font-size: 110% !important;
+        font-weight: bold;
+    }
+
+    .completed-loader .completed-label {
+        position: relative;
+        top: -3px;
+        color: green;
+    }
+
 #missingIEPDates {
     visibility: hidden;
     position: absolute;
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.55);
+}
+
+#modal-studentPlanning {
+    background-color: #fff;
+}
+
+    #modal-studentPlanning .modal-dialog {
+        margin: 0 auto;
+    }
+
+    #modal-studentPlanning .modal-title {
+        font-size: 30px;
+    }
+
+        #modal-studentPlanning .modal-title i {
+            font-size: smaller;
+        }
+
+#dismissIEPPlan .glyphicon-remove-circle {
+    font-size: 30px;
+}
+
+#IEPBeginDate.NoDates, #IEPMeetingDate.NoDates {
+    border: solid red 2px;
 }
 
 .module-completed:before {
@@ -250,44 +724,95 @@
     left: 15px;
 }
 
-.glyphicon-arrow-left {
-    font-size: 20px;
-    font-weight: bold;
+@-webkit-keyframes scaleUpCenter {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+    }
 }
 
-.edit-student h3 {
-    margin-bottom: 0;
+@keyframes scaleUpCenter {
+    from {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+        transform: scale(.7);
+    }
 }
 
-.user-info-block {
-    padding-top: 12px;
-    padding-bottom: 12px;
+@-webkit-keyframes scaleDownCenter {
+    from {
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+    }
 }
 
-#studentPlanBtn {
-    font-size: 16px;
-    margin: 3px 0 3px 3px;
+@keyframes scaleDownCenter {
+    from {
+    }
+
+    to {
+        opacity: 0;
+        -webkit-transform: scale(.7);
+        transform: scale(.7);
+    }
 }
 
-#printStudentInfo {
-    font-size: 16px;
-    margin: 3px 0 3px 3px;
+.animated {
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
 }
 
-#printIEP {
-    font-size: 16px;
-    margin: 3px 0 3px 3px;
+@-webkit-keyframes pulse {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(2.5, 2.5, 2.5);
+        transform: scale3d(2.5, 2.5, 2.5);
+    }
+
+    to {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
 }
 
-#IEPBeginDate, #IEPMeetingDate {
-    height: 35px;
-    max-width: 135px;
-    padding-left: 5px;
+@keyframes pulse {
+    from {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+
+    50% {
+        -webkit-transform: scale3d(2.5, 2.5, 2.5);
+        transform: scale3d(2.5, 2.5, 2.5);
+    }
+
+    to {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.pulse {
+    -webkit-animation-name: pulse;
+    animation-name: pulse;
 }
 
 @media (min-width: 768px) {
     .modal-fullscreen .modal-dialog {
         width: 750px;
+    }
+
+    .modal-lg {
+        width: 900px;
     }
 }
 
@@ -316,6 +841,15 @@
         visibility: collapse;
     }
 
+    .print-media-only {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    h2 {
+        display: none;
+    }
+
     .close, .tooltip-help {
         display: none;
     }
@@ -334,6 +868,11 @@
     .modal-dialog {
         width: 100% !important;
         margin: 0;
+    }
+
+    .modal-backdrop {
+        background-color: white;
+        opacity: 1 !important;
     }
 
     .modal-header, .modal-footer {

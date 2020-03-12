@@ -74,7 +74,6 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = owner)]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult OwnerPortal()
         {
             var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
@@ -101,7 +100,6 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = mis)]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult MISPortal()
         {
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -125,7 +123,6 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = admin)]
-        [OutputCache(Duration = int.MaxValue, VaryByParam = "id")]
         public ActionResult AdminPortal(int? userId)
         {
 
