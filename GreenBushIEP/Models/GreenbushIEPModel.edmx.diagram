@@ -91,6 +91,24 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRelationships_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormConferenceSummary" Width="1.5" PointX="30.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment_" Width="1.5" PointX="0.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_" Width="1.5" PointX="30.75" PointY="4.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_" Width="1.5" PointX="7.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration" Width="1.5" PointX="9.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation" Width="1.5" PointX="29.75" PointY="26.125" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers" Width="1.5" PointX="32" PointY="27.125" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormNoticeOfMeeting" Width="1.5" PointX="11.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormParentConsent" Width="1.5" PointX="13.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPhysicianScript" Width="1.5" PointX="25.75" PointY="30.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_Eval" Width="1.5" PointX="31.75" PointY="8.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_Ident" Width="1.5" PointX="21.75" PointY="31.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokeAll" Width="1.5" PointX="31.75" PointY="19.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokePart" Width="1.5" PointX="31.75" PointY="31.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormPublicNotice" Width="1.5" PointX="32.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentAll" Width="1.5" PointX="15.75" PointY="32.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentPart" Width="1.5" PointX="17.75" PointY="32.75" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

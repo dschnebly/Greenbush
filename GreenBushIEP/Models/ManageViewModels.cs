@@ -437,8 +437,9 @@ namespace GreenBushIEP.Models
         public StudentLegalView fileModel { get; set; }
         public tblFormTeamEval teamEval { get; set; }
         public tblFormSummaryPerformance summaryPerformance { get; set; }
+		public tblFormConferenceSummary conferenceSummary { get; set; }
 
-        public IEPFormFileViewModel()
+		public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;

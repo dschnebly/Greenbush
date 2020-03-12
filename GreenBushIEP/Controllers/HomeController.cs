@@ -2305,9 +2305,13 @@ namespace GreenbushIep.Controllers
             {
                 viewModel.summaryPerformance = db.tblFormSummaryPerformances.Where(o => o.StudentId == id).FirstOrDefault();
             }
+			else if (fileName == "ConferenceSummary")
+			{
+				viewModel.conferenceSummary = db.tblFormConferenceSummaries.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
-            viewModel.fileModel = fileViewModel;
+			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -4064,150 +4068,174 @@ namespace GreenbushIep.Controllers
             var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
             var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
 
-            if (formName == "Team Evaluation Report")
-            {
-                var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
+			if (formName == "Team Evaluation Report")
+			{
+				var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
 
-                teamEval.StudentId = sid;
-                teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
-                teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
-                teamEval.Hearing = GetInputValue("txtHearing", spans);
-                teamEval.Vision = GetInputValue("txtVision", spans);
-                teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
-                teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
-                teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
-                teamEval.TestData = GetInputValue("txtTestData", spans);
-                teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
-                teamEval.Peformance = GetInputValue("txtPeformance", spans);
-                teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
-                teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
-                teamEval.Regulations = GetInputValue("txtRegulations", spans);
-                teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
-                teamEval.Strengths = GetInputValue("txtStrengths", spans);
-                teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
-                teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
-                teamEval.Tried = GetInputValue("txtTried", spans);
-                teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
-                teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
-                teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
-                teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
-                teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
-                teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
-                teamEval.ListSources = GetInputValue("txtListSources", spans);
-
-
-                teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
-                teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
-                teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
-
-                if (teamEval.FormTeamEvalId == 0)
-                {
-                    teamEval.CreatedBy = currentUser.UserID;
-                    teamEval.Create_Date = DateTime.Now;
-                    teamEval.ModifiedBy = currentUser.UserID;
-                    teamEval.Update_Date = DateTime.Now;
-                    db.tblFormTeamEvals.Add(teamEval);
-                }
-                else
-                {
-                    teamEval.ModifiedBy = currentUser.UserID;
-                    teamEval.Update_Date = DateTime.Now;
-                }
-
-                db.SaveChanges();
-            }
-            else if (formName == "Summary Of Performance")
-            {
-                var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
-
-                summaryPerf.StudentId = sid;
-                summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
-                summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
-                summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
-                summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
-                summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
-                summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
-                summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
-                summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
-                summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
-                summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
-                summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
-                summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
-                summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
-                summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
-                summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
-                summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
-                summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
-                summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
-                summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
-                summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
-                summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
-                summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
-                summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
-                summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
-                summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
-                summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
-                summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
-                summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
-                summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
-                summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
-                summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
-                summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
-                summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
-                summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
-                summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
-                summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
-                summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
-                summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
-                summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
-                summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
-                summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
-                summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
-                summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
-                summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
-                summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
-                summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
-                summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
-                summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
-                summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
-                summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
-                summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
-                summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
-                summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
-                summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
-                summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
-                summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
-                summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
-                summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
+				teamEval.StudentId = sid;
+				teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
+				teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
+				teamEval.Hearing = GetInputValue("txtHearing", spans);
+				teamEval.Vision = GetInputValue("txtVision", spans);
+				teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
+				teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
+				teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
+				teamEval.TestData = GetInputValue("txtTestData", spans);
+				teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
+				teamEval.Peformance = GetInputValue("txtPeformance", spans);
+				teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
+				teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
+				teamEval.Regulations = GetInputValue("txtRegulations", spans);
+				teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
+				teamEval.Strengths = GetInputValue("txtStrengths", spans);
+				teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
+				teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
+				teamEval.Tried = GetInputValue("txtTried", spans);
+				teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
+				teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
+				teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
+				teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
+				teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
+				teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
+				teamEval.ListSources = GetInputValue("txtListSources", spans);
 
 
-                if (summaryPerf.FormSummaryPerformanceId == 0)
-                {
-                    summaryPerf.CreatedBy = currentUser.UserID;
-                    summaryPerf.Create_Date = DateTime.Now;
-                    summaryPerf.ModifiedBy = currentUser.UserID;
-                    summaryPerf.Update_Date = DateTime.Now;
-                    db.tblFormSummaryPerformances.Add(summaryPerf);
-                }
-                else
-                {
-                    summaryPerf.ModifiedBy = currentUser.UserID;
-                    summaryPerf.Update_Date = DateTime.Now;
-                }
+				teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
+				teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
+				teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
 
-                db.SaveChanges();
-            }
+				if (teamEval.FormTeamEvalId == 0)
+				{
+					teamEval.CreatedBy = currentUser.UserID;
+					teamEval.Create_Date = DateTime.Now;
+					teamEval.ModifiedBy = currentUser.UserID;
+					teamEval.Update_Date = DateTime.Now;
+					db.tblFormTeamEvals.Add(teamEval);
+				}
+				else
+				{
+					teamEval.ModifiedBy = currentUser.UserID;
+					teamEval.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+			else if (formName == "Summary Of Performance")
+			{
+				var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
+
+				summaryPerf.StudentId = sid;
+				summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
+				summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
+				summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
+				summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
+				summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
+				summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
+				summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
+				summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
+				summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
+				summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
+				summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
+				summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
+				summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
+				summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
+				summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
+				summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
+				summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
+				summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
+				summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
+				summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
+				summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
+				summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
+				summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
+				summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
+				summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
+				summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
+				summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
+				summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
+				summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
+				summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
+				summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
+				summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
+				summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
+				summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
+				summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
+				summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
+				summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
+				summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
+				summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
+				summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
+				summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
+				summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
+				summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
+				summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
+				summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
+				summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
+				summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
+				summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
+				summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
+				summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
+				summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
+				summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
+				summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
+				summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
+				summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
+				summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
+				summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
+				summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
 
 
-        }
+				if (summaryPerf.FormSummaryPerformanceId == 0)
+				{
+					summaryPerf.CreatedBy = currentUser.UserID;
+					summaryPerf.Create_Date = DateTime.Now;
+					summaryPerf.ModifiedBy = currentUser.UserID;
+					summaryPerf.Update_Date = DateTime.Now;
+					db.tblFormSummaryPerformances.Add(summaryPerf);
+				}
+				else
+				{
+					summaryPerf.ModifiedBy = currentUser.UserID;
+					summaryPerf.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+			else if (formName == "Conference Summary")
+			{
+				var conf = db.tblFormConferenceSummaries.Any(o => o.StudentId == sid) ? db.tblFormConferenceSummaries.FirstOrDefault(o => o.StudentId == sid) : new tblFormConferenceSummary();
+
+				conf.StudentId = sid;
+				conf.BuildingAdministrator = GetInputValue("txtBuildingAdministrator", spans);
+				conf.RequestedBy = GetInputValue("txtRequestedBy", spans);
+				conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
+				conf.Conclusions = GetInputValue("txtConclusions", spans);
+				if (conf.FormConferenceSummaryId == 0)
+				{
+					conf.CreatedBy = currentUser.UserID;
+					conf.Create_Date = DateTime.Now;
+					conf.ModifiedBy = currentUser.UserID;
+					conf.Update_Date = DateTime.Now;
+					db.tblFormConferenceSummaries.Add(conf);
+				}
+				else
+				{
+					conf.ModifiedBy = currentUser.UserID;
+					conf.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+		}
 
         private string GetInputValue(string inputName, List<HtmlNode> inputs)
         {
             var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
             if (input != null)
-                return input.InnerHtml;
+                return input.InnerHtml != null ? input.InnerHtml.Replace("&nbsp;", "") : "";
             else
-                return "";
+
+				return "";
         }
 
         private DateTime? GetInputDateValue(string inputName, List<HtmlNode> inputs)
