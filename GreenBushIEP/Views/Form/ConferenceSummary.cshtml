@@ -1,5 +1,6 @@
 ﻿
 @{
+	var formModel = ViewData["conferenceSummary"] != null ? ViewData["conferenceSummary"] as GreenBushIEP.Models.tblFormConferenceSummary : new GreenBushIEP.Models.tblFormConferenceSummary();
 
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
@@ -26,14 +27,14 @@
 	}
 
 }
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
 	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;margin-bottom:35px' class="voffset2">
 		<p class=MsoNormal align=center style='text-align:center'>
 			<span style='font-size: 16pt;'><b>CONFERENCE SUMMARY</b></span>
 		</p>
 	</div>
 	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">Student's Name: </span> <u>@(studentFormattedName.Length > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+		<span style="font-weight:bold">Student's Name: </span> <u>@(studentFormattedName.Length > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>
 		<span style="font-weight:bold">DOB:</span> <u>@(dobStr.Length > 25 ? dobStr :String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</u>
 	</p>
 	<p class="voffset3" style="font-weight:normal">
@@ -55,16 +56,16 @@
 	<p class="voffset3" style="font-weight:normal">
 		<span style="font-weight:bold">Teacher:</span>
 		<u>@(teacherFormattedName.Length > 40 ? teacherFormattedName : String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
-		<u><textarea onfocus="clearContents(this);" cols="25" rows="1" data-val="25">@(districtContactName.Length > 15 ? districtContactName : String.Format(districtContactName).PadRight(15 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none" class="input-value"></span></u>
+		<u><textarea onfocus="clearContents(this);" cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
 	</p>
 	<p class="voffset3" style="font-weight:normal">
 		<b><span>Requested by</span></b>
-		<u><textarea cols="40" rows="1" data-val="25"></textarea><span style="display:none" class="input-value"></span></u>
+		<u><textarea cols="40" rows="1"  maxlength="200">@(formModel.RequestedBy)</textarea><span id="txtRequestedBy" style="display:none" class="input-value">@(formModel.RequestedBy)</span></u>
 	</p>		
-	<p style="margin-top:25px"><span><b>Reason(s) for Conference:</b></span><br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value"></span></p>
-	<br/><br/><p style="padding-top:15px"><span><b>Conclusions:</b></span><br/><textarea class="form-control" cols="100" rows="4"></textarea><span style='display:none' class="input-value"></span></p>
+	<p style="margin-top:25px"><span><b>Reason(s) for Conference:</b></span><br/><textarea class="form-control" cols="100" rows="4"  maxlength="2000">@(formModel.ReasonForConfrence)</textarea><span id="txtReasonForConfrence" style='display:none' class="input-value">@(formModel.ReasonForConfrence)</span></p>
+	<br/><br/><p style="padding-top:15px"><span><b>Conclusions:</b></span><br/><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Conclusions)</textarea><span id="txtConclusions" style='display:none' class="input-value">@(formModel.Conclusions)</span></p>
 	<p style="padding-top:15px"><span><b>Signatures of Participants in Conference:</b></span></p>
-	<table border=0 cellspacing=10 cellpadding=10 style='width:350px;border-collapse:collapse;'>
+	<table border=0 cellspacing=10 cellpadding=10 style='width:350px;'>
 		<tr><th>Name</th><th>Date</th></tr>
 		<tr><td>___________________________________</td><td>__________________</td></tr>
 		<tr><td>___________________________________</td><td>__________________</td></tr>

@@ -342,6 +342,434 @@
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
           <Property Name="isUpload" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblFormConferenceSummary">
+          <Key>
+            <PropertyRef Name="FormConferenceSummaryId" />
+          </Key>
+          <Property Name="FormConferenceSummaryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="BuildingAdministrator" Type="nvarchar" MaxLength="200" />
+          <Property Name="RequestedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="ReasonForConfrence" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Conclusions" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormIEPAmendment_">
+          <Key>
+            <PropertyRef Name="FormIEPAmendment.Id" />
+          </Key>
+          <Property Name="FormIEPAmendment.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AgreeToAmmend" Type="bit" />
+          <Property Name="DisagreeToAmmend" Type="bit" />
+          <Property Name="ConveneMeeting" Type="bit" />
+          <Property Name="DoNotConveneMeeting" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingConsentToInvite_">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingConsentToInvite.Id" />
+          </Key>
+          <Property Name="FormIEPMeetingConsentToInvite.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ParticipatingAgency" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProvideTransitionService" Type="bit" />
+          <Property Name="FurtherInformed" Type="bit" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingExcusal_">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingExcusal.Id" />
+          </Key>
+          <Property Name="FormIEPMeetingExcusal.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolRepresentative" Type="nvarchar" MaxLength="200" />
+          <Property Name="PositionOfRepresentative" Type="nvarchar" MaxLength="200" />
+          <Property Name="PositionOfMemberNotAttending" Type="nvarchar" MaxLength="200" />
+          <Property Name="Services_Not_ModOrDisc_NonAttend" Type="bit" />
+          <Property Name="Services_Not_ModOrDisc_PartialAttend" Type="bit" />
+          <Property Name="Services_Not_ModOrDisc_IssueDiscussed" Type="nvarchar" MaxLength="200" />
+          <Property Name="Services_Not_ModOrDisc_Agree" Type="bit" />
+          <Property Name="Services_Not_ModOrDisc_Disagree" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="nvarchar" MaxLength="200" />
+          <Property Name="Services_MayBe_ModOrDisc_Consent" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_NotConsent" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormIEPTeamConsiderations">
+          <Key>
+            <PropertyRef Name="FormIEPTeamConsiderationsId" />
+          </Key>
+          <Property Name="FormIEPTeamConsiderationsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="IEPMeetingDate" Type="datetime" />
+          <Property Name="ChildsStrength" Type="nvarchar" MaxLength="2000" />
+          <Property Name="UtilizeStrength" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ConcernsForEnhancing" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ConcernsAddressesd" Type="nvarchar" MaxLength="2000" />
+          <Property Name="HarmfulEffects" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PhysicalEducatoin" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ExtendedSchoolYear" Type="nvarchar" MaxLength="2000" />
+          <Property Name="NeedsBeenConsidered_Yes" Type="bit" />
+          <Property Name="NeedsBeenConsidered_No" Type="bit" />
+          <Property Name="NeedsBeenConsidered_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="BehaviorImpede_Yes" Type="bit" />
+          <Property Name="BehaviorImpede_No" Type="bit" />
+          <Property Name="BehaviorImpede_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="InstructionInBraille_Yes" Type="bit" />
+          <Property Name="InstructionInBraille_No" Type="bit" />
+          <Property Name="InstructionInBraille_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="LimitedEnglish_Yes" Type="bit" />
+          <Property Name="LimitedEnglish_No" Type="bit" />
+          <Property Name="LimitedEnglish_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CommunicationNeeds_Yes" Type="bit" />
+          <Property Name="CommunicationNeeds_No" Type="bit" />
+          <Property Name="CommunicationNeeds_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="HearingCommunicationNeeds_Yes" Type="bit" />
+          <Property Name="HearingCommunicationNeeds_No" Type="bit" />
+          <Property Name="HearingCommunicationNeeds_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="AssistiveTech_Yes" Type="bit" />
+          <Property Name="AssistiveTech_No" Type="bit" />
+          <Property Name="AssistiveTech_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormManifestationDeterminiation">
+          <Key>
+            <PropertyRef Name="FormManifestationDeterminiationId" />
+          </Key>
+          <Property Name="FormManifestationDeterminiationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="StudentBehavior" Type="nvarchar" MaxLength="2000" />
+          <Property Name="StudentIEP" Type="nvarchar" MaxLength="2000" />
+          <Property Name="TeacherObservation" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ParentInformation" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OtherInformation" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ConductCausedByDisability" Type="bit" />
+          <Property Name="IsManifestationOfDisability" Type="bit" />
+          <Property Name="StudentWillReturn" Type="bit" />
+          <Property Name="BehaviorPlan_IsManifest_Develop" Type="bit" />
+          <Property Name="ReviewBehaviorPlan" Type="bit" />
+          <Property Name="IsNotManifestationOfDisability" Type="bit" />
+          <Property Name="DisciplinaryRemovalMayOccur" Type="bit" />
+          <Property Name="BehaviorPlan_NotManifest_Develop" Type="bit" />
+          <Property Name="Attachments" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormManifestDeterm_TeamMembers">
+          <Key>
+            <PropertyRef Name="FormManifestDeterm_TeamMembersId" />
+          </Key>
+          <Property Name="FormManifestDeterm_TeamMembersId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="FormManifestationDeterminiationId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Title" Type="nvarchar" MaxLength="200" />
+          <Property Name="Dissenting" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormNoticeOfMeeting">
+          <Key>
+            <PropertyRef Name="FormNoticeOfMeetingId" />
+          </Key>
+          <Property Name="FormNoticeOfMeetingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ProposedMeetingInfo" Type="nvarchar" MaxLength="2000" />
+          <Property Name="MeetingToReviewEvaluation" Type="bit" />
+          <Property Name="DevelopIEP" Type="bit" />
+          <Property Name="DiscussIEPChanges" Type="bit" />
+          <Property Name="AnnualIEPReview" Type="bit" />
+          <Property Name="TransitionAssesment" Type="bit" />
+          <Property Name="Other" Type="bit" />
+          <Property Name="SpecialExpertise1" Type="nvarchar" MaxLength="200" />
+          <Property Name="SpecialExpertise2" Type="nvarchar" MaxLength="200" />
+          <Property Name="SpecialExpertise3" Type="nvarchar" MaxLength="200" />
+          <Property Name="SpecialExpertise4" Type="nvarchar" MaxLength="200" />
+          <Property Name="SpecialExpertise5" Type="nvarchar" MaxLength="200" />
+          <Property Name="SpecialExpertise6" Type="nvarchar" MaxLength="200" />
+          <Property Name="AgencyStaff" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolContactName" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
+          <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredByHand" Type="bit" />
+          <Property Name="DelieveredByMail" Type="bit" />
+          <Property Name="DelieveredByOther" Type="bit" />
+          <Property Name="DelieveredByOtherDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="PlanToAttend" Type="bit" />
+          <Property Name="RescheduleMeeting" Type="bit" />
+          <Property Name="AvaliableToAttend_flag" Type="bit" />
+          <Property Name="AvailableToAttend_desc" Type="nvarchar" MaxLength="200" />
+          <Property Name="WaiveRightToNotice" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormParentConsent">
+          <Key>
+            <PropertyRef Name="FormParentConsentId" />
+          </Key>
+          <Property Name="FormParentConsentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="School" Type="nvarchar" MaxLength="200" />
+          <Property Name="GiveConsent" Type="bit" />
+          <Property Name="DoNotGiveConsent" Type="bit" />
+          <Property Name="BeginDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPhysicianScript">
+          <Key>
+            <PropertyRef Name="FormPhysicianScriptId" />
+          </Key>
+          <Property Name="FormPhysicianScriptId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="PhysicianName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_Eval">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_EvalId" />
+          </Key>
+          <Property Name="FormPriorWritten_EvalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="InitialEval" Type="bit" />
+          <Property Name="InitialEval_NoAdditional" Type="bit" />
+          <Property Name="Reeval" Type="bit" />
+          <Property Name="Reeval_NoAdditional" Type="bit" />
+          <Property Name="Refuse_InitialEval" Type="bit" />
+          <Property Name="Refuse_Reeval" Type="bit" />
+          <Property Name="SchoolContact" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="NewData_HealthMotor" Type="bit" />
+          <Property Name="ExistingData_HealthMotor" Type="bit" />
+          <Property Name="NewData_Vision" Type="bit" />
+          <Property Name="ExistingData_Vision" Type="bit" />
+          <Property Name="NewData_Hearing" Type="bit" />
+          <Property Name="ExistingData_Hearing" Type="bit" />
+          <Property Name="NewData_SEBStatus" Type="bit" />
+          <Property Name="ExistingData_SEBStatus" Type="bit" />
+          <Property Name="NewData_GenIntelligence" Type="bit" />
+          <Property Name="ExistingData_GenIntelligence" Type="bit" />
+          <Property Name="NewData_Academic" Type="bit" />
+          <Property Name="ExistingData_Academic" Type="bit" />
+          <Property Name="NewData_Communicative" Type="bit" />
+          <Property Name="ExistingData_Communicative" Type="bit" />
+          <Property Name="NewData_Transistion" Type="bit" />
+          <Property Name="ExistingData_Transistion" Type="bit" />
+          <Property Name="NewData_OtherData" Type="bit" />
+          <Property Name="ExistingData_OtherData" Type="bit" />
+          <Property Name="OtherData_Desc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ExplaninationWhy" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OptionsConsidered" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DescriptionOfData" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OtherFactors" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredByHand" Type="bit" />
+          <Property Name="DelieveredByMail" Type="bit" />
+          <Property Name="DelieveredByOther" Type="bit" />
+          <Property Name="DelieveredByOtherDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredDate" Type="datetime" />
+          <Property Name="GivenConsent" Type="bit" />
+          <Property Name="RefuseConsent" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_Ident">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_IdentId" />
+          </Key>
+          <Property Name="FormPriorWritten_IdentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="ChildSPEDEligible" Type="bit" />
+          <Property Name="SPEDNeeded" Type="bit" />
+          <Property Name="SPEDPlacement" Type="bit" />
+          <Property Name="ModificationsThatEnableSPED" Type="bit" />
+          <Property Name="Identification_Section" Type="bit" />
+          <Property Name="ChildIsEligible" Type="bit" />
+          <Property Name="ChildMeetsCriteria" Type="bit" />
+          <Property Name="SPEDNecessary" Type="bit" />
+          <Property Name="ChildNotElgible" Type="bit" />
+          <Property Name="ChildDoesNotMeetCriteria" Type="bit" />
+          <Property Name="SPEDNotNecessary" Type="bit" />
+          <Property Name="InitialServices_Section" Type="bit" />
+          <Property Name="ChangesInService_Section" Type="bit" />
+          <Property Name="ChangeInService" Type="bit" />
+          <Property Name="MaterialChangeInService" Type="bit" />
+          <Property Name="ChangeInPlacement_Section" Type="bit" />
+          <Property Name="ChangeInPlacements" Type="bit" />
+          <Property Name="SubstantialChangeInPlacement" Type="bit" />
+          <Property Name="OtherChanges" Type="bit" />
+          <Property Name="LEARefusesToChangeIdentification" Type="bit" />
+          <Property Name="DescriptionOfAction" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ExplaninationWhy" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OptionsConsidered" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DescriptionOfData" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OtherFactors" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredByHand" Type="bit" />
+          <Property Name="DelieveredByMail" Type="bit" />
+          <Property Name="DelieveredByOther" Type="bit" />
+          <Property Name="DelieveredByOtherDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredDate" Type="datetime" />
+          <Property Name="SchoolContact" Type="nvarchar" MaxLength="200" />
+          <Property Name="SchoolContactAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="GivenConsent" Type="bit" />
+          <Property Name="RefuseConsent" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_ReokeAll">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_ReokeAllId" />
+          </Key>
+          <Property Name="FormPriorWritten_ReokeAllId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="MeetingDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredByHand" Type="bit" />
+          <Property Name="DelieveredByMail" Type="bit" />
+          <Property Name="DelieveredByOther" Type="bit" />
+          <Property Name="DelieveredByOtherDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_ReokePart">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_ReokePartId" />
+          </Key>
+          <Property Name="FormPriorWritten_ReokePartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="SubmitDate" Type="datetime" />
+          <Property Name="ServicesRevoked" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ActionTaken" Type="bit" />
+          <Property Name="ActionTakenEndDate" Type="datetime" />
+          <Property Name="ActionTakenDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ActionRefused" Type="bit" />
+          <Property Name="ActionRefusedDescription" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OptionsConsidered" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DataUsed" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OtherFactors" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredByHand" Type="bit" />
+          <Property Name="DelieveredByMail" Type="bit" />
+          <Property Name="DelieveredByOther" Type="bit" />
+          <Property Name="DelieveredByOtherDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
+          <Property Name="DelieveredDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormPublicNotice">
+          <Key>
+            <PropertyRef Name="FormPublicNoticeId" />
+          </Key>
+          <Property Name="FormPublicNoticeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="To" Type="nvarchar" MaxLength="200" />
+          <Property Name="From" Type="nvarchar" MaxLength="200" />
+          <Property Name="Regarding" Type="nvarchar" MaxLength="500" />
+          <Property Name="EntityName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Area" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContactNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormRevokeConsentAll">
+          <Key>
+            <PropertyRef Name="FormRevokeConsentAllId" />
+          </Key>
+          <Property Name="FormRevokeConsentAllId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="AuthorityName" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OnBehalfOfStudent" Type="bit" />
+          <Property Name="OnMyOwnBehalf" Type="bit" />
+          <Property Name="RevokeConsentDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblFormRevokeConsentPart">
+          <Key>
+            <PropertyRef Name="FormRevokeConsentPartId" />
+          </Key>
+          <Property Name="FormRevokeConsentPartId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="AuthorityName" Type="nvarchar" MaxLength="2000" />
+          <Property Name="OnBehalfOfStudent" Type="bit" />
+          <Property Name="OnMyOwnBehalf" Type="bit" />
+          <Property Name="RevokedServices" Type="nvarchar" MaxLength="2000" />
+          <Property Name="RepresenativeName" Type="nvarchar" MaxLength="2000" />
+          <Property Name="StudentMeets" Type="bit" />
+          <Property Name="StudentDoesNotMeet" Type="bit" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+        </EntityType>
         <EntityType Name="tblFormSummaryPerformance">
           <Key>
             <PropertyRef Name="FormSummaryPerformanceId" />
@@ -1515,6 +1943,18 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId">
+          <End Role="tblFormManifestationDeterminiation" Type="Self.tblFormManifestationDeterminiation" Multiplicity="0..1" />
+          <End Role="tblFormManifestDeterm_TeamMembers" Type="Self.tblFormManifestDeterm_TeamMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFormManifestationDeterminiation">
+              <PropertyRef Name="FormManifestationDeterminiationId" />
+            </Principal>
+            <Dependent Role="tblFormManifestDeterm_TeamMembers">
+              <PropertyRef Name="FormManifestationDeterminiationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblProviderDistricts_ProviderID">
           <End Role="tblProviders" Type="Self.tblProviders" Multiplicity="1" />
           <End Role="tblProviderDistricts" Type="Self.tblProviderDistricts" Multiplicity="*" />
@@ -1703,6 +2143,23 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblEvaluationProcedures" EntityType="Self.tblEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormConferenceSummary" EntityType="Self.tblFormConferenceSummary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormIEPAmendment_" EntityType="Self.tblFormIEPAmendment_" Schema="dbo" Table="tblFormIEPAmendment." store:Type="Tables" />
+          <EntitySet Name="tblFormIEPMeetingConsentToInvite_" EntityType="Self.tblFormIEPMeetingConsentToInvite_" Schema="dbo" Table="tblFormIEPMeetingConsentToInvite." store:Type="Tables" />
+          <EntitySet Name="tblFormIEPMeetingExcusal_" EntityType="Self.tblFormIEPMeetingExcusal_" Schema="dbo" Table="tblFormIEPMeetingExcusal." store:Type="Tables" />
+          <EntitySet Name="tblFormIEPTeamConsiderations" EntityType="Self.tblFormIEPTeamConsiderations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormManifestationDeterminiation" EntityType="Self.tblFormManifestationDeterminiation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormManifestDeterm_TeamMembers" EntityType="Self.tblFormManifestDeterm_TeamMembers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormNoticeOfMeeting" EntityType="Self.tblFormNoticeOfMeeting" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormParentConsent" EntityType="Self.tblFormParentConsent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPhysicianScript" EntityType="Self.tblFormPhysicianScript" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPriorWritten_Eval" EntityType="Self.tblFormPriorWritten_Eval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPriorWritten_Ident" EntityType="Self.tblFormPriorWritten_Ident" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPriorWritten_ReokeAll" EntityType="Self.tblFormPriorWritten_ReokeAll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPriorWritten_ReokePart" EntityType="Self.tblFormPriorWritten_ReokePart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormPublicNotice" EntityType="Self.tblFormPublicNotice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormRevokeConsentAll" EntityType="Self.tblFormRevokeConsentAll" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormRevokeConsentPart" EntityType="Self.tblFormRevokeConsentPart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormSummaryPerformance" EntityType="Self.tblFormSummaryPerformance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormTeamEval" EntityType="Self.tblFormTeamEval" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarkMethods" EntityType="Self.tblGoalBenchmarkMethods" Schema="dbo" store:Type="Tables" />
@@ -1889,6 +2346,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <AssociationSet Name="FK_tblContacts_tblDistricts_USD" Association="Self.FK_tblContacts_tblDistricts_USD">
             <End Role="tblDistricts" EntitySet="tblDistricts" />
             <End Role="tblContacts" EntitySet="tblContacts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" Association="Self.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId">
+            <End Role="tblFormManifestationDeterminiation" EntitySet="tblFormManifestationDeterminiation" />
+            <End Role="tblFormManifestDeterm_TeamMembers" EntitySet="tblFormManifestDeterm_TeamMembers" />
           </AssociationSet>
           <AssociationSet Name="FK_tblProviderDistricts_ProviderID" Association="Self.FK_tblProviderDistricts_ProviderID">
             <End Role="tblProviders" EntitySet="tblProviders" />
@@ -2106,6 +2567,27 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="BuildingID" Mode="In" Type="String" />
             <Parameter Name="isAssgined" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="tblFormConferenceSummaries" EntityType="IndividualizedEducationProgramModel.tblFormConferenceSummary" />
+          <EntitySet Name="tblFormIEPAmendment_" EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment_" />
+          <EntitySet Name="tblFormIEPMeetingConsentToInvite_" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_" />
+          <EntitySet Name="tblFormIEPMeetingExcusal_" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_" />
+          <EntitySet Name="tblFormIEPTeamConsiderations" EntityType="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration" />
+          <EntitySet Name="tblFormManifestationDeterminiations" EntityType="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation" />
+          <EntitySet Name="tblFormManifestDeterm_TeamMembers" EntityType="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers" />
+          <EntitySet Name="tblFormNoticeOfMeetings" EntityType="IndividualizedEducationProgramModel.tblFormNoticeOfMeeting" />
+          <EntitySet Name="tblFormParentConsents" EntityType="IndividualizedEducationProgramModel.tblFormParentConsent" />
+          <EntitySet Name="tblFormPhysicianScripts" EntityType="IndividualizedEducationProgramModel.tblFormPhysicianScript" />
+          <EntitySet Name="tblFormPriorWritten_Eval" EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_Eval" />
+          <EntitySet Name="tblFormPriorWritten_Ident" EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_Ident" />
+          <EntitySet Name="tblFormPriorWritten_ReokeAll" EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokeAll" />
+          <EntitySet Name="tblFormPriorWritten_ReokePart" EntityType="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokePart" />
+          <EntitySet Name="tblFormPublicNotices" EntityType="IndividualizedEducationProgramModel.tblFormPublicNotice" />
+          <EntitySet Name="tblFormRevokeConsentAlls" EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentAll" />
+          <EntitySet Name="tblFormRevokeConsentParts" EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentPart" />
+          <AssociationSet Name="FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" Association="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId">
+            <End Role="tblFormManifestationDeterminiation" EntitySet="tblFormManifestationDeterminiations" />
+            <End Role="tblFormManifestDeterm_TeamMembers" EntitySet="tblFormManifestDeterm_TeamMembers" />
+          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -3849,6 +4331,448 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="Int64" Name="KIDSID" Nullable="true" />
           <Property Type="Boolean" Name="isAssgined" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tblFormConferenceSummary">
+          <Key>
+            <PropertyRef Name="FormConferenceSummaryId" />
+          </Key>
+          <Property Name="FormConferenceSummaryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="BuildingAdministrator" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RequestedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ReasonForConfrence" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Conclusions" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormIEPAmendment_">
+          <Key>
+            <PropertyRef Name="FormIEPAmendment_Id" />
+          </Key>
+          <Property Name="FormIEPAmendment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AgreeToAmmend" Type="Boolean" />
+          <Property Name="DisagreeToAmmend" Type="Boolean" />
+          <Property Name="ConveneMeeting" Type="Boolean" />
+          <Property Name="DoNotConveneMeeting" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingConsentToInvite_">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingConsentToInvite_Id" />
+          </Key>
+          <Property Name="FormIEPMeetingConsentToInvite_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParticipatingAgency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProvideTransitionService" Type="Boolean" />
+          <Property Name="FurtherInformed" Type="Boolean" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingExcusal_">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingExcusal_Id" />
+          </Key>
+          <Property Name="FormIEPMeetingExcusal_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PositionOfRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PositionOfMemberNotAttending" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Not_ModOrDisc_NonAttend" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_PartialAttend" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Not_ModOrDisc_Agree" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_Disagree" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_MayBe_ModOrDisc_Consent" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_NotConsent" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormIEPTeamConsideration">
+          <Key>
+            <PropertyRef Name="FormIEPTeamConsiderationsId" />
+          </Key>
+          <Property Name="FormIEPTeamConsiderationsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="IEPMeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="ChildsStrength" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="UtilizeStrength" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ConcernsForEnhancing" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ConcernsAddressesd" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="HarmfulEffects" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="PhysicalEducatoin" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendedSchoolYear" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="NeedsBeenConsidered_Yes" Type="Boolean" />
+          <Property Name="NeedsBeenConsidered_No" Type="Boolean" />
+          <Property Name="NeedsBeenConsidered_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="BehaviorImpede_Yes" Type="Boolean" />
+          <Property Name="BehaviorImpede_No" Type="Boolean" />
+          <Property Name="BehaviorImpede_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="InstructionInBraille_Yes" Type="Boolean" />
+          <Property Name="InstructionInBraille_No" Type="Boolean" />
+          <Property Name="InstructionInBraille_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="LimitedEnglish_Yes" Type="Boolean" />
+          <Property Name="LimitedEnglish_No" Type="Boolean" />
+          <Property Name="LimitedEnglish_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CommunicationNeeds_Yes" Type="Boolean" />
+          <Property Name="CommunicationNeeds_No" Type="Boolean" />
+          <Property Name="CommunicationNeeds_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="HearingCommunicationNeeds_Yes" Type="Boolean" />
+          <Property Name="HearingCommunicationNeeds_No" Type="Boolean" />
+          <Property Name="HearingCommunicationNeeds_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AssistiveTech_Yes" Type="Boolean" />
+          <Property Name="AssistiveTech_No" Type="Boolean" />
+          <Property Name="AssistiveTech_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormManifestationDeterminiation">
+          <Key>
+            <PropertyRef Name="FormManifestationDeterminiationId" />
+          </Key>
+          <Property Name="FormManifestationDeterminiationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="StudentBehavior" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StudentIEP" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherObservation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ParentInformation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherInformation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ConductCausedByDisability" Type="Boolean" />
+          <Property Name="IsManifestationOfDisability" Type="Boolean" />
+          <Property Name="StudentWillReturn" Type="Boolean" />
+          <Property Name="BehaviorPlan_IsManifest_Develop" Type="Boolean" />
+          <Property Name="ReviewBehaviorPlan" Type="Boolean" />
+          <Property Name="IsNotManifestationOfDisability" Type="Boolean" />
+          <Property Name="DisciplinaryRemovalMayOccur" Type="Boolean" />
+          <Property Name="BehaviorPlan_NotManifest_Develop" Type="Boolean" />
+          <Property Name="Attachments" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblFormManifestDeterm_TeamMembers" Relationship="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" FromRole="tblFormManifestationDeterminiation" ToRole="tblFormManifestDeterm_TeamMembers" />
+        </EntityType>
+        <EntityType Name="tblFormManifestDeterm_TeamMembers">
+          <Key>
+            <PropertyRef Name="FormManifestDeterm_TeamMembersId" />
+          </Key>
+          <Property Name="FormManifestDeterm_TeamMembersId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormManifestationDeterminiationId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Dissenting" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tblFormManifestationDeterminiation" Relationship="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" FromRole="tblFormManifestDeterm_TeamMembers" ToRole="tblFormManifestationDeterminiation" />
+        </EntityType>
+        <EntityType Name="tblFormNoticeOfMeeting">
+          <Key>
+            <PropertyRef Name="FormNoticeOfMeetingId" />
+          </Key>
+          <Property Name="FormNoticeOfMeetingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ProposedMeetingInfo" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="MeetingToReviewEvaluation" Type="Boolean" />
+          <Property Name="DevelopIEP" Type="Boolean" />
+          <Property Name="DiscussIEPChanges" Type="Boolean" />
+          <Property Name="AnnualIEPReview" Type="Boolean" />
+          <Property Name="TransitionAssesment" Type="Boolean" />
+          <Property Name="Other" Type="Boolean" />
+          <Property Name="SpecialExpertise1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialExpertise2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialExpertise3" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialExpertise4" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialExpertise5" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SpecialExpertise6" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AgencyStaff" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredByHand" Type="Boolean" />
+          <Property Name="DelieveredByMail" Type="Boolean" />
+          <Property Name="DelieveredByOther" Type="Boolean" />
+          <Property Name="DelieveredByOtherDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PlanToAttend" Type="Boolean" />
+          <Property Name="RescheduleMeeting" Type="Boolean" />
+          <Property Name="AvaliableToAttend_flag" Type="Boolean" />
+          <Property Name="AvailableToAttend_desc" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="WaiveRightToNotice" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormParentConsent">
+          <Key>
+            <PropertyRef Name="FormParentConsentId" />
+          </Key>
+          <Property Name="FormParentConsentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="School" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="GiveConsent" Type="Boolean" />
+          <Property Name="DoNotGiveConsent" Type="Boolean" />
+          <Property Name="BeginDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPhysicianScript">
+          <Key>
+            <PropertyRef Name="FormPhysicianScriptId" />
+          </Key>
+          <Property Name="FormPhysicianScriptId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="PhysicianName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_Eval">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_EvalId" />
+          </Key>
+          <Property Name="FormPriorWritten_EvalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="InitialEval" Type="Boolean" />
+          <Property Name="InitialEval_NoAdditional" Type="Boolean" />
+          <Property Name="Reeval" Type="Boolean" />
+          <Property Name="Reeval_NoAdditional" Type="Boolean" />
+          <Property Name="Refuse_InitialEval" Type="Boolean" />
+          <Property Name="Refuse_Reeval" Type="Boolean" />
+          <Property Name="SchoolContact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NewData_HealthMotor" Type="Boolean" />
+          <Property Name="ExistingData_HealthMotor" Type="Boolean" />
+          <Property Name="NewData_Vision" Type="Boolean" />
+          <Property Name="ExistingData_Vision" Type="Boolean" />
+          <Property Name="NewData_Hearing" Type="Boolean" />
+          <Property Name="ExistingData_Hearing" Type="Boolean" />
+          <Property Name="NewData_SEBStatus" Type="Boolean" />
+          <Property Name="ExistingData_SEBStatus" Type="Boolean" />
+          <Property Name="NewData_GenIntelligence" Type="Boolean" />
+          <Property Name="ExistingData_GenIntelligence" Type="Boolean" />
+          <Property Name="NewData_Academic" Type="Boolean" />
+          <Property Name="ExistingData_Academic" Type="Boolean" />
+          <Property Name="NewData_Communicative" Type="Boolean" />
+          <Property Name="ExistingData_Communicative" Type="Boolean" />
+          <Property Name="NewData_Transistion" Type="Boolean" />
+          <Property Name="ExistingData_Transistion" Type="Boolean" />
+          <Property Name="NewData_OtherData" Type="Boolean" />
+          <Property Name="ExistingData_OtherData" Type="Boolean" />
+          <Property Name="OtherData_Desc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ExplaninationWhy" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OptionsConsidered" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionOfData" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherFactors" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredByHand" Type="Boolean" />
+          <Property Name="DelieveredByMail" Type="Boolean" />
+          <Property Name="DelieveredByOther" Type="Boolean" />
+          <Property Name="DelieveredByOtherDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
+          <Property Name="GivenConsent" Type="Boolean" />
+          <Property Name="RefuseConsent" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_Ident">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_IdentId" />
+          </Key>
+          <Property Name="FormPriorWritten_IdentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="ChildSPEDEligible" Type="Boolean" />
+          <Property Name="SPEDNeeded" Type="Boolean" />
+          <Property Name="SPEDPlacement" Type="Boolean" />
+          <Property Name="ModificationsThatEnableSPED" Type="Boolean" />
+          <Property Name="Identification_Section" Type="Boolean" />
+          <Property Name="ChildIsEligible" Type="Boolean" />
+          <Property Name="ChildMeetsCriteria" Type="Boolean" />
+          <Property Name="SPEDNecessary" Type="Boolean" />
+          <Property Name="ChildNotElgible" Type="Boolean" />
+          <Property Name="ChildDoesNotMeetCriteria" Type="Boolean" />
+          <Property Name="SPEDNotNecessary" Type="Boolean" />
+          <Property Name="InitialServices_Section" Type="Boolean" />
+          <Property Name="ChangesInService_Section" Type="Boolean" />
+          <Property Name="ChangeInService" Type="Boolean" />
+          <Property Name="MaterialChangeInService" Type="Boolean" />
+          <Property Name="ChangeInPlacement_Section" Type="Boolean" />
+          <Property Name="ChangeInPlacements" Type="Boolean" />
+          <Property Name="SubstantialChangeInPlacement" Type="Boolean" />
+          <Property Name="OtherChanges" Type="Boolean" />
+          <Property Name="LEARefusesToChangeIdentification" Type="Boolean" />
+          <Property Name="DescriptionOfAction" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ExplaninationWhy" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OptionsConsidered" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionOfData" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherFactors" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredByHand" Type="Boolean" />
+          <Property Name="DelieveredByMail" Type="Boolean" />
+          <Property Name="DelieveredByOther" Type="Boolean" />
+          <Property Name="DelieveredByOtherDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
+          <Property Name="SchoolContact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GivenConsent" Type="Boolean" />
+          <Property Name="RefuseConsent" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_ReokeAll">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_ReokeAllId" />
+          </Key>
+          <Property Name="FormPriorWritten_ReokeAllId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredByHand" Type="Boolean" />
+          <Property Name="DelieveredByMail" Type="Boolean" />
+          <Property Name="DelieveredByOther" Type="Boolean" />
+          <Property Name="DelieveredByOtherDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPriorWritten_ReokePart">
+          <Key>
+            <PropertyRef Name="FormPriorWritten_ReokePartId" />
+          </Key>
+          <Property Name="FormPriorWritten_ReokePartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="SubmitDate" Type="DateTime" Precision="3" />
+          <Property Name="ServicesRevoked" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionTaken" Type="Boolean" />
+          <Property Name="ActionTakenEndDate" Type="DateTime" Precision="3" />
+          <Property Name="ActionTakenDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ActionRefused" Type="Boolean" />
+          <Property Name="ActionRefusedDescription" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OptionsConsidered" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DataUsed" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OtherFactors" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredByHand" Type="Boolean" />
+          <Property Name="DelieveredByMail" Type="Boolean" />
+          <Property Name="DelieveredByOther" Type="Boolean" />
+          <Property Name="DelieveredByOtherDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormPublicNotice">
+          <Key>
+            <PropertyRef Name="FormPublicNoticeId" />
+          </Key>
+          <Property Name="FormPublicNoticeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="To" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="From" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Regarding" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="EntityName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Area" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormRevokeConsentAll">
+          <Key>
+            <PropertyRef Name="FormRevokeConsentAllId" />
+          </Key>
+          <Property Name="FormRevokeConsentAllId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="AuthorityName" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OnBehalfOfStudent" Type="Boolean" />
+          <Property Name="OnMyOwnBehalf" Type="Boolean" />
+          <Property Name="RevokeConsentDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblFormRevokeConsentPart">
+          <Key>
+            <PropertyRef Name="FormRevokeConsentPartId" />
+          </Key>
+          <Property Name="FormRevokeConsentPartId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="AuthorityName" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="OnBehalfOfStudent" Type="Boolean" />
+          <Property Name="OnMyOwnBehalf" Type="Boolean" />
+          <Property Name="RevokedServices" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="RepresenativeName" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="StudentMeets" Type="Boolean" />
+          <Property Name="StudentDoesNotMeet" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId">
+          <End Type="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation" Role="tblFormManifestationDeterminiation" Multiplicity="0..1" />
+          <End Type="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers" Role="tblFormManifestDeterm_TeamMembers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblFormManifestationDeterminiation">
+              <PropertyRef Name="FormManifestationDeterminiationId" />
+            </Principal>
+            <Dependent Role="tblFormManifestDeterm_TeamMembers">
+              <PropertyRef Name="FormManifestationDeterminiationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -5601,6 +6525,451 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblFormConferenceSummaries">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormConferenceSummary">
+              <MappingFragment StoreEntitySet="tblFormConferenceSummary">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Conclusions" ColumnName="Conclusions" />
+                <ScalarProperty Name="ReasonForConfrence" ColumnName="ReasonForConfrence" />
+                <ScalarProperty Name="RequestedBy" ColumnName="RequestedBy" />
+                <ScalarProperty Name="BuildingAdministrator" ColumnName="BuildingAdministrator" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormConferenceSummaryId" ColumnName="FormConferenceSummaryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPAmendment_">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPAmendment_">
+              <MappingFragment StoreEntitySet="tblFormIEPAmendment_">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DoNotConveneMeeting" ColumnName="DoNotConveneMeeting" />
+                <ScalarProperty Name="ConveneMeeting" ColumnName="ConveneMeeting" />
+                <ScalarProperty Name="DisagreeToAmmend" ColumnName="DisagreeToAmmend" />
+                <ScalarProperty Name="AgreeToAmmend" ColumnName="AgreeToAmmend" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormIEPAmendment_Id" ColumnName="FormIEPAmendment.Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPMeetingConsentToInvite_">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_">
+              <MappingFragment StoreEntitySet="tblFormIEPMeetingConsentToInvite_">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="FurtherInformed" ColumnName="FurtherInformed" />
+                <ScalarProperty Name="ProvideTransitionService" ColumnName="ProvideTransitionService" />
+                <ScalarProperty Name="ParticipatingAgency" ColumnName="ParticipatingAgency" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormIEPMeetingConsentToInvite_Id" ColumnName="FormIEPMeetingConsentToInvite.Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPMeetingExcusal_">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_">
+              <MappingFragment StoreEntitySet="tblFormIEPMeetingExcusal_">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_NotConsent" ColumnName="Services_MayBe_ModOrDisc_NotConsent" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_Consent" ColumnName="Services_MayBe_ModOrDisc_Consent" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_IssueDiscussed" ColumnName="Services_MayBe_ModOrDisc_IssueDiscussed" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_PartialAttend" ColumnName="Services_MayBe_ModOrDisc_PartialAttend" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_NonAttend" ColumnName="Services_MayBe_ModOrDisc_NonAttend" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_Disagree" ColumnName="Services_Not_ModOrDisc_Disagree" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_Agree" ColumnName="Services_Not_ModOrDisc_Agree" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_IssueDiscussed" ColumnName="Services_Not_ModOrDisc_IssueDiscussed" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_PartialAttend" ColumnName="Services_Not_ModOrDisc_PartialAttend" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_NonAttend" ColumnName="Services_Not_ModOrDisc_NonAttend" />
+                <ScalarProperty Name="PositionOfMemberNotAttending" ColumnName="PositionOfMemberNotAttending" />
+                <ScalarProperty Name="PositionOfRepresentative" ColumnName="PositionOfRepresentative" />
+                <ScalarProperty Name="SchoolRepresentative" ColumnName="SchoolRepresentative" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormIEPMeetingExcusal_Id" ColumnName="FormIEPMeetingExcusal.Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPTeamConsiderations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration">
+              <MappingFragment StoreEntitySet="tblFormIEPTeamConsiderations">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="AssistiveTech_Desc" ColumnName="AssistiveTech_Desc" />
+                <ScalarProperty Name="AssistiveTech_No" ColumnName="AssistiveTech_No" />
+                <ScalarProperty Name="AssistiveTech_Yes" ColumnName="AssistiveTech_Yes" />
+                <ScalarProperty Name="HearingCommunicationNeeds_Desc" ColumnName="HearingCommunicationNeeds_Desc" />
+                <ScalarProperty Name="HearingCommunicationNeeds_No" ColumnName="HearingCommunicationNeeds_No" />
+                <ScalarProperty Name="HearingCommunicationNeeds_Yes" ColumnName="HearingCommunicationNeeds_Yes" />
+                <ScalarProperty Name="CommunicationNeeds_Desc" ColumnName="CommunicationNeeds_Desc" />
+                <ScalarProperty Name="CommunicationNeeds_No" ColumnName="CommunicationNeeds_No" />
+                <ScalarProperty Name="CommunicationNeeds_Yes" ColumnName="CommunicationNeeds_Yes" />
+                <ScalarProperty Name="LimitedEnglish_Desc" ColumnName="LimitedEnglish_Desc" />
+                <ScalarProperty Name="LimitedEnglish_No" ColumnName="LimitedEnglish_No" />
+                <ScalarProperty Name="LimitedEnglish_Yes" ColumnName="LimitedEnglish_Yes" />
+                <ScalarProperty Name="InstructionInBraille_Desc" ColumnName="InstructionInBraille_Desc" />
+                <ScalarProperty Name="InstructionInBraille_No" ColumnName="InstructionInBraille_No" />
+                <ScalarProperty Name="InstructionInBraille_Yes" ColumnName="InstructionInBraille_Yes" />
+                <ScalarProperty Name="BehaviorImpede_Desc" ColumnName="BehaviorImpede_Desc" />
+                <ScalarProperty Name="BehaviorImpede_No" ColumnName="BehaviorImpede_No" />
+                <ScalarProperty Name="BehaviorImpede_Yes" ColumnName="BehaviorImpede_Yes" />
+                <ScalarProperty Name="NeedsBeenConsidered_Desc" ColumnName="NeedsBeenConsidered_Desc" />
+                <ScalarProperty Name="NeedsBeenConsidered_No" ColumnName="NeedsBeenConsidered_No" />
+                <ScalarProperty Name="NeedsBeenConsidered_Yes" ColumnName="NeedsBeenConsidered_Yes" />
+                <ScalarProperty Name="ExtendedSchoolYear" ColumnName="ExtendedSchoolYear" />
+                <ScalarProperty Name="PhysicalEducatoin" ColumnName="PhysicalEducatoin" />
+                <ScalarProperty Name="HarmfulEffects" ColumnName="HarmfulEffects" />
+                <ScalarProperty Name="ConcernsAddressesd" ColumnName="ConcernsAddressesd" />
+                <ScalarProperty Name="ConcernsForEnhancing" ColumnName="ConcernsForEnhancing" />
+                <ScalarProperty Name="UtilizeStrength" ColumnName="UtilizeStrength" />
+                <ScalarProperty Name="ChildsStrength" ColumnName="ChildsStrength" />
+                <ScalarProperty Name="IEPMeetingDate" ColumnName="IEPMeetingDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormIEPTeamConsiderationsId" ColumnName="FormIEPTeamConsiderationsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormManifestationDeterminiations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation">
+              <MappingFragment StoreEntitySet="tblFormManifestationDeterminiation">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Attachments" ColumnName="Attachments" />
+                <ScalarProperty Name="BehaviorPlan_NotManifest_Develop" ColumnName="BehaviorPlan_NotManifest_Develop" />
+                <ScalarProperty Name="DisciplinaryRemovalMayOccur" ColumnName="DisciplinaryRemovalMayOccur" />
+                <ScalarProperty Name="IsNotManifestationOfDisability" ColumnName="IsNotManifestationOfDisability" />
+                <ScalarProperty Name="ReviewBehaviorPlan" ColumnName="ReviewBehaviorPlan" />
+                <ScalarProperty Name="BehaviorPlan_IsManifest_Develop" ColumnName="BehaviorPlan_IsManifest_Develop" />
+                <ScalarProperty Name="StudentWillReturn" ColumnName="StudentWillReturn" />
+                <ScalarProperty Name="IsManifestationOfDisability" ColumnName="IsManifestationOfDisability" />
+                <ScalarProperty Name="ConductCausedByDisability" ColumnName="ConductCausedByDisability" />
+                <ScalarProperty Name="OtherInformation" ColumnName="OtherInformation" />
+                <ScalarProperty Name="ParentInformation" ColumnName="ParentInformation" />
+                <ScalarProperty Name="TeacherObservation" ColumnName="TeacherObservation" />
+                <ScalarProperty Name="StudentIEP" ColumnName="StudentIEP" />
+                <ScalarProperty Name="StudentBehavior" ColumnName="StudentBehavior" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormManifestationDeterminiationId" ColumnName="FormManifestationDeterminiationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormManifestDeterm_TeamMembers">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers">
+              <MappingFragment StoreEntitySet="tblFormManifestDeterm_TeamMembers">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Dissenting" ColumnName="Dissenting" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="FormManifestationDeterminiationId" ColumnName="FormManifestationDeterminiationId" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormManifestDeterm_TeamMembersId" ColumnName="FormManifestDeterm_TeamMembersId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormNoticeOfMeetings">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormNoticeOfMeeting">
+              <MappingFragment StoreEntitySet="tblFormNoticeOfMeeting">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="WaiveRightToNotice" ColumnName="WaiveRightToNotice" />
+                <ScalarProperty Name="AvailableToAttend_desc" ColumnName="AvailableToAttend_desc" />
+                <ScalarProperty Name="AvaliableToAttend_flag" ColumnName="AvaliableToAttend_flag" />
+                <ScalarProperty Name="RescheduleMeeting" ColumnName="RescheduleMeeting" />
+                <ScalarProperty Name="PlanToAttend" ColumnName="PlanToAttend" />
+                <ScalarProperty Name="DelieveredByOtherDesc" ColumnName="DelieveredByOtherDesc" />
+                <ScalarProperty Name="DelieveredByOther" ColumnName="DelieveredByOther" />
+                <ScalarProperty Name="DelieveredByMail" ColumnName="DelieveredByMail" />
+                <ScalarProperty Name="DelieveredByHand" ColumnName="DelieveredByHand" />
+                <ScalarProperty Name="DeliveriedTo" ColumnName="DeliveriedTo" />
+                <ScalarProperty Name="DeliveriedByWho" ColumnName="DeliveriedByWho" />
+                <ScalarProperty Name="SchoolContactPhone" ColumnName="SchoolContactPhone" />
+                <ScalarProperty Name="SchoolContactName" ColumnName="SchoolContactName" />
+                <ScalarProperty Name="AgencyStaff" ColumnName="AgencyStaff" />
+                <ScalarProperty Name="SpecialExpertise6" ColumnName="SpecialExpertise6" />
+                <ScalarProperty Name="SpecialExpertise5" ColumnName="SpecialExpertise5" />
+                <ScalarProperty Name="SpecialExpertise4" ColumnName="SpecialExpertise4" />
+                <ScalarProperty Name="SpecialExpertise3" ColumnName="SpecialExpertise3" />
+                <ScalarProperty Name="SpecialExpertise2" ColumnName="SpecialExpertise2" />
+                <ScalarProperty Name="SpecialExpertise1" ColumnName="SpecialExpertise1" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="TransitionAssesment" ColumnName="TransitionAssesment" />
+                <ScalarProperty Name="AnnualIEPReview" ColumnName="AnnualIEPReview" />
+                <ScalarProperty Name="DiscussIEPChanges" ColumnName="DiscussIEPChanges" />
+                <ScalarProperty Name="DevelopIEP" ColumnName="DevelopIEP" />
+                <ScalarProperty Name="MeetingToReviewEvaluation" ColumnName="MeetingToReviewEvaluation" />
+                <ScalarProperty Name="ProposedMeetingInfo" ColumnName="ProposedMeetingInfo" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormNoticeOfMeetingId" ColumnName="FormNoticeOfMeetingId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormParentConsents">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormParentConsent">
+              <MappingFragment StoreEntitySet="tblFormParentConsent">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="DoNotGiveConsent" ColumnName="DoNotGiveConsent" />
+                <ScalarProperty Name="GiveConsent" ColumnName="GiveConsent" />
+                <ScalarProperty Name="School" ColumnName="School" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormParentConsentId" ColumnName="FormParentConsentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPhysicianScripts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPhysicianScript">
+              <MappingFragment StoreEntitySet="tblFormPhysicianScript">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="PhysicianName" ColumnName="PhysicianName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPhysicianScriptId" ColumnName="FormPhysicianScriptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPriorWritten_Eval">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPriorWritten_Eval">
+              <MappingFragment StoreEntitySet="tblFormPriorWritten_Eval">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RefuseConsent" ColumnName="RefuseConsent" />
+                <ScalarProperty Name="GivenConsent" ColumnName="GivenConsent" />
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
+                <ScalarProperty Name="DeliveriedTo" ColumnName="DeliveriedTo" />
+                <ScalarProperty Name="DelieveredByOtherDesc" ColumnName="DelieveredByOtherDesc" />
+                <ScalarProperty Name="DelieveredByOther" ColumnName="DelieveredByOther" />
+                <ScalarProperty Name="DelieveredByMail" ColumnName="DelieveredByMail" />
+                <ScalarProperty Name="DelieveredByHand" ColumnName="DelieveredByHand" />
+                <ScalarProperty Name="DeliveriedByWho" ColumnName="DeliveriedByWho" />
+                <ScalarProperty Name="OtherFactors" ColumnName="OtherFactors" />
+                <ScalarProperty Name="DescriptionOfData" ColumnName="DescriptionOfData" />
+                <ScalarProperty Name="OptionsConsidered" ColumnName="OptionsConsidered" />
+                <ScalarProperty Name="ExplaninationWhy" ColumnName="ExplaninationWhy" />
+                <ScalarProperty Name="OtherData_Desc" ColumnName="OtherData_Desc" />
+                <ScalarProperty Name="ExistingData_OtherData" ColumnName="ExistingData_OtherData" />
+                <ScalarProperty Name="NewData_OtherData" ColumnName="NewData_OtherData" />
+                <ScalarProperty Name="ExistingData_Transistion" ColumnName="ExistingData_Transistion" />
+                <ScalarProperty Name="NewData_Transistion" ColumnName="NewData_Transistion" />
+                <ScalarProperty Name="ExistingData_Communicative" ColumnName="ExistingData_Communicative" />
+                <ScalarProperty Name="NewData_Communicative" ColumnName="NewData_Communicative" />
+                <ScalarProperty Name="ExistingData_Academic" ColumnName="ExistingData_Academic" />
+                <ScalarProperty Name="NewData_Academic" ColumnName="NewData_Academic" />
+                <ScalarProperty Name="ExistingData_GenIntelligence" ColumnName="ExistingData_GenIntelligence" />
+                <ScalarProperty Name="NewData_GenIntelligence" ColumnName="NewData_GenIntelligence" />
+                <ScalarProperty Name="ExistingData_SEBStatus" ColumnName="ExistingData_SEBStatus" />
+                <ScalarProperty Name="NewData_SEBStatus" ColumnName="NewData_SEBStatus" />
+                <ScalarProperty Name="ExistingData_Hearing" ColumnName="ExistingData_Hearing" />
+                <ScalarProperty Name="NewData_Hearing" ColumnName="NewData_Hearing" />
+                <ScalarProperty Name="ExistingData_Vision" ColumnName="ExistingData_Vision" />
+                <ScalarProperty Name="NewData_Vision" ColumnName="NewData_Vision" />
+                <ScalarProperty Name="ExistingData_HealthMotor" ColumnName="ExistingData_HealthMotor" />
+                <ScalarProperty Name="NewData_HealthMotor" ColumnName="NewData_HealthMotor" />
+                <ScalarProperty Name="SchoolContactPhone" ColumnName="SchoolContactPhone" />
+                <ScalarProperty Name="SchoolContact" ColumnName="SchoolContact" />
+                <ScalarProperty Name="Refuse_Reeval" ColumnName="Refuse_Reeval" />
+                <ScalarProperty Name="Refuse_InitialEval" ColumnName="Refuse_InitialEval" />
+                <ScalarProperty Name="Reeval_NoAdditional" ColumnName="Reeval_NoAdditional" />
+                <ScalarProperty Name="Reeval" ColumnName="Reeval" />
+                <ScalarProperty Name="InitialEval_NoAdditional" ColumnName="InitialEval_NoAdditional" />
+                <ScalarProperty Name="InitialEval" ColumnName="InitialEval" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPriorWritten_EvalId" ColumnName="FormPriorWritten_EvalId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPriorWritten_Ident">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPriorWritten_Ident">
+              <MappingFragment StoreEntitySet="tblFormPriorWritten_Ident">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RefuseConsent" ColumnName="RefuseConsent" />
+                <ScalarProperty Name="GivenConsent" ColumnName="GivenConsent" />
+                <ScalarProperty Name="SchoolContactPhone" ColumnName="SchoolContactPhone" />
+                <ScalarProperty Name="SchoolContactAddress" ColumnName="SchoolContactAddress" />
+                <ScalarProperty Name="SchoolContact" ColumnName="SchoolContact" />
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
+                <ScalarProperty Name="DeliveriedTo" ColumnName="DeliveriedTo" />
+                <ScalarProperty Name="DelieveredByOtherDesc" ColumnName="DelieveredByOtherDesc" />
+                <ScalarProperty Name="DelieveredByOther" ColumnName="DelieveredByOther" />
+                <ScalarProperty Name="DelieveredByMail" ColumnName="DelieveredByMail" />
+                <ScalarProperty Name="DelieveredByHand" ColumnName="DelieveredByHand" />
+                <ScalarProperty Name="DeliveriedByWho" ColumnName="DeliveriedByWho" />
+                <ScalarProperty Name="OtherFactors" ColumnName="OtherFactors" />
+                <ScalarProperty Name="DescriptionOfData" ColumnName="DescriptionOfData" />
+                <ScalarProperty Name="OptionsConsidered" ColumnName="OptionsConsidered" />
+                <ScalarProperty Name="ExplaninationWhy" ColumnName="ExplaninationWhy" />
+                <ScalarProperty Name="DescriptionOfAction" ColumnName="DescriptionOfAction" />
+                <ScalarProperty Name="LEARefusesToChangeIdentification" ColumnName="LEARefusesToChangeIdentification" />
+                <ScalarProperty Name="OtherChanges" ColumnName="OtherChanges" />
+                <ScalarProperty Name="SubstantialChangeInPlacement" ColumnName="SubstantialChangeInPlacement" />
+                <ScalarProperty Name="ChangeInPlacements" ColumnName="ChangeInPlacements" />
+                <ScalarProperty Name="ChangeInPlacement_Section" ColumnName="ChangeInPlacement_Section" />
+                <ScalarProperty Name="MaterialChangeInService" ColumnName="MaterialChangeInService" />
+                <ScalarProperty Name="ChangeInService" ColumnName="ChangeInService" />
+                <ScalarProperty Name="ChangesInService_Section" ColumnName="ChangesInService_Section" />
+                <ScalarProperty Name="InitialServices_Section" ColumnName="InitialServices_Section" />
+                <ScalarProperty Name="SPEDNotNecessary" ColumnName="SPEDNotNecessary" />
+                <ScalarProperty Name="ChildDoesNotMeetCriteria" ColumnName="ChildDoesNotMeetCriteria" />
+                <ScalarProperty Name="ChildNotElgible" ColumnName="ChildNotElgible" />
+                <ScalarProperty Name="SPEDNecessary" ColumnName="SPEDNecessary" />
+                <ScalarProperty Name="ChildMeetsCriteria" ColumnName="ChildMeetsCriteria" />
+                <ScalarProperty Name="ChildIsEligible" ColumnName="ChildIsEligible" />
+                <ScalarProperty Name="Identification_Section" ColumnName="Identification_Section" />
+                <ScalarProperty Name="ModificationsThatEnableSPED" ColumnName="ModificationsThatEnableSPED" />
+                <ScalarProperty Name="SPEDPlacement" ColumnName="SPEDPlacement" />
+                <ScalarProperty Name="SPEDNeeded" ColumnName="SPEDNeeded" />
+                <ScalarProperty Name="ChildSPEDEligible" ColumnName="ChildSPEDEligible" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPriorWritten_IdentId" ColumnName="FormPriorWritten_IdentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPriorWritten_ReokeAll">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokeAll">
+              <MappingFragment StoreEntitySet="tblFormPriorWritten_ReokeAll">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
+                <ScalarProperty Name="DeliveriedTo" ColumnName="DeliveriedTo" />
+                <ScalarProperty Name="DelieveredByOtherDesc" ColumnName="DelieveredByOtherDesc" />
+                <ScalarProperty Name="DelieveredByOther" ColumnName="DelieveredByOther" />
+                <ScalarProperty Name="DelieveredByMail" ColumnName="DelieveredByMail" />
+                <ScalarProperty Name="DelieveredByHand" ColumnName="DelieveredByHand" />
+                <ScalarProperty Name="DeliveriedByWho" ColumnName="DeliveriedByWho" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPriorWritten_ReokeAllId" ColumnName="FormPriorWritten_ReokeAllId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPriorWritten_ReokePart">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPriorWritten_ReokePart">
+              <MappingFragment StoreEntitySet="tblFormPriorWritten_ReokePart">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
+                <ScalarProperty Name="DeliveriedTo" ColumnName="DeliveriedTo" />
+                <ScalarProperty Name="DelieveredByOtherDesc" ColumnName="DelieveredByOtherDesc" />
+                <ScalarProperty Name="DelieveredByOther" ColumnName="DelieveredByOther" />
+                <ScalarProperty Name="DelieveredByMail" ColumnName="DelieveredByMail" />
+                <ScalarProperty Name="DelieveredByHand" ColumnName="DelieveredByHand" />
+                <ScalarProperty Name="DeliveriedByWho" ColumnName="DeliveriedByWho" />
+                <ScalarProperty Name="OtherFactors" ColumnName="OtherFactors" />
+                <ScalarProperty Name="DataUsed" ColumnName="DataUsed" />
+                <ScalarProperty Name="OptionsConsidered" ColumnName="OptionsConsidered" />
+                <ScalarProperty Name="ActionRefusedDescription" ColumnName="ActionRefusedDescription" />
+                <ScalarProperty Name="ActionRefused" ColumnName="ActionRefused" />
+                <ScalarProperty Name="ActionTakenDescription" ColumnName="ActionTakenDescription" />
+                <ScalarProperty Name="ActionTakenEndDate" ColumnName="ActionTakenEndDate" />
+                <ScalarProperty Name="ActionTaken" ColumnName="ActionTaken" />
+                <ScalarProperty Name="ServicesRevoked" ColumnName="ServicesRevoked" />
+                <ScalarProperty Name="SubmitDate" ColumnName="SubmitDate" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPriorWritten_ReokePartId" ColumnName="FormPriorWritten_ReokePartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormPublicNotices">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormPublicNotice">
+              <MappingFragment StoreEntitySet="tblFormPublicNotice">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Area" ColumnName="Area" />
+                <ScalarProperty Name="EntityName" ColumnName="EntityName" />
+                <ScalarProperty Name="Regarding" ColumnName="Regarding" />
+                <ScalarProperty Name="From" ColumnName="From" />
+                <ScalarProperty Name="To" ColumnName="To" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormPublicNoticeId" ColumnName="FormPublicNoticeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormRevokeConsentAlls">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormRevokeConsentAll">
+              <MappingFragment StoreEntitySet="tblFormRevokeConsentAll">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="RevokeConsentDate" ColumnName="RevokeConsentDate" />
+                <ScalarProperty Name="OnMyOwnBehalf" ColumnName="OnMyOwnBehalf" />
+                <ScalarProperty Name="OnBehalfOfStudent" ColumnName="OnBehalfOfStudent" />
+                <ScalarProperty Name="AuthorityName" ColumnName="AuthorityName" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormRevokeConsentAllId" ColumnName="FormRevokeConsentAllId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormRevokeConsentParts">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormRevokeConsentPart">
+              <MappingFragment StoreEntitySet="tblFormRevokeConsentPart">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="StudentDoesNotMeet" ColumnName="StudentDoesNotMeet" />
+                <ScalarProperty Name="StudentMeets" ColumnName="StudentMeets" />
+                <ScalarProperty Name="RepresenativeName" ColumnName="RepresenativeName" />
+                <ScalarProperty Name="RevokedServices" ColumnName="RevokedServices" />
+                <ScalarProperty Name="OnMyOwnBehalf" ColumnName="OnMyOwnBehalf" />
+                <ScalarProperty Name="OnBehalfOfStudent" ColumnName="OnBehalfOfStudent" />
+                <ScalarProperty Name="AuthorityName" ColumnName="AuthorityName" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormRevokeConsentPartId" ColumnName="FormRevokeConsentPartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
