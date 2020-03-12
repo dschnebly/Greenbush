@@ -438,6 +438,7 @@ namespace GreenBushIEP.Models
         public tblFormTeamEval teamEval { get; set; }
         public tblFormSummaryPerformance summaryPerformance { get; set; }
 		public tblFormConferenceSummary conferenceSummary { get; set; }
+		public tblFormIEPAmendment_ formAmend { get; set; }
 
 		public IEPFormFileViewModel()
         {
