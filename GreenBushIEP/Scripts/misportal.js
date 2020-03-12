@@ -548,11 +548,13 @@ function filterList(members) {
         i--;
     }
 
-    var i = members.length - 1;
-    while (i >= 0) {
-        var matchFound = container.querySelectorAll("div[data-id='" + members[i].UserID + "']");
-        matchFound[0].classList.remove("hidden");
-        i--;
+    var j = members.length - 1;
+    while (j >= 0) {
+        var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
+        if (matchFound[0] != null) {
+            matchFound[0].classList.remove("hidden");
+        }
+        j--;
     }
 }
 
