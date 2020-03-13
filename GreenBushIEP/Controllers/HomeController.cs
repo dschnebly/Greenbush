@@ -110,7 +110,7 @@ namespace GreenbushIep.Controllers
                 model.districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList();
                 model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
 
-                model.members = db.uspUserListByUserID(MIS.UserID, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), hasIEP = u.hasIEP ?? false }).ToList();
+                model.members = db.uspUserListByUserID(MIS.UserID, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), hasIEP = u.hasIEP ?? false }).Take(10).ToList();
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
