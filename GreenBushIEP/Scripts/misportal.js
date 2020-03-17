@@ -538,14 +538,16 @@
             "but": true, //Flag to enable transitions on button, false by default
             "cBa": function () {
                 init();
+                // disable the new page from display ajax loader because it is already loaded.
+                console.log(document.querySelector(".ajax-loader"));
+
+                // USE a fade out css animation!
+                document.querySelector(".ajax-loader").style.display = "none";
             } //callback function
         };
     new ft(params);
+    
 });
-
-window.addEventListener('load', function () {
-    $(".ajax-loader").hide();
-})
 
 function filterList(members) {
     var container = document.querySelector(".list-group-root");
@@ -594,5 +596,13 @@ jQuery.fn.extend({
         $(listrap).find(toggle + "img").on("click", selectionChanged);
         $(listrap).find(toggle + "span").on("click", selectionChanged);
         return listrap;
+    }
+});
+
+
+// once the page is fully loaded, hide the ajax loading icon.
+document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === "complete") {
+        $(".ajax-loader").hide();
     }
 });

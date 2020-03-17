@@ -10,7 +10,14 @@
 }
 
 <div class="modal-header">
-    <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+    @if (ViewBag.ReturnToHome)
+    {
+        <a class="glyphicon glyphicon-remove btn btn-info pull-right" role="button" href="/Home/StudentProcedures?stid=@(Model.StudentId)" title="Cancel action and go back to student IEP modules"></a>
+    }
+    else
+    {
+        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+    }
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;Forms</h4>
     <h5 class="formStudentName">@(Model.StudentName)</h5>
 </div>
@@ -34,6 +41,7 @@
                         <th class="date">&nbsp;</th>
                     </tr>
                 </thead>
+                {
                 <tbody>
                     @{
                         foreach (var archive in Model.Archives.Where(a => !a.isUpload))
