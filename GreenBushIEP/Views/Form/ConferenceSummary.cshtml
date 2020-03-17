@@ -56,7 +56,7 @@
 	<p class="voffset3" style="font-weight:normal">
 		<span style="font-weight:bold">Teacher:</span>
 		<u>@(teacherFormattedName.Length > 40 ? teacherFormattedName : String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
-		<u><textarea onfocus="clearContents(this);" cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
+		<u><textarea cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
 	</p>
 	<p class="voffset3" style="font-weight:normal">
 		<b><span>Requested by</span></b>

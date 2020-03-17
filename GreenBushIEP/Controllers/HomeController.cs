@@ -2315,6 +2315,10 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formAmend = db.tblFormIEPAmendment_.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "IEPMtgConsent")
+			{
+				viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvite_.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
 			viewModel.fileModel = fileViewModel;
@@ -4259,6 +4263,39 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
+
+			else if (formName == "IEP Meeting-Consent to Invite Representative of Non-Educational Agency")
+			{
+				var formMeetConsent = db.tblFormIEPMeetingConsentToInvite_.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvite_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite_();
+
+				formMeetConsent.StudentId = sid;
+				formMeetConsent.FurtherInformed = GetCheckboxSingleInputValue("FurtherInformed", checkboxes);
+				formMeetConsent.ProvideTransitionService = GetCheckboxSingleInputValue("ProvideTransitionService", checkboxes);
+				formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
+
+				var meetingDateStr = GetInputValue("MeetingDate", spans);
+				if(!string.IsNullOrEmpty(meetingDateStr))
+					formMeetConsent.MeetingDate = Convert.ToDateTime(meetingDateStr);
+
+				if (formMeetConsent.FormIEPMeetingConsentToInvite_Id == 0)
+				{
+					formMeetConsent.CreatedBy = currentUser.UserID;
+					formMeetConsent.Create_Date = DateTime.Now;
+					formMeetConsent.ModifiedBy = currentUser.UserID;
+					formMeetConsent.Update_Date = DateTime.Now;
+					db.tblFormIEPMeetingConsentToInvite_.Add(formMeetConsent);
+				}
+				else
+				{
+					formMeetConsent.ModifiedBy = currentUser.UserID;
+					formMeetConsent.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+
+
+			
 		}
 
         private string GetInputValue(string inputName, List<HtmlNode> inputs)

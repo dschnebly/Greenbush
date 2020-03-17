@@ -1,8 +1,12 @@
 ﻿@{
+	var formModel = ViewData["formMtgConsent"] != null ? ViewData["formMtgConsent"] as GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite_ : new GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite_();
+
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
 }
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
     <div class=WordSection1>
         <p align="center" style='font-size:18.0pt;font-family:"Calibri",sans-serif'>
             CONSENT TO INVITE REPRESENTATIVE
@@ -17,19 +21,17 @@
             I, the parent (or adult student) identified below, have been informed that
         </p>
         <p>
-            <span style="text-decoration:underline;"><textarea  data-val="107" style="width:150px;height:20px;"></textarea><span style="display:none" class="input-value"></span></span>:					   
+            <span style="text-decoration:underline;"><textarea cols="20" rows="1" maxlength="200">@(formModel.ParticipatingAgency)</textarea><span id="ParticipatingAgency" style="display:none" class="input-value">@(formModel.ParticipatingAgency)</span></span>:					   
         </p>
         <p>
             (Participating Agency)
         </p>
         <p>
-            <span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span> may be providing or paying for certain transition services for my child;
+            <span><input type="checkbox" name="ProvideTransitionServiceCbx" @(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "checked" : "")/><img id="ProvideTransitionService" class='imgCheck' src="@(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? @imageChecked : @imageNotChecked)"/></span> may be providing or paying for certain transition services for my child;
         </p>
         <p align="center">- OR -</p>
         <p>
-            <span><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /></span> may be providing or paying for certain transition services for my child (or
-            me) and
-        </p>
+			<span><input type="checkbox" name="FurtherInformedCbx" @(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "checked" : "")/><img id="FurtherInformed" class='imgCheck' src="@(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? @imageChecked : @imageNotChecked)"/></span> may be providing or paying for certain transition services for my child (or me) and  </p>
         <p>I have been further informed that:</p>
         <ul>
             <li>
@@ -51,8 +53,7 @@
             district to:
         </p>
         <div>
-            (a) invite a representative of the above agency to attend the IEP meeting
-            scheduled for <textarea maxlength="20" style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span> and
+            (a) invite a representative of the above agency to attend the IEP meeting scheduled for <textarea maxlength="20" cols="25" rows="1" >@(formModel.MeetingDate.HasValue ? formModel.MeetingDate.Value.ToShortDateString() : "")</textarea><span style="display:none" id ="MeetingDate" class="input-value">@(formModel.MeetingDate.HasValue ? formModel.MeetingDate.Value.ToShortDateString() : "")</span> and
         </div>
         <p>
             (b) to disclose at the meeting to the agency representative any information
