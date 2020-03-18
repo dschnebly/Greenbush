@@ -1,5 +1,5 @@
 ﻿@{
-	var formModel = ViewData["formMtgConsent"] != null ? ViewData["formMtgConsent"] as GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite_ : new GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite_();
+	var formModel = ViewData["formMtgConsent"] != null ? ViewData["formMtgConsent"] as GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite : new GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite();
 
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");

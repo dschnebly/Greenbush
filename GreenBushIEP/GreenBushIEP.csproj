@@ -296,6 +296,9 @@
     <Compile Include="Models\tblAccommodation.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblAccommodationModule.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblArchiveEvaluationDate.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -374,13 +377,13 @@
     <Compile Include="Models\tblFormConferenceSummary.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblFormIEPAmendment_.cs">
+    <Compile Include="Models\tblFormIEPAmendment.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblFormIEPMeetingConsentToInvite_.cs">
+    <Compile Include="Models\tblFormIEPMeetingConsentToInvite.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblFormIEPMeetingExcusal_.cs">
+    <Compile Include="Models\tblFormIEPMeetingExcusal.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblFormIEPTeamConsideration.cs">

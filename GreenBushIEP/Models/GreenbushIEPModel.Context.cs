@@ -107,9 +107,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
         public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
-        public virtual DbSet<tblFormIEPAmendment_> tblFormIEPAmendment_ { get; set; }
-        public virtual DbSet<tblFormIEPMeetingConsentToInvite_> tblFormIEPMeetingConsentToInvite_ { get; set; }
-        public virtual DbSet<tblFormIEPMeetingExcusal_> tblFormIEPMeetingExcusal_ { get; set; }
         public virtual DbSet<tblFormIEPTeamConsideration> tblFormIEPTeamConsiderations { get; set; }
         public virtual DbSet<tblFormManifestationDeterminiation> tblFormManifestationDeterminiations { get; set; }
         public virtual DbSet<tblFormManifestDeterm_TeamMembers> tblFormManifestDeterm_TeamMembers { get; set; }
@@ -123,6 +120,10 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormPublicNotice> tblFormPublicNotices { get; set; }
         public virtual DbSet<tblFormRevokeConsentAll> tblFormRevokeConsentAlls { get; set; }
         public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
+        public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
+        public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
+        public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
+        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)

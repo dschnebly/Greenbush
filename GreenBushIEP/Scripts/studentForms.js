@@ -112,19 +112,49 @@
                     );
                 }
 
-            });//end file upload
+			});//end file upload
+
+			var id = getUrlParameter('saved');
+			if (id == 2) {
+				$("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+				$("#alertMessage").show();
+				//$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+				//	$("#alertMessage").slideUp(500);
+				//});
+				//_showAlert("There was an un-expected problem saving the form.", false);
+			}
 
         });//end document ready
     }
 
 	init();
 
+	function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
 
-    function _showAlert(message, positive) {
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
 
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	}
+
+	function _showAlert(message, positive) {
+		
         if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-            if (positive) { $("#alertMessage").removeClass('alert-danger').addClass('alert-success'); }
-            else { $("#alertMessage").removeClass('alert-success').addClass('alert-danger'); }
+			if (positive)
+			{
+				$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
+			}
+			else {
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+			}
+
             $("#alertMessage .moreinfo").html(message);
             $("#alertMessage").fadeTo(3000, 1000).slideUp(2000, function () {
                 $("#alertMessage").slideUp(5000);

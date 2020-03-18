@@ -21,8 +21,8 @@
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;Forms</h4>
     <h5 class="formStudentName">@(Model.StudentName)</h5>
 </div>
-<div class="alert alert-danger hidden" id="alertMessage" role="alert">
-    <strong class="moreinfo">Oh snap!</strong>
+<div class="alert alert-danger" id="alertMessage" role="alert" style="display:none">
+    <span class="moreinfo"><strong>Results!</strong></span>
 </div>
 <div class="modal-body">
     @Html.Hidden("stid", Model.StudentId)
@@ -122,9 +122,9 @@
     </div>
 
     <!-- loading the file even though it's an ajax call -->
-    <var data-reload="true" data-src="/Scripts/studentForms.js"></var>
+    <var data-reload="true" data-src="/Scripts/studentForms.js?v1.2"></var>
     <var data-reload="true" data-src="/Scripts/jquery.fileupload.js"></var>
     @section scripts {
-        @Scripts.Render("~/Scripts/studentForms.js?v1.1")
+        @Scripts.Render("~/Scripts/studentForms.js?v1.2")
     }
 </div>

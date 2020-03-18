@@ -2313,16 +2313,22 @@ namespace GreenbushIep.Controllers
 			}
 			else if (fileName == "IEPAmendment")
 			{
-				viewModel.formAmend = db.tblFormIEPAmendment_.Where(o => o.StudentId == id).FirstOrDefault();
+				viewModel.formAmend = db.tblFormIEPAmendments.Where(o => o.StudentId == id).FirstOrDefault();
 			}
 			else if (fileName == "IEPMtgConsent")
 			{
-				viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvite_.Where(o => o.StudentId == id).FirstOrDefault();
+				viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvites.Where(o => o.StudentId == id).FirstOrDefault();
 			}
 			else if (fileName == "IEPMtgExcusal")
 			{
-				viewModel.formMtgExcusal = db.tblFormIEPMeetingExcusal_.Where(o => o.StudentId == id).FirstOrDefault();
+				viewModel.formMtgExcusal = db.tblFormIEPMeetingExcusals.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "IEPTeamConsider")
+			{
+				viewModel.formIEPTeamConsider = db.tblFormIEPTeamConsiderations.Where(o => o.StudentId == id).FirstOrDefault();
+			}
+
+			
 
 			viewModel.fileModel = fileViewModel;
 
@@ -3501,10 +3507,16 @@ namespace GreenbushIep.Controllers
                 {
                     SaveFormValues(HTMLContent, formName, studentId);
                 }
-                catch
+                catch(Exception ex)
                 {
+					string error = ex.Message;
+					if (ex.InnerException != null)
+						error += " " + ex.InnerException.Message;
 
-                }
+					TempData["Error"] = error;
+					return RedirectToAction("Index", "Error");
+					//return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 2 });
+				}
 
                 return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
             }
@@ -4251,7 +4263,7 @@ namespace GreenbushIep.Controllers
 			}
 			else if (formName == "IEP Amendment Form")
 			{
-				var formAmend = db.tblFormIEPAmendment_.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendment_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment_();
+				var formAmend = db.tblFormIEPAmendments.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendments.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment();
 
 				formAmend.StudentId = sid;
 				formAmend.AgreeToAmmend = GetCheckboxSingleInputValue("AgreeToAmmend", checkboxes);
@@ -4260,13 +4272,13 @@ namespace GreenbushIep.Controllers
 				formAmend.DoNotConveneMeeting = GetCheckboxSingleInputValue("DoNotConveneMeeting", checkboxes);
 				formAmend.Description = GetInputValue("Description", spans);
 
-				if (formAmend.FormIEPAmendment_Id == 0)
+				if (formAmend.FormIEPAmendmentId == 0)
 				{
 					formAmend.CreatedBy = currentUser.UserID;
 					formAmend.Create_Date = DateTime.Now;
 					formAmend.ModifiedBy = currentUser.UserID;
 					formAmend.Update_Date = DateTime.Now;
-					db.tblFormIEPAmendment_.Add(formAmend);
+					db.tblFormIEPAmendments.Add(formAmend);
 				}
 				else
 				{
@@ -4278,7 +4290,7 @@ namespace GreenbushIep.Controllers
 			}
 			else if (formName == "IEP Meeting-Consent to Invite Representative of Non-Educational Agency")
 			{
-				var formMeetConsent = db.tblFormIEPMeetingConsentToInvite_.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvite_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite_();
+				var formMeetConsent = db.tblFormIEPMeetingConsentToInvites.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvites.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite();
 
 				formMeetConsent.StudentId = sid;
 				formMeetConsent.FurtherInformed = GetCheckboxSingleInputValue("FurtherInformed", checkboxes);
@@ -4287,15 +4299,21 @@ namespace GreenbushIep.Controllers
 
 				var meetingDateStr = GetInputValue("MeetingDate", spans);
 				if(!string.IsNullOrEmpty(meetingDateStr))
-					formMeetConsent.MeetingDate = Convert.ToDateTime(meetingDateStr);
+				{
+					var dt = DateTime.MinValue;
+					DateTime.TryParse(meetingDateStr, out dt);
+					if (dt != DateTime.MinValue)
+						formMeetConsent.MeetingDate = dt;
+				}
+				
 
-				if (formMeetConsent.FormIEPMeetingConsentToInvite_Id == 0)
+				if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
 				{
 					formMeetConsent.CreatedBy = currentUser.UserID;
 					formMeetConsent.Create_Date = DateTime.Now;
 					formMeetConsent.ModifiedBy = currentUser.UserID;
 					formMeetConsent.Update_Date = DateTime.Now;
-					db.tblFormIEPMeetingConsentToInvite_.Add(formMeetConsent);
+					db.tblFormIEPMeetingConsentToInvites.Add(formMeetConsent);
 				}
 				else
 				{
@@ -4305,10 +4323,9 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-
 			else if (formName == "IEP Meeting-Excusal from Attendance Form")
 			{
-				var formExcusal = db.tblFormIEPMeetingExcusal_.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusal_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal_();
+				var formExcusal = db.tblFormIEPMeetingExcusals.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusals.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal();
 
 				formExcusal.StudentId = sid;
 				formExcusal.ParentName = GetInputValue("ParentName", spans);
@@ -4334,24 +4351,91 @@ namespace GreenbushIep.Controllers
 
 				var meetingDateStr = GetInputValue("FormDate", spans);
 				if (!string.IsNullOrEmpty(meetingDateStr))
-					formExcusal.FormDate = Convert.ToDateTime(meetingDateStr);
+				{
+					var dt = DateTime.MinValue;
+					DateTime.TryParse(meetingDateStr, out dt);
+					if (dt != DateTime.MinValue)
+						formExcusal.FormDate = dt;
+				}
 
 				var iepDateStr = GetInputValue("IEPDate", spans);
 				if (!string.IsNullOrEmpty(iepDateStr))
-					formExcusal.IEPDate = Convert.ToDateTime(iepDateStr);
+				{
+					var dt = DateTime.MinValue;
+					DateTime.TryParse(iepDateStr, out dt);
+					if (dt != DateTime.MinValue)
+						formExcusal.IEPDate = dt;
+				}
+							
 
-				if (formExcusal.FormIEPMeetingExcusal_Id == 0)
+				if (formExcusal.FormIEPMeetingExcusalId == 0)
 				{
 					formExcusal.CreatedBy = currentUser.UserID;
 					formExcusal.Create_Date = DateTime.Now;
 					formExcusal.ModifiedBy = currentUser.UserID;
 					formExcusal.Update_Date = DateTime.Now;
-					db.tblFormIEPMeetingExcusal_.Add(formExcusal);
+					db.tblFormIEPMeetingExcusals.Add(formExcusal);
 				}
 				else
 				{
 					formExcusal.ModifiedBy = currentUser.UserID;
 					formExcusal.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+			else if (formName == "IEP Team Considerations")
+			{
+				var formTeam = db.tblFormIEPTeamConsiderations.Any(o => o.StudentId == sid) ? db.tblFormIEPTeamConsiderations.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPTeamConsideration();
+
+				formTeam.StudentId = sid;
+				formTeam.ChildsStrength = GetInputValue("ChildsStrength", spans);
+				formTeam.UtilizeStrength = GetInputValue("UtilizeStrength", spans);
+				formTeam.ConcernsForEnhancing = GetInputValue("ConcernsForEnhancing", spans);
+				formTeam.ConcernsAddressesd = GetInputValue("ConcernsAddressesd", spans);
+				formTeam.HarmfulEffects = GetInputValue("HarmfulEffects", spans);
+				formTeam.PhysicalEducatoin = GetInputValue("PhysicalEducatoin", spans);
+				formTeam.ExtendedSchoolYear = GetInputValue("ExtendedSchoolYear", spans);
+				formTeam.NeedsBeenConsidered_Yes = GetCheckboxSingleInputValue("NeedsBeenConsidered_Yes", checkboxes);
+				formTeam.NeedsBeenConsidered_No = GetCheckboxSingleInputValue("NeedsBeenConsidered_No", checkboxes);
+				formTeam.NeedsBeenConsidered_Desc = GetInputValue("NeedsBeenConsidered_Desc", spans);
+				formTeam.BehaviorImpede_Yes = GetCheckboxSingleInputValue("BehaviorImpede_Yes", checkboxes);
+				formTeam.BehaviorImpede_No = GetCheckboxSingleInputValue("BehaviorImpede_No", checkboxes);
+				formTeam.BehaviorImpede_Desc = GetInputValue("BehaviorImpede_Desc", spans);
+				formTeam.InstructionInBraille_Yes = GetCheckboxSingleInputValue("InstructionInBraille_Yes", checkboxes);
+				formTeam.InstructionInBraille_No = GetCheckboxSingleInputValue("InstructionInBraille_No", checkboxes);
+				formTeam.InstructionInBraille_Desc = GetInputValue("InstructionInBraille_Desc", spans);
+				formTeam.LimitedEnglish_Yes = GetCheckboxSingleInputValue("LimitedEnglish_Yes", checkboxes);
+				formTeam.LimitedEnglish_No = GetCheckboxSingleInputValue("LimitedEnglish_No", checkboxes);
+				formTeam.LimitedEnglish_Desc = GetInputValue("LimitedEnglish_Desc", spans);
+				formTeam.CommunicationNeeds_Yes = GetCheckboxSingleInputValue("CommunicationNeeds_Yes", checkboxes);
+				formTeam.CommunicationNeeds_No = GetCheckboxSingleInputValue("CommunicationNeeds_No", checkboxes);
+				formTeam.CommunicationNeeds_Desc = GetInputValue("CommunicationNeeds_Desc", spans);
+				formTeam.HearingCommunicationNeeds_Yes = GetCheckboxSingleInputValue("HearingCommunicationNeeds_Yes", checkboxes);
+				formTeam.HearingCommunicationNeeds_No = GetCheckboxSingleInputValue("HearingCommunicationNeeds_No", checkboxes);
+				formTeam.HearingCommunicationNeeds_Desc = GetInputValue("HearingCommunicationNeeds_Desc", spans);
+				formTeam.AssistiveTech_Yes = GetCheckboxSingleInputValue("AssistiveTech_Yes", checkboxes);
+				formTeam.AssistiveTech_No = GetCheckboxSingleInputValue("AssistiveTech_No", checkboxes);
+				formTeam.AssistiveTech_Desc = GetInputValue("AssistiveTech_Desc", spans);
+
+
+				var meetingDateStr = GetInputValue("IEPMeetingDate", spans);
+				if (!string.IsNullOrEmpty(meetingDateStr))
+					formTeam.IEPMeetingDate = Convert.ToDateTime(meetingDateStr);
+
+				
+				if (formTeam.FormIEPTeamConsiderationsId == 0)
+				{
+					formTeam.CreatedBy = currentUser.UserID;
+					formTeam.Create_Date = DateTime.Now;
+					formTeam.ModifiedBy = currentUser.UserID;
+					formTeam.Update_Date = DateTime.Now;
+					db.tblFormIEPTeamConsiderations.Add(formTeam);
+				}
+				else
+				{
+					formTeam.ModifiedBy = currentUser.UserID;
+					formTeam.Update_Date = DateTime.Now;
 				}
 
 				db.SaveChanges();

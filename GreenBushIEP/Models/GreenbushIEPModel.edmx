@@ -5,6 +5,22 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IndividualizedEducationProgramModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodationModules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblAccommodationModules">
+          <Key>
+            <PropertyRef Name="AccommodationModuleID" />
+            <PropertyRef Name="AccommodationID" />
+            <PropertyRef Name="ModuleID" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="Create_Date" />
+          </Key>
+          <Property Name="AccommodationModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccommodationID" Type="int" Nullable="false" />
+          <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblAccommodations">
           <Key>
             <PropertyRef Name="AccommodationID" />
@@ -356,13 +372,13 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
-          <Property Name="PlacementCode" Type="char" MaxLength="1" />
+          <Property Name="PlacementCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <EntityType Name="tblFormIEPAmendment_">
+        <EntityType Name="tblFormIEPAmendment">
           <Key>
-            <PropertyRef Name="FormIEPAmendment.Id" />
+            <PropertyRef Name="FormIEPAmendmentId" />
           </Key>
-          <Property Name="FormIEPAmendment.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormIEPAmendmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="2000" />
           <Property Name="AgreeToAmmend" Type="bit" />
@@ -374,11 +390,11 @@
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
         </EntityType>
-        <EntityType Name="tblFormIEPMeetingConsentToInvite_">
+        <EntityType Name="tblFormIEPMeetingConsentToInvite">
           <Key>
-            <PropertyRef Name="FormIEPMeetingConsentToInvite.Id" />
+            <PropertyRef Name="FormIEPMeetingConsentToInviteId" />
           </Key>
-          <Property Name="FormIEPMeetingConsentToInvite.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormIEPMeetingConsentToInviteId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
           <Property Name="ParticipatingAgency" Type="nvarchar" MaxLength="200" />
           <Property Name="ProvideTransitionService" Type="bit" />
@@ -389,11 +405,11 @@
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
         </EntityType>
-        <EntityType Name="tblFormIEPMeetingExcusal_">
+        <EntityType Name="tblFormIEPMeetingExcusal">
           <Key>
-            <PropertyRef Name="FormIEPMeetingExcusal.Id" />
+            <PropertyRef Name="FormIEPMeetingExcusalId" />
           </Key>
-          <Property Name="FormIEPMeetingExcusal.Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormIEPMeetingExcusalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
           <Property Name="FormDate" Type="datetime" />
           <Property Name="ParentName" Type="nvarchar" MaxLength="200" />
@@ -2146,9 +2162,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblEvaluationProcedures" EntityType="Self.tblEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormConferenceSummary" EntityType="Self.tblFormConferenceSummary" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblFormIEPAmendment_" EntityType="Self.tblFormIEPAmendment_" Schema="dbo" Table="tblFormIEPAmendment." store:Type="Tables" />
-          <EntitySet Name="tblFormIEPMeetingConsentToInvite_" EntityType="Self.tblFormIEPMeetingConsentToInvite_" Schema="dbo" Table="tblFormIEPMeetingConsentToInvite." store:Type="Tables" />
-          <EntitySet Name="tblFormIEPMeetingExcusal_" EntityType="Self.tblFormIEPMeetingExcusal_" Schema="dbo" Table="tblFormIEPMeetingExcusal." store:Type="Tables" />
+          <EntitySet Name="tblFormIEPAmendment" EntityType="Self.tblFormIEPAmendment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormIEPMeetingConsentToInvite" EntityType="Self.tblFormIEPMeetingConsentToInvite" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormIEPMeetingExcusal" EntityType="Self.tblFormIEPMeetingExcusal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPTeamConsiderations" EntityType="Self.tblFormIEPTeamConsiderations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormManifestationDeterminiation" EntityType="Self.tblFormManifestationDeterminiation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormManifestDeterm_TeamMembers" EntityType="Self.tblFormManifestDeterm_TeamMembers" Schema="dbo" store:Type="Tables" />
@@ -2205,6 +2221,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblTransitionServices" EntityType="Self.tblTransitionServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAccommodationModules" EntityType="Self.tblAccommodationModules" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblAccommodationModules].[AccommodationModuleID] AS [AccommodationModuleID], 
+    [tblAccommodationModules].[AccommodationID] AS [AccommodationID], 
+    [tblAccommodationModules].[ModuleID] AS [ModuleID], 
+    [tblAccommodationModules].[CreatedBy] AS [CreatedBy], 
+    [tblAccommodationModules].[Create_Date] AS [Create_Date]
+    FROM [dbo].[tblAccommodationModules] AS [tblAccommodationModules]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_BuildingList" EntityType="Self.vw_BuildingList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_BuildingList].[USD] AS [USD], 
@@ -2570,9 +2595,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="isAssgined" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="tblFormConferenceSummaries" EntityType="IndividualizedEducationProgramModel.tblFormConferenceSummary" />
-          <EntitySet Name="tblFormIEPAmendment_" EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment_" />
-          <EntitySet Name="tblFormIEPMeetingConsentToInvite_" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_" />
-          <EntitySet Name="tblFormIEPMeetingExcusal_" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_" />
           <EntitySet Name="tblFormIEPTeamConsiderations" EntityType="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration" />
           <EntitySet Name="tblFormManifestationDeterminiations" EntityType="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation" />
           <EntitySet Name="tblFormManifestDeterm_TeamMembers" EntityType="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers" />
@@ -2590,6 +2612,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblFormManifestationDeterminiation" EntitySet="tblFormManifestationDeterminiations" />
             <End Role="tblFormManifestDeterm_TeamMembers" EntitySet="tblFormManifestDeterm_TeamMembers" />
           </AssociationSet>
+          <EntitySet Name="tblFormIEPAmendments" EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment" />
+          <EntitySet Name="tblFormIEPMeetingConsentToInvites" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite" />
+          <EntitySet Name="tblFormIEPMeetingExcusals" EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal" />
+          <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
         </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -4347,65 +4373,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
-          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-        </EntityType>
-        <EntityType Name="tblFormIEPAmendment_">
-          <Key>
-            <PropertyRef Name="FormIEPAmendment_Id" />
-          </Key>
-          <Property Name="FormIEPAmendment_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="AgreeToAmmend" Type="Boolean" />
-          <Property Name="DisagreeToAmmend" Type="Boolean" />
-          <Property Name="ConveneMeeting" Type="Boolean" />
-          <Property Name="DoNotConveneMeeting" Type="Boolean" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblFormIEPMeetingConsentToInvite_">
-          <Key>
-            <PropertyRef Name="FormIEPMeetingConsentToInvite_Id" />
-          </Key>
-          <Property Name="FormIEPMeetingConsentToInvite_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="ParticipatingAgency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ProvideTransitionService" Type="Boolean" />
-          <Property Name="FurtherInformed" Type="Boolean" />
-          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblFormIEPMeetingExcusal_">
-          <Key>
-            <PropertyRef Name="FormIEPMeetingExcusal_Id" />
-          </Key>
-          <Property Name="FormIEPMeetingExcusal_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="FormDate" Type="DateTime" Precision="3" />
-          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PositionOfRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PositionOfMemberNotAttending" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Services_Not_ModOrDisc_NonAttend" Type="Boolean" />
-          <Property Name="Services_Not_ModOrDisc_PartialAttend" Type="Boolean" />
-          <Property Name="Services_Not_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Services_Not_ModOrDisc_Agree" Type="Boolean" />
-          <Property Name="Services_Not_ModOrDisc_Disagree" Type="Boolean" />
-          <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="Boolean" />
-          <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="Boolean" />
-          <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Precision="3" />
-          <Property Name="Services_MayBe_ModOrDisc_Agree" Type="Boolean" />
-          <Property Name="Services_MayBe_ModOrDisc_Disagree" Type="Boolean" />
-          <Property Name="IEPDate" Type="DateTime" Precision="3" />
+          <Property Name="PlacementCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblFormIEPTeamConsideration">
           <Key>
@@ -4777,6 +4745,78 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblFormIEPAmendment">
+          <Key>
+            <PropertyRef Name="FormIEPAmendmentId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="AgreeToAmmend" Type="Boolean" />
+          <Property Name="DisagreeToAmmend" Type="Boolean" />
+          <Property Name="ConveneMeeting" Type="Boolean" />
+          <Property Name="DoNotConveneMeeting" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="FormIEPAmendmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingConsentToInvite">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingConsentToInviteId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ParticipatingAgency" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProvideTransitionService" Type="Boolean" />
+          <Property Name="FurtherInformed" Type="Boolean" />
+          <Property Name="MeetingDate" Type="DateTime" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="FormIEPMeetingConsentToInviteId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tblFormIEPMeetingExcusal">
+          <Key>
+            <PropertyRef Name="FormIEPMeetingExcusalId" />
+          </Key>
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PositionOfRepresentative" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PositionOfMemberNotAttending" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Not_ModOrDisc_NonAttend" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_PartialAttend" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Not_ModOrDisc_Agree" Type="Boolean" />
+          <Property Name="Services_Not_ModOrDisc_Disagree" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Services_MayBe_ModOrDisc_Agree" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_Disagree" Type="Boolean" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="IEPDate" Type="DateTime" Precision="3" />
+          <Property Name="FormIEPMeetingExcusalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <EntityType Name="tblAccommodationModule">
+          <Key>
+            <PropertyRef Name="AccommodationModuleID" />
+            <PropertyRef Name="AccommodationID" />
+            <PropertyRef Name="ModuleID" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="Create_Date" />
+          </Key>
+          <Property Name="AccommodationModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6546,67 +6586,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblFormIEPAmendment_">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPAmendment_">
-              <MappingFragment StoreEntitySet="tblFormIEPAmendment_">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="DoNotConveneMeeting" ColumnName="DoNotConveneMeeting" />
-                <ScalarProperty Name="ConveneMeeting" ColumnName="ConveneMeeting" />
-                <ScalarProperty Name="DisagreeToAmmend" ColumnName="DisagreeToAmmend" />
-                <ScalarProperty Name="AgreeToAmmend" ColumnName="AgreeToAmmend" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="FormIEPAmendment_Id" ColumnName="FormIEPAmendment.Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFormIEPMeetingConsentToInvite_">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_">
-              <MappingFragment StoreEntitySet="tblFormIEPMeetingConsentToInvite_">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
-                <ScalarProperty Name="FurtherInformed" ColumnName="FurtherInformed" />
-                <ScalarProperty Name="ProvideTransitionService" ColumnName="ProvideTransitionService" />
-                <ScalarProperty Name="ParticipatingAgency" ColumnName="ParticipatingAgency" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="FormIEPMeetingConsentToInvite_Id" ColumnName="FormIEPMeetingConsentToInvite.Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblFormIEPMeetingExcusal_">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_">
-              <MappingFragment StoreEntitySet="tblFormIEPMeetingExcusal_">
-                <ScalarProperty Name="IEPDate" ColumnName="IEPDate" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_Disagree" ColumnName="Services_MayBe_ModOrDisc_Disagree" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_Agree" ColumnName="Services_MayBe_ModOrDisc_Agree" />
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_IssueDiscussed" ColumnName="Services_MayBe_ModOrDisc_IssueDiscussed" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_PartialAttend" ColumnName="Services_MayBe_ModOrDisc_PartialAttend" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_NonAttend" ColumnName="Services_MayBe_ModOrDisc_NonAttend" />
-                <ScalarProperty Name="Services_Not_ModOrDisc_Disagree" ColumnName="Services_Not_ModOrDisc_Disagree" />
-                <ScalarProperty Name="Services_Not_ModOrDisc_Agree" ColumnName="Services_Not_ModOrDisc_Agree" />
-                <ScalarProperty Name="Services_Not_ModOrDisc_IssueDiscussed" ColumnName="Services_Not_ModOrDisc_IssueDiscussed" />
-                <ScalarProperty Name="Services_Not_ModOrDisc_PartialAttend" ColumnName="Services_Not_ModOrDisc_PartialAttend" />
-                <ScalarProperty Name="Services_Not_ModOrDisc_NonAttend" ColumnName="Services_Not_ModOrDisc_NonAttend" />
-                <ScalarProperty Name="PositionOfMemberNotAttending" ColumnName="PositionOfMemberNotAttending" />
-                <ScalarProperty Name="PositionOfRepresentative" ColumnName="PositionOfRepresentative" />
-                <ScalarProperty Name="SchoolRepresentative" ColumnName="SchoolRepresentative" />
-                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
-                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="FormIEPMeetingExcusal_Id" ColumnName="FormIEPMeetingExcusal.Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblFormIEPTeamConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration">
               <MappingFragment StoreEntitySet="tblFormIEPTeamConsiderations">
@@ -6973,6 +6952,78 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
                 <ScalarProperty Name="StudentId" ColumnName="StudentId" />
                 <ScalarProperty Name="FormRevokeConsentPartId" ColumnName="FormRevokeConsentPartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPAmendments">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPAmendment">
+              <MappingFragment StoreEntitySet="tblFormIEPAmendment">
+                <ScalarProperty Name="FormIEPAmendmentId" ColumnName="FormIEPAmendmentId" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="DoNotConveneMeeting" ColumnName="DoNotConveneMeeting" />
+                <ScalarProperty Name="ConveneMeeting" ColumnName="ConveneMeeting" />
+                <ScalarProperty Name="DisagreeToAmmend" ColumnName="DisagreeToAmmend" />
+                <ScalarProperty Name="AgreeToAmmend" ColumnName="AgreeToAmmend" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPMeetingConsentToInvites">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite">
+              <MappingFragment StoreEntitySet="tblFormIEPMeetingConsentToInvite">
+                <ScalarProperty Name="FormIEPMeetingConsentToInviteId" ColumnName="FormIEPMeetingConsentToInviteId" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="FurtherInformed" ColumnName="FurtherInformed" />
+                <ScalarProperty Name="ProvideTransitionService" ColumnName="ProvideTransitionService" />
+                <ScalarProperty Name="ParticipatingAgency" ColumnName="ParticipatingAgency" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFormIEPMeetingExcusals">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal">
+              <MappingFragment StoreEntitySet="tblFormIEPMeetingExcusal">
+                <ScalarProperty Name="FormIEPMeetingExcusalId" ColumnName="FormIEPMeetingExcusalId" />
+                <ScalarProperty Name="IEPDate" ColumnName="IEPDate" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_Disagree" ColumnName="Services_MayBe_ModOrDisc_Disagree" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_Agree" ColumnName="Services_MayBe_ModOrDisc_Agree" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_IssueDiscussed" ColumnName="Services_MayBe_ModOrDisc_IssueDiscussed" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_PartialAttend" ColumnName="Services_MayBe_ModOrDisc_PartialAttend" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_NonAttend" ColumnName="Services_MayBe_ModOrDisc_NonAttend" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_Disagree" ColumnName="Services_Not_ModOrDisc_Disagree" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_Agree" ColumnName="Services_Not_ModOrDisc_Agree" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_IssueDiscussed" ColumnName="Services_Not_ModOrDisc_IssueDiscussed" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_PartialAttend" ColumnName="Services_Not_ModOrDisc_PartialAttend" />
+                <ScalarProperty Name="Services_Not_ModOrDisc_NonAttend" ColumnName="Services_Not_ModOrDisc_NonAttend" />
+                <ScalarProperty Name="PositionOfMemberNotAttending" ColumnName="PositionOfMemberNotAttending" />
+                <ScalarProperty Name="PositionOfRepresentative" ColumnName="PositionOfRepresentative" />
+                <ScalarProperty Name="SchoolRepresentative" ColumnName="SchoolRepresentative" />
+                <ScalarProperty Name="ParentName" ColumnName="ParentName" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccommodationModules">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodationModule">
+              <MappingFragment StoreEntitySet="tblAccommodationModules">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="AccommodationModuleID" ColumnName="AccommodationModuleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

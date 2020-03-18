@@ -12,17 +12,18 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblFormIEPMeetingConsentToInvite_
+    public partial class tblFormIEPAmendment
     {
-        public int FormIEPMeetingConsentToInvite_Id { get; set; }
         public int StudentId { get; set; }
-        public string ParticipatingAgency { get; set; }
-        public Nullable<bool> ProvideTransitionService { get; set; }
-        public Nullable<bool> FurtherInformed { get; set; }
-        public Nullable<System.DateTime> MeetingDate { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> AgreeToAmmend { get; set; }
+        public Nullable<bool> DisagreeToAmmend { get; set; }
+        public Nullable<bool> ConveneMeeting { get; set; }
+        public Nullable<bool> DoNotConveneMeeting { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
+        public int FormIEPAmendmentId { get; set; }
     }
 }

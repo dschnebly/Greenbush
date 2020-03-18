@@ -1,333 +1,299 @@
 ﻿@{
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var formModel = ViewData["formIEPTeamConsider"] != null ? ViewData["formIEPTeamConsider"] as GreenBushIEP.Models.tblFormIEPTeamConsideration : new GreenBushIEP.Models.tblFormIEPTeamConsideration();
+
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var IEPMeetingDate = "";
+	if (formModel.IEPMeetingDate.HasValue)
+	{
+		IEPMeetingDate = String.Format("{0:MM/dd/yyyy}", formModel.IEPMeetingDate.Value);
+	}
 }
 
-<div class="module-page">
-    <div class=WordSection1>
+<div class="module-page savdDraftAllowed">
+	<div class=WordSection1>
+		<div class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt'>
+			Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))  <br />
+			IEP Meeting Date:  <textarea cols="20" rows="1" maxlength="10" data-val="57">@(IEPMeetingDate)</textarea><span id="IEPMeetingDate" style="display:none" class="input-value" data-val="59">@(IEPMeetingDate)</span>
+		</div>
 
-        <div class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:
-0in;margin-left:0in;margin-bottom:.0001pt'>
-            Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))  <br/>
-			IEP Meeting Date:  <textarea maxlength="20" style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
-        </div>
+		<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;margin-left:22.55pt'>
+			<span style='font-size:7.0pt;line-height:107%;font-family:"Times New Roman",serif'></span>
+		</p>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;
-margin-left:22.55pt'>
-            <span style='font-size:7.0pt;line-height:107%;font-family:
-"Times New Roman",serif'></span>
-        </p>
+		<p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
+			<b>
+				<span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
+					IEP Team
+					Considerations
+				</span>
+			</b>
+		</p>
 
-        <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
-margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
-            <b>
-                <span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
-                    IEP Team
-                    Considerations
-                </span>
-            </b>
-        </p>
+		<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+			<span style='font-size:4.0pt;line-height:107%;font-family:"Cambria",serif'></span><span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'>
+				(The child’s IEP must reflect these considerations.)
+			</span><span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'></span>
+		</p>
 
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:4.0pt;line-height:107%;font-family:"Cambria",serif'></span><span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'>
-                (The child’s IEP must reflect these considerations.)
-            </span><span style='font-size:
-16.0pt;line-height:107%;font-family:"Cambria",serif'></span>
-        </p>
+		<p class=MsoNormal style='margin-top:0in;margin-right:-55.1pt;margin-bottom:5.75pt;margin-left:0in'>
+			<img width=680 height=1 id="Group 2520"	 src="IEP_Team_Considerations_files/image003.gif">
+		</p>
 
-        <p class=MsoNormal style='margin-top:0in;margin-right:-55.1pt;margin-bottom:
-5.75pt;margin-left:0in'>
-            <img width=680 height=1 id="Group 2520"
-                 src="IEP_Team_Considerations_files/image003.gif">
-        </p>
+		<table class=TableGrid border=1 cellspacing=0 cellpadding=5 width=0 style='width:509.6pt;border: solid black 1pt'>
+			<tr style='height:68.5pt'>
+				<td width=679 valign=top style='width:509.6pt;border:none black 0pt;  border-bottom:none black 1.0pt;padding:2.3pt 5.75pt 0in 5.5pt;height:68.5pt'>
+					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						What are
+						the strengths of the child?
 
-        <table class=TableGrid border=1 cellspacing=0 cellpadding=5 width=0 style='width:509.6pt;border: solid black 1pt'>
-            <tr style='height:68.5pt'>
-                <td width=679 valign=top style='width:509.6pt;border:none black 0pt;
-  border-bottom:none black 1.0pt;padding:2.3pt 5.75pt 0in 5.5pt;height:68.5pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        What are
-                        the strengths of the child?
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.ChildsStrength)</textarea><span id="ChildsStrength" style="display:none" class="input-value">@(formModel.ChildsStrength)</span><br />
+				</td>
+			</tr>
+			<tr style='height:67.7pt;'>
+				<td valign=top style='width:509.6pt;border-top:none solid 0px;border-left:  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;  padding:2.3pt 5.75pt 0in 5.5pt;height:67.5pt'>
 
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:67.7pt;'>
-                <td valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
-  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:67.5pt'>
-                    
-                    <p class=MsoNormal style='margin-top:0in;margin-bottom:.0001pt;'>
-                        How have
-                        the child’s strengths been utilized to address the child’s needs on the IEP?
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:66.5pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
-  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:66.5pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        What are
-                        the parents’ concerns, if any, for enhancing the education of their child?
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:67.55pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
-  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:67.55pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        How are
-                        the parents’ concerns for the education of their child addressed on the IEP?
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:81.15pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
-  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:81.15pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  99%'>
-                        Are there any potential harmful effects of the recommended placement on
-                        the student and/or the quality of services for the student?  (Do the positive
-                        effects of the placement outweigh the potential harmful effects?)
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:81.0pt'>
-                <td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:
-  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;
-  padding:2.3pt 5.75pt 0in 5.5pt;height:81.0pt'>
-                    <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  99%'>
-                        Will the child participate in regular physical education or does the
-                        child require specially designed adapted physical education? (Children with
-                        disabilities only.)
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-            <tr style='height:95.55pt'>
-                <td width=679 valign=top style='width:509.6pt;border:none black 0pt;
-  border-top:none solid 0px;padding:2.3pt 5.75pt 0in 5.5pt;height:95.55pt'>
-                    <p class=MsoNormal style='margin-bottom:.1pt;line-height:99%'>
-                        Are extended
-                        school year services necessary since the benefits accrued to the child during
-                        the regular school term will be significantly jeopardized as a result of a
-                        break in educational programming? (Children with disabilities only.)
-                    </p>
-                    <textarea class="form-control" cols="100" rows="4"></textarea><p style="display:none" class="input-value"></p><br />
-                </td>
-            </tr>
-        </table>
+					<p class=MsoNormal style='margin-top:0in;margin-bottom:.0001pt;'>
+						How have
+						the child’s strengths been utilized to address the child’s needs on the IEP?
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.UtilizeStrength)</textarea><span id="UtilizeStrength" style="display:none" class="input-value">@(formModel.UtilizeStrength)</span><br />
+				</td>
+			</tr>
+			<tr style='height:66.5pt'>
+				<td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;  padding:2.3pt 5.75pt 0in 5.5pt;height:66.5pt'>
+					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						What are
+						the parents’ concerns, if any, for enhancing the education of their child?
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.ConcernsForEnhancing)</textarea><span id="ConcernsForEnhancing" style="display:none" class="input-value">@(formModel.ConcernsForEnhancing)</span><br />
+				</td>
+			</tr>
+			<tr style='height:67.55pt'>
+				<td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;  padding:2.3pt 5.75pt 0in 5.5pt;height:67.55pt'>
+					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						How are
+						the parents’ concerns for the education of their child addressed on the IEP?
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.ConcernsAddressesd)</textarea><span id="ConcernsAddressesd" style="display:none" class="input-value">@(formModel.ConcernsAddressesd)</span><br />
+				</td>
+			</tr>
+			<tr style='height:81.15pt'>
+				<td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;  padding:2.3pt 5.75pt 0in 5.5pt;height:81.15pt'>
+					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:  99%'>
+						Are there any potential harmful effects of the recommended placement on
+						the student and/or the quality of services for the student?  (Do the positive
+						effects of the placement outweigh the potential harmful effects?)
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.HarmfulEffects)</textarea><span id="HarmfulEffects" style="display:none" class="input-value">@(formModel.HarmfulEffects)</span><br />
+				</td>
+			</tr>
+			<tr style='height:81.0pt'>
+				<td width=679 valign=top style='width:509.6pt;border-top:none solid 0px;border-left:  none black 0pt;border-bottom:solid black 1.0pt;border-right:none black 0pt;  padding:2.3pt 5.75pt 0in 5.5pt;height:81.0pt'>
+					<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:  99%'>
+						Will the child participate in regular physical education or does the
+						child require specially designed adapted physical education? (Children with
+						disabilities only.)
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.PhysicalEducatoin)</textarea><span id="PhysicalEducatoin" style="display:none" class="input-value">@(formModel.PhysicalEducatoin)</span><br />
+				</td>
+			</tr>
+			<tr style='height:95.55pt'>
+				<td width=679 valign=top style='width:509.6pt;border:none black 0pt;  border-top:none solid 0px;padding:2.3pt 5.75pt 0in 5.5pt;height:95.55pt'>					<p class=MsoNormal style='margin-bottom:.1pt;line-height:99%'>
+						Are extended
+						school year services necessary since the benefits accrued to the child during
+						the regular school term will be significantly jeopardized as a result of a
+						break in educational programming? (Children with disabilities only.)
+					</p>
+					<textarea cols="100" rows="5"  maxlength="2000">@(formModel.ExtendedSchoolYear)</textarea><span id="ExtendedSchoolYear" style="display:none" class="input-value">@(formModel.ExtendedSchoolYear)</span><br />
+				</td>
+			</tr>
+		</table>
+		<p class="section-break"></p>
+		<table border="1" cellpadding="5" class="dont-break" style="width:100%;margin-bottom:50px">
+			<tr>
+				<td valign=top>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.55pt;margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<b>
+							<span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
+								IEP
+								Team Consideration of
+							</span>
+						</b>
+					</p>
+					<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center'>
+						<b>
+							<span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>Evaluation Results and Special Factors</span>
+						</b>
+					</p>
+				</td>
 
-       
-        <p  class="section-break"></p>
-        <table border="1" cellpadding="5" class="dont-break" style="width:100%">
-            <tr>
-                <td valign=top >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.55pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <b>
-                            <span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
-                                IEP
-                                Team Consideration of
-                            </span>
-                        </b>
-                    </p>
-                    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center'>
-                        <b>
-                            <span style='font-size:16.0pt;line-height:107%;
-  font-family:"Cambria",serif'>Evaluation Results and Special Factors</span>
-                        </b>
-                    </p>
-                </td>
-
-                <td style="width:20%" >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;
-  margin-bottom:0in;margin-left:.8pt;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'></span>
-                    </p>
-                </td>
-                <td  style="width:20%" >
-                    <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
-  text-align:center'>
-                        <span style='font-size:12.0pt;line-height:107%;font-family:
-  "Cambria",serif'>If yes, where is this need addressed in the IEP?</span>
-                    </p>
-                </td>
-            </tr>
-            <tr style='height:74.15pt'>
-                <td >
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        Have the needs of the child which
-                        were identified in the most recent evaluation of the child, including
-                        observed needs and the child’s performance on general State and district-wide
-                        assessments, been considered in the development of the child’s IEP?
-                    </p>
-                </td>
-                <td >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td >
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:72.65pt'>
-                <td >
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        Does the child’s behavior impede his
-                        or her learning or that of others?<span style='font-size:10.0pt;line-height:
-  107%'></span>
-                    </p>
-                </td>
-                <td >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td >
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:100.45pt'>
-                <td >
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt;line-height:99%'>
-                        If the child is blind
-                        or visually impaired, does evaluation of the child’s reading and writing
-                        skills, needs, and appropriate reading and writing media (including an
-                        evaluation of the child’s future needs for instruction in Braille or the use
-                        of Braille), indicate that instruction in Braille or the use of Braille is
-                        appropriate for the child? 
-                    </p>
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>(Children with disabilities only.)</p>
-                </td>
-                <td >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td >
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:72.5pt'>
-                <td>
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        Does the child have limited English
-                        proficiency?
-                    </p>
-                </td>
-                <td>
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td>
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:72.5pt'>
-                <td>
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        Does the child have any special
-                        communication needs?
-                    </p>
-                </td>
-                <td>
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td>
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:100.6pt'>
-                <td >
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        If the child is deaf or hard of
-                        hearing, does the child have any special communication needs relating to
-                        opportunities for direct communications with peers and professional personnel
-                        in the child’s language and communication mode, academic level, or
-                        opportunities for direct instruction in the child’s language and
-                        communication mode?  (Children with disabilities only.)
-                    </p>
-                </td>
-                <td >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> Yes  <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)"/> No</span>
-                    </p>
-                </td>
-                <td >
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-            <tr style='height:73.1pt'>
-                <td >
-                    <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;
-  margin-left:.1pt;margin-bottom:.0001pt'>
-                        Does the child require any assistive
-                        technology devices or services in order to be involved, and to progress in
-                        the general curriculum or to be educated in a less restrictive environment?
-                        (Children with disabilities only.)
-                    </p>
-                </td>
-                <td >
-                    <p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;
-  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
-                        <span style='font-size:10.0pt;line-height:107%'><input type="checkbox" name="reqAssist" /><img class='imgCheck' src="@(@imageNotChecked)" /> Yes  <input type="checkbox" name="reqAssist" /><img class='imgCheck' src="@(@imageNotChecked)" /> No</span>
-                    </p>
-                </td>
-                <td >
-                    <div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-                        <textarea class="form-control" rows="5"></textarea><p style="display:none" class="input-value"></p>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
-        <p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:34.05pt;
-margin-left:22.55pt'>
-            <span style='font-size:5.0pt;line-height:107%;font-family:
-"Times New Roman",serif'></span>
-        </p>
-
-
-
-    </div>
+				<td style="width:20%">
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;  margin-bottom:0in;margin-left:.8pt;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'></span>
+					</p>
+				</td>
+				<td style="width:20%">
+					<p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;  text-align:center'>
+						<span style='font-size:12.0pt;line-height:107%;font-family:  "Cambria",serif'>If yes, where is this need addressed in the IEP?</span>
+					</p>
+				</td>
+			</tr>
+			<tr style='height:74.15pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						Have the needs of the child which
+						were identified in the most recent evaluation of the child, including
+						observed needs and the child’s performance on general State and district-wide
+						assessments, been considered in the development of the child’s IEP?
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "")/><img id="NeedsBeenConsidered_Yes" class='imgCheck' src="@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
+						<input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "")/><img id="NeedsBeenConsidered_No" class='imgCheck' src="@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:72.65pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						Does the child’s behavior impede his
+						or her learning or that of others?<span style='font-size:10.0pt;line-height:  107%'></span>
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="BehaviorImpede_YesCBS" @(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? "checked" : "")/><img id="BehaviorImpede_Yes" class='imgCheck' src="@(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
+						<input type="checkbox" name="BehaviorImpede_NoCBS" @(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? "checked" : "")/><img id="BehaviorImpede_No" class='imgCheck' src="@(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.BehaviorImpede_Desc)</textarea><span id="BehaviorImpede_Desc" style="display:none" class="input-value">@(formModel.BehaviorImpede_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:100.45pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt;line-height:99%'>
+						If the child is blind
+						or visually impaired, does evaluation of the child’s reading and writing
+						skills, needs, and appropriate reading and writing media (including an
+						evaluation of the child’s future needs for instruction in Braille or the use
+						of Braille), indicate that instruction in Braille or the use of Braille is
+						appropriate for the child? 
+					</p>					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>(Children with disabilities only.)</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><img id="InstructionInBraille_Yes" class='imgCheck' src="@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
+						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><img id="InstructionInBraille_No" class='imgCheck' src="@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.InstructionInBraille_Desc)</textarea><span id="InstructionInBraille_Desc" style="display:none" class="input-value">@(formModel.InstructionInBraille_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:72.5pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						Does the child have limited English
+						proficiency?
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><img id="InstructionInBraille_Yes" class='imgCheck' src="@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
+						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><img id="InstructionInBraille_No" class='imgCheck' src="@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.LimitedEnglish_Desc)</textarea><span id="LimitedEnglish_Desc" style="display:none" class="input-value">@(formModel.LimitedEnglish_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:72.5pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						Does the child have any special
+						communication needs?
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="LimitedEnglish_YesCBS" @(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? "checked" : "")/><img id="LimitedEnglish_Yes" class='imgCheck' src="@(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
+						<input type="checkbox" name="LimitedEnglish_NoCBS" @(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? "checked" : "")/><img id="LimitedEnglish_No" class='imgCheck' src="@(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.CommunicationNeeds_Desc)</textarea><span id="CommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.CommunicationNeeds_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:100.6pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						If the child is deaf or hard of
+						hearing, does the child have any special communication needs relating to
+						opportunities for direct communications with peers and professional personnel
+						in the child’s language and communication mode, academic level, or
+						opportunities for direct instruction in the child’s language and
+						communication mode?  (Children with disabilities only.)
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="CommunicationNeeds_YesCBS" @(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? "checked" : "")/><img id="CommunicationNeeds_Yes" class='imgCheck' src="@(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
+						<input type="checkbox" name="CommunicationNeeds_NoCBS" @(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? "checked" : "")/><img id="CommunicationNeeds_No" class='imgCheck' src="@(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.HearingCommunicationNeeds_Desc)</textarea><span id="HearingCommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.HearingCommunicationNeeds_Desc)</span>
+					</div>
+				</td>
+			</tr>
+			<tr style='height:73.1pt'>
+				<td>
+					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+						Does the child require any assistive
+						technology devices or services in order to be involved, and to progress in
+						the general curriculum or to be educated in a less restrictive environment?
+						(Children with disabilities only.)
+					</p>
+				</td>
+				<td>
+					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
+						<span style='font-size:10.0pt;line-height:107%'>
+						<input type="checkbox" name="AssistiveTech_YesCBS" @(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? "checked" : "")/><img id="AssistiveTech_Yes" class='imgCheck' src="@(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
+						<input type="checkbox" name="AssistiveTech_NoCBS" @(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? "checked" : "")/><img id="AssistiveTech_No" class='imgCheck' src="@(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+					</p>
+				</td>
+				<td>
+					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
+						<textarea cols="100" rows="5"  maxlength="2000">@(formModel.AssistiveTech_Desc)</textarea><span id="AssistiveTech_Desc" style="display:none" class="input-value">@(formModel.AssistiveTech_Desc)</span>
+					</div>
+				</td>
+			</tr>
+		</table>
+		
+	</div>
 </div>

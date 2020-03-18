@@ -92,9 +92,6 @@
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.tblServiceGoals" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormConferenceSummary" Width="1.5" PointX="30.75" PointY="0.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment_" Width="1.5" PointX="0.75" PointY="30.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite_" Width="1.5" PointX="30.75" PointY="4.75" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_" Width="1.5" PointX="7.75" PointY="30.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPTeamConsideration" Width="1.5" PointX="9.75" PointY="30.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation" Width="1.5" PointX="29.75" PointY="26.125" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormManifestDeterm_TeamMembers" Width="1.5" PointX="32" PointY="27.125" />
@@ -109,6 +106,10 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentAll" Width="1.5" PointX="15.75" PointY="32.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormRevokeConsentPart" Width="1.5" PointX="17.75" PointY="32.75" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPAmendment" Width="1.5" PointX="28.75" PointY="32.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite" Width="1.5" PointX="3.75" PointY="33.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal" Width="1.5" PointX="0.75" PointY="34.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="33.75" PointY="5.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

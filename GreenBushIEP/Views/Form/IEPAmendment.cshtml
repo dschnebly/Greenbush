@@ -1,5 +1,5 @@
 ﻿@{
-	var formModel = ViewData["formAmend"] != null ? ViewData["formAmend"] as GreenBushIEP.Models.tblFormIEPAmendment_ : new GreenBushIEP.Models.tblFormIEPAmendment_();
+	var formModel = ViewData["formAmend"] != null ? ViewData["formAmend"] as GreenBushIEP.Models.tblFormIEPAmendment : new GreenBushIEP.Models.tblFormIEPAmendment();
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");

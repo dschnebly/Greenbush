@@ -438,9 +438,10 @@ namespace GreenBushIEP.Models
         public tblFormTeamEval teamEval { get; set; }
         public tblFormSummaryPerformance summaryPerformance { get; set; }
 		public tblFormConferenceSummary conferenceSummary { get; set; }
-		public tblFormIEPAmendment_ formAmend { get; set; }
-		public tblFormIEPMeetingConsentToInvite_ formMtgConsent { get; set; }
-		public tblFormIEPMeetingExcusal_ formMtgExcusal { get; set; }
+		public tblFormIEPAmendment formAmend { get; set; }
+		public tblFormIEPMeetingConsentToInvite formMtgConsent { get; set; }
+		public tblFormIEPMeetingExcusal formMtgExcusal { get; set; }
+		public tblFormIEPTeamConsideration formIEPTeamConsider { get; set; }
 
 		public IEPFormFileViewModel()
         {
