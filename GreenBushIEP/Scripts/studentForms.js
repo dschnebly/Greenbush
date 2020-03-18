@@ -5,7 +5,7 @@
             var id = $("#stid").val();
 
             if (id) {
-                $('.ajax-loader').css("visibility", "visible");
+                //$('.ajax-loader').css("visibility", "visible");
 
                 var pageName = this.id;
                 window.location.href = '/Home/IEPFormFile?id=' + id + '&fileName=' + pageName;

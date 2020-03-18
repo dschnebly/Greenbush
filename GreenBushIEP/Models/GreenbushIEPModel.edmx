@@ -356,6 +356,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
+          <Property Name="PlacementCode" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="tblFormIEPAmendment_">
           <Key>
@@ -407,12 +408,13 @@
           <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="bit" />
           <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="bit" />
           <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="nvarchar" MaxLength="200" />
-          <Property Name="Services_MayBe_ModOrDisc_Consent" Type="bit" />
-          <Property Name="Services_MayBe_ModOrDisc_NotConsent" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_Agree" Type="bit" />
+          <Property Name="Services_MayBe_ModOrDisc_Disagree" Type="bit" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
+          <Property Name="IEPDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormIEPTeamConsiderations">
           <Key>
@@ -4345,6 +4347,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblFormIEPAmendment_">
           <Key>
@@ -4396,12 +4399,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Services_MayBe_ModOrDisc_NonAttend" Type="Boolean" />
           <Property Name="Services_MayBe_ModOrDisc_PartialAttend" Type="Boolean" />
           <Property Name="Services_MayBe_ModOrDisc_IssueDiscussed" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Services_MayBe_ModOrDisc_Consent" Type="Boolean" />
-          <Property Name="Services_MayBe_ModOrDisc_NotConsent" Type="Boolean" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="Services_MayBe_ModOrDisc_Agree" Type="Boolean" />
+          <Property Name="Services_MayBe_ModOrDisc_Disagree" Type="Boolean" />
+          <Property Name="IEPDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormIEPTeamConsideration">
           <Key>
@@ -6528,6 +6532,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormConferenceSummaries">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormConferenceSummary">
               <MappingFragment StoreEntitySet="tblFormConferenceSummary">
+                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -6577,12 +6582,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormIEPMeetingExcusal_">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal_">
               <MappingFragment StoreEntitySet="tblFormIEPMeetingExcusal_">
+                <ScalarProperty Name="IEPDate" ColumnName="IEPDate" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_Disagree" ColumnName="Services_MayBe_ModOrDisc_Disagree" />
+                <ScalarProperty Name="Services_MayBe_ModOrDisc_Agree" ColumnName="Services_MayBe_ModOrDisc_Agree" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_NotConsent" ColumnName="Services_MayBe_ModOrDisc_NotConsent" />
-                <ScalarProperty Name="Services_MayBe_ModOrDisc_Consent" ColumnName="Services_MayBe_ModOrDisc_Consent" />
                 <ScalarProperty Name="Services_MayBe_ModOrDisc_IssueDiscussed" ColumnName="Services_MayBe_ModOrDisc_IssueDiscussed" />
                 <ScalarProperty Name="Services_MayBe_ModOrDisc_PartialAttend" ColumnName="Services_MayBe_ModOrDisc_PartialAttend" />
                 <ScalarProperty Name="Services_MayBe_ModOrDisc_NonAttend" ColumnName="Services_MayBe_ModOrDisc_NonAttend" />

@@ -1,22 +1,43 @@
 ﻿@{
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	var formModel = ViewData["formMtgExcusal"] != null ? ViewData["formMtgExcusal"] as GreenBushIEP.Models.tblFormIEPMeetingExcusal_ : new GreenBushIEP.Models.tblFormIEPMeetingExcusal_();
+
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
 	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	string contactFormattedName = "";	
+	string contactFormattedName = "";
+	string iepDate = "";
 	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
 	{
 		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
 		if (primary != null)
 		{
-			contactFormattedName = primary.FirstName + " " + primary.LastName;			
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
 		}
+	}
+
+	if (formModel.FormIEPMeetingExcusal_Id == 0)
+	{
+		formModel.ParentName = contactFormattedName;
+		formModel.SchoolRepresentative = districtContactName;
+	}
+
+	if (formModel.FormDate.HasValue)
+	{
+		currentDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+	}
+
+	if (formModel.IEPDate.HasValue)
+	{
+		iepDate = String.Format("{0:MM/dd/yyyy}", formModel.IEPDate.Value);
 	}
 }
 
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
     <div class=WordSection1>
         <p class=MsoNormal align=center style='text-align:center;margin-bottom:10px'>
             <span style='font-size:11.0pt;font-family:"Cambria",serif;'>
@@ -26,7 +47,7 @@
 
 		<table cellpadding="1" cellspacing="3">
 			<tr>
-				<td style="width: 50px">Date:</td><td><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="59">@(currentDate.PadRight(59, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@((currentDate.Length) > 59 ? currentDate : String.Format(currentDate).PadRight(59 - String.Format(currentDate).Length, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td style="width: 50px">Date:</td><td><u><textarea cols="20" rows="1" maxlength="20" data-val="59">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(currentDate)</span></u></td>
 				<td style="width: 50px">Student:</td><td><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></td>
 			</tr>		
 			<tr>
@@ -34,8 +55,8 @@
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
-				<td style="width: 50px">IEP date</td><td><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="57">@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(57, ' ').Replace(" ", "\u00A0"))</span></u></td>
-				<td colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="83">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td style="width: 50px">IEP Date:</td><td><u><textarea cols="20" rows="1" maxlength="20" data-val="57">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value" data-val="59">@(iepDate)</span></u></td>
+				<td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83">@(formModel.ParentName)</textarea><span id="ParentName" style="display:none" class="input-value">@(formModel.ParentName)</span></u></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
@@ -46,8 +67,8 @@
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
-				<td  colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="72">@((districtContactName.Length) > 72 || string.IsNullOrEmpty(districtContactName) ? districtContactName : String.Format(districtContactName).PadRight(72 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@((districtContactName.Length) > 72 ? districtContactName : String.Format(districtContactName).PadRight(72 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</span></u></td>
-				<td  colspan="2"><u><textarea onfocus="clearContents(this);" cols="40" rows="1" data-val="83">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;" class="input-value">@(String.Format("{0}", "").PadRight(83, ' ').Replace(" ", "\u00A0"))</span></u></td>
+				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.SchoolRepresentative)</textarea><span id="SchoolRepresentative" style="display:none" class="input-value">@(formModel.SchoolRepresentative)</span></u></td>
+				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83">@(formModel.PositionOfRepresentative)</textarea><span id="PositionOfRepresentative" style="display:none" class="input-value">@(formModel.PositionOfRepresentative)</span></u></td>
 			</tr>
 			<tr>
 				<td colspan="2">School representative</td>
@@ -55,7 +76,7 @@
 			</tr>
 		</table>
         <p class=MsoNormal align=center style='text-align:center;margin-top:8px'>
-            <b ><u><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>UNDERSTANDINGS<o:p></o:p></span></u></b>
+            <b><u><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>UNDERSTANDINGS<o:p></o:p></span></u></b>
         </p>
 
         <p class=MsoNormal>
@@ -90,7 +111,7 @@
         </p>
 		 
         <p class=MsoNormal align=center style='text-align:center;margin-bottom:5px'>			
-			<span align=center style='text-align:center;'>______________________________________________________________________________________________</span>
+			<u><textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.PositionOfMemberNotAttending)</textarea><span id="PositionOfMemberNotAttending" style="display:none" class="input-value">@(formModel.PositionOfMemberNotAttending)</span></u>
             <i>
                 <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>(Position of team member who will not be attending)<o:p></o:p></span>
             </i>
@@ -133,7 +154,7 @@
             <tr >
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                        <input type="checkbox" name="Services_Not_ModOrDisc_NonAttendCBS" @(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? "checked" : "")/><img id="Services_Not_ModOrDisc_NonAttend" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? @imageChecked : @imageNotChecked)"/><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                             NON ATTENDANCE: The member of the IEP team noted above will not attend the IEP meeting as both the school and the parent agree that the team member’s attendance at this meeting is not necessary.<o:p></o:p>
                         </span>
                     </p>
@@ -141,8 +162,8 @@
                         <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
                     </p>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                            PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed: <textarea  data-val="107" style="width:150px;height:20px;"></textarea><span style="display:none;font-size:11.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value"></span> 
+                        <input type="checkbox" name="Services_Not_ModOrDisc_PartialAttendCBX" @(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? "checked" : "")/><img id="Services_Not_ModOrDisc_PartialAttend" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? @imageChecked : @imageNotChecked)"/><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                            PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed: <textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.Services_Not_ModOrDisc_IssueDiscussed)</textarea><span id="Services_Not_ModOrDisc_IssueDiscussed" style="display:none;font-size:11.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value">@(formModel.Services_Not_ModOrDisc_IssueDiscussed)</span> 
                         </span>
                     </p>
                     <p class=MsoNormal>
@@ -153,13 +174,14 @@
                 </td>
                 <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                       <input type="checkbox" name="Services_MayBe_ModOrDisc_NonAttendCBX" @(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? "checked" : "")/><img id="Services_MayBe_ModOrDisc_NonAttend" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? @imageChecked : @imageNotChecked)"/>
+						<span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                            NON ATTENDANCE: The member of the IEP team noted above is excused from attending this IEP meeting, providing that the member submits written input related to the development of the IEP to both the parent and to the other members of the team prior to the meeting.
                         </span>
                     </p>
                     <p class=MsoListParagraph style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
-                            PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed:  <textarea  data-val="107" style="width:150px;height:20px;"></textarea><span style="display:none;font-size:11.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value"></span>
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_PartialAttendCBX" @(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? "checked" : "")/><img id="Services_MayBe_ModOrDisc_PartialAttend" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? @imageChecked : @imageNotChecked)"/><span style='font-size:11.0pt;font-family:"Arial",sans-serif'></span><span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
+                            PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed: <textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.Services_MayBe_ModOrDisc_IssueDiscussed)</textarea><span id="Services_MayBe_ModOrDisc_IssueDiscussed" style="display:none;font-size:11.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value">@(formModel.Services_MayBe_ModOrDisc_IssueDiscussed)</span> 
                         </span>
                     </p>
                 </td>
@@ -170,11 +192,11 @@
                         <span style='font-family:"Calibri",sans-serif'>
                             I<span ></span>
                         </span>
-                        <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
+						<input type="checkbox" name="Services_Not_ModOrDisc_AgreeCBX" @(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? "checked" : "")/><img id="Services_Not_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)"/>                        
                         <span style='font-family:"Calibri",sans-serif'>
                             agree<span >  </span>
                         </span>
-                        <input type="checkbox" name="ckAgree" /><img class='imgCheck' src="@(@imageNotChecked)" />
+                        <input type="checkbox" name="Services_Not_ModOrDisc_DisagreeCBX" @(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? "checked" : "")/><img id="Services_Not_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)"/>
                         <span style='font-family:"Calibri",sans-serif'>
                             <span ></span>disagree <br>
                             with the above marked statement:
@@ -187,11 +209,11 @@
                         <span style='font-family:"Calibri",sans-serif'>
                             I<span ></span>
                         </span>
-                        <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_AgreeCBX" @(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? "checked" : "")/><img id="Services_MayBe_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)"/>                        
                         <span style='font-family:"Calibri",sans-serif'>
                             consent<span ></span>
                         </span>
-                        <input type="checkbox" name="ckConsent" /><img class='imgCheck' src="@(@imageNotChecked)" />
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_DisagreeCBX" @(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? "checked" : "")/><img id="Services_MayBe_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)"/>                        
                         <span style='font-family:"Calibri",sans-serif'>
                             do not
                             consent <br>

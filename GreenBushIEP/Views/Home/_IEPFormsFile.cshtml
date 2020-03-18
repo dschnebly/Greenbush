@@ -315,7 +315,8 @@
 						   { "summaryPerf", Model.summaryPerformance },
 						   { "conferenceSummary", Model.conferenceSummary },
 						   { "formAmend", Model.formAmend },
-						   { "formMtgConsent", Model.formMtgConsent }
+						   { "formMtgConsent", Model.formMtgConsent },
+						   { "formMtgExcusal", Model.formMtgExcusal }
 
 					   })
                     </div>
@@ -379,7 +380,7 @@
             }
         });
 
-
+				
 		$("textarea").keyup(function () {
 			var nextParagraph = $(this).next(".input-value");
 			var currentVal = $(this).val();

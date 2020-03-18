@@ -2319,7 +2319,10 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvite_.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-
+			else if (fileName == "IEPMtgExcusal")
+			{
+				viewModel.formMtgExcusal = db.tblFormIEPMeetingExcusal_.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 			viewModel.fileModel = fileViewModel;
 
@@ -3569,7 +3572,7 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-                    result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
+                  //  result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -3699,8 +3702,16 @@ namespace GreenbushIep.Controllers
             doc.OptionWriteEmptyNodes = true;
             doc.OptionFixNestedTags = true;
             doc.LoadHtml(cssTextResult + "<div class='" + className + "'>" + result2 + "</div>");
+			//var htmlBody = doc.DocumentNode.SelectSingleNode("//textarea");
+			//if (htmlBody.HasChildNodes)
+			//{
+			//	foreach (var node in htmlBody.ChildNodes) {
+			//		//HtmlNode node = htmlBody.ChildNodes
+			//		node.RemoveAll();
+			//	}
+			//}
 
-            string cleanHTML2 = doc.DocumentNode.OuterHtml;
+			string cleanHTML2 = doc.DocumentNode.OuterHtml;
 
             byte[] fileIn = null;
             byte[] printFile = null;
@@ -4220,6 +4231,8 @@ namespace GreenbushIep.Controllers
 				conf.RequestedBy = GetInputValue("txtRequestedBy", spans);
 				conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
 				conf.Conclusions = GetInputValue("txtConclusions", spans);
+				conf.PlacementCode = GetInputValue("PlacementCode", spans);
+
 				if (conf.FormConferenceSummaryId == 0)
 				{
 					conf.CreatedBy = currentUser.UserID;
@@ -4263,7 +4276,6 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-
 			else if (formName == "IEP Meeting-Consent to Invite Representative of Non-Educational Agency")
 			{
 				var formMeetConsent = db.tblFormIEPMeetingConsentToInvite_.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvite_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite_();
@@ -4294,8 +4306,59 @@ namespace GreenbushIep.Controllers
 				db.SaveChanges();
 			}
 
+			else if (formName == "IEP Meeting-Excusal from Attendance Form")
+			{
+				var formExcusal = db.tblFormIEPMeetingExcusal_.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusal_.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal_();
 
-			
+				formExcusal.StudentId = sid;
+				formExcusal.ParentName = GetInputValue("ParentName", spans);
+				formExcusal.SchoolRepresentative = GetInputValue("SchoolRepresentative", spans);
+				formExcusal.PositionOfRepresentative = GetInputValue("PositionOfRepresentative", spans);
+				formExcusal.PositionOfMemberNotAttending = GetInputValue("PositionOfMemberNotAttending", spans);
+
+				formExcusal.Services_MayBe_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_NonAttend", checkboxes);
+				formExcusal.Services_MayBe_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_PartialAttend", checkboxes);
+
+				formExcusal.Services_MayBe_ModOrDisc_IssueDiscussed = GetInputValue("Services_MayBe_ModOrDisc_IssueDiscussed", spans);
+				formExcusal.Services_Not_ModOrDisc_IssueDiscussed = GetInputValue("Services_Not_ModOrDisc_IssueDiscussed", spans);
+
+				formExcusal.Services_Not_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Agree", checkboxes);
+				formExcusal.Services_Not_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Disagree", checkboxes);
+
+				formExcusal.Services_Not_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_NonAttend", checkboxes);
+				formExcusal.Services_Not_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_PartialAttend", checkboxes);
+				
+				formExcusal.Services_MayBe_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Agree", checkboxes);
+				formExcusal.Services_MayBe_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Disagree", checkboxes);
+								
+
+				var meetingDateStr = GetInputValue("FormDate", spans);
+				if (!string.IsNullOrEmpty(meetingDateStr))
+					formExcusal.FormDate = Convert.ToDateTime(meetingDateStr);
+
+				var iepDateStr = GetInputValue("IEPDate", spans);
+				if (!string.IsNullOrEmpty(iepDateStr))
+					formExcusal.IEPDate = Convert.ToDateTime(iepDateStr);
+
+				if (formExcusal.FormIEPMeetingExcusal_Id == 0)
+				{
+					formExcusal.CreatedBy = currentUser.UserID;
+					formExcusal.Create_Date = DateTime.Now;
+					formExcusal.ModifiedBy = currentUser.UserID;
+					formExcusal.Update_Date = DateTime.Now;
+					db.tblFormIEPMeetingExcusal_.Add(formExcusal);
+				}
+				else
+				{
+					formExcusal.ModifiedBy = currentUser.UserID;
+					formExcusal.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+			}
+
+
+
 		}
 
         private string GetInputValue(string inputName, List<HtmlNode> inputs)

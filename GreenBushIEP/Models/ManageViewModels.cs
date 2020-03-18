@@ -440,7 +440,8 @@ namespace GreenBushIEP.Models
 		public tblFormConferenceSummary conferenceSummary { get; set; }
 		public tblFormIEPAmendment_ formAmend { get; set; }
 		public tblFormIEPMeetingConsentToInvite_ formMtgConsent { get; set; }
-		
+		public tblFormIEPMeetingExcusal_ formMtgExcusal { get; set; }
+
 		public IEPFormFileViewModel()
         {
             studentId = 0;

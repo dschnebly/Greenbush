@@ -40,8 +40,7 @@
                         <th class="date">Date</th>
                         <th class="date">&nbsp;</th>
                     </tr>
-                </thead>
-                {
+                </thead>               
                 <tbody>
                     @{
                         foreach (var archive in Model.Archives.Where(a => !a.isUpload))
@@ -126,6 +125,6 @@
     <var data-reload="true" data-src="/Scripts/studentForms.js"></var>
     <var data-reload="true" data-src="/Scripts/jquery.fileupload.js"></var>
     @section scripts {
-        @Scripts.Render("~/Scripts/studentForms.js")
+        @Scripts.Render("~/Scripts/studentForms.js?v1.1")
     }
 </div>
