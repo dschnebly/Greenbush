@@ -65,7 +65,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.22.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>packages\HtmlAgilityPack.1.11.22\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <HintPath>..\packages\HtmlAgilityPack.1.11.22\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>

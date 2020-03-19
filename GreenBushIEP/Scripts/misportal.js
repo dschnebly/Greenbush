@@ -538,11 +538,9 @@
             "but": true, //Flag to enable transitions on button, false by default
             "cBa": function () {
                 init();
-                // disable the new page from display ajax loader because it is already loaded.
-                console.log(document.querySelector(".ajax-loader"));
 
-                // USE a fade out css animation!
-                document.querySelector(".ajax-loader").style.display = "none";
+                document.querySelector(".ajax-loader").classList.add("fadeIntoYou");
+                //document.querySelector(".ajax-loader").style.display = "none";
             } //callback function
         };
     new ft(params);

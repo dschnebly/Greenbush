@@ -289,9 +289,6 @@ namespace GreenBushIEP.Controllers
 
             else
             {
-
-
-
                 var districts = (from org in db.tblOrganizationMappings
                                  join user in db.tblUsers
                                      on org.UserID equals user.UserID
