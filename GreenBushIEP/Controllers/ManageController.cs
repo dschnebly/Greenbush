@@ -2505,12 +2505,35 @@ namespace GreenBushIEP.Controllers
                         var statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
 
                         if (statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive")
+                        {
+                            // keep an audit trail on the students that come and go due to real life circumstances 
+                            tblArchiveIEPExit archive = db.tblArchiveIEPExits.Where(a => a.userID == studentId).FirstOrDefault();
+                            if(archive != null)
+                            {
+                                archive = new tblArchiveIEPExit();
+                                archive.exitDate = DateTime.Now;
+                                archive.exitNotes = info.ExitNotes;
+                                archive.ModifiedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
+                                archive.Update_Date = DateTime.Now;
+                            }
+                            else
+                            {
+                                archive = new tblArchiveIEPExit();
+                                archive.userID = studentId;
+                                archive.exitDate = DateTime.Now;
+                                archive.CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
+                                archive.exitNotes = info.ExitNotes;
+                                archive.Create_Date = DateTime.Now;
+                            }
+                            db.SaveChanges();
+
                             SendExitEmail(info.AssignedUSD
                                 , string.Format("{0}, {1}", student.LastName, student.FirstName)
                                 , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
                                 , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
                                 , info.ExitNotes
                                 );
+                        }
                     }
                 }
                 catch (Exception e)
