@@ -539,7 +539,11 @@
             "cBa": function () {
                 init();
 
-                document.querySelector(".ajax-loader").classList.add("fadeIntoYou");
+                var ajax =  document.querySelector(".ajax-loader");
+                if(ajax != null)
+                {
+                    ajax.classList.add("fadeIntoYou");
+                }
                 //document.querySelector(".ajax-loader").style.display = "none";
             } //callback function
         };
