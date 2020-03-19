@@ -2327,8 +2327,20 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formIEPTeamConsider = db.tblFormIEPTeamConsiderations.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "ManiDetermReview")
+			{
+				var mani = db.tblFormManifestationDeterminiations.Where(o => o.StudentId == id).FirstOrDefault();
 
-			
+				if (mani != null) {
+				  var maniTeam = db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == mani.FormManifestationDeterminiationId);
+					foreach (var mt in maniTeam)
+						mani.tblFormManifestDeterm_TeamMembers.Add(mt);
+				}
+
+				viewModel.formMani = mani;
+			}
+
+
 
 			viewModel.fileModel = fileViewModel;
 
@@ -4440,7 +4452,100 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
+			else if (formName == "Manifestation Determination Review Form")
+			{
+				var formMani= db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
 
+				formMani.StudentId = sid;
+								
+				var meetingDateStr = GetInputValue("FormDate", spans);
+				if (!string.IsNullOrEmpty(meetingDateStr))
+				{
+					var dt = DateTime.MinValue;
+					DateTime.TryParse(meetingDateStr, out dt);
+					if (dt != DateTime.MinValue)
+						formMani.FormDate = dt;
+				}
+
+				formMani.StudentBehavior = GetInputValue("StudentBehavior", spans);
+				formMani.StudentIEP = GetInputValue("StudentIEP", spans);
+				formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
+				formMani.ParentInformation = GetInputValue("ParentInformation", spans);
+				formMani.OtherInformation = GetInputValue("OtherInformation", spans);
+				formMani.ConductCausedByDisability = GetCheckboxSingleInputValue("ConductCausedByDisability", checkboxes);
+				formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
+				formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
+				formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
+				formMani.ReviewBehaviorPlan = GetCheckboxSingleInputValue("ReviewBehaviorPlan", checkboxes);
+				formMani.IsNotManifestationOfDisability = GetCheckboxSingleInputValue("IsNotManifestationOfDisability", checkboxes);
+				formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
+				formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
+				formMani.Attachments = GetCheckboxSingleInputValue("Attachments", checkboxes);
+
+				if (formMani.FormManifestationDeterminiationId == 0)
+				{
+					formMani.CreatedBy = currentUser.UserID;
+					formMani.Create_Date = DateTime.Now;
+					formMani.ModifiedBy = currentUser.UserID;
+					formMani.Update_Date = DateTime.Now;
+					db.tblFormManifestationDeterminiations.Add(formMani);
+				}
+				else
+				{
+					formMani.ModifiedBy = currentUser.UserID;
+					formMani.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+
+				//get member info
+
+				//delete all
+				foreach (var existingPD in db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == formMani.FormManifestationDeterminiationId))
+				{
+					db.tblFormManifestDeterm_TeamMembers.Remove(existingPD);
+				}
+
+				db.SaveChanges();
+
+				//add back
+				var memberPresentSpans = spans.Where(o => o.HasClass("memberPresent")).ToList();
+				foreach (var mp in memberPresentSpans.Where(o => o.HasClass("memberName")))
+				{
+					var elementId = mp.Id;  // = memberPresentTitle_0"
+					string[] elementSplit = elementId.Split('_');
+					if (elementSplit.Length > 1)
+					{
+						bool isDissent = mp.HasClass("dissent");
+						HtmlNode elementTitle = null;
+						if (isDissent)
+						{
+							elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && o.HasClass("dissent")).FirstOrDefault();
+						}
+						else
+						{
+							elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && !o.HasClass("dissent")).FirstOrDefault();
+						}						
+						
+						var teamMember = new tblFormManifestDeterm_TeamMembers() {
+							Name = mp.InnerHtml,
+							Title = elementTitle != null ? elementTitle.InnerHtml : "",
+							Dissenting = isDissent,
+							StudentId = sid,
+							FormManifestationDeterminiationId = formMani.FormManifestationDeterminiationId,
+							CreatedBy = currentUser.UserID,						
+
+						};
+
+						if(!string.IsNullOrEmpty(teamMember.Name))
+							db.tblFormManifestDeterm_TeamMembers.Add(teamMember);
+						
+					}
+				}
+
+				db.SaveChanges();
+
+			}
 
 
 		}
