@@ -2524,6 +2524,7 @@ namespace GreenBushIEP.Controllers
                                 archive.CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
                                 archive.exitNotes = info.ExitNotes;
                                 archive.Create_Date = DateTime.Now;
+                                db.tblArchiveIEPExits.Add(archive);
                             }
                             db.SaveChanges();
 
