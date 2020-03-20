@@ -553,6 +553,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
+          <Property Name="DelieveredDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormParentConsent">
           <Key>
@@ -4501,6 +4502,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormParentConsent">
           <Key>
@@ -6682,6 +6684,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormNoticeOfMeetings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormNoticeOfMeeting">
               <MappingFragment StoreEntitySet="tblFormNoticeOfMeeting">
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

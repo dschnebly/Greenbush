@@ -2339,6 +2339,10 @@ namespace GreenbushIep.Controllers
 
 				viewModel.formMani = mani;
 			}
+			else if (fileName == "NoticeOfMeeting")
+			{
+				viewModel.formNotice = db.tblFormNoticeOfMeetings.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
 
@@ -4103,7 +4107,9 @@ namespace GreenbushIep.Controllers
             if (sid == 0)
                 return;
 
-            tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+			//var formList = GetForms();
+
+			tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
 
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.OptionWriteEmptyNodes = true;
@@ -4112,8 +4118,10 @@ namespace GreenbushIep.Controllers
 
             var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
             var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+			var formNameStr = formName.ToUpper();
 
-			if (formName == "Team Evaluation Report")
+
+			if (formNameStr == "TEAM EVALUATION REPORT")
 			{
 				var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
 
@@ -4165,7 +4173,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "Summary Of Performance")
+			else if (formNameStr == "SUMMARY OF PERFORMANCE")
 			{
 				var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
 
@@ -4246,7 +4254,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "Conference Summary")
+			else if (formNameStr == "CONFERENCE SUMMARY")
 			{
 				var conf = db.tblFormConferenceSummaries.Any(o => o.StudentId == sid) ? db.tblFormConferenceSummaries.FirstOrDefault(o => o.StudentId == sid) : new tblFormConferenceSummary();
 
@@ -4273,7 +4281,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "IEP Amendment Form")
+			else if (formNameStr == "IEP AMENDMENT FORM")
 			{
 				var formAmend = db.tblFormIEPAmendments.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendments.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment();
 
@@ -4300,7 +4308,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "IEP Meeting-Consent to Invite Representative of Non-Educational Agency")
+			else if (formNameStr == "IEP MEETING-CONSENT TO INVITE REPRESENTATIVE OF NON-EDUCATIONAL AGENCY")
 			{
 				var formMeetConsent = db.tblFormIEPMeetingConsentToInvites.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvites.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite();
 
@@ -4310,14 +4318,13 @@ namespace GreenbushIep.Controllers
 				formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
 
 				var meetingDateStr = GetInputValue("MeetingDate", spans);
-				if(!string.IsNullOrEmpty(meetingDateStr))
+				if (!string.IsNullOrEmpty(meetingDateStr))
 				{
 					var dt = DateTime.MinValue;
 					DateTime.TryParse(meetingDateStr, out dt);
 					if (dt != DateTime.MinValue)
 						formMeetConsent.MeetingDate = dt;
 				}
-				
 
 				if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
 				{
@@ -4335,7 +4342,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "IEP Meeting-Excusal from Attendance Form")
+			else if (formNameStr == "IEP MEETING-EXCUSAL FROM ATTENDANCE FORM")
 			{
 				var formExcusal = db.tblFormIEPMeetingExcusals.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusals.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal();
 
@@ -4356,10 +4363,10 @@ namespace GreenbushIep.Controllers
 
 				formExcusal.Services_Not_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_NonAttend", checkboxes);
 				formExcusal.Services_Not_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_PartialAttend", checkboxes);
-				
+
 				formExcusal.Services_MayBe_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Agree", checkboxes);
 				formExcusal.Services_MayBe_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Disagree", checkboxes);
-								
+
 
 				var meetingDateStr = GetInputValue("FormDate", spans);
 				if (!string.IsNullOrEmpty(meetingDateStr))
@@ -4378,7 +4385,7 @@ namespace GreenbushIep.Controllers
 					if (dt != DateTime.MinValue)
 						formExcusal.IEPDate = dt;
 				}
-							
+
 
 				if (formExcusal.FormIEPMeetingExcusalId == 0)
 				{
@@ -4396,7 +4403,7 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "IEP Team Considerations")
+			else if (formNameStr == "IEP TEAM CONSIDERATIONS")
 			{
 				var formTeam = db.tblFormIEPTeamConsiderations.Any(o => o.StudentId == sid) ? db.tblFormIEPTeamConsiderations.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPTeamConsideration();
 
@@ -4435,7 +4442,7 @@ namespace GreenbushIep.Controllers
 				if (!string.IsNullOrEmpty(meetingDateStr))
 					formTeam.IEPMeetingDate = Convert.ToDateTime(meetingDateStr);
 
-				
+
 				if (formTeam.FormIEPTeamConsiderationsId == 0)
 				{
 					formTeam.CreatedBy = currentUser.UserID;
@@ -4452,12 +4459,12 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-			else if (formName == "Manifestation Determination Review Form")
+			else if (formNameStr == "MANIFESTATION DETERMINATION REVIEW FORM")
 			{
-				var formMani= db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
+				var formMani = db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
 
 				formMani.StudentId = sid;
-								
+
 				var meetingDateStr = GetInputValue("FormDate", spans);
 				if (!string.IsNullOrEmpty(meetingDateStr))
 				{
@@ -4472,7 +4479,7 @@ namespace GreenbushIep.Controllers
 				formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
 				formMani.ParentInformation = GetInputValue("ParentInformation", spans);
 				formMani.OtherInformation = GetInputValue("OtherInformation", spans);
-				
+
 				formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
 				formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
 				formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
@@ -4480,7 +4487,6 @@ namespace GreenbushIep.Controllers
 				formMani.IsNotManifestationOfDisability = GetCheckboxSingleInputValue("IsNotManifestationOfDisability", checkboxes);
 				formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
 				formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
-				//formMani.Attachments = GetCheckboxSingleInputValue("Attachments", checkboxes);
 				formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
 
 				formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
@@ -4531,26 +4537,87 @@ namespace GreenbushIep.Controllers
 						else
 						{
 							elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && !o.HasClass("dissent")).FirstOrDefault();
-						}						
-						
-						var teamMember = new tblFormManifestDeterm_TeamMembers() {
+						}
+
+						var teamMember = new tblFormManifestDeterm_TeamMembers()
+						{
 							Name = mp.InnerHtml,
 							Title = elementTitle != null ? elementTitle.InnerHtml : "",
 							Dissenting = isDissent,
 							StudentId = sid,
 							FormManifestationDeterminiationId = formMani.FormManifestationDeterminiationId,
-							CreatedBy = currentUser.UserID,						
+							CreatedBy = currentUser.UserID,
 
 						};
 
-						if(!string.IsNullOrEmpty(teamMember.Name))
+						if (!string.IsNullOrEmpty(teamMember.Name))
 							db.tblFormManifestDeterm_TeamMembers.Add(teamMember);
-						
+
 					}
 				}
 
 				db.SaveChanges();
 
+			}
+			else if (formNameStr == "NOTICE OF MEETING")
+			{
+				var formNotice = db.tblFormNoticeOfMeetings.Any(o => o.StudentId == sid) ? db.tblFormNoticeOfMeetings.FirstOrDefault(o => o.StudentId == sid) : new tblFormNoticeOfMeeting();
+
+				formNotice.StudentId = sid;
+
+				formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
+				formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
+				formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);
+				formNotice.DiscussIEPChanges = GetCheckboxSingleInputValue("DiscussIEPChanges", checkboxes);
+				formNotice.AnnualIEPReview = GetCheckboxSingleInputValue("AnnualIEPReview", checkboxes);
+				formNotice.TransitionAssesment = GetCheckboxSingleInputValue("TransitionAssesment", checkboxes);
+				formNotice.Other = GetCheckboxSingleInputValue("Other", checkboxes);
+				formNotice.SpecialExpertise1 = GetInputValue("SpecialExpertise1", spans);
+				formNotice.SpecialExpertise2 = GetInputValue("SpecialExpertise2", spans);
+				formNotice.SpecialExpertise3 = GetInputValue("SpecialExpertise3", spans);
+				formNotice.SpecialExpertise4 = GetInputValue("SpecialExpertise4", spans);
+				formNotice.SpecialExpertise5 = GetInputValue("SpecialExpertise5", spans);
+				formNotice.SpecialExpertise6 = GetInputValue("SpecialExpertise6", spans);
+				formNotice.AgencyStaff = GetInputValue("AgencyStaff", spans);
+				formNotice.SchoolContactName = GetInputValue("SchoolContactName", spans);
+				formNotice.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+				formNotice.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+				formNotice.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+				formNotice.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+				formNotice.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+				formNotice.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+				formNotice.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+				formNotice.PlanToAttend = GetCheckboxSingleInputValue("PlanToAttend", checkboxes);
+				formNotice.RescheduleMeeting = GetCheckboxSingleInputValue("RescheduleMeeting", checkboxes);
+				formNotice.AvaliableToAttend_flag = GetCheckboxSingleInputValue("AvaliableToAttend_flag", checkboxes);
+				formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
+				formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
+
+				var meetingDateStr = GetInputValue("DelieveredDate", spans);
+				if (!string.IsNullOrEmpty(meetingDateStr))
+				{
+					var dt = DateTime.MinValue;
+					DateTime.TryParse(meetingDateStr, out dt);
+					if (dt != DateTime.MinValue)
+						formNotice.DelieveredDate = dt;
+				}
+
+
+				if (formNotice.FormNoticeOfMeetingId == 0)
+				{
+					formNotice.CreatedBy = currentUser.UserID;
+					formNotice.Create_Date = DateTime.Now;
+					formNotice.ModifiedBy = currentUser.UserID;
+					formNotice.Update_Date = DateTime.Now;
+					db.tblFormNoticeOfMeetings.Add(formNotice);
+				}
+				else
+				{
+					formNotice.ModifiedBy = currentUser.UserID;
+					formNotice.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
 			}
 
 

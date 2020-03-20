@@ -47,5 +47,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
+        public Nullable<System.DateTime> DelieveredDate { get; set; }
     }
 }
