@@ -4472,7 +4472,7 @@ namespace GreenbushIep.Controllers
 				formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
 				formMani.ParentInformation = GetInputValue("ParentInformation", spans);
 				formMani.OtherInformation = GetInputValue("OtherInformation", spans);
-				formMani.ConductCausedByDisability = GetCheckboxSingleInputValue("ConductCausedByDisability", checkboxes);
+				
 				formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
 				formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
 				formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
@@ -4480,7 +4480,13 @@ namespace GreenbushIep.Controllers
 				formMani.IsNotManifestationOfDisability = GetCheckboxSingleInputValue("IsNotManifestationOfDisability", checkboxes);
 				formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
 				formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
-				formMani.Attachments = GetCheckboxSingleInputValue("Attachments", checkboxes);
+				//formMani.Attachments = GetCheckboxSingleInputValue("Attachments", checkboxes);
+				formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
+
+				formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
+				formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
+				formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
+
 
 				if (formMani.FormManifestationDeterminiationId == 0)
 				{
@@ -4587,7 +4593,7 @@ namespace GreenbushIep.Controllers
                 valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
             }
 
-            var input2 = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+            var input2 = checkboxes.Where(o => o.Id == inputName2).FirstOrDefault();
             if (input2 != null)
             {
                 valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";

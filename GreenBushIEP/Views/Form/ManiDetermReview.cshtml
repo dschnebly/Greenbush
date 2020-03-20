@@ -111,9 +111,9 @@
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:58.5pt 81.0pt'>
 			&nbsp;&nbsp;&nbsp;&nbsp;
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability.HasValue && formModel.ConductCausedByDisability.Value ? "checked" : "")/><img id="ConductCausedByDisability" class='imgCheck' src="@(formModel.ConductCausedByDisability.HasValue && formModel.ConductCausedByDisability.Value ? @imageChecked : @imageNotChecked)"/>  YES    
+                <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? "checked" : "")/><img id="ConductCausedByDisability_Yes" class='imgCheck' src="@(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? @imageChecked : @imageNotChecked)"/>  YES    
 				&nbsp;or<span style=''>     </span>
-				<input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.ConductCausedByDisability.HasValue && formModel.ConductCausedByDisability.Value ? "checked" : "")/><img id="IsManifestationOfDisability" class='imgCheck' src="@(formModel.ConductCausedByDisability.HasValue && formModel.ConductCausedByDisability.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
+				<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? "checked" : "")/><img id="ConductCausedByDisability_No" class='imgCheck' src="@(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
             </span>
         </p>
 
@@ -136,13 +136,12 @@
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:58.5pt 81.0pt'>
 			&nbsp;&nbsp;&nbsp;&nbsp;
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "checked" : "")/><img id="IsManifestationOfDisability" class='imgCheck' src="@(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? @imageChecked : @imageNotChecked)"/>  YES     &nbsp;or<span style=''>     </span>
-				<input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "checked" : "")/><img id="IsManifestationOfDisability" class='imgCheck' src="@(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
+                <input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? "checked" : "")/><img id="ConductCausedByFailure_Yes" class='imgCheck' src="@(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? @imageChecked : @imageNotChecked)"/>  YES     &nbsp;or<span style=''>     </span>
+				<input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? "checked" : "")/><img id="ConductCausedByFailure_No" class='imgCheck' src="@(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:
-58.5pt 81.0pt'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
+        <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:58.5pt 81.0pt'><span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span></p>
 
         <p class='MsoNormal page-break' style='margin-left:.25in;text-indent:-.25in;mso-list:l5 level1 lfo11;tab-stops:list .25in'>
             <![if !supportLists]><b style=''>
@@ -199,7 +198,7 @@
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
             </span>
-			<input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "checked" : "")/><img id="IsManifestationOfDisability" class='imgCheck' src="@(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? @imageChecked : @imageNotChecked)"/> 
+			<input type="checkbox" name="BehaviorPlan_NotManifest_DevelopCBS" @(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? "checked" : "")/><img id="BehaviorPlan_NotManifest_Develop" class='imgCheck' src="@(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? @imageChecked : @imageNotChecked)"/> 
 			<span style='font-family:"Arial",sans-serif'>
                 the team will conduct a functional
                 behavioral assessment (unless a functional behavioral assessment has already
@@ -261,8 +260,7 @@
             </span>
         </p>
 
-        <p class=MsoNormal style='margin-left:1.25in;;tab-stops:
-.5in 1.0in'>
+        <p class=MsoNormal style='margin-left:1.25in;;tab-stops:.5in 1.0in'>
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
             </span><input type="checkbox" name="BehaviorPlan_IsManifest_DevelopCBS" @(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? "checked" : "")/><img id="BehaviorPlan_IsManifest_Develop" class='imgCheck' src="@(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
@@ -272,7 +270,7 @@
             </span>
         </p>
 
-        <p class=MsoNormal style=''>
+        @*<p class=MsoNormal style=''>
             <span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
         </p>
 
@@ -280,27 +278,23 @@
             <span style='font-family:"Arial",sans-serif'>.<o:p></o:p></span>
         </p>
 
-        <p class=MsoNormal style=''>
-            <span style='font-family:
-"Arial",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
+        <p class=MsoNormal style=''>            <span style='font-family:"Arial",sans-serif'><o:p>&nbsp;</o:p></span>        </p>*@
 
-        <div style='border:solid windowtext 1.0pt;padding:1.0pt 1.0pt 1.0pt 31.0pt;background:#E5E5E5;margin-right:0in'>
+        <div style='border:solid windowtext 1.0pt;padding:1.0pt 1.0pt 1.0pt 31.0pt;background:#E5E5E5;margin-right:0in;margin-top:.5in'>
             <h2 style='margin-left:0in;background:#E5E5E5;padding:.01in;'><span style='font-size:10.0pt'>TEAM MEMBERS PRESENT</span></h2>
         </div>
         <div>
             <table style="width:100%" class="pull-left" cellspacing="0" border="1">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-
 				@foreach (var memberPresent in formModel.tblFormManifestDeterm_TeamMembers.Where(o => o.Dissenting == false))
 				{
 					<tr>
 						<td>
-							<textarea maxlength="20" style="width:200px;height:20px">@memberPresent.Name</textarea>
+							<textarea maxlength="200" style="height:30px;width:100%">@memberPresent.Name</textarea>
 							<span style="display:none" class="input-value memberPresent memberName" id="@(string.Format("memberPresentName_{0}",memberPresent.FormManifestDeterm_TeamMembersId))">@memberPresent.Name</span>
 						</td>
 						<td>
-							<textarea maxlength="20" style="width:200px;height:20px">@memberPresent.Title</textarea> 
+							<textarea maxlength="200" style="height:30px;width:100%">@memberPresent.Title</textarea> 
 							<span id="@(string.Format("memberPresentTitle_{0}",memberPresent.FormManifestDeterm_TeamMembersId))" style="display:none" class="input-value memberPresent memberTitle">@memberPresent.Title</span>
 						</td>
 					</tr>
@@ -311,14 +305,14 @@
 					for (int i = 0;  i < missingRows; i++)
 					{
 						<tr>
-							<td> <textarea maxlength="20" style="width:200px;height:20px"></textarea><span style="display:none" class="input-value memberPresent memberName" id="@(string.Format("memberPresentName_{0}",i))"></span></td>
-							<td> <textarea maxlength="20" style="width:200px;height:20px"></textarea><span id="@(string.Format("memberPresentTitle_{0}",i))" style="display:none" class="input-value memberPresent memberTitle"></span></td></tr>
+							<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value memberPresent memberName" id="@(string.Format("memberPresentName_{0}",i))"></span></td>
+							<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("memberPresentTitle_{0}",i))" style="display:none" class="input-value memberPresent memberTitle"></span></td>
+						</tr>
 					}
 
 				}
 
-            </table>
-          
+            </table>          
         </div>
 
         <p class=MsoNormal style='text-indent:4.3pt;line-height:200%;margin-top:8px'>
@@ -328,16 +322,15 @@
         <div>
              <table style="width:100%" class="pull-left" cellspacing="0" border="1">
                 <tr><td>NAME</td><td>TITLE</td></tr>
-
 				@foreach (var memberPresent in formModel.tblFormManifestDeterm_TeamMembers.Where(o => o.Dissenting == true))
 				{
 					<tr>
 						<td>
-							<textarea maxlength="20" style="width:200px;height:20px">@memberPresent.Name</textarea>
+							<textarea maxlength="200" style="height:30px;width:100%">@memberPresent.Name</textarea>
 							<span style="display:none" class="input-value memberPresent memberName dissent" id="@(string.Format("memberPresentName_{0}",memberPresent.FormManifestDeterm_TeamMembersId))">@memberPresent.Name</span>
 						</td>
 						<td>
-							<textarea maxlength="20" style="width:200px;height:20px">@memberPresent.Title</textarea> 
+							<textarea maxlength="200" style="height:30px;width:100%">@memberPresent.Title</textarea> 
 							<span id="@(string.Format("memberPresentTitle_{0}",memberPresent.FormManifestDeterm_TeamMembersId))" style="display:none" class="input-value memberPresent memberTitle dissent">@memberPresent.Title</span>
 						</td>
 					</tr>
@@ -348,22 +341,23 @@
 					for (int i = 0;  i < missingRows2; i++)
 					{
 						<tr>
-							<td> <textarea maxlength="20" style="width:200px;height:20px"></textarea><span style="display:none" class="input-value memberPresent memberName dissent" id="@(string.Format("memberPresentName_{0}",i))"></span></td>
-							<td> <textarea maxlength="20" style="width:200px;height:20px"></textarea><span id="@(string.Format("memberPresentTitle_{0}",i))" style="display:none" class="input-value memberPresent memberTitle dissent"></span></td></tr>
+							<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value memberPresent memberName dissent" id="@(string.Format("memberPresentName_{0}",i))"></span></td>
+							<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("memberPresentTitle_{0}",i))" style="display:none" class="input-value memberPresent memberTitle dissent"></span></td></tr>
 					}
 
 				}
 
-            </table>
-            
+            </table>            
         </div>
-
 
         <p class=MsoNormal style='line-height:23.0pt;tab-stops:81.0pt 117.0pt 2.0in 148.5pt'>
             <span style='font-family:"Arial",sans-serif'>
-                Attachments:<span style=''>      </span><input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  YES<span style=''>     </span>or<span style=''>    </span><input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
+                Attachments:<span style=''>      </span>
+				<input type="checkbox" name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")   /><img id="Attachments_Yes" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>YES<span style=''>     </span>or<span style=''>    </span>
+				<input type="checkbox"  name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "checked" : "")/><img id="Attachments_No" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? @imageChecked : @imageNotChecked)"/>  NO
+				@*<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  
+				<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>*@
             </span>
         </p>
-
     </div>
 </div>
