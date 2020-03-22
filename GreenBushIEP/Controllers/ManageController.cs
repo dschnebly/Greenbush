@@ -2522,8 +2522,11 @@ namespace GreenBushIEP.Controllers
                                 archive.userID = studentId;
                                 archive.exitDate = DateTime.Now;
                                 archive.CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
+                                archive.ModifiedBy = archive.CreatedBy;
                                 archive.exitNotes = info.ExitNotes;
                                 archive.Create_Date = DateTime.Now;
+                                archive.Update_Date = DateTime.Now;
+
                                 db.tblArchiveIEPExits.Add(archive);
                             }
                             db.SaveChanges();
