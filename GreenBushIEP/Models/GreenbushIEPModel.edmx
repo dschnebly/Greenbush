@@ -484,7 +484,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="TeacherObservation" Type="nvarchar" MaxLength="2000" />
           <Property Name="ParentInformation" Type="nvarchar" MaxLength="2000" />
           <Property Name="OtherInformation" Type="nvarchar" MaxLength="2000" />
-          <Property Name="ConductCausedByDisability" Type="bit" />
+          <Property Name="ConductCausedByDisability_Yes" Type="bit" />
           <Property Name="IsManifestationOfDisability" Type="bit" />
           <Property Name="StudentWillReturn" Type="bit" />
           <Property Name="BehaviorPlan_IsManifest_Develop" Type="bit" />
@@ -497,6 +497,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
+          <Property Name="ConductCausedByDisability_No" Type="bit" />
+          <Property Name="ConductCausedByFailure_Yes" Type="bit" />
+          <Property Name="ConductCausedByFailure_No" Type="bit" />
         </EntityType>
         <EntityType Name="tblFormManifestDeterm_TeamMembers">
           <Key>
@@ -550,6 +553,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
+          <Property Name="DelieveredDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormParentConsent">
           <Key>
@@ -4427,7 +4431,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="TeacherObservation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ParentInformation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="OtherInformation" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="ConductCausedByDisability" Type="Boolean" />
           <Property Name="IsManifestationOfDisability" Type="Boolean" />
           <Property Name="StudentWillReturn" Type="Boolean" />
           <Property Name="BehaviorPlan_IsManifest_Develop" Type="Boolean" />
@@ -4441,6 +4444,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblFormManifestDeterm_TeamMembers" Relationship="IndividualizedEducationProgramModel.FK_tblFormManifestDetermTeamMembers_FormNoticeOfMeetingId" FromRole="tblFormManifestationDeterminiation" ToRole="tblFormManifestDeterm_TeamMembers" />
+          <Property Name="ConductCausedByDisability_Yes" Type="Boolean" />
+          <Property Name="ConductCausedByDisability_No" Type="Boolean" />
+          <Property Name="ConductCausedByFailure_Yes" Type="Boolean" />
+          <Property Name="ConductCausedByFailure_No" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblFormManifestDeterm_TeamMembers">
           <Key>
@@ -4495,6 +4502,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormParentConsent">
           <Key>
@@ -6630,6 +6638,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormManifestationDeterminiations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormManifestationDeterminiation">
               <MappingFragment StoreEntitySet="tblFormManifestationDeterminiation">
+                <ScalarProperty Name="ConductCausedByFailure_No" ColumnName="ConductCausedByFailure_No" />
+                <ScalarProperty Name="ConductCausedByFailure_Yes" ColumnName="ConductCausedByFailure_Yes" />
+                <ScalarProperty Name="ConductCausedByDisability_No" ColumnName="ConductCausedByDisability_No" />
+                <ScalarProperty Name="ConductCausedByDisability_Yes" ColumnName="ConductCausedByDisability_Yes" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -6642,7 +6654,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="BehaviorPlan_IsManifest_Develop" ColumnName="BehaviorPlan_IsManifest_Develop" />
                 <ScalarProperty Name="StudentWillReturn" ColumnName="StudentWillReturn" />
                 <ScalarProperty Name="IsManifestationOfDisability" ColumnName="IsManifestationOfDisability" />
-                <ScalarProperty Name="ConductCausedByDisability" ColumnName="ConductCausedByDisability" />
                 <ScalarProperty Name="OtherInformation" ColumnName="OtherInformation" />
                 <ScalarProperty Name="ParentInformation" ColumnName="ParentInformation" />
                 <ScalarProperty Name="TeacherObservation" ColumnName="TeacherObservation" />
@@ -6673,6 +6684,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormNoticeOfMeetings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormNoticeOfMeeting">
               <MappingFragment StoreEntitySet="tblFormNoticeOfMeeting">
+                <ScalarProperty Name="DelieveredDate" ColumnName="DelieveredDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

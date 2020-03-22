@@ -45,9 +45,9 @@
             </span>
         </p>
 
-		<table cellpadding="1" cellspacing="3">
+		<table cellpadding="1" cellspacing="4">
 			<tr>
-				<td style="width: 50px">Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="59">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(currentDate)</span></u></td>
+				<td style="width: 50px">Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="59" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(currentDate)</span></u></td>
 				<td style="width: 50px">Student:</td><td><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></td>
 			</tr>		
 			<tr>
@@ -55,8 +55,8 @@
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
-				<td style="width: 50px">IEP Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="57">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value" data-val="59">@(iepDate)</span></u></td>
-				<td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83">@(formModel.ParentName)</textarea><span id="ParentName" style="display:none" class="input-value">@(formModel.ParentName)</span></u></td>
+				<td style="width: 50px">IEP Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="57" style="height:30px">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value" data-val="59">@(iepDate)</span></u></td>
+				<td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83" style="height:30px">@(formModel.ParentName)</textarea><span id="ParentName" style="display:none" class="input-value">@(formModel.ParentName)</span></u></td>
 			</tr>
 			<tr>
 				<td colspan="2"></td>
@@ -67,8 +67,8 @@
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
-				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.SchoolRepresentative)</textarea><span id="SchoolRepresentative" style="display:none" class="input-value">@(formModel.SchoolRepresentative)</span></u></td>
-				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83">@(formModel.PositionOfRepresentative)</textarea><span id="PositionOfRepresentative" style="display:none" class="input-value">@(formModel.PositionOfRepresentative)</span></u></td>
+				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="72" style="height:30px">@(formModel.SchoolRepresentative)</textarea><span id="SchoolRepresentative" style="display:none" class="input-value">@(formModel.SchoolRepresentative)</span></u></td>
+				<td  colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83" style="height:30px">@(formModel.PositionOfRepresentative)</textarea><span id="PositionOfRepresentative" style="display:none" class="input-value">@(formModel.PositionOfRepresentative)</span></u></td>
 			</tr>
 			<tr>
 				<td colspan="2">School representative</td>
