@@ -2347,8 +2347,12 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formConsentMedicaid = db.tblFormParentConsents.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-			
 
+			else if (fileName == "PhysicianScript")
+			{
+				viewModel.formPhysician = db.tblFormPhysicianScripts.Where(o => o.StudentId == id).FirstOrDefault();
+			}
+			
 
 
 			viewModel.fileModel = fileViewModel;
@@ -4595,6 +4599,31 @@ namespace GreenbushIep.Controllers
 				{
 					formParentConsent.ModifiedBy = currentUser.UserID;
 					formParentConsent.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+
+			}
+			else if (formNameStr == "PHYSICIAN SCRIPT")
+			{
+				var formPhysicianScript = db.tblFormPhysicianScripts.Any(o => o.StudentId == sid) ? db.tblFormPhysicianScripts.FirstOrDefault(o => o.StudentId == sid) : new tblFormPhysicianScript();
+
+				formPhysicianScript.StudentId = sid;
+				formPhysicianScript.PhysicianName = GetInputValue("PhysicianName", spans);
+				formPhysicianScript.FormDate = GetInputValueDate("FormDate", spans);
+
+				if (formPhysicianScript.FormPhysicianScriptId == 0)
+				{
+					formPhysicianScript.CreatedBy = currentUser.UserID;
+					formPhysicianScript.Create_Date = DateTime.Now;
+					formPhysicianScript.ModifiedBy = currentUser.UserID;
+					formPhysicianScript.Update_Date = DateTime.Now;
+					db.tblFormPhysicianScripts.Add(formPhysicianScript);
+				}
+				else
+				{
+					formPhysicianScript.ModifiedBy = currentUser.UserID;
+					formPhysicianScript.Update_Date = DateTime.Now;
 				}
 
 				db.SaveChanges();

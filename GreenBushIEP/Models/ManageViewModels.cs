@@ -445,6 +445,7 @@ namespace GreenBushIEP.Models
 		public tblFormManifestationDeterminiation formMani { get; set; }
 		public tblFormNoticeOfMeeting formNotice { get; set; }
 		public tblFormParentConsent formConsentMedicaid { get; set; }
+		public tblFormPhysicianScript formPhysician { get; set; }
 		
 
 		public IEPFormFileViewModel()
