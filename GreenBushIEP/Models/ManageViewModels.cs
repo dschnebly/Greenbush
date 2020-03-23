@@ -444,6 +444,8 @@ namespace GreenBushIEP.Models
 		public tblFormIEPTeamConsideration formIEPTeamConsider { get; set; }
 		public tblFormManifestationDeterminiation formMani { get; set; }
 		public tblFormNoticeOfMeeting formNotice { get; set; }
+		public tblFormParentConsent formConsentMedicaid { get; set; }
+		
 
 		public IEPFormFileViewModel()
         {

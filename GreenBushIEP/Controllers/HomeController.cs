@@ -2343,6 +2343,11 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formNotice = db.tblFormNoticeOfMeetings.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "ParentConsentMedicaid")
+			{
+				viewModel.formConsentMedicaid = db.tblFormParentConsents.Where(o => o.StudentId == id).FirstOrDefault();
+			}
+			
 
 
 
@@ -4316,16 +4321,8 @@ namespace GreenbushIep.Controllers
 				formMeetConsent.FurtherInformed = GetCheckboxSingleInputValue("FurtherInformed", checkboxes);
 				formMeetConsent.ProvideTransitionService = GetCheckboxSingleInputValue("ProvideTransitionService", checkboxes);
 				formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
-
-				var meetingDateStr = GetInputValue("MeetingDate", spans);
-				if (!string.IsNullOrEmpty(meetingDateStr))
-				{
-					var dt = DateTime.MinValue;
-					DateTime.TryParse(meetingDateStr, out dt);
-					if (dt != DateTime.MinValue)
-						formMeetConsent.MeetingDate = dt;
-				}
-
+				formMeetConsent.MeetingDate = GetInputValueDate("MeetingDate", spans);
+				
 				if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
 				{
 					formMeetConsent.CreatedBy = currentUser.UserID;
@@ -4367,26 +4364,9 @@ namespace GreenbushIep.Controllers
 				formExcusal.Services_MayBe_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Agree", checkboxes);
 				formExcusal.Services_MayBe_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Disagree", checkboxes);
 
-
-				var meetingDateStr = GetInputValue("FormDate", spans);
-				if (!string.IsNullOrEmpty(meetingDateStr))
-				{
-					var dt = DateTime.MinValue;
-					DateTime.TryParse(meetingDateStr, out dt);
-					if (dt != DateTime.MinValue)
-						formExcusal.FormDate = dt;
-				}
-
-				var iepDateStr = GetInputValue("IEPDate", spans);
-				if (!string.IsNullOrEmpty(iepDateStr))
-				{
-					var dt = DateTime.MinValue;
-					DateTime.TryParse(iepDateStr, out dt);
-					if (dt != DateTime.MinValue)
-						formExcusal.IEPDate = dt;
-				}
-
-
+				formExcusal.FormDate = GetInputValueDate("FormDate", spans);
+				formExcusal.IEPDate = GetInputValueDate("IEPDate", spans);
+				
 				if (formExcusal.FormIEPMeetingExcusalId == 0)
 				{
 					formExcusal.CreatedBy = currentUser.UserID;
@@ -4436,12 +4416,7 @@ namespace GreenbushIep.Controllers
 				formTeam.AssistiveTech_Yes = GetCheckboxSingleInputValue("AssistiveTech_Yes", checkboxes);
 				formTeam.AssistiveTech_No = GetCheckboxSingleInputValue("AssistiveTech_No", checkboxes);
 				formTeam.AssistiveTech_Desc = GetInputValue("AssistiveTech_Desc", spans);
-
-
-				var meetingDateStr = GetInputValue("IEPMeetingDate", spans);
-				if (!string.IsNullOrEmpty(meetingDateStr))
-					formTeam.IEPMeetingDate = Convert.ToDateTime(meetingDateStr);
-
+				formTeam.IEPMeetingDate = GetInputValueDate("IEPMeetingDate", spans);
 
 				if (formTeam.FormIEPTeamConsiderationsId == 0)
 				{
@@ -4464,22 +4439,12 @@ namespace GreenbushIep.Controllers
 				var formMani = db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
 
 				formMani.StudentId = sid;
-
-				var meetingDateStr = GetInputValue("FormDate", spans);
-				if (!string.IsNullOrEmpty(meetingDateStr))
-				{
-					var dt = DateTime.MinValue;
-					DateTime.TryParse(meetingDateStr, out dt);
-					if (dt != DateTime.MinValue)
-						formMani.FormDate = dt;
-				}
-
+				formMani.FormDate = GetInputValueDate("FormDate", spans);
 				formMani.StudentBehavior = GetInputValue("StudentBehavior", spans);
 				formMani.StudentIEP = GetInputValue("StudentIEP", spans);
 				formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
 				formMani.ParentInformation = GetInputValue("ParentInformation", spans);
 				formMani.OtherInformation = GetInputValue("OtherInformation", spans);
-
 				formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
 				formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
 				formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
@@ -4488,12 +4453,10 @@ namespace GreenbushIep.Controllers
 				formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
 				formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
 				formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
-
 				formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
 				formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
 				formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
-
-
+				
 				if (formMani.FormManifestationDeterminiationId == 0)
 				{
 					formMani.CreatedBy = currentUser.UserID;
@@ -4592,16 +4555,7 @@ namespace GreenbushIep.Controllers
 				formNotice.AvaliableToAttend_flag = GetCheckboxSingleInputValue("AvaliableToAttend_flag", checkboxes);
 				formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
 				formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
-
-				var meetingDateStr = GetInputValue("DelieveredDate", spans);
-				if (!string.IsNullOrEmpty(meetingDateStr))
-				{
-					var dt = DateTime.MinValue;
-					DateTime.TryParse(meetingDateStr, out dt);
-					if (dt != DateTime.MinValue)
-						formNotice.DelieveredDate = dt;
-				}
-
+				formNotice.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
 
 				if (formNotice.FormNoticeOfMeetingId == 0)
 				{
@@ -4619,11 +4573,52 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
+			else if (formNameStr == "PARENT CONSENT FOR RELEASE OF INFORMATION AND MEDICAID REIMBURSEMENT")
+			{
+				var formParentConsent = db.tblFormParentConsents.Any(o => o.StudentId == sid) ? db.tblFormParentConsents.FirstOrDefault(o => o.StudentId == sid) : new tblFormParentConsent();
 
+				formParentConsent.StudentId = sid;
+				formParentConsent.School = GetInputValue("School", spans);
+				formParentConsent.GiveConsent = GetCheckboxSingleInputValue("GiveConsent", checkboxes);
+				formParentConsent.DoNotGiveConsent = GetCheckboxSingleInputValue("DoNotGiveConsent", checkboxes);
+				formParentConsent.BeginDate = GetInputValueDate("BeginDate", spans);
 
+				if (formParentConsent.FormParentConsentId == 0)
+				{
+					formParentConsent.CreatedBy = currentUser.UserID;
+					formParentConsent.Create_Date = DateTime.Now;
+					formParentConsent.ModifiedBy = currentUser.UserID;
+					formParentConsent.Update_Date = DateTime.Now;
+					db.tblFormParentConsents.Add(formParentConsent);
+				}
+				else
+				{
+					formParentConsent.ModifiedBy = currentUser.UserID;
+					formParentConsent.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+
+			}
 		}
 
-        private string GetInputValue(string inputName, List<HtmlNode> inputs)
+
+		private DateTime? GetInputValueDate(string inputName, List<HtmlNode> inputs)
+		{
+			var dateStr = GetInputValue(inputName, inputs);
+
+			if (!string.IsNullOrEmpty(dateStr))
+			{
+				var dt = DateTime.MinValue;
+				DateTime.TryParse(dateStr, out dt);
+				if (dt != DateTime.MinValue)
+					return dt;
+			}
+
+			return null;
+		}
+
+		private string GetInputValue(string inputName, List<HtmlNode> inputs)
         {
             var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
             if (input != null)
