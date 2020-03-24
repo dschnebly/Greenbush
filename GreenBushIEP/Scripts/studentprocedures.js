@@ -71,6 +71,7 @@
     // Attach Event
     // fires when the user clicks the button to see the student forms
     $('#viewForms').not('.bound').addClass('bound').on("click", function (e) {
+        $(".ajax-laoder").show();
         var stid = getUrlParameter('stid');
         location.href = "/Home/IEPFormModule?studentId=" + stid + "&home=true";
     });
