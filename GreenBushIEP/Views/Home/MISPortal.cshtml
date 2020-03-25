@@ -176,11 +176,11 @@
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                         <span class="fa fa-building-o" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
@@ -200,7 +200,12 @@
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
                                     <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                                    @*<sup><span class="badge">4</span><i class="glyphicon glyphicon-list-alt"></i></sup>*@
+                                    <span style="margin-left:10px">
+                                        <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" data-toggle="tooltip" class="viewForms viewFormsBtn" data-ftrans="slide">
+                                            <span class="glyphicon glyphicon glyphicon-folder-open text-muted" style="margin: 0 2px;" data-toggle="tooltip" title="this kid is showing signs of needing a professional doctor"></span>
+                                        </a>
+                                        <i class="fa fa-comment-o" style="margin:0 2px;"></i>
+                                    </span>
 
                                     if (user.hasIEP)
                                     {
@@ -215,9 +220,6 @@
                                         </button>
                                     }
 
-                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
-                                        <span class="glyphicon glyphicon-folder-open"></span>
-                                    </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
