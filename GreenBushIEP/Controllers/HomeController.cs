@@ -1278,7 +1278,6 @@ namespace GreenbushIep.Controllers
 
                     try
                     {						
-
 						db.SaveChanges();
 
 						//archive print
@@ -1295,7 +1294,7 @@ namespace GreenbushIep.Controllers
                     }
                     catch (Exception e)
                     {
-                        return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "error", Message = "Error. " + e.Message.ToString() }, JsonRequestBehavior.AllowGet);
                     }
                 }
                 else
