@@ -76,15 +76,19 @@
     </p>
     <table border=0 cellspacing=8 cellpadding=2 style="margin-top:25px;width:60%">
         <tr>
-            <td><u><textarea data-val="100" cols="105" rows="1" style="height:30px" onfocus="clearContents(this);" class="form-control">@((formModel.PhysicianName.Length) > 100 || string.IsNullOrEmpty(formModel.PhysicianName) ? formModel.PhysicianName : String.Format(formModel.PhysicianName).PadRight(100 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span id="PhysicianName" style="display:none;" class="input-value">@((formModel.PhysicianName.Length) > 100 ? formModel.PhysicianName : String.Format(formModel.PhysicianName).PadRight(100 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</span></u>
-            <td><u><textarea maxlength="10" style="width:100px;height:30px" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(beginDate)</span></u></td>
+            <td><u>
+				<textarea data-val="60" onfocus="clearContents(this);" class="form-control">
+					@( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName : formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")) : String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</textarea>
+				<span id="PhysicianName" style="display:none;" class="input-value">
+				    @( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName :  formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")):  String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</span></u>
+            <td><u><textarea maxlength="10" style="width:100px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(beginDate)</span></u></td>
         </tr>
         <tr>
             <td>Health Care Provider – Printed Name</td>
             <td>Date</td>
         </tr>
     </table>
-    <table border=0 cellspacing=8 cellpadding=2  style="margin-top:30px">
+    <table border=0 cellspacing=8 cellpadding=2  style="margin-top:40px">
         <tr>
             <td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
             <td><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
