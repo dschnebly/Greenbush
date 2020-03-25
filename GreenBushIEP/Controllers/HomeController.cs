@@ -2346,13 +2346,16 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formConsentMedicaid = db.tblFormParentConsents.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-
 			else if (fileName == "PhysicianScript")
 			{
 				viewModel.formPhysician = db.tblFormPhysicianScripts.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-			
+			else if (fileName == "PriorWrittenNoticeId")
+			{
+				viewModel.formPWN = db.tblFormPriorWritten_Ident.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
+			
 
 			viewModel.fileModel = fileViewModel;
 
@@ -4623,6 +4626,70 @@ namespace GreenbushIep.Controllers
 				{
 					formPhysicianScript.ModifiedBy = currentUser.UserID;
 					formPhysicianScript.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
+
+			}
+			else if (formNameStr == "PRIOR WRITTEN NOTICE - IDENTIFICATION")
+			{
+				var formPWN = db.tblFormPriorWritten_Ident.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Ident.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Ident();
+
+				formPWN.StudentId = sid;
+				formPWN.ParentName = GetInputValue("ParentName", spans);
+				formPWN.FormDate = GetInputValueDate("FormDate", spans);
+				formPWN.MeetingDate = GetInputValueDate("MeetingDate", spans);
+				formPWN.ChildSPEDEligible = GetCheckboxSingleInputValue("ChildSPEDEligible", checkboxes);
+				formPWN.SPEDNeeded = GetCheckboxSingleInputValue("SPEDNeeded", checkboxes);
+				formPWN.SPEDPlacement = GetCheckboxSingleInputValue("SPEDPlacement", checkboxes);
+				formPWN.ModificationsThatEnableSPED = GetCheckboxSingleInputValue("ModificationsThatEnableSPED", checkboxes);
+				formPWN.Identification_Section = GetCheckboxSingleInputValue("Identification_Section", checkboxes);
+				formPWN.ChildIsEligible = GetCheckboxSingleInputValue("ChildIsEligible", checkboxes);
+				formPWN.ChildMeetsCriteria = GetCheckboxSingleInputValue("ChildMeetsCriteria", checkboxes);
+				formPWN.SPEDNecessary = GetCheckboxSingleInputValue("SPEDNecessary", checkboxes);
+				formPWN.ChildNotElgible = GetCheckboxSingleInputValue("ChildNotElgible", checkboxes);
+				formPWN.ChildDoesNotMeetCriteria = GetCheckboxSingleInputValue("ChildDoesNotMeetCriteria", checkboxes);
+				formPWN.SPEDNotNecessary = GetCheckboxSingleInputValue("SPEDNotNecessary", checkboxes);
+				formPWN.InitialServices_Section = GetCheckboxSingleInputValue("InitialServices_Section", checkboxes);
+				formPWN.ChangesInService_Section = GetCheckboxSingleInputValue("ChangesInService_Section", checkboxes);
+				formPWN.ChangeInService = GetCheckboxSingleInputValue("ChangeInService", checkboxes);
+				formPWN.MaterialChangeInService = GetCheckboxSingleInputValue("MaterialChangeInService", checkboxes);
+				formPWN.ChangeInPlacement_Section = GetCheckboxSingleInputValue("ChangeInPlacement_Section", checkboxes);
+				formPWN.ChangeInPlacements = GetCheckboxSingleInputValue("ChangeInPlacements", checkboxes);
+				formPWN.SubstantialChangeInPlacement = GetCheckboxSingleInputValue("SubstantialChangeInPlacement", checkboxes);
+				formPWN.OtherChanges = GetCheckboxSingleInputValue("OtherChanges", checkboxes);
+				formPWN.LEARefusesToChangeIdentification = GetCheckboxSingleInputValue("LEARefusesToChangeIdentification", checkboxes);
+				formPWN.DescriptionOfAction = GetInputValue("DescriptionOfAction", spans);
+				formPWN.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
+				formPWN.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+				formPWN.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
+				formPWN.OtherFactors = GetInputValue("OtherFactors", spans);
+				formPWN.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+				formPWN.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+				formPWN.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+				formPWN.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+				formPWN.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+				formPWN.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+				formPWN.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+				formPWN.SchoolContact = GetInputValue("SchoolContact", spans);
+				formPWN.SchoolContactAddress = GetInputValue("SchoolContactAddress", spans);
+				formPWN.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+				formPWN.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
+				formPWN.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
+
+
+				if (formPWN.FormPriorWritten_IdentId == 0)
+				{
+					formPWN.CreatedBy = currentUser.UserID;
+					formPWN.Create_Date = DateTime.Now;
+					formPWN.ModifiedBy = currentUser.UserID;
+					formPWN.Update_Date = DateTime.Now;
+					db.tblFormPriorWritten_Ident.Add(formPWN);
+				}
+				else
+				{
+					formPWN.ModifiedBy = currentUser.UserID;
+					formPWN.Update_Date = DateTime.Now;
 				}
 
 				db.SaveChanges();

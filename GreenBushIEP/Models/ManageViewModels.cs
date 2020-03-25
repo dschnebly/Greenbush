@@ -446,8 +446,8 @@ namespace GreenBushIEP.Models
 		public tblFormNoticeOfMeeting formNotice { get; set; }
 		public tblFormParentConsent formConsentMedicaid { get; set; }
 		public tblFormPhysicianScript formPhysician { get; set; }
+		public tblFormPriorWritten_Ident formPWN { get; set; }
 		
-
 		public IEPFormFileViewModel()
         {
             studentId = 0;
