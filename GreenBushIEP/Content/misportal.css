@@ -134,6 +134,18 @@ hr {
   transition: visibility 0s 2s, opacity 2s linear;
 }
 
+.StudentActionIcons {
+    margin-left:10px
+}
+
+.viewStudentNotes i {
+    margin:0 2px;
+}
+
+.viewStudentNotes:focus {
+    outline:none;
+}
+
 /*//////////////////////////////////////
 ///  User Toggle Buttons Starts Here
 //////////////////////////////////////*/
