@@ -200,15 +200,6 @@
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
                                     <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                                    <span class="StudentActionIcons pull-right" style="font-size: 13px; position: relative; bottom: 5px; border-left: 1px solid rgb(230, 230, 230); padding-left: 8px;">
-                                        <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" data-toggle="tooltip" class="viewForms viewFormsBtn" data-ftrans="slide">
-                                            <span class="glyphicon glyphicon glyphicon-folder-open text-muted" style="margin: 0 2px;" title="view this student's folder of forms'"></span>
-                                        </a>
-                                        <br/>
-                                        <a tabindex="0" role="button" class="viewStudentNotes" data-toggle="popover">
-                                            <i class="far fa-comment-alt"></i>
-                                        </a>
-                                    </span>
 
                                     if (user.hasIEP)
                                     {
@@ -223,6 +214,9 @@
                                         </button>
                                     }
 
+                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
+                                        <span class="glyphicon glyphicon-folder-open"></span>
+                                    </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
