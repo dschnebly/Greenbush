@@ -1,8 +1,21 @@
 ﻿$(function () {
+
     function init() {
         $(".chosen-select").chosen({
             width: "95%",
             disable_search_threshold: 10
+        });
+
+        $('[data-toggle="popover"]').popover({
+            html: true,
+            title: "Student Notes <i class='pull-right glyphicon glyphicon-remove-circle'></i>",
+            trigger: "click",
+            content: "<p>this is someone's note here<br>-MJ 03-25-2020</p><hr/><textarea rows='4' cols='30' placeholder='Have something to say about the student? Add a note.'></textarea>",
+            template: "<div class='popover' role='tooltip'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><center><a href='#' class='btn btn-class'>Add Note <i class='glyphicon glyphicon-plus'></i></a></center></div>"
+        });
+
+        $(".viewStudentNotes").on("click", function () {
+
         });
 
         // filter to only active students

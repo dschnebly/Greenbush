@@ -129,9 +129,41 @@ hr {
 }
 
 .fadeIntoYou {
-  visibility: hidden;
-  opacity: 0;
-  transition: visibility 0s 2s, opacity 2s linear;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
+.StudentActionIcons {
+    margin-left: 10px;
+}
+
+.viewStudentNotes i {
+    margin: 0 2px;
+}
+
+.viewStudentNotes:focus {
+    outline: none;
+}
+
+.popover-content p {
+    margin-bottom: 5px;
+}
+
+.popover-content textarea {
+    margin-top: 10px;
+}
+
+.popover-content hr {
+    border-top: 1px solid #000;
+}
+
+.popover-content textarea::-webkit-input-placeholder {
+    color: lightgray;
+}
+
+.popover-content textarea::-moz-placeholder {
+    color: lightgray;
 }
 
 /*//////////////////////////////////////
