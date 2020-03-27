@@ -1,7 +1,8 @@
 ﻿@{
+	var formModel = ViewData["formPWNRevAll"] != null ? ViewData["formPWNRevAll"] as GreenBushIEP.Models.tblFormPriorWritten_ReokeAll : new GreenBushIEP.Models.tblFormPriorWritten_ReokeAll();
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
 	string contactFormattedName = "";
 	string studentAddress = "";
 	string studentCityStZip = "";
@@ -16,93 +17,117 @@
 			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
 		}
 	}
+
+	if (formModel.FormPriorWritten_ReokeAllId > 0)
+	{		
+		contactFormattedName = formModel.ParentName;
+	}
+
+	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.FormDate.HasValue)
+	{
+		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+	}
+
+	var meetingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.MeetingDate.HasValue)
+	{
+		meetingDate = String.Format("{0:MM/dd/yyyy}", formModel.MeetingDate.Value);
+	}
+
+	var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.DelieveredDate.HasValue)
+	{
+		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
+	}
+
+	var endDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.EndDate.HasValue)
+	{
+		endDate = String.Format("{0:MM/dd/yyyy}", formModel.EndDate.Value);
+	}
 }
 
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
     <div class=WordSection1>
-
-        <p class=MsoNormal align=center style='text-align:center;border:solid windowtext 0pt;padding-bottom:25px'>
+        <p class=MsoNormal align=center style='text-align:center;border:solid windowtext 0pt'>
             <span style='font-size:12.0pt;'>
                 <b>
                     PRIOR WRITTEN NOTICE for<br />
                     TERMINATION OF ALL SPECIAL EDUCATION SERVICES,<br />
                     RELATED SERVICES, AND SUPPLEMENTARY AIDS AND SERVICES <br />
                     DUE TO PARENT'S REVOCATION OF CONSENT
-                </b><o:p></o:p>
+                </b>
             </span>
         </p>
-
-         <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
-               style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
-            <tr>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>To:</b>					
-					<span style="text-decoration:underline;font-weight:bold"><textarea  data-val="70" style="width:150px;height:20px;">@(contactFormattedName)</textarea><span style="display:none" class="input-value">@(contactFormattedName)</span></span>
-					
-					</span>
-                    <span style='font-size:11.0pt'><o:p></o:p></span>
-                </p>
-                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-                    <span style='font-size:10.0pt'>
-                        <span style='mso-tab-count:1'>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
-                    </span>
-                </p>
-                </td>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                     <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <span style='font-size:  11.0pt'><b>Date:</b> <textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;text-decoration:underline" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span>
-                    <span style='font-size:11.0pt'><o:p></o:p></span>
-                </p>
-                <p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-                    <span style='font-size:11.0pt'>
-                        <span style='mso-tab-count:1'>       </span>&nbsp;<o:p></o:p>
-                    </span>
-                </p>
-                </td>
-            </tr>
-            <tr>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
-                    </b>
-                </p>
-                <p class=MsoNormal style='tab-stops:lined 261.0pt'>
-                    <b>
-                        <span style='font-size:  11.0pt'>On behalf of:</span>
-                    </b><span style='font-size:11.0pt;mso-bidi-font-weight:
-  bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
-</p>
-<p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
-    <span style='font-size:10.0pt'>
-        <span style='mso-tab-count:1'>                           </span>(Student’s name)<o:p></o:p>
-    </span>
-</p>
-<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-                </td>
-                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-                    <h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-    <p class=MsoNormal>
-        <b style='mso-bidi-font-weight:normal'>
-            <span style='font-size:11.0pt'>Address:</span>
-        </b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
-    </p>
-    <p class=MsoNormal><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></p>
-    <p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(68 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
-                </td>
-            </tr>
-        </table>
-
-
+        <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672 style='width:7.0in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
+			<tr>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<span style='font-size:  11.0pt'>
+							<b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><u><span id="ParentName" style="display:none;" class="input-value">@(contactFormattedName)</span></u>
+						</span>
+						<span style='font-size:11.0pt'><o:p></o:p></span>
+					</p>
+					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+						<span style='font-size:10.0pt'>
+							<span style=''>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
+						</span>
+					</p>
+				</td>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><u><span id="FormDate" style="display:none" class="input-value">@(beginDate)</span></u></span>
+					</p>
+					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
+						<span style='font-size:11.0pt'>
+							<span style=''>       </span>&nbsp;<o:p></o:p>
+						</span>
+					</p>
+				</td>
+			</tr>
+			<tr>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<b>
+							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+						</b>
+					</p>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<b>
+							<span style='font-size:  11.0pt'>On behalf of: </span>
+						</b><span style='font-size:11.0pt;mso-bidi-font-weight: bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+					</p>
+					<p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
+						<span style='font-size:10.0pt'>
+							<span style='mso-tab-count:2'>                                     </span>(Student’s name)<o:p></o:p>
+						</span>
+					</p>
+					<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
+				</td>
+				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
+						<b>
+							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+						</b>
+					</p>
+					<p class=MsoNormal>
+						<b style='mso-bidi-font-weight:normal'>
+							<span style='font-size:11.0pt'>Address:</span>
+						</b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+					</p>
+					<p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
+				</td>
+			</tr>
+		</table>
+		
         <p class=MsoNormal style='margin-right:8.0pt;line-height:12.0pt'>
             <span style='color:black'>
-                On <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>,
+                On <textarea maxlength="10" style="width:100px;height:30px">@(meetingDate)</textarea><span id="MeetingDate" style="display:none" class="input-value">@(meetingDate)</span>,
                 <span>you revoked consent, in writing, for all special education services, related
                 services and supplementary aids and services for the student named above.</span>
             </span>
         </p>
-
         <p class=MsoNormal style='margin-right:8.0pt;line-height:12.0pt'>
             <span style='color:black'>
                 Under this circumstance, special education regulations
@@ -114,7 +139,6 @@
                 notice required by these regulations. <o:p></o:p>
             </span>
         </p>
-
        
         <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt;'>
             <b style=''>
@@ -124,30 +148,16 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;text-indent:.25in;line-height:12.0pt;'>
-            <b style=''>
-                <span style='color:black'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-
+      
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:12.0pt;'>
             <b style=''>
                 <span style='color:black'>
-                    On <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span><span>, all special education services, related
+                    On <textarea maxlength="10" style="width:100px;height:30px">@(endDate)</textarea><span id="EndDate" style="display:none" class="input-value">@(endDate)</span><span>, all special education services, related
                     services and supplementary aids and services specified in the IEP of the student named above will cease.</span><o:p></o:p>
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
+       
         <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -155,11 +165,7 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <b style=''><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-        </p>
-
+       
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -169,15 +175,7 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
+		
         <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -185,10 +183,6 @@
                     REJECTED:<o:p></o:p>
                 </span>
             </b>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <b style=''><span style='color:black'><o:p>&nbsp;</o:p></span></b>
         </p>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:12.0pt'>
@@ -201,15 +195,6 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
         <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -222,24 +207,13 @@
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
-                    (<i style=''>
-                        <u>
-                            including each evaluation procedure,
-                            assessment, record or report used as a basis for the proposed or refused action
+                    (<i>
+                        <u>including each evaluation procedure, assessment, record or report used as a basis for the proposed or refused action
                         </u>
-                    </i>):<o:p></o:p>
+                    </i>):
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -251,15 +225,6 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <span style='color:black'><o:p>&nbsp;</o:p></span>
-        </p>
-
         <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
             <b style=''>
                 <span style='color:black'>
@@ -267,11 +232,6 @@
                 </span>
             </b>
         </p>
-
-        <p class=MsoNormal style='margin-right:-1.0pt;line-height:12.0pt'>
-            <b style=''><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-        </p>
-
         <p class=MsoNormal style='margin-left:.25in'>
             <b style=''>
                 <span style='color:black'>
@@ -283,125 +243,55 @@
                 </span>
             </b>
         </p>       
-        <p class=MsoNormal></p>
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b><span style='font-size:11.0pt'>ADDITIONAL INFORMATION<o:p></o:p></span></b>
-        </p>
+       <p class=MsoNormal align=center style='text-align:center;margin-top:15px'>
+		<b>
+			<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+		</b>
+	</p>
 
-        <p class=MsoNormal>
-            You may contact any of the following resources to help you
-            understand the federal and state laws for educating children with
-            exceptionalities and parental rights (procedural safeguards) granted by those
-            laws: <st1:place w:st="on">
-                <st1:PlaceName w:st="on">Kansas</st1:PlaceName> <st1:PlaceType w:st="on">State</st1:PlaceType>
-            </st1:place> Dept. of Education 800-203-9462; Disability
-            Rights Center of Kansas (DRC) (877) 776-1541; Families Together, Inc.
-            800-264-6343; and Keys for Networking 785-233-8732.
-        </p>
+	<p class="MsoNormal" style="text-align:left;">
+		You may contact any of the following resources to help you
+		understand the federal and state laws for educating children with
+		exceptionalities and parental rights (procedural safeguards) granted by those
+		laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+		Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+		Networking  785-233-8732.
+	</p>
 
+	<table border="1" cellpadding="10" style="margin-top:15px">
+	<tr>
+		<td>
+			<p align=center style='text-align:center;border:none;
+						mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+				<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY</span></b>
+			</p>
+			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedByWho)</span>,					
+			</p>
 
-        <p class='MsoNormal page-break' style='margin-right:-1.0pt;line-height:12.0pt'></p>
-
-        <table border="1" cellpadding="10">
-            <tr>
-                <td>
-                    <div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:8.0pt'>
-                        <h4 style='margin-right:0in;'><o:p>&nbsp;</o:p></h4>
-
-                        <h4 style='margin-right:0in;'>
-                            PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS
-                        </h4>
-
-                        <p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'>
-                            <b style=''><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-                        </p>
-
-                        <p class=MsoNormal style='text-align:left;margin-left:9.0pt;line-height:12.0pt;border:none;padding:0in;'>
-                            <span style='color:black'>
-                                Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
-                                require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. The school is required to give you a copy of the rights of a parent at least one time each school year. To receive an additional copy of your rights and the procedural safeguards available to you, and if you have any questions
-                                regarding your rights, you may contact the special education director of the school or special education cooperative.
-                            </span>
-                        </p>
-
-                        <p class=MsoNormal style='margin-left:9.0pt;text-indent:-9.0pt;line-height:12.0pt;border:none;padding:0in;'><span style='color:black'><o:p>&nbsp;</o:p></span></p>
-
-                    </div>
-                </td>
-            </tr>
-        </table>
-        <br/>
-        <table border="1" cellpadding="10">
-            <tr>
-                <td>
-                    <div>
-
-                        <p class=MsoNormal align=center style='text-align:center;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
-                        </p>
-
-                        <p class=MsoNormal align=center style='text-align:center;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    <b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'><o:p>&nbsp;</o:p></span></b>
-                                </span>
-                            </span>
-                        </p>
-
-                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:
-    OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    I, <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>,<span style='mso-spacerun:yes'></span>
-                                </span>
-                            </span><span style='mso-bookmark:OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
-                            </span>
-                        </p>
-
-                        <p class=MsoNormal style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:
-    OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
-                        </p>
-
-                        <p class=MsoNormal style='text-indent:40.5pt;tab-stops:130.5pt;border:none;    mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;  hand delivered,
-                            </span><span style='mso-bookmark:OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    <span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
-                                </span>
-                            </span><span style='mso-bookmark:OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;  mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
-                                </span>
-                            </span><span style='mso-bookmark:
-    OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;  other <textarea style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span>
-                                </span>
-                            </span>
-                        </p>
-
-
-                        <p class=MsoNormal style='tab-stops:310.5pt;border:none;mso-border-alt:solid windowtext .5pt;    padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:    OLE_LINK2'><span style='mso-bookmark:OLE_LINK1'><o:p>&nbsp;</o:p></span></span>
-                        </p>
-
-                        <p class=MsoNormal style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:    solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-                            <span style='mso-bookmark:OLE_LINK2'>
-                                <span style='mso-bookmark:OLE_LINK1'>
-                                    this notice
-                                    to <u><textarea maxlength="20" style="width:100px;height:20px" placeholder="(Name)"></textarea><span style="display:none" class="input-value"></span></u>&nbsp; on <u><textarea placeholder="(Date)" maxlength="20" style="width:100px;height:20px"></textarea><span style="display:none" class="input-value"></span></u>.
-                                </span>
-                            </span>
-                        </p>
-
-                       
-
-                    </div>
-                </td>
-            </tr>
-        </table>     
-		<br/>
+			<p style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+				<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  hand delivered,
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
+					</span>
+				</span>
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
+					</span>
+				</span>
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value">@(formModel.DelieveredByOtherDesc)</span>
+					</span>
+				</span>
+			</p>
+			<p style='margin-top:8px;'>
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span>.				
+			</p>
+		</td>
+		</tr>
+	</table>    
+	<br/>
     </div>
 </div>

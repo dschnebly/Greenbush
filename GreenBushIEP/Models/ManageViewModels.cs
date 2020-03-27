@@ -448,7 +448,8 @@ namespace GreenBushIEP.Models
 		public tblFormPhysicianScript formPhysician { get; set; }
 		public tblFormPriorWritten_Ident formPWN { get; set; }
 		public tblFormPriorWritten_Eval formPWNEval { get; set; }
-		
+		public tblFormPriorWritten_ReokeAll formPWNRevAll { get; set; }
+
 		public IEPFormFileViewModel()
         {
             studentId = 0;

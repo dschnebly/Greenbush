@@ -459,7 +459,7 @@
 						mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
 				<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY</span></b>
 			</p>
-			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><u><span id="DeliveriedByWho" style="display:none;" class="input-value">@(formModel.DeliveriedByWho)</span></u>,					
+			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedByWho)</span>,					
 			</p>
 
 			<p style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
@@ -481,11 +481,11 @@
 				</span>
 			</p>
 			<p style='margin-top:8px;'>
-				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><u><span id="DeliveriedTo" style="display:none;" class="input-value">@(formModel.DeliveriedTo)</span></u>&nbsp; on <u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span></u>.				
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span>.				
 			</p>
 		</td>
 		</tr>
-	</table>
+	</table>    
 		
 	<div style="margin-top:15px">
 	<h2 class="text-center" >

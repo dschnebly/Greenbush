@@ -2358,8 +2358,11 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formPWNEval = db.tblFormPriorWritten_Eval.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "RevAllSvscPWN")
+			{
+				viewModel.formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 			
-
 
 
 			viewModel.fileModel = fileViewModel;
@@ -4114,26 +4117,26 @@ namespace GreenbushIep.Controllers
 			return success;
 		}
 
-        #region FormPDFDownload
-        private void SaveFormValues(string HTMLContent, string formName, string studentId)
-        {
-            //capture data
-            int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
+		#region FormPDFDownload
+		private void SaveFormValues(string HTMLContent, string formName, string studentId)
+		{
+			//capture data
+			int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
 
-            if (sid == 0)
-                return;
+			if (sid == 0)
+				return;
 
 			//var formList = GetForms();
 
 			tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
 
-            HtmlDocument htmlDocument = new HtmlDocument();
-            htmlDocument.OptionWriteEmptyNodes = true;
-            htmlDocument.OptionFixNestedTags = true;
-            htmlDocument.LoadHtml(HTMLContent);
+			HtmlDocument htmlDocument = new HtmlDocument();
+			htmlDocument.OptionWriteEmptyNodes = true;
+			htmlDocument.OptionFixNestedTags = true;
+			htmlDocument.LoadHtml(HTMLContent);
 
-            var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
-            var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+			var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
+			var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
 			var formNameStr = formName.ToUpper();
 
 
@@ -4748,7 +4751,7 @@ namespace GreenbushIep.Controllers
 				formPWNEval.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
 				formPWNEval.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
 				formPWNEval.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-				
+
 				formPWNEval.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
 				formPWNEval.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
 
@@ -4768,8 +4771,39 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 			}
-		}
+			else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF ALL SERVICES")
+			{
+				var formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokeAll.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokeAll();
 
+				formPWNRevAll.StudentId = sid;
+				formPWNRevAll.ParentName = GetInputValue("ParentName", spans);
+				formPWNRevAll.FormDate = GetInputValueDate("FormDate", spans);
+				formPWNRevAll.MeetingDate = GetInputValueDate("MeetingDate", spans);
+				formPWNRevAll.EndDate = GetInputValueDate("EndDate", spans);
+				formPWNRevAll.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+				formPWNRevAll.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+				formPWNRevAll.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+				formPWNRevAll.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+				formPWNRevAll.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+				formPWNRevAll.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+				formPWNRevAll.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+				if (formPWNRevAll.FormPriorWritten_ReokeAllId == 0)
+				{
+					formPWNRevAll.CreatedBy = currentUser.UserID;
+					formPWNRevAll.Create_Date = DateTime.Now;
+					formPWNRevAll.ModifiedBy = currentUser.UserID;
+					formPWNRevAll.Update_Date = DateTime.Now;
+					db.tblFormPriorWritten_ReokeAll.Add(formPWNRevAll);
+				}
+				else
+				{
+					formPWNRevAll.ModifiedBy = currentUser.UserID;
+					formPWNRevAll.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+			}
+		}
 
 		private DateTime? GetInputValueDate(string inputName, List<HtmlNode> inputs)
 		{

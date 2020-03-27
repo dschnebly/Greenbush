@@ -52,10 +52,8 @@
 			<p class=MsoNormal align=center style='text-align:center'>
 				<span style='font-size: 12pt; font-weight: bold;'>AND REQUEST FOR CONSENT</span>
 			</p>
-		</div>
-		<p class=MsoNormal>&nbsp;</p>
-		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
-			   style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
+		</div>		
+		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672  style='width:7.0in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
 			<tr>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
@@ -552,7 +550,7 @@
 						mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
 				<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY</span></b>
 			</p>
-			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><u><span id="DeliveriedByWho" style="display:none;" class="input-value">@(formModel.DeliveriedByWho)</span></u>,					
+			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedByWho)</span>,					
 			</p>
 
 			<p style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
@@ -574,143 +572,143 @@
 				</span>
 			</p>
 			<p style='margin-top:8px;'>
-				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><u><span id="DeliveriedTo" style="display:none;" class="input-value">@(formModel.DeliveriedTo)</span></u>&nbsp; on <u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span></u>.				
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span>.				
 			</p>
 		</td>
-	</tr>
-</table>
-<div style="margin-top:15px">
-<h2 class="text-center" >
-	<span style='font-size: 11pt;font-weight: bold;'>
-		REQUEST FOR CONSENT FOR SPECIAL
-		EDUCATION ACTION
-	</span>
-</h2>
-</div>
-<p class=MsoNormal align=center style='text-align:center;'><i><u>(If Required)</u></i></p>
-<p class="MsoNormal" style="text-align:left;">
-	We ask that you give us consent to carry out the special
-	education action as indicated on the attached notice.  Any disagreement we have
-	regarding any of the above matters may be resolved by our mutual agreement,
-	through mediation or through due process proceedings.  An explanation of mediation
-	and due process proceedings is provided upon request.  The proposed action(s)
-	may begin immediately upon receiving your written permission.  If this is an
-	initial evaluation your consent initiates a 60 school day timeline that, if your
-	child is eligible, will conclude with your consent to implement special
-	education and related services according to an IEP.  If you have any questions
-	regarding this notice, you may contact the following school representative: 
-</p>
+		</tr>
+	</table>    
+	<div style="margin-top:15px">
+	<h2 class="text-center" >
+		<span style='font-size: 11pt;font-weight: bold;'>
+			REQUEST FOR CONSENT FOR SPECIAL
+			EDUCATION ACTION
+		</span>
+	</h2>
+	</div>
+	<p class=MsoNormal align=center style='text-align:center;'><i><u>(If Required)</u></i></p>
+	<p class="MsoNormal" style="text-align:left;">
+		We ask that you give us consent to carry out the special
+		education action as indicated on the attached notice.  Any disagreement we have
+		regarding any of the above matters may be resolved by our mutual agreement,
+		through mediation or through due process proceedings.  An explanation of mediation
+		and due process proceedings is provided upon request.  The proposed action(s)
+		may begin immediately upon receiving your written permission.  If this is an
+		initial evaluation your consent initiates a 60 school day timeline that, if your
+		child is eligible, will conclude with your consent to implement special
+		education and related services according to an IEP.  If you have any questions
+		regarding this notice, you may contact the following school representative: 
+	</p>
 
-<p style="padding-top:15px;padding-bottom:0px;font-size:10pt">
-	<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span><span> at </span><textarea data-val="40" style="width:150px;height:30px;">@(districtContactPhone)</textarea><span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value">@(districtContactPhone)</span><span>&nbsp;immediately.</span>
-</p>
-<p class=MsoNormal style="padding:0px;font-size:10pt">(School Contact/Phone)</p>
+	<p style="padding-top:15px;padding-bottom:0px;font-size:10pt">
+		<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span><span> at </span><textarea data-val="40" style="width:150px;height:30px;">@(districtContactPhone)</textarea><span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value">@(districtContactPhone)</span><span>&nbsp;immediately.</span>
+	</p>
+	<p class=MsoNormal style="padding:0px;font-size:10pt">(School Contact/Phone)</p>
 
-<p class="MsoNormal" style="text-align:left;padding-top:8px">
-	<b>
-		If you wish to consent to the special education actions
-		specified in this notice, or if you do not give consent, please sign and date
-		this form (below) and return it to the school representative indicated above. 
-	</b>
-</p>
+	<p class="MsoNormal" style="text-align:left;padding-top:8px">
+		<b>
+			If you wish to consent to the special education actions
+			specified in this notice, or if you do not give consent, please sign and date
+			this form (below) and return it to the school representative indicated above. 
+		</b>
+	</p>
 
-<table border="1" cellpadding="10" style="margin-bottom:20px">
-	<tr>
-		<td>
-			<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:-1.0pt;margin-bottom:10px'>
-				<p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'><span style='color:black'><o:p>&nbsp;</o:p></span></p>
+	<table border="1" cellpadding="10" style="margin-bottom:20px">
+		<tr>
+			<td>
+				<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:-1.0pt;margin-bottom:10px'>
+					<p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'><span style='color:black'><o:p>&nbsp;</o:p></span></p>
 
-				<p class=MsoNormal align=center style='text-align:center;line-height:12.0pt;border:none;padding:0in;'>
-					<b>
-						<i><span style='color:black'>GIVE CONSENT</span></i>
-					</b><span style='font-size:7.0pt;color:black'><o:p></o:p></span>
-				</p>
+					<p class=MsoNormal align=center style='text-align:center;line-height:12.0pt;border:none;padding:0in;'>
+						<b>
+							<i><span style='color:black'>GIVE CONSENT</span></i>
+						</b><span style='font-size:7.0pt;color:black'><o:p></o:p></span>
+					</p>
 
-				<p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'>
-					<b><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-				</p>
+					<p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'>
+						<b><span style='color:black'><o:p>&nbsp;</o:p></span></b>
+					</p>
 
-				<p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
-					<b>
-						<span style='font-size:14.0pt;font-family:"Courier New"'>
-							<span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><img id="GivenConsent" class='imgCheck' src="@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
-						</span>
-					</b><b>
-						<span style='font-size:14.0pt;font-family:"Courier New"'></span>
-					</b><span style='color:black'>
-						I <b>
-							<i>give consent</i>
-						</b> for the special
-						education placement and services action(<i>s)</i>
-						in this notice for my child.<span>  </span>I
-						understand this consent is voluntary and may be revoked at any time, but that
-						revocation does not negate an action that occurs after consent is given and
-						before consent is revoked.<span>  </span>I also
-						understand that I may revoke my consent for a particular service or placement
-						only if the IEP team certifies in writing that the particular services or
-						placement is not necessary for this student to receive a free appropriate
-						public education.<o:p></o:p>
-					</span>
-				</p>
-
-				<p class=MsoNormal align=center style='text-align:center;text-indent:.25in;line-height:12.0pt;border:none;padding:0in;padding-top:10px'>
-					<b>
-						<i>
-							<span style='color:black'>
-								DO NOT
-								GIVE CONSENT
+					<p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
+						<b>
+							<span style='font-size:14.0pt;font-family:"Courier New"'>
+								<span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><img id="GivenConsent" class='imgCheck' src="@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
 							</span>
-						</i><span style='color:black'><o:p></o:p></span>
-					</b>
-				</p>
-
-				<p class=MsoNormal align=center style='text-align:center;text-indent:.25in;line-height:12.0pt;border:none;padding:0in;'>
-					<b><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-				</p>
-
-				<p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
-					<b>
-						<span style='font-size:14.0pt;font-family:"Courier New"'>
-							<span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><img id="RefuseConsent" class='imgCheck' src="@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
+						</b><b>
+							<span style='font-size:14.0pt;font-family:"Courier New"'></span>
+						</b><span style='color:black'>
+							I <b>
+								<i>give consent</i>
+							</b> for the special
+							education placement and services action(<i>s)</i>
+							in this notice for my child.<span>  </span>I
+							understand this consent is voluntary and may be revoked at any time, but that
+							revocation does not negate an action that occurs after consent is given and
+							before consent is revoked.<span>  </span>I also
+							understand that I may revoke my consent for a particular service or placement
+							only if the IEP team certifies in writing that the particular services or
+							placement is not necessary for this student to receive a free appropriate
+							public education.<o:p></o:p>
 						</span>
-					</b><span style='color:black'>
-						I
+					</p>
+
+					<p class=MsoNormal align=center style='text-align:center;text-indent:.25in;line-height:12.0pt;border:none;padding:0in;padding-top:10px'>
 						<b>
 							<i>
-								do
-								not give consent
-							</i>
-						</b> for the special education placement and services
-						action(<i>s)</i> in this notice for my
-						child.
-					</span>
-				</p>
+								<span style='color:black'>
+									DO NOT
+									GIVE CONSENT
+								</span>
+							</i><span style='color:black'><o:p></o:p></span>
+						</b>
+					</p>
 
-				<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
-					<span style='color:black'>
-						_______________________________________<span></span>Date ___________________<u><o:p></o:p></u>
-					</span>
-				</p>
-				<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:2px'>
-					<span style='color:black'>
-						<span></span>(Parent/Legal Education Decision Maker) <o:p></o:p>
-					</span>
-				</p>
-				<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
-					<span style='color:black'>
-						_______________________________________<span></span>Date __________________<o:p></o:p>
-					</span>
-				</p>
-				<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:2px'>
-					<span style='color:black'>
-						<span></span>(Parent/Legal Education Decision Maker) <o:p></o:p>
-					</span>
-				</p>
-			</div>
+					<p class=MsoNormal align=center style='text-align:center;text-indent:.25in;line-height:12.0pt;border:none;padding:0in;'>
+						<b><span style='color:black'><o:p>&nbsp;</o:p></span></b>
+					</p>
 
-		</td>
-	</tr>
-</table>
+					<p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
+						<b>
+							<span style='font-size:14.0pt;font-family:"Courier New"'>
+								<span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><img id="RefuseConsent" class='imgCheck' src="@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
+							</span>
+						</b><span style='color:black'>
+							I
+							<b>
+								<i>
+									do
+									not give consent
+								</i>
+							</b> for the special education placement and services
+							action(<i>s)</i> in this notice for my
+							child.
+						</span>
+					</p>
+
+					<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
+						<span style='color:black'>
+							_______________________________________<span></span>Date ___________________<u><o:p></o:p></u>
+						</span>
+					</p>
+					<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:2px'>
+						<span style='color:black'>
+							<span></span>(Parent/Legal Education Decision Maker) <o:p></o:p>
+						</span>
+					</p>
+					<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
+						<span style='color:black'>
+							_______________________________________<span></span>Date __________________<o:p></o:p>
+						</span>
+					</p>
+					<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:2px'>
+						<span style='color:black'>
+							<span></span>(Parent/Legal Education Decision Maker) <o:p></o:p>
+						</span>
+					</p>
+				</div>
+
+			</td>
+		</tr>
+	</table>
 
 </div>
 
