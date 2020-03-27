@@ -447,6 +447,7 @@ namespace GreenBushIEP.Models
 		public tblFormParentConsent formConsentMedicaid { get; set; }
 		public tblFormPhysicianScript formPhysician { get; set; }
 		public tblFormPriorWritten_Ident formPWN { get; set; }
+		public tblFormPriorWritten_Eval formPWNEval { get; set; }
 		
 		public IEPFormFileViewModel()
         {

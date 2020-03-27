@@ -2354,8 +2354,13 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formPWN = db.tblFormPriorWritten_Ident.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-
+			else if (fileName == "RequestConsent")
+			{
+				viewModel.formPWNEval = db.tblFormPriorWritten_Eval.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 			
+
+
 
 			viewModel.fileModel = fileViewModel;
 
@@ -4328,7 +4333,7 @@ namespace GreenbushIep.Controllers
 				formMeetConsent.ProvideTransitionService = GetCheckboxSingleInputValue("ProvideTransitionService", checkboxes);
 				formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
 				formMeetConsent.MeetingDate = GetInputValueDate("MeetingDate", spans);
-				
+
 				if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
 				{
 					formMeetConsent.CreatedBy = currentUser.UserID;
@@ -4372,7 +4377,7 @@ namespace GreenbushIep.Controllers
 
 				formExcusal.FormDate = GetInputValueDate("FormDate", spans);
 				formExcusal.IEPDate = GetInputValueDate("IEPDate", spans);
-				
+
 				if (formExcusal.FormIEPMeetingExcusalId == 0)
 				{
 					formExcusal.CreatedBy = currentUser.UserID;
@@ -4462,7 +4467,7 @@ namespace GreenbushIep.Controllers
 				formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
 				formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
 				formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
-				
+
 				if (formMani.FormManifestationDeterminiationId == 0)
 				{
 					formMani.CreatedBy = currentUser.UserID;
@@ -4694,6 +4699,74 @@ namespace GreenbushIep.Controllers
 
 				db.SaveChanges();
 
+			}
+			else if (formNameStr == "PRIOR WRITTEN NOTICE - EVALUATION -ENGLISH")
+			{
+				var formPWNEval = db.tblFormPriorWritten_Eval.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Eval.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Eval();
+
+				formPWNEval.StudentId = sid;
+				formPWNEval.ParentName = GetInputValue("ParentName", spans);
+				formPWNEval.FormDate = GetInputValueDate("FormDate", spans);
+
+				formPWNEval.InitialEval = GetCheckboxSingleInputValue("InitialEval", checkboxes);
+				formPWNEval.InitialEval_NoAdditional = GetCheckboxSingleInputValue("InitialEval_NoAdditional", checkboxes);
+				formPWNEval.Reeval = GetCheckboxSingleInputValue("Reeval", checkboxes);
+				formPWNEval.Reeval_NoAdditional = GetCheckboxSingleInputValue("Reeval_NoAdditional", checkboxes);
+				formPWNEval.Refuse_InitialEval = GetCheckboxSingleInputValue("Refuse_InitialEval", checkboxes);
+				formPWNEval.Refuse_Reeval = GetCheckboxSingleInputValue("Refuse_Reeval", checkboxes);
+				formPWNEval.SchoolContact = GetInputValue("SchoolContact", spans);
+				formPWNEval.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+				formPWNEval.NewData_HealthMotor = GetCheckboxSingleInputValue("NewData_HealthMotor", checkboxes);
+				formPWNEval.ExistingData_HealthMotor = GetCheckboxSingleInputValue("ExistingData_HealthMotor", checkboxes);
+				formPWNEval.NewData_Vision = GetCheckboxSingleInputValue("NewData_Vision", checkboxes);
+				formPWNEval.ExistingData_Vision = GetCheckboxSingleInputValue("ExistingData_Vision", checkboxes);
+				formPWNEval.NewData_Hearing = GetCheckboxSingleInputValue("NewData_Hearing", checkboxes);
+				formPWNEval.ExistingData_Hearing = GetCheckboxSingleInputValue("ExistingData_Hearing", checkboxes);
+				formPWNEval.NewData_SEBStatus = GetCheckboxSingleInputValue("NewData_SEBStatus", checkboxes);
+				formPWNEval.ExistingData_SEBStatus = GetCheckboxSingleInputValue("ExistingData_SEBStatus", checkboxes);
+				formPWNEval.NewData_GenIntelligence = GetCheckboxSingleInputValue("NewData_GenIntelligence", checkboxes);
+				formPWNEval.ExistingData_GenIntelligence = GetCheckboxSingleInputValue("ExistingData_GenIntelligence", checkboxes);
+				formPWNEval.NewData_Academic = GetCheckboxSingleInputValue("NewData_Academic", checkboxes);
+				formPWNEval.ExistingData_Academic = GetCheckboxSingleInputValue("ExistingData_Academic", checkboxes);
+				formPWNEval.NewData_Communicative = GetCheckboxSingleInputValue("NewData_Communicative", checkboxes);
+				formPWNEval.ExistingData_Communicative = GetCheckboxSingleInputValue("ExistingData_Communicative", checkboxes);
+				formPWNEval.NewData_Transistion = GetCheckboxSingleInputValue("NewData_Transistion", checkboxes);
+				formPWNEval.ExistingData_Transistion = GetCheckboxSingleInputValue("ExistingData_Transistion", checkboxes);
+				formPWNEval.NewData_OtherData = GetCheckboxSingleInputValue("NewData_OtherData", checkboxes);
+				formPWNEval.ExistingData_OtherData = GetCheckboxSingleInputValue("ExistingData_OtherData", checkboxes);
+				formPWNEval.OtherData_Desc = GetInputValue("OtherData_Desc", spans);
+
+
+				formPWNEval.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
+				formPWNEval.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+				formPWNEval.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
+				formPWNEval.OtherFactors = GetInputValue("OtherFactors", spans);
+				formPWNEval.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+				formPWNEval.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+				formPWNEval.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+				formPWNEval.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+				formPWNEval.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+				formPWNEval.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+				formPWNEval.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+				
+				formPWNEval.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
+				formPWNEval.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
+
+				if (formPWNEval.FormPriorWritten_EvalId == 0)
+				{
+					formPWNEval.CreatedBy = currentUser.UserID;
+					formPWNEval.Create_Date = DateTime.Now;
+					formPWNEval.ModifiedBy = currentUser.UserID;
+					formPWNEval.Update_Date = DateTime.Now;
+					db.tblFormPriorWritten_Eval.Add(formPWNEval);
+				}
+				else
+				{
+					formPWNEval.ModifiedBy = currentUser.UserID;
+					formPWNEval.Update_Date = DateTime.Now;
+				}
+
+				db.SaveChanges();
 			}
 		}
 

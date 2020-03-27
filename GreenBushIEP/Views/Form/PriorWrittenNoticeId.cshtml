@@ -419,30 +419,28 @@
 		<div style='padding-left:65px;line-height:12.0pt;text-indent:.15in'>
 			<textarea class="form-control" maxlength="2000">@(formModel.OtherFactors)</textarea> <span id="OtherFactors" style="display:none;" class="input-value">@(formModel.OtherFactors)</span>
 		</div>
-		<p class=MsoNormal align=center style='text-align:center'>
-			<b><span style='font-size:11.0pt'>ADDITIONAL INFORMATION<o:p></o:p></span></b>
-		</p>
-		<p class=MsoNormal>
-			You may contact any of the following resources to help you
-			understand the federal and state laws for educating children with
-			exceptionalities and parental rights (procedural safeguards) granted by those
-			laws: <st1:place w:st="on">
-				<st1:PlaceName w:st="on">Kansas</st1:PlaceName> <st1:PlaceType w:st="on">State</st1:PlaceType>
-			</st1:place> Dept. of Education 800-203-9462; Disability
-			Rights Center of Kansas (DRC) (877) 776-1541; Families Together, Inc.
-			800-264-6343; and Keys for Networking 785-233-8732.
-		</p>
+	<p class=MsoNormal align=center style='text-align:center;margin-top:15px'>
+		<b>
+			<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+		</b>
+	</p>
+
+	<p class="MsoNormal" style="text-align:left;">
+		You may contact any of the following resources to help you
+		understand the federal and state laws for educating children with
+		exceptionalities and parental rights (procedural safeguards) granted by those
+		laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+		Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+		Networking  785-233-8732.
+	</p>
 		
-		<table border="1" cellpadding="10">
+		<table border="1" cellpadding="10" style="align-content:center; margin-top:25px">
 			<tr>
 				<td>
-					<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:8.0pt'>					
-						<h4 style='margin-right:0in;'>
+					<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:8.0pt;text-align:center'>
+						<span style="font-size:11pt;font-weight:600">
 							PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS
-						</h4>
-						<p class=MsoNormal style='line-height:12.0pt;border:none;padding:0in;'>
-							<b><span style='color:black'><o:p>&nbsp;</o:p></span></b>
-						</p>
+						</span>						
 						<p class=MsoNormal style='text-align:left;margin-left:9.0pt;line-height:12.0pt;border:none;padding:0in;'>
 							<span style='color:black'>
 								Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
@@ -454,63 +452,49 @@
 				</td>
 			</tr>
 		</table>
-
-		<table border="1" cellpadding="10">
-			<tr><td>
-					<p  align=center style='text-align:center;border:none;
+	<table border="1" cellpadding="10" style="margin-top:15px">
+	<tr>
+		<td>
+			<p align=center style='text-align:center;border:none;
 						mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY<o:p></o:p></span></b>
-					</p>				
-					<p  style='tab-stops:261.0pt;border:none;mso-border-alt:solid windowtext .5pt;	padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>						<span style='mso-bookmark:
-						OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								I, <textarea style="width:200px;height:35px" maxlength="200" >@(formModel.DeliveriedByWho)</textarea> <span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedByWho)</span>,
-							</span>
-						</span><span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'><span style='font-size:10.0pt'><o:p></o:p></span></span>
-						</span>
-					</p>
-					
-					<p  style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "")/><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;  hand delivered,
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
-							</span>
-						</span>
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "")/><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;  mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
-							</span>
-						</span>
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<input type="checkbox"  @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "")/><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;  other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)" >@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value">@(formModel.DelieveredByOtherDesc)</span>
-							</span>
-						</span>
-					</p>
-				
-					<p  style='tab-stops:301.5pt 6.0in;border:none;mso-border-alt:
-						solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								this notice
-								to <u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)" >@(formModel.DeliveriedTo)</textarea> <span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span></u>&nbsp; on <u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)" >@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span></u>.
-							</span>
-						</span>
-					</p>
-				</td></tr>
-		</table>		
-		
-		<br />
-		<h1 class="page-break" style="text-align:center">
-			<i>
-				<span style='font-size:10.0pt;font-family:"Times New Roman",serif;color:windowtext'>
-					REQUEST
-					FOR CONSENT FOR SPECIAL EDUCATION ACTION<o:p></o:p>
+				<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY</span></b>
+			</p>
+			<p>I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><u><span id="DeliveriedByWho" style="display:none;" class="input-value">@(formModel.DeliveriedByWho)</span></u>,					
+			</p>
+
+			<p style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
+				<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  hand delivered,
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
+					</span>
 				</span>
-			</i>
-		</h1>
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
+					</span>
+				</span>
+				<span style='mso-bookmark:OLE_LINK2'>
+					<span style='mso-bookmark:OLE_LINK1'>
+						<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value">@(formModel.DelieveredByOtherDesc)</span>
+					</span>
+				</span>
+			</p>
+			<p style='margin-top:8px;'>
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><u><span id="DeliveriedTo" style="display:none;" class="input-value">@(formModel.DeliveriedTo)</span></u>&nbsp; on <u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span></u>.				
+			</p>
+		</td>
+		</tr>
+	</table>
+		
+	<div style="margin-top:15px">
+	<h2 class="text-center" >
+		<span style='font-size: 11pt;font-weight: bold;'>
+			REQUEST FOR CONSENT FOR SPECIAL
+			EDUCATION ACTION
+		</span>
+	</h2>
+	</div>
 		<p class=MsoNormal align=center style='text-align:center'>
 			<b><i><u>(If Required)<o:p></o:p></u></i></b>
 		</p>		
@@ -619,11 +603,10 @@
 									</i>
 								</b> for the special education placement and services
 								action(<i>s)</i> in this notice for my
-								child.<o:p></o:p>
+								child.
 							</span>
 						</p>
-
-						<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:20px'>
+						<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
 							<span style='color:black'>
 								_______________________________________<span></span>Date ___________________<u><o:p></o:p></u>
 							</span>
@@ -633,7 +616,7 @@
 								<span></span>(Parent/Legal Education Decision Maker) <o:p></o:p>
 							</span>
 						</p>
-						<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:20px'>
+						<p class=MsoNormal style='text-indent:.25in;line-height:12.0pt;border:none;padding:0in;margin-top:50px'>
 							<span style='color:black'>
 								_______________________________________<span></span>Date __________________<o:p></o:p>
 							</span>
