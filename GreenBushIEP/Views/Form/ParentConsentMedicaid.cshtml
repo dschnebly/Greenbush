@@ -82,8 +82,8 @@
 	<table border=0 cellspacing=2 cellpadding=0 style="width:60%;margin-top:20px">
 		<tr>
 			<td><span><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
-			<td><u><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value">@dobStr</span></u></td>
-			<td><u><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none" class="input-value">@(beginDate)</span></u></td>
+			<td><u><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value isDate">@dobStr</span></u></td>
+			<td><u><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none" class="input-value isDate">@(beginDate)</span></u></td>
 		</tr>
 		<tr>
 			<td>Child's Name</td>

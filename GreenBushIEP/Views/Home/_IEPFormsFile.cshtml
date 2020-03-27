@@ -280,6 +280,10 @@
     }
 </style>
 <div class="transition-page" style="margin-bottom: 45px; display: none;">
+	 <div class="alert alert-danger" role="alert" id="alertMessage" style="display: none; margin-top: 20px;">
+            <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <span class="moreinfo"><strong>Results!</strong> </span>
+        </div>
     <div class="container" style="min-height: 1250px; width: 725px;">
         <div class="row" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
@@ -467,15 +471,45 @@
 		}        
 	}
 
-	function SaveText() {
-		 var form1 = document.getElementById("frmPrint");
-		 var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+	function SaveText(e) {
+		var form1 = document.getElementById("frmPrint");
+		var markup = document.getElementsByClassName("module-page")[0].innerHTML;
+
+		$(".isDate").each(function () {
+			var dateStr = $(this).text();
+			if (dateStr != "") {
+				var isValidDate = isDate(dateStr);
+				if (!isValidDate) {					
+
+					$("#alertMessage .moreinfo").html(dateStr + " is an invalid date. Please use the format: mm/dd/yyyy");
+					$("#alertMessage")
+						.fadeTo(3000, 500)
+						.slideUp(1000, function () {
+							$("#alertMessage").slideUp(1000);
+						});
+
+					e.preventDefault();
+					return false;
+				}
+			}
+		});		 
+
+
 		 $("#printText").val(markup);	
 		 $("#isArchive").val(0);
 		 $("#isSave").val(1);
 		 form1.submit();
 	}
-	
+
+	function isDate(str) {    
+	  var parms = str.split(/[\.\-\/]/);
+	  var yyyy = parseInt(parms[2],10);
+	  var mm   = parseInt(parms[0],10);
+	  var dd   = parseInt(parms[1],10);
+	  var date = new Date(yyyy,mm-1,dd,0,0,0,0);
+	  return mm === (date.getMonth()+1) && dd === date.getDate() && yyyy === date.getFullYear();
+	}
+
 	function clearContents(element) {
 		element.value = '';
 	}

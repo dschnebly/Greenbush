@@ -24,7 +24,7 @@
         <p class=MsoNormal style='tab-stops:5.0in 369.0pt'>
             <span style='font-size:11.0pt;font-family:"Arial",sans-serif'>
                 Student's Name: <u>@(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>&nbsp; Date:
-                <u><textarea cols="20" rows="1" maxlength="10" data-val="75" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(currentDate)</span></u>
+                <u><textarea cols="20" rows="1" maxlength="10" data-val="75" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value isDate">@(currentDate)</span></u>
             </span>
         </p>
 

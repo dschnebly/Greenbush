@@ -58,7 +58,7 @@
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<span style='font-size:  11.0pt'>
-							<b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><u><span id="ParentName" style="display:none;" class="input-value">@(contactFormattedName)</span></u>
+							<b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span>
 						</span>
 						<span style='font-size:11.0pt'><o:p></o:p></span>
 					</p>
@@ -70,7 +70,7 @@
 				</td>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
-						<span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><u><span id="FormDate" style="display:none" class="input-value">@(beginDate)</span></u></span>
+						<span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span></span>
 					</p>
 					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
 						<span style='font-size:11.0pt'>
@@ -572,7 +572,7 @@
 				</span>
 			</p>
 			<p style='margin-top:8px;'>
-				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value">@(deliverDate)</span>.				
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value isDate">@(deliverDate)</span>.				
 			</p>
 		</td>
 		</tr>

@@ -47,7 +47,7 @@
 
 		<table cellpadding="1" cellspacing="4">
 			<tr>
-				<td style="width: 50px">Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="59" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(currentDate)</span></u></td>
+				<td style="width: 50px">Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="59" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value isDate">@(currentDate)</span></u></td>
 				<td style="width: 50px">Student:</td><td><u><b>@(String.Format(studentFormattedName).PadRight(79 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></td>
 			</tr>		
 			<tr>
@@ -55,7 +55,7 @@
 				<td colspan="2">&nbsp;</td>
 			</tr>
 			<tr>
-				<td style="width: 50px">IEP Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="57" style="height:30px">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value" data-val="59">@(iepDate)</span></u></td>
+				<td style="width: 50px">IEP Date:</td><td><u><textarea cols="20" rows="1" maxlength="10" data-val="57" style="height:30px">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value isDate" data-val="59">@(iepDate)</span></u></td>
 				<td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" data-val="83" style="height:30px">@(formModel.ParentName)</textarea><span id="ParentName" style="display:none" class="input-value">@(formModel.ParentName)</span></u></td>
 			</tr>
 			<tr>

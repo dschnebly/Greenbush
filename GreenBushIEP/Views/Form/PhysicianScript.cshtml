@@ -81,7 +81,7 @@
 					@( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName : formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")) : String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</textarea>
 				<span id="PhysicianName" style="display:none;" class="input-value">
 				    @( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName :  formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")):  String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</span></u>
-            <td><u><textarea maxlength="10" style="width:100px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none" class="input-value">@(beginDate)</span></u></td>
+            <td><u><textarea maxlength="10" style="width:100px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none" class="input-value isDate">@(beginDate)</span></u></td>
         </tr>
         <tr>
             <td>Health Care Provider – Printed Name</td>

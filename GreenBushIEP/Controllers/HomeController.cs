@@ -4541,7 +4541,8 @@ namespace GreenbushIep.Controllers
 				var formNotice = db.tblFormNoticeOfMeetings.Any(o => o.StudentId == sid) ? db.tblFormNoticeOfMeetings.FirstOrDefault(o => o.StudentId == sid) : new tblFormNoticeOfMeeting();
 
 				formNotice.StudentId = sid;
-
+				
+				//formNotice.ParentName = GetInputValue("ParentName", spans);
 				formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
 				formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
 				formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);
