@@ -1,10 +1,25 @@
 ﻿@{
+	var formModel = ViewData["formPWNEval"] != null ? ViewData["formPWNEval"] as GreenBushIEP.Models.tblFormPriorWritten_Eval : new GreenBushIEP.Models.tblFormPriorWritten_Eval();
+
 	string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
 	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string evalDate = Model.lastReEvalDate != null ? Model.lastReEvalDate : "";
 	string todaysDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+	//if (formModel.FormPriorWritten_EvalId > 0)
+	//{
+	//	districtContactName = formModel.SchoolContact;
+	//	districtContactPhone = formModel.SchoolContactPhone;
+	//	contactFormattedName = formModel.ParentName;
+	//}
+
+	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.FormDate.HasValue)
+	{
+		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+	}
 }
 
 <div>
@@ -29,7 +44,7 @@
 					</span>
 				</td>
 				<td style="text-decoration:underline;font-family:'Calibri',sans-serif;">
-					<textarea  data-val="107" style="width:150px;height:25px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none;" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span>
+					<textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span>
 				</td>
 			</tr>
 			<tr>
@@ -80,7 +95,7 @@
 			</tr>
 			<tr>
 				<td style='border-bottom:solid 1px black;font-size:10.0pt;font-family:"Calibri",sans-serif'>
-					<textarea style='width:200px;height:30px;'>@(" ")</textarea><span style='display:none;' class="input-value">@(" ")</span></td>
+					<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;" class="input-value">@(districtContactName)</span></td>
 				<td></td>
 			</tr>
 			<tr>
@@ -115,7 +130,7 @@
 					____________________________________________________________       
 				</td>
 				<td>
-					__________________________________
+					________________________________
 				</td>
 			</tr>
 			<tr>
@@ -141,7 +156,7 @@
 					____________________________________________________________       
 				</td>
 				<td>
-					__________________________________
+					________________________________
 				</td>
 			</tr>
 			<tr>
@@ -167,7 +182,7 @@
 					____________________________________________________________       
 				</td>
 				<td>
-					__________________________________
+					________________________________
 				</td>
 			</tr>
 			<tr>

@@ -2361,8 +2361,19 @@ namespace GreenbushIep.Controllers
 			else if (fileName == "RevAllSvscPWN")
 			{
 				viewModel.formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Where(o => o.StudentId == id).FirstOrDefault();
+			}		
+			else if (fileName == "RevPartSvscPWN")
+			{
+				viewModel.formPWNRevPart = db.tblFormPriorWritten_ReokePart.Where(o => o.StudentId == id).FirstOrDefault();
 			}
-			
+			else if (fileName == "RevAllSvscConsent")
+			{
+				viewModel.formRevAll = db.tblFormRevokeConsentAlls.Where(o => o.StudentId == id).FirstOrDefault();
+			}
+			else if (fileName == "RevPartSvscConsent")
+			{
+				viewModel.formRevPart = db.tblFormRevokeConsentParts.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
 			viewModel.fileModel = fileViewModel;
@@ -4801,6 +4812,103 @@ namespace GreenbushIep.Controllers
 				{
 					formPWNRevAll.ModifiedBy = currentUser.UserID;
 					formPWNRevAll.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+			}
+			else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF PARTICULAR SERVICES")
+			{
+				var formPWNRevPart = db.tblFormPriorWritten_ReokePart.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokePart.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokePart();
+
+				formPWNRevPart.StudentId = sid;
+				formPWNRevPart.ParentName = GetInputValue("ParentName", spans);
+				formPWNRevPart.FormDate = GetInputValueDate("FormDate", spans);
+				formPWNRevPart.SubmitDate = GetInputValueDate("SubmitDate", spans);
+				formPWNRevPart.ActionTakenEndDate = GetInputValueDate("ActionTakenEndDate", spans);
+				formPWNRevPart.ServicesRevoked = GetInputValue("ServicesRevoked", spans);
+
+				formPWNRevPart.ActionTaken = GetCheckboxSingleInputValue("ActionTaken", checkboxes);				
+				formPWNRevPart.ActionTakenDescription= GetInputValue("ActionTakenDescription", spans);
+				formPWNRevPart.ActionRefused= GetCheckboxSingleInputValue("ActionRefused", checkboxes);
+				formPWNRevPart.ActionRefusedDescription= GetInputValue("ActionRefusedDescription", spans);
+				formPWNRevPart.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+				formPWNRevPart.DataUsed = GetInputValue("DataUsed", spans);
+				formPWNRevPart.OtherFactors= GetInputValue("OtherFactors", spans);
+
+				formPWNRevPart.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+				formPWNRevPart.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+				formPWNRevPart.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+				formPWNRevPart.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+				formPWNRevPart.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+				formPWNRevPart.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+				formPWNRevPart.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+				if (formPWNRevPart.FormPriorWritten_ReokePartId == 0)
+				{
+					formPWNRevPart.CreatedBy = currentUser.UserID;
+					formPWNRevPart.Create_Date = DateTime.Now;
+					formPWNRevPart.ModifiedBy = currentUser.UserID;
+					formPWNRevPart.Update_Date = DateTime.Now;
+					db.tblFormPriorWritten_ReokePart.Add(formPWNRevPart);
+				}
+				else
+				{
+					formPWNRevPart.ModifiedBy = currentUser.UserID;
+					formPWNRevPart.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+			}
+			else if (formNameStr == "REVOCATION OF CONSENT-ALL SERVICES")
+			{
+				var formRevAll = db.tblFormRevokeConsentAlls.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentAlls.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentAll();
+
+				formRevAll.StudentId = sid;
+				formRevAll.AuthorityName = GetInputValue("AuthorityName", spans);
+				formRevAll.FormDate = GetInputValueDate("FormDate", spans);
+				formRevAll.RevokeConsentDate = GetInputValueDate("RevokeConsentDate", spans);
+				formRevAll.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
+				formRevAll.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
+				
+				if (formRevAll.FormRevokeConsentAllId == 0)
+				{
+					formRevAll.CreatedBy = currentUser.UserID;
+					formRevAll.Create_Date = DateTime.Now;
+					formRevAll.ModifiedBy = currentUser.UserID;
+					formRevAll.Update_Date = DateTime.Now;
+					db.tblFormRevokeConsentAlls.Add(formRevAll);
+				}
+				else
+				{
+					formRevAll.ModifiedBy = currentUser.UserID;
+					formRevAll.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+			}
+			else if (formNameStr == "REVOCATION OF CONSENT-PARTICULAR SERVICES")
+			{
+				var formRevPart = db.tblFormRevokeConsentParts.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentParts.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentPart();
+
+				formRevPart.StudentId = sid;
+				formRevPart.AuthorityName = GetInputValue("AuthorityName", spans);
+				formRevPart.RepresenativeName = GetInputValue("RepresenativeName", spans);
+				formRevPart.RevokedServices = GetInputValue("RevokedServices", spans);
+				formRevPart.EffectiveDate = GetInputValueDate("EffectiveDate", spans);
+				formRevPart.StudentMeets = GetCheckboxSingleInputValue("StudentMeets", checkboxes);
+				formRevPart.StudentDoesNotMeet = GetCheckboxSingleInputValue("StudentDoesNotMeet", checkboxes);
+				formRevPart.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
+				formRevPart.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
+
+				if (formRevPart.FormRevokeConsentPartId == 0)
+				{
+					formRevPart.CreatedBy = currentUser.UserID;
+					formRevPart.Create_Date = DateTime.Now;
+					formRevPart.ModifiedBy = currentUser.UserID;
+					formRevPart.Update_Date = DateTime.Now;
+					db.tblFormRevokeConsentParts.Add(formRevPart);
+				}
+				else
+				{
+					formRevPart.ModifiedBy = currentUser.UserID;
+					formRevPart.Update_Date = DateTime.Now;
 				}
 				db.SaveChanges();
 			}

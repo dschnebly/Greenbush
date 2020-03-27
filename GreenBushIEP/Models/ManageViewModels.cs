@@ -449,6 +449,10 @@ namespace GreenBushIEP.Models
 		public tblFormPriorWritten_Ident formPWN { get; set; }
 		public tblFormPriorWritten_Eval formPWNEval { get; set; }
 		public tblFormPriorWritten_ReokeAll formPWNRevAll { get; set; }
+		public tblFormPriorWritten_ReokePart formPWNRevPart { get; set; }
+		public tblFormRevokeConsentAll formRevAll { get; set; }
+		public tblFormRevokeConsentPart formRevPart { get; set; }
+		
 
 		public IEPFormFileViewModel()
         {

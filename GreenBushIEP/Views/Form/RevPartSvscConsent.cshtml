@@ -1,13 +1,26 @@
 ﻿@{
+	var formModel = ViewData["formRevPart"] != null ? ViewData["formRevPart"] as GreenBushIEP.Models.tblFormRevokeConsentPart : new GreenBushIEP.Models.tblFormRevokeConsentPart();
 	string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
+	if (formModel.FormRevokeConsentPartId > 0)
+	{
+		districtContactName = formModel.AuthorityName;		
+	}
+
+
+	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.EffectiveDate.HasValue)
+	{
+		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.EffectiveDate.Value);
+	}
 }
 
-<div class="module-page">
+<div class="module-page savdDraftAllowed">
     <div class=WordSection1>
 
         <p class=MsoNormal align=center style='margin-bottom:0in;margin-bottom:.0001pt;
@@ -25,16 +38,16 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
-            Effective <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</textarea><span style="display:none" class="input-value">@(String.Format("{0:MM/dd/yyyy}", DateTime.Now))</span></span>,
-            I, <span style="text-decoration:underline;font-weight:bold"><textarea style="width:150px;height:20px;">@(districtContactName)</textarea><span style="display:none" class="input-value">@(districtContactName)</span></span>,
+            Effective <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="EffectiveDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span>,
+            I, <textarea data-val="50" style="width:200px;height:30px;" maxlength="2000" placeholder="Name">@(districtContactName)</textarea><span id="AuthorityName" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span>,
             having authority under the laws of the state of Kansas to make educational decisions:  
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on behalf of the above named student  
+            <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><img id="OnBehalfOfStudent" class='imgCheck' src="@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on behalf of the above named student  
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp; on my own behalf (adult student),
+            <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><img id="OnMyOwnBehalf" class='imgCheck' src="@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on my own behalf (adult student),
         </p>
       
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
@@ -43,7 +56,7 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
             or placement(s) for the above named student:
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:10px'>
-            <u><textarea class="form-control"></textarea><span style="display:none" class="input-value"></span></u>
+            <textarea data-val="50" class="form-control" maxlength="2000" >@(formModel.RevokedServices)</textarea><span id="RevokedServices" style="display:none;text-decoration:underline" class="input-value">@(formModel.RevokedServices)</span>
         </p>        
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             If the IEP
@@ -94,18 +107,18 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
             special education service(s) and/or placement(s) specified above are needed in
             order for the student to receive a FAPE.
         </p>
-        <p class=MsoNormal style='margin-top:15pt;margin-right:0in;margin-bottom:0in;margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                     </u>&nbsp;<u>                                          </u></p>
+        <p class=MsoNormal style='margin-top:40px;margin-right:0in;margin-bottom:0in;margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                     </u>&nbsp;<u>                                          </u></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>                                                                                                                       (Signature)                                             (Date)</span></p>
-
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>&nbsp;</p>
-		 <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            As the school representative on this student’s IEP team, I,<textarea style='width:200px;height:30px;'>@(districtContactName)</textarea><span style='display:none;' class="input-value">@(districtContactName)</span>
+		        
+		 <p class=MsoNormal style='margin-top:5px; margin-bottom:0in;margin-bottom:.0001pt'>
+            As the school representative on this student’s IEP team, I,<textarea data-val="50" style="width:200px;height:30px;" maxlength="2000" placeholder="Name">@(formModel.RepresenativeName)</textarea><span id="RepresenativeName" style="display:none;text-decoration:underline" class="input-value">@(formModel.RepresenativeName)</span>
 			 <span>, certify, on behalf of the IEP team, that this student’s IEP team considered the revocation of consent described above and that the team determined that the student</span>
-			 <i><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" />&nbsp;does</i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b><span style='font-size:14.0pt;line-height:115%'></span></b><input type="checkbox" /><img class='imgCheck' src="@(@imageNotChecked)" /><i>&nbsp;does not</i><span>  need the
+			 <i> <input type="checkbox" @(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? "checked" : "") /><img id="StudentMeets" class='imgCheck' src="@(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? @imageChecked : @imageNotChecked)" />&nbsp;does</i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b><span style='font-size:14.0pt;line-height:115%'></span></b> 
+			 <input type="checkbox" @(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? "checked" : "") /><img id="StudentDoesNotMeet" class='imgCheck' src="@(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? @imageChecked : @imageNotChecked)" /><i>&nbsp;does not</i><span>  need the
             special education and related service(s) and/or placement(s) specified above in order to receive a free appropriate public education (FAPE).</span>
         </p>
-        <p class=MsoNormal style='margin-top:15pt;margin-right:0in;margin-bottom:0in;
+        <p class=MsoNormal style='margin-top:40px;margin-right:0in;margin-bottom:0in;
 margin-left:220.3pt;margin-bottom:.0001pt;line-height:10.0pt'><u>                                                      </u>&nbsp;<u>                                          </u></p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
