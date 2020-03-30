@@ -66,12 +66,12 @@
             <div class="col-md-3">
                 @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now)
                 {
-                <div class="btn-group">
-                    <button type="button" class="btn btn-bordered-warning-status dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b>
-                    </button>
-                    <ul class="dropdown-menu list-group" id="iepStatusList">
-                        @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-bordered-warning-status dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b>
+                        </button>
+                        <ul class="dropdown-menu list-group" id="iepStatusList">
+                            @if (Model.studentIEP.listOfStudentsIEPs.Count > 1)
                             {
                                 int currentIEPId = Model.studentIEP.current.IEPid;
 
@@ -79,41 +79,41 @@
                                 {
                                     if (iep.IEPid != currentIEPId)
                                     {
-                            <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !iep.Amendment ? "ANNUAL" : string.Empty) @(Model.GetIEPStatus(iep)) @(iep.Amendment && iep.IepStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty)</a></li>
+                                        <li class="list-group-item"><a href="/Home/StudentProcedures?stid=@(Model.student.UserID)&iepID=@(iep.IEPid)">@(iep.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !iep.Amendment ? "ANNUAL" : string.Empty) @(Model.GetIEPStatus(iep)) @(iep.Amendment && iep.IepStatus != IEPStatus.ACTIVE ? "DRAFT" : string.Empty)</a></li>
                                     }
                                 }
                             }
-                        @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
+                            @if ((ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT && !Model.studentIEP.anyStudentIEPActive)  // Draft
                             { // teacher permissions removed in 10/24/2019 due to seeing teachers able to make ieps active.
-                            <li class="list-group-item makeIEPActive"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item makeIEPActive"><a href="#" id="makeIEPActive" class="list-group-item @Html.Raw(!Model.studentIEP.isAllCompleted ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                        @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
+                            @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && Model.studentIEP.current.Amendment)  // Ammendment Draft
                             {
-                            <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                        @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment) // Annual Draft
+                            @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.anyStudentIEPActive && !Model.studentIEP.current.Amendment) // Annual Draft
                             {
-                            <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnualActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
                             }
-                        @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT)
+                            @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.iepStatusType == IEPStatus.DRAFT)
                             {
-                            <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
-                        @if (Model.studentIEP.iepStatusType == IEPStatus.ACTIVE)
+                            @if (Model.studentIEP.iepStatusType == IEPStatus.ACTIVE)
                             {
-                            <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                            <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                                 if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && !Model.studentIEP.anyStudentIEPDraft)
                                 {
-                            <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @Html.Raw(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
+                                    <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @Html.Raw(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
                                 }
                             }
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
                 }
                 else
                 {
-                <label class="btn btn-square-toround btn-xl btn-bordered-warning"><span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper()) </label>
+                    <label class="btn btn-square-toround btn-xl btn-bordered-warning"><span class="glyphicon glyphicon-chevron-right"></span> @(Model.studentIEP.current.IepStatus.ToUpper()) </label>
                 }
             </div>
             <div class="col-md-7">
@@ -128,9 +128,9 @@
             </div>
             @if (Model.studentIEP.iepStatusType == IEPStatus.DRAFT || Model.studentIEP.iepStatusType == IEPStatus.AMENDMENT)
             {
-            <div class="col-md-2">
-                <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
-            </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-default" id="IEPDates">Save Dates</button>
+                </div>
             }
         </div>
         <div class="row">
@@ -166,7 +166,7 @@
                 <li class="ui-state-default filter iep @(Model.studentPlan.CommunicationNoConcern ? "widgetDisabled" : string.Empty )" id="CommunicationWidget">
                     <div class="hero-widget well @(Model.studentIEP.isCommunicationCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-commenting"></i>
+                            <i class="far fa-comment-dots"></i>
                         </div>
                         <div class="text">
                             <var>&nbsp;</var>
@@ -180,7 +180,7 @@
                 <li class="ui-state-default filter iep @(Model.studentPlan.SocialNoConcern ? "widgetDisabled" : string.Empty )" id="SocialWidget">
                     <div class="hero-widget well @(Model.studentIEP.isSocialCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-smile-o"></i>
+                            <i class="fas fa-smile"></i>
                         </div>
                         <div class="text">
                             <var>&nbsp;</var>
@@ -235,7 +235,7 @@
                 <li class="ui-state-default filter planning iep" id="ServiceWidget">
                     <div class="hero-widget well @(Model.studentIEP.isServiceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                            <i class="far fa-handshake" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Services</label>
@@ -343,7 +343,7 @@
             <div class="modal-body">
 
                 @using (Html.BeginForm("Home", "StudentPlanning", new { }, FormMethod.Post, new { id = "thePlan" }))
-                    {
+                {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(model => model.student.UserID, new { id = "stid" })
                     @Html.Hidden("iepId", Model.studentIEP.current.IEPid)
@@ -446,7 +446,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-commenting" aria-hidden="true"></i> Communication</h5>
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="far fa-comment-dots" aria-hidden="true"></i> Communication</h5>
                             <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                             <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
                                 <input type="checkbox" name="CommunicationNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchCommunicationConcerns" @(Model.studentPlan.CommunicationNoConcern ? "checked" : String.Empty )>
@@ -473,7 +473,7 @@
 
                     <div class="row">
                         <div class="col-md-4">
-                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-smile-o" aria-hidden="true"></i> Social-Emotional</h5>
+                            <h5 style="font-size: 18px;font-weight:bold;"><i class="fas fa-smile" aria-hidden="true"></i> Social-Emotional</h5>
                             <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                             <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
                                 <input type="checkbox" name="SocialNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchSocialConcerns" @(Model.studentPlan.SocialNoConcern ? "checked" : String.Empty )>
@@ -644,7 +644,7 @@
                     <div class="modal-footer">
                         <button id="saveplan" type="button" class="btn btn-default btn-lg">Save Plan</button>
                     </div>
-                    }
+                }
             </div>
         </div>
     </div>

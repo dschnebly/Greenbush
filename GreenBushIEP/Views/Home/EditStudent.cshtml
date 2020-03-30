@@ -722,7 +722,14 @@
             </ul>
         </div>
         <div class="col-md-2 pull-right">
-            @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+            @if(ViewBag.backToStudentIEP)
+            {
+                @Html.ActionLink(" ", "StudentProcedures", "Home", new { stid = Model.student.UserID }, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+            }
+            else
+            {
+                @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+            }
         </div>
     </div>
     <div class="row">
@@ -1380,7 +1387,7 @@
                                                         <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
                                                         <div class="input-group">
                                                             <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")"
-                                                                data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
+                                                                   data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
                                                             <span class="input-group-addon btn toggle-reCompletedPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
                                                         </div>
                                                     </div>

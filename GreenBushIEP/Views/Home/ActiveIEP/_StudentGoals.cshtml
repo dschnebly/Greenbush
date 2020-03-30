@@ -4,7 +4,7 @@
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Goals');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
 	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title pull-left" style="font-size: 30px;"><i class="fa fa-trophy" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Goals</h4>
+    <h4 class="modal-title pull-left" style="font-size: 30px;"><i class="fas fa-trophy" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Goals</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
 </div>
 <div class="modal-body">
@@ -64,7 +64,7 @@
                                     <h4 class="panel-title">
                                         <input type="hidden" name="StudentGoalId" value="@(studentGoal.goal.goalID)" />
                                         <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
-                                            <i class="fa fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
+                                            <i class="fas fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
                                         </a>
                                     </h4>
                                 </div>

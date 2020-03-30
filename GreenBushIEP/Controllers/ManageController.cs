@@ -2171,7 +2171,7 @@ namespace GreenBushIEP.Controllers
 
         // GET: Manage/EditStudent/5
         [HttpGet]
-        public ActionResult EditStudent(int id)
+        public ActionResult EditStudent(int id, bool backToStudentIEP = false)
         {
             StudentDetailsViewModel model = new StudentDetailsViewModel();
 
@@ -2262,6 +2262,7 @@ namespace GreenBushIEP.Controllers
                                         BuildingUSD = b.USD
                                     }).OrderBy(b => b.BuildingName).ToList();
             ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
+            ViewBag.backToStudentIEP = backToStudentIEP;
 
             return View("~/Views/Home/EditStudent.cshtml", model);
         }
