@@ -128,7 +128,7 @@
                 <li class="ui-state-default filter iep @(Model.studentPlan.CommunicationNoConcern ? "widgetDisabled" : string.Empty )" id="CommunicationWidget">
                     <div class="hero-widget well @(Model.studentIEP.isCommunicationCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-commenting"></i>
+                            <i class="far fa-comment-dots"></i>
                         </div>
                         <div class="text">
                             <var>&nbsp;</var>
@@ -142,7 +142,7 @@
                 <li class="ui-state-default filter iep @(Model.studentPlan.SocialNoConcern ? "widgetDisabled" : string.Empty )" id="SocialWidget">
                     <div class="hero-widget well @(Model.studentIEP.isSocialCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-smile-o"></i>
+                            <i class="fas fa-smile"></i>
                         </div>
                         <div class="text">
                             <var>&nbsp;</var>
@@ -184,7 +184,7 @@
                 <li class="ui-state-default filter planning iep" id="GoalWidget">
                     <div class="hero-widget well @(Model.studentIEP.isGoalCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-trophy" aria-hidden="true"></i>
+                            <i class="fas fa-trophy" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Student Goals</label>
@@ -197,7 +197,7 @@
                 <li class="ui-state-default filter planning iep" id="ServiceWidget">
                     <div class="hero-widget well @(Model.studentIEP.isServiceCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
-                            <i class="fa fa-handshake-o" aria-hidden="true"></i>
+                            <i class="far fa-handshake" aria-hidden="true"></i>
                         </div>
                         <div class="text">
                             <label class="text-muted">Services</label>
@@ -406,7 +406,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
-                        <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-commenting" aria-hidden="true"></i> Communication</h5>
+                        <h5 style="font-size: 18px;font-weight:bold;"><i class="far fa-comment-dots" aria-hidden="true"></i> Communication</h5>
                         <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                         <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
                             <input type="checkbox" name="CommunicationNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchCommunicationConcerns" @(Model.studentPlan.CommunicationNoConcern ? "checked" : String.Empty )>
@@ -432,7 +432,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-4">
-                        <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-smile-o" aria-hidden="true"></i> Social-Emotional</h5>
+                        <h5 style="font-size: 18px;font-weight:bold;"><i class="fas fa-smile" aria-hidden="true"></i> Social-Emotional</h5>
                         <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                         <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
                             <input type="checkbox" name="SocialNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchSocialConcerns" @(Model.studentPlan.SocialNoConcern ? "checked" : String.Empty )>
