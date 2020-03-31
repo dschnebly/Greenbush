@@ -124,6 +124,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
         public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
+        public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)

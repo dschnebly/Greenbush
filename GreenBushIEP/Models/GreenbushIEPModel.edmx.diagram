@@ -110,6 +110,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingConsentToInvite" Width="1.5" PointX="3.75" PointY="33.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormIEPMeetingExcusal" Width="1.5" PointX="0.75" PointY="34.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="33.75" PointY="5.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormTransportationRequest" Width="1.5" PointX="6.375" PointY="33.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

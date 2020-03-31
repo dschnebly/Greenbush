@@ -1529,19 +1529,18 @@
 	@if (@Model.studentDetails.printAcc)
 {
 	<div id="divAcc">
-		<hr />
-		<h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
+		<hr /><h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
 		@if (Model.accommodations != null && Model.accommodations.Count() > 0)
 		{
-			<table>
+			<table class="table table-bordered" border="1">
 				<tr>
 					<td><b>Type</b></td>
 					<td><b>Description</b></td>
 					<td><b>Frequency</b></td>
 					<td><b>Location</b></td>
 					<td><b>Duration</b></td>
-					<td><b>Anticipated <br />Start Date</b></td>
-					<td><b>Anticipated <br />End Date</b></td>
+					<td><b>Anticipated <br />Start<br />Date</b></td>
+					<td><b>Anticipated <br />End<br />Date</b></td>
 				</tr>
 				@foreach (var accom in Model.accommodations)
 				{
@@ -1568,18 +1567,18 @@
 						shortDesc = "Transportation ";
 					}
 					<tr>
-						<td>@(shortDesc)</td>
-						<td>@accom.Description</td>
-						<td>@accom.Frequency</td>
-						<td>@accom.Location</td>
-						<td>@accom.Duration</td>
-						<td>
+						<td valign="top">@(shortDesc)</td>
+						<td valign="top">@accom.Description</td>
+						<td valign="top">@accom.Frequency</td>
+						<td valign="top">@accom.Location</td>
+						<td valign="top">@accom.Duration</td>
+						<td valign="top">
 							@if (accom.AnticipatedStartDate.HasValue)
 							{
 								@accom.AnticipatedStartDate.Value.Date.ToString("MM/dd/yyyy")
 							}
 						</td>
-						<td>
+						<td valign="top">
 							@if (accom.AnticipatedEndDate.HasValue)
 							{
 								@accom.AnticipatedEndDate.Value.Date.ToString("MM/dd/yyyy")
@@ -3335,7 +3334,7 @@
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 		{
 			var serviceCount = 1;
-			<table style="text-align:left" border="1">
+			<table class="table table-bordered" border="1">
 				@foreach (var service in Model.studentServices)
 				{
 					<tr>

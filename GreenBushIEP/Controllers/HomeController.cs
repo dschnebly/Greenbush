@@ -2374,6 +2374,10 @@ namespace GreenbushIep.Controllers
 			{
 				viewModel.formRevPart = db.tblFormRevokeConsentParts.Where(o => o.StudentId == id).FirstOrDefault();
 			}
+			else if (fileName == "TransportationRequest")
+			{
+				viewModel.formTransRequest = db.tblFormTransportationRequests.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
 			viewModel.fileModel = fileViewModel;
@@ -2426,9 +2430,11 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
             forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
+			forms.Add(new SelectListItem { Text = "Request for Transportation", Value = "TransportationRequest" });
 
 
-            return forms.OrderBy(x => x.Text).ToList();
+
+			return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]
@@ -4552,7 +4558,7 @@ namespace GreenbushIep.Controllers
 				var formNotice = db.tblFormNoticeOfMeetings.Any(o => o.StudentId == sid) ? db.tblFormNoticeOfMeetings.FirstOrDefault(o => o.StudentId == sid) : new tblFormNoticeOfMeeting();
 
 				formNotice.StudentId = sid;
-				
+
 				//formNotice.ParentName = GetInputValue("ParentName", spans);
 				formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
 				formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
@@ -4826,13 +4832,13 @@ namespace GreenbushIep.Controllers
 				formPWNRevPart.ActionTakenEndDate = GetInputValueDate("ActionTakenEndDate", spans);
 				formPWNRevPart.ServicesRevoked = GetInputValue("ServicesRevoked", spans);
 
-				formPWNRevPart.ActionTaken = GetCheckboxSingleInputValue("ActionTaken", checkboxes);				
-				formPWNRevPart.ActionTakenDescription= GetInputValue("ActionTakenDescription", spans);
-				formPWNRevPart.ActionRefused= GetCheckboxSingleInputValue("ActionRefused", checkboxes);
-				formPWNRevPart.ActionRefusedDescription= GetInputValue("ActionRefusedDescription", spans);
+				formPWNRevPart.ActionTaken = GetCheckboxSingleInputValue("ActionTaken", checkboxes);
+				formPWNRevPart.ActionTakenDescription = GetInputValue("ActionTakenDescription", spans);
+				formPWNRevPart.ActionRefused = GetCheckboxSingleInputValue("ActionRefused", checkboxes);
+				formPWNRevPart.ActionRefusedDescription = GetInputValue("ActionRefusedDescription", spans);
 				formPWNRevPart.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
 				formPWNRevPart.DataUsed = GetInputValue("DataUsed", spans);
-				formPWNRevPart.OtherFactors= GetInputValue("OtherFactors", spans);
+				formPWNRevPart.OtherFactors = GetInputValue("OtherFactors", spans);
 
 				formPWNRevPart.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
 				formPWNRevPart.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
@@ -4867,7 +4873,7 @@ namespace GreenbushIep.Controllers
 				formRevAll.RevokeConsentDate = GetInputValueDate("RevokeConsentDate", spans);
 				formRevAll.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
 				formRevAll.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
-				
+
 				if (formRevAll.FormRevokeConsentAllId == 0)
 				{
 					formRevAll.CreatedBy = currentUser.UserID;
@@ -4911,6 +4917,78 @@ namespace GreenbushIep.Controllers
 					formRevPart.Update_Date = DateTime.Now;
 				}
 				db.SaveChanges();
+			}
+			else if (formNameStr == "REQUEST FOR TRANSPORTATION")
+			{
+				var formTransRequest = db.tblFormTransportationRequests.Any(o => o.StudentId == sid) ? db.tblFormTransportationRequests.FirstOrDefault(o => o.StudentId == sid) : new tblFormTransportationRequest();
+				
+				formTransRequest.StudentId = sid;
+				formTransRequest.FormDate = GetInputValueDate("FormDate", spans);
+				formTransRequest.BeginDate = GetInputValueDate("BeginDate", spans);
+				formTransRequest.EndDate = GetInputValueDate("EndDate", spans);
+
+				formTransRequest.StudentName = GetInputValue("StudentName", spans);
+
+				formTransRequest.USD = GetInputValue("USD", spans);
+				formTransRequest.School = GetInputValue("School", spans);
+				formTransRequest.Grade = GetInputValue("Grade", spans);
+				formTransRequest.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
+				formTransRequest.ReceivingUSD = GetInputValue("ReceivingUSD", spans);
+				formTransRequest.TransportationDirector = GetInputValue("TransportationDirector", spans);
+				formTransRequest.TransportationDirectorPhone = GetInputValue("TransportationDirectorPhone", spans);
+				formTransRequest.ReceivingTeacherAndProgram = GetInputValue("ReceivingTeacherAndProgram", spans);
+
+				var hours = GetInputValue("Hours", spans);
+				if (!string.IsNullOrEmpty(hours)) {
+					decimal hourVal = 0;
+					Decimal.TryParse(hours, out hourVal);
+					formTransRequest.Hours = hourVal;
+				}
+
+				formTransRequest.Contact_1_Name = GetInputValue("Contact_1_Name", spans);
+				formTransRequest.Contact_1_HomePhone = GetInputValue("Contact_1_HomePhone", spans);
+				formTransRequest.Contact_1_WorkPhone = GetInputValue("Contact_1_WorkPhone", spans);
+				formTransRequest.Contact_2_Name = GetInputValue("Contact_2_Name", spans);
+				formTransRequest.Contact_2_HomePhone = GetInputValue("Contact_2_HomePhone", spans);
+				formTransRequest.Contact_2_WorkPhone = GetInputValue("Contact_2_WorkPhone", spans);
+				formTransRequest.BabySitterDaycareNameAndPhone = GetInputValue("BabySitterDaycareNameAndPhone", spans);
+				formTransRequest.HomeAddress = GetInputValue("HomeAddress", spans);
+				formTransRequest.FamilyPhysicianAndHosptial = GetInputValue("FamilyPhysicianAndHosptial", spans);
+				formTransRequest.PickupLocation = GetInputValue("PickupLocation", spans);
+				formTransRequest.ReturnLocation = GetInputValue("ReturnLocation", spans);
+				formTransRequest.WheelChair = GetCheckboxSingleInputValue("WheelChair", checkboxes);
+				formTransRequest.CarSeat = GetCheckboxSingleInputValue("CarSeat", checkboxes);
+				formTransRequest.SeatBelt = GetCheckboxSingleInputValue("SeatBelt", checkboxes);
+				formTransRequest.ChestHarness = GetCheckboxSingleInputValue("ChestHarness", checkboxes);
+				formTransRequest.BusLift = GetCheckboxSingleInputValue("BusLift", checkboxes);
+				formTransRequest.BoosterSeat = GetCheckboxSingleInputValue("BoosterSeat", checkboxes);
+				formTransRequest.Tray = GetCheckboxSingleInputValue("Tray", checkboxes);
+				formTransRequest.PersonalCareAttendant = GetCheckboxSingleInputValue("PersonalCareAttendant", checkboxes);
+				formTransRequest.AdductorInPlace = GetCheckboxSingleInputValue("AdductorInPlace", checkboxes);
+				formTransRequest.Communication = GetCheckboxSingleInputValue("Communication", checkboxes);
+				formTransRequest.Other = GetCheckboxSingleInputValue("Other", checkboxes);
+				formTransRequest.Other_Desc = GetInputValue("Other_Desc", spans);
+				formTransRequest.Documentation = GetInputValue("Documentation", spans);
+				formTransRequest.PositioningAndHandling = GetInputValue("PositioningAndHandling", spans);
+				formTransRequest.MeidicationAndSideEffects = GetInputValue("MeidicationAndSideEffects", spans);
+				formTransRequest.Equipment = GetInputValue("Equipment", spans);
+
+
+				if (formTransRequest.FormTransportationRequestId == 0)
+				{
+					formTransRequest.CreatedBy = currentUser.UserID;
+					formTransRequest.Create_Date = DateTime.Now;
+					formTransRequest.ModifiedBy = currentUser.UserID;
+					formTransRequest.Update_Date = DateTime.Now;
+					db.tblFormTransportationRequests.Add(formTransRequest);
+				}
+				else
+				{
+					formTransRequest.ModifiedBy = currentUser.UserID;
+					formTransRequest.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+
 			}
 		}
 

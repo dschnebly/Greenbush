@@ -332,6 +332,8 @@
 						   { "formPWNRevPart", Model.formPWNRevPart },
 						   { "formRevAll", Model.formRevAll },
 						   { "formRevPart", Model.formRevPart },
+						   { "formTransRequest", Model.formTransRequest },
+						   
 						   
 						   
 
@@ -511,6 +513,12 @@
 	  var dd   = parseInt(parms[1],10);
 	  var date = new Date(yyyy,mm-1,dd,0,0,0,0);
 	  return mm === (date.getMonth()+1) && dd === date.getDate() && yyyy === date.getFullYear();
+	}
+
+	function isDecimal(str) {
+		if (str != undefined && str != "") {
+			return !isNaN(str);
+		}
 	}
 
 	function clearContents(element) {

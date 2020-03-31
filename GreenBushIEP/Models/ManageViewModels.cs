@@ -452,7 +452,7 @@ namespace GreenBushIEP.Models
 		public tblFormPriorWritten_ReokePart formPWNRevPart { get; set; }
 		public tblFormRevokeConsentAll formRevAll { get; set; }
 		public tblFormRevokeConsentPart formRevPart { get; set; }
-		
+		public tblFormTransportationRequest formTransRequest { get; set; }
 
 		public IEPFormFileViewModel()
         {

@@ -1,0 +1,330 @@
+﻿@{
+	var formModel = ViewData["formTransRequest"] != null ? ViewData["formTransRequest"] as GreenBushIEP.Models.tblFormTransportationRequest : new GreenBushIEP.Models.tblFormTransportationRequest();
+
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
+	string idStr = Model.studentInfo != null ? Model.studentInfo.KIDSID.ToString() : "";
+	//string schoolDistrictNum = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+	string schoolBuilding =Model.building;
+	string schoolDistrictName = Model.districtName;
+	string usd = string.Format("{0}", schoolDistrictName);
+	string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.ToString() : " ";
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
+	var formDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.FormDate.HasValue)
+	{
+		formDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+	}
+
+	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.BeginDate.HasValue)
+	{
+		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.BeginDate.Value);
+	}
+
+	var endDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.EndDate.HasValue)
+	{
+		endDate = String.Format("{0:MM/dd/yyyy}", formModel.EndDate.Value);
+	}
+
+	string contactFormattedName = "";
+	string homeAddress = "";
+	string contactPhone = "";
+	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+	{
+		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
+		if (primary != null)
+		{
+			contactFormattedName = primary.FirstName + " " + primary.LastName;
+			homeAddress = primary.Address1 + " " + primary.Address2 + " " + primary.City + ", " + primary.State + " " + primary.Zip;
+			contactPhone = primary.Phone;
+		}
+	}
+
+	string contactFormattedName2 = "";
+	string contactPhone2 = "";
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 0) > 0))
+	{
+		var secondary = contacts.FirstOrDefault(o => o.PrimaryContact == 0);
+		if (secondary != null)
+		{
+			contactFormattedName2 = secondary.FirstName + " " + secondary.LastName;
+			contactPhone2 = secondary.Phone;
+
+		}
+	}
+
+	if (formModel.FormTransportationRequestId > 0)
+	{
+		contactFormattedName = formModel.Contact_1_Name;
+		homeAddress = formModel.HomeAddress;
+		contactPhone = formModel.Contact_1_HomePhone;
+		contactFormattedName2 = formModel.Contact_2_Name;
+		contactPhone2 = formModel.Contact_2_HomePhone;
+		studentFormattedName = formModel.StudentName;
+		dobStr = formModel.DateOfBirth.HasValue ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
+		usd = formModel.USD;
+		schoolBuilding = formModel.School;
+	}
+
+}
+<div class="module-page savdDraftAllowed">
+
+	<p align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:14.0pt;line-height:107%'>District</span>
+		</b>
+	</p>
+
+	<p align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:14.0pt;line-height:107%'>Request for Transportation</span>
+		</b>
+	</p>
+
+	<p align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:14.0pt;line-height:107%'>Special Needs Students</span>
+		</b>
+	</p>
+
+	<p align=center style='margin-bottom:0in;margin-bottom:.0001pt;text-align:center'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:14.0pt;line-height:107%'>School Year 2020</span>
+		</b>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>Student Name: <textarea maxlength="500" style="width:250px;height:30px">@(studentFormattedName)</textarea><span id="StudentName" style="display:none;font-size:11.0pt" class="input-value ">@(studentFormattedName)</span> </span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Date: <textarea maxlength="10" style="width:250px;height:30px">@(formDate)</textarea><span id="FormDate" style="display:none;font-size:11.0pt" class="input-value isDate">@(formDate)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Home District: <textarea maxlength="50" style="width:250px;height:30px">@(usd)</textarea><span id="USD" style="display:none;font-size:11.0pt" class="input-value ">@(usd)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>School: <textarea maxlength="500" style="width:250px;height:30px">@(schoolBuilding)</textarea><span id="School" style="display:none;font-size:11.0pt" class="input-value ">@(schoolBuilding)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Grade: <textarea maxlength="10" style="width:250px;height:30px">@(studentGrade)</textarea><span id="Grade" style="display:none;font-size:11.0pt" class="input-value ">@(studentGrade)</span> </span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>DOB: <textarea maxlength="10" style="width:250px;height:30px">@(dobStr)</textarea><span id="DateOfBirth" style="display:none;font-size:11.0pt" class="input-value isDate">@(dobStr)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Receiving school district transported
+			to and school (if different): <textarea maxlength="50" style="width:250px;height:30px">@(formModel.ReceivingUSD)</textarea><span id="ReceivingUSD" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.ReceivingUSD)</span>
+		</span>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>Transportation Director: <textarea maxlength="200" style="width:250px;height:30px">@(formModel.TransportationDirector)</textarea><span id="TransportationDirector" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.TransportationDirector)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Telephone Number: <textarea maxlength="20" style="width:250px;height:30px">@(formModel.TransportationDirectorPhone)</textarea><span id="TransportationDirectorPhone" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.TransportationDirectorPhone)</span></span>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:15px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Receiving classroom teacher and	program:<textarea maxlength="1000" style="width:250px;height:30px">@(formModel.ReceivingTeacherAndProgram)</textarea><span id="ReceivingTeacherAndProgram" style="display:none;font-size:11.0pt" class="input-value">@(formModel.ReceivingTeacherAndProgram)</span>
+		</span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Begin Date: <textarea maxlength="10" style="width:250px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none;font-size:11.0pt" class="input-value isDate">@(beginDate)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>End Date: <textarea maxlength="10" style="width:250px;height:30px">@(endDate)</textarea><span id="EndDate" style="display:none;font-size:11.0pt" class="input-value isDate">@(endDate)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Hours of program or school: <textarea maxlength="10" style="width:250px;height:30px">@(formModel.Hours.HasValue ? formModel.Hours.Value.ToString("F") : "")</textarea><span id="Hours" style="display:none;font-size:11.0pt" class="input-value">@(formModel.Hours.HasValue ? formModel.Hours.Value.ToString("F") : "")</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			We must have the information below to
+			assure that your student will receive prompt emergency care in case of
+			necessity. Please complete all if the
+			blanks below. If you do not have a
+			family physician, write none in the blank. If you do not have a preference of hospital indicate this by writing “no
+			choice” and student will be taken to nearest hospital available for emergency
+			treatment. School districts whenever possible before any emergency treatment will notify parents.
+		</span>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>Contact 1 Name: <textarea maxlength="200" style="width:250px;height:30px">@(contactFormattedName )</textarea><span id="Contact_1_Name" style="display:none;font-size:11.0pt" class="input-value ">@(contactFormattedName )</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Home Phone: <textarea maxlength="20" style="width:250px;height:30px">@(contactPhone)</textarea><span id="Contact_1_HomePhone" style="display:none;font-size:11.0pt" class="input-value ">@(contactPhone )</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Work Phone: <textarea maxlength="20" style="width:250px;height:30px">@(formModel.Contact_1_WorkPhone)</textarea><span id="Contact_1_WorkPhone" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Contact_1_WorkPhone)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Contact 2 Name: <textarea maxlength="200" style="width:250px;height:30px">@(contactFormattedName2 )</textarea><span id="Contact_2_Name" style="display:none;font-size:11.0pt" class="input-value ">@(contactFormattedName2)</span>
+		</span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Home Phone: <textarea maxlength="20" style="width:250px;height:30px">@(contactPhone2)</textarea><span id="Contact_2_HomePhone" style="display:none;font-size:11.0pt" class="input-value ">@(contactPhone2)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Work Phone: <textarea maxlength="20" style="width:250px;height:30px">@(formModel.Contact_2_WorkPhone)</textarea><span id="Contact_2_WorkPhone" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Contact_2_WorkPhone)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Babysitter/Daycare Name and Telephone
+			Number: <textarea maxlength="2000" style="width:250px;height:30px">@(formModel.BabySitterDaycareNameAndPhone)</textarea><span id="BabySitterDaycareNameAndPhone" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.BabySitterDaycareNameAndPhone)</span>
+		</span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>Home Address: <textarea maxlength="500" style="width:500px;height:30px">@(homeAddress )</textarea><span id="HomeAddress" style="display:none;font-size:11.0pt" class="input-value ">@(homeAddress )</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Family Physician and Hospital: <textarea maxlength="1000" style="width:500px;height:30px">@(formModel.FamilyPhysicianAndHosptial)</textarea><span id="FamilyPhysicianAndHosptial" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.FamilyPhysicianAndHosptial)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Pickup Point if different than home: <textarea maxlength="2000" style="width:500px;height:30px">@(formModel.PickupLocation)</textarea><span id="PickupLocation" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.PickupLocation)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<span style='font-size:11.0pt;line-height:107%'>Return Address if other than home: <textarea maxlength="2000" style="width:500px;height:30px">@(formModel.ReturnLocation)</textarea><span id="ReturnLocation" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.ReturnLocation)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:10px;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Describe any physical, emotional
+			and/or behavioral conditions and communication methods which would affect
+			transportation. 
+		</span>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? "checked" : "")/><img id="WheelChair" class='imgCheck' src="@(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? @imageChecked : @imageNotChecked)"/>Wheelchair
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? "checked" : "")/><img id="CarSeat" class='imgCheck' src="@(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? @imageChecked : @imageNotChecked)"/>Car Seat
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? "checked" : "")/><img id="SeatBelt" class='imgCheck' src="@(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? @imageChecked : @imageNotChecked)"/>Seat Belt
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? "checked" : "")/><img id="ChestHarness" class='imgCheck' src="@(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? @imageChecked : @imageNotChecked)"/>Chest Harness
+		</label>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.BusLift.HasValue && formModel.BusLift.Value ? "checked" : "")/><img id="BusLift" class='imgCheck' src="@(formModel.BusLift.HasValue && formModel.BusLift.Value ? @imageChecked : @imageNotChecked)"/>Bus Lift
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? "checked" : "")/><img id="BoosterSeat" class='imgCheck' src="@(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? @imageChecked : @imageNotChecked)"/>Booster Seat
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.Tray.HasValue && formModel.Tray.Value ? "checked" : "")/><img id="Tray" class='imgCheck' src="@(formModel.Tray.HasValue && formModel.Tray.Value ? @imageChecked : @imageNotChecked)"/>Tray
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? "checked" : "")/><img id="PersonalCareAttendant" class='imgCheck' src="@(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? @imageChecked : @imageNotChecked)"/>Personal Care Attendant
+		</label>
+	</p>
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? "checked" : "")/><img id="AdductorInPlace" class='imgCheck' src="@(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? @imageChecked : @imageNotChecked)"/>Adductor in Place
+		</label>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.Communication.HasValue && formModel.Communication.Value ? "checked" : "")/><img id="Communication" class='imgCheck' src="@(formModel.Communication.HasValue && formModel.Communication.Value ? @imageChecked : @imageNotChecked)"/>Communication
+		</label>
+		
+		
+	</p>
+	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
+		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+			<input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "")/><img id="Other" class='imgCheck' src="@(formModel.Other.HasValue && formModel.Other.Value ? @imageChecked : @imageNotChecked)"/> Other Specify:
+		</label>
+		<textarea maxlength="2000" style="width:250px;height:30px">@(formModel.Other_Desc)</textarea><span id="Other_Desc" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Other_Desc)</span>
+	</p>
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:15px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Documentation of Need for Special
+			Transportation: <textarea maxlength="2000" class="form-control">@(formModel.Documentation)</textarea><span id="Documentation" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Documentation)</span>
+		</span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Positioning and handling
+			requirements: <textarea maxlength="2000" class="form-control">@(formModel.PositioningAndHandling)</textarea><span id="PositioningAndHandling" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.PositioningAndHandling)</span>
+		</span>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>Medications and Side Effects: <textarea maxlength="2000" class="form-control">@(formModel.MeidicationAndSideEffects)</textarea><span id="MeidicationAndSideEffects" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.MeidicationAndSideEffects)</span></span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<span style='font-size:11.0pt;line-height:107%'>
+			Equipment that must be transported on
+			bus: <textarea maxlength="2000" class="form-control">@(formModel.Equipment)</textarea><span id="Equipment" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Equipment)</span>
+		</span>
+	</p>
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:20px'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:11.0pt;line-height:107%'>
+				PLEASE COMMUNICATE ANY CHANGES IN ADDRESS, PHONE, OR ABOVE DATA TO
+				TRANSPORTATION DIRECTOR AND RECEIVING PRINCIPAL.
+			</span>
+		</b>
+	</p>
+
+
+	<p style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:10px'>
+		<b style='mso-bidi-font-weight:normal'>
+			<span style='font-size:11.0pt;line-height:107%'>
+				IF ANY PROBLEMS ARISE OR TRANSPORTATION NEEDS CHANGE, PLEASE CALL THE
+				TRANSPORTATION DIRECTOR AND RECEIVING PRINCIPAL.
+			</span>
+		</b>
+	</p>
+
+
+</div>
