@@ -167,7 +167,7 @@
                     <td>@Model.studentDetails.inititationDate</td>                
                 </tr>*@                
                <tr>
-				<td><label>Annual IEP Date:</label></td>
+				<td><label>IEP Date:</label></td>
 	  			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>					
 				<td><label>Next Annual IEP Date:</label></td>
 				<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
