@@ -206,7 +206,7 @@
     </div>
 </div> <!--end print-->
 <script>
-
+	debugger;
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -364,14 +364,28 @@
             $(this).find(".saveCompletedGoal").on('click', function (e) {
 
                 var currentForm = $(this).closest("form").find('.panel-collapse');
-                var modulesNeedingAccommodations = $("#modulesNeedingAccommodations").val();
+				var modulesNeedingAccommodations = $("#modulesNeedingAccommodations").val();
+				var missingModules = "";
+				var lastChar = modulesNeedingAccommodations.slice(-1);
+				if (lastChar == ';') {
+					modulesNeedingAccommodations = modulesNeedingAccommodations.slice(0, -1);
+				}
+				var modulesNeedingAccommodationsArr = null;
+				if (modulesNeedingAccommodations != "")
+					modulesNeedingAccommodationsArr = modulesNeedingAccommodations.split(";");
+				
 
                 var canSave = true;
                 //need to save and complete all
                 $.each($(".oneStudentGoal").not(".hidden"), function () {
 
-                    var accFor = $(this).find("[data-bind='bs-drp-sel-label']").html();
-                    modulesNeedingAccommodations = modulesNeedingAccommodations.replace(accFor, "");
+					var accFor = $(this).find("[data-bind='bs-drp-sel-label']").html();
+					if (modulesNeedingAccommodationsArr != null && modulesNeedingAccommodationsArr.length > 0) {
+						var found = modulesNeedingAccommodationsArr.indexOf(accFor);
+						if (found > -1) {
+							modulesNeedingAccommodationsArr.splice(found, 1);
+						}
+					}					
 
                     var accommTitle = $(this).closest('.oneStudentGoal').find('.studentGoalLabel').text();
                     var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
@@ -438,8 +452,14 @@
 
                 });
 
-                if (canSave && modulesNeedingAccommodations.trim(' ', "").length != 0) {
-                    alert('You need to make a Student Accommodation(s), Modification(s), and/or Supplemental Aid of type(s): ' + modulesNeedingAccommodations.trim().replace(RegExp(' ', 'g'), ', ').replace(RegExp('&nbsp;', 'g'), ' '));
+				if (canSave && modulesNeedingAccommodationsArr != null && modulesNeedingAccommodationsArr.length > 0) {					
+					var i;
+					var missingModules = "";
+					for (i = 0; i < modulesNeedingAccommodationsArr.length; i++) {
+					  missingModules += modulesNeedingAccommodationsArr[i] + "\n";
+					}
+					
+                    alert('You need to make a Student Accommodation(s), Modification(s), and/or Supplemental Aid of type(s):\n' + missingModules);
                     return canSave = false;
                 }
 

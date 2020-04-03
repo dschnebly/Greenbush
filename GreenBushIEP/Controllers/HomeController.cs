@@ -2034,14 +2034,14 @@ namespace GreenbushIep.Controllers
                 model.IEPid = iep.IEPid;
 
                 List<vw_ModuleAccommodationFlags> accommodationFlag = db.vw_ModuleAccommodationFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
-                model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation ? "Health " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation ? "Motor " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation ? "Communication " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written-Language " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional" : string.Empty;
+                model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation ? "Health;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation ? "Motor;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation ? "Communication;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written Language;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional;" : string.Empty;
 
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
                 if (accommodations.Any())
