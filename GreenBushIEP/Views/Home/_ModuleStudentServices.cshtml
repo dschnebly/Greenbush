@@ -113,7 +113,7 @@
                     <button id="newService" class="btn btn-default noPrint">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <button id="duplicateService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <button id="duplicateAllService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
-                    <a class="pull-right" role="button" style="font-size: 10pt;" id="collapseCards"><span style="padding-left: 8px;">Show All<i class="fas fa-angle-double-down" style="font-size: 11pt; position: relative; top: 2px; margin-left: 8px;" title="Show All"></i></span></a>
+                    <a class="pull-right" role="button" style="font-size: 10pt; position: relative; top: 0.80rem;" id="collapseCards"><span style="padding-left: 8px;">Show All<i class="fas fa-angle-double-down" style="font-size: 11pt; position: relative; top: 2px; margin-left: 8px;" title="Show All"></i></span></a>
                 </div>
             </div>
             <input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
