@@ -1,0 +1,23 @@
+﻿
+@{
+    ViewBag.Title = "Student Notes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="modal-header">
+        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+    <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;@(ViewBag.Title)</h4>
+</div>
+<div class="alert alert-danger" id="alertMessage" role="alert" style="display:none">
+    <span class="moreinfo"><strong>Results!</strong></span>
+</div>
+<div class="modal-body">
+    <p>John's a good student but lacks commitment.</p>
+    <div>Melanie Johnson - 04/04/2020</div>
+    <br/>
+    <form>
+        <textarea rows="10" style="width: 85%" placeholder="Type something here if you please."></textarea>
+        <br/>
+        <button>Submit</button>
+    </form>
+</div>
