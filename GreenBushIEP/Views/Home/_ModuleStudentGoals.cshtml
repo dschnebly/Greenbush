@@ -280,6 +280,7 @@
             <div class="row">
                 <div class="col-md-12" style="margin-bottom: 12px;">
                     <button id="newgoal" class="btn btn-default">New Student Goal&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <a class="pull-right" role="button" style="font-size: 10pt; position: relative; top: 0.80rem;" id="collapseCards"><span style="padding-left: 8px;">Show All<i class="fas fa-angle-double-down" style="font-size: 11pt; position: relative; top: 2px; margin-left: 8px;" title="Show All"></i></span></a>
                 </div>
             </div>
             <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
@@ -1095,4 +1096,23 @@
             }
         });
     });
+
+    $("#collapseCards").on("click", function () {
+        var text = $(this).children("span").contents().first()[0].textContent
+        if (text == "Show All") {
+            $(this).children("span").contents().first()[0].textContent = text.replace("Show All", "Hide All");
+            $(this).find("i").addClass("fa-angle-double-up").removeClass("fa-angle-double-down");
+            $.each($("div.collapse"), function (index) {
+                $(this).collapse('show');
+            });
+        }
+        else {
+            $(this).children("span").contents().first()[0].textContent = text.replace("Hide All", "Show All");
+            $(this).find("i").addClass("fa-angle-double-down").removeClass("fa-angle-double-up");
+            $.each($("div.collapse:not(:last)"), function (index) {
+                $(this).collapse('hide');
+            });
+        }
+    })
+
 </script>
