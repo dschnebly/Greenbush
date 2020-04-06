@@ -16,6 +16,11 @@ namespace GreenBushIEP.Models
     {
         public int FormNoticeOfMeetingId { get; set; }
         public int StudentId { get; set; }
+        public Nullable<System.DateTime> FormDate { get; set; }
+        public string Parentname { get; set; }
+        public string OnBehalf { get; set; }
+        public string Address { get; set; }
+        public string CityStateZip { get; set; }
         public string ProposedMeetingInfo { get; set; }
         public Nullable<bool> MeetingToReviewEvaluation { get; set; }
         public Nullable<bool> DevelopIEP { get; set; }

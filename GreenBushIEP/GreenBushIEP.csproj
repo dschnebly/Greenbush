@@ -489,6 +489,9 @@
     <Compile Include="Models\tblModule.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblNote.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblOrganizationMapping.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

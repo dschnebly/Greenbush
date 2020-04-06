@@ -53,8 +53,26 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
+        public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
+        public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
+        public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
+        public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
+        public virtual DbSet<tblFormIEPTeamConsideration> tblFormIEPTeamConsiderations { get; set; }
+        public virtual DbSet<tblFormManifestationDeterminiation> tblFormManifestationDeterminiations { get; set; }
+        public virtual DbSet<tblFormManifestDeterm_TeamMembers> tblFormManifestDeterm_TeamMembers { get; set; }
+        public virtual DbSet<tblFormNoticeOfMeeting> tblFormNoticeOfMeetings { get; set; }
+        public virtual DbSet<tblFormParentConsent> tblFormParentConsents { get; set; }
+        public virtual DbSet<tblFormPhysicianScript> tblFormPhysicianScripts { get; set; }
+        public virtual DbSet<tblFormPriorWritten_Eval> tblFormPriorWritten_Eval { get; set; }
+        public virtual DbSet<tblFormPriorWritten_Ident> tblFormPriorWritten_Ident { get; set; }
+        public virtual DbSet<tblFormPriorWritten_ReokeAll> tblFormPriorWritten_ReokeAll { get; set; }
+        public virtual DbSet<tblFormPriorWritten_ReokePart> tblFormPriorWritten_ReokePart { get; set; }
+        public virtual DbSet<tblFormPublicNotice> tblFormPublicNotices { get; set; }
+        public virtual DbSet<tblFormRevokeConsentAll> tblFormRevokeConsentAlls { get; set; }
+        public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
         public virtual DbSet<tblFormSummaryPerformance> tblFormSummaryPerformances { get; set; }
         public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
+        public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
         public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
@@ -73,6 +91,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblModule> tblModules { get; set; }
+        public virtual DbSet<tblNote> tblNotes { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
         public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
@@ -95,6 +114,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
+        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
         public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
@@ -106,25 +126,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
-        public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
-        public virtual DbSet<tblFormIEPTeamConsideration> tblFormIEPTeamConsiderations { get; set; }
-        public virtual DbSet<tblFormManifestationDeterminiation> tblFormManifestationDeterminiations { get; set; }
-        public virtual DbSet<tblFormManifestDeterm_TeamMembers> tblFormManifestDeterm_TeamMembers { get; set; }
-        public virtual DbSet<tblFormNoticeOfMeeting> tblFormNoticeOfMeetings { get; set; }
-        public virtual DbSet<tblFormParentConsent> tblFormParentConsents { get; set; }
-        public virtual DbSet<tblFormPhysicianScript> tblFormPhysicianScripts { get; set; }
-        public virtual DbSet<tblFormPriorWritten_Eval> tblFormPriorWritten_Eval { get; set; }
-        public virtual DbSet<tblFormPriorWritten_Ident> tblFormPriorWritten_Ident { get; set; }
-        public virtual DbSet<tblFormPriorWritten_ReokeAll> tblFormPriorWritten_ReokeAll { get; set; }
-        public virtual DbSet<tblFormPriorWritten_ReokePart> tblFormPriorWritten_ReokePart { get; set; }
-        public virtual DbSet<tblFormPublicNotice> tblFormPublicNotices { get; set; }
-        public virtual DbSet<tblFormRevokeConsentAll> tblFormRevokeConsentAlls { get; set; }
-        public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
-        public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
-        public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
-        public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
-        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
-        public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -367,19 +368,6 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     
-        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var isAssginedParameter = isAssgined.HasValue ?
-                new ObjectParameter("isAssgined", isAssgined) :
-                new ObjectParameter("isAssgined", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
-        }
-    
         public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined)
         {
             var userIDParameter = userID.HasValue ?
@@ -399,6 +387,19 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("isAssgined", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter);
+        }
+    
+        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
         }
     }
 }

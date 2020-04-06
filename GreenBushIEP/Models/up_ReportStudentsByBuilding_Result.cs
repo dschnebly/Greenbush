@@ -27,5 +27,6 @@ namespace GreenBushIEP.Models
         public string City { get; set; }
         public string StudentState { get; set; }
         public string Zip { get; set; }
+        public string StatusCode { get; set; }
     }
 }

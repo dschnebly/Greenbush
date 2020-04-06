@@ -15,7 +15,8 @@ namespace GreenBushIEP.Models
     public partial class vw_ModuleAccommodationFlags
     {
         public int IEPid { get; set; }
-        public bool NeedMetByAccommodation { get; set; }
+        public Nullable<bool> NeedMetByAccommodation { get; set; }
         public string Module { get; set; }
+        public int ModuleID { get; set; }
     }
 }

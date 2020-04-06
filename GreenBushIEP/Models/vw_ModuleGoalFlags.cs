@@ -15,7 +15,8 @@ namespace GreenBushIEP.Models
     public partial class vw_ModuleGoalFlags
     {
         public int IEPid { get; set; }
-        public Nullable<int> NeedMetByGoal { get; set; }
+        public Nullable<bool> NeedMetByGoal { get; set; }
         public string Module { get; set; }
+        public int ModuleID { get; set; }
     }
 }

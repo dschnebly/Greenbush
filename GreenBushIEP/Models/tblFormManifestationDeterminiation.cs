@@ -28,6 +28,7 @@ namespace GreenBushIEP.Models
         public string TeacherObservation { get; set; }
         public string ParentInformation { get; set; }
         public string OtherInformation { get; set; }
+        public Nullable<bool> ConductCausedByDisability_Yes { get; set; }
         public Nullable<bool> IsManifestationOfDisability { get; set; }
         public Nullable<bool> StudentWillReturn { get; set; }
         public Nullable<bool> BehaviorPlan_IsManifest_Develop { get; set; }
@@ -40,7 +41,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
-        public Nullable<bool> ConductCausedByDisability_Yes { get; set; }
         public Nullable<bool> ConductCausedByDisability_No { get; set; }
         public Nullable<bool> ConductCausedByFailure_Yes { get; set; }
         public Nullable<bool> ConductCausedByFailure_No { get; set; }

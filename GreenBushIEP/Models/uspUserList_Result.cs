@@ -21,5 +21,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> hasIEP { get; set; }
         public Nullable<long> KIDSID { get; set; }
         public Nullable<bool> isAssgined { get; set; }
+        public string StatusCode { get; set; }
+        public int StatusActive { get; set; }
     }
 }

@@ -14,6 +14,7 @@ namespace GreenBushIEP.Models
     
     public partial class tblFormIEPMeetingExcusal
     {
+        public int FormIEPMeetingExcusalId { get; set; }
         public int StudentId { get; set; }
         public Nullable<System.DateTime> FormDate { get; set; }
         public string ParentName { get; set; }
@@ -35,6 +36,5 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
         public Nullable<System.DateTime> IEPDate { get; set; }
-        public int FormIEPMeetingExcusalId { get; set; }
     }
 }
