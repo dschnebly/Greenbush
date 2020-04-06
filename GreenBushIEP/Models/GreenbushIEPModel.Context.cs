@@ -91,7 +91,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblLanguage> tblLanguages { get; set; }
         public virtual DbSet<tblLocation> tblLocations { get; set; }
         public virtual DbSet<tblModule> tblModules { get; set; }
-        public virtual DbSet<tblNote> tblNotes { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
         public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
@@ -107,6 +106,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
         public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
+        public virtual DbSet<tblStudentNote> tblStudentNotes { get; set; }
+        public virtual DbSet<tblStudentNotes_MIS> tblStudentNotes_MIS { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
         public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
@@ -116,7 +117,6 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
-        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
         public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
@@ -124,6 +124,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
+        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
     

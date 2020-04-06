@@ -12,16 +12,15 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblNote
+    public partial class tblStudentNotes_MIS
     {
-        public int NoteID { get; set; }
+        public int StudentNoteMISID { get; set; }
         public string Note { get; set; }
-        public string USD { get; set; }
+        public int StudentID { get; set; }
         public bool isArchive { get; set; }
-        public Nullable<int> modifiedNoteID { get; set; }
-        public Nullable<int> originalNoteID { get; set; }
+        public Nullable<int> originalNoteMISID { get; set; }
         public int CreatedBy { get; set; }
-        public Nullable<int> ModifiedBy { get; set; }
+        public int ModifiedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
     }

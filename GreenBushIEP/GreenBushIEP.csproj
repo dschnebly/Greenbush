@@ -489,9 +489,6 @@
     <Compile Include="Models\tblModule.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblNote.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tblOrganizationMapping.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -535,6 +532,12 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblStudentInfo.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblStudentNote.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblStudentNotes_MIS.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblStudentRelationship.cs">

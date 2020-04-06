@@ -1354,21 +1354,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="ModuleTable" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblNotes">
-          <Key>
-            <PropertyRef Name="NoteID" />
-          </Key>
-          <Property Name="NoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="isArchive" Type="bit" Nullable="false" />
-          <Property Name="modifiedNoteID" Type="int" />
-          <Property Name="originalNoteID" Type="int" />
-          <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" />
-          <Property Name="Create_Date" Type="datetime" Nullable="false" />
-          <Property Name="Update_Date" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -1657,6 +1642,34 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="ExitNotes" Type="nvarchar" MaxLength="2000" />
           <Property Name="RaceCode" Type="char" MaxLength="1" />
           <Property Name="ReEvalCompleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tblStudentNotes">
+          <Key>
+            <PropertyRef Name="StudentNoteID" />
+          </Key>
+          <Property Name="StudentNoteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="isArchive" Type="bit" Nullable="false" />
+          <Property Name="originalNoteID" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblStudentNotes_MIS">
+          <Key>
+            <PropertyRef Name="StudentNoteMISID" />
+          </Key>
+          <Property Name="StudentNoteMISID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Note" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="isArchive" Type="bit" Nullable="false" />
+          <Property Name="originalNoteMISID" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudentRelationships">
           <Key>
@@ -2277,7 +2290,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblLanguages" EntityType="Self.tblLanguages" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblLocations" EntityType="Self.tblLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblModules" EntityType="Self.tblModules" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblNotes" EntityType="Self.tblNotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrganizationMapping" EntityType="Self.tblOrganizationMapping" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOtherConsiderations" EntityType="Self.tblOtherConsiderations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPlacementCodes" EntityType="Self.tblPlacementCodes" Schema="dbo" store:Type="Tables" />
@@ -2294,6 +2306,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblServiceTypes" EntityType="Self.tblServiceTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStatusCodes" EntityType="Self.tblStatusCodes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentInfo" EntityType="Self.tblStudentInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudentNotes" EntityType="Self.tblStudentNotes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudentNotes_MIS" EntityType="Self.tblStudentNotes_MIS" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudentRelationships" EntityType="Self.tblStudentRelationships" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransitionAssessments" EntityType="Self.tblTransitionAssessments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblTransitionGoals" EntityType="Self.tblTransitionGoals" Schema="dbo" store:Type="Tables" />
@@ -2555,7 +2569,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblLanguages" EntityType="IndividualizedEducationProgramModel.tblLanguage" />
           <EntitySet Name="tblLocations" EntityType="IndividualizedEducationProgramModel.tblLocation" />
           <EntitySet Name="tblModules" EntityType="IndividualizedEducationProgramModel.tblModule" />
-          <EntitySet Name="tblNotes" EntityType="IndividualizedEducationProgramModel.tblNote" />
           <EntitySet Name="tblOrganizationMappings" EntityType="IndividualizedEducationProgramModel.tblOrganizationMapping" />
           <EntitySet Name="tblOtherConsiderations" EntityType="IndividualizedEducationProgramModel.tblOtherConsideration" />
           <EntitySet Name="tblPlacementCodes" EntityType="IndividualizedEducationProgramModel.tblPlacementCode" />
@@ -2571,6 +2584,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblServiceTypes" EntityType="IndividualizedEducationProgramModel.tblServiceType" />
           <EntitySet Name="tblStatusCodes" EntityType="IndividualizedEducationProgramModel.tblStatusCode" />
           <EntitySet Name="tblStudentInfoes" EntityType="IndividualizedEducationProgramModel.tblStudentInfo" />
+          <EntitySet Name="tblStudentNotes" EntityType="IndividualizedEducationProgramModel.tblStudentNote" />
+          <EntitySet Name="tblStudentNotes_MIS" EntityType="IndividualizedEducationProgramModel.tblStudentNotes_MIS" />
           <EntitySet Name="tblStudentRelationships" EntityType="IndividualizedEducationProgramModel.tblStudentRelationship" />
           <EntitySet Name="tblTransitionAssessments" EntityType="IndividualizedEducationProgramModel.tblTransitionAssessment" />
           <EntitySet Name="tblTransitionGoals" EntityType="IndividualizedEducationProgramModel.tblTransitionGoal" />
@@ -2580,7 +2595,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblVersionLogs" EntityType="IndividualizedEducationProgramModel.tblVersionLog" />
           <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
           <EntitySet Name="vw_BuildingList" EntityType="IndividualizedEducationProgramModel.vw_BuildingList" />
-          <EntitySet Name="vw_BuildingsForAttendance" EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" />
           <EntitySet Name="vw_GoalExport" EntityType="IndividualizedEducationProgramModel.vw_GoalExport" />
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" />
           <EntitySet Name="vw_ModuleGoalFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleGoalFlags" />
@@ -2588,8 +2602,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="vw_PrimaryDisabilities" EntityType="IndividualizedEducationProgramModel.vw_PrimaryDisabilities" />
           <EntitySet Name="vw_SecondaryDisabilities" EntityType="IndividualizedEducationProgramModel.vw_SecondaryDisabilities" />
           <EntitySet Name="vw_ServiceExport" EntityType="IndividualizedEducationProgramModel.vw_ServiceExport" />
-          <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
-          <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="IndividualizedEducationProgramModel.FK_tblAccommodations_LocationCode">
             <End Role="tblLocation" EntitySet="tblLocations" />
             <End Role="tblAccommodation" EntitySet="tblAccommodations" />
@@ -2627,7 +2639,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="DELIMITER" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
-            <Parameter Name="BuildingID" Mode="In" Type="Int32" />
+          <Parameter Name="BuildingID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportDraftIEPS" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportDraftIEPS_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2701,6 +2713,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="isAssgined" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="vw_BuildingsForAttendance" EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" />
+          <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
+          <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -4042,21 +4057,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ModuleTable" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="tblNote">
-          <Key>
-            <PropertyRef Name="NoteID" />
-          </Key>
-          <Property Name="NoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="isArchive" Type="Boolean" Nullable="false" />
-          <Property Name="modifiedNoteID" Type="Int32" />
-          <Property Name="originalNoteID" Type="Int32" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int32" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
         <EntityType Name="tblOrganizationMapping">
           <Key>
             <PropertyRef Name="AdminID" />
@@ -4347,6 +4347,34 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="RaceCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ReEvalCompleted" Type="DateTime" Precision="3" />
         </EntityType>
+        <EntityType Name="tblStudentNote">
+          <Key>
+            <PropertyRef Name="StudentNoteID" />
+          </Key>
+          <Property Name="StudentNoteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="isArchive" Type="Boolean" Nullable="false" />
+          <Property Name="originalNoteID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="tblStudentNotes_MIS">
+          <Key>
+            <PropertyRef Name="StudentNoteMISID" />
+          </Key>
+          <Property Name="StudentNoteMISID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Note" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="isArchive" Type="Boolean" Nullable="false" />
+          <Property Name="originalNoteMISID" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         <EntityType Name="tblStudentRelationship">
           <Key>
             <PropertyRef Name="RealtionshipID" />
@@ -4516,16 +4544,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isServiceOnly" Type="Boolean" Nullable="false" />
           <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="vw_BuildingsForAttendance">
-          <Key>
-            <PropertyRef Name="userID" />
-            <PropertyRef Name="BuildingID" />
-          </Key>
-          <Property Name="userID" Type="Int32" Nullable="false" />
-          <Property Name="USD" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="vw_GoalExport">
           <Key>
             <PropertyRef Name="ServiceCode" />
@@ -4640,61 +4658,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
           <Property Name="isTestUser" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_StudentExport">
-          <Key>
-            <PropertyRef Name="StudentNumber" />
-            <PropertyRef Name="BirthDate" />
-            <PropertyRef Name="District" />
-            <PropertyRef Name="UserCreateDate" />
-            <PropertyRef Name="UserUpdateDate" />
-            <PropertyRef Name="IepStatus" />
-            <PropertyRef Name="ServiceType_Billable" />
-            <PropertyRef Name="Location_Billable" />
-            <PropertyRef Name="Service_Billable" />
-            <PropertyRef Name="isGBMedicaid" />
-            <PropertyRef Name="isTestDistrict" />
-            <PropertyRef Name="isTestUser" />
-          </Key>
-          <Property Name="StudentNumber" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleInitital" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Zip" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="District" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="TransportationFlag" Type="Boolean" />
-          <Property Name="KIDSID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Active" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
-          <Property Name="MedicaidBeneficiaryID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="UserCreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="UserUpdateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IepStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceType_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Location_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="Service_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
-          <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
-          <Property Name="IEPStartDate" Type="DateTime" Precision="3" />
-          <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
-          <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
-          <Property Name="isTestUser" Type="Boolean" Nullable="false" />
-        </EntityType>
-        <EntityType Name="vw_UserList">
-          <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="BuildingID" />
-            <PropertyRef Name="USD" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsActive" Type="Boolean" />
-          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
@@ -4983,6 +4946,71 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="Int64" Name="KIDSID" Nullable="true" />
           <Property Type="Boolean" Name="isAssgined" Nullable="true" />
         </ComplexType>
+        <EntityType Name="vw_BuildingsForAttendance">
+          <Key>
+            <PropertyRef Name="userID" />
+            <PropertyRef Name="BuildingID" />
+          </Key>
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" MaxLength="8000" FixedLength="false" Unicode="false" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="vw_StudentExport">
+          <Key>
+            <PropertyRef Name="StudentNumber" />
+            <PropertyRef Name="BirthDate" />
+            <PropertyRef Name="District" />
+            <PropertyRef Name="UserCreateDate" />
+            <PropertyRef Name="UserUpdateDate" />
+            <PropertyRef Name="IepStatus" />
+            <PropertyRef Name="ServiceType_Billable" />
+            <PropertyRef Name="Location_Billable" />
+            <PropertyRef Name="Service_Billable" />
+            <PropertyRef Name="isGBMedicaid" />
+            <PropertyRef Name="isTestDistrict" />
+            <PropertyRef Name="isTestUser" />
+          </Key>
+          <Property Name="StudentNumber" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleInitital" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Zip" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TransportationFlag" Type="Boolean" />
+          <Property Name="KIDSID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="MedicaidBeneficiaryID" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UserCreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserUpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IepStatus" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceType_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Location_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="Service_Billable" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
+          <Property Name="IEPStartDate" Type="DateTime" Precision="3" />
+          <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
+          <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
+          <Property Name="isTestUser" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="vw_UserList">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="BuildingID" />
+            <PropertyRef Name="USD" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="RoleID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6382,22 +6410,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblNotes">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblNote">
-              <MappingFragment StoreEntitySet="tblNotes">
-                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="originalNoteID" ColumnName="originalNoteID" />
-                <ScalarProperty Name="modifiedNoteID" ColumnName="modifiedNoteID" />
-                <ScalarProperty Name="isArchive" ColumnName="isArchive" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="NoteID" ColumnName="NoteID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblOrganizationMappings">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOrganizationMapping">
               <MappingFragment StoreEntitySet="tblOrganizationMapping">
@@ -6692,6 +6704,36 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tblStudentNotes">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentNote">
+              <MappingFragment StoreEntitySet="tblStudentNotes">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="originalNoteID" ColumnName="originalNoteID" />
+                <ScalarProperty Name="isArchive" ColumnName="isArchive" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="StudentNoteID" ColumnName="StudentNoteID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudentNotes_MIS">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentNotes_MIS">
+              <MappingFragment StoreEntitySet="tblStudentNotes_MIS">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="originalNoteMISID" ColumnName="originalNoteMISID" />
+                <ScalarProperty Name="isArchive" ColumnName="isArchive" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="StudentNoteMISID" ColumnName="StudentNoteMISID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblStudentRelationships">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentRelationship">
               <MappingFragment StoreEntitySet="tblStudentRelationships">
@@ -6863,16 +6905,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="vw_BuildingsForAttendance">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingsForAttendance">
-              <MappingFragment StoreEntitySet="vw_BuildingsForAttendance">
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="userID" ColumnName="userID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vw_GoalExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_GoalExport">
               <MappingFragment StoreEntitySet="vw_GoalExport">
@@ -6966,50 +6998,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
                 <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_StudentExport">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_StudentExport">
-              <MappingFragment StoreEntitySet="vw_StudentExport">
-                <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
-                <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
-                <ScalarProperty Name="IEPEndDate" ColumnName="IEPEndDate" />
-                <ScalarProperty Name="IEPStartDate" ColumnName="IEPStartDate" />
-                <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
-                <ScalarProperty Name="Service_Billable" ColumnName="Service_Billable" />
-                <ScalarProperty Name="Location_Billable" ColumnName="Location_Billable" />
-                <ScalarProperty Name="ServiceType_Billable" ColumnName="ServiceType_Billable" />
-                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
-                <ScalarProperty Name="UserUpdateDate" ColumnName="UserUpdateDate" />
-                <ScalarProperty Name="UserCreateDate" ColumnName="UserCreateDate" />
-                <ScalarProperty Name="MedicaidBeneficiaryID" ColumnName="MedicaidBeneficiaryID" />
-                <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="TransportationFlag" ColumnName="TransportationFlag" />
-                <ScalarProperty Name="District" ColumnName="District" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
-                <ScalarProperty Name="MiddleInitital" ColumnName="MiddleInitital" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="vw_UserList">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_UserList">
-              <MappingFragment StoreEntitySet="vw_UserList">
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -7276,6 +7264,60 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="vw_BuildingsForAttendance">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingsForAttendance">
+              <MappingFragment StoreEntitySet="vw_BuildingsForAttendance">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_StudentExport">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_StudentExport">
+              <MappingFragment StoreEntitySet="vw_StudentExport">
+                <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
+                <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
+                <ScalarProperty Name="IEPEndDate" ColumnName="IEPEndDate" />
+                <ScalarProperty Name="IEPStartDate" ColumnName="IEPStartDate" />
+                <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
+                <ScalarProperty Name="Service_Billable" ColumnName="Service_Billable" />
+                <ScalarProperty Name="Location_Billable" ColumnName="Location_Billable" />
+                <ScalarProperty Name="ServiceType_Billable" ColumnName="ServiceType_Billable" />
+                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
+                <ScalarProperty Name="UserUpdateDate" ColumnName="UserUpdateDate" />
+                <ScalarProperty Name="UserCreateDate" ColumnName="UserCreateDate" />
+                <ScalarProperty Name="MedicaidBeneficiaryID" ColumnName="MedicaidBeneficiaryID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="TransportationFlag" ColumnName="TransportationFlag" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="MiddleInitital" ColumnName="MiddleInitital" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="StudentNumber" ColumnName="StudentNumber" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vw_UserList">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_UserList">
+              <MappingFragment StoreEntitySet="vw_UserList">
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
