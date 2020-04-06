@@ -3380,7 +3380,7 @@
 							}
 						</td>
 						<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-						<td>@(service.EndDate.ToString("MM/dd/yyyy"))</td>
+						<td>@(service.EndDate.Value.ToString("MM/dd/yyyy"))</td>
 						<td>
 							@switch (@service.Frequency)
 							{

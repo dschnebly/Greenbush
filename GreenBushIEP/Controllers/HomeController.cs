@@ -1441,13 +1441,6 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentNotes(int stid)
-        {
-            return View();
-        }
-
-        [HttpGet]
-        [Authorize]
         public ActionResult DuplicateStudentServicesNextYear(int studentId, int? serviceId, int iepId)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
