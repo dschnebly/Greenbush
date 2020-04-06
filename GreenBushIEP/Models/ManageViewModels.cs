@@ -128,6 +128,12 @@ namespace GreenBushIEP.Models
         public List<tblCalendar> calendarDays { get; set; }
     }
 
+
+    public class MISNotesViewModel
+    {
+        public List<tblStudentNotes_MIS> notes { get; set; }
+    }
+
     public class MISProviderViewModel
     {
         public List<tblDistrict> districts { get; set; }

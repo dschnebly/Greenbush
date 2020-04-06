@@ -1443,7 +1443,29 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult MISNotes(int stid)
         {
-            return View();
+            MISNotesViewModel viewModel = new MISNotesViewModel();
+
+            var stuff = db.tblStudentNotes_MIS.Where(n => n.StudentID == stid && n.isArchive == false).ToList();
+
+            viewModel.notes = db.tblStudentNotes_MIS.Where(n => n.isArchive == false).ToList();
+
+            return View(viewModel);
+        }
+
+
+        public ActionResult SaveMISNote(FormCollection collection)
+        {
+            try
+            {
+                Console.WriteLine("whatever");
+            }
+            catch (Exception e)
+            {
+                throw new EmailException("There was a problem when emailing the new user password.", e);
+            }
+
+            return RedirectToAction("MISNotes");
+
         }
 
         [HttpGet]

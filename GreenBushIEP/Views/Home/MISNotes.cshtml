@@ -1,30 +1,41 @@
-﻿
+﻿@model GreenBushIEP.Models.MISNotesViewModel
+
 @{
     ViewBag.Title = "MIS Notes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2>@ViewBag.Title</h2>
 <div class="modal-header">
-        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+    <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;@(ViewBag.Title)</h4>
 </div>
-<div class="alert alert-danger" id="alertMessage" role="alert" style="display:none">
-    <span class="moreinfo"><strong>Results!</strong></span>
-</div>
-<span style="font-size: 10pt; padding: 8px;">
-    We delete nuthin so don't type something dumb that could get you in legal trouble.  FYI we store all your data on our local machines and keep everything about you in our public folders.
-</span>
-<div class="modal-body">
-    <p>John's a good student but lacks commitment.</p>
-    <div>Melanie Johnson <small style="font-size:10px;">&ndash;&nbsp;04/04/2020</small></div>
-    <hr/>
-    <p>Working with John to make him a better student with more determination.</p>
-    <div>Stacy Clarkson <small style="font-size:10px;">&ndash;&nbsp;04/06/2020</small></div>
-    <hr />
-    <br/>
-    <form>
-        <textarea rows="10" style="width: 85%" placeholder="Type something here if you please."></textarea>
-        <br/>
-        <button>Submit</button>
-    </form>
+<div class="container">
+    @if (Model.notes.Count > 0)
+    {
+        foreach (var note in Model.notes)
+        {
+            <p>@(note.Note)</p>
+            <div>@(note.CreatedBy)<small style="font-size:10px;">&ndash;&nbsp;@(note.Create_Date.ToShortDateString())</small></div>
+            <hr />
+        }
+    }
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("SaveMISNote", "Home", FormMethod.Post, new { role = "form", id = "contact-form", @Class = "contact-form" }))
+            {
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <textarea class="form-control textarea" rows="3" name="Message" id="Message" placeholder="Message" required></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="submit" class="btn main-btn pull-right">Save Note</button>
+                </div>
+            </div>
+        }
+    </div>
 </div>
