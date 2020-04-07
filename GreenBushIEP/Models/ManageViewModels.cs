@@ -516,7 +516,7 @@ namespace GreenBushIEP.Models
             Locations = new List<System.Web.Mvc.SelectListItem>();
             modulesNeedingAccommodations = string.Empty;
             ModuleList = new List<tblModule>();
-
+			AccommModules = new List<tblAccommodationModule>();
         }
 
         public int StudentId { get; set; }
@@ -541,8 +541,11 @@ namespace GreenBushIEP.Models
         public string modulesNeedingAccommodations { get; set; }
         public string Module { get; set; }
         public List<tblModule> ModuleList { get; set; }
+		public List<tblAccommodationModule> AccommModules { get; set; }
+		public int[] SelectedModules { get; set; }
 
-    }
+
+	}
 
     public class BehaviorViewModel
     {

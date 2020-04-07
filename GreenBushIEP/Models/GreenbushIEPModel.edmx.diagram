@@ -93,7 +93,6 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblTransitionService" Width="1.5" PointX="31.75" PointY="4.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUser" Width="1.5" PointX="26.75" PointY="35.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblVersionLog" Width="1.5" PointX="2.75" PointY="36.25" />
-        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="4.75" PointY="36.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_BuildingList" Width="1.5" PointX="32.75" PointY="9.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_GoalExport" Width="1.5" PointX="32.75" PointY="12.25" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" Width="1.5" PointX="32.75" PointY="17.25" />
@@ -113,6 +112,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="34.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="6.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="9.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

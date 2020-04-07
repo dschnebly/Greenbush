@@ -2073,12 +2073,16 @@ namespace GreenbushIep.Controllers
                 model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation.Value ? "Academic/Functional;" : string.Empty;
 
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
-                if (accommodations.Any())
-                {
-                    model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
-                }
+				if (accommodations.Any())
+				{
+					model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
 
-                var locations = db.tblLocations.Where(o => o.Active == true);
+					var accommodationIds = accommodations.Select(o => o.AccommodationID);
+					if (accommodationIds != null)
+						model.AccommModules = db.tblAccommodationModules.Where(i => accommodationIds.Contains(i.AccommodationID)).ToList();				
+				}				
+
+				var locations = db.tblLocations.Where(o => o.Active == true);
                 if (locations.Any())
                 {
                     foreach (var loc in locations)

@@ -707,7 +707,27 @@ namespace GreenBushIEP.Controllers
                         accommodation.AnticipatedEndDate = model.AnticipatedEndDate;
 
                     accommodation.Update_Date = DateTime.Now;
-                    db.SaveChanges();
+
+					//delete 
+					if (model.SelectedModules != null)
+					{
+						var existingModules = db.tblAccommodationModules.Where(o => o.AccommodationID == accommodation.AccommodationID && !model.SelectedModules.Contains(o.ModuleID)).ToList();
+						foreach (var em in existingModules)
+						{
+							db.tblAccommodationModules.Remove(em);
+						}
+
+						//add 
+						foreach (var accomModuleId in model.SelectedModules)
+						{
+							if (!db.tblAccommodationModules.Any(o => o.AccommodationID == accommodation.AccommodationID && o.ModuleID == accomModuleId))
+							{
+								db.tblAccommodationModules.Add(new tblAccommodationModule() { AccommodationID = accommodation.AccommodationID, ModuleID = accomModuleId, CreatedBy = 0, Create_Date = DateTime.Now });
+							}
+						}
+					}
+
+					db.SaveChanges();
 
                     return Json(new { success = true, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
                 }
@@ -734,9 +754,21 @@ namespace GreenBushIEP.Controllers
                     newAccomodation.Create_Date = DateTime.Now;
 
                     db.tblAccommodations.Add(newAccomodation);
-                    db.SaveChanges();
 
-                    return Json(new { success = true, id = newAccomodation.AccommodationID, iep = newAccomodation.IEPid, isNew = true });
+					db.SaveChanges();
+
+					//add modules
+					if (model.SelectedModules != null)
+					{
+						foreach (var accomModuleId in model.SelectedModules)
+						{
+							db.tblAccommodationModules.Add(new tblAccommodationModule() { AccommodationID = newAccomodation.AccommodationID, ModuleID = accomModuleId, CreatedBy = 0, Create_Date = DateTime.Now });
+						}
+
+						db.SaveChanges();
+					}
+
+					return Json(new { success = true, id = newAccomodation.AccommodationID, iep = newAccomodation.IEPid, isNew = true });
                 }
             }
 

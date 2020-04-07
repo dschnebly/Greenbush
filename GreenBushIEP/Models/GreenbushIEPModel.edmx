@@ -5,15 +5,9 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="IndividualizedEducationProgramModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodationModules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblAccommodationModules">
           <Key>
             <PropertyRef Name="AccommodationModuleID" />
-            <PropertyRef Name="AccommodationID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="Create_Date" />
           </Key>
           <Property Name="AccommodationModuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="AccommodationID" Type="int" Nullable="false" />
@@ -1653,7 +1647,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="isArchive" Type="bit" Nullable="false" />
           <Property Name="originalNoteID" Type="int" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -1667,7 +1661,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.tblAccommodatio
           <Property Name="isArchive" Type="bit" Nullable="false" />
           <Property Name="originalNoteMISID" Type="int" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
-          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
@@ -2226,6 +2220,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="isAssgined" Type="bit" Mode="In" />
         </Function>
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
+          <EntitySet Name="tblAccommodationModules" EntityType="Self.tblAccommodationModules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDate" EntityType="Self.tblArchiveEvaluationDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDateSigned" EntityType="Self.tblArchiveEvaluationDateSigned" Schema="dbo" store:Type="Tables" />
@@ -2315,15 +2310,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblTransitionServices" EntityType="Self.tblTransitionServices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblAccommodationModules" EntityType="Self.tblAccommodationModules" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblAccommodationModules].[AccommodationModuleID] AS [AccommodationModuleID], 
-    [tblAccommodationModules].[AccommodationID] AS [AccommodationID], 
-    [tblAccommodationModules].[ModuleID] AS [ModuleID], 
-    [tblAccommodationModules].[CreatedBy] AS [CreatedBy], 
-    [tblAccommodationModules].[Create_Date] AS [Create_Date]
-    FROM [dbo].[tblAccommodationModules] AS [tblAccommodationModules]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vw_BuildingList" EntityType="Self.vw_BuildingList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_BuildingList].[USD] AS [USD], 
@@ -2593,7 +2579,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblTransitionServices" EntityType="IndividualizedEducationProgramModel.tblTransitionService" />
           <EntitySet Name="tblUsers" EntityType="IndividualizedEducationProgramModel.tblUser" />
           <EntitySet Name="tblVersionLogs" EntityType="IndividualizedEducationProgramModel.tblVersionLog" />
-          <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
           <EntitySet Name="vw_BuildingList" EntityType="IndividualizedEducationProgramModel.vw_BuildingList" />
           <EntitySet Name="vw_GoalExport" EntityType="IndividualizedEducationProgramModel.vw_GoalExport" />
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="IndividualizedEducationProgramModel.vw_ModuleAccommodationFlags" />
@@ -2716,6 +2701,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="vw_BuildingsForAttendance" EntityType="IndividualizedEducationProgramModel.vw_BuildingsForAttendance" />
           <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
           <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
+          <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -4357,7 +4343,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isArchive" Type="Boolean" Nullable="false" />
           <Property Name="originalNoteID" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -4371,7 +4357,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isArchive" Type="Boolean" Nullable="false" />
           <Property Name="originalNoteMISID" Type="Int32" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
@@ -4516,20 +4502,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="UpdateText" Type="String" Nullable="false" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
-        </EntityType>
-        <EntityType Name="tblAccommodationModule">
-          <Key>
-            <PropertyRef Name="AccommodationModuleID" />
-            <PropertyRef Name="AccommodationID" />
-            <PropertyRef Name="ModuleID" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="Create_Date" />
-          </Key>
-          <Property Name="AccommodationModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AccommodationID" Type="Int32" Nullable="false" />
-          <Property Name="ModuleID" Type="Int32" Nullable="false" />
-          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
-          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="vw_BuildingList">
           <Key>
@@ -5010,6 +4982,16 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblAccommodationModule">
+          <Key>
+            <PropertyRef Name="AccommodationModuleID" />
+          </Key>
+          <Property Name="AccommodationModuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccommodationID" Type="Int32" Nullable="false" />
+          <Property Name="ModuleID" Type="Int32" Nullable="false" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6883,17 +6865,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblAccommodationModules">
-            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodationModule">
-              <MappingFragment StoreEntitySet="tblAccommodationModules">
-                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
-                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
-                <ScalarProperty Name="AccommodationModuleID" ColumnName="AccommodationModuleID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="vw_BuildingList">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_BuildingList">
               <MappingFragment StoreEntitySet="vw_BuildingList">
@@ -7315,6 +7286,17 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAccommodationModules">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAccommodationModule">
+              <MappingFragment StoreEntitySet="tblAccommodationModules">
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModuleID" ColumnName="ModuleID" />
+                <ScalarProperty Name="AccommodationID" ColumnName="AccommodationID" />
+                <ScalarProperty Name="AccommodationModuleID" ColumnName="AccommodationModuleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
