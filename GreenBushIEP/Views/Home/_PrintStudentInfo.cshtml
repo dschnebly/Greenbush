@@ -168,13 +168,13 @@
                 </tr>*@                
                <tr>
 				<td><label>IEP Date:</label></td>
-	  			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>					
+	  			<td> @(Model.studentDetails.history != null && Model.studentDetails.history.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>					
 				<td><label>Next Annual IEP Date:</label></td>
 				<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 				</tr>         
-				@if (ViewBag.History != null)
+				@if (Model.studentDetails.history != null)
 				{			
-					foreach (var history in (ViewBag.History as List<IEPHistoryViewModel>))
+					foreach (var history in (Model.studentDetails.history as List<IEPHistoryViewModel>))
 					{
 
 						<tr>					
@@ -262,7 +262,7 @@
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 		{
 			var serviceCount = 1;
-			<table style="font-size:8pt;text-align:left">
+			<table class="table table-bordered" border="1">
 				<tr>
 					<td><b>Ln#</b></td>
 					<td><b>FY</b></td>
@@ -419,35 +419,6 @@
 					case "3": { progQ4 = "Goal Met (indicate date)"; break; }
 				} //end switch
 
-
-				//foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
-				//{
-				//	switch (ep.evaluationProcedureID)
-				//	{
-				//		case 1: { evalText += " Written Observation, "; break; }
-				//		case 2: { evalText += " Written Performance, "; break; }
-				//		case 3: { evalText += " Oral Performance, "; break; }
-				//		case 4: { evalText += " Criterion-Referenced Test, "; break; }
-				//		case 5: { evalText += " Time Sample, "; break; }
-				//		case 6: { evalText += " Demonstration/Performance, "; break; }
-
-				//		case 8: { evalText += " Progress Monitoring,"; break; }
-				//		case 7:
-				//		{
-
-				//			if (!string.IsNullOrEmpty(ep.OtherDescription))
-				//			{
-				//				evalText += " Other: " + ep.OtherDescription + ",";
-				//			}
-				//			else
-				//			{
-				//				evalText += " Other,";
-				//			}
-				//			break;
-				//		}
-				//	} //end switch
-				//}
-
 				<div>
 					<div>
 						<div>
@@ -472,8 +443,7 @@
 								<p>@sGoal.StateStandards</p>
 							</div>
 							<div class="form-group">
-								<label>Evaluation Procedure</label>
-								@*<p>@evalText.Trim().TrimEnd(',')</p>*@
+								<label>Evaluation Procedure</label>								
 								<p>
 								@foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
 								{
@@ -520,9 +490,10 @@
 		@if (Model.accommodations != null && Model.accommodations.Count() > 0)
 		{
 
-			<table>
+			<table class="table table-bordered" border="1">
 				<tr>
 					<td><b>Type</b></td>
+					<td><b>Module(s)</b></td>
 					<td><b>Description</b></td>
 					<td><b>Frequency</b></td>
 					<td><b>Location</b></td>
@@ -530,35 +501,12 @@
 					<td><b>Anticipated <br />Start Date</b></td>
 					<td><b>Anticipated <br />End Date</b></td>
 				</tr>
-				@foreach (var accom in Model.accommodations)
-
-				{
-					string shortDesc = "Accommodation ";
-
-					if (@accom.AccomType == 1)
-					{
-						shortDesc = "Accommodation ";
-					}
-					else if (@accom.AccomType == 2)
-					{
-						shortDesc = "Modification ";
-					}
-					else if (@accom.AccomType == 3)
-					{
-						shortDesc = "Supplemental Aids and Services ";
-					}
-					else if (@accom.AccomType == 4)
-					{
-						shortDesc = "Support for School Personnel ";
-					}
-					else if (@accom.AccomType == 5)
-					{
-						shortDesc = "Transportation ";
-					}
-
+				@foreach (var accom in Model.studentDetails.accommodationList)
+				{					
 					<tr>
 
-						<td>@(shortDesc)</td>
+						<td valign="top">@accom.AccomType</td>
+						<td valign="top" style="max-width:50px;word-wrap:break-word">@Html.Raw(accom.Module)</td>
 						<td>@accom.Description</td>
 						<td>@accom.Frequency</td>
 						<td>@accom.Location</td>

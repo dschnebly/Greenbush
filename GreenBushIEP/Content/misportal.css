@@ -87,9 +87,10 @@ hr {
 }
 
 .panel-primary > .panel-heading {
-    padding: 8px 15px;
-    background-color: #45906d !important;
-    border-color: #45906d !important;
+	padding: 8px 15px;
+	background-color: #45906d !important;
+	border-color: #45906d !important;
+	
 }
 
 .panel-primary {
@@ -97,9 +98,14 @@ hr {
 }
 
 .panel-title {
-    display: inline-block !important;
-    color: #fff !important;
-    font-weight: 600 !important;
+	display: inline-block !important;
+	color: #fff !important;	
+	font-weight: 600 !important;
+}
+
+h4.panel-title {
+	display: inline-block !important;
+	color: #666 !important;	
 }
 
 .btn-filter {
