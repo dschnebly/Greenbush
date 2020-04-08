@@ -20,7 +20,7 @@ namespace GreenBushIEP.Models
         public bool isArchive { get; set; }
         public Nullable<int> originalNoteMISID { get; set; }
         public int CreatedBy { get; set; }
-        public int ModifiedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
     }

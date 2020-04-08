@@ -5,37 +5,54 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
 <div class="modal-header">
     <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;@(ViewBag.Title)</h4>
 </div>
-<div class="container">
-    @if (Model.notes.Count > 0)
+<div class="alert alert-warning alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+    <strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
+</div>
+
+@using (Html.BeginForm("SaveMISNote", "Home", FormMethod.Post, new { role = "form", id = "contact-form", @Class = "contact-form container-fluid" }))
+{
+
+    @(Html.Hidden("stid", Model.student.UserID.ToString()))
+    if (Model.notes.Count > 0)
     {
         foreach (var note in Model.notes)
         {
-            <p>@(note.Note)</p>
-            <div>@(note.CreatedBy)<small style="font-size:10px;">&ndash;&nbsp;@(note.Create_Date.ToShortDateString())</small></div>
-            <hr />
+            <div class="row">
+                <div class="col-md-12 onecomment">
+                    @(Html.Hidden("commentId", note.CommentId))
+                    <span class="pull-right deleteNote"><i class="glyphicon glyphicon-remove-circle"></i></span>
+                    <p style="message">@(note.Note)</p>
+                    <div class="author">@(note.FirstName) @(note.LastName)&nbsp;&nbsp;&ndash;&nbsp;&nbsp;@(note.Create_Date.ToString("MM'/'dd'/'yyyy HH':'mm tt"))</div>
+                </div>
+            </div>
         }
     }
-    <br />
+
     <div class="row">
-        @using (Html.BeginForm("SaveMISNote", "Home", FormMethod.Post, new { role = "form", id = "contact-form", @Class = "contact-form" }))
-            {
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <textarea class="form-control textarea" rows="3" name="Message" id="Message" placeholder="Message" required></textarea>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <button type="submit" class="btn main-btn pull-right">Save Note</button>
-                </div>
-            </div>
-        }
+        <div class="col-md-12">
+            <textarea class="form-control" rows="3" name="Message" placeholder="Enter a note about the student here" id="Message" required></textarea>
+            <br/>
+            <button type="submit" class="btn notes-save main-btn pull-left">Save Note</button>
+            <button type="button" class="btn notes-print pull-right"><i class="glyphicon glyphicon-print"></i>&nbsp;Print Notes</button>
+        </div>
     </div>
-</div>
+    <br/>
+    <br />
+    <br />
+    <br />
+    <br />
+}
+
+
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/MISNotes.js"></var>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+    @Scripts.Render("~/Scripts/MISNotes.js")
+}

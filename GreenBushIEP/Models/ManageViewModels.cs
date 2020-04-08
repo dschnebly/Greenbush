@@ -128,10 +128,24 @@ namespace GreenBushIEP.Models
         public List<tblCalendar> calendarDays { get; set; }
     }
 
+    public class MISNotesUI
+    {
+        public int CommentId { get; set; }
+        public string Note { get; set; }
+        public int StudentID { get; set; }
+        public int CreatedBy { get; set; }
+        public bool isArchive { get; set; }
+        public DateTime Create_Date { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime Update_Date { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
 
     public class MISNotesViewModel
     {
-        public List<tblStudentNotes_MIS> notes { get; set; }
+        public List<MISNotesUI> notes { get; set; }
+        public tblUser student { get; set; }
     }
 
     public class MISProviderViewModel

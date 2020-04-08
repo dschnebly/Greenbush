@@ -365,6 +365,73 @@ hr {
 
 /*********************************/
 /*********************************/
+/***        MISNote PAGE         ***/
+/*********************************/
+/*********************************/
+
+.onecomment {
+    padding: 10px;
+    border: 1px solid lightgray;
+    margin: 8px;
+}
+
+    .onecomment .message {
+        font-size: large;
+    }
+
+    .onecomment .author {
+        font-size: 11px;
+        color: #999;
+    }
+
+    .onecomment textarea {
+        margin: 10px;
+        padding: 10px;
+    }
+
+.deleteNote {
+    display: inline-block;
+    font-size: 16pt;
+    position: relative;
+    top: -7px;
+    left: 2px;
+}
+
+    .deleteNote:hover {
+        cursor: pointer;
+    }
+
+#Message {
+    margin: 10px, 0;
+}
+
+.main-btn {
+}
+
+@media print {
+    #Message {
+        display: none;
+    }
+
+    .alert-warning {
+        display: none;
+    }
+
+    .notes-save {
+        display: none;
+    }
+
+    .notes-print {
+        display: none;
+    }
+
+    .glyphicon-arrow-left {
+        display: none;
+    }
+}
+
+/*********************************/
+/*********************************/
 /***         Portal PAGE         ***/
 /*********************************/
 /*********************************/
