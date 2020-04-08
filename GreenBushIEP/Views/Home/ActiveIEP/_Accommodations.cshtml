@@ -23,6 +23,7 @@
 				<table class="table-striped" id="serviceTable" >
 					<tr>
 						<th>Type</th>
+						<th>Module(s)</th>
 						<th>Description</th>
 						<th>Frequency</th>
 						<th>Location</th>
@@ -53,6 +54,19 @@
 						<tr>
 							<td>
 								@(shortDesc)
+							</td>
+							<td>
+								@{
+									var selected = "";
+									foreach (var module in Model.ModuleList)
+									{
+										if (Model.AccommModules.Any(o => o.AccommodationID == accom.AccommodationID && o.ModuleID == module.ModuleID))
+										{
+											selected += module.ModuleName + "<br />";
+										}
+									}
+								}
+								@Html.Raw(selected) 
 							</td>
 							<td>
 								@accom.Description

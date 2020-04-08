@@ -2808,8 +2808,55 @@ namespace GreenbushIep.Controllers
 						historicalIEPList.Add(exitItem);
 					}
 
-					ViewBag.History = historicalIEPList;
+					studentDetails.history = historicalIEPList;
                 }
+
+
+				if (theIEP.accommodations != null)
+				{
+					foreach (var accom in theIEP.accommodations)
+					{
+						string shortDesc = "Accommodation ";
+
+						if (@accom.AccomType == 1)
+						{
+							shortDesc = "Accommodation ";
+						}
+						else if (@accom.AccomType == 2)
+						{
+							shortDesc = "Modification ";
+						}
+						else if (@accom.AccomType == 3)
+						{
+							shortDesc = "Supplemental Aids and Services ";
+						}
+						else if (@accom.AccomType == 4)
+						{
+							shortDesc = "Support for School Personnel ";
+						}
+						else if (@accom.AccomType == 5)
+						{
+							shortDesc = "Transportation ";
+						}
+
+						var moduleList = db.tblAccommodationModules.Where(o => o.AccommodationID == accom.AccommodationID).Select(o => o.ModuleID);
+
+						var modules = string.Join("<br />", db.tblModules.Where(o => moduleList.Contains(o.ModuleID)).Select(o => o.ModuleName));
+						
+						var accommodationView = new AccomodationPrintViewModel();
+						accommodationView.StudentId = stid;
+						accommodationView.Location = accom.Location;
+						accommodationView.Description = accom.Description;
+						accommodationView.Duration = accom.Duration;
+						accommodationView.Frequency = accom.Frequency;
+						accommodationView.AnticipatedEndDate = accom.AnticipatedEndDate;
+						accommodationView.AnticipatedStartDate = accom.AnticipatedStartDate;
+						accommodationView.AccomType = shortDesc;
+						accommodationView.Module = modules;
+
+						studentDetails.accommodationList.Add(accommodationView);
+					}
+				}
 
                 theIEP.studentDetails = studentDetails;
 
