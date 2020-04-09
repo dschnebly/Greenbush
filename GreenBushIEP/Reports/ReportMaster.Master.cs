@@ -277,7 +277,11 @@ namespace GreenBushIEP.Report
 		{
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
-			var districtList = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == user.UserID select district).Distinct().ToList();
+			var districtList = (from org in db.tblOrganizationMappings
+								join district in db.tblDistricts on org.USD equals district.USD
+								where org.UserID == user.UserID
+								orderby district.DistrictName
+								select district).Distinct().ToList();
 
 			List<tblDistrict> districts = new List<tblDistrict>();
 
@@ -300,6 +304,7 @@ namespace GreenBushIEP.Report
 			var buildingList = (from bm in db.tblBuildingMappings
 								join b in db.tblBuildings on bm.USD equals b.USD
 								where b.Active == 1 && bm.BuildingID == b.BuildingID && bm.UserID == user.UserID
+								orderby b.BuildingName
 								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
 
 			buildings.AddRange(buildingList);

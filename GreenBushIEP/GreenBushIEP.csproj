@@ -711,9 +711,11 @@
     <Compile Include="Reports\StudentData\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\StudentData\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\ProceduralDates\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -749,6 +751,15 @@
     </Compile>
     <Compile Include="Reports\ServiceReport\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports\StudentInfo\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\StudentInfo\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -862,11 +873,16 @@
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
     <Content Include="Reports\ProceduralDatesTracking\Report.aspx" />
-    <Content Include="Reports\StudentData\Report.aspx" />
+    <Content Include="Reports\StudentData\Report.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\Progress\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
     <Content Include="Reports\ServiceReport\Report.aspx" />
+    <Content Include="Reports\StudentInfo\Report.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Scripts\AddEdit.js" />
     <Content Include="Scripts\AddUsers.js" />
     <Content Include="Scripts\adminportal.js" />
@@ -1224,7 +1240,12 @@
     <EmbeddedResource Include="Reports\Progress\rptProgressReport.rdlc" />
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
     <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
-    <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc" />
+    <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\StudentInfo\rptStudentInfo.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
