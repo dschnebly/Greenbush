@@ -17,6 +17,14 @@
         <CommandText>/* Local Query */</CommandText>
       </Query>
       <Fields>
+        <Field Name="IEPid">
+          <DataField>IEPid</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="OriginalIEPid">
+          <DataField>OriginalIEPid</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="IepStatus">
           <DataField>IepStatus</DataField>
           <rd:TypeName>System.String</rd:TypeName>
@@ -55,7 +63,7 @@
         </Field>
         <Field Name="FullDayKG">
           <DataField>FullDayKG</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="Gender">
           <DataField>Gender</DataField>
@@ -63,6 +71,10 @@
         </Field>
         <Field Name="NeighborhoodBuildingID">
           <DataField>NeighborhoodBuildingID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="NeighborhoodBuildingName">
+          <DataField>NeighborhoodBuildingName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="AssignedUSD">
@@ -77,8 +89,16 @@
           <DataField>Primary_DisabilityCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="PrimaryDisabilityDesc">
+          <DataField>PrimaryDisabilityDesc</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
         <Field Name="Secondary_DisabilityCode">
           <DataField>Secondary_DisabilityCode</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SecondaryDisabilityDesc">
+          <DataField>SecondaryDisabilityDesc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ClaimingCode">
@@ -119,7 +139,7 @@
         </Field>
         <Field Name="isGifted">
           <DataField>isGifted</DataField>
-          <rd:TypeName>System.Boolean</rd:TypeName>
+          <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="ModifiedBy">
           <DataField>ModifiedBy</DataField>
@@ -161,30 +181,6 @@
           <DataField>IepStartTime</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="IEPid">
-          <DataField>IEPid</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="OriginalIEPid">
-          <DataField>OriginalIEPid</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="NeighborhoodBuildingName">
-          <DataField>NeighborhoodBuildingName</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="begin_date">
-          <DataField>begin_date</DataField>
-          <rd:TypeName>System.DateTime</rd:TypeName>
-        </Field>
-        <Field Name="PrimaryDisabilityDesc">
-          <DataField>PrimaryDisabilityDesc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="SecondaryDisabilityDesc">
-          <DataField>SecondaryDisabilityDesc</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="OriginalIepDate">
           <DataField>OriginalIepDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -199,14 +195,6 @@
         </Field>
         <Field Name="PlacementDescription">
           <DataField>PlacementDescription</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="FullDayKG1">
-          <DataField>FullDayKG</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="isGifted1">
-          <DataField>isGifted</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
         <Field Name="VisionDate">
@@ -229,6 +217,10 @@
           <DataField>ServiceCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="ServiceID">
+          <DataField>ServiceID</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
         <Field Name="ServiceEndDate">
           <DataField>ServiceEndDate</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
@@ -249,35 +241,23 @@
           <DataField>ServiceLocationCode</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ServiceFrequency">
-          <DataField>ServiceFrequency</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
         <Field Name="ServiceMinutes">
           <DataField>ServiceMinutes</DataField>
           <rd:TypeName>System.Int16</rd:TypeName>
         </Field>
-        <Field Name="ServiceProviderId">
-          <DataField>ServiceProviderId</DataField>
+        <Field Name="ServiceProviderName">
+          <DataField>ServiceProviderName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ServiceProviderID">
+          <DataField>ServiceProviderID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
         </Field>
         <Field Name="ServiceFY">
           <DataField>ServiceFY</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ServiceID">
-          <DataField>ServiceID</DataField>
-          <rd:TypeName>System.Int32</rd:TypeName>
-        </Field>
-        <Field Name="ServiceProviderId1">
-          <DataField>ServiceProviderId</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
-        <Field Name="ServiceFY1">
-          <DataField>ServiceFY</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
-        <Field Name="ServiceFrequency1">
+        <Field Name="ServiceFrequency">
           <DataField>ServiceFrequency</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
@@ -2723,7 +2703,7 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                                   <Paragraph>
                                                     <TextRuns>
                                                       <TextRun>
-                                                        <Value>=RowNumber("Details1")</Value>
+                                                        <Value>=RunningValue(Fields!ServiceID.Value,CountDistinct,"Details1")</Value>
                                                         <Style>
                                                           <FontSize>9pt</FontSize>
                                                         </Style>
@@ -2746,6 +2726,7 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                                   <PaddingBottom>2pt</PaddingBottom>
                                                 </Style>
                                               </Textbox>
+                                              <rd:Selected>true</rd:Selected>
                                             </CellContents>
                                           </TablixCell>
                                           <TablixCell>
@@ -2818,14 +2799,14 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                           </TablixCell>
                                           <TablixCell>
                                             <CellContents>
-                                              <Textbox Name="ServiceProviderId">
+                                              <Textbox Name="ServiceProviderName">
                                                 <CanGrow>true</CanGrow>
                                                 <KeepTogether>true</KeepTogether>
                                                 <Paragraphs>
                                                   <Paragraph>
                                                     <TextRuns>
                                                       <TextRun>
-                                                        <Value>=Fields!ServiceProviderId.Value</Value>
+                                                        <Value>=Fields!ServiceProviderName.Value</Value>
                                                         <Style>
                                                           <FontSize>9pt</FontSize>
                                                         </Style>
@@ -2836,7 +2817,7 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                                     </Style>
                                                   </Paragraph>
                                                 </Paragraphs>
-                                                <rd:DefaultName>ServiceProviderId</rd:DefaultName>
+                                                <rd:DefaultName>ServiceProviderName</rd:DefaultName>
                                                 <Style>
                                                   <Border>
                                                     <Color>LightGrey</Color>
@@ -3115,7 +3096,7 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                         <KeepWithGroup>After</KeepWithGroup>
                                       </TablixMember>
                                       <TablixMember>
-                                        <Group Name="Details">
+                                        <Group Name="ServiceDetails">
                                           <GroupExpressions>
                                             <GroupExpression>=Fields!ServiceID.Value</GroupExpression>
                                           </GroupExpressions>

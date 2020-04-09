@@ -31,6 +31,15 @@ namespace GreenBushIEP.Reports.StudentInfo {
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
         
         /// <summary>
+        /// providerDD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect providerDD;
+        
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>
@@ -38,5 +47,17 @@ namespace GreenBushIEP.Reports.StudentInfo {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new GreenBushIEP.Report.ReportMaster Master {
+            get {
+                return ((GreenBushIEP.Report.ReportMaster)(base.Master));
+            }
+        }
     }
 }
