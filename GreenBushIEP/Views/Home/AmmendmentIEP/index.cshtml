@@ -52,7 +52,7 @@
         </div>
         <div class="row iepState">
             <div class="col-md-3">
-                @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4" && Model.studentIEP.current.begin_date != null && Model.studentIEP.current.begin_date <= DateTime.Now)
+                @if (ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
                 {
                     <div class="btn-group">
                         <button type="button" class="btn btn-bordered-warning-status dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,7 +80,7 @@
                 }
                 else
                 {
-                    <label class="btn btn-square-toround btn-xl btn-bordered-warning"><span class="glyphicon glyphicon-chevron-right"></span> @((Model.studentIEP.displayIEPStatus)) </label>
+                    <label class="btn btn-bordered-warning-status dropdown-toggle"><span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b></label>
                 }
             </div>
             <div class="col-md-7">
