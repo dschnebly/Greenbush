@@ -46,8 +46,6 @@ namespace GreenBushIEP.Reports {
         
         private up_ReportStudentInfoDataTable tableup_ReportStudentInfo;
         
-        private up_IEPHistoryDataTable tableup_IEPHistory;
-        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -108,9 +106,6 @@ namespace GreenBushIEP.Reports {
                 }
                 if ((ds.Tables["up_ReportStudentInfo"] != null)) {
                     base.Tables.Add(new up_ReportStudentInfoDataTable(ds.Tables["up_ReportStudentInfo"]));
-                }
-                if ((ds.Tables["up_IEPHistory"] != null)) {
-                    base.Tables.Add(new up_IEPHistoryDataTable(ds.Tables["up_IEPHistory"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -242,16 +237,6 @@ namespace GreenBushIEP.Reports {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public up_IEPHistoryDataTable up_IEPHistory {
-            get {
-                return this.tableup_IEPHistory;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         [global::System.ComponentModel.BrowsableAttribute(true)]
         [global::System.ComponentModel.DesignerSerializationVisibilityAttribute(global::System.ComponentModel.DesignerSerializationVisibility.Visible)]
         public override global::System.Data.SchemaSerializationMode SchemaSerializationMode {
@@ -349,9 +334,6 @@ namespace GreenBushIEP.Reports {
                 }
                 if ((ds.Tables["up_ReportStudentInfo"] != null)) {
                     base.Tables.Add(new up_ReportStudentInfoDataTable(ds.Tables["up_ReportStudentInfo"]));
-                }
-                if ((ds.Tables["up_IEPHistory"] != null)) {
-                    base.Tables.Add(new up_IEPHistoryDataTable(ds.Tables["up_IEPHistory"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -452,12 +434,6 @@ namespace GreenBushIEP.Reports {
                     this.tableup_ReportStudentInfo.InitVars();
                 }
             }
-            this.tableup_IEPHistory = ((up_IEPHistoryDataTable)(base.Tables["up_IEPHistory"]));
-            if ((initTable == true)) {
-                if ((this.tableup_IEPHistory != null)) {
-                    this.tableup_IEPHistory.InitVars();
-                }
-            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -490,8 +466,6 @@ namespace GreenBushIEP.Reports {
             base.Tables.Add(this.tableup_ReportProceduralDatesTracking);
             this.tableup_ReportStudentInfo = new up_ReportStudentInfoDataTable();
             base.Tables.Add(this.tableup_ReportStudentInfo);
-            this.tableup_IEPHistory = new up_IEPHistoryDataTable();
-            base.Tables.Add(this.tableup_IEPHistory);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -557,12 +531,6 @@ namespace GreenBushIEP.Reports {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private bool ShouldSerializeup_ReportStudentInfo() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private bool ShouldSerializeup_IEPHistory() {
             return false;
         }
         
@@ -653,9 +621,6 @@ namespace GreenBushIEP.Reports {
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         public delegate void up_ReportStudentInfoRowChangeEventHandler(object sender, up_ReportStudentInfoRowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public delegate void up_IEPHistoryRowChangeEventHandler(object sender, up_IEPHistoryRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -5502,6 +5467,10 @@ namespace GreenBushIEP.Reports {
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
         public partial class up_ReportStudentInfoDataTable : global::System.Data.TypedTableBase<up_ReportStudentInfoRow> {
             
+            private global::System.Data.DataColumn columnIEPid;
+            
+            private global::System.Data.DataColumn columnOriginalIEPid;
+            
             private global::System.Data.DataColumn columnIepStatus;
             
             private global::System.Data.DataColumn columnStudentId;
@@ -5526,13 +5495,19 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnNeighborhoodBuildingID;
             
+            private global::System.Data.DataColumn columnNeighborhoodBuildingName;
+            
             private global::System.Data.DataColumn columnAssignedUSD;
             
             private global::System.Data.DataColumn columnGrade;
             
             private global::System.Data.DataColumn columnPrimary_DisabilityCode;
             
+            private global::System.Data.DataColumn columnPrimaryDisabilityDesc;
+            
             private global::System.Data.DataColumn columnSecondary_DisabilityCode;
+            
+            private global::System.Data.DataColumn columnSecondaryDisabilityDesc;
             
             private global::System.Data.DataColumn columnClaimingCode;
             
@@ -5574,18 +5549,6 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnIepStartTime;
             
-            private global::System.Data.DataColumn columnIEPid;
-            
-            private global::System.Data.DataColumn columnOriginalIEPid;
-            
-            private global::System.Data.DataColumn columnNeighborhoodBuildingName;
-            
-            private global::System.Data.DataColumn columnbegin_date;
-            
-            private global::System.Data.DataColumn columnPrimaryDisabilityDesc;
-            
-            private global::System.Data.DataColumn columnSecondaryDisabilityDesc;
-            
             private global::System.Data.DataColumn columnOriginalIepDate;
             
             private global::System.Data.DataColumn columnAssignedUSDName;
@@ -5593,10 +5556,6 @@ namespace GreenBushIEP.Reports {
             private global::System.Data.DataColumn columnStudentCounty;
             
             private global::System.Data.DataColumn columnPlacementDescription;
-            
-            private global::System.Data.DataColumn columnFullDayKG1;
-            
-            private global::System.Data.DataColumn columnisGifted1;
             
             private global::System.Data.DataColumn columnVisionDate;
             
@@ -5608,6 +5567,8 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnServiceCode;
             
+            private global::System.Data.DataColumn columnServiceID;
+            
             private global::System.Data.DataColumn columnServiceEndDate;
             
             private global::System.Data.DataColumn columnServiceStartDate;
@@ -5618,21 +5579,15 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnServiceLocationCode;
             
-            private global::System.Data.DataColumn columnServiceFrequency;
-            
             private global::System.Data.DataColumn columnServiceMinutes;
             
-            private global::System.Data.DataColumn columnServiceProviderId;
+            private global::System.Data.DataColumn columnServiceProviderName;
+            
+            private global::System.Data.DataColumn columnServiceProviderID;
             
             private global::System.Data.DataColumn columnServiceFY;
             
-            private global::System.Data.DataColumn columnServiceID;
-            
-            private global::System.Data.DataColumn columnServiceProviderId1;
-            
-            private global::System.Data.DataColumn columnServiceFY1;
-            
-            private global::System.Data.DataColumn columnServiceFrequency1;
+            private global::System.Data.DataColumn columnServiceFrequency;
             
             private global::System.Data.DataColumn columnHistoryItems;
             
@@ -5675,6 +5630,22 @@ namespace GreenBushIEP.Reports {
             protected up_ReportStudentInfoDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn IEPidColumn {
+                get {
+                    return this.columnIEPid;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn OriginalIEPidColumn {
+                get {
+                    return this.columnOriginalIEPid;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5775,6 +5746,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn NeighborhoodBuildingNameColumn {
+                get {
+                    return this.columnNeighborhoodBuildingName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn AssignedUSDColumn {
                 get {
                     return this.columnAssignedUSD;
@@ -5799,9 +5778,25 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn PrimaryDisabilityDescColumn {
+                get {
+                    return this.columnPrimaryDisabilityDesc;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn Secondary_DisabilityCodeColumn {
                 get {
                     return this.columnSecondary_DisabilityCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn SecondaryDisabilityDescColumn {
+                get {
+                    return this.columnSecondaryDisabilityDesc;
                 }
             }
             
@@ -5967,54 +5962,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn IEPidColumn {
-                get {
-                    return this.columnIEPid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn OriginalIEPidColumn {
-                get {
-                    return this.columnOriginalIEPid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn NeighborhoodBuildingNameColumn {
-                get {
-                    return this.columnNeighborhoodBuildingName;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn begin_dateColumn {
-                get {
-                    return this.columnbegin_date;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn PrimaryDisabilityDescColumn {
-                get {
-                    return this.columnPrimaryDisabilityDesc;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn SecondaryDisabilityDescColumn {
-                get {
-                    return this.columnSecondaryDisabilityDesc;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn OriginalIepDateColumn {
                 get {
                     return this.columnOriginalIepDate;
@@ -6042,22 +5989,6 @@ namespace GreenBushIEP.Reports {
             public global::System.Data.DataColumn PlacementDescriptionColumn {
                 get {
                     return this.columnPlacementDescription;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn FullDayKG1Column {
-                get {
-                    return this.columnFullDayKG1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn isGifted1Column {
-                get {
-                    return this.columnisGifted1;
                 }
             }
             
@@ -6103,6 +6034,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ServiceIDColumn {
+                get {
+                    return this.columnServiceID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn ServiceEndDateColumn {
                 get {
                     return this.columnServiceEndDate;
@@ -6143,14 +6082,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceFrequencyColumn {
-                get {
-                    return this.columnServiceFrequency;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public global::System.Data.DataColumn ServiceMinutesColumn {
                 get {
                     return this.columnServiceMinutes;
@@ -6159,9 +6090,17 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceProviderIdColumn {
+            public global::System.Data.DataColumn ServiceProviderNameColumn {
                 get {
-                    return this.columnServiceProviderId;
+                    return this.columnServiceProviderName;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public global::System.Data.DataColumn ServiceProviderIDColumn {
+                get {
+                    return this.columnServiceProviderID;
                 }
             }
             
@@ -6175,33 +6114,9 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceIDColumn {
+            public global::System.Data.DataColumn ServiceFrequencyColumn {
                 get {
-                    return this.columnServiceID;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceProviderId1Column {
-                get {
-                    return this.columnServiceProviderId1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceFY1Column {
-                get {
-                    return this.columnServiceFY1;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn ServiceFrequency1Column {
-                get {
-                    return this.columnServiceFrequency1;
+                    return this.columnServiceFrequency;
                 }
             }
             
@@ -6283,6 +6198,7 @@ namespace GreenBushIEP.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportStudentInfoRow Addup_ReportStudentInfoRow(
+                        int OriginalIEPid, 
                         string IepStatus, 
                         string StudentLastName, 
                         string StudentFirstName, 
@@ -6291,13 +6207,16 @@ namespace GreenBushIEP.Reports {
                         string StudentLanguage, 
                         string ParentLanguage, 
                         string FundSource, 
-                        bool FullDayKG, 
+                        string FullDayKG, 
                         string Gender, 
                         string NeighborhoodBuildingID, 
+                        string NeighborhoodBuildingName, 
                         string AssignedUSD, 
                         int Grade, 
                         string Primary_DisabilityCode, 
+                        string PrimaryDisabilityDesc, 
                         string Secondary_DisabilityCode, 
+                        string SecondaryDisabilityDesc, 
                         bool ClaimingCode, 
                         string County, 
                         string PlacementCode, 
@@ -6307,7 +6226,7 @@ namespace GreenBushIEP.Reports {
                         System.DateTime InitialEvalConsentSigned, 
                         System.DateTime InitialEvalDetermination, 
                         System.DateTime ReEvalConsentSigned, 
-                        bool isGifted, 
+                        string isGifted, 
                         int ModifiedBy, 
                         System.DateTime ReEvalCompleted, 
                         string USD, 
@@ -6318,17 +6237,10 @@ namespace GreenBushIEP.Reports {
                         string BuildingZip, 
                         string BuidlingPhone, 
                         System.DateTime IepStartTime, 
-                        int OriginalIEPid, 
-                        string NeighborhoodBuildingName, 
-                        System.DateTime begin_date, 
-                        string PrimaryDisabilityDesc, 
-                        string SecondaryDisabilityDesc, 
                         System.DateTime OriginalIepDate, 
                         string AssignedUSDName, 
                         string StudentCounty, 
                         string PlacementDescription, 
-                        string FullDayKG1, 
-                        string isGifted1, 
                         System.DateTime VisionDate, 
                         System.DateTime HearingDate, 
                         string VisionResult, 
@@ -6339,13 +6251,11 @@ namespace GreenBushIEP.Reports {
                         string ServiceBuidlingId, 
                         byte ServiceDaysPerWeek, 
                         string ServiceLocationCode, 
-                        int ServiceFrequency, 
                         short ServiceMinutes, 
-                        int ServiceProviderId, 
-                        int ServiceFY, 
-                        string ServiceProviderId1, 
-                        string ServiceFY1, 
-                        string ServiceFrequency1, 
+                        string ServiceProviderName, 
+                        int ServiceProviderID, 
+                        string ServiceFY, 
+                        string ServiceFrequency, 
                         string HistoryItems, 
                         string ContactName, 
                         string ContactAddress, 
@@ -6353,6 +6263,8 @@ namespace GreenBushIEP.Reports {
                         string ContactEmail) {
                 up_ReportStudentInfoRow rowup_ReportStudentInfoRow = ((up_ReportStudentInfoRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
+                        null,
+                        OriginalIEPid,
                         IepStatus,
                         null,
                         StudentLastName,
@@ -6365,10 +6277,13 @@ namespace GreenBushIEP.Reports {
                         FullDayKG,
                         Gender,
                         NeighborhoodBuildingID,
+                        NeighborhoodBuildingName,
                         AssignedUSD,
                         Grade,
                         Primary_DisabilityCode,
+                        PrimaryDisabilityDesc,
                         Secondary_DisabilityCode,
+                        SecondaryDisabilityDesc,
                         ClaimingCode,
                         County,
                         PlacementCode,
@@ -6389,36 +6304,26 @@ namespace GreenBushIEP.Reports {
                         BuildingZip,
                         BuidlingPhone,
                         IepStartTime,
-                        null,
-                        OriginalIEPid,
-                        NeighborhoodBuildingName,
-                        begin_date,
-                        PrimaryDisabilityDesc,
-                        SecondaryDisabilityDesc,
                         OriginalIepDate,
                         AssignedUSDName,
                         StudentCounty,
                         PlacementDescription,
-                        FullDayKG1,
-                        isGifted1,
                         VisionDate,
                         HearingDate,
                         VisionResult,
                         HearingResult,
                         ServiceCode,
+                        null,
                         ServiceEndDate,
                         ServiceStartDate,
                         ServiceBuidlingId,
                         ServiceDaysPerWeek,
                         ServiceLocationCode,
-                        ServiceFrequency,
                         ServiceMinutes,
-                        ServiceProviderId,
+                        ServiceProviderName,
+                        ServiceProviderID,
                         ServiceFY,
-                        null,
-                        ServiceProviderId1,
-                        ServiceFY1,
-                        ServiceFrequency1,
+                        ServiceFrequency,
                         HistoryItems,
                         ContactName,
                         ContactAddress,
@@ -6427,13 +6332,6 @@ namespace GreenBushIEP.Reports {
                 rowup_ReportStudentInfoRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportStudentInfoRow);
                 return rowup_ReportStudentInfoRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_ReportStudentInfoRow FindByStudentId(int StudentId) {
-                return ((up_ReportStudentInfoRow)(this.Rows.Find(new object[] {
-                            StudentId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6453,6 +6351,8 @@ namespace GreenBushIEP.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             internal void InitVars() {
+                this.columnIEPid = base.Columns["IEPid"];
+                this.columnOriginalIEPid = base.Columns["OriginalIEPid"];
                 this.columnIepStatus = base.Columns["IepStatus"];
                 this.columnStudentId = base.Columns["StudentId"];
                 this.columnStudentLastName = base.Columns["StudentLastName"];
@@ -6465,10 +6365,13 @@ namespace GreenBushIEP.Reports {
                 this.columnFullDayKG = base.Columns["FullDayKG"];
                 this.columnGender = base.Columns["Gender"];
                 this.columnNeighborhoodBuildingID = base.Columns["NeighborhoodBuildingID"];
+                this.columnNeighborhoodBuildingName = base.Columns["NeighborhoodBuildingName"];
                 this.columnAssignedUSD = base.Columns["AssignedUSD"];
                 this.columnGrade = base.Columns["Grade"];
                 this.columnPrimary_DisabilityCode = base.Columns["Primary_DisabilityCode"];
+                this.columnPrimaryDisabilityDesc = base.Columns["PrimaryDisabilityDesc"];
                 this.columnSecondary_DisabilityCode = base.Columns["Secondary_DisabilityCode"];
+                this.columnSecondaryDisabilityDesc = base.Columns["SecondaryDisabilityDesc"];
                 this.columnClaimingCode = base.Columns["ClaimingCode"];
                 this.columnCounty = base.Columns["County"];
                 this.columnPlacementCode = base.Columns["PlacementCode"];
@@ -6489,36 +6392,26 @@ namespace GreenBushIEP.Reports {
                 this.columnBuildingZip = base.Columns["BuildingZip"];
                 this.columnBuidlingPhone = base.Columns["BuidlingPhone"];
                 this.columnIepStartTime = base.Columns["IepStartTime"];
-                this.columnIEPid = base.Columns["IEPid"];
-                this.columnOriginalIEPid = base.Columns["OriginalIEPid"];
-                this.columnNeighborhoodBuildingName = base.Columns["NeighborhoodBuildingName"];
-                this.columnbegin_date = base.Columns["begin_date"];
-                this.columnPrimaryDisabilityDesc = base.Columns["PrimaryDisabilityDesc"];
-                this.columnSecondaryDisabilityDesc = base.Columns["SecondaryDisabilityDesc"];
                 this.columnOriginalIepDate = base.Columns["OriginalIepDate"];
                 this.columnAssignedUSDName = base.Columns["AssignedUSDName"];
                 this.columnStudentCounty = base.Columns["StudentCounty"];
                 this.columnPlacementDescription = base.Columns["PlacementDescription"];
-                this.columnFullDayKG1 = base.Columns["FullDayKG1"];
-                this.columnisGifted1 = base.Columns["isGifted1"];
                 this.columnVisionDate = base.Columns["VisionDate"];
                 this.columnHearingDate = base.Columns["HearingDate"];
                 this.columnVisionResult = base.Columns["VisionResult"];
                 this.columnHearingResult = base.Columns["HearingResult"];
                 this.columnServiceCode = base.Columns["ServiceCode"];
+                this.columnServiceID = base.Columns["ServiceID"];
                 this.columnServiceEndDate = base.Columns["ServiceEndDate"];
                 this.columnServiceStartDate = base.Columns["ServiceStartDate"];
                 this.columnServiceBuidlingId = base.Columns["ServiceBuidlingId"];
                 this.columnServiceDaysPerWeek = base.Columns["ServiceDaysPerWeek"];
                 this.columnServiceLocationCode = base.Columns["ServiceLocationCode"];
-                this.columnServiceFrequency = base.Columns["ServiceFrequency"];
                 this.columnServiceMinutes = base.Columns["ServiceMinutes"];
-                this.columnServiceProviderId = base.Columns["ServiceProviderId"];
+                this.columnServiceProviderName = base.Columns["ServiceProviderName"];
+                this.columnServiceProviderID = base.Columns["ServiceProviderID"];
                 this.columnServiceFY = base.Columns["ServiceFY"];
-                this.columnServiceID = base.Columns["ServiceID"];
-                this.columnServiceProviderId1 = base.Columns["ServiceProviderId1"];
-                this.columnServiceFY1 = base.Columns["ServiceFY1"];
-                this.columnServiceFrequency1 = base.Columns["ServiceFrequency1"];
+                this.columnServiceFrequency = base.Columns["ServiceFrequency"];
                 this.columnHistoryItems = base.Columns["HistoryItems"];
                 this.columnContactName = base.Columns["ContactName"];
                 this.columnContactAddress = base.Columns["ContactAddress"];
@@ -6529,6 +6422,10 @@ namespace GreenBushIEP.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             private void InitClass() {
+                this.columnIEPid = new global::System.Data.DataColumn("IEPid", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnIEPid);
+                this.columnOriginalIEPid = new global::System.Data.DataColumn("OriginalIEPid", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnOriginalIEPid);
                 this.columnIepStatus = new global::System.Data.DataColumn("IepStatus", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIepStatus);
                 this.columnStudentId = new global::System.Data.DataColumn("StudentId", typeof(int), null, global::System.Data.MappingType.Element);
@@ -6547,20 +6444,26 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnParentLanguage);
                 this.columnFundSource = new global::System.Data.DataColumn("FundSource", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFundSource);
-                this.columnFullDayKG = new global::System.Data.DataColumn("FullDayKG", typeof(bool), null, global::System.Data.MappingType.Element);
+                this.columnFullDayKG = new global::System.Data.DataColumn("FullDayKG", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFullDayKG);
                 this.columnGender = new global::System.Data.DataColumn("Gender", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGender);
                 this.columnNeighborhoodBuildingID = new global::System.Data.DataColumn("NeighborhoodBuildingID", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnNeighborhoodBuildingID);
+                this.columnNeighborhoodBuildingName = new global::System.Data.DataColumn("NeighborhoodBuildingName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnNeighborhoodBuildingName);
                 this.columnAssignedUSD = new global::System.Data.DataColumn("AssignedUSD", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnAssignedUSD);
                 this.columnGrade = new global::System.Data.DataColumn("Grade", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnGrade);
                 this.columnPrimary_DisabilityCode = new global::System.Data.DataColumn("Primary_DisabilityCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPrimary_DisabilityCode);
+                this.columnPrimaryDisabilityDesc = new global::System.Data.DataColumn("PrimaryDisabilityDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrimaryDisabilityDesc);
                 this.columnSecondary_DisabilityCode = new global::System.Data.DataColumn("Secondary_DisabilityCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSecondary_DisabilityCode);
+                this.columnSecondaryDisabilityDesc = new global::System.Data.DataColumn("SecondaryDisabilityDesc", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSecondaryDisabilityDesc);
                 this.columnClaimingCode = new global::System.Data.DataColumn("ClaimingCode", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnClaimingCode);
                 this.columnCounty = new global::System.Data.DataColumn("County", typeof(string), null, global::System.Data.MappingType.Element);
@@ -6579,7 +6482,7 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnInitialEvalDetermination);
                 this.columnReEvalConsentSigned = new global::System.Data.DataColumn("ReEvalConsentSigned", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnReEvalConsentSigned);
-                this.columnisGifted = new global::System.Data.DataColumn("isGifted", typeof(bool), null, global::System.Data.MappingType.Element);
+                this.columnisGifted = new global::System.Data.DataColumn("isGifted", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnisGifted);
                 this.columnModifiedBy = new global::System.Data.DataColumn("ModifiedBy", typeof(int), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnModifiedBy);
@@ -6601,18 +6504,6 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnBuidlingPhone);
                 this.columnIepStartTime = new global::System.Data.DataColumn("IepStartTime", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnIepStartTime);
-                this.columnIEPid = new global::System.Data.DataColumn("IEPid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIEPid);
-                this.columnOriginalIEPid = new global::System.Data.DataColumn("OriginalIEPid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOriginalIEPid);
-                this.columnNeighborhoodBuildingName = new global::System.Data.DataColumn("NeighborhoodBuildingName", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnNeighborhoodBuildingName);
-                this.columnbegin_date = new global::System.Data.DataColumn("begin_date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnbegin_date);
-                this.columnPrimaryDisabilityDesc = new global::System.Data.DataColumn("PrimaryDisabilityDesc", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnPrimaryDisabilityDesc);
-                this.columnSecondaryDisabilityDesc = new global::System.Data.DataColumn("SecondaryDisabilityDesc", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnSecondaryDisabilityDesc);
                 this.columnOriginalIepDate = new global::System.Data.DataColumn("OriginalIepDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnOriginalIepDate);
                 this.columnAssignedUSDName = new global::System.Data.DataColumn("AssignedUSDName", typeof(string), null, global::System.Data.MappingType.Element);
@@ -6621,10 +6512,6 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnStudentCounty);
                 this.columnPlacementDescription = new global::System.Data.DataColumn("PlacementDescription", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnPlacementDescription);
-                this.columnFullDayKG1 = new global::System.Data.DataColumn("FullDayKG1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFullDayKG1);
-                this.columnisGifted1 = new global::System.Data.DataColumn("isGifted1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnisGifted1);
                 this.columnVisionDate = new global::System.Data.DataColumn("VisionDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnVisionDate);
                 this.columnHearingDate = new global::System.Data.DataColumn("HearingDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -6635,6 +6522,8 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnHearingResult);
                 this.columnServiceCode = new global::System.Data.DataColumn("ServiceCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceCode);
+                this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceID);
                 this.columnServiceEndDate = new global::System.Data.DataColumn("ServiceEndDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceEndDate);
                 this.columnServiceStartDate = new global::System.Data.DataColumn("ServiceStartDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
@@ -6645,22 +6534,16 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnServiceDaysPerWeek);
                 this.columnServiceLocationCode = new global::System.Data.DataColumn("ServiceLocationCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceLocationCode);
-                this.columnServiceFrequency = new global::System.Data.DataColumn("ServiceFrequency", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceFrequency);
                 this.columnServiceMinutes = new global::System.Data.DataColumn("ServiceMinutes", typeof(short), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceMinutes);
-                this.columnServiceProviderId = new global::System.Data.DataColumn("ServiceProviderId", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceProviderId);
-                this.columnServiceFY = new global::System.Data.DataColumn("ServiceFY", typeof(int), null, global::System.Data.MappingType.Element);
+                this.columnServiceProviderName = new global::System.Data.DataColumn("ServiceProviderName", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceProviderName);
+                this.columnServiceProviderID = new global::System.Data.DataColumn("ServiceProviderID", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceProviderID);
+                this.columnServiceFY = new global::System.Data.DataColumn("ServiceFY", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnServiceFY);
-                this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceID);
-                this.columnServiceProviderId1 = new global::System.Data.DataColumn("ServiceProviderId1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceProviderId1);
-                this.columnServiceFY1 = new global::System.Data.DataColumn("ServiceFY1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceFY1);
-                this.columnServiceFrequency1 = new global::System.Data.DataColumn("ServiceFrequency1", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnServiceFrequency1);
+                this.columnServiceFrequency = new global::System.Data.DataColumn("ServiceFrequency", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceFrequency);
                 this.columnHistoryItems = new global::System.Data.DataColumn("HistoryItems", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHistoryItems);
                 this.columnContactName = new global::System.Data.DataColumn("ContactName", typeof(string), null, global::System.Data.MappingType.Element);
@@ -6671,8 +6554,11 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnContactPhone);
                 this.columnContactEmail = new global::System.Data.DataColumn("ContactEmail", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnContactEmail);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnStudentId}, true));
+                this.columnIEPid.AutoIncrement = true;
+                this.columnIEPid.AutoIncrementSeed = -1;
+                this.columnIEPid.AutoIncrementStep = -1;
+                this.columnIEPid.AllowDBNull = false;
+                this.columnIEPid.ReadOnly = true;
                 this.columnIepStatus.AllowDBNull = false;
                 this.columnIepStatus.MaxLength = 20;
                 this.columnStudentId.AutoIncrement = true;
@@ -6680,27 +6566,34 @@ namespace GreenBushIEP.Reports {
                 this.columnStudentId.AutoIncrementStep = -1;
                 this.columnStudentId.AllowDBNull = false;
                 this.columnStudentId.ReadOnly = true;
-                this.columnStudentId.Unique = true;
                 this.columnStudentLastName.MaxLength = 255;
                 this.columnStudentFirstName.MaxLength = 255;
                 this.columnKIDSID.AllowDBNull = false;
                 this.columnDateOfBirth.AllowDBNull = false;
-                this.columnStudentLanguage.MaxLength = 10;
-                this.columnParentLanguage.MaxLength = 10;
+                this.columnStudentLanguage.ReadOnly = true;
+                this.columnStudentLanguage.MaxLength = 213;
+                this.columnParentLanguage.ReadOnly = true;
+                this.columnParentLanguage.MaxLength = 213;
                 this.columnFundSource.MaxLength = 50;
+                this.columnFullDayKG.ReadOnly = true;
+                this.columnFullDayKG.MaxLength = 3;
                 this.columnGender.MaxLength = 10;
                 this.columnNeighborhoodBuildingID.MaxLength = 50;
+                this.columnNeighborhoodBuildingName.MaxLength = 255;
                 this.columnAssignedUSD.MaxLength = 50;
                 this.columnPrimary_DisabilityCode.AllowDBNull = false;
                 this.columnPrimary_DisabilityCode.MaxLength = 2;
+                this.columnPrimaryDisabilityDesc.MaxLength = 100;
                 this.columnSecondary_DisabilityCode.AllowDBNull = false;
                 this.columnSecondary_DisabilityCode.MaxLength = 2;
+                this.columnSecondaryDisabilityDesc.MaxLength = 100;
                 this.columnClaimingCode.AllowDBNull = false;
                 this.columnCounty.MaxLength = 2;
                 this.columnPlacementCode.AllowDBNull = false;
                 this.columnPlacementCode.MaxLength = 1;
                 this.columnStatusCode.MaxLength = 1;
-                this.columnisGifted.AllowDBNull = false;
+                this.columnisGifted.ReadOnly = true;
+                this.columnisGifted.MaxLength = 3;
                 this.columnUSD.AllowDBNull = false;
                 this.columnUSD.MaxLength = 50;
                 this.columnBuildingName.MaxLength = 255;
@@ -6709,50 +6602,36 @@ namespace GreenBushIEP.Reports {
                 this.columnBuildingState.MaxLength = 50;
                 this.columnBuildingZip.MaxLength = 10;
                 this.columnBuidlingPhone.MaxLength = 50;
-                this.columnIEPid.AutoIncrement = true;
-                this.columnIEPid.AutoIncrementSeed = -1;
-                this.columnIEPid.AutoIncrementStep = -1;
-                this.columnIEPid.AllowDBNull = false;
-                this.columnIEPid.ReadOnly = true;
-                this.columnNeighborhoodBuildingName.MaxLength = 255;
-                this.columnPrimaryDisabilityDesc.MaxLength = 100;
-                this.columnSecondaryDisabilityDesc.MaxLength = 100;
+                this.columnIepStartTime.ReadOnly = true;
                 this.columnAssignedUSDName.MaxLength = 255;
                 this.columnStudentCounty.MaxLength = 50;
                 this.columnPlacementDescription.AllowDBNull = false;
                 this.columnPlacementDescription.MaxLength = 50;
-                this.columnFullDayKG1.ReadOnly = true;
-                this.columnFullDayKG1.Caption = "FullDayKG";
-                this.columnFullDayKG1.MaxLength = 3;
-                this.columnisGifted1.ReadOnly = true;
-                this.columnisGifted1.Caption = "isGifted";
-                this.columnisGifted1.MaxLength = 3;
                 this.columnVisionResult.ReadOnly = true;
                 this.columnVisionResult.MaxLength = 14;
                 this.columnHearingResult.ReadOnly = true;
                 this.columnHearingResult.MaxLength = 14;
-                this.columnServiceCode.MaxLength = 2;
-                this.columnServiceBuidlingId.MaxLength = 50;
-                this.columnServiceLocationCode.MaxLength = 1;
+                this.columnServiceCode.ReadOnly = true;
+                this.columnServiceCode.MaxLength = 105;
                 this.columnServiceID.AutoIncrement = true;
                 this.columnServiceID.AutoIncrementSeed = -1;
                 this.columnServiceID.AutoIncrementStep = -1;
                 this.columnServiceID.ReadOnly = true;
-                this.columnServiceProviderId1.ReadOnly = true;
-                this.columnServiceProviderId1.Caption = "ServiceProviderId";
-                this.columnServiceProviderId1.MaxLength = 101;
-                this.columnServiceFY1.ReadOnly = true;
-                this.columnServiceFY1.Caption = "ServiceFY";
-                this.columnServiceFY1.MaxLength = 11;
-                this.columnServiceFrequency1.ReadOnly = true;
-                this.columnServiceFrequency1.Caption = "ServiceFrequency";
-                this.columnServiceFrequency1.MaxLength = 21;
+                this.columnServiceBuidlingId.MaxLength = 50;
+                this.columnServiceLocationCode.ReadOnly = true;
+                this.columnServiceLocationCode.MaxLength = 104;
+                this.columnServiceProviderName.ReadOnly = true;
+                this.columnServiceProviderName.MaxLength = 101;
+                this.columnServiceFY.ReadOnly = true;
+                this.columnServiceFY.MaxLength = 11;
+                this.columnServiceFrequency.ReadOnly = true;
+                this.columnServiceFrequency.MaxLength = 21;
                 this.columnHistoryItems.ReadOnly = true;
                 this.columnHistoryItems.MaxLength = 2147483647;
                 this.columnContactName.ReadOnly = true;
                 this.columnContactName.MaxLength = 201;
                 this.columnContactAddress.ReadOnly = true;
-                this.columnContactAddress.MaxLength = 574;
+                this.columnContactAddress.MaxLength = 625;
                 this.columnContactPhone.MaxLength = 15;
                 this.columnContactEmail.MaxLength = 255;
             }
@@ -6841,329 +6720,6 @@ namespace GreenBushIEP.Reports {
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "up_ReportStudentInfoDataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class up_IEPHistoryDataTable : global::System.Data.TypedTableBase<up_IEPHistoryRow> {
-            
-            private global::System.Data.DataColumn columnIEPid;
-            
-            private global::System.Data.DataColumn columnOriginalIEPid;
-            
-            private global::System.Data.DataColumn columnIEPType;
-            
-            private global::System.Data.DataColumn columnStatusCode;
-            
-            private global::System.Data.DataColumn columnIepDate;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryDataTable() {
-                this.TableName = "up_IEPHistory";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal up_IEPHistoryDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected up_IEPHistoryDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn IEPidColumn {
-                get {
-                    return this.columnIEPid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn OriginalIEPidColumn {
-                get {
-                    return this.columnOriginalIEPid;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn IEPTypeColumn {
-                get {
-                    return this.columnIEPType;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn StatusCodeColumn {
-                get {
-                    return this.columnStatusCode;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataColumn IepDateColumn {
-                get {
-                    return this.columnIepDate;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRow this[int index] {
-                get {
-                    return ((up_IEPHistoryRow)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event up_IEPHistoryRowChangeEventHandler up_IEPHistoryRowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event up_IEPHistoryRowChangeEventHandler up_IEPHistoryRowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event up_IEPHistoryRowChangeEventHandler up_IEPHistoryRowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public event up_IEPHistoryRowChangeEventHandler up_IEPHistoryRowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Addup_IEPHistoryRow(up_IEPHistoryRow row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRow Addup_IEPHistoryRow(int OriginalIEPid, string IEPType, string StatusCode, System.DateTime IepDate) {
-                up_IEPHistoryRow rowup_IEPHistoryRow = ((up_IEPHistoryRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        null,
-                        OriginalIEPid,
-                        IEPType,
-                        StatusCode,
-                        IepDate};
-                rowup_IEPHistoryRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowup_IEPHistoryRow);
-                return rowup_IEPHistoryRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRow FindByIEPid(int IEPid) {
-                return ((up_IEPHistoryRow)(this.Rows.Find(new object[] {
-                            IEPid})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                up_IEPHistoryDataTable cln = ((up_IEPHistoryDataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new up_IEPHistoryDataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal void InitVars() {
-                this.columnIEPid = base.Columns["IEPid"];
-                this.columnOriginalIEPid = base.Columns["OriginalIEPid"];
-                this.columnIEPType = base.Columns["IEPType"];
-                this.columnStatusCode = base.Columns["StatusCode"];
-                this.columnIepDate = base.Columns["IepDate"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            private void InitClass() {
-                this.columnIEPid = new global::System.Data.DataColumn("IEPid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIEPid);
-                this.columnOriginalIEPid = new global::System.Data.DataColumn("OriginalIEPid", typeof(int), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnOriginalIEPid);
-                this.columnIEPType = new global::System.Data.DataColumn("IEPType", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIEPType);
-                this.columnStatusCode = new global::System.Data.DataColumn("StatusCode", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnStatusCode);
-                this.columnIepDate = new global::System.Data.DataColumn("IepDate", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnIepDate);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnIEPid}, true));
-                this.columnIEPid.AutoIncrement = true;
-                this.columnIEPid.AutoIncrementSeed = -1;
-                this.columnIEPid.AutoIncrementStep = -1;
-                this.columnIEPid.AllowDBNull = false;
-                this.columnIEPid.ReadOnly = true;
-                this.columnIEPid.Unique = true;
-                this.columnIEPType.ReadOnly = true;
-                this.columnIEPType.MaxLength = 9;
-                this.columnStatusCode.ReadOnly = true;
-                this.columnStatusCode.MaxLength = 1;
-                this.columnIepDate.ReadOnly = true;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRow Newup_IEPHistoryRow() {
-                return ((up_IEPHistoryRow)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new up_IEPHistoryRow(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(up_IEPHistoryRow);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.up_IEPHistoryRowChanged != null)) {
-                    this.up_IEPHistoryRowChanged(this, new up_IEPHistoryRowChangeEvent(((up_IEPHistoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.up_IEPHistoryRowChanging != null)) {
-                    this.up_IEPHistoryRowChanging(this, new up_IEPHistoryRowChangeEvent(((up_IEPHistoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.up_IEPHistoryRowDeleted != null)) {
-                    this.up_IEPHistoryRowDeleted(this, new up_IEPHistoryRowChangeEvent(((up_IEPHistoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.up_IEPHistoryRowDeleting != null)) {
-                    this.up_IEPHistoryRowDeleting(this, new up_IEPHistoryRowChangeEvent(((up_IEPHistoryRow)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Removeup_IEPHistoryRow(up_IEPHistoryRow row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                IndividualizedEducationProgramDataSet ds = new IndividualizedEducationProgramDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "up_IEPHistoryDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -10948,6 +10504,33 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int IEPid {
+                get {
+                    return ((int)(this[this.tableup_ReportStudentInfo.IEPidColumn]));
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.IEPidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int OriginalIEPid {
+                get {
+                    try {
+                        return ((int)(this[this.tableup_ReportStudentInfo.OriginalIEPidColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'OriginalIEPid\' in table \'up_ReportStudentInfo\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.OriginalIEPidColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string IepStatus {
                 get {
                     return ((string)(this[this.tableup_ReportStudentInfo.IepStatusColumn]));
@@ -11075,10 +10658,10 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool FullDayKG {
+            public string FullDayKG {
                 get {
                     try {
-                        return ((bool)(this[this.tableup_ReportStudentInfo.FullDayKGColumn]));
+                        return ((string)(this[this.tableup_ReportStudentInfo.FullDayKGColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'FullDayKG\' in table \'up_ReportStudentInfo\' is DBNull.", e);
@@ -11119,6 +10702,23 @@ namespace GreenBushIEP.Reports {
                 }
                 set {
                     this[this.tableup_ReportStudentInfo.NeighborhoodBuildingIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string NeighborhoodBuildingName {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'NeighborhoodBuildingName\' in table \'up_ReportStudentInfo\' i" +
+                                "s DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn] = value;
                 }
             }
             
@@ -11167,12 +10767,46 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string PrimaryDisabilityDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PrimaryDisabilityDesc\' in table \'up_ReportStudentInfo\' is D" +
+                                "BNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public string Secondary_DisabilityCode {
                 get {
                     return ((string)(this[this.tableup_ReportStudentInfo.Secondary_DisabilityCodeColumn]));
                 }
                 set {
                     this[this.tableup_ReportStudentInfo.Secondary_DisabilityCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string SecondaryDisabilityDesc {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SecondaryDisabilityDesc\' in table \'up_ReportStudentInfo\' is" +
+                                " DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn] = value;
                 }
             }
             
@@ -11315,9 +10949,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool isGifted {
+            public string isGifted {
                 get {
-                    return ((bool)(this[this.tableup_ReportStudentInfo.isGiftedColumn]));
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentInfo.isGiftedColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'isGifted\' in table \'up_ReportStudentInfo\' is DBNull.", e);
+                    }
                 }
                 set {
                     this[this.tableup_ReportStudentInfo.isGiftedColumn] = value;
@@ -11483,100 +11122,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int IEPid {
-                get {
-                    return ((int)(this[this.tableup_ReportStudentInfo.IEPidColumn]));
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.IEPidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int OriginalIEPid {
-                get {
-                    try {
-                        return ((int)(this[this.tableup_ReportStudentInfo.OriginalIEPidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'OriginalIEPid\' in table \'up_ReportStudentInfo\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.OriginalIEPidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string NeighborhoodBuildingName {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'NeighborhoodBuildingName\' in table \'up_ReportStudentInfo\' i" +
-                                "s DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public System.DateTime begin_date {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableup_ReportStudentInfo.begin_dateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'begin_date\' in table \'up_ReportStudentInfo\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.begin_dateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string PrimaryDisabilityDesc {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'PrimaryDisabilityDesc\' in table \'up_ReportStudentInfo\' is D" +
-                                "BNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string SecondaryDisabilityDesc {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'SecondaryDisabilityDesc\' in table \'up_ReportStudentInfo\' is" +
-                                " DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public System.DateTime OriginalIepDate {
                 get {
                     try {
@@ -11633,38 +11178,6 @@ namespace GreenBushIEP.Reports {
                 }
                 set {
                     this[this.tableup_ReportStudentInfo.PlacementDescriptionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string FullDayKG1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.FullDayKG1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'FullDayKG1\' in table \'up_ReportStudentInfo\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.FullDayKG1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string isGifted1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.isGifted1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'isGifted1\' in table \'up_ReportStudentInfo\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.isGifted1Column] = value;
                 }
             }
             
@@ -11745,6 +11258,22 @@ namespace GreenBushIEP.Reports {
                 }
                 set {
                     this[this.tableup_ReportStudentInfo.ServiceCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public int ServiceID {
+                get {
+                    try {
+                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceID\' in table \'up_ReportStudentInfo\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.ServiceIDColumn] = value;
                 }
             }
             
@@ -11834,23 +11363,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int ServiceFrequency {
-                get {
-                    try {
-                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceFrequency\' in table \'up_ReportStudentInfo\' is DBNull" +
-                                ".", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public short ServiceMinutes {
                 get {
                     try {
@@ -11867,27 +11379,44 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int ServiceProviderId {
+            public string ServiceProviderName {
                 get {
                     try {
-                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceProviderIdColumn]));
+                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceProviderNameColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceProviderId\' in table \'up_ReportStudentInfo\' is DBNul" +
-                                "l.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceProviderName\' in table \'up_ReportStudentInfo\' is DBN" +
+                                "ull.", e);
                     }
                 }
                 set {
-                    this[this.tableup_ReportStudentInfo.ServiceProviderIdColumn] = value;
+                    this[this.tableup_ReportStudentInfo.ServiceProviderNameColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int ServiceFY {
+            public int ServiceProviderID {
                 get {
                     try {
-                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceFYColumn]));
+                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceProviderIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceProviderID\' in table \'up_ReportStudentInfo\' is DBNul" +
+                                "l.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportStudentInfo.ServiceProviderIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public string ServiceFY {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceFYColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
                         throw new global::System.Data.StrongTypingException("The value for column \'ServiceFY\' in table \'up_ReportStudentInfo\' is DBNull.", e);
@@ -11900,67 +11429,18 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int ServiceID {
+            public string ServiceFrequency {
                 get {
                     try {
-                        return ((int)(this[this.tableup_ReportStudentInfo.ServiceIDColumn]));
+                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceID\' in table \'up_ReportStudentInfo\' is DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceFrequency\' in table \'up_ReportStudentInfo\' is DBNull" +
+                                ".", e);
                     }
                 }
                 set {
-                    this[this.tableup_ReportStudentInfo.ServiceIDColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ServiceProviderId1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceProviderId1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceProviderId1\' in table \'up_ReportStudentInfo\' is DBNu" +
-                                "ll.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.ServiceProviderId1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ServiceFY1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceFY1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceFY1\' in table \'up_ReportStudentInfo\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.ServiceFY1Column] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string ServiceFrequency1 {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_ReportStudentInfo.ServiceFrequency1Column]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceFrequency1\' in table \'up_ReportStudentInfo\' is DBNul" +
-                                "l.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_ReportStudentInfo.ServiceFrequency1Column] = value;
+                    this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn] = value;
                 }
             }
             
@@ -12042,6 +11522,18 @@ namespace GreenBushIEP.Reports {
                 set {
                     this[this.tableup_ReportStudentInfo.ContactEmailColumn] = value;
                 }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsOriginalIEPidNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.OriginalIEPidColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetOriginalIEPidNull() {
+                this[this.tableup_ReportStudentInfo.OriginalIEPidColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12142,6 +11634,18 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsNeighborhoodBuildingNameNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetNeighborhoodBuildingNameNull() {
+                this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsAssignedUSDNull() {
                 return this.IsNull(this.tableup_ReportStudentInfo.AssignedUSDColumn);
             }
@@ -12162,6 +11666,30 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetGradeNull() {
                 this[this.tableup_ReportStudentInfo.GradeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsPrimaryDisabilityDescNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetPrimaryDisabilityDescNull() {
+                this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsSecondaryDisabilityDescNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetSecondaryDisabilityDescNull() {
+                this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12246,6 +11774,18 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetReEvalConsentSignedNull() {
                 this[this.tableup_ReportStudentInfo.ReEvalConsentSignedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsisGiftedNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.isGiftedColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetisGiftedNull() {
+                this[this.tableup_ReportStudentInfo.isGiftedColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12358,66 +11898,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsOriginalIEPidNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.OriginalIEPidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetOriginalIEPidNull() {
-                this[this.tableup_ReportStudentInfo.OriginalIEPidColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsNeighborhoodBuildingNameNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetNeighborhoodBuildingNameNull() {
-                this[this.tableup_ReportStudentInfo.NeighborhoodBuildingNameColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool Isbegin_dateNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.begin_dateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void Setbegin_dateNull() {
-                this[this.tableup_ReportStudentInfo.begin_dateColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsPrimaryDisabilityDescNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetPrimaryDisabilityDescNull() {
-                this[this.tableup_ReportStudentInfo.PrimaryDisabilityDescColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsSecondaryDisabilityDescNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetSecondaryDisabilityDescNull() {
-                this[this.tableup_ReportStudentInfo.SecondaryDisabilityDescColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsOriginalIepDateNull() {
                 return this.IsNull(this.tableup_ReportStudentInfo.OriginalIepDateColumn);
             }
@@ -12450,30 +11930,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetStudentCountyNull() {
                 this[this.tableup_ReportStudentInfo.StudentCountyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsFullDayKG1Null() {
-                return this.IsNull(this.tableup_ReportStudentInfo.FullDayKG1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetFullDayKG1Null() {
-                this[this.tableup_ReportStudentInfo.FullDayKG1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsisGifted1Null() {
-                return this.IsNull(this.tableup_ReportStudentInfo.isGifted1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetisGifted1Null() {
-                this[this.tableup_ReportStudentInfo.isGifted1Column] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12538,6 +11994,18 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsServiceIDNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.ServiceIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetServiceIDNull() {
+                this[this.tableup_ReportStudentInfo.ServiceIDColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsServiceEndDateNull() {
                 return this.IsNull(this.tableup_ReportStudentInfo.ServiceEndDateColumn);
             }
@@ -12598,18 +12066,6 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceFrequencyNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceFrequencyColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceFrequencyNull() {
-                this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public bool IsServiceMinutesNull() {
                 return this.IsNull(this.tableup_ReportStudentInfo.ServiceMinutesColumn);
             }
@@ -12622,14 +12078,26 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceProviderIdNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceProviderIdColumn);
+            public bool IsServiceProviderNameNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.ServiceProviderNameColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceProviderIdNull() {
-                this[this.tableup_ReportStudentInfo.ServiceProviderIdColumn] = global::System.Convert.DBNull;
+            public void SetServiceProviderNameNull() {
+                this[this.tableup_ReportStudentInfo.ServiceProviderNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public bool IsServiceProviderIDNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.ServiceProviderIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
+            public void SetServiceProviderIDNull() {
+                this[this.tableup_ReportStudentInfo.ServiceProviderIDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12646,50 +12114,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceIDNull() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceIDColumn);
+            public bool IsServiceFrequencyNull() {
+                return this.IsNull(this.tableup_ReportStudentInfo.ServiceFrequencyColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceIDNull() {
-                this[this.tableup_ReportStudentInfo.ServiceIDColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceProviderId1Null() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceProviderId1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceProviderId1Null() {
-                this[this.tableup_ReportStudentInfo.ServiceProviderId1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceFY1Null() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceFY1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceFY1Null() {
-                this[this.tableup_ReportStudentInfo.ServiceFY1Column] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsServiceFrequency1Null() {
-                return this.IsNull(this.tableup_ReportStudentInfo.ServiceFrequency1Column);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetServiceFrequency1Null() {
-                this[this.tableup_ReportStudentInfo.ServiceFrequency1Column] = global::System.Convert.DBNull;
+            public void SetServiceFrequencyNull() {
+                this[this.tableup_ReportStudentInfo.ServiceFrequencyColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -12750,144 +12182,6 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public void SetContactEmailNull() {
                 this[this.tableup_ReportStudentInfo.ContactEmailColumn] = global::System.Convert.DBNull;
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class up_IEPHistoryRow : global::System.Data.DataRow {
-            
-            private up_IEPHistoryDataTable tableup_IEPHistory;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            internal up_IEPHistoryRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tableup_IEPHistory = ((up_IEPHistoryDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int IEPid {
-                get {
-                    return ((int)(this[this.tableup_IEPHistory.IEPidColumn]));
-                }
-                set {
-                    this[this.tableup_IEPHistory.IEPidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public int OriginalIEPid {
-                get {
-                    try {
-                        return ((int)(this[this.tableup_IEPHistory.OriginalIEPidColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'OriginalIEPid\' in table \'up_IEPHistory\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_IEPHistory.OriginalIEPidColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string IEPType {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_IEPHistory.IEPTypeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IEPType\' in table \'up_IEPHistory\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_IEPHistory.IEPTypeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public string StatusCode {
-                get {
-                    try {
-                        return ((string)(this[this.tableup_IEPHistory.StatusCodeColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'StatusCode\' in table \'up_IEPHistory\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_IEPHistory.StatusCodeColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public System.DateTime IepDate {
-                get {
-                    try {
-                        return ((global::System.DateTime)(this[this.tableup_IEPHistory.IepDateColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("The value for column \'IepDate\' in table \'up_IEPHistory\' is DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableup_IEPHistory.IepDateColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsOriginalIEPidNull() {
-                return this.IsNull(this.tableup_IEPHistory.OriginalIEPidColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetOriginalIEPidNull() {
-                this[this.tableup_IEPHistory.OriginalIEPidColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsIEPTypeNull() {
-                return this.IsNull(this.tableup_IEPHistory.IEPTypeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetIEPTypeNull() {
-                this[this.tableup_IEPHistory.IEPTypeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsStatusCodeNull() {
-                return this.IsNull(this.tableup_IEPHistory.StatusCodeColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetStatusCodeNull() {
-                this[this.tableup_IEPHistory.StatusCodeColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public bool IsIepDateNull() {
-                return this.IsNull(this.tableup_IEPHistory.IepDateColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public void SetIepDateNull() {
-                this[this.tableup_IEPHistory.IepDateColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -13251,40 +12545,6 @@ namespace GreenBushIEP.Reports {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
             public up_ReportStudentInfoRow Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public class up_IEPHistoryRowChangeEvent : global::System.EventArgs {
-            
-            private up_IEPHistoryRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRowChangeEvent(up_IEPHistoryRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-            public up_IEPHistoryRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -15738,6 +14998,8 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "up_ReportStudentInfo";
+            tableMapping.ColumnMappings.Add("IEPid", "IEPid");
+            tableMapping.ColumnMappings.Add("OriginalIEPid", "OriginalIEPid");
             tableMapping.ColumnMappings.Add("IepStatus", "IepStatus");
             tableMapping.ColumnMappings.Add("StudentId", "StudentId");
             tableMapping.ColumnMappings.Add("StudentLastName", "StudentLastName");
@@ -15747,12 +15009,16 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("StudentLanguage", "StudentLanguage");
             tableMapping.ColumnMappings.Add("ParentLanguage", "ParentLanguage");
             tableMapping.ColumnMappings.Add("FundSource", "FundSource");
+            tableMapping.ColumnMappings.Add("FullDayKG", "FullDayKG");
             tableMapping.ColumnMappings.Add("Gender", "Gender");
             tableMapping.ColumnMappings.Add("NeighborhoodBuildingID", "NeighborhoodBuildingID");
+            tableMapping.ColumnMappings.Add("NeighborhoodBuildingName", "NeighborhoodBuildingName");
             tableMapping.ColumnMappings.Add("AssignedUSD", "AssignedUSD");
             tableMapping.ColumnMappings.Add("Grade", "Grade");
             tableMapping.ColumnMappings.Add("Primary_DisabilityCode", "Primary_DisabilityCode");
+            tableMapping.ColumnMappings.Add("PrimaryDisabilityDesc", "PrimaryDisabilityDesc");
             tableMapping.ColumnMappings.Add("Secondary_DisabilityCode", "Secondary_DisabilityCode");
+            tableMapping.ColumnMappings.Add("SecondaryDisabilityDesc", "SecondaryDisabilityDesc");
             tableMapping.ColumnMappings.Add("ClaimingCode", "ClaimingCode");
             tableMapping.ColumnMappings.Add("County", "County");
             tableMapping.ColumnMappings.Add("PlacementCode", "PlacementCode");
@@ -15762,6 +15028,7 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("InitialEvalConsentSigned", "InitialEvalConsentSigned");
             tableMapping.ColumnMappings.Add("InitialEvalDetermination", "InitialEvalDetermination");
             tableMapping.ColumnMappings.Add("ReEvalConsentSigned", "ReEvalConsentSigned");
+            tableMapping.ColumnMappings.Add("isGifted", "isGifted");
             tableMapping.ColumnMappings.Add("ModifiedBy", "ModifiedBy");
             tableMapping.ColumnMappings.Add("ReEvalCompleted", "ReEvalCompleted");
             tableMapping.ColumnMappings.Add("USD", "USD");
@@ -15772,33 +15039,26 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
             tableMapping.ColumnMappings.Add("BuildingZip", "BuildingZip");
             tableMapping.ColumnMappings.Add("BuidlingPhone", "BuidlingPhone");
             tableMapping.ColumnMappings.Add("IepStartTime", "IepStartTime");
-            tableMapping.ColumnMappings.Add("IEPid", "IEPid");
-            tableMapping.ColumnMappings.Add("OriginalIEPid", "OriginalIEPid");
-            tableMapping.ColumnMappings.Add("NeighborhoodBuildingName", "NeighborhoodBuildingName");
-            tableMapping.ColumnMappings.Add("begin_date", "begin_date");
-            tableMapping.ColumnMappings.Add("PrimaryDisabilityDesc", "PrimaryDisabilityDesc");
-            tableMapping.ColumnMappings.Add("SecondaryDisabilityDesc", "SecondaryDisabilityDesc");
             tableMapping.ColumnMappings.Add("OriginalIepDate", "OriginalIepDate");
             tableMapping.ColumnMappings.Add("AssignedUSDName", "AssignedUSDName");
             tableMapping.ColumnMappings.Add("StudentCounty", "StudentCounty");
             tableMapping.ColumnMappings.Add("PlacementDescription", "PlacementDescription");
-            tableMapping.ColumnMappings.Add("FullDayKG", "FullDayKG1");
-            tableMapping.ColumnMappings.Add("isGifted", "isGifted1");
             tableMapping.ColumnMappings.Add("VisionDate", "VisionDate");
             tableMapping.ColumnMappings.Add("HearingDate", "HearingDate");
             tableMapping.ColumnMappings.Add("VisionResult", "VisionResult");
             tableMapping.ColumnMappings.Add("HearingResult", "HearingResult");
             tableMapping.ColumnMappings.Add("ServiceCode", "ServiceCode");
+            tableMapping.ColumnMappings.Add("ServiceID", "ServiceID");
             tableMapping.ColumnMappings.Add("ServiceEndDate", "ServiceEndDate");
             tableMapping.ColumnMappings.Add("ServiceStartDate", "ServiceStartDate");
             tableMapping.ColumnMappings.Add("ServiceBuidlingId", "ServiceBuidlingId");
             tableMapping.ColumnMappings.Add("ServiceDaysPerWeek", "ServiceDaysPerWeek");
             tableMapping.ColumnMappings.Add("ServiceLocationCode", "ServiceLocationCode");
             tableMapping.ColumnMappings.Add("ServiceMinutes", "ServiceMinutes");
-            tableMapping.ColumnMappings.Add("ServiceID", "ServiceID");
-            tableMapping.ColumnMappings.Add("ServiceProviderId", "ServiceProviderId1");
-            tableMapping.ColumnMappings.Add("ServiceFY", "ServiceFY1");
-            tableMapping.ColumnMappings.Add("ServiceFrequency", "ServiceFrequency1");
+            tableMapping.ColumnMappings.Add("ServiceProviderName", "ServiceProviderName");
+            tableMapping.ColumnMappings.Add("ServiceProviderID", "ServiceProviderID");
+            tableMapping.ColumnMappings.Add("ServiceFY", "ServiceFY");
+            tableMapping.ColumnMappings.Add("ServiceFrequency", "ServiceFrequency");
             tableMapping.ColumnMappings.Add("HistoryItems", "HistoryItems");
             tableMapping.ColumnMappings.Add("ContactName", "ContactName");
             tableMapping.ColumnMappings.Add("ContactAddress", "ContactAddress");
@@ -15811,7 +15071,9 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString1"].ConnectionString;
+            this._connection.ConnectionString = "Data Source=10.46.0.35;Initial Catalog=IndividualizedEducationProgram;User ID=IEP" +
+                "Admin;Password=X1X#1HXmx$kBaZTSFlxI;MultipleActiveResultSets=True;Application Na" +
+                "me=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -15871,191 +15133,6 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
                 this.Adapter.SelectCommand.Parameters[2].Value = ((string)(BuildingId));
             }
             IndividualizedEducationProgramDataSet.up_ReportStudentInfoDataTable dataTable = new IndividualizedEducationProgramDataSet.up_ReportStudentInfoDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class up_IEPHistoryTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public up_IEPHistoryTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "up_IEPHistory";
-            tableMapping.ColumnMappings.Add("IEPid", "IEPid");
-            tableMapping.ColumnMappings.Add("OriginalIEPid", "OriginalIEPid");
-            tableMapping.ColumnMappings.Add("IEPType", "IEPType");
-            tableMapping.ColumnMappings.Add("StatusCode", "StatusCode");
-            tableMapping.ColumnMappings.Add("IepDate", "IepDate");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString1"].ConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "dbo.up_IEPHistory";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.StoredProcedure;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@StudentId", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.Input, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(IndividualizedEducationProgramDataSet.up_IEPHistoryDataTable dataTable, global::System.Nullable<int> StudentId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((StudentId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(StudentId.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((this.ClearBeforeFill == true)) {
-                dataTable.Clear();
-            }
-            int returnValue = this.Adapter.Fill(dataTable);
-            return returnValue;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual IndividualizedEducationProgramDataSet.up_IEPHistoryDataTable GetData(global::System.Nullable<int> StudentId) {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((StudentId.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[1].Value = ((int)(StudentId.Value));
-            }
-            else {
-                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            IndividualizedEducationProgramDataSet.up_IEPHistoryDataTable dataTable = new IndividualizedEducationProgramDataSet.up_IEPHistoryDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
