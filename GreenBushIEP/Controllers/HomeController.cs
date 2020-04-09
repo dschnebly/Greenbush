@@ -2682,7 +2682,7 @@ namespace GreenbushIep.Controllers
 
             var studentDetails = new StudentDetailsPrintViewModel();
 
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
+            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid && i.PrimaryContact == 1).ToList();
 
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
@@ -2818,9 +2818,9 @@ namespace GreenbushIep.Controllers
                     studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
 
                     var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
-                    var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
+                    //var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
                     var historicalIEPList = new List<IEPHistoryViewModel>();
-                    int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
+                    //int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
 
                     if (theIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT)
                     {
