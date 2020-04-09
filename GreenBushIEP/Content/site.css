@@ -428,6 +428,10 @@ hr {
     .glyphicon-arrow-left {
         display: none;
     }
+
+    .deleteNote { 
+        display: none;
+    }
 }
 
 /*********************************/
