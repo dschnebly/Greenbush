@@ -12,12 +12,16 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class vw_ModuleOtherFlags
+    public partial class tblStudentNote
     {
-        public int IEPid { get; set; }
-        public Nullable<bool> NeedMetByOther { get; set; }
-        public string NeedMetByOtherDescription { get; set; }
-        public string Module { get; set; }
-        public int ModuleID { get; set; }
+        public int StudentNoteID { get; set; }
+        public string Note { get; set; }
+        public int StudentID { get; set; }
+        public bool isArchive { get; set; }
+        public Nullable<int> originalNoteID { get; set; }
+        public int CreatedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
     }
 }

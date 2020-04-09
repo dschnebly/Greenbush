@@ -29,7 +29,7 @@
 }
 
 <div class="transition-page" style="display:none;padding-bottom:50px">
-    <div class="container" style="min-height: 1250px; width: 725px;">
+    <div class="container" style="padding-right:5px;padding-left:5px;  min-height: 1250px; width: 850px;">
         <div class="row print-button" style="margin-top: 25px; margin-left: -200px; position: fixed;">
             <div class="col-md-11">
 
@@ -51,7 +51,7 @@
         </div>
         <div class="row">
             <div class="pull-right">
-                @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right exit", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
+                @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right exit", style = "margin-top:20px;margin-bottom:10px;margin-right: -5px;font-size:20px;font-weight:bold;" })
             </div>
         </div>
 		@if (ViewBag.IsStudentInfo != null)

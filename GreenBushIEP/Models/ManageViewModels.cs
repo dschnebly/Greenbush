@@ -128,6 +128,26 @@ namespace GreenBushIEP.Models
         public List<tblCalendar> calendarDays { get; set; }
     }
 
+    public class MISNotesUI
+    {
+        public int CommentId { get; set; }
+        public string Note { get; set; }
+        public int StudentID { get; set; }
+        public int CreatedBy { get; set; }
+        public bool isArchive { get; set; }
+        public DateTime Create_Date { get; set; }
+        public int ModifiedBy { get; set; }
+        public DateTime Update_Date { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+    }
+
+    public class MISNotesViewModel
+    {
+        public List<MISNotesUI> notes { get; set; }
+        public tblUser student { get; set; }
+    }
+
     public class MISProviderViewModel
     {
         public List<tblDistrict> districts { get; set; }
@@ -510,7 +530,7 @@ namespace GreenBushIEP.Models
             Locations = new List<System.Web.Mvc.SelectListItem>();
             modulesNeedingAccommodations = string.Empty;
             ModuleList = new List<tblModule>();
-
+			AccommModules = new List<tblAccommodationModule>();
         }
 
         public int StudentId { get; set; }
@@ -535,10 +555,33 @@ namespace GreenBushIEP.Models
         public string modulesNeedingAccommodations { get; set; }
         public string Module { get; set; }
         public List<tblModule> ModuleList { get; set; }
+		public List<tblAccommodationModule> AccommModules { get; set; }
+		public int[] SelectedModules { get; set; }
 
-    }
 
-    public class BehaviorViewModel
+	}
+
+	public class AccomodationPrintViewModel
+	{
+		public AccomodationPrintViewModel()
+		{
+			
+		}
+
+		public int StudentId { get; set; }		
+		public string AccomType { get; set; }
+		public int AccommodationID { get; set; }
+		public int IEPid { get; set; }		
+		public string Description { get; set; }
+		public string Location { get; set; }
+		public string Frequency { get; set; }
+		public string Duration { get; set; }
+		public DateTime? AnticipatedStartDate { get; set; }
+		public DateTime? AnticipatedEndDate { get; set; }
+		public string Module { get; set; }
+	}
+
+	public class BehaviorViewModel
     {
         public BehaviorViewModel()
         {
@@ -653,45 +696,49 @@ namespace GreenBushIEP.Models
     }
 
 
-    public class StudentDetailsPrintViewModel
-    {
-        public StudentDetailsPrintViewModel()
-        {
-            student = new tblStudentInfo();
-            teacher = new tblUser();
-            contacts = new List<tblStudentRelationship>();
-            building = new tblBuilding();
-            teacherBuilding = new tblBuilding();
-            neighborhoodBuilding = new tblBuilding();
-            reevalDates = new List<tblArchiveEvaluationDate>();
+	public class StudentDetailsPrintViewModel
+	{
+		public StudentDetailsPrintViewModel()
+		{
+			student = new tblStudentInfo();
+			teacher = new tblUser();
+			contacts = new List<tblStudentRelationship>();
+			building = new tblBuilding();
+			teacherBuilding = new tblBuilding();
+			neighborhoodBuilding = new tblBuilding();
+			reevalDates = new List<tblArchiveEvaluationDate>();
 			printProgressGoals = new List<int>();
-            printStudentInfo = false;
-            printIEPDetails = false;
-            printHealth = false;
-            printMotor = false;
-            printComm = false;
-            printSocial = false;
-            printGeneral = false;
-            printAcademic = false;
-            printAcc = false;
-            printBehavior = false;
-            printTrans = false;
-            printOther = false;
-            printGoals = false;
-            printServices = false;
-            printNotice = false;
-            printProgressReport = false;
+			printStudentInfo = false;
+			printIEPDetails = false;
+			printHealth = false;
+			printMotor = false;
+			printComm = false;
+			printSocial = false;
+			printGeneral = false;
+			printAcademic = false;
+			printAcc = false;
+			printBehavior = false;
+			printTrans = false;
+			printOther = false;
+			printGoals = false;
+			printServices = false;
+			printNotice = false;
+			printProgressReport = false;
 			isArchive = false;
+			history = new List<IEPHistoryViewModel>();
+			accommodationList = new List<AccomodationPrintViewModel>();
 
 		}
 
-        public tblUser teacher { get; set; }
-        public tblStudentInfo student { get; set; }
-        public List<tblStudentRelationship> contacts { get; set; }
-        public List<tblArchiveEvaluationDate> reevalDates { get; set; }
+		public tblUser teacher { get; set; }
+		public tblStudentInfo student { get; set; }
+		public List<tblStudentRelationship> contacts { get; set; }
+		public List<tblArchiveEvaluationDate> reevalDates { get; set; }
 		public List<int> printProgressGoals { get; set; }
+		public List<IEPHistoryViewModel> history { get; set; }
+		public List<AccomodationPrintViewModel> accommodationList { get; set; }
 
-        public string ethnicity { get; set; }
+		public string ethnicity { get; set; }
         public string gender { get; set; }
         public string parentLang { get; set; }
         public string studentLang { get; set; }

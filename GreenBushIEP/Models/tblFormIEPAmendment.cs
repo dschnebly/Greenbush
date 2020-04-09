@@ -14,6 +14,7 @@ namespace GreenBushIEP.Models
     
     public partial class tblFormIEPAmendment
     {
+        public int FormIEPAmendmentId { get; set; }
         public int StudentId { get; set; }
         public string Description { get; set; }
         public Nullable<bool> AgreeToAmmend { get; set; }
@@ -24,6 +25,5 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
-        public int FormIEPAmendmentId { get; set; }
     }
 }

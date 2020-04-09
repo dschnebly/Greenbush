@@ -27,6 +27,7 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
         public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
         public virtual DbSet<tblArchiveEvaluationDateSigned> tblArchiveEvaluationDateSigneds { get; set; }
@@ -53,8 +54,26 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
+        public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
+        public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
+        public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
+        public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
+        public virtual DbSet<tblFormIEPTeamConsideration> tblFormIEPTeamConsiderations { get; set; }
+        public virtual DbSet<tblFormManifestationDeterminiation> tblFormManifestationDeterminiations { get; set; }
+        public virtual DbSet<tblFormManifestDeterm_TeamMembers> tblFormManifestDeterm_TeamMembers { get; set; }
+        public virtual DbSet<tblFormNoticeOfMeeting> tblFormNoticeOfMeetings { get; set; }
+        public virtual DbSet<tblFormParentConsent> tblFormParentConsents { get; set; }
+        public virtual DbSet<tblFormPhysicianScript> tblFormPhysicianScripts { get; set; }
+        public virtual DbSet<tblFormPriorWritten_Eval> tblFormPriorWritten_Eval { get; set; }
+        public virtual DbSet<tblFormPriorWritten_Ident> tblFormPriorWritten_Ident { get; set; }
+        public virtual DbSet<tblFormPriorWritten_ReokeAll> tblFormPriorWritten_ReokeAll { get; set; }
+        public virtual DbSet<tblFormPriorWritten_ReokePart> tblFormPriorWritten_ReokePart { get; set; }
+        public virtual DbSet<tblFormPublicNotice> tblFormPublicNotices { get; set; }
+        public virtual DbSet<tblFormRevokeConsentAll> tblFormRevokeConsentAlls { get; set; }
+        public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
         public virtual DbSet<tblFormSummaryPerformance> tblFormSummaryPerformances { get; set; }
         public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
+        public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
         public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
         public virtual DbSet<tblGoalEvaluationProcedure> tblGoalEvaluationProcedures { get; set; }
@@ -88,6 +107,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblServiceType> tblServiceTypes { get; set; }
         public virtual DbSet<tblStatusCode> tblStatusCodes { get; set; }
         public virtual DbSet<tblStudentInfo> tblStudentInfoes { get; set; }
+        public virtual DbSet<tblStudentNote> tblStudentNotes { get; set; }
+        public virtual DbSet<tblStudentNotes_MIS> tblStudentNotes_MIS { get; set; }
         public virtual DbSet<tblStudentRelationship> tblStudentRelationships { get; set; }
         public virtual DbSet<tblTransitionAssessment> tblTransitionAssessments { get; set; }
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
@@ -106,25 +127,110 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
-        public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
-        public virtual DbSet<tblFormIEPTeamConsideration> tblFormIEPTeamConsiderations { get; set; }
-        public virtual DbSet<tblFormManifestationDeterminiation> tblFormManifestationDeterminiations { get; set; }
-        public virtual DbSet<tblFormManifestDeterm_TeamMembers> tblFormManifestDeterm_TeamMembers { get; set; }
-        public virtual DbSet<tblFormNoticeOfMeeting> tblFormNoticeOfMeetings { get; set; }
-        public virtual DbSet<tblFormParentConsent> tblFormParentConsents { get; set; }
-        public virtual DbSet<tblFormPhysicianScript> tblFormPhysicianScripts { get; set; }
-        public virtual DbSet<tblFormPriorWritten_Eval> tblFormPriorWritten_Eval { get; set; }
-        public virtual DbSet<tblFormPriorWritten_Ident> tblFormPriorWritten_Ident { get; set; }
-        public virtual DbSet<tblFormPriorWritten_ReokeAll> tblFormPriorWritten_ReokeAll { get; set; }
-        public virtual DbSet<tblFormPriorWritten_ReokePart> tblFormPriorWritten_ReokePart { get; set; }
-        public virtual DbSet<tblFormPublicNotice> tblFormPublicNotices { get; set; }
-        public virtual DbSet<tblFormRevokeConsentAll> tblFormRevokeConsentAlls { get; set; }
-        public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
-        public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
-        public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
-        public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
-        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
-        public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
+       
+    
+        public virtual int sp_alterdiagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_alterdiagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_creatediagram(string diagramname, Nullable<int> owner_id, Nullable<int> version, byte[] definition)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var versionParameter = version.HasValue ?
+                new ObjectParameter("version", version) :
+                new ObjectParameter("version", typeof(int));
+    
+            var definitionParameter = definition != null ?
+                new ObjectParameter("definition", definition) :
+                new ObjectParameter("definition", typeof(byte[]));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_creatediagram", diagramnameParameter, owner_idParameter, versionParameter, definitionParameter);
+        }
+    
+        public virtual int sp_dropdiagram(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_dropdiagram", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_helpdiagramdefinition(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagramdefinition", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_helpdiagrams(string diagramname, Nullable<int> owner_id)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_helpdiagrams", diagramnameParameter, owner_idParameter);
+        }
+    
+        public virtual int sp_renamediagram(string diagramname, Nullable<int> owner_id, string new_diagramname)
+        {
+            var diagramnameParameter = diagramname != null ?
+                new ObjectParameter("diagramname", diagramname) :
+                new ObjectParameter("diagramname", typeof(string));
+    
+            var owner_idParameter = owner_id.HasValue ?
+                new ObjectParameter("owner_id", owner_id) :
+                new ObjectParameter("owner_id", typeof(int));
+    
+            var new_diagramnameParameter = new_diagramname != null ?
+                new ObjectParameter("new_diagramname", new_diagramname) :
+                new ObjectParameter("new_diagramname", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_renamediagram", diagramnameParameter, owner_idParameter, new_diagramnameParameter);
+        }
+    
+        public virtual int sp_upgraddiagrams()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_upgraddiagrams");
+        }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -367,19 +473,6 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     
-        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var isAssginedParameter = isAssgined.HasValue ?
-                new ObjectParameter("isAssgined", isAssgined) :
-                new ObjectParameter("isAssgined", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
-        }
-    
         public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined)
         {
             var userIDParameter = userID.HasValue ?
@@ -399,6 +492,19 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("isAssgined", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter);
+        }
+    
+        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
         }
     }
 }

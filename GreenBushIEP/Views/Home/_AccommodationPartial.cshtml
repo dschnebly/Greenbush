@@ -35,6 +35,11 @@
 		modules = (List<GreenBushIEP.Models.tblModule>)this.ViewData["ModuleList"];
 	}
 
+	List<GreenBushIEP.Models.tblAccommodationModule> accommModules = new List<GreenBushIEP.Models.tblAccommodationModule>();
+	if (this.ViewData.ContainsKey("AccommModules"))
+	{
+		accommModules = (List<GreenBushIEP.Models.tblAccommodationModule>)this.ViewData["AccommModules"];
+	}
 }
 
 <div class="row oneStudentGoal " id="defaultgoal_@Model.AccommodationID">
@@ -61,25 +66,21 @@
                     <div id=@(string.Format("collapse{0}", Model.AccommodationID)) class="panel-collapse collapse" >
                         <div class="panel-body">
 								<div class="row form-group">
-                                        <div class="col-md-3">
-                                            <label style="font-size: 18px;" for="ModuleType">Module</label>
-											<div class="input-group">
-                                            <div class="input-group-btn bs-dropdown-to-select-group">
-                                                <button type="button" class="btn btn-default dropdown-toggle as-is bs-dropdown-to-select" data-toggle="dropdown" style="font-size:16px;height: 49px;width:100%;text-align:left">
-                                                    <span data-bind="bs-drp-sel-label">Select Module...</span>
-                                                    <span class="caret"></span>
-                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                </button>
-                                                <input type="hidden" name="Module" data-bind="bs-drp-sel-value" value="@(Model.Module)">
-													<ul class="dropdown-menu newlist" role="menu" style="font-size:16px;width:100%">
-													@foreach (var module in modules)
+									<div class="col-md-3">
+											  <label style="font-size: 18px;" for="ModuleType">Module</label>
+											  <select name="SelectedModules" data-placeholder="Choose Module(s)" class="chosen-selected standard-font-size selectModules existingModules" multiple="multiple" style="min-height: 49px; " data-validate="true">
+												@foreach (var module in modules)
+												{
+													var selected = "";
+													if (accommModules.Any(o => o.AccommodationID == Model.AccommodationID && o.ModuleID == module.ModuleID))
 													{
-														<li data-value="@(module.ModuleID)"><a href="#">@(module.ModuleName)</a></li>
-													}                                                    
-                                                </ul>                                              
-                                            </div>                                            
-                                        </div>										
-									</div>	
+														selected = "selected";
+													}
+													<option @(selected) value="@(module.ModuleID)">@(module.ModuleName)</option>
+                                                }                                                        
+                                                </select>
+											</div>
+                                      
 							</div>
                             <div class="row form-group voffset3">
                                 <div class="col-md-12">

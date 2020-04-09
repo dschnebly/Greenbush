@@ -14,6 +14,7 @@ namespace GreenBushIEP.Models
     
     public partial class tblFormIEPMeetingConsentToInvite
     {
+        public int FormIEPMeetingConsentToInviteId { get; set; }
         public int StudentId { get; set; }
         public string ParticipatingAgency { get; set; }
         public Nullable<bool> ProvideTransitionService { get; set; }
@@ -23,6 +24,5 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
-        public int FormIEPMeetingConsentToInviteId { get; set; }
     }
 }

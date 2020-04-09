@@ -12,6 +12,7 @@
     @Styles.Render("~/Content/editUser.css")
 }
 
+
 @using (Html.BeginForm("Edit", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
 {
     @Html.AntiForgeryToken()

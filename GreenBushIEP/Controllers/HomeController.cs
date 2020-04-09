@@ -423,35 +423,35 @@ namespace GreenbushIep.Controllers
                     newProvider.LastName = providerLastName.ToString();
                     newProvider.ProviderCode = providerCode.ToString();
                     newProvider.UserID = owner.UserID;
-					newProvider.Create_Date = DateTime.Now;
-					newProvider.Update_Date = DateTime.Now;
+                    newProvider.Create_Date = DateTime.Now;
+                    newProvider.Update_Date = DateTime.Now;
 
                     //can't have duplicate provider code
                     tblProvider dup = db.tblProviders.Where(p => p.ProviderCode == providerCode).SingleOrDefault();
 
                     if (dup == null)
                     {
-						try
-						{
-							db.tblProviders.Add(newProvider);
-							db.SaveChanges();
+                        try
+                        {
+                            db.tblProviders.Add(newProvider);
+                            db.SaveChanges();
 
-							int newProvderId = newProvider.ProviderID;
+                            int newProvderId = newProvider.ProviderID;
 
-							//add to tblProviderDistricts
-							if (newProvderId > 0)
-							{
-								foreach (var district in providerDistrict)
-								{
-									db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString(), CreatedBy = owner.UserID, Create_Date = DateTime.Now });
-									db.SaveChanges();
-								}
-							}
-						}
-						catch
-						{
-							return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help." }, JsonRequestBehavior.AllowGet);
-						}
+                            //add to tblProviderDistricts
+                            if (newProvderId > 0)
+                            {
+                                foreach (var district in providerDistrict)
+                                {
+                                    db.tblProviderDistricts.Add(new tblProviderDistrict() { ProviderID = newProvderId, USD = district.ToString(), CreatedBy = owner.UserID, Create_Date = DateTime.Now });
+                                    db.SaveChanges();
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            return Json(new { Result = "error", id = pk, errors = "There was a problem creating the provider. Please ask a sysadmin for help." }, JsonRequestBehavior.AllowGet);
+                        }
 
                     }
                     else
@@ -1071,18 +1071,18 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
-				model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
-				
-				//need to check if transition plan is required and completed
-				if ((model.studentAge > 13 || (model.isDoc && model.studentAge <= 21))  && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
-				{
-					if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
-					{
-						//transition plan must be completed
-						theIEP.isAllCompleted = false;
-					}
-				}
-			}
+                model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
+
+                //need to check if transition plan is required and completed
+                if ((model.studentAge > 13 || (model.isDoc && model.studentAge <= 21)) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
+                {
+                    if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
+                    {
+                        //transition plan must be completed
+                        theIEP.isAllCompleted = false;
+                    }
+                }
+            }
 
             switch (model.studentIEP.iepStatusType)
             {
@@ -1125,7 +1125,7 @@ namespace GreenbushIep.Controllers
                             iep.begin_date = meetingDate;
                         }
 
-						db.SaveChanges();
+                        db.SaveChanges();
                     }
 
                     return Json(new { Result = "success", Message = "IEP dates were updated" }, JsonRequestBehavior.AllowGet);
@@ -1144,35 +1144,35 @@ namespace GreenbushIep.Controllers
             tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.IEPid == studentAmmendIEP.AmendingIEPid).FirstOrDefault();
             if (studentAmmendIEP != null && studentActiveIEP != null)
             {
-				//archive previously active iep and progress
-				var theIEP = GetIEPPrint(stId, studentActiveIEP.IEPid);
+                //archive previously active iep and progress
+                var theIEP = GetIEPPrint(stId, studentActiveIEP.IEPid);
 
-				bool success = ArchiveIEPPrint(stId, theIEP, true);
+                bool success = ArchiveIEPPrint(stId, theIEP, true);
 
-				if (!success)
-				{
-					return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
-				}
+                if (!success)
+                {
+                    return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
+                }
 
-				// find the current active iep and make it inactive and change its status to DELETED
-				studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
+                // find the current active iep and make it inactive and change its status to DELETED
+                studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
                 studentAmmendIEP.IepStatus = IEPStatus.ACTIVE;
 
-				//iep status code history just in case the teacher changed it
-				var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+                //iep status code history just in case the teacher changed it
+                var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
 
-				if (studentRec != null)
-				{
-					studentAmmendIEP.StatusCode = studentRec.StatusCode;
-				}
-								
-				try
+                if (studentRec != null)
+                {
+                    studentAmmendIEP.StatusCode = studentRec.StatusCode;
+                }
+
+                try
                 {
                     db.SaveChanges();
 
-					
-					return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
+
+                    return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1203,16 +1203,16 @@ namespace GreenbushIep.Controllers
 
                 try
                 {
-					//iep status code history
-					var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
-					if (studentDetails != null)
-					{
-						studentAnnualIEP.StatusCode = studentDetails.StatusCode;
-					}
+                    //iep status code history
+                    var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+                    if (studentDetails != null)
+                    {
+                        studentAnnualIEP.StatusCode = studentDetails.StatusCode;
+                    }
 
-					db.SaveChanges();									
+                    db.SaveChanges();
 
-					return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1222,19 +1222,19 @@ namespace GreenbushIep.Controllers
             else
             {
 
-				//archive previously active iep and progress
-				var theIEP = GetIEPPrint(stId, studentActiveIEP.IEPid);
+                //archive previously active iep and progress
+                var theIEP = GetIEPPrint(stId, studentActiveIEP.IEPid);
 
-				bool success = ArchiveIEPPrint(stId, theIEP, true);
+                bool success = ArchiveIEPPrint(stId, theIEP, true);
 
-				if (!success)
-				{
-					return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
-				}
+                if (!success)
+                {
+                    return Json(new { Result = "error", Message = "There was a problem creating the IEP Archive" }, JsonRequestBehavior.AllowGet);
+                }
 
 
-				// find the current active iep and make it inactive and change its status to DELETED
-				studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
+                // find the current active iep and make it inactive and change its status to DELETED
+                studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
 
                 studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
@@ -1264,25 +1264,25 @@ namespace GreenbushIep.Controllers
             {
                 if (iepDraft.IepStatus != IEPStatus.ACTIVE)
                 {
-					//iep status code history just in case the teacher changed it
-					var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
-					
-					if (studentRec != null)
-					{
-						iepDraft.StatusCode = studentRec.StatusCode;												
-					}
+                    //iep status code history just in case the teacher changed it
+                    var studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
 
-					// start switching the flag.
-					iepDraft.IepStatus = IEPStatus.ACTIVE;
+                    if (studentRec != null)
+                    {
+                        iepDraft.StatusCode = studentRec.StatusCode;
+                    }
+
+                    // start switching the flag.
+                    iepDraft.IepStatus = IEPStatus.ACTIVE;
 
                     //iepDraft.begin_date = DateTime.Now;
                     iepDraft.end_Date = (!iepDraft.Amendment) ? iepDraft.begin_date.Value.AddYears(1) : iepDraft.end_Date;
 
                     try
-                    {						
-						db.SaveChanges();
+                    {
+                        db.SaveChanges();
 
-						return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
                     }
                     catch (Exception e)
                     {
@@ -1396,14 +1396,14 @@ namespace GreenbushIep.Controllers
                 model.canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true;
 
                 List<vw_ModuleGoalFlags> GoalFlag = db.vw_ModuleGoalFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
-                model.modulesNeedingGoals = GoalFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByGoal == 1 ? "Health " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByGoal == 1 ? "Motor " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByGoal == 1 ? "Communication " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByGoal == 1 ? "Social-Emotional " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByGoal == 1 ? "Math " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByGoal == 1 ? "Reading " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal == 1 ? "Written&nbsp;Language " : string.Empty;
-                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal == 1 ? "Academic/Functional" : string.Empty;
+                model.modulesNeedingGoals = GoalFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByGoal.Value ? "Health " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByGoal.Value ? "Motor " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByGoal.Value ? "Communication " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByGoal.Value ? "Social-Emotional " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByGoal.Value ? "Math " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByGoal.Value ? "Reading " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByGoal.Value ? "Written&nbsp;Language " : string.Empty;
+                model.modulesNeedingGoals += GoalFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByGoal.Value ? "Academic/Functional" : string.Empty;
 
                 var modulesList = db.tblModules.OrderBy(o => o.ModuleName).Select(o => o.ModuleID.ToString()).ToList();
                 List<tblGoal> goals = db.tblGoals.Where(g => g.IEPid == iep.IEPid).ToList().OrderBy(d => modulesList.IndexOf(d.Module)).ToList();
@@ -1437,6 +1437,88 @@ namespace GreenbushIep.Controllers
             }
 
             return PartialView("_ModuleStudentGoals", new StudentGoalsViewModel());
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult MISNotes(int stid)
+        {
+            MISNotesViewModel viewModel = new MISNotesViewModel();
+
+            var misnotes = (from note in db.tblStudentNotes_MIS
+                            join user in db.tblUsers on note.CreatedBy equals user.UserID
+                            where note.isArchive == false && note.StudentID == stid
+                            select new MISNotesUI
+                            {
+                                CommentId = note.StudentNoteMISID,
+                                Note = note.Note,
+                                StudentID = note.StudentID,
+                                CreatedBy = note.CreatedBy,
+                                isArchive = note.isArchive,
+                                Create_Date = note.Create_Date,
+                                ModifiedBy = note.ModifiedBy.Value,
+                                Update_Date = note.Update_Date,
+                                FirstName = user.FirstName,
+                                LastName = user.LastName
+                            }).ToList();
+
+            viewModel.notes = misnotes;
+            viewModel.student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
+
+            return View(viewModel);
+        }
+
+
+        public ActionResult SaveMISNote(FormCollection collection)
+        {
+            int studentId = Convert.ToInt32(collection["stid"]);
+            string comment = collection["Message"].ToString();
+
+            try
+            {
+                tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
+
+                if (student != null)
+                {
+                    tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+                    tblStudentNotes_MIS note = new tblStudentNotes_MIS();
+                    note.CreatedBy = user.UserID;
+                    note.ModifiedBy = user.UserID;
+                    note.isArchive = false;
+                    note.Note = comment;
+                    note.StudentID = studentId;
+                    note.Create_Date = DateTime.Now;
+                    note.Update_Date = DateTime.Now;
+
+                    db.tblStudentNotes_MIS.Add(note);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+                throw new EmailException("Encountered an error while adding the MIS note.", e);
+            }
+
+            return RedirectToAction("MISNotes", new { stid = studentId });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult DeleteNote(int studentId, int commentId)
+        {
+            tblStudentNotes_MIS note = db.tblStudentNotes_MIS.Where(n => n.StudentID == studentId && n.StudentNoteMISID == commentId).FirstOrDefault();
+            if(note != null)
+            {
+                note.isArchive = true;
+                db.SaveChanges();
+
+                return RedirectToAction("MISNotes", new { stid = studentId });
+            }
+            else
+            {
+                return Json(new { Result = "error", Message = "This MIS note was not found in our database." }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         [HttpGet]
@@ -1502,10 +1584,10 @@ namespace GreenbushIep.Controllers
                         item.ServiceCode = service.ServiceCode;
                         item.Frequency = service.Frequency;
                         item.selectedAttendingBuilding = service.BuildingID;
-						item.ProvidedFor = service.ProvidedFor;
+                        item.ProvidedFor = service.ProvidedFor;
 
 
-						if (service.tblGoals.Any())
+                        if (service.tblGoals.Any())
                         {
                             foreach (var goal in service.tblGoals)
                             {
@@ -1806,7 +1888,7 @@ namespace GreenbushIep.Controllers
 
                     //check dates
                     IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), service.BuildingID, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.EndDate.Value.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
                 else // exsisting service
                 {
@@ -1852,7 +1934,7 @@ namespace GreenbushIep.Controllers
 
                     //check dates
                     IsValidDate(service.SchoolYear, service.StartDate.ToShortDateString(), service.BuildingID, out isValidStartDate, out isValidServiceStartDate, out validDates);
-                    IsValidDate(service.SchoolYear, service.EndDate.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
+                    IsValidDate(service.SchoolYear, service.EndDate.Value.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
 
 
@@ -1938,11 +2020,11 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult StudentTransition(int studentId, int IEPid)
         {
-			IEP theIEP = new IEP(studentId, IEPid);
-			tblIEP iep = theIEP.current; //db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
-			
+            IEP theIEP = new IEP(studentId, IEPid);
+            tblIEP iep = theIEP.current; //db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
 
-			bool isReadOnly = false;
+
+            bool isReadOnly = false;
             if (iep != null)
             {
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -1951,8 +2033,8 @@ namespace GreenbushIep.Controllers
 
                 string studentFirstName = string.Format("{0}", student.FirstName);
                 string studentLastName = string.Format("{0}", student.LastName);
-				
-				isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
 
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
@@ -1966,10 +2048,10 @@ namespace GreenbushIep.Controllers
                 model.services = db.tblTransitionServices.Where(s => s.IEPid == iep.IEPid).ToList();
                 model.goals = db.tblTransitionGoals.Where(g => g.IEPid == iep.IEPid).ToList();
                 model.transition = db.tblTransitions.Where(t => t.IEPid == iep.IEPid).FirstOrDefault() ?? new tblTransition();
-								
-				int studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDOC);
 
-				model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
+                int studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDOC);
+
+                model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
                 model.gender = info.Gender;
                 model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
 
@@ -2034,22 +2116,26 @@ namespace GreenbushIep.Controllers
                 model.IEPid = iep.IEPid;
 
                 List<vw_ModuleAccommodationFlags> accommodationFlag = db.vw_ModuleAccommodationFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
-                model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation ? "Health " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation ? "Motor " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation ? "Communication " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation ? "Social-Emotional " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation ? "Math " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation ? "Reading " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation ? "Written-Language " : string.Empty;
-                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation ? "Academic/Functional" : string.Empty;
+                model.modulesNeedingAccommodations = accommodationFlag.Where(vm => vm.Module == "Health").FirstOrDefault().NeedMetByAccommodation.Value ? "Health;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Motor").FirstOrDefault().NeedMetByAccommodation.Value ? "Motor;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Communication").FirstOrDefault().NeedMetByAccommodation.Value ? "Communication;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Social").FirstOrDefault().NeedMetByAccommodation.Value ? "Social-Emotional;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Math").FirstOrDefault().NeedMetByAccommodation.Value ? "Math;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Reading").FirstOrDefault().NeedMetByAccommodation.Value ? "Reading;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Written").FirstOrDefault().NeedMetByAccommodation.Value ? "Written Language;" : string.Empty;
+                model.modulesNeedingAccommodations += accommodationFlag.Where(vm => vm.Module == "Academic").FirstOrDefault().NeedMetByAccommodation.Value ? "Academic/Functional;" : string.Empty;
 
                 var accommodations = db.tblAccommodations.Where(i => i.IEPid == iep.IEPid);
-                if (accommodations.Any())
-                {
-                    model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
-                }
+				if (accommodations.Any())
+				{
+					model.AccomList = accommodations.OrderBy(o => o.AccomType).ToList();
 
-                var locations = db.tblLocations.Where(o => o.Active == true);
+					var accommodationIds = accommodations.Select(o => o.AccommodationID);
+					if (accommodationIds != null)
+						model.AccommModules = db.tblAccommodationModules.Where(i => accommodationIds.Contains(i.AccommodationID)).ToList();				
+				}				
+
+				var locations = db.tblLocations.Where(o => o.Active == true);
                 if (locations.Any())
                 {
                     foreach (var loc in locations)
@@ -2298,81 +2384,82 @@ namespace GreenbushIep.Controllers
             {
                 viewModel.summaryPerformance = db.tblFormSummaryPerformances.Where(o => o.StudentId == id).FirstOrDefault();
             }
-			else if (fileName == "ConferenceSummary")
-			{
-				viewModel.conferenceSummary = db.tblFormConferenceSummaries.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "IEPAmendment")
-			{
-				viewModel.formAmend = db.tblFormIEPAmendments.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "IEPMtgConsent")
-			{
-				viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvites.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "IEPMtgExcusal")
-			{
-				viewModel.formMtgExcusal = db.tblFormIEPMeetingExcusals.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "IEPTeamConsider")
-			{
-				viewModel.formIEPTeamConsider = db.tblFormIEPTeamConsiderations.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "ManiDetermReview")
-			{
-				var mani = db.tblFormManifestationDeterminiations.Where(o => o.StudentId == id).FirstOrDefault();
+            else if (fileName == "ConferenceSummary")
+            {
+                viewModel.conferenceSummary = db.tblFormConferenceSummaries.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "IEPAmendment")
+            {
+                viewModel.formAmend = db.tblFormIEPAmendments.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "IEPMtgConsent")
+            {
+                viewModel.formMtgConsent = db.tblFormIEPMeetingConsentToInvites.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "IEPMtgExcusal")
+            {
+                viewModel.formMtgExcusal = db.tblFormIEPMeetingExcusals.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "IEPTeamConsider")
+            {
+                viewModel.formIEPTeamConsider = db.tblFormIEPTeamConsiderations.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "ManiDetermReview")
+            {
+                var mani = db.tblFormManifestationDeterminiations.Where(o => o.StudentId == id).FirstOrDefault();
 
-				if (mani != null) {
-				  var maniTeam = db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == mani.FormManifestationDeterminiationId);
-					foreach (var mt in maniTeam)
-						mani.tblFormManifestDeterm_TeamMembers.Add(mt);
-				}
+                if (mani != null)
+                {
+                    var maniTeam = db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == mani.FormManifestationDeterminiationId);
+                    foreach (var mt in maniTeam)
+                        mani.tblFormManifestDeterm_TeamMembers.Add(mt);
+                }
 
-				viewModel.formMani = mani;
-			}
-			else if (fileName == "NoticeOfMeeting")
-			{
-				viewModel.formNotice = db.tblFormNoticeOfMeetings.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "ParentConsentMedicaid")
-			{
-				viewModel.formConsentMedicaid = db.tblFormParentConsents.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "PhysicianScript")
-			{
-				viewModel.formPhysician = db.tblFormPhysicianScripts.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "PriorWrittenNoticeId")
-			{
-				viewModel.formPWN = db.tblFormPriorWritten_Ident.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "RequestConsent")
-			{
-				viewModel.formPWNEval = db.tblFormPriorWritten_Eval.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "RevAllSvscPWN")
-			{
-				viewModel.formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Where(o => o.StudentId == id).FirstOrDefault();
-			}		
-			else if (fileName == "RevPartSvscPWN")
-			{
-				viewModel.formPWNRevPart = db.tblFormPriorWritten_ReokePart.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "RevAllSvscConsent")
-			{
-				viewModel.formRevAll = db.tblFormRevokeConsentAlls.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "RevPartSvscConsent")
-			{
-				viewModel.formRevPart = db.tblFormRevokeConsentParts.Where(o => o.StudentId == id).FirstOrDefault();
-			}
-			else if (fileName == "TransportationRequest")
-			{
-				viewModel.formTransRequest = db.tblFormTransportationRequests.Where(o => o.StudentId == id).FirstOrDefault();
-			}
+                viewModel.formMani = mani;
+            }
+            else if (fileName == "NoticeOfMeeting")
+            {
+                viewModel.formNotice = db.tblFormNoticeOfMeetings.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "ParentConsentMedicaid")
+            {
+                viewModel.formConsentMedicaid = db.tblFormParentConsents.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "PhysicianScript")
+            {
+                viewModel.formPhysician = db.tblFormPhysicianScripts.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "PriorWrittenNoticeId")
+            {
+                viewModel.formPWN = db.tblFormPriorWritten_Ident.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "RequestConsent")
+            {
+                viewModel.formPWNEval = db.tblFormPriorWritten_Eval.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "RevAllSvscPWN")
+            {
+                viewModel.formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "RevPartSvscPWN")
+            {
+                viewModel.formPWNRevPart = db.tblFormPriorWritten_ReokePart.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "RevAllSvscConsent")
+            {
+                viewModel.formRevAll = db.tblFormRevokeConsentAlls.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "RevPartSvscConsent")
+            {
+                viewModel.formRevPart = db.tblFormRevokeConsentParts.Where(o => o.StudentId == id).FirstOrDefault();
+            }
+            else if (fileName == "TransportationRequest")
+            {
+                viewModel.formTransRequest = db.tblFormTransportationRequests.Where(o => o.StudentId == id).FirstOrDefault();
+            }
 
 
-			viewModel.fileModel = fileViewModel;
+            viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -2422,11 +2509,11 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "Conference Summary", Value = "ConferenceSummary" });
             forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
-			forms.Add(new SelectListItem { Text = "Request for Transportation", Value = "TransportationRequest" });
+            forms.Add(new SelectListItem { Text = "Request for Transportation", Value = "TransportationRequest" });
 
 
 
-			return forms.OrderBy(x => x.Text).ToList();
+            return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]
@@ -2466,9 +2553,9 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-		[HttpGet]
-		[Authorize]
-		public ActionResult PrintIEPSection(int stid, int iepId, string section, string goalsToPrint)
+        [HttpGet]
+        [Authorize]
+        public ActionResult PrintIEPSection(int stid, int iepId, string section, string goalsToPrint)
         {
             var theIEP = GetIEPPrint(stid, iepId);
             if (theIEP != null)
@@ -2539,10 +2626,10 @@ namespace GreenbushIep.Controllers
                         }
                     case "Progress":
                         {
-							if(!string.IsNullOrEmpty(goalsToPrint))
-								theIEP.studentDetails.printProgressGoals = goalsToPrint.Split(',').Select(Int32.Parse).ToList();
+                            if (!string.IsNullOrEmpty(goalsToPrint))
+                                theIEP.studentDetails.printProgressGoals = goalsToPrint.Split(',').Select(Int32.Parse).ToList();
 
-							theIEP.studentDetails.printProgressReport = true;
+                            theIEP.studentDetails.printProgressReport = true;
                             break;
                         }
 
@@ -2595,7 +2682,7 @@ namespace GreenbushIep.Controllers
 
             var studentDetails = new StudentDetailsPrintViewModel();
 
-            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid).ToList();
+            List<tblStudentRelationship> contacts = db.tblStudentRelationships.Where(i => i.UserID == stid && i.PrimaryContact == 1).ToList();
 
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
@@ -2672,17 +2759,17 @@ namespace GreenbushIep.Controllers
                         isDOC = theIEP.studentTransition.isDOC;
                     }
 
-					if (theIEP.current.begin_date != null && !isDOC)
-					{
-						//check student age for transition plan using the begin date plus one year
-						var endDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1) : theIEP.current.begin_date.Value.AddYears(1);
-						theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-					}
-					else
-					{
-						//use current date
-						theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-					}
+                    if (theIEP.current.begin_date != null && !isDOC)
+                    {
+                        //check student age for transition plan using the begin date plus one year
+                        var endDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1) : theIEP.current.begin_date.Value.AddYears(1);
+                        theIEP.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                    }
+                    else
+                    {
+                        //use current date
+                        theIEP.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                    }
 
 
                     stvw.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
@@ -2691,92 +2778,139 @@ namespace GreenbushIep.Controllers
 
                 }
 
-				if (info != null && theIEP.current != null)
-				{
-					var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
-					var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
-					var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
-					var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
-					int studentAgeAtIEP = 0;
+                if (info != null && theIEP.current != null)
+                {
+                    var studentBuilding = db.tblBuildings.Where(c => c.BuildingID == info.BuildingID).Take(1).FirstOrDefault();
+                    var studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
+                    var studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
+                    var studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
+                    int studentAgeAtIEP = 0;
 
 
-					if (theIEP.iepStartTime.HasValue)
-					{
-						var iepDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value : theIEP.current.begin_date.Value;
-						studentAgeAtIEP =(iepDate.Year - info.DateOfBirth.Year - 1) + (((iepDate.Month > info.DateOfBirth.Month) || ((iepDate.Month == info.DateOfBirth.Month) && (iepDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+                    if (theIEP.iepStartTime.HasValue)
+                    {
+                        var iepDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value : theIEP.current.begin_date.Value;
+                        studentAgeAtIEP = (iepDate.Year - info.DateOfBirth.Year - 1) + (((iepDate.Month > info.DateOfBirth.Month) || ((iepDate.Month == info.DateOfBirth.Month) && (iepDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
 
-					}
-					
+                    }
 
-					studentDetails.student = info;
-					studentDetails.teacher = teacher;
-					studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
-					studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
-					studentDetails.contacts = contacts;
-					studentDetails.building = studentBuilding;
-					studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-					studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
-					studentDetails.parentLang = GetLanguage(info.ParentLanguage);
-					studentDetails.studentLang = GetLanguage(info.StudentLanguage);
-					studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
-					studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
-					studentDetails.studentAgeAtIEP = studentAgeAtIEP;
-					studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
-					studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
-					studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
-					studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
-					studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
+
+                    studentDetails.student = info;
+                    studentDetails.teacher = teacher;
+                    studentDetails.ethnicity = info.Ethicity == "Y" ? "Hispanic" : "Not Hispanic or Latino";
+                    studentDetails.gender = info.Gender == "F" ? "Female" : "Male";
+                    studentDetails.contacts = contacts;
+                    studentDetails.building = studentBuilding;
+                    studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
+                    studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+                    studentDetails.parentLang = GetLanguage(info.ParentLanguage);
+                    studentDetails.studentLang = GetLanguage(info.StudentLanguage);
+                    studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
+                    studentDetails.secondaryDisability = GetDisability(info.Secondary_DisabilityCode);
+                    studentDetails.studentAgeAtIEP = studentAgeAtIEP;
+                    studentDetails.studentAgeAtAnnualMeeting = (theIEP.current.MeetingDate.HasValue ? (theIEP.current.MeetingDate.Value.Year - info.DateOfBirth.Year - 1) + (((theIEP.current.MeetingDate.Value.Month > info.DateOfBirth.Month) || ((theIEP.current.MeetingDate.Value.Month == info.DateOfBirth.Month) && (theIEP.current.MeetingDate.Value.Day >= info.DateOfBirth.Day))) ? 1 : 0) : 0);
+                    studentDetails.assignChildCount = studentUSD != null ? studentUSD.DistrictName : "";
+                    studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
+                    studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
+                    studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
 
                     studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
                     studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
 
-					var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
-					var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
-					var historicalIEPList = new List<IEPHistoryViewModel>();					
-					int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
+                    var historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
+                    //var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
+                    var historicalIEPList = new List<IEPHistoryViewModel>();
+                    //int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
 
-					if (theIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT)
-					{
-						//add draft to history
-						var iepType = string.Format("{0}", theIEP.anyStudentIEPActive && !theIEP.current.Amendment ? "Annual" : theIEP.anyStudentIEPActive && theIEP.current.Amendment ? "Amendment" : string.Empty);
-						var historyItem = new IEPHistoryViewModel() { edStatus = theIEP.current.StatusCode, iepDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "", iepType = iepType };
-						historicalIEPList.Add(historyItem);
-					}					
+                    if (theIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT)
+                    {
+                        //add draft to history
+                        var iepType = string.Format("{0}", theIEP.anyStudentIEPActive && !theIEP.current.Amendment ? "Annual" : theIEP.anyStudentIEPActive && theIEP.current.Amendment ? "Amendment" : string.Empty);
+                        var historyItem = new IEPHistoryViewModel() { edStatus = theIEP.current.StatusCode, iepDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "", iepType = iepType };
+                        historicalIEPList.Add(historyItem);
+                    }
 
-					foreach (var history in historicalIEPs)
-					{
-						
-						var historyItem = new IEPHistoryViewModel();
+                    foreach (var history in historicalIEPs)
+                    {
 
-						if (history.OriginalIEPid == null)
-						{						
-							historyItem.iepType = "Annual";
-						}
-						else
-						{
-							if (history.Amendment)
-							{						
-								historyItem.iepType = "Amendment";
-							}
-						}
+                        var historyItem = new IEPHistoryViewModel();
 
-						historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? studentDetails.student.StatusCode : history.StatusCode;
-						historyItem.iepDate = history.begin_date.HasValue ? history.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "";
-						historicalIEPList.Add(historyItem);
-					}
+                        if (history.OriginalIEPid == null)
+                        {
+                            historyItem.iepType = "Annual";
+                        }
+                        else
+                        {
+                            if (history.Amendment)
+                            {
+                                historyItem.iepType = "Amendment";
+                            }
+                        }
+
+                        historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? studentDetails.student.StatusCode : history.StatusCode;
+                        historyItem.iepDate = history.begin_date.HasValue ? history.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "";
+                        historicalIEPList.Add(historyItem);
+                    }
 
 
-					if (studentDetails.student.ExitDate.HasValue)
-					{
-						var exitItem = new IEPHistoryViewModel();
-						exitItem.iepType = "Exit";
-						exitItem.iepDate = studentDetails.student.ExitDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture); 
-						exitItem.edStatus = "D";
-						historicalIEPList.Add(exitItem);
-					}
+                    if (studentDetails.student.ExitDate.HasValue)
+                    {
+                        var exitItem = new IEPHistoryViewModel();
+                        exitItem.iepType = "Exit";
+                        exitItem.iepDate = studentDetails.student.ExitDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture);
+                        exitItem.edStatus = "D";
+                        historicalIEPList.Add(exitItem);
+                    }
 
-					ViewBag.History = historicalIEPList;
+					studentDetails.history = historicalIEPList;
                 }
+
+
+				if (theIEP.accommodations != null)
+				{
+					foreach (var accom in theIEP.accommodations)
+					{
+						string shortDesc = "Accommodation ";
+
+						if (@accom.AccomType == 1)
+						{
+							shortDesc = "Accommodation ";
+						}
+						else if (@accom.AccomType == 2)
+						{
+							shortDesc = "Modification ";
+						}
+						else if (@accom.AccomType == 3)
+						{
+							shortDesc = "Supplemental Aids and Services ";
+						}
+						else if (@accom.AccomType == 4)
+						{
+							shortDesc = "Support for School Personnel ";
+						}
+						else if (@accom.AccomType == 5)
+						{
+							shortDesc = "Transportation ";
+						}
+
+						var moduleList = db.tblAccommodationModules.Where(o => o.AccommodationID == accom.AccommodationID).Select(o => o.ModuleID);
+
+						var modules = string.Join("<br />", db.tblModules.Where(o => moduleList.Contains(o.ModuleID)).Select(o => o.ModuleName));
+						
+						var accommodationView = new AccomodationPrintViewModel();
+						accommodationView.StudentId = stid;
+						accommodationView.Location = accom.Location;
+						accommodationView.Description = accom.Description;
+						accommodationView.Duration = accom.Duration;
+						accommodationView.Frequency = accom.Frequency;
+						accommodationView.AnticipatedEndDate = accom.AnticipatedEndDate;
+						accommodationView.AnticipatedStartDate = accom.AnticipatedStartDate;
+						accommodationView.AccomType = shortDesc;
+						accommodationView.Module = modules;
+
+						studentDetails.accommodationList.Add(accommodationView);
+					}
+				}
 
                 theIEP.studentDetails = studentDetails;
 
@@ -3396,29 +3530,29 @@ namespace GreenbushIep.Controllers
 
                 service.FiledOn = DateTime.Now;
 
-				DateTime? serviceIEPDate = null;
+                DateTime? serviceIEPDate = null;
 
-				//1 IEP date req
-				if (service.IEPid != studentIEP.current.IEPid)
+                //1 IEP date req
+                if (service.IEPid != studentIEP.current.IEPid)
                 {
                     //need to look up date from the iep this service is from
                     var serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
-					
 
-					if (serviceIEP.OriginalIEPid != null)
-					{
-						//look up date of orginal iep
-						var originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
-						if (originalIEP != null && originalIEP.begin_date.HasValue)
-							serviceIEPDate = originalIEP.begin_date.Value;
-					}
-					else
-					{
-						if (serviceIEP.begin_date.HasValue)
-						{
-							serviceIEPDate = serviceIEP.begin_date.Value;
-						}
-					}
+
+                    if (serviceIEP.OriginalIEPid != null)
+                    {
+                        //look up date of orginal iep
+                        var originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
+                        if (originalIEP != null && originalIEP.begin_date.HasValue)
+                            serviceIEPDate = originalIEP.begin_date.Value;
+                    }
+                    else
+                    {
+                        if (serviceIEP.begin_date.HasValue)
+                        {
+                            serviceIEPDate = serviceIEP.begin_date.Value;
+                        }
+                    }
 
                     if (!serviceIEPDate.HasValue)
                     {
@@ -3436,19 +3570,19 @@ namespace GreenbushIep.Controllers
                 }
                 else
                 {
-					if (studentIEP.current.OriginalIEPid != null)
-					{
-						//look up date of orginal iep
-						var originalIEP2 = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
-						if (originalIEP2 != null && originalIEP2.begin_date.HasValue)
-							serviceIEPDate = originalIEP2.begin_date.Value;
-					}
-					else
-					{
-						serviceIEPDate = studentIEP.current.begin_date.Value;
-					}
+                    if (studentIEP.current.OriginalIEPid != null)
+                    {
+                        //look up date of orginal iep
+                        var originalIEP2 = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
+                        if (originalIEP2 != null && originalIEP2.begin_date.HasValue)
+                            serviceIEPDate = originalIEP2.begin_date.Value;
+                    }
+                    else
+                    {
+                        serviceIEPDate = studentIEP.current.begin_date.Value;
+                    }
 
-					if (!serviceIEPDate.HasValue)
+                    if (!serviceIEPDate.HasValue)
                     {
                         errors.Add(new ExportErrorView()
                         {
@@ -3499,7 +3633,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", service.StartDate.ToShortDateString());
 
                 //14 Service end Date
-                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.ToShortDateString() : serviceEndDateOverride);
+                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.Value.ToShortDateString() : serviceEndDateOverride);
 
                 //15 minutes
                 sb.AppendFormat("\t{0}", service.Minutes);
@@ -3551,16 +3685,16 @@ namespace GreenbushIep.Controllers
                 {
                     SaveFormValues(HTMLContent, formName, studentId);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-					string error = ex.Message;
-					if (ex.InnerException != null)
-						error += " " + ex.InnerException.Message;
+                    string error = ex.Message;
+                    if (ex.InnerException != null)
+                        error += " " + ex.InnerException.Message;
 
-					TempData["Error"] = error;
-					return RedirectToAction("Index", "Error");
-					//return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 2 });
-				}
+                    TempData["Error"] = error;
+                    return RedirectToAction("Index", "Error");
+                    //return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 2 });
+                }
 
                 return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 1 });
             }
@@ -3628,7 +3762,7 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-                  //  result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
+                    //  result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -3692,20 +3826,20 @@ namespace GreenbushIep.Controllers
                 {
                     try
                     {
-						var formNameValue = formName;
-						
-						if (formName == null || formName == "IEP")
-						{
-							if (iepObj != null)
-							{
-								if(iepObj.Amendment)
-									formNameValue = string.Format("Amendment IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
-								else
-									formNameValue = string.Format("Annual IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
-							}
-						}
+                        var formNameValue = formName;
 
-						var archive = new tblFormArchive();
+                        if (formName == null || formName == "IEP")
+                        {
+                            if (iepObj != null)
+                            {
+                                if (iepObj.Amendment)
+                                    formNameValue = string.Format("Amendment IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
+                                else
+                                    formNameValue = string.Format("Annual IEP {0}", iepObj.begin_date.HasValue ? iepObj.begin_date.Value.ToShortDateString() : "");
+                            }
+                        }
+
+                        var archive = new tblFormArchive();
                         archive.Creator_UserID = teacher.UserID;
                         archive.Student_UserID = id;
                         archive.FormName = string.IsNullOrEmpty(formNameValue) ? "IEP" : formNameValue;
@@ -3758,16 +3892,16 @@ namespace GreenbushIep.Controllers
             doc.OptionWriteEmptyNodes = true;
             doc.OptionFixNestedTags = true;
             doc.LoadHtml(cssTextResult + "<div class='" + className + "'>" + result2 + "</div>");
-			//var htmlBody = doc.DocumentNode.SelectSingleNode("//textarea");
-			//if (htmlBody.HasChildNodes)
-			//{
-			//	foreach (var node in htmlBody.ChildNodes) {
-			//		//HtmlNode node = htmlBody.ChildNodes
-			//		node.RemoveAll();
-			//	}
-			//}
+            //var htmlBody = doc.DocumentNode.SelectSingleNode("//textarea");
+            //if (htmlBody.HasChildNodes)
+            //{
+            //	foreach (var node in htmlBody.ChildNodes) {
+            //		//HtmlNode node = htmlBody.ChildNodes
+            //		node.RemoveAll();
+            //	}
+            //}
 
-			string cleanHTML2 = doc.DocumentNode.OuterHtml;
+            string cleanHTML2 = doc.DocumentNode.OuterHtml;
 
             byte[] fileIn = null;
             byte[] printFile = null;
@@ -4036,980 +4170,981 @@ namespace GreenbushIep.Controllers
             Response.End();
         }
 
-		private bool ArchiveIEPPrint(int studentId, IEP theIEP, bool includeProgressReport)
-		{
-			bool success = false;
-
-			//create archive
-			try
-			{
-				
-				if (theIEP != null)
-				{
-					theIEP.studentDetails.printStudentInfo = true;
-					theIEP.studentDetails.printIEPDetails = true;
-					theIEP.studentDetails.printHealth = true;
-					theIEP.studentDetails.printMotor = true;
-					theIEP.studentDetails.printComm = true;
-					theIEP.studentDetails.printSocial = true;
-					theIEP.studentDetails.printGeneral = true;
-					theIEP.studentDetails.printAcademic = true;
-					theIEP.studentDetails.printAcc = true;
-					theIEP.studentDetails.printBehavior = true;
-					theIEP.studentDetails.printTrans = true;
-					theIEP.studentDetails.printOther = true;
-					theIEP.studentDetails.printGoals = true;
-					theIEP.studentDetails.printServices = true;
-					theIEP.studentDetails.printNotice = true;
-					theIEP.studentDetails.printProgressReport = false;
-					theIEP.studentDetails.isArchive = true;
-					theIEP.isServerRender = true;
-				}
-
-				var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
-
-				string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
-				result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
-				HtmlDocument doc = new HtmlDocument();
-				doc.OptionWriteEmptyNodes = true;
-				doc.OptionFixNestedTags = true;
-				doc.LoadHtml(result);
-
-				var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
-				var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-				var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
-
-				if (includeProgressReport)
-				{
-					//print progress report separately
-					if (theIEP != null)
-					{
-						theIEP.studentDetails.printStudentInfo = false;
-						theIEP.studentDetails.printIEPDetails = false;
-						theIEP.studentDetails.printHealth = false;
-						theIEP.studentDetails.printMotor = false;
-						theIEP.studentDetails.printComm = false;
-						theIEP.studentDetails.printSocial = false;
-						theIEP.studentDetails.printGeneral = false;
-						theIEP.studentDetails.printAcademic = false;
-						theIEP.studentDetails.printAcc = false;
-						theIEP.studentDetails.printBehavior = false;
-						theIEP.studentDetails.printTrans = false;
-						theIEP.studentDetails.printOther = false;
-						theIEP.studentDetails.printGoals = false;
-						theIEP.studentDetails.printServices = false;
-						theIEP.studentDetails.printNotice = false;
-						theIEP.studentDetails.printProgressReport = true;
-						theIEP.studentDetails.isArchive = true;
-						theIEP.isServerRender = true;
-					}
-
-					data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
-
-					result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
-					result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
-					doc = new HtmlDocument();
-					doc.OptionWriteEmptyNodes = true;
-					doc.OptionFixNestedTags = true;
-					doc.LoadHtml(result);
-
-					var progressModuleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-					var progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
-				}
-
-				success = true;
-
-			}
-			catch (Exception e)
-			{
-				success = false;
-                Console.Write(e.InnerException.ToString());				
-			}
-
-			return success;
-		}
-
-		#region FormPDFDownload
-		private void SaveFormValues(string HTMLContent, string formName, string studentId)
-		{
-			//capture data
-			int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
-
-			if (sid == 0)
-				return;
-
-			//var formList = GetForms();
-
-			tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-
-			HtmlDocument htmlDocument = new HtmlDocument();
-			htmlDocument.OptionWriteEmptyNodes = true;
-			htmlDocument.OptionFixNestedTags = true;
-			htmlDocument.LoadHtml(HTMLContent);
-
-			var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
-			var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
-			var formNameStr = formName.ToUpper();
-
-
-			if (formNameStr == "TEAM EVALUATION REPORT")
-			{
-				var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
-
-				teamEval.StudentId = sid;
-				teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
-				teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
-				teamEval.Hearing = GetInputValue("txtHearing", spans);
-				teamEval.Vision = GetInputValue("txtVision", spans);
-				teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
-				teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
-				teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
-				teamEval.TestData = GetInputValue("txtTestData", spans);
-				teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
-				teamEval.Peformance = GetInputValue("txtPeformance", spans);
-				teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
-				teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
-				teamEval.Regulations = GetInputValue("txtRegulations", spans);
-				teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
-				teamEval.Strengths = GetInputValue("txtStrengths", spans);
-				teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
-				teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
-				teamEval.Tried = GetInputValue("txtTried", spans);
-				teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
-				teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
-				teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
-				teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
-				teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
-				teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
-				teamEval.ListSources = GetInputValue("txtListSources", spans);
-
-
-				teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
-				teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
-				teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
-
-				if (teamEval.FormTeamEvalId == 0)
-				{
-					teamEval.CreatedBy = currentUser.UserID;
-					teamEval.Create_Date = DateTime.Now;
-					teamEval.ModifiedBy = currentUser.UserID;
-					teamEval.Update_Date = DateTime.Now;
-					db.tblFormTeamEvals.Add(teamEval);
-				}
-				else
-				{
-					teamEval.ModifiedBy = currentUser.UserID;
-					teamEval.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "SUMMARY OF PERFORMANCE")
-			{
-				var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
-
-				summaryPerf.StudentId = sid;
-				summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
-				summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
-				summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
-				summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
-				summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
-				summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
-				summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
-				summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
-				summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
-				summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
-				summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
-				summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
-				summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
-				summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
-				summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
-				summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
-				summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
-				summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
-				summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
-				summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
-				summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
-				summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
-				summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
-				summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
-				summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
-				summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
-				summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
-				summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
-				summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
-				summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
-				summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
-				summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
-				summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
-				summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
-				summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
-				summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
-				summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
-				summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
-				summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
-				summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
-				summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
-				summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
-				summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
-				summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
-				summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
-				summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
-				summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
-				summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
-				summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
-				summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
-				summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
-				summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
-				summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
-				summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
-				summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
-				summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
-				summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
-				summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
-
-
-				if (summaryPerf.FormSummaryPerformanceId == 0)
-				{
-					summaryPerf.CreatedBy = currentUser.UserID;
-					summaryPerf.Create_Date = DateTime.Now;
-					summaryPerf.ModifiedBy = currentUser.UserID;
-					summaryPerf.Update_Date = DateTime.Now;
-					db.tblFormSummaryPerformances.Add(summaryPerf);
-				}
-				else
-				{
-					summaryPerf.ModifiedBy = currentUser.UserID;
-					summaryPerf.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "CONFERENCE SUMMARY")
-			{
-				var conf = db.tblFormConferenceSummaries.Any(o => o.StudentId == sid) ? db.tblFormConferenceSummaries.FirstOrDefault(o => o.StudentId == sid) : new tblFormConferenceSummary();
-
-				conf.StudentId = sid;
-				conf.BuildingAdministrator = GetInputValue("txtBuildingAdministrator", spans);
-				conf.RequestedBy = GetInputValue("txtRequestedBy", spans);
-				conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
-				conf.Conclusions = GetInputValue("txtConclusions", spans);
-				conf.PlacementCode = GetInputValue("PlacementCode", spans);
-
-				if (conf.FormConferenceSummaryId == 0)
-				{
-					conf.CreatedBy = currentUser.UserID;
-					conf.Create_Date = DateTime.Now;
-					conf.ModifiedBy = currentUser.UserID;
-					conf.Update_Date = DateTime.Now;
-					db.tblFormConferenceSummaries.Add(conf);
-				}
-				else
-				{
-					conf.ModifiedBy = currentUser.UserID;
-					conf.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "IEP AMENDMENT FORM")
-			{
-				var formAmend = db.tblFormIEPAmendments.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendments.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment();
-
-				formAmend.StudentId = sid;
-				formAmend.AgreeToAmmend = GetCheckboxSingleInputValue("AgreeToAmmend", checkboxes);
-				formAmend.DisagreeToAmmend = GetCheckboxSingleInputValue("DisagreeToAmmend", checkboxes);
-				formAmend.ConveneMeeting = GetCheckboxSingleInputValue("ConveneMeeting", checkboxes);
-				formAmend.DoNotConveneMeeting = GetCheckboxSingleInputValue("DoNotConveneMeeting", checkboxes);
-				formAmend.Description = GetInputValue("Description", spans);
-
-				if (formAmend.FormIEPAmendmentId == 0)
-				{
-					formAmend.CreatedBy = currentUser.UserID;
-					formAmend.Create_Date = DateTime.Now;
-					formAmend.ModifiedBy = currentUser.UserID;
-					formAmend.Update_Date = DateTime.Now;
-					db.tblFormIEPAmendments.Add(formAmend);
-				}
-				else
-				{
-					formAmend.ModifiedBy = currentUser.UserID;
-					formAmend.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "IEP MEETING-CONSENT TO INVITE REPRESENTATIVE OF NON-EDUCATIONAL AGENCY")
-			{
-				var formMeetConsent = db.tblFormIEPMeetingConsentToInvites.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvites.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite();
-
-				formMeetConsent.StudentId = sid;
-				formMeetConsent.FurtherInformed = GetCheckboxSingleInputValue("FurtherInformed", checkboxes);
-				formMeetConsent.ProvideTransitionService = GetCheckboxSingleInputValue("ProvideTransitionService", checkboxes);
-				formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
-				formMeetConsent.MeetingDate = GetInputValueDate("MeetingDate", spans);
-
-				if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
-				{
-					formMeetConsent.CreatedBy = currentUser.UserID;
-					formMeetConsent.Create_Date = DateTime.Now;
-					formMeetConsent.ModifiedBy = currentUser.UserID;
-					formMeetConsent.Update_Date = DateTime.Now;
-					db.tblFormIEPMeetingConsentToInvites.Add(formMeetConsent);
-				}
-				else
-				{
-					formMeetConsent.ModifiedBy = currentUser.UserID;
-					formMeetConsent.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "IEP MEETING-EXCUSAL FROM ATTENDANCE FORM")
-			{
-				var formExcusal = db.tblFormIEPMeetingExcusals.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusals.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal();
-
-				formExcusal.StudentId = sid;
-				formExcusal.ParentName = GetInputValue("ParentName", spans);
-				formExcusal.SchoolRepresentative = GetInputValue("SchoolRepresentative", spans);
-				formExcusal.PositionOfRepresentative = GetInputValue("PositionOfRepresentative", spans);
-				formExcusal.PositionOfMemberNotAttending = GetInputValue("PositionOfMemberNotAttending", spans);
-
-				formExcusal.Services_MayBe_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_NonAttend", checkboxes);
-				formExcusal.Services_MayBe_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_PartialAttend", checkboxes);
-
-				formExcusal.Services_MayBe_ModOrDisc_IssueDiscussed = GetInputValue("Services_MayBe_ModOrDisc_IssueDiscussed", spans);
-				formExcusal.Services_Not_ModOrDisc_IssueDiscussed = GetInputValue("Services_Not_ModOrDisc_IssueDiscussed", spans);
-
-				formExcusal.Services_Not_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Agree", checkboxes);
-				formExcusal.Services_Not_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Disagree", checkboxes);
-
-				formExcusal.Services_Not_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_NonAttend", checkboxes);
-				formExcusal.Services_Not_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_PartialAttend", checkboxes);
-
-				formExcusal.Services_MayBe_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Agree", checkboxes);
-				formExcusal.Services_MayBe_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Disagree", checkboxes);
-
-				formExcusal.FormDate = GetInputValueDate("FormDate", spans);
-				formExcusal.IEPDate = GetInputValueDate("IEPDate", spans);
-
-				if (formExcusal.FormIEPMeetingExcusalId == 0)
-				{
-					formExcusal.CreatedBy = currentUser.UserID;
-					formExcusal.Create_Date = DateTime.Now;
-					formExcusal.ModifiedBy = currentUser.UserID;
-					formExcusal.Update_Date = DateTime.Now;
-					db.tblFormIEPMeetingExcusals.Add(formExcusal);
-				}
-				else
-				{
-					formExcusal.ModifiedBy = currentUser.UserID;
-					formExcusal.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "IEP TEAM CONSIDERATIONS")
-			{
-				var formTeam = db.tblFormIEPTeamConsiderations.Any(o => o.StudentId == sid) ? db.tblFormIEPTeamConsiderations.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPTeamConsideration();
-
-				formTeam.StudentId = sid;
-				formTeam.ChildsStrength = GetInputValue("ChildsStrength", spans);
-				formTeam.UtilizeStrength = GetInputValue("UtilizeStrength", spans);
-				formTeam.ConcernsForEnhancing = GetInputValue("ConcernsForEnhancing", spans);
-				formTeam.ConcernsAddressesd = GetInputValue("ConcernsAddressesd", spans);
-				formTeam.HarmfulEffects = GetInputValue("HarmfulEffects", spans);
-				formTeam.PhysicalEducatoin = GetInputValue("PhysicalEducatoin", spans);
-				formTeam.ExtendedSchoolYear = GetInputValue("ExtendedSchoolYear", spans);
-				formTeam.NeedsBeenConsidered_Yes = GetCheckboxSingleInputValue("NeedsBeenConsidered_Yes", checkboxes);
-				formTeam.NeedsBeenConsidered_No = GetCheckboxSingleInputValue("NeedsBeenConsidered_No", checkboxes);
-				formTeam.NeedsBeenConsidered_Desc = GetInputValue("NeedsBeenConsidered_Desc", spans);
-				formTeam.BehaviorImpede_Yes = GetCheckboxSingleInputValue("BehaviorImpede_Yes", checkboxes);
-				formTeam.BehaviorImpede_No = GetCheckboxSingleInputValue("BehaviorImpede_No", checkboxes);
-				formTeam.BehaviorImpede_Desc = GetInputValue("BehaviorImpede_Desc", spans);
-				formTeam.InstructionInBraille_Yes = GetCheckboxSingleInputValue("InstructionInBraille_Yes", checkboxes);
-				formTeam.InstructionInBraille_No = GetCheckboxSingleInputValue("InstructionInBraille_No", checkboxes);
-				formTeam.InstructionInBraille_Desc = GetInputValue("InstructionInBraille_Desc", spans);
-				formTeam.LimitedEnglish_Yes = GetCheckboxSingleInputValue("LimitedEnglish_Yes", checkboxes);
-				formTeam.LimitedEnglish_No = GetCheckboxSingleInputValue("LimitedEnglish_No", checkboxes);
-				formTeam.LimitedEnglish_Desc = GetInputValue("LimitedEnglish_Desc", spans);
-				formTeam.CommunicationNeeds_Yes = GetCheckboxSingleInputValue("CommunicationNeeds_Yes", checkboxes);
-				formTeam.CommunicationNeeds_No = GetCheckboxSingleInputValue("CommunicationNeeds_No", checkboxes);
-				formTeam.CommunicationNeeds_Desc = GetInputValue("CommunicationNeeds_Desc", spans);
-				formTeam.HearingCommunicationNeeds_Yes = GetCheckboxSingleInputValue("HearingCommunicationNeeds_Yes", checkboxes);
-				formTeam.HearingCommunicationNeeds_No = GetCheckboxSingleInputValue("HearingCommunicationNeeds_No", checkboxes);
-				formTeam.HearingCommunicationNeeds_Desc = GetInputValue("HearingCommunicationNeeds_Desc", spans);
-				formTeam.AssistiveTech_Yes = GetCheckboxSingleInputValue("AssistiveTech_Yes", checkboxes);
-				formTeam.AssistiveTech_No = GetCheckboxSingleInputValue("AssistiveTech_No", checkboxes);
-				formTeam.AssistiveTech_Desc = GetInputValue("AssistiveTech_Desc", spans);
-				formTeam.IEPMeetingDate = GetInputValueDate("IEPMeetingDate", spans);
-
-				if (formTeam.FormIEPTeamConsiderationsId == 0)
-				{
-					formTeam.CreatedBy = currentUser.UserID;
-					formTeam.Create_Date = DateTime.Now;
-					formTeam.ModifiedBy = currentUser.UserID;
-					formTeam.Update_Date = DateTime.Now;
-					db.tblFormIEPTeamConsiderations.Add(formTeam);
-				}
-				else
-				{
-					formTeam.ModifiedBy = currentUser.UserID;
-					formTeam.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "MANIFESTATION DETERMINATION REVIEW FORM")
-			{
-				var formMani = db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
-
-				formMani.StudentId = sid;
-				formMani.FormDate = GetInputValueDate("FormDate", spans);
-				formMani.StudentBehavior = GetInputValue("StudentBehavior", spans);
-				formMani.StudentIEP = GetInputValue("StudentIEP", spans);
-				formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
-				formMani.ParentInformation = GetInputValue("ParentInformation", spans);
-				formMani.OtherInformation = GetInputValue("OtherInformation", spans);
-				formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
-				formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
-				formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
-				formMani.ReviewBehaviorPlan = GetCheckboxSingleInputValue("ReviewBehaviorPlan", checkboxes);
-				formMani.IsNotManifestationOfDisability = GetCheckboxSingleInputValue("IsNotManifestationOfDisability", checkboxes);
-				formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
-				formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
-				formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
-				formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
-				formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
-				formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
-
-				if (formMani.FormManifestationDeterminiationId == 0)
-				{
-					formMani.CreatedBy = currentUser.UserID;
-					formMani.Create_Date = DateTime.Now;
-					formMani.ModifiedBy = currentUser.UserID;
-					formMani.Update_Date = DateTime.Now;
-					db.tblFormManifestationDeterminiations.Add(formMani);
-				}
-				else
-				{
-					formMani.ModifiedBy = currentUser.UserID;
-					formMani.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-
-				//get member info
-
-				//delete all
-				foreach (var existingPD in db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == formMani.FormManifestationDeterminiationId))
-				{
-					db.tblFormManifestDeterm_TeamMembers.Remove(existingPD);
-				}
-
-				db.SaveChanges();
-
-				//add back
-				var memberPresentSpans = spans.Where(o => o.HasClass("memberPresent")).ToList();
-				foreach (var mp in memberPresentSpans.Where(o => o.HasClass("memberName")))
-				{
-					var elementId = mp.Id;  // = memberPresentTitle_0"
-					string[] elementSplit = elementId.Split('_');
-					if (elementSplit.Length > 1)
-					{
-						bool isDissent = mp.HasClass("dissent");
-						HtmlNode elementTitle = null;
-						if (isDissent)
-						{
-							elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && o.HasClass("dissent")).FirstOrDefault();
-						}
-						else
-						{
-							elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && !o.HasClass("dissent")).FirstOrDefault();
-						}
-
-						var teamMember = new tblFormManifestDeterm_TeamMembers()
-						{
-							Name = mp.InnerHtml,
-							Title = elementTitle != null ? elementTitle.InnerHtml : "",
-							Dissenting = isDissent,
-							StudentId = sid,
-							FormManifestationDeterminiationId = formMani.FormManifestationDeterminiationId,
-							CreatedBy = currentUser.UserID,
-
-						};
-
-						if (!string.IsNullOrEmpty(teamMember.Name))
-							db.tblFormManifestDeterm_TeamMembers.Add(teamMember);
-
-					}
-				}
-
-				db.SaveChanges();
-
-			}
-			else if (formNameStr == "NOTICE OF MEETING")
-			{
-				var formNotice = db.tblFormNoticeOfMeetings.Any(o => o.StudentId == sid) ? db.tblFormNoticeOfMeetings.FirstOrDefault(o => o.StudentId == sid) : new tblFormNoticeOfMeeting();
-
-				formNotice.StudentId = sid;
-
-				//formNotice.ParentName = GetInputValue("ParentName", spans);
-				formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
-				formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
-				formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);
-				formNotice.DiscussIEPChanges = GetCheckboxSingleInputValue("DiscussIEPChanges", checkboxes);
-				formNotice.AnnualIEPReview = GetCheckboxSingleInputValue("AnnualIEPReview", checkboxes);
-				formNotice.TransitionAssesment = GetCheckboxSingleInputValue("TransitionAssesment", checkboxes);
-				formNotice.Other = GetCheckboxSingleInputValue("Other", checkboxes);
-				formNotice.SpecialExpertise1 = GetInputValue("SpecialExpertise1", spans);
-				formNotice.SpecialExpertise2 = GetInputValue("SpecialExpertise2", spans);
-				formNotice.SpecialExpertise3 = GetInputValue("SpecialExpertise3", spans);
-				formNotice.SpecialExpertise4 = GetInputValue("SpecialExpertise4", spans);
-				formNotice.SpecialExpertise5 = GetInputValue("SpecialExpertise5", spans);
-				formNotice.SpecialExpertise6 = GetInputValue("SpecialExpertise6", spans);
-				formNotice.AgencyStaff = GetInputValue("AgencyStaff", spans);
-				formNotice.SchoolContactName = GetInputValue("SchoolContactName", spans);
-				formNotice.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
-				formNotice.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
-				formNotice.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
-				formNotice.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
-				formNotice.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
-				formNotice.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
-				formNotice.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
-				formNotice.PlanToAttend = GetCheckboxSingleInputValue("PlanToAttend", checkboxes);
-				formNotice.RescheduleMeeting = GetCheckboxSingleInputValue("RescheduleMeeting", checkboxes);
-				formNotice.AvaliableToAttend_flag = GetCheckboxSingleInputValue("AvaliableToAttend_flag", checkboxes);
-				formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
-				formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
-				formNotice.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-
-				if (formNotice.FormNoticeOfMeetingId == 0)
-				{
-					formNotice.CreatedBy = currentUser.UserID;
-					formNotice.Create_Date = DateTime.Now;
-					formNotice.ModifiedBy = currentUser.UserID;
-					formNotice.Update_Date = DateTime.Now;
-					db.tblFormNoticeOfMeetings.Add(formNotice);
-				}
-				else
-				{
-					formNotice.ModifiedBy = currentUser.UserID;
-					formNotice.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "PARENT CONSENT FOR RELEASE OF INFORMATION AND MEDICAID REIMBURSEMENT")
-			{
-				var formParentConsent = db.tblFormParentConsents.Any(o => o.StudentId == sid) ? db.tblFormParentConsents.FirstOrDefault(o => o.StudentId == sid) : new tblFormParentConsent();
-
-				formParentConsent.StudentId = sid;
-				formParentConsent.School = GetInputValue("School", spans);
-				formParentConsent.GiveConsent = GetCheckboxSingleInputValue("GiveConsent", checkboxes);
-				formParentConsent.DoNotGiveConsent = GetCheckboxSingleInputValue("DoNotGiveConsent", checkboxes);
-				formParentConsent.BeginDate = GetInputValueDate("BeginDate", spans);
-
-				if (formParentConsent.FormParentConsentId == 0)
-				{
-					formParentConsent.CreatedBy = currentUser.UserID;
-					formParentConsent.Create_Date = DateTime.Now;
-					formParentConsent.ModifiedBy = currentUser.UserID;
-					formParentConsent.Update_Date = DateTime.Now;
-					db.tblFormParentConsents.Add(formParentConsent);
-				}
-				else
-				{
-					formParentConsent.ModifiedBy = currentUser.UserID;
-					formParentConsent.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-
-			}
-			else if (formNameStr == "PHYSICIAN SCRIPT")
-			{
-				var formPhysicianScript = db.tblFormPhysicianScripts.Any(o => o.StudentId == sid) ? db.tblFormPhysicianScripts.FirstOrDefault(o => o.StudentId == sid) : new tblFormPhysicianScript();
-
-				formPhysicianScript.StudentId = sid;
-				formPhysicianScript.PhysicianName = GetInputValue("PhysicianName", spans);
-				formPhysicianScript.FormDate = GetInputValueDate("FormDate", spans);
-
-				if (formPhysicianScript.FormPhysicianScriptId == 0)
-				{
-					formPhysicianScript.CreatedBy = currentUser.UserID;
-					formPhysicianScript.Create_Date = DateTime.Now;
-					formPhysicianScript.ModifiedBy = currentUser.UserID;
-					formPhysicianScript.Update_Date = DateTime.Now;
-					db.tblFormPhysicianScripts.Add(formPhysicianScript);
-				}
-				else
-				{
-					formPhysicianScript.ModifiedBy = currentUser.UserID;
-					formPhysicianScript.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-
-			}
-			else if (formNameStr == "PRIOR WRITTEN NOTICE - IDENTIFICATION")
-			{
-				var formPWN = db.tblFormPriorWritten_Ident.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Ident.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Ident();
-
-				formPWN.StudentId = sid;
-				formPWN.ParentName = GetInputValue("ParentName", spans);
-				formPWN.FormDate = GetInputValueDate("FormDate", spans);
-				formPWN.MeetingDate = GetInputValueDate("MeetingDate", spans);
-				formPWN.ChildSPEDEligible = GetCheckboxSingleInputValue("ChildSPEDEligible", checkboxes);
-				formPWN.SPEDNeeded = GetCheckboxSingleInputValue("SPEDNeeded", checkboxes);
-				formPWN.SPEDPlacement = GetCheckboxSingleInputValue("SPEDPlacement", checkboxes);
-				formPWN.ModificationsThatEnableSPED = GetCheckboxSingleInputValue("ModificationsThatEnableSPED", checkboxes);
-				formPWN.Identification_Section = GetCheckboxSingleInputValue("Identification_Section", checkboxes);
-				formPWN.ChildIsEligible = GetCheckboxSingleInputValue("ChildIsEligible", checkboxes);
-				formPWN.ChildMeetsCriteria = GetCheckboxSingleInputValue("ChildMeetsCriteria", checkboxes);
-				formPWN.SPEDNecessary = GetCheckboxSingleInputValue("SPEDNecessary", checkboxes);
-				formPWN.ChildNotElgible = GetCheckboxSingleInputValue("ChildNotElgible", checkboxes);
-				formPWN.ChildDoesNotMeetCriteria = GetCheckboxSingleInputValue("ChildDoesNotMeetCriteria", checkboxes);
-				formPWN.SPEDNotNecessary = GetCheckboxSingleInputValue("SPEDNotNecessary", checkboxes);
-				formPWN.InitialServices_Section = GetCheckboxSingleInputValue("InitialServices_Section", checkboxes);
-				formPWN.ChangesInService_Section = GetCheckboxSingleInputValue("ChangesInService_Section", checkboxes);
-				formPWN.ChangeInService = GetCheckboxSingleInputValue("ChangeInService", checkboxes);
-				formPWN.MaterialChangeInService = GetCheckboxSingleInputValue("MaterialChangeInService", checkboxes);
-				formPWN.ChangeInPlacement_Section = GetCheckboxSingleInputValue("ChangeInPlacement_Section", checkboxes);
-				formPWN.ChangeInPlacements = GetCheckboxSingleInputValue("ChangeInPlacements", checkboxes);
-				formPWN.SubstantialChangeInPlacement = GetCheckboxSingleInputValue("SubstantialChangeInPlacement", checkboxes);
-				formPWN.OtherChanges = GetCheckboxSingleInputValue("OtherChanges", checkboxes);
-				formPWN.LEARefusesToChangeIdentification = GetCheckboxSingleInputValue("LEARefusesToChangeIdentification", checkboxes);
-				formPWN.DescriptionOfAction = GetInputValue("DescriptionOfAction", spans);
-				formPWN.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
-				formPWN.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
-				formPWN.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
-				formPWN.OtherFactors = GetInputValue("OtherFactors", spans);
-				formPWN.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
-				formPWN.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
-				formPWN.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
-				formPWN.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
-				formPWN.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
-				formPWN.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
-				formPWN.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-				formPWN.SchoolContact = GetInputValue("SchoolContact", spans);
-				formPWN.SchoolContactAddress = GetInputValue("SchoolContactAddress", spans);
-				formPWN.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
-				formPWN.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
-				formPWN.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
-
-
-				if (formPWN.FormPriorWritten_IdentId == 0)
-				{
-					formPWN.CreatedBy = currentUser.UserID;
-					formPWN.Create_Date = DateTime.Now;
-					formPWN.ModifiedBy = currentUser.UserID;
-					formPWN.Update_Date = DateTime.Now;
-					db.tblFormPriorWritten_Ident.Add(formPWN);
-				}
-				else
-				{
-					formPWN.ModifiedBy = currentUser.UserID;
-					formPWN.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-
-			}
-			else if (formNameStr == "PRIOR WRITTEN NOTICE - EVALUATION -ENGLISH")
-			{
-				var formPWNEval = db.tblFormPriorWritten_Eval.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Eval.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Eval();
-
-				formPWNEval.StudentId = sid;
-				formPWNEval.ParentName = GetInputValue("ParentName", spans);
-				formPWNEval.FormDate = GetInputValueDate("FormDate", spans);
-
-				formPWNEval.InitialEval = GetCheckboxSingleInputValue("InitialEval", checkboxes);
-				formPWNEval.InitialEval_NoAdditional = GetCheckboxSingleInputValue("InitialEval_NoAdditional", checkboxes);
-				formPWNEval.Reeval = GetCheckboxSingleInputValue("Reeval", checkboxes);
-				formPWNEval.Reeval_NoAdditional = GetCheckboxSingleInputValue("Reeval_NoAdditional", checkboxes);
-				formPWNEval.Refuse_InitialEval = GetCheckboxSingleInputValue("Refuse_InitialEval", checkboxes);
-				formPWNEval.Refuse_Reeval = GetCheckboxSingleInputValue("Refuse_Reeval", checkboxes);
-				formPWNEval.SchoolContact = GetInputValue("SchoolContact", spans);
-				formPWNEval.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
-				formPWNEval.NewData_HealthMotor = GetCheckboxSingleInputValue("NewData_HealthMotor", checkboxes);
-				formPWNEval.ExistingData_HealthMotor = GetCheckboxSingleInputValue("ExistingData_HealthMotor", checkboxes);
-				formPWNEval.NewData_Vision = GetCheckboxSingleInputValue("NewData_Vision", checkboxes);
-				formPWNEval.ExistingData_Vision = GetCheckboxSingleInputValue("ExistingData_Vision", checkboxes);
-				formPWNEval.NewData_Hearing = GetCheckboxSingleInputValue("NewData_Hearing", checkboxes);
-				formPWNEval.ExistingData_Hearing = GetCheckboxSingleInputValue("ExistingData_Hearing", checkboxes);
-				formPWNEval.NewData_SEBStatus = GetCheckboxSingleInputValue("NewData_SEBStatus", checkboxes);
-				formPWNEval.ExistingData_SEBStatus = GetCheckboxSingleInputValue("ExistingData_SEBStatus", checkboxes);
-				formPWNEval.NewData_GenIntelligence = GetCheckboxSingleInputValue("NewData_GenIntelligence", checkboxes);
-				formPWNEval.ExistingData_GenIntelligence = GetCheckboxSingleInputValue("ExistingData_GenIntelligence", checkboxes);
-				formPWNEval.NewData_Academic = GetCheckboxSingleInputValue("NewData_Academic", checkboxes);
-				formPWNEval.ExistingData_Academic = GetCheckboxSingleInputValue("ExistingData_Academic", checkboxes);
-				formPWNEval.NewData_Communicative = GetCheckboxSingleInputValue("NewData_Communicative", checkboxes);
-				formPWNEval.ExistingData_Communicative = GetCheckboxSingleInputValue("ExistingData_Communicative", checkboxes);
-				formPWNEval.NewData_Transistion = GetCheckboxSingleInputValue("NewData_Transistion", checkboxes);
-				formPWNEval.ExistingData_Transistion = GetCheckboxSingleInputValue("ExistingData_Transistion", checkboxes);
-				formPWNEval.NewData_OtherData = GetCheckboxSingleInputValue("NewData_OtherData", checkboxes);
-				formPWNEval.ExistingData_OtherData = GetCheckboxSingleInputValue("ExistingData_OtherData", checkboxes);
-				formPWNEval.OtherData_Desc = GetInputValue("OtherData_Desc", spans);
-
-
-				formPWNEval.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
-				formPWNEval.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
-				formPWNEval.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
-				formPWNEval.OtherFactors = GetInputValue("OtherFactors", spans);
-				formPWNEval.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
-				formPWNEval.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
-				formPWNEval.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
-				formPWNEval.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
-				formPWNEval.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
-				formPWNEval.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
-				formPWNEval.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-
-				formPWNEval.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
-				formPWNEval.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
-
-				if (formPWNEval.FormPriorWritten_EvalId == 0)
-				{
-					formPWNEval.CreatedBy = currentUser.UserID;
-					formPWNEval.Create_Date = DateTime.Now;
-					formPWNEval.ModifiedBy = currentUser.UserID;
-					formPWNEval.Update_Date = DateTime.Now;
-					db.tblFormPriorWritten_Eval.Add(formPWNEval);
-				}
-				else
-				{
-					formPWNEval.ModifiedBy = currentUser.UserID;
-					formPWNEval.Update_Date = DateTime.Now;
-				}
-
-				db.SaveChanges();
-			}
-			else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF ALL SERVICES")
-			{
-				var formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokeAll.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokeAll();
-
-				formPWNRevAll.StudentId = sid;
-				formPWNRevAll.ParentName = GetInputValue("ParentName", spans);
-				formPWNRevAll.FormDate = GetInputValueDate("FormDate", spans);
-				formPWNRevAll.MeetingDate = GetInputValueDate("MeetingDate", spans);
-				formPWNRevAll.EndDate = GetInputValueDate("EndDate", spans);
-				formPWNRevAll.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
-				formPWNRevAll.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
-				formPWNRevAll.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
-				formPWNRevAll.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
-				formPWNRevAll.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
-				formPWNRevAll.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
-				formPWNRevAll.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-
-				if (formPWNRevAll.FormPriorWritten_ReokeAllId == 0)
-				{
-					formPWNRevAll.CreatedBy = currentUser.UserID;
-					formPWNRevAll.Create_Date = DateTime.Now;
-					formPWNRevAll.ModifiedBy = currentUser.UserID;
-					formPWNRevAll.Update_Date = DateTime.Now;
-					db.tblFormPriorWritten_ReokeAll.Add(formPWNRevAll);
-				}
-				else
-				{
-					formPWNRevAll.ModifiedBy = currentUser.UserID;
-					formPWNRevAll.Update_Date = DateTime.Now;
-				}
-				db.SaveChanges();
-			}
-			else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF PARTICULAR SERVICES")
-			{
-				var formPWNRevPart = db.tblFormPriorWritten_ReokePart.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokePart.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokePart();
-
-				formPWNRevPart.StudentId = sid;
-				formPWNRevPart.ParentName = GetInputValue("ParentName", spans);
-				formPWNRevPart.FormDate = GetInputValueDate("FormDate", spans);
-				formPWNRevPart.SubmitDate = GetInputValueDate("SubmitDate", spans);
-				formPWNRevPart.ActionTakenEndDate = GetInputValueDate("ActionTakenEndDate", spans);
-				formPWNRevPart.ServicesRevoked = GetInputValue("ServicesRevoked", spans);
-
-				formPWNRevPart.ActionTaken = GetCheckboxSingleInputValue("ActionTaken", checkboxes);
-				formPWNRevPart.ActionTakenDescription = GetInputValue("ActionTakenDescription", spans);
-				formPWNRevPart.ActionRefused = GetCheckboxSingleInputValue("ActionRefused", checkboxes);
-				formPWNRevPart.ActionRefusedDescription = GetInputValue("ActionRefusedDescription", spans);
-				formPWNRevPart.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
-				formPWNRevPart.DataUsed = GetInputValue("DataUsed", spans);
-				formPWNRevPart.OtherFactors = GetInputValue("OtherFactors", spans);
-
-				formPWNRevPart.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
-				formPWNRevPart.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
-				formPWNRevPart.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
-				formPWNRevPart.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
-				formPWNRevPart.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
-				formPWNRevPart.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
-				formPWNRevPart.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
-
-				if (formPWNRevPart.FormPriorWritten_ReokePartId == 0)
-				{
-					formPWNRevPart.CreatedBy = currentUser.UserID;
-					formPWNRevPart.Create_Date = DateTime.Now;
-					formPWNRevPart.ModifiedBy = currentUser.UserID;
-					formPWNRevPart.Update_Date = DateTime.Now;
-					db.tblFormPriorWritten_ReokePart.Add(formPWNRevPart);
-				}
-				else
-				{
-					formPWNRevPart.ModifiedBy = currentUser.UserID;
-					formPWNRevPart.Update_Date = DateTime.Now;
-				}
-				db.SaveChanges();
-			}
-			else if (formNameStr == "REVOCATION OF CONSENT-ALL SERVICES")
-			{
-				var formRevAll = db.tblFormRevokeConsentAlls.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentAlls.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentAll();
-
-				formRevAll.StudentId = sid;
-				formRevAll.AuthorityName = GetInputValue("AuthorityName", spans);
-				formRevAll.FormDate = GetInputValueDate("FormDate", spans);
-				formRevAll.RevokeConsentDate = GetInputValueDate("RevokeConsentDate", spans);
-				formRevAll.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
-				formRevAll.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
-
-				if (formRevAll.FormRevokeConsentAllId == 0)
-				{
-					formRevAll.CreatedBy = currentUser.UserID;
-					formRevAll.Create_Date = DateTime.Now;
-					formRevAll.ModifiedBy = currentUser.UserID;
-					formRevAll.Update_Date = DateTime.Now;
-					db.tblFormRevokeConsentAlls.Add(formRevAll);
-				}
-				else
-				{
-					formRevAll.ModifiedBy = currentUser.UserID;
-					formRevAll.Update_Date = DateTime.Now;
-				}
-				db.SaveChanges();
-			}
-			else if (formNameStr == "REVOCATION OF CONSENT-PARTICULAR SERVICES")
-			{
-				var formRevPart = db.tblFormRevokeConsentParts.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentParts.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentPart();
-
-				formRevPart.StudentId = sid;
-				formRevPart.AuthorityName = GetInputValue("AuthorityName", spans);
-				formRevPart.RepresenativeName = GetInputValue("RepresenativeName", spans);
-				formRevPart.RevokedServices = GetInputValue("RevokedServices", spans);
-				formRevPart.EffectiveDate = GetInputValueDate("EffectiveDate", spans);
-				formRevPart.StudentMeets = GetCheckboxSingleInputValue("StudentMeets", checkboxes);
-				formRevPart.StudentDoesNotMeet = GetCheckboxSingleInputValue("StudentDoesNotMeet", checkboxes);
-				formRevPart.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
-				formRevPart.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
-
-				if (formRevPart.FormRevokeConsentPartId == 0)
-				{
-					formRevPart.CreatedBy = currentUser.UserID;
-					formRevPart.Create_Date = DateTime.Now;
-					formRevPart.ModifiedBy = currentUser.UserID;
-					formRevPart.Update_Date = DateTime.Now;
-					db.tblFormRevokeConsentParts.Add(formRevPart);
-				}
-				else
-				{
-					formRevPart.ModifiedBy = currentUser.UserID;
-					formRevPart.Update_Date = DateTime.Now;
-				}
-				db.SaveChanges();
-			}
-			else if (formNameStr == "REQUEST FOR TRANSPORTATION")
-			{
-				var formTransRequest = db.tblFormTransportationRequests.Any(o => o.StudentId == sid) ? db.tblFormTransportationRequests.FirstOrDefault(o => o.StudentId == sid) : new tblFormTransportationRequest();
-				
-				formTransRequest.StudentId = sid;
-				formTransRequest.FormDate = GetInputValueDate("FormDate", spans);
-				formTransRequest.BeginDate = GetInputValueDate("BeginDate", spans);
-				formTransRequest.EndDate = GetInputValueDate("EndDate", spans);
-
-				formTransRequest.StudentName = GetInputValue("StudentName", spans);
-
-				formTransRequest.USD = GetInputValue("USD", spans);
-				formTransRequest.School = GetInputValue("School", spans);
-				formTransRequest.Grade = GetInputValue("Grade", spans);
-				formTransRequest.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
-				formTransRequest.ReceivingUSD = GetInputValue("ReceivingUSD", spans);
-				formTransRequest.TransportationDirector = GetInputValue("TransportationDirector", spans);
-				formTransRequest.TransportationDirectorPhone = GetInputValue("TransportationDirectorPhone", spans);
-				formTransRequest.ReceivingTeacherAndProgram = GetInputValue("ReceivingTeacherAndProgram", spans);
-
-				var hours = GetInputValue("Hours", spans);
-				if (!string.IsNullOrEmpty(hours)) {
-					decimal hourVal = 0;
-					Decimal.TryParse(hours, out hourVal);
-					formTransRequest.Hours = hourVal;
-				}
-
-				formTransRequest.Contact_1_Name = GetInputValue("Contact_1_Name", spans);
-				formTransRequest.Contact_1_HomePhone = GetInputValue("Contact_1_HomePhone", spans);
-				formTransRequest.Contact_1_WorkPhone = GetInputValue("Contact_1_WorkPhone", spans);
-				formTransRequest.Contact_2_Name = GetInputValue("Contact_2_Name", spans);
-				formTransRequest.Contact_2_HomePhone = GetInputValue("Contact_2_HomePhone", spans);
-				formTransRequest.Contact_2_WorkPhone = GetInputValue("Contact_2_WorkPhone", spans);
-				formTransRequest.BabySitterDaycareNameAndPhone = GetInputValue("BabySitterDaycareNameAndPhone", spans);
-				formTransRequest.HomeAddress = GetInputValue("HomeAddress", spans);
-				formTransRequest.FamilyPhysicianAndHosptial = GetInputValue("FamilyPhysicianAndHosptial", spans);
-				formTransRequest.PickupLocation = GetInputValue("PickupLocation", spans);
-				formTransRequest.ReturnLocation = GetInputValue("ReturnLocation", spans);
-				formTransRequest.WheelChair = GetCheckboxSingleInputValue("WheelChair", checkboxes);
-				formTransRequest.CarSeat = GetCheckboxSingleInputValue("CarSeat", checkboxes);
-				formTransRequest.SeatBelt = GetCheckboxSingleInputValue("SeatBelt", checkboxes);
-				formTransRequest.ChestHarness = GetCheckboxSingleInputValue("ChestHarness", checkboxes);
-				formTransRequest.BusLift = GetCheckboxSingleInputValue("BusLift", checkboxes);
-				formTransRequest.BoosterSeat = GetCheckboxSingleInputValue("BoosterSeat", checkboxes);
-				formTransRequest.Tray = GetCheckboxSingleInputValue("Tray", checkboxes);
-				formTransRequest.PersonalCareAttendant = GetCheckboxSingleInputValue("PersonalCareAttendant", checkboxes);
-				formTransRequest.AdductorInPlace = GetCheckboxSingleInputValue("AdductorInPlace", checkboxes);
-				formTransRequest.Communication = GetCheckboxSingleInputValue("Communication", checkboxes);
-				formTransRequest.Other = GetCheckboxSingleInputValue("Other", checkboxes);
-				formTransRequest.Other_Desc = GetInputValue("Other_Desc", spans);
-				formTransRequest.Documentation = GetInputValue("Documentation", spans);
-				formTransRequest.PositioningAndHandling = GetInputValue("PositioningAndHandling", spans);
-				formTransRequest.MeidicationAndSideEffects = GetInputValue("MeidicationAndSideEffects", spans);
-				formTransRequest.Equipment = GetInputValue("Equipment", spans);
-
-
-				if (formTransRequest.FormTransportationRequestId == 0)
-				{
-					formTransRequest.CreatedBy = currentUser.UserID;
-					formTransRequest.Create_Date = DateTime.Now;
-					formTransRequest.ModifiedBy = currentUser.UserID;
-					formTransRequest.Update_Date = DateTime.Now;
-					db.tblFormTransportationRequests.Add(formTransRequest);
-				}
-				else
-				{
-					formTransRequest.ModifiedBy = currentUser.UserID;
-					formTransRequest.Update_Date = DateTime.Now;
-				}
-				db.SaveChanges();
-
-			}
-		}
-
-		private DateTime? GetInputValueDate(string inputName, List<HtmlNode> inputs)
-		{
-			var dateStr = GetInputValue(inputName, inputs);
-
-			if (!string.IsNullOrEmpty(dateStr))
-			{
-				var dt = DateTime.MinValue;
-				DateTime.TryParse(dateStr, out dt);
-				if (dt != DateTime.MinValue)
-					return dt;
-			}
-
-			return null;
-		}
-
-		private string GetInputValue(string inputName, List<HtmlNode> inputs)
+        private bool ArchiveIEPPrint(int studentId, IEP theIEP, bool includeProgressReport)
+        {
+            bool success = false;
+
+            //create archive
+            try
+            {
+
+                if (theIEP != null)
+                {
+                    theIEP.studentDetails.printStudentInfo = true;
+                    theIEP.studentDetails.printIEPDetails = true;
+                    theIEP.studentDetails.printHealth = true;
+                    theIEP.studentDetails.printMotor = true;
+                    theIEP.studentDetails.printComm = true;
+                    theIEP.studentDetails.printSocial = true;
+                    theIEP.studentDetails.printGeneral = true;
+                    theIEP.studentDetails.printAcademic = true;
+                    theIEP.studentDetails.printAcc = true;
+                    theIEP.studentDetails.printBehavior = true;
+                    theIEP.studentDetails.printTrans = true;
+                    theIEP.studentDetails.printOther = true;
+                    theIEP.studentDetails.printGoals = true;
+                    theIEP.studentDetails.printServices = true;
+                    theIEP.studentDetails.printNotice = true;
+                    theIEP.studentDetails.printProgressReport = false;
+                    theIEP.studentDetails.isArchive = true;
+                    theIEP.isServerRender = true;
+                }
+
+                var data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+
+                string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
+                result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+                HtmlDocument doc = new HtmlDocument();
+                doc.OptionWriteEmptyNodes = true;
+                doc.OptionFixNestedTags = true;
+                doc.LoadHtml(result);
+
+                var studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
+                var moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
+                var mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+
+                if (includeProgressReport)
+                {
+                    //print progress report separately
+                    if (theIEP != null)
+                    {
+                        theIEP.studentDetails.printStudentInfo = false;
+                        theIEP.studentDetails.printIEPDetails = false;
+                        theIEP.studentDetails.printHealth = false;
+                        theIEP.studentDetails.printMotor = false;
+                        theIEP.studentDetails.printComm = false;
+                        theIEP.studentDetails.printSocial = false;
+                        theIEP.studentDetails.printGeneral = false;
+                        theIEP.studentDetails.printAcademic = false;
+                        theIEP.studentDetails.printAcc = false;
+                        theIEP.studentDetails.printBehavior = false;
+                        theIEP.studentDetails.printTrans = false;
+                        theIEP.studentDetails.printOther = false;
+                        theIEP.studentDetails.printGoals = false;
+                        theIEP.studentDetails.printServices = false;
+                        theIEP.studentDetails.printNotice = false;
+                        theIEP.studentDetails.printProgressReport = true;
+                        theIEP.studentDetails.isArchive = true;
+                        theIEP.isServerRender = true;
+                    }
+
+                    data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+
+                    result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
+                    result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
+                    doc = new HtmlDocument();
+                    doc.OptionWriteEmptyNodes = true;
+                    doc.OptionFixNestedTags = true;
+                    doc.LoadHtml(result);
+
+                    var progressModuleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
+                    var progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+                }
+
+                success = true;
+
+            }
+            catch (Exception e)
+            {
+                success = false;
+                Console.Write(e.InnerException.ToString());
+            }
+
+            return success;
+        }
+
+        #region FormPDFDownload
+        private void SaveFormValues(string HTMLContent, string formName, string studentId)
+        {
+            //capture data
+            int sid = !string.IsNullOrEmpty(studentId) ? Int32.Parse(studentId) : 0;
+
+            if (sid == 0)
+                return;
+
+            //var formList = GetForms();
+
+            tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+
+            HtmlDocument htmlDocument = new HtmlDocument();
+            htmlDocument.OptionWriteEmptyNodes = true;
+            htmlDocument.OptionFixNestedTags = true;
+            htmlDocument.LoadHtml(HTMLContent);
+
+            var spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
+            var checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+            var formNameStr = formName.ToUpper();
+
+
+            if (formNameStr == "TEAM EVALUATION REPORT")
+            {
+                var teamEval = db.tblFormTeamEvals.Any(o => o.StudentId == sid) ? db.tblFormTeamEvals.FirstOrDefault(o => o.StudentId == sid) : new tblFormTeamEval();
+
+                teamEval.StudentId = sid;
+                teamEval.ReasonReferral = GetInputValue("txtReasonReferral", spans);
+                teamEval.MedicalFindings = GetInputValue("txtMedicalFindings", spans);
+                teamEval.Hearing = GetInputValue("txtHearing", spans);
+                teamEval.Vision = GetInputValue("txtVision", spans);
+                teamEval.RelevantBehavior = GetInputValue("txtRelevantBehavior", spans);
+                teamEval.InfoReview = GetInputValue("txtInfoReview", spans);
+                teamEval.ParentInterview = GetInputValue("txtParentInterview", spans);
+                teamEval.TestData = GetInputValue("txtTestData", spans);
+                teamEval.IntellectualDevelopment = GetInputValue("txtIntellectualDevelopment", spans);
+                teamEval.Peformance = GetInputValue("txtPeformance", spans);
+                teamEval.Disadvantage = GetInputValue("txtDisadvantage", spans);
+                teamEval.DisadvantageExplain = GetInputValue("txtDisadvantageExplain", spans);
+                teamEval.Regulations = GetInputValue("txtRegulations", spans);
+                teamEval.SustainedResources = GetInputValue("txtSustainedResources", spans);
+                teamEval.Strengths = GetInputValue("txtStrengths", spans);
+                teamEval.AreaOfConcern = GetInputValue("txtAreaOfConcern", spans);
+                teamEval.GeneralEducationExpectations = GetInputValue("txtGeneralEducationExpectations", spans);
+                teamEval.Tried = GetInputValue("txtTried", spans);
+                teamEval.NotWorked = GetInputValue("txtNotWorked", spans);
+                teamEval.GeneralDirection = GetInputValue("txtGeneralDirection", spans);
+                teamEval.MeetEligibility = GetInputValue("txtMeetEligibility", spans);
+                teamEval.ResourcesNeeded = GetInputValue("txtResourcesNeeded", spans);
+                teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
+                teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
+                teamEval.ListSources = GetInputValue("txtListSources", spans);
+
+
+                teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
+                teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);
+                teamEval.ConvergentData_flag = GetCheckboxInputValue("ConvergentData_flag_Yes", "ConvergentData_flag_No", checkboxes);
+
+                if (teamEval.FormTeamEvalId == 0)
+                {
+                    teamEval.CreatedBy = currentUser.UserID;
+                    teamEval.Create_Date = DateTime.Now;
+                    teamEval.ModifiedBy = currentUser.UserID;
+                    teamEval.Update_Date = DateTime.Now;
+                    db.tblFormTeamEvals.Add(teamEval);
+                }
+                else
+                {
+                    teamEval.ModifiedBy = currentUser.UserID;
+                    teamEval.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "SUMMARY OF PERFORMANCE")
+            {
+                var summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
+
+                summaryPerf.StudentId = sid;
+                summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
+                summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
+                summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
+                summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
+                summaryPerf.Goal_Living = GetInputValue("Goal_Living", spans);
+                summaryPerf.Goal_LivingRecommendation = GetInputValue("Goal_LivingRecommendation", spans);
+                summaryPerf.AC_ReadingPerformance = GetInputValue("AC_ReadingPerformance", spans);
+                summaryPerf.AC_ReadingAccommodations = GetInputValue("AC_ReadingAccommodations", spans);
+                summaryPerf.AC_MathPerformance = GetInputValue("AC_MathPerformance", spans);
+                summaryPerf.AC_MathAccommodations = GetInputValue("AC_MathAccommodations", spans);
+                summaryPerf.AC_LanguagePerformance = GetInputValue("AC_LanguagePerformance", spans);
+                summaryPerf.AC_LanguageAccommodations = GetInputValue("AC_LanguageAccommodations", spans);
+                summaryPerf.AC_LearningPerformance = GetInputValue("AC_LearningPerformance", spans);
+                summaryPerf.AC_LearningAccommodations = GetInputValue("AC_LearningAccommodations", spans);
+                summaryPerf.AC_OtherPerformance = GetInputValue("AC_OtherPerformance", spans);
+                summaryPerf.AC_OtherAccommodations = GetInputValue("AC_OtherAccommodations", spans);
+                summaryPerf.Functional_SocialPerformance = GetInputValue("Functional_SocialPerformance", spans);
+                summaryPerf.Functional_SocialAccommodations = GetInputValue("Functional_SocialAccommodations", spans);
+                summaryPerf.Functional_LivingPerformance = GetInputValue("Functional_LivingPerformance", spans);
+                summaryPerf.Functional_LivingAccommodations = GetInputValue("Functional_LivingAccommodations", spans);
+                summaryPerf.Functional_MobiilityPerformance = GetInputValue("Functional_MobiilityPerformance", spans);
+                summaryPerf.Functional_MobiilityAccommodations = GetInputValue("Functional_MobiilityAccommodations", spans);
+                summaryPerf.Functional_AdvocacyPerformance = GetInputValue("Functional_AdvocacyPerformance", spans);
+                summaryPerf.Functional_AdvocacyAccommodations = GetInputValue("Functional_AdvocacyAccommodations", spans);
+                summaryPerf.Functional_EmploymentPerformance = GetInputValue("Functional_EmploymentPerformance", spans);
+                summaryPerf.Functional_EmploymentAccommodations = GetInputValue("Functional_EmploymentAccommodations", spans);
+                summaryPerf.Functional_AdditionsPerformance = GetInputValue("Functional_AdditionsPerformance", spans);
+                summaryPerf.Functional_AdditionsAccommodations = GetInputValue("Functional_AdditionsAccommodations", spans);
+                summaryPerf.DateCompleted = GetInputDateValue("DateCompleted", spans);
+                summaryPerf.Documentation_PsychologicalAssementName = GetInputValue("Documentation_PsychologicalAssementName", spans);
+                summaryPerf.Documentation_PsychologicalDate = GetInputDateValue("Documentation_PsychologicalDate", spans);
+                summaryPerf.Documentation_NeuropsychologicalAssementName = GetInputValue("Documentation_NeuropsychologicalAssementName", spans);
+                summaryPerf.Documentation_NeuropsychologicalDate = GetInputDateValue("Documentation_NeuropsychologicalDate", spans);
+                summaryPerf.Documentation_MedicalAssementName = GetInputValue("Documentation_MedicalAssementName", spans);
+                summaryPerf.Documentation_MedicalDate = GetInputDateValue("Documentation_MedicalDate", spans);
+                summaryPerf.Documentation_CommunicationAssementName = GetInputValue("Documentation_CommunicationAssementName", spans);
+                summaryPerf.Documentation_CommunicationDate = GetInputDateValue("Documentation_CommunicationDate", spans);
+                summaryPerf.Documentation_AdaptiveBehaviorAssementName = GetInputValue("Documentation_AdaptiveBehaviorAssementName", spans);
+                summaryPerf.Documentation_AdaptiveBehaviorDate = GetInputDateValue("Documentation_AdaptiveBehaviorDate", spans);
+                summaryPerf.Documentation_InterpersonalAssementName = GetInputValue("Documentation_InterpersonalAssementName", spans);
+                summaryPerf.Documentation_InterpersonalDate = GetInputDateValue("Documentation_InterpersonalDate", spans);
+                summaryPerf.Documentation_SpeechAssementName = GetInputValue("Documentation_SpeechAssementName", spans);
+                summaryPerf.Documentation_SpeechDate = GetInputDateValue("Documentation_SpeechDate", spans);
+                summaryPerf.Documentation_MTSSAssementName = GetInputValue("Documentation_MTSSAssementName", spans);
+                summaryPerf.Documentation_MTSSDate = GetInputDateValue("Documentation_MTSSDate", spans);
+                summaryPerf.Documentation_CareerAssementName = GetInputValue("Documentation_CareerAssementName", spans);
+                summaryPerf.Documentation_CareerDate = GetInputDateValue("Documentation_CareerDate", spans);
+                summaryPerf.Documentation_CommunityAssementName = GetInputValue("Documentation_CommunityAssementName", spans);
+                summaryPerf.Documentation_CommunityDate = GetInputDateValue("Documentation_CommunityDate", spans);
+                summaryPerf.Documentation_SelfDeterminationAssementName = GetInputValue("Documentation_SelfDeterminationAssementName", spans);
+                summaryPerf.Documentation_SelfDeterminationDate = GetInputDateValue("Documentation_SelfDeterminationDate", spans);
+                summaryPerf.Documentation_AssistiveTechAssementName = GetInputValue("Documentation_AssistiveTechAssementName", spans);
+                summaryPerf.Documentation_AssistiveTechDate = GetInputDateValue("Documentation_AssistiveTechDate", spans);
+                summaryPerf.Documentation_ClassroomAssementName = GetInputValue("Documentation_ClassroomAssementName", spans);
+                summaryPerf.Documentation_ClassroomDate = GetInputDateValue("Documentation_ClassroomDate", spans);
+                summaryPerf.Documentation_OtherAssementName = GetInputValue("Documentation_OtherAssementName", spans);
+                summaryPerf.Documentation_OtherDate = GetInputDateValue("Documentation_OtherDate", spans);
+                summaryPerf.AdditionalInformation = GetInputValue("AdditionalInformation", spans);
+
+
+                if (summaryPerf.FormSummaryPerformanceId == 0)
+                {
+                    summaryPerf.CreatedBy = currentUser.UserID;
+                    summaryPerf.Create_Date = DateTime.Now;
+                    summaryPerf.ModifiedBy = currentUser.UserID;
+                    summaryPerf.Update_Date = DateTime.Now;
+                    db.tblFormSummaryPerformances.Add(summaryPerf);
+                }
+                else
+                {
+                    summaryPerf.ModifiedBy = currentUser.UserID;
+                    summaryPerf.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "CONFERENCE SUMMARY")
+            {
+                var conf = db.tblFormConferenceSummaries.Any(o => o.StudentId == sid) ? db.tblFormConferenceSummaries.FirstOrDefault(o => o.StudentId == sid) : new tblFormConferenceSummary();
+
+                conf.StudentId = sid;
+                conf.BuildingAdministrator = GetInputValue("txtBuildingAdministrator", spans);
+                conf.RequestedBy = GetInputValue("txtRequestedBy", spans);
+                conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
+                conf.Conclusions = GetInputValue("txtConclusions", spans);
+                conf.PlacementCode = GetInputValue("PlacementCode", spans);
+
+                if (conf.FormConferenceSummaryId == 0)
+                {
+                    conf.CreatedBy = currentUser.UserID;
+                    conf.Create_Date = DateTime.Now;
+                    conf.ModifiedBy = currentUser.UserID;
+                    conf.Update_Date = DateTime.Now;
+                    db.tblFormConferenceSummaries.Add(conf);
+                }
+                else
+                {
+                    conf.ModifiedBy = currentUser.UserID;
+                    conf.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "IEP AMENDMENT FORM")
+            {
+                var formAmend = db.tblFormIEPAmendments.Any(o => o.StudentId == sid) ? db.tblFormIEPAmendments.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPAmendment();
+
+                formAmend.StudentId = sid;
+                formAmend.AgreeToAmmend = GetCheckboxSingleInputValue("AgreeToAmmend", checkboxes);
+                formAmend.DisagreeToAmmend = GetCheckboxSingleInputValue("DisagreeToAmmend", checkboxes);
+                formAmend.ConveneMeeting = GetCheckboxSingleInputValue("ConveneMeeting", checkboxes);
+                formAmend.DoNotConveneMeeting = GetCheckboxSingleInputValue("DoNotConveneMeeting", checkboxes);
+                formAmend.Description = GetInputValue("Description", spans);
+
+                if (formAmend.FormIEPAmendmentId == 0)
+                {
+                    formAmend.CreatedBy = currentUser.UserID;
+                    formAmend.Create_Date = DateTime.Now;
+                    formAmend.ModifiedBy = currentUser.UserID;
+                    formAmend.Update_Date = DateTime.Now;
+                    db.tblFormIEPAmendments.Add(formAmend);
+                }
+                else
+                {
+                    formAmend.ModifiedBy = currentUser.UserID;
+                    formAmend.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "IEP MEETING-CONSENT TO INVITE REPRESENTATIVE OF NON-EDUCATIONAL AGENCY")
+            {
+                var formMeetConsent = db.tblFormIEPMeetingConsentToInvites.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingConsentToInvites.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingConsentToInvite();
+
+                formMeetConsent.StudentId = sid;
+                formMeetConsent.FurtherInformed = GetCheckboxSingleInputValue("FurtherInformed", checkboxes);
+                formMeetConsent.ProvideTransitionService = GetCheckboxSingleInputValue("ProvideTransitionService", checkboxes);
+                formMeetConsent.ParticipatingAgency = GetInputValue("ParticipatingAgency", spans);
+                formMeetConsent.MeetingDate = GetInputValueDate("MeetingDate", spans);
+
+                if (formMeetConsent.FormIEPMeetingConsentToInviteId == 0)
+                {
+                    formMeetConsent.CreatedBy = currentUser.UserID;
+                    formMeetConsent.Create_Date = DateTime.Now;
+                    formMeetConsent.ModifiedBy = currentUser.UserID;
+                    formMeetConsent.Update_Date = DateTime.Now;
+                    db.tblFormIEPMeetingConsentToInvites.Add(formMeetConsent);
+                }
+                else
+                {
+                    formMeetConsent.ModifiedBy = currentUser.UserID;
+                    formMeetConsent.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "IEP MEETING-EXCUSAL FROM ATTENDANCE FORM")
+            {
+                var formExcusal = db.tblFormIEPMeetingExcusals.Any(o => o.StudentId == sid) ? db.tblFormIEPMeetingExcusals.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPMeetingExcusal();
+
+                formExcusal.StudentId = sid;
+                formExcusal.ParentName = GetInputValue("ParentName", spans);
+                formExcusal.SchoolRepresentative = GetInputValue("SchoolRepresentative", spans);
+                formExcusal.PositionOfRepresentative = GetInputValue("PositionOfRepresentative", spans);
+                formExcusal.PositionOfMemberNotAttending = GetInputValue("PositionOfMemberNotAttending", spans);
+
+                formExcusal.Services_MayBe_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_NonAttend", checkboxes);
+                formExcusal.Services_MayBe_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_PartialAttend", checkboxes);
+
+                formExcusal.Services_MayBe_ModOrDisc_IssueDiscussed = GetInputValue("Services_MayBe_ModOrDisc_IssueDiscussed", spans);
+                formExcusal.Services_Not_ModOrDisc_IssueDiscussed = GetInputValue("Services_Not_ModOrDisc_IssueDiscussed", spans);
+
+                formExcusal.Services_Not_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Agree", checkboxes);
+                formExcusal.Services_Not_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_Disagree", checkboxes);
+
+                formExcusal.Services_Not_ModOrDisc_NonAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_NonAttend", checkboxes);
+                formExcusal.Services_Not_ModOrDisc_PartialAttend = GetCheckboxSingleInputValue("Services_Not_ModOrDisc_PartialAttend", checkboxes);
+
+                formExcusal.Services_MayBe_ModOrDisc_Agree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Agree", checkboxes);
+                formExcusal.Services_MayBe_ModOrDisc_Disagree = GetCheckboxSingleInputValue("Services_MayBe_ModOrDisc_Disagree", checkboxes);
+
+                formExcusal.FormDate = GetInputValueDate("FormDate", spans);
+                formExcusal.IEPDate = GetInputValueDate("IEPDate", spans);
+
+                if (formExcusal.FormIEPMeetingExcusalId == 0)
+                {
+                    formExcusal.CreatedBy = currentUser.UserID;
+                    formExcusal.Create_Date = DateTime.Now;
+                    formExcusal.ModifiedBy = currentUser.UserID;
+                    formExcusal.Update_Date = DateTime.Now;
+                    db.tblFormIEPMeetingExcusals.Add(formExcusal);
+                }
+                else
+                {
+                    formExcusal.ModifiedBy = currentUser.UserID;
+                    formExcusal.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "IEP TEAM CONSIDERATIONS")
+            {
+                var formTeam = db.tblFormIEPTeamConsiderations.Any(o => o.StudentId == sid) ? db.tblFormIEPTeamConsiderations.FirstOrDefault(o => o.StudentId == sid) : new tblFormIEPTeamConsideration();
+
+                formTeam.StudentId = sid;
+                formTeam.ChildsStrength = GetInputValue("ChildsStrength", spans);
+                formTeam.UtilizeStrength = GetInputValue("UtilizeStrength", spans);
+                formTeam.ConcernsForEnhancing = GetInputValue("ConcernsForEnhancing", spans);
+                formTeam.ConcernsAddressesd = GetInputValue("ConcernsAddressesd", spans);
+                formTeam.HarmfulEffects = GetInputValue("HarmfulEffects", spans);
+                formTeam.PhysicalEducatoin = GetInputValue("PhysicalEducatoin", spans);
+                formTeam.ExtendedSchoolYear = GetInputValue("ExtendedSchoolYear", spans);
+                formTeam.NeedsBeenConsidered_Yes = GetCheckboxSingleInputValue("NeedsBeenConsidered_Yes", checkboxes);
+                formTeam.NeedsBeenConsidered_No = GetCheckboxSingleInputValue("NeedsBeenConsidered_No", checkboxes);
+                formTeam.NeedsBeenConsidered_Desc = GetInputValue("NeedsBeenConsidered_Desc", spans);
+                formTeam.BehaviorImpede_Yes = GetCheckboxSingleInputValue("BehaviorImpede_Yes", checkboxes);
+                formTeam.BehaviorImpede_No = GetCheckboxSingleInputValue("BehaviorImpede_No", checkboxes);
+                formTeam.BehaviorImpede_Desc = GetInputValue("BehaviorImpede_Desc", spans);
+                formTeam.InstructionInBraille_Yes = GetCheckboxSingleInputValue("InstructionInBraille_Yes", checkboxes);
+                formTeam.InstructionInBraille_No = GetCheckboxSingleInputValue("InstructionInBraille_No", checkboxes);
+                formTeam.InstructionInBraille_Desc = GetInputValue("InstructionInBraille_Desc", spans);
+                formTeam.LimitedEnglish_Yes = GetCheckboxSingleInputValue("LimitedEnglish_Yes", checkboxes);
+                formTeam.LimitedEnglish_No = GetCheckboxSingleInputValue("LimitedEnglish_No", checkboxes);
+                formTeam.LimitedEnglish_Desc = GetInputValue("LimitedEnglish_Desc", spans);
+                formTeam.CommunicationNeeds_Yes = GetCheckboxSingleInputValue("CommunicationNeeds_Yes", checkboxes);
+                formTeam.CommunicationNeeds_No = GetCheckboxSingleInputValue("CommunicationNeeds_No", checkboxes);
+                formTeam.CommunicationNeeds_Desc = GetInputValue("CommunicationNeeds_Desc", spans);
+                formTeam.HearingCommunicationNeeds_Yes = GetCheckboxSingleInputValue("HearingCommunicationNeeds_Yes", checkboxes);
+                formTeam.HearingCommunicationNeeds_No = GetCheckboxSingleInputValue("HearingCommunicationNeeds_No", checkboxes);
+                formTeam.HearingCommunicationNeeds_Desc = GetInputValue("HearingCommunicationNeeds_Desc", spans);
+                formTeam.AssistiveTech_Yes = GetCheckboxSingleInputValue("AssistiveTech_Yes", checkboxes);
+                formTeam.AssistiveTech_No = GetCheckboxSingleInputValue("AssistiveTech_No", checkboxes);
+                formTeam.AssistiveTech_Desc = GetInputValue("AssistiveTech_Desc", spans);
+                formTeam.IEPMeetingDate = GetInputValueDate("IEPMeetingDate", spans);
+
+                if (formTeam.FormIEPTeamConsiderationsId == 0)
+                {
+                    formTeam.CreatedBy = currentUser.UserID;
+                    formTeam.Create_Date = DateTime.Now;
+                    formTeam.ModifiedBy = currentUser.UserID;
+                    formTeam.Update_Date = DateTime.Now;
+                    db.tblFormIEPTeamConsiderations.Add(formTeam);
+                }
+                else
+                {
+                    formTeam.ModifiedBy = currentUser.UserID;
+                    formTeam.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "MANIFESTATION DETERMINATION REVIEW FORM")
+            {
+                var formMani = db.tblFormManifestationDeterminiations.Any(o => o.StudentId == sid) ? db.tblFormManifestationDeterminiations.FirstOrDefault(o => o.StudentId == sid) : new tblFormManifestationDeterminiation();
+
+                formMani.StudentId = sid;
+                formMani.FormDate = GetInputValueDate("FormDate", spans);
+                formMani.StudentBehavior = GetInputValue("StudentBehavior", spans);
+                formMani.StudentIEP = GetInputValue("StudentIEP", spans);
+                formMani.TeacherObservation = GetInputValue("TeacherObservation", spans);
+                formMani.ParentInformation = GetInputValue("ParentInformation", spans);
+                formMani.OtherInformation = GetInputValue("OtherInformation", spans);
+                formMani.IsManifestationOfDisability = GetCheckboxSingleInputValue("IsManifestationOfDisability", checkboxes);
+                formMani.StudentWillReturn = GetCheckboxSingleInputValue("StudentWillReturn", checkboxes);
+                formMani.BehaviorPlan_IsManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_IsManifest_Develop", checkboxes);
+                formMani.ReviewBehaviorPlan = GetCheckboxSingleInputValue("ReviewBehaviorPlan", checkboxes);
+                formMani.IsNotManifestationOfDisability = GetCheckboxSingleInputValue("IsNotManifestationOfDisability", checkboxes);
+                formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
+                formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
+                formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
+                formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
+                formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
+                formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
+
+                if (formMani.FormManifestationDeterminiationId == 0)
+                {
+                    formMani.CreatedBy = currentUser.UserID;
+                    formMani.Create_Date = DateTime.Now;
+                    formMani.ModifiedBy = currentUser.UserID;
+                    formMani.Update_Date = DateTime.Now;
+                    db.tblFormManifestationDeterminiations.Add(formMani);
+                }
+                else
+                {
+                    formMani.ModifiedBy = currentUser.UserID;
+                    formMani.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+
+                //get member info
+
+                //delete all
+                foreach (var existingPD in db.tblFormManifestDeterm_TeamMembers.Where(o => o.FormManifestationDeterminiationId == formMani.FormManifestationDeterminiationId))
+                {
+                    db.tblFormManifestDeterm_TeamMembers.Remove(existingPD);
+                }
+
+                db.SaveChanges();
+
+                //add back
+                var memberPresentSpans = spans.Where(o => o.HasClass("memberPresent")).ToList();
+                foreach (var mp in memberPresentSpans.Where(o => o.HasClass("memberName")))
+                {
+                    var elementId = mp.Id;  // = memberPresentTitle_0"
+                    string[] elementSplit = elementId.Split('_');
+                    if (elementSplit.Length > 1)
+                    {
+                        bool isDissent = mp.HasClass("dissent");
+                        HtmlNode elementTitle = null;
+                        if (isDissent)
+                        {
+                            elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && o.HasClass("dissent")).FirstOrDefault();
+                        }
+                        else
+                        {
+                            elementTitle = memberPresentSpans.Where(o => o.Id == "memberPresentTitle_" + elementSplit[1] && !o.HasClass("dissent")).FirstOrDefault();
+                        }
+
+                        var teamMember = new tblFormManifestDeterm_TeamMembers()
+                        {
+                            Name = mp.InnerHtml,
+                            Title = elementTitle != null ? elementTitle.InnerHtml : "",
+                            Dissenting = isDissent,
+                            StudentId = sid,
+                            FormManifestationDeterminiationId = formMani.FormManifestationDeterminiationId,
+                            CreatedBy = currentUser.UserID,
+
+                        };
+
+                        if (!string.IsNullOrEmpty(teamMember.Name))
+                            db.tblFormManifestDeterm_TeamMembers.Add(teamMember);
+
+                    }
+                }
+
+                db.SaveChanges();
+
+            }
+            else if (formNameStr == "NOTICE OF MEETING")
+            {
+                var formNotice = db.tblFormNoticeOfMeetings.Any(o => o.StudentId == sid) ? db.tblFormNoticeOfMeetings.FirstOrDefault(o => o.StudentId == sid) : new tblFormNoticeOfMeeting();
+
+                formNotice.StudentId = sid;
+
+                //formNotice.ParentName = GetInputValue("ParentName", spans);
+                formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
+                formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
+                formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);
+                formNotice.DiscussIEPChanges = GetCheckboxSingleInputValue("DiscussIEPChanges", checkboxes);
+                formNotice.AnnualIEPReview = GetCheckboxSingleInputValue("AnnualIEPReview", checkboxes);
+                formNotice.TransitionAssesment = GetCheckboxSingleInputValue("TransitionAssesment", checkboxes);
+                formNotice.Other = GetCheckboxSingleInputValue("Other", checkboxes);
+                formNotice.SpecialExpertise1 = GetInputValue("SpecialExpertise1", spans);
+                formNotice.SpecialExpertise2 = GetInputValue("SpecialExpertise2", spans);
+                formNotice.SpecialExpertise3 = GetInputValue("SpecialExpertise3", spans);
+                formNotice.SpecialExpertise4 = GetInputValue("SpecialExpertise4", spans);
+                formNotice.SpecialExpertise5 = GetInputValue("SpecialExpertise5", spans);
+                formNotice.SpecialExpertise6 = GetInputValue("SpecialExpertise6", spans);
+                formNotice.AgencyStaff = GetInputValue("AgencyStaff", spans);
+                formNotice.SchoolContactName = GetInputValue("SchoolContactName", spans);
+                formNotice.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+                formNotice.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+                formNotice.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+                formNotice.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+                formNotice.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+                formNotice.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+                formNotice.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+                formNotice.PlanToAttend = GetCheckboxSingleInputValue("PlanToAttend", checkboxes);
+                formNotice.RescheduleMeeting = GetCheckboxSingleInputValue("RescheduleMeeting", checkboxes);
+                formNotice.AvaliableToAttend_flag = GetCheckboxSingleInputValue("AvaliableToAttend_flag", checkboxes);
+                formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
+                formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
+                formNotice.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+                if (formNotice.FormNoticeOfMeetingId == 0)
+                {
+                    formNotice.CreatedBy = currentUser.UserID;
+                    formNotice.Create_Date = DateTime.Now;
+                    formNotice.ModifiedBy = currentUser.UserID;
+                    formNotice.Update_Date = DateTime.Now;
+                    db.tblFormNoticeOfMeetings.Add(formNotice);
+                }
+                else
+                {
+                    formNotice.ModifiedBy = currentUser.UserID;
+                    formNotice.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "PARENT CONSENT FOR RELEASE OF INFORMATION AND MEDICAID REIMBURSEMENT")
+            {
+                var formParentConsent = db.tblFormParentConsents.Any(o => o.StudentId == sid) ? db.tblFormParentConsents.FirstOrDefault(o => o.StudentId == sid) : new tblFormParentConsent();
+
+                formParentConsent.StudentId = sid;
+                formParentConsent.School = GetInputValue("School", spans);
+                formParentConsent.GiveConsent = GetCheckboxSingleInputValue("GiveConsent", checkboxes);
+                formParentConsent.DoNotGiveConsent = GetCheckboxSingleInputValue("DoNotGiveConsent", checkboxes);
+                formParentConsent.BeginDate = GetInputValueDate("BeginDate", spans);
+
+                if (formParentConsent.FormParentConsentId == 0)
+                {
+                    formParentConsent.CreatedBy = currentUser.UserID;
+                    formParentConsent.Create_Date = DateTime.Now;
+                    formParentConsent.ModifiedBy = currentUser.UserID;
+                    formParentConsent.Update_Date = DateTime.Now;
+                    db.tblFormParentConsents.Add(formParentConsent);
+                }
+                else
+                {
+                    formParentConsent.ModifiedBy = currentUser.UserID;
+                    formParentConsent.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+
+            }
+            else if (formNameStr == "PHYSICIAN SCRIPT")
+            {
+                var formPhysicianScript = db.tblFormPhysicianScripts.Any(o => o.StudentId == sid) ? db.tblFormPhysicianScripts.FirstOrDefault(o => o.StudentId == sid) : new tblFormPhysicianScript();
+
+                formPhysicianScript.StudentId = sid;
+                formPhysicianScript.PhysicianName = GetInputValue("PhysicianName", spans);
+                formPhysicianScript.FormDate = GetInputValueDate("FormDate", spans);
+
+                if (formPhysicianScript.FormPhysicianScriptId == 0)
+                {
+                    formPhysicianScript.CreatedBy = currentUser.UserID;
+                    formPhysicianScript.Create_Date = DateTime.Now;
+                    formPhysicianScript.ModifiedBy = currentUser.UserID;
+                    formPhysicianScript.Update_Date = DateTime.Now;
+                    db.tblFormPhysicianScripts.Add(formPhysicianScript);
+                }
+                else
+                {
+                    formPhysicianScript.ModifiedBy = currentUser.UserID;
+                    formPhysicianScript.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+
+            }
+            else if (formNameStr == "PRIOR WRITTEN NOTICE - IDENTIFICATION")
+            {
+                var formPWN = db.tblFormPriorWritten_Ident.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Ident.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Ident();
+
+                formPWN.StudentId = sid;
+                formPWN.ParentName = GetInputValue("ParentName", spans);
+                formPWN.FormDate = GetInputValueDate("FormDate", spans);
+                formPWN.MeetingDate = GetInputValueDate("MeetingDate", spans);
+                formPWN.ChildSPEDEligible = GetCheckboxSingleInputValue("ChildSPEDEligible", checkboxes);
+                formPWN.SPEDNeeded = GetCheckboxSingleInputValue("SPEDNeeded", checkboxes);
+                formPWN.SPEDPlacement = GetCheckboxSingleInputValue("SPEDPlacement", checkboxes);
+                formPWN.ModificationsThatEnableSPED = GetCheckboxSingleInputValue("ModificationsThatEnableSPED", checkboxes);
+                formPWN.Identification_Section = GetCheckboxSingleInputValue("Identification_Section", checkboxes);
+                formPWN.ChildIsEligible = GetCheckboxSingleInputValue("ChildIsEligible", checkboxes);
+                formPWN.ChildMeetsCriteria = GetCheckboxSingleInputValue("ChildMeetsCriteria", checkboxes);
+                formPWN.SPEDNecessary = GetCheckboxSingleInputValue("SPEDNecessary", checkboxes);
+                formPWN.ChildNotElgible = GetCheckboxSingleInputValue("ChildNotElgible", checkboxes);
+                formPWN.ChildDoesNotMeetCriteria = GetCheckboxSingleInputValue("ChildDoesNotMeetCriteria", checkboxes);
+                formPWN.SPEDNotNecessary = GetCheckboxSingleInputValue("SPEDNotNecessary", checkboxes);
+                formPWN.InitialServices_Section = GetCheckboxSingleInputValue("InitialServices_Section", checkboxes);
+                formPWN.ChangesInService_Section = GetCheckboxSingleInputValue("ChangesInService_Section", checkboxes);
+                formPWN.ChangeInService = GetCheckboxSingleInputValue("ChangeInService", checkboxes);
+                formPWN.MaterialChangeInService = GetCheckboxSingleInputValue("MaterialChangeInService", checkboxes);
+                formPWN.ChangeInPlacement_Section = GetCheckboxSingleInputValue("ChangeInPlacement_Section", checkboxes);
+                formPWN.ChangeInPlacements = GetCheckboxSingleInputValue("ChangeInPlacements", checkboxes);
+                formPWN.SubstantialChangeInPlacement = GetCheckboxSingleInputValue("SubstantialChangeInPlacement", checkboxes);
+                formPWN.OtherChanges = GetCheckboxSingleInputValue("OtherChanges", checkboxes);
+                formPWN.LEARefusesToChangeIdentification = GetCheckboxSingleInputValue("LEARefusesToChangeIdentification", checkboxes);
+                formPWN.DescriptionOfAction = GetInputValue("DescriptionOfAction", spans);
+                formPWN.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
+                formPWN.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+                formPWN.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
+                formPWN.OtherFactors = GetInputValue("OtherFactors", spans);
+                formPWN.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+                formPWN.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+                formPWN.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+                formPWN.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+                formPWN.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+                formPWN.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+                formPWN.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+                formPWN.SchoolContact = GetInputValue("SchoolContact", spans);
+                formPWN.SchoolContactAddress = GetInputValue("SchoolContactAddress", spans);
+                formPWN.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+                formPWN.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
+                formPWN.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
+
+
+                if (formPWN.FormPriorWritten_IdentId == 0)
+                {
+                    formPWN.CreatedBy = currentUser.UserID;
+                    formPWN.Create_Date = DateTime.Now;
+                    formPWN.ModifiedBy = currentUser.UserID;
+                    formPWN.Update_Date = DateTime.Now;
+                    db.tblFormPriorWritten_Ident.Add(formPWN);
+                }
+                else
+                {
+                    formPWN.ModifiedBy = currentUser.UserID;
+                    formPWN.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+
+            }
+            else if (formNameStr == "PRIOR WRITTEN NOTICE - EVALUATION -ENGLISH")
+            {
+                var formPWNEval = db.tblFormPriorWritten_Eval.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_Eval.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_Eval();
+
+                formPWNEval.StudentId = sid;
+                formPWNEval.ParentName = GetInputValue("ParentName", spans);
+                formPWNEval.FormDate = GetInputValueDate("FormDate", spans);
+
+                formPWNEval.InitialEval = GetCheckboxSingleInputValue("InitialEval", checkboxes);
+                formPWNEval.InitialEval_NoAdditional = GetCheckboxSingleInputValue("InitialEval_NoAdditional", checkboxes);
+                formPWNEval.Reeval = GetCheckboxSingleInputValue("Reeval", checkboxes);
+                formPWNEval.Reeval_NoAdditional = GetCheckboxSingleInputValue("Reeval_NoAdditional", checkboxes);
+                formPWNEval.Refuse_InitialEval = GetCheckboxSingleInputValue("Refuse_InitialEval", checkboxes);
+                formPWNEval.Refuse_Reeval = GetCheckboxSingleInputValue("Refuse_Reeval", checkboxes);
+                formPWNEval.SchoolContact = GetInputValue("SchoolContact", spans);
+                formPWNEval.SchoolContactPhone = GetInputValue("SchoolContactPhone", spans);
+                formPWNEval.NewData_HealthMotor = GetCheckboxSingleInputValue("NewData_HealthMotor", checkboxes);
+                formPWNEval.ExistingData_HealthMotor = GetCheckboxSingleInputValue("ExistingData_HealthMotor", checkboxes);
+                formPWNEval.NewData_Vision = GetCheckboxSingleInputValue("NewData_Vision", checkboxes);
+                formPWNEval.ExistingData_Vision = GetCheckboxSingleInputValue("ExistingData_Vision", checkboxes);
+                formPWNEval.NewData_Hearing = GetCheckboxSingleInputValue("NewData_Hearing", checkboxes);
+                formPWNEval.ExistingData_Hearing = GetCheckboxSingleInputValue("ExistingData_Hearing", checkboxes);
+                formPWNEval.NewData_SEBStatus = GetCheckboxSingleInputValue("NewData_SEBStatus", checkboxes);
+                formPWNEval.ExistingData_SEBStatus = GetCheckboxSingleInputValue("ExistingData_SEBStatus", checkboxes);
+                formPWNEval.NewData_GenIntelligence = GetCheckboxSingleInputValue("NewData_GenIntelligence", checkboxes);
+                formPWNEval.ExistingData_GenIntelligence = GetCheckboxSingleInputValue("ExistingData_GenIntelligence", checkboxes);
+                formPWNEval.NewData_Academic = GetCheckboxSingleInputValue("NewData_Academic", checkboxes);
+                formPWNEval.ExistingData_Academic = GetCheckboxSingleInputValue("ExistingData_Academic", checkboxes);
+                formPWNEval.NewData_Communicative = GetCheckboxSingleInputValue("NewData_Communicative", checkboxes);
+                formPWNEval.ExistingData_Communicative = GetCheckboxSingleInputValue("ExistingData_Communicative", checkboxes);
+                formPWNEval.NewData_Transistion = GetCheckboxSingleInputValue("NewData_Transistion", checkboxes);
+                formPWNEval.ExistingData_Transistion = GetCheckboxSingleInputValue("ExistingData_Transistion", checkboxes);
+                formPWNEval.NewData_OtherData = GetCheckboxSingleInputValue("NewData_OtherData", checkboxes);
+                formPWNEval.ExistingData_OtherData = GetCheckboxSingleInputValue("ExistingData_OtherData", checkboxes);
+                formPWNEval.OtherData_Desc = GetInputValue("OtherData_Desc", spans);
+
+
+                formPWNEval.ExplaninationWhy = GetInputValue("ExplaninationWhy", spans);
+                formPWNEval.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+                formPWNEval.DescriptionOfData = GetInputValue("DescriptionOfData", spans);
+                formPWNEval.OtherFactors = GetInputValue("OtherFactors", spans);
+                formPWNEval.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+                formPWNEval.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+                formPWNEval.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+                formPWNEval.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+                formPWNEval.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+                formPWNEval.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+                formPWNEval.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+                formPWNEval.GivenConsent = GetCheckboxSingleInputValue("GivenConsent", checkboxes);
+                formPWNEval.RefuseConsent = GetCheckboxSingleInputValue("RefuseConsent", checkboxes);
+
+                if (formPWNEval.FormPriorWritten_EvalId == 0)
+                {
+                    formPWNEval.CreatedBy = currentUser.UserID;
+                    formPWNEval.Create_Date = DateTime.Now;
+                    formPWNEval.ModifiedBy = currentUser.UserID;
+                    formPWNEval.Update_Date = DateTime.Now;
+                    db.tblFormPriorWritten_Eval.Add(formPWNEval);
+                }
+                else
+                {
+                    formPWNEval.ModifiedBy = currentUser.UserID;
+                    formPWNEval.Update_Date = DateTime.Now;
+                }
+
+                db.SaveChanges();
+            }
+            else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF ALL SERVICES")
+            {
+                var formPWNRevAll = db.tblFormPriorWritten_ReokeAll.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokeAll.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokeAll();
+
+                formPWNRevAll.StudentId = sid;
+                formPWNRevAll.ParentName = GetInputValue("ParentName", spans);
+                formPWNRevAll.FormDate = GetInputValueDate("FormDate", spans);
+                formPWNRevAll.MeetingDate = GetInputValueDate("MeetingDate", spans);
+                formPWNRevAll.EndDate = GetInputValueDate("EndDate", spans);
+                formPWNRevAll.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+                formPWNRevAll.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+                formPWNRevAll.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+                formPWNRevAll.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+                formPWNRevAll.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+                formPWNRevAll.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+                formPWNRevAll.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+                if (formPWNRevAll.FormPriorWritten_ReokeAllId == 0)
+                {
+                    formPWNRevAll.CreatedBy = currentUser.UserID;
+                    formPWNRevAll.Create_Date = DateTime.Now;
+                    formPWNRevAll.ModifiedBy = currentUser.UserID;
+                    formPWNRevAll.Update_Date = DateTime.Now;
+                    db.tblFormPriorWritten_ReokeAll.Add(formPWNRevAll);
+                }
+                else
+                {
+                    formPWNRevAll.ModifiedBy = currentUser.UserID;
+                    formPWNRevAll.Update_Date = DateTime.Now;
+                }
+                db.SaveChanges();
+            }
+            else if (formNameStr == "PRIOR WRITTEN NOTICE-REVOCATION OF PARTICULAR SERVICES")
+            {
+                var formPWNRevPart = db.tblFormPriorWritten_ReokePart.Any(o => o.StudentId == sid) ? db.tblFormPriorWritten_ReokePart.FirstOrDefault(o => o.StudentId == sid) : new tblFormPriorWritten_ReokePart();
+
+                formPWNRevPart.StudentId = sid;
+                formPWNRevPart.ParentName = GetInputValue("ParentName", spans);
+                formPWNRevPart.FormDate = GetInputValueDate("FormDate", spans);
+                formPWNRevPart.SubmitDate = GetInputValueDate("SubmitDate", spans);
+                formPWNRevPart.ActionTakenEndDate = GetInputValueDate("ActionTakenEndDate", spans);
+                formPWNRevPart.ServicesRevoked = GetInputValue("ServicesRevoked", spans);
+
+                formPWNRevPart.ActionTaken = GetCheckboxSingleInputValue("ActionTaken", checkboxes);
+                formPWNRevPart.ActionTakenDescription = GetInputValue("ActionTakenDescription", spans);
+                formPWNRevPart.ActionRefused = GetCheckboxSingleInputValue("ActionRefused", checkboxes);
+                formPWNRevPart.ActionRefusedDescription = GetInputValue("ActionRefusedDescription", spans);
+                formPWNRevPart.OptionsConsidered = GetInputValue("OptionsConsidered", spans);
+                formPWNRevPart.DataUsed = GetInputValue("DataUsed", spans);
+                formPWNRevPart.OtherFactors = GetInputValue("OtherFactors", spans);
+
+                formPWNRevPart.DeliveriedByWho = GetInputValue("DeliveriedByWho", spans);
+                formPWNRevPart.DelieveredByHand = GetCheckboxSingleInputValue("DelieveredByHand", checkboxes);
+                formPWNRevPart.DelieveredByMail = GetCheckboxSingleInputValue("DelieveredByMail", checkboxes);
+                formPWNRevPart.DelieveredByOther = GetCheckboxSingleInputValue("DelieveredByOther", checkboxes);
+                formPWNRevPart.DelieveredByOtherDesc = GetInputValue("DelieveredByOtherDesc", spans);
+                formPWNRevPart.DeliveriedTo = GetInputValue("DeliveriedTo", spans);
+                formPWNRevPart.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+
+                if (formPWNRevPart.FormPriorWritten_ReokePartId == 0)
+                {
+                    formPWNRevPart.CreatedBy = currentUser.UserID;
+                    formPWNRevPart.Create_Date = DateTime.Now;
+                    formPWNRevPart.ModifiedBy = currentUser.UserID;
+                    formPWNRevPart.Update_Date = DateTime.Now;
+                    db.tblFormPriorWritten_ReokePart.Add(formPWNRevPart);
+                }
+                else
+                {
+                    formPWNRevPart.ModifiedBy = currentUser.UserID;
+                    formPWNRevPart.Update_Date = DateTime.Now;
+                }
+                db.SaveChanges();
+            }
+            else if (formNameStr == "REVOCATION OF CONSENT-ALL SERVICES")
+            {
+                var formRevAll = db.tblFormRevokeConsentAlls.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentAlls.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentAll();
+
+                formRevAll.StudentId = sid;
+                formRevAll.AuthorityName = GetInputValue("AuthorityName", spans);
+                formRevAll.FormDate = GetInputValueDate("FormDate", spans);
+                formRevAll.RevokeConsentDate = GetInputValueDate("RevokeConsentDate", spans);
+                formRevAll.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
+                formRevAll.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
+
+                if (formRevAll.FormRevokeConsentAllId == 0)
+                {
+                    formRevAll.CreatedBy = currentUser.UserID;
+                    formRevAll.Create_Date = DateTime.Now;
+                    formRevAll.ModifiedBy = currentUser.UserID;
+                    formRevAll.Update_Date = DateTime.Now;
+                    db.tblFormRevokeConsentAlls.Add(formRevAll);
+                }
+                else
+                {
+                    formRevAll.ModifiedBy = currentUser.UserID;
+                    formRevAll.Update_Date = DateTime.Now;
+                }
+                db.SaveChanges();
+            }
+            else if (formNameStr == "REVOCATION OF CONSENT-PARTICULAR SERVICES")
+            {
+                var formRevPart = db.tblFormRevokeConsentParts.Any(o => o.StudentId == sid) ? db.tblFormRevokeConsentParts.FirstOrDefault(o => o.StudentId == sid) : new tblFormRevokeConsentPart();
+
+                formRevPart.StudentId = sid;
+                formRevPart.AuthorityName = GetInputValue("AuthorityName", spans);
+                formRevPart.RepresenativeName = GetInputValue("RepresenativeName", spans);
+                formRevPart.RevokedServices = GetInputValue("RevokedServices", spans);
+                formRevPart.EffectiveDate = GetInputValueDate("EffectiveDate", spans);
+                formRevPart.StudentMeets = GetCheckboxSingleInputValue("StudentMeets", checkboxes);
+                formRevPart.StudentDoesNotMeet = GetCheckboxSingleInputValue("StudentDoesNotMeet", checkboxes);
+                formRevPart.OnBehalfOfStudent = GetCheckboxSingleInputValue("OnBehalfOfStudent", checkboxes);
+                formRevPart.OnMyOwnBehalf = GetCheckboxSingleInputValue("OnMyOwnBehalf", checkboxes);
+
+                if (formRevPart.FormRevokeConsentPartId == 0)
+                {
+                    formRevPart.CreatedBy = currentUser.UserID;
+                    formRevPart.Create_Date = DateTime.Now;
+                    formRevPart.ModifiedBy = currentUser.UserID;
+                    formRevPart.Update_Date = DateTime.Now;
+                    db.tblFormRevokeConsentParts.Add(formRevPart);
+                }
+                else
+                {
+                    formRevPart.ModifiedBy = currentUser.UserID;
+                    formRevPart.Update_Date = DateTime.Now;
+                }
+                db.SaveChanges();
+            }
+            else if (formNameStr == "REQUEST FOR TRANSPORTATION")
+            {
+                var formTransRequest = db.tblFormTransportationRequests.Any(o => o.StudentId == sid) ? db.tblFormTransportationRequests.FirstOrDefault(o => o.StudentId == sid) : new tblFormTransportationRequest();
+
+                formTransRequest.StudentId = sid;
+                formTransRequest.FormDate = GetInputValueDate("FormDate", spans);
+                formTransRequest.BeginDate = GetInputValueDate("BeginDate", spans);
+                formTransRequest.EndDate = GetInputValueDate("EndDate", spans);
+
+                formTransRequest.StudentName = GetInputValue("StudentName", spans);
+
+                formTransRequest.USD = GetInputValue("USD", spans);
+                formTransRequest.School = GetInputValue("School", spans);
+                formTransRequest.Grade = GetInputValue("Grade", spans);
+                formTransRequest.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
+                formTransRequest.ReceivingUSD = GetInputValue("ReceivingUSD", spans);
+                formTransRequest.TransportationDirector = GetInputValue("TransportationDirector", spans);
+                formTransRequest.TransportationDirectorPhone = GetInputValue("TransportationDirectorPhone", spans);
+                formTransRequest.ReceivingTeacherAndProgram = GetInputValue("ReceivingTeacherAndProgram", spans);
+
+                var hours = GetInputValue("Hours", spans);
+                if (!string.IsNullOrEmpty(hours))
+                {
+                    decimal hourVal = 0;
+                    Decimal.TryParse(hours, out hourVal);
+                    formTransRequest.Hours = hourVal;
+                }
+
+                formTransRequest.Contact_1_Name = GetInputValue("Contact_1_Name", spans);
+                formTransRequest.Contact_1_HomePhone = GetInputValue("Contact_1_HomePhone", spans);
+                formTransRequest.Contact_1_WorkPhone = GetInputValue("Contact_1_WorkPhone", spans);
+                formTransRequest.Contact_2_Name = GetInputValue("Contact_2_Name", spans);
+                formTransRequest.Contact_2_HomePhone = GetInputValue("Contact_2_HomePhone", spans);
+                formTransRequest.Contact_2_WorkPhone = GetInputValue("Contact_2_WorkPhone", spans);
+                formTransRequest.BabySitterDaycareNameAndPhone = GetInputValue("BabySitterDaycareNameAndPhone", spans);
+                formTransRequest.HomeAddress = GetInputValue("HomeAddress", spans);
+                formTransRequest.FamilyPhysicianAndHosptial = GetInputValue("FamilyPhysicianAndHosptial", spans);
+                formTransRequest.PickupLocation = GetInputValue("PickupLocation", spans);
+                formTransRequest.ReturnLocation = GetInputValue("ReturnLocation", spans);
+                formTransRequest.WheelChair = GetCheckboxSingleInputValue("WheelChair", checkboxes);
+                formTransRequest.CarSeat = GetCheckboxSingleInputValue("CarSeat", checkboxes);
+                formTransRequest.SeatBelt = GetCheckboxSingleInputValue("SeatBelt", checkboxes);
+                formTransRequest.ChestHarness = GetCheckboxSingleInputValue("ChestHarness", checkboxes);
+                formTransRequest.BusLift = GetCheckboxSingleInputValue("BusLift", checkboxes);
+                formTransRequest.BoosterSeat = GetCheckboxSingleInputValue("BoosterSeat", checkboxes);
+                formTransRequest.Tray = GetCheckboxSingleInputValue("Tray", checkboxes);
+                formTransRequest.PersonalCareAttendant = GetCheckboxSingleInputValue("PersonalCareAttendant", checkboxes);
+                formTransRequest.AdductorInPlace = GetCheckboxSingleInputValue("AdductorInPlace", checkboxes);
+                formTransRequest.Communication = GetCheckboxSingleInputValue("Communication", checkboxes);
+                formTransRequest.Other = GetCheckboxSingleInputValue("Other", checkboxes);
+                formTransRequest.Other_Desc = GetInputValue("Other_Desc", spans);
+                formTransRequest.Documentation = GetInputValue("Documentation", spans);
+                formTransRequest.PositioningAndHandling = GetInputValue("PositioningAndHandling", spans);
+                formTransRequest.MeidicationAndSideEffects = GetInputValue("MeidicationAndSideEffects", spans);
+                formTransRequest.Equipment = GetInputValue("Equipment", spans);
+
+
+                if (formTransRequest.FormTransportationRequestId == 0)
+                {
+                    formTransRequest.CreatedBy = currentUser.UserID;
+                    formTransRequest.Create_Date = DateTime.Now;
+                    formTransRequest.ModifiedBy = currentUser.UserID;
+                    formTransRequest.Update_Date = DateTime.Now;
+                    db.tblFormTransportationRequests.Add(formTransRequest);
+                }
+                else
+                {
+                    formTransRequest.ModifiedBy = currentUser.UserID;
+                    formTransRequest.Update_Date = DateTime.Now;
+                }
+                db.SaveChanges();
+
+            }
+        }
+
+        private DateTime? GetInputValueDate(string inputName, List<HtmlNode> inputs)
+        {
+            var dateStr = GetInputValue(inputName, inputs);
+
+            if (!string.IsNullOrEmpty(dateStr))
+            {
+                var dt = DateTime.MinValue;
+                DateTime.TryParse(dateStr, out dt);
+                if (dt != DateTime.MinValue)
+                    return dt;
+            }
+
+            return null;
+        }
+
+        private string GetInputValue(string inputName, List<HtmlNode> inputs)
         {
             var input = inputs.Where(o => o.Id == inputName).FirstOrDefault();
             if (input != null)
                 return input.InnerHtml != null ? input.InnerHtml.Replace("&nbsp;", "") : "";
             else
 
-				return "";
+                return "";
         }
 
         private DateTime? GetInputDateValue(string inputName, List<HtmlNode> inputs)
@@ -5054,27 +5189,27 @@ namespace GreenbushIep.Controllers
 
         }
 
-		private bool GetCheckboxSingleInputValue(string inputName, List<HtmlNode> checkboxes)
-		{
-			
-			var valYes = "";
-			
+        private bool GetCheckboxSingleInputValue(string inputName, List<HtmlNode> checkboxes)
+        {
 
-			var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
-			if (input != null)
-			{
-				valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
-			}
-						
-			if (valYes == "Y")
-				return true;
-			else
-				return false;
+            var valYes = "";
 
-			
 
-		}
+            var input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
+            if (input != null)
+            {
+                valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+            }
 
-		#endregion
-	}
+            if (valYes == "Y")
+                return true;
+            else
+                return false;
+
+
+
+        }
+
+        #endregion
+    }
 }

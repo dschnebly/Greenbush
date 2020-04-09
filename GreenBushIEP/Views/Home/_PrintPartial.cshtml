@@ -167,15 +167,15 @@
 
 			</td>
 		</tr>		
-		<tr>
+		<tr>			
 			<td><label>IEP Date:</label></td>
-			<td> @(ViewBag.History != null && ViewBag.History.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>			
+			<td> @(Model.studentDetails.history != null && Model.studentDetails.history.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>			
 			<td><label>Next Annual IEP Date:</label></td>
 			<td>@(string.IsNullOrEmpty(Model.studentDetails.inititationDateNext) ? "" : Model.studentDetails.inititationDateNext)</td>
 		</tr>
-		@if (ViewBag.History != null && ViewBag.History.Count > 0)
+		@if (Model.studentDetails.history != null && Model.studentDetails.history.Count > 0)
 		{			
-			foreach (var history in (ViewBag.History as List<IEPHistoryViewModel>))
+			foreach (var history in (Model.studentDetails.history as List<IEPHistoryViewModel>))
 			{
 				<tr>					
 					<td>@history.iepDate </td>
@@ -1072,7 +1072,7 @@
 	</div>
 }
 
-	@if (@Model.studentDetails.printAcademic)
+@if (@Model.studentDetails.printAcademic)
 {
 	<div id="divAcademic">
 	<div>
@@ -1359,7 +1359,7 @@
 				</p>
 			</fieldset>
 			<fieldset class="form-group">
-				@{
+			@{
 					var textNeedMetBy = "";
 					if (Model.studentWritten.NeedMetByGoal.HasValue && Model.studentWritten.NeedMetByGoal.Value)
 					{
@@ -1398,20 +1398,20 @@
 						textNeedMetBy = " with accommodations or modifications and by Other.<br/>Other Description: " + Model.studentWritten.NeedMetByOtherDescription;
 					}
 
-				}
-				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
-				}
+			}
+			@if (!string.IsNullOrEmpty(textNeedMetBy))
+			{
+				<div class="form-check form-group-label">
+					<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
+				</div>
+			}
 			</fieldset>
-					}
-					else
-					{
-			<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Writing at this time.</p>
+			}
+			else
+			{
+				<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Writing at this time.</p>
 
-					}
+			}
 	</div><hr />
 	<div>
 		<h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
@@ -1516,16 +1516,16 @@
 					</div>
 				}
 			</fieldset>
-					}
-					else
-					{
-			<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
-					}
+			}
+			else
+			{
+				<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
+			}
 	</div>
 	</div>
 }
 
-	@if (@Model.studentDetails.printAcc)
+@if (@Model.studentDetails.printAcc)
 {
 	<div id="divAcc">
 		<hr /><h3 class="text-center">ACCOMMODATIONS AND MODIFICATIONS</h3>
@@ -1534,39 +1534,19 @@
 			<table class="table table-bordered" border="1">
 				<tr>
 					<td><b>Type</b></td>
+					<td><b>Module(s)</b></td>
 					<td><b>Description</b></td>
 					<td><b>Frequency</b></td>
 					<td><b>Location</b></td>
 					<td><b>Duration</b></td>
-					<td><b>Anticipated <br />Start<br />Date</b></td>
-					<td><b>Anticipated <br />End<br />Date</b></td>
+					<td><b>Anticipated<br />Start<br />Date</b></td>
+					<td><b>Anticipated<br />End<br />Date</b></td>
 				</tr>
-				@foreach (var accom in Model.accommodations)
-				{
-					string shortDesc = "Accommodation ";
-
-					if (@accom.AccomType == 1)
-					{
-						shortDesc = "Accommodation ";
-					}
-					else if (@accom.AccomType == 2)
-					{
-						shortDesc = "Modification ";
-					}
-					else if (@accom.AccomType == 3)
-					{
-						shortDesc = "Supplemental Aids and Services ";
-					}
-					else if (@accom.AccomType == 4)
-					{
-						shortDesc = "Support for School Personnel ";
-					}
-					else if (@accom.AccomType == 5)
-					{
-						shortDesc = "Transportation ";
-					}
+				@foreach (var accom in Model.studentDetails.accommodationList)
+				{					
 					<tr>
-						<td valign="top">@(shortDesc)</td>
+						<td valign="top">@accom.AccomType</td>
+						<td valign="top" style="max-width:50px;word-wrap:break-word">@Html.Raw(accom.Module)</td>
 						<td valign="top">@accom.Description</td>
 						<td valign="top">@accom.Frequency</td>
 						<td valign="top">@accom.Location</td>
@@ -3380,7 +3360,7 @@
 							}
 						</td>
 						<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-						<td>@(service.EndDate.ToString("MM/dd/yyyy"))</td>
+						<td>@(service.EndDate.Value.ToString("MM/dd/yyyy"))</td>
 						<td>
 							@switch (@service.Frequency)
 							{

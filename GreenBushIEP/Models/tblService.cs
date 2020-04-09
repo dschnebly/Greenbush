@@ -24,7 +24,7 @@ namespace GreenBushIEP.Models
         public int IEPid { get; set; }
         public int SchoolYear { get; set; }
         public System.DateTime StartDate { get; set; }
-        public System.DateTime EndDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
         public string ServiceCode { get; set; }
         public int Frequency { get; set; }
         public byte DaysPerWeek { get; set; }

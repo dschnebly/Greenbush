@@ -15,6 +15,7 @@ namespace GreenBushIEP.Models
     public partial class tblFormTransportationRequest
     {
         public int FormTransportationRequestId { get; set; }
+        public int StudentId { get; set; }
         public string StudentName { get; set; }
         public Nullable<System.DateTime> FormDate { get; set; }
         public string USD { get; set; }
@@ -59,6 +60,5 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
-        public int StudentId { get; set; }
     }
 }
