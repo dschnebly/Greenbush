@@ -645,6 +645,7 @@ namespace GreenBushIEP.Models
         public DateTime IEPStartDate { get; set; }
         public DateTime MeetingDate { get; set; }
         public string providedfor { get; set; }
+        public string IEPStatus { get; set; }
         public bool isOriginalIEPService { get; set; }
 
         public StudentServiceViewModel()
@@ -660,6 +661,7 @@ namespace GreenBushIEP.Models
             IEPStartDate = new DateTime();
             MeetingDate = new DateTime();
             providedfor = "";
+            IEPStatus = "Draft";
         }
     }
 

@@ -1666,6 +1666,7 @@ namespace GreenbushIep.Controllers
                     model.IEPStartDate = original.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
                     model.isOriginalIEPService = iep.IepStatus.ToUpper() == IEPStatus.DRAFT && iep.Amendment;
+                    model.IEPStatus = iep.IepStatus.ToUpper();
 
                     int? modifiedby = (services.Count > 0) ? services.FirstOrDefault().ModifiedBy : null;
                     if (modifiedby != null)
@@ -1686,6 +1687,7 @@ namespace GreenbushIep.Controllers
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = iep.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
+                    model.IEPStatus = iep.IepStatus.ToUpper();
                 }
 
                 if (isReadOnly)
