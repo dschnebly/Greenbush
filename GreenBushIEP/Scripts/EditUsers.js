@@ -77,6 +77,40 @@
         });
     });
 
+    //// attach event
+    //// fires off a new password when the reset password button is clicked
+    $('#confirmNewPassword button[type=submit]').on('click', function (e) {
+        var userId = $("#hidden-userid").val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Account/ResetMyPassword',
+            dataType: 'json',
+            data: { id: userId, password: $("input[type='password']").val() },
+            async: false,
+            success: function (data) {
+                if (data.Result === "Success") {
+                    $("#alertMessage .moreinfo").html('An email was sent to the user with their new password.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+                else {
+                    $("#alertMessage .moreinfo").html(data.Message);
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            },
+            error: function (data) {
+                $("#alertMessage .moreinfo").html('Unable to connect to the server or other related problem. Please contact your admin.');
+                $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                    $("#alertMessage").slideUp(500);
+                });
+            }
+        });
+    });
+
     //$(".chosen-choices").chosen().change(function () {
     $(".chosen-select").chosen().change(function () {
 
