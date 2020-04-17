@@ -17,6 +17,11 @@ table.printTable td {
 	text-align: left;
 }
 
+.accTable {
+	font-size: 12px !important;
+	max-width: 600px;
+}
+
 body {
 	background-color: #525659;
 }
