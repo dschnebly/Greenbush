@@ -852,6 +852,16 @@ namespace GreenBushIEP.Models
         public string iepType { get; set; }
         public string iepDate { get; set; }
     }
+
+	public class TempTransitionItemViewModel
+	{
+		public TempTransitionItemViewModel()
+		{
+		}
+
+		public int TransitionItemID { get; set; }
+		public string ElementName { get; set; }		
+	}
 }
 public class IEPStatus
 {

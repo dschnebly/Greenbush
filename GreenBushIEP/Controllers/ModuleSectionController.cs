@@ -1335,10 +1335,14 @@ namespace GreenBushIEP.Controllers
                     bool hasEmploymentGoal = false;
                     bool hasEducationalGoal = false;
                     bool canComplete = false;
-                    while (i < collection.Count - 2)
+					var draftGoals= new List<TempTransitionItemViewModel>();
+				
+					while (i < collection.Count - 2)
                     {
-                        var transitionGoalID = Convert.ToInt32(collection[i++]);
-                        tblTransitionGoal transitionGoal = db.tblTransitionGoals.Where(g => g.IEPid == iedId && g.TransitionGoalID == transitionGoalID).FirstOrDefault() ?? new tblTransitionGoal();
+						var tempElementName = collection.AllKeys[i].ToString();
+						var transitionGoalID = Convert.ToInt32(collection[i++]);					
+
+						tblTransitionGoal transitionGoal = db.tblTransitionGoals.Where(g => g.IEPid == iedId && g.TransitionGoalID == transitionGoalID).FirstOrDefault() ?? new tblTransitionGoal();
 
                         transitionGoal.IEPid = iedId;
                         transitionGoal.TransitionID = transition.TransitionID;
@@ -1365,18 +1369,23 @@ namespace GreenBushIEP.Controllers
                             hasEmploymentGoal = true;
                         }
 
+						db.SaveChanges();
+
+						if (transitionGoalID == 0)
+						{
+							draftGoals.Add(new TempTransitionItemViewModel() { TransitionItemID = transitionGoal.TransitionGoalID, ElementName = tempElementName });
+						}
                     }
 
-                    db.SaveChanges();
 					if (hasEmploymentGoal && hasEducationalGoal)
 						canComplete = true;
 					else
 					{
 						canComplete = false;
-						return Json(new { Result = "failure", Message = "At least one Education/Training Goal and one Employment Goal is required." }, JsonRequestBehavior.AllowGet);
+						return Json(new { Result = "failure", DraftGoals= draftGoals, Message = "At least one Education/Training Goal and one Employment Goal is required." }, JsonRequestBehavior.AllowGet);
 					}
 
-                    return Json(new { Result = "success", Message = "The Student Transition Goals were added.", CanComplete = canComplete }, JsonRequestBehavior.AllowGet);
+                    return Json(new { Result = "success", DraftGoals = draftGoals, Message = "The Student Transition Goals were added.", CanComplete = canComplete }, JsonRequestBehavior.AllowGet);
                 }
                 catch (Exception e)
                 {
@@ -1418,11 +1427,14 @@ namespace GreenBushIEP.Controllers
                     int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
                     int serviceCount = collection.Count - 4;
                     int i = 2;
+					var draftServices = new List<TempTransitionItemViewModel>();
+					
 
-                    tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
+					tblTransition transition = db.tblTransitions.Where(t => t.IEPid == iedId).FirstOrDefault();
                     while (i < serviceCount)
                     {
-                        var transitionServiceID = Convert.ToInt32(collection[i++]);
+						var tempElementName = collection.AllKeys[i].ToString();
+						var transitionServiceID = Convert.ToInt32(collection[i++]);
                         tblTransitionService transitionService = db.tblTransitionServices.Where(s => s.IEPid == iedId && s.TransitionServiceID == transitionServiceID).FirstOrDefault() ?? new tblTransitionService();
 
                         transitionService.IEPid = iedId;
@@ -1454,7 +1466,11 @@ namespace GreenBushIEP.Controllers
 
                         db.SaveChanges();
 						serviceFound = true;
-
+						
+						if (transitionServiceID == 0)
+						{
+							draftServices.Add(new TempTransitionItemViewModel() { TransitionItemID = transitionService.TransitionServiceID, ElementName = tempElementName });
+						}
 					}
 
                     // for catching the Community Participation info at the end of the form.
@@ -1467,9 +1483,9 @@ namespace GreenBushIEP.Controllers
                     }
 
 					if(serviceFound)					
-						return Json(new { Result = "success", Message = "The Student Transition Services were added." }, JsonRequestBehavior.AllowGet);
+						return Json(new { Result = "success", DraftServices = draftServices, Message = "The Student Transition Services were added." }, JsonRequestBehavior.AllowGet);
 					else
-						return Json(new { Result = "failure", Message = "At least one Service must be added." }, JsonRequestBehavior.AllowGet);
+						return Json(new { Result = "failure", DraftServices = draftServices, Message = "At least one Service must be added." }, JsonRequestBehavior.AllowGet);
 				}
                 catch (Exception e)
                 {
