@@ -22,5 +22,6 @@ namespace GreenBushIEP.Models
         public Nullable<bool> IsActive { get; set; }
         public string BuildingID { get; set; }
         public string USD { get; set; }
+        public string RowID { get; set; }
     }
 }

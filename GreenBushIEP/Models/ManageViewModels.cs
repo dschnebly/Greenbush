@@ -443,8 +443,9 @@ namespace GreenBushIEP.Models
         public List<tblFormArchive> Archives { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
+		public bool CanDelete { get; set; }
 
-    }
+	}
 
     public class IEPFormFileViewModel
     {

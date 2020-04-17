@@ -351,6 +351,7 @@
           <Property Name="FormName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormFile" Type="varbinary(max)" Nullable="false" />
           <Property Name="isUpload" Type="bit" Nullable="false" />
+          <Property Name="isActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblFormConferenceSummary">
           <Key>
@@ -2021,6 +2022,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IsActive" Type="bit" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RowID" Type="nvarchar" MaxLength="122" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Role="tblLocations" Type="Self.tblLocations" Multiplicity="0..1" />
@@ -2446,7 +2448,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_UserList].[RoleID] AS [RoleID], 
     [vw_UserList].[IsActive] AS [IsActive], 
     [vw_UserList].[BuildingID] AS [BuildingID], 
-    [vw_UserList].[USD] AS [USD]
+    [vw_UserList].[USD] AS [USD], 
+    [vw_UserList].[RowID] AS [RowID]
     FROM [dbo].[vw_UserList] AS [vw_UserList]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_tblAccommodations_LocationCode" Association="Self.FK_tblAccommodations_LocationCode">
@@ -3042,6 +3045,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="FormName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FormFile" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="isUpload" Type="Boolean" Nullable="false" />
+          <Property Name="isActive" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblFormConferenceSummary">
           <Key>
@@ -4982,6 +4986,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IsActive" Type="Boolean" />
           <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="RowID" Type="String" MaxLength="122" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblAccommodationModule">
           <Key>
@@ -5349,6 +5354,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormArchives">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormArchive">
               <MappingFragment StoreEntitySet="tblFormArchive">
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
                 <ScalarProperty Name="isUpload" ColumnName="isUpload" />
                 <ScalarProperty Name="FormFile" ColumnName="FormFile" />
                 <ScalarProperty Name="FormName" ColumnName="FormName" />
@@ -7278,6 +7284,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="vw_UserList">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_UserList">
               <MappingFragment StoreEntitySet="vw_UserList">
+                <ScalarProperty Name="RowID" ColumnName="RowID" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />

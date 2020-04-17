@@ -27,7 +27,7 @@
 
             $.ajax({
                 type: 'GET',
-                url: '/Manage/deleteUploadForm',
+				url: '/Home/DeleteUploadForm',
                 data: { studentId: id, formId: formid },
                 dataType: 'json',
                 success: function (data) {
@@ -69,7 +69,38 @@
                     $("#alertMessage").slideUp(500);
                 });
             }
-        });
+		});
+
+
+		$(".deleteArchiveForm").on("click", function (e) {
+			var button = $(this);
+			var id = button.attr("data-val");
+			var documentName = $(this).attr("data-name");
+			var answer = confirm("Are you sure you want to delete '" + documentName + "'?");
+
+			if (answer) {				
+				$.ajax({
+					type: 'GET',
+					url: '/Home/DeleteArchive',
+					data: { id: id},
+					dataType: "json",
+					async: false,
+					success: function (data) {
+						if (data.Result) {
+							button.closest("tr").remove();
+							_showAlert(data.Message, true);							
+						} else {
+							_showAlert(data.Message, false);
+						}
+					},
+					error: function (data) {
+						_showAlert(data.Message, false);
+					}
+				});
+			}
+
+			return false;
+		});
 
         $(document).ready(function () {
 
@@ -118,10 +149,7 @@
 			if (id == 2) {
 				$("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
 				$("#alertMessage").show();
-				//$("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-				//	$("#alertMessage").slideUp(500);
-				//});
-				//_showAlert("There was an un-expected problem saving the form.", false);
+			
 			}
 
         });//end document ready

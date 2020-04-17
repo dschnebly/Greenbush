@@ -2302,14 +2302,18 @@ namespace GreenbushIep.Controllers
             IEPFormViewModel viewModel = new IEPFormViewModel();
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-            if (student != null)
+
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+			if (student != null)
             {
                 viewModel.IEPForms = GetForms();
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
                 viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
+				viewModel.CanDelete = user != null && user.RoleID == owner ? true : false;
 
-                ViewBag.ReturnToHome = home;
+				ViewBag.ReturnToHome = home;
             }
 
             return PartialView("_IEPFormModule", viewModel);
@@ -3008,7 +3012,9 @@ namespace GreenbushIep.Controllers
             return View(model);
         }
 
-        [Authorize]
+		#region StudentForms
+
+		[Authorize]
         public ActionResult DownloadArchive(int id)
         {
             //TODO: Check if user has permissions to update permissions
@@ -3027,8 +3033,52 @@ namespace GreenbushIep.Controllers
             else
                 return null;
         }
+		
+		[Authorize]
+		public ActionResult DeleteArchive(int id)
+		{
+			//TODO: Check if user has permissions to update permissions
+			var document = db.tblFormArchives.Where(o => o.FormArchiveID == id).FirstOrDefault();
 
-        [HttpPost]
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+			if (document != null && (user.RoleID == owner))
+			{
+				document.isActive = false;
+				db.SaveChanges();
+				return Json(new { Result = true,  Message = "The document was successfully deleted." }, JsonRequestBehavior.AllowGet);
+			}
+			else
+				return Json(new { Result = false, Message = "Unable to delete the document. Please contact the system administrator for more assistance." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		[Authorize]
+		public ActionResult DeleteUploadForm(int studentId, int formId)
+		{
+			tblFormArchive form = db.tblFormArchives.Where(f => f.Student_UserID == studentId && f.FormArchiveID == formId).FirstOrDefault();
+			if (form != null)
+			{
+				//delete the form in the database
+				db.tblFormArchives.Remove(form);
+
+				try
+				{
+					db.SaveChanges();
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the file from the database: " + e.InnerException.ToString() }, JsonRequestBehavior.AllowGet);
+				}
+
+				return Json(new { Result = "success", Message = "The uploaded file was removed from the database." }, JsonRequestBehavior.AllowGet);
+			}
+
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the uploaded form." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpPost]
         public ActionResult UploadStudentFile(HttpPostedFileBase myFile, int studentId)
         {
             try
@@ -3053,6 +3103,7 @@ namespace GreenbushIep.Controllers
                     archive.FormFile = fileData;
                     archive.ArchiveDate = DateTime.Now;
                     archive.isUpload = true;
+					archive.isActive = true;
 
                     db.tblFormArchives.Add(archive);
                     db.SaveChanges();
@@ -3073,8 +3124,9 @@ namespace GreenbushIep.Controllers
                 return Json(new { result = false, message = ex.Message }, "text/plain");
             }
         }
+		#endregion
 
-        [HttpPost]
+		[HttpPost]
         public ActionResult SearchUserName(string username)
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -3845,8 +3897,8 @@ namespace GreenbushIep.Controllers
                         archive.Creator_UserID = teacher.UserID;
                         archive.Student_UserID = id;
                         archive.FormName = string.IsNullOrEmpty(formNameValue) ? "IEP" : formNameValue;
-                        archive.FormFile = mergedFile;//fileIn;
-                                                      //archive.IEPid = iepId;
+                        archive.FormFile = mergedFile;
+                        archive.isActive = true;
                         archive.ArchiveDate = DateTime.Now;
 
                         db.tblFormArchives.Add(archive);

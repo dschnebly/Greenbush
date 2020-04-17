@@ -21,5 +21,6 @@ namespace GreenBushIEP.Models
         public string FormName { get; set; }
         public byte[] FormFile { get; set; }
         public bool isUpload { get; set; }
+        public bool isActive { get; set; }
     }
 }
