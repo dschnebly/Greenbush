@@ -334,7 +334,7 @@
                             <form action="/Home/saveStudentService" method="post">
                                 <input type="hidden" name="StudentId" value="@(Model.studentId)" />
                                 <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
-                                <input type="hidden" name="StudentServiceIepStartDate" value="@(service.StartDate.ToString("MM/dd/yyyy"))" />
+                                <input type="hidden" name="StudentServiceIepStartDate" value="@(Model.IEPStartDate.ToString("MM/dd/yyyy"))" />
                                 <input type="hidden" name="completed" value="@(service.Completed.ToString().ToLower())" />
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
