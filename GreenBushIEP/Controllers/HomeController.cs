@@ -3816,8 +3816,8 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-                    //  result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
-                }
+                    
+				}
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
                 byte[] studentFile = null;
@@ -3825,7 +3825,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
+                    //result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -3833,7 +3833,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent2))
                 {
                     string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
+                    //secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
                     secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -3841,7 +3841,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent3))
                 {
                     string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
+                    //thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
                     thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -3946,16 +3946,16 @@ namespace GreenbushIep.Controllers
             doc.OptionWriteEmptyNodes = true;
             doc.OptionFixNestedTags = true;
             doc.LoadHtml(cssTextResult + "<div class='" + className + "'>" + result2 + "</div>");
-            //var htmlBody = doc.DocumentNode.SelectSingleNode("//textarea");
-            //if (htmlBody.HasChildNodes)
-            //{
-            //	foreach (var node in htmlBody.ChildNodes) {
-            //		//HtmlNode node = htmlBody.ChildNodes
-            //		node.RemoveAll();
-            //	}
-            //}
+            var htmlBody = doc.DocumentNode.SelectNodes("//textarea");
+			if (htmlBody != null && htmlBody.Count > 0)
+			{				
+				foreach (var node in htmlBody)
+				{
+					node.Remove();			
+				}
+			}
 
-            string cleanHTML2 = doc.DocumentNode.OuterHtml;
+			string cleanHTML2 = doc.DocumentNode.OuterHtml;
 
             byte[] fileIn = null;
             byte[] printFile = null;

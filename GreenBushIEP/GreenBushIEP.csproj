@@ -790,6 +790,7 @@
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\IEPBackpacklogo_black.png" />
     <Content Include="Content\IEPBackpacklogo_black2.png" />
+    <Content Include="Content\iepForm.css" />
     <Content Include="Content\iepforms.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
