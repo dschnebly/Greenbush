@@ -186,14 +186,7 @@
 			
 		}
 		
-		@*<tr>
-			<td><label>Exit:</label></td>
-			<td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>
-			<td><label>Ed Status:</label></td>
-			<td>
-				(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc
-			</td>
-		</tr>*@
+		
 		<tr>
 			<td class="voffset4"><label>Vision Screening:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)			

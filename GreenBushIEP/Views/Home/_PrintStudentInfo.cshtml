@@ -161,11 +161,7 @@
 
 					</td>
 				</tr>
-				@*<tr>				
-                    <td></td><td></td>
-					<td><label>Initiation:</label></td>
-                    <td>@Model.studentDetails.inititationDate</td>                
-                </tr>*@                
+				              
                <tr>
 				<td><label>IEP Date:</label></td>
 	  			<td> @(Model.studentDetails.history != null && Model.studentDetails.history.Count == 0 ? string.Format("{0} ({1}) {2}", Model.studentDetails.inititationDate, @Model.studentDetails.student.StatusCode, @iepType): "")</td>					
@@ -183,14 +179,7 @@
 							<td colspan="2"></td>
 						</tr>
 					}
-				}
-                @*<tr>
-					<td><label>Exit:</label></td>
-                    <td>@(Model.studentDetails.student.ExitDate.HasValue ? Model.studentDetails.student.ExitDate.Value.ToShortDateString() : "")</td>					
-                    <td><label>Ed Status:</label></td>
-					<td>
-					(@Model.studentDetails.student.StatusCode) @Model.studentDetails.edStatusCodeDesc</td> 				
-				</tr>*@
+				}              
 				<tr>
 					<td><label>Vision Screening:</label></td>
                     <td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)</td>
@@ -262,7 +251,7 @@
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 		{
 			var serviceCount = 1;
-			<table class="table table-bordered" border="1">
+			<table class="table table-bordered accTable" border="1">
 				<tr>
 					<td><b>Ln#</b></td>
 					<td><b>FY</b></td>
@@ -490,7 +479,7 @@
 		@if (Model.accommodations != null && Model.accommodations.Count() > 0)
 		{
 
-			<table class="table table-bordered" border="1">
+			<table class="table table-bordered accTable" border="1">
 				<tr>
 					<td><b>Type</b></td>
 					<td><b>Module(s)</b></td>
