@@ -93,7 +93,7 @@
 p.MsoNormal, li.MsoNormal, div.MsoNormal {
 	margin: 0in;
 	margin-bottom: .0001pt;
-	font-size: 10.0pt;
+	font-size: 11pt;
 	font-family: "Times New Roman",serif;
 }
 
@@ -107,7 +107,7 @@ h1 {
 	page-break-after: avoid;
 	border: none;
 	padding: 0in;
-	font-size: 10.0pt;
+	font-size: 14.0pt;
 	font-family: "Times New Roman",serif;
 }
 
@@ -116,7 +116,7 @@ h2 {
 	margin-bottom: .0001pt;
 	text-align: center;
 	page-break-after: avoid;
-	font-size: 10.0pt;
+	font-size: 12.0pt;
 	font-family: "Times New Roman",serif;
 }
 
@@ -124,7 +124,7 @@ h5 {
 	margin: 0in;
 	margin-bottom: .0001pt;
 	font-size: 12.0pt;
-	font-family: "Arial Narrow",sans-serif;
+	font-family: "Arial",sans-serif;
 	font-weight: normal;
 }
 

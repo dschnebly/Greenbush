@@ -1,0 +1,874 @@
+﻿@{
+	var formModel = ViewData["continuousLearningPlan"] != null ? ViewData["continuousLearningPlan"] as GreenBushIEP.Models.tblFormContinuousLearningPlan : new GreenBushIEP.Models.tblFormContinuousLearningPlan();
+
+	string strICLPDate = "";
+	string strEffectiveDate = "";
+	string strEndingDate = "";
+	string strDateOfBirth = "";
+	string strEvaluationCompletion = "";
+	string strIEPDate = "";
+	string strAccessToWorkPacket_DateProvided = "";
+	string strServices_StartDate1 = "";
+	string strServices_EndDate1 = "";
+	string strServices_StartDate2 = "";
+	string strServices_EndDate2 = "";
+
+	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+
+	
+	string grade = Model.studentInfo != null ? Model.studentInfo.Grade.ToString() : "";
+	string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
+	string provider = Model.districtName;
+	string responsibleBuilding = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
+	string buildingName = Model.building;
+	string buildingAddress = Model.buildingAddress;
+	string buildingPhone = Model.buildingPhone;
+	string buildingCityStateZip = Model.buildingCityStZip;
+	string buildingNeigborhood = Model.buildingNeigborhood;
+	string primeD = Model.studentInfo.Primary_DisabilityCode;
+
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
+
+	if (formModel.FormContinuousLearningPlanId == 0)
+	{
+		formModel.StudentName = studentFormattedName;
+		formModel.Grade = grade;
+		formModel.PrimaryDisability = primeD;
+		formModel.AttendingBuilding = buildingName;
+		formModel.ResponsibleBuilding = buildingNeigborhood;
+		formModel.Provider = provider;
+		strIEPDate = Model.studentInfo.InitialIEPDate != null ? Model.studentInfo.InitialIEPDate.ToString("MM/dd/yyyy") : "";
+		strEvaluationCompletion = Model.studentInfo.InitialEvalConsentSigned != null ? Model.studentInfo.InitialEvalConsentSigned.ToString("MM/dd/yyyy") : "";
+		strDateOfBirth = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
+	}
+	else
+	{
+		 strICLPDate =formModel.ICLPDate != null ? formModel.ICLPDate.Value.ToString("MM/dd/yyyy") : "";
+		 strEffectiveDate =formModel.EffectiveDate != null ? formModel.EffectiveDate.Value.ToString("MM/dd/yyyy") : "";
+		 strEndingDate =formModel.EndingDate != null ? formModel.EndingDate.Value.ToString("MM/dd/yyyy") : "";
+		 strDateOfBirth =formModel.DateOfBirth != null ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
+		 strEvaluationCompletion =formModel.EvaluationCompletion != null ? formModel.EvaluationCompletion.Value.ToString("MM/dd/yyyy") : "";
+		 strIEPDate =formModel.IEPDate != null ? formModel.IEPDate.Value.ToString("MM/dd/yyyy") : "";
+		 strAccessToWorkPacket_DateProvided =formModel.AccessToWorkPacket_DateProvided != null ? formModel.AccessToWorkPacket_DateProvided.Value.ToString("MM/dd/yyyy") : "";
+		 strServices_StartDate1 =formModel.Services_StartDate1 != null ? formModel.Services_StartDate1.Value.ToString("MM/dd/yyyy") : "";
+		 strServices_EndDate1 =formModel.Services_EndDate1 != null ? formModel.Services_EndDate1.Value.ToString("MM/dd/yyyy") : "";
+		 strServices_StartDate2 =formModel.Services_StartDate2 != null ? formModel.Services_StartDate2.Value.ToString("MM/dd/yyyy") : "";
+		 strServices_EndDate2 =formModel.Services_EndDate2 != null ? formModel.Services_EndDate2.Value.ToString("MM/dd/yyyy") : "";
+	}
+}
+
+<div class="module-page savdDraftAllowed WordSection1">
+	<div>
+		<table class="text-center" style="margin:auto">
+			<tr>
+				<td>
+					<h1 style="font-weight:bold;font-size:16pt">@(buildingName)</h1>
+					<h5>@(buildingAddress)</h5>
+					<h5>@(buildingCityStateZip)</h5>
+					<h5 x-ms-format-detection="none">@(buildingPhone)</h5>
+
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="text-center" style="margin:auto;margin-top:20px;margin-bottom:15px">
+	<p class="text-center" >
+		<h2 style="font-weight:bold;font-size:14pt">
+			Special Education ~
+			Individualized Continuous Learning Plan (ICLP)
+		</h2>
+	</p>
+	</div>
+	<div>
+		<table class="table table-bordered" border="1">
+			<tr>
+				<td colspan="4">
+					<table>
+						<tr>
+							<td><span style="font-size:11pt"><b>ICLP Date:</b></span>							
+								<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strICLPDate)</textarea><span id="ICLPDate" style='display:none;text-align:left' class="input-value isDate">@(strICLPDate)</span>
+							</td>
+							<td><span style="font-size:11pt"><b>Effective date:</b></span>							
+								<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strEffectiveDate)</textarea><span id="EffectiveDate" style='display:none;text-align:left' class="input-value isDate">@(strEffectiveDate)</span>
+							</td>
+							<td><span style="font-size:11pt"><b>Ending date</b></span> <i style="font-size:7pt">(anticipated)</i>							
+								<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strEndingDate)</textarea><span id="EndingDate" style='display:none;text-align:left' class="input-value isDate">@(strEndingDate)</span>
+							</td>
+						</tr>
+					</table>
+			</td>
+			</tr>
+			<tr>
+				<td>
+					<b>
+						<span>Student Name:</span>
+					</b>
+
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.StudentName)</textarea><span id="StudentName" style='display:none;text-align:left' class="input-value">@(formModel.StudentName)</span>					
+				</td>
+				<td>
+					<b>
+						<span>
+							District:
+						</span>
+					</b>
+
+				</td>
+				<td>
+				<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(usdName)</textarea>
+					@*<span id="" style='display:none;text-align:left' class="input-value">@()</span>*@
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<b>
+						<span>Responsible Bldg:</span>
+					</b>
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.ResponsibleBuilding)</textarea><span id="ResponsibleBuilding" style='display:none;text-align:left' class="input-value">@(formModel.ResponsibleBuilding)</span>					
+				</td>
+				<td>
+					<b>
+						<span>
+							Grade:
+						</span>
+					</b>
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Grade)</textarea><span id="Grade" style='display:none;text-align:left' class="input-value">@(formModel.Grade)</span>					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<b>
+						<span>Primary Disability:</span>
+					</b>
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.PrimaryDisability)</textarea><span id="PrimaryDisability" style='display:none;text-align:left' class="input-value">@(formModel.PrimaryDisability)</span>					
+					
+				</td>
+				<td>
+					<b>
+						<span>
+							Provider:
+						</span>
+					</b>
+
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Provider)</textarea><span id="Provider" style='display:none;text-align:left' class="input-value">@(formModel.Provider)</span>					
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>
+						<b>
+							<span>Attend Bldg:</span>
+						</b>
+					</p>
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.AttendingBuilding)</textarea><span id="AttendingBuilding" style='display:none;text-align:left' class="input-value">@(formModel.AttendingBuilding)</span>					
+				</td>
+				<td>
+					<b>
+						<span>
+							Date of Birth:
+						</span>
+					</b>
+
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strDateOfBirth)</textarea><span id="DateOfBirth" style='display:none;text-align:left' class="input-value isDate">@(strDateOfBirth)</span>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<p>
+						<b>
+							<span>Initial Eval/Reeval</span>
+						</b>
+						<br/>
+						<b>
+							<span>completed:</span>
+						</b>
+					</p>
+				</td>
+				<td>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.EvaluationCompletion)</textarea><span id="EvaluationCompletion" style='display:none;text-align:left' class="input-value isDate">@(formModel.EvaluationCompletion)</span>
+				</td>
+				<td>
+					<b>
+						<span>
+							IEP Date:
+						</span>
+					</b>
+
+				</td>
+				<td><textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strIEPDate)</textarea><span id="IEPDate" style='display:none;text-align:left' class="input-value isDate">@(strIEPDate)</span></td>
+			</tr>
+		</table>
+
+	</div>
+	<p>
+		<b>
+			<span>
+				Student’s ability to access individualized continuous learning/preferred type of learning activities:
+			</span>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span>
+				(Special education services &amp; Related services)
+			</span>
+		</b>
+	</p>
+	<p>
+		<b>
+			<input type="checkbox" name="AccessToInternetBasedActivities_YesCBS" @(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_Yes" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span>  </span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_NoCBS" @(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_No" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N</span>
+		</b>
+		<span>
+			<span style='mso-tab-count:1'>   </span>Internet-based online virtual activities:<span style='mso-spacerun:yes'>  </span><span style='mso-tab-count:1'></span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_HomeCBS" @(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_Home" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Home<span style='mso-tab-count:1'> </span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_HotSpotCBS" @(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_HotSpot" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Community location (Hot spot)
+		</span>
+	</p>
+	<p>
+		<b>
+			<input type="checkbox" name="AccessToServiceDelivery_YesCBS" @(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? "checked" : "")/><img id="AccessToServiceDelivery_Yes" class='imgCheck' src="@(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToServiceDelivery_NoCBS" @(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? "checked" : "")/><img id="AccessToServiceDelivery_No" class='imgCheck' src="@(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N<span style='mso-spacerun:yes'></span>
+			</span>
+		</b>
+		<span>
+			Virtual/Internet Services delivery (i.e <i>Zoom</i>)
+		</span>
+	</p>
+	<p>
+		<b>
+			<input type="checkbox" name="AccessToEmailCommunication_YesCBS" @(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? "checked" : "")/><img id="AccessToEmailCommunication_Yes" class='imgCheck' src="@(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToEmailCommunication_NoCBS" @(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? "checked" : "")/><img id="AccessToEmailCommunication_No" class='imgCheck' src="@(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N</span>
+		</b>
+		<span>
+			<span style='mso-spacerun:yes'>   </span><span style='mso-tab-count:1'></span>Email communication, directions, instruction,	supports
+		</span>
+	</p>
+	<p>
+		<b>
+			<input type="checkbox" name="AccessToWorkPacket_YesCBS" @(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? "checked" : "")/><img id="AccessToWorkPacket_Yes" class='imgCheck' src="@(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToWorkPacket_NoCBS" @(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? "checked" : "")/><img id="AccessToWorkPacket_No" class='imgCheck' src="@(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N<span style='mso-spacerun:yes'></span><span style='mso-tab-count:1'>            </span>
+			</span>
+		</b>
+		<span>
+			Work/Skill Packet
+		</span>
+	</p>
+	<p>
+		<span>
+			<span style='mso-tab-count:1'>            </span><span style='mso-spacerun:yes'></span>
+		</span>
+		<span>
+			(If yes, dates packets provided:<textarea class="form-control1" cols="10" style="height:30px;"  maxlength="20">@(strAccessToWorkPacket_DateProvided)</textarea><span id="AccessToWorkPacket_DateProvided" style='display:none' class="input-value isDate">@(strAccessToWorkPacket_DateProvided)</span>;
+			Method:<textarea class="form-control1" cols="30" style="height:30px;"  maxlength="200">@(formModel.AccessToWorkPacket_Method)</textarea><span id="AccessToWorkPacket_Method" style='display:none' class="input-value">@(formModel.AccessToWorkPacket_Method)</span>)
+		</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Services, consultation, supports, tutoring,
+				accommodations to ensure the student has access to educational materials to
+				allow them the opportunity to progress in the general education curriculum and
+				IEP goals and objectives:
+			</span>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span><input type="checkbox" name="ServicesOfferedCBS" @(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? "checked" : "")/><img id="ServicesOffered" class='imgCheck' src="@(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? @imageChecked : @imageNotChecked)"/></span>
+		</b>
+		<span>
+			&nbsp;Have been <i>offered</i> to the parent(s)/guardian on behalf of the student*
+		</span>
+	</p>
+	<p>
+		<b>
+			<span><input type="checkbox" name="ServicesAcceptedCBS" @(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? "checked" : "")/><img id="ServicesAccepted" class='imgCheck' src="@(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? @imageChecked : @imageNotChecked)"/></span>
+		</b>
+		<span>
+			&nbsp;Have been <i>accepted</i>	by the parent(s)/guardian on behalf of the student*
+		</span>
+	</p>
+	<p>
+		<b>
+			<span><input type="checkbox" name="ServicesDeclinededCBS" @(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? "checked" : "")/><img id="ServicesDeclineded" class='imgCheck' src="@(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? @imageChecked : @imageNotChecked)"/></span>
+		</b>
+		<span>&nbsp;Have been <i>declined</i> by the parent(s)/guardian on behalf of the student - </span><span><i>denoted in each section*</i></span>		
+	</p>
+	<p>
+		<span>
+			* and to students who have reached
+			<i>
+				Age of Majority
+			</i>
+		</span>
+	</p>
+	<p>
+		<b>
+			<u>
+				<span>
+					Accommodations/Modifications/Supplementary Aids
+				</span>
+			</u>
+		</b>
+	</p>
+	<p>
+		<span>
+		</span>
+	</p>
+	<p>
+		<span>
+			Accommodations,	modifications and other supports such as Supplementary Aids and Supports that are necessary to access the educational materials being made available during
+			this time:
+		</span>
+	</p>	
+	<p>
+		<b>
+			<span>
+				<input type="checkbox" name="Accommodations_HasNoCurrentCBS" @(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "checked" : "")/><img id="Accommodations_HasNoCurrent" class='imgCheck' src="@(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? @imageChecked : @imageNotChecked)"/> 
+				&nbsp;Student currently has no accommodations/modifications/supplementary aids in their IEP
+			</span>
+		</b>
+	</p>
+	<p>
+			<span>
+				<b>
+					­<input type="checkbox" name="Accommodations_OfferedAndDeclinedCBS" @(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? "checked" : "")/><img id="Accommodations_OfferedAndDeclined" class='imgCheck' src="@(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/>
+					<i>Accommodations/modifications/supplementary aids have been offered and declined by the parent or guardian</i>
+				</b>
+			</span>
+
+	</p>
+	<p>
+		<span>
+			Accomm/Mod/Aid:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Description1)</textarea><span id="Accommodation_Description1" style="display:none" class="input-value">@(formModel.Accommodation_Description1)</span>
+	</p>
+	<p>
+		<span>
+			Plan for implementation:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Implementation1)</textarea><span id="Accommodation_Implementation1" style="display:none" class="input-value">@(formModel.Accommodation_Implementation1)</span>
+	</p>
+	<p>
+		<span>
+			Frequency:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Frequency1)</textarea><span id="Accommodation_Frequency1" style="display:none" class="input-value">@(formModel.Accommodation_Frequency1)</span>
+	</p>
+	<p>
+		<span>
+		</span>
+	</p>
+	<p>
+		<span>
+			Accomm/Mod/Aid:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Description2)</textarea><span id="Accommodation_Description2" style="display:none" class="input-value">@(formModel.Accommodation_Description2)</span>
+	</p>
+	<p>
+		<span>
+			Plan for implementation:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Implementation2)</textarea><span id="Accommodation_Implementation2" style="display:none" class="input-value">@(formModel.Accommodation_Implementation2)</span>
+	</p>
+	<p>
+		<span>
+			Frequency:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Frequency2)</textarea><span id="Accommodation_Frequency2" style="display:none" class="input-value">@(formModel.Accommodation_Frequency2)</span>
+	</p>
+	<p>
+		<span>
+		</span>
+	</p>
+	<p>
+		<span>
+			Accomm/Mod/Aid:
+		</span>
+	</p>
+	<p>
+	<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Description3)</textarea><span id="Accommodation_Description3" style="display:none" class="input-value">@(formModel.Accommodation_Description3)</span>
+	</p>
+	<p>
+		<span>
+			Plan for implementation:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Implementation3)</textarea><span id="Accommodation_Implementation3" style="display:none" class="input-value">@(formModel.Accommodation_Implementation3)</span>
+	</p>
+	<p>
+		<span>
+			Frequency:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Frequency3)</textarea><span id="Accommodation_Frequency3" style="display:none" class="input-value">@(formModel.Accommodation_Frequency3)</span>
+	</p>
+	<p>
+		<span>
+		</span>
+	</p>
+	<p>
+		<span>
+			Accomm/Mod/Aid:
+		</span>
+	</p>
+	<p>
+	<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Description4)</textarea><span id="Accommodation_Description4" style="display:none" class="input-value">@(formModel.Accommodation_Description4)</span>
+	</p>
+
+	<p>
+		<span>
+			Plan for implementation:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Implementation4)</textarea><span id="Accommodation_Implementation4" style="display:none" class="input-value">@(formModel.Accommodation_Implementation4)</span>
+	</p>
+	<p>
+		<span>
+			Frequency:
+		</span>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Accommodation_Frequency4)</textarea><span id="Accommodation_Frequency4" style="display:none" class="input-value">@(formModel.Accommodation_Frequency4)</span>
+	</p>
+	<p>
+		<b>
+			<u>
+				<span>
+					Schedule of Services to be provided
+				</span>
+			</u>
+		</b>
+	</p>
+	<p>
+		<span>
+		</span>
+	</p>
+	<p>
+		<b>
+			<i>
+				<span>
+					<input type="checkbox" name="Services_OfferedAndDeclinedCBS" @(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "checked" : "")/><img id="Services_OfferedAndDeclined" class='imgCheck' src="@(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/>
+					&nbsp;Services have been offered by the provider and declined by the parent/guardian
+				</span>
+			</i>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span>
+				Service:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_ServiceProvided1)</textarea><span id="Services_ServiceProvided1" style="display:none" class="input-value">@(formModel.Services_ServiceProvided1)</span>
+	</p>
+	<p>
+		<b>
+			<span>Setting:<span style='mso-spacerun:yes'>  </span></span>
+		</b>		
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Setting1)</textarea><span id="Services_Setting1" style="display:none" class="input-value">@(formModel.Services_Setting1)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Subject/Class:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Subject1)</textarea><span id="Services_Subject1" style="display:none" class="input-value">@(formModel.Services_Subject1)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Minutes:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Minutes1)</textarea><span id="Services_Minutes1" style="display:none" class="input-value">@(formModel.Services_Minutes1)</span>
+	</p>
+	<p>
+		<b>
+			Frequency:
+			
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Frequency1)</textarea><span id="Services_Frequency1" style="display:none" class="input-value">@(formModel.Services_Frequency1)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Start date:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strServices_StartDate1)</textarea><span id="Services_StartDate1" style='display:none' class="input-value isDate">@(strServices_StartDate1)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				End date:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strServices_EndDate1)</textarea><span id="Services_EndDate1" style='display:none' class="input-value isDate">@(strServices_EndDate1)</span>
+	</p>
+	<p>
+		<b>
+			-------------------------------------------------------------------------------------------------------------------------------------
+			
+		</b>
+	</p>
+	<p>
+		<b>
+			Service:
+			
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_ServiceProvided2)</textarea><span id="Services_ServiceProvided2" style="display:none" class="input-value">@(formModel.Services_ServiceProvided2)</span>
+	</p>
+	<p>
+		<b>
+			<span>Setting:<span style='mso-spacerun:yes'>  </span></span>
+		</b>		
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Setting2)</textarea><span id="Services_Setting2" style="display:none" class="input-value">@(formModel.Services_Setting2)</span>
+	</p>
+	<p>
+		<b>
+			Subject/Class:
+			
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Subject2)</textarea><span id="Services_Subject2" style="display:none" class="input-value">@(formModel.Services_Subject2)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Minutes:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Minutes2)</textarea><span id="Services_Minutes2" style="display:none" class="input-value">@(formModel.Services_Minutes2)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Frequency:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Services_Frequency2)</textarea><span id="Services_Frequency2" style="display:none" class="input-value">@(formModel.Services_Frequency2)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				Start date:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Services_StartDate2)</textarea><span id="Services_StartDate2" style='display:none' class="input-value isDate">@(formModel.Services_StartDate2)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				End date:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strServices_EndDate2)</textarea><span id="Services_EndDate2" style='display:none' class="input-value isDate">@(strServices_EndDate2)</span>
+	</p>
+	<p>
+		<b>
+			<u>
+				<span>
+					Schedule of Parent/Teacher Consultation
+				</span>
+			</u>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span><input type="checkbox" name="Provider_WillContactPhoneCBS" @(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "checked" : "")/><img id="Provider_WillContactPhone" class='imgCheck' src="@(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? @imageChecked : @imageNotChecked)"/></span>
+		</b>
+		<span>
+			&nbsp;Provider will contact the parent by phone:
+		</span>
+	</p>
+	<p style="margin-left:15px">
+		<span><input type="checkbox" name="Provider_WillContactPhone_WeeklyCBS" @(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? "checked" : "")/><img id="Provider_WillContactPhone_Weekly" class='imgCheck' src="@(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;weekly</span>
+		<span><input type="checkbox" name="Provider_WillContactPhone_BiweeklyCBS" @(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? "checked" : "")/><img id="Provider_WillContactPhone_Biweekly" class='imgCheck' src="@(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;bi-weekly</span>
+	</p>
+	<p>
+		<span><input type="checkbox" name="Provider_WillContactEmailCBS" @(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? "checked" : "")/><img id="Provider_WillContactEmail" class='imgCheck' src="@(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? @imageChecked : @imageNotChecked)"/></span>
+		<span>			
+			&nbsp;Provider will contact the parent by email:
+		</span>
+	</p>
+	<p style="margin-left:15px">
+		<span><input type="checkbox" name="Provider_WillContactEmail_OnceWeekCBS" @(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? "checked" : "")/><img id="Provider_WillContactEmail_OnceWeek" class='imgCheck' src="@(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;1x per week</span>
+		<span><input type="checkbox" name="Provider_WillContactEmail_TwiceWeekCBS" @(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? "checked" : "")/><img id="Provider_WillContactEmail_TwiceWeek" class='imgCheck' src="@(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;2x per week</span>
+		<span><input type="checkbox" name="Provider_WillContactEmail_BiweeklyCBS" @(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? "checked" : "")/><img id="Provider_WillContactEmail_Biweekly" class='imgCheck' src="@(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;bi-weekly</span>
+	</p>	
+	<p>
+		<span><input type="checkbox" name="Provider_ParentsContactCBS" @(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? "checked" : "")/><img id="Provider_ParentsContact" class='imgCheck' src="@(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? @imageChecked : @imageNotChecked)"/></span>
+		<span>&nbsp;Parent prefers to contact provider if needed</span>
+	</p>	
+	<p>
+		<b>
+			<u>
+				<span>
+					IEP	Goals and Objectives
+				</span>
+			</u>
+		</b>
+	</p>	
+	<p>
+		<span><input type="checkbox" name="Goals_OfferedAndDeclinedCBS" @(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "checked" : "")/><img id="Goals_OfferedAndDeclined" class='imgCheck' src="@(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/></span>
+		<b>
+			<i>
+				<span>
+					&nbsp;Opportunity for student to
+					progress towards annual goals has been offered and declined by the parent or
+					guardian
+				</span>
+			</i>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span>
+				GOAL
+				#: <textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Goals_Number1)</textarea><span id="Goals_Number1" style='display:none' class="input-value">@(formModel.Goals_Number1)</span>
+			</span>
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				Goal statement:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Goals_Statement1)</textarea><span id="Goals_Statement1" style="display:none" class="input-value">@(formModel.Goals_Statement1)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				How	will progress be tracked?<span style='mso-spacerun:yes'>   </span>
+				<input type="checkbox" name="Goal_TrackProgress_Engagement1CBS" @(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback1CBS" @(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other1CBS" @(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+		</b>
+	</p>
+	
+	<p>
+		<b>
+			<span>
+				GOAL
+				#: <textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Goals_Number2)</textarea><span id="Goals_Number2" style='display:none' class="input-value">@(formModel.Goals_Number2)</span>
+			</span>
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				Goal
+				statement:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Goals_Statement2)</textarea><span id="Goals_Statement2" style="display:none" class="input-value">@(formModel.Goals_Statement2)</span>
+	</p>
+	<p>
+		<b>
+			<span>How	will progress be tracked?</span>
+				<input type="checkbox" name="Goal_TrackProgress_Engagement2CBS" @(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback2CBS" @(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other2CBS" @(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+		</b>
+	</p>
+	
+	<p>
+		<b>
+			<span>
+				GOAL
+				#: <textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Goals_Number3)</textarea><span id="Goals_Number3" style='display:none' class="input-value">@(formModel.Goals_Number3)</span>
+			</span>
+		</b>
+	</p>
+	
+	<p>
+		<b>
+			<span>
+				Goal
+				statement:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Goals_Statement3)</textarea><span id="Goals_Statement3" style="display:none" class="input-value">@(formModel.Goals_Statement3)</span>
+	</p>
+	<p>
+		<b>
+			<span>How	will progress be tracked?</span>
+				<input type="checkbox" name="Goal_TrackProgress_Engagement3CBS" @(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback3CBS" @(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other3CBS" @(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				GOAL
+				#: <textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.Goals_Number4)</textarea><span id="Goals_Number4" style='display:none' class="input-value">@(formModel.Goals_Number4)</span>
+			</span>
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				Goal
+				statement:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="1000">@(formModel.Goals_Statement4)</textarea><span id="Goals_Statement4" style="display:none" class="input-value">@(formModel.Goals_Statement4)</span>
+	</p>
+	<p>
+		<b>
+			<span>How will progress be tracked?</span>
+				<input type="checkbox" name="Goal_TrackProgress_Engagement4CBS" @(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback4CBS" @(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other4CBS" @(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+		</b>
+	</p>
+	<p>
+		<b>
+			<u>
+				<span>
+					Other
+					Considerations
+				</span>
+			</u>
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				Activities/supports offered to
+				enable access to peers during the ICLP time frame:
+			</span>
+		</b>
+	</p>
+	<p>
+		<textarea cols="100" rows="5" class="form-control"  maxlength="2000">@(formModel.ActivitiesOfferedToEnableAccess)</textarea><span id="ActivitiesOfferedToEnableAccess" style="display:none" class="input-value">@(formModel.ActivitiesOfferedToEnableAccess)</span>
+	</p>
+	<p>
+		<b>
+			<span>
+				A copy of this ICLP will be provided to the parent(s)/guardian, and students who have reached the
+				<i>
+					Age of Majority.
+				</i>
+			</span>
+		</b>
+	</p>	
+	<p>
+		<b>
+			<span>
+				A copy of this ICLP will be on file
+				with the students IEP records maintained by the @(buildingName), @(buildingCityStateZip)				
+			</span>
+		</b>
+	</p>
+
+	<p>
+		<b>
+			<span>
+				Provider responsible for this ICLP:<br/><br/><br/>
+				___________________________________________________________
+			</span>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span><span style='mso-tab-count:6'>                                                                        </span></span>
+		</b>
+		<b>
+			<span>
+				(Printed name) <span style='mso-tab-count:4'>                                                     </span><span style='mso-spacerun:yes'></span>(Signature)<span>                            </span><span style='mso-tab-count:4'></span>
+			</span>
+		</b>
+	</p>
+	<p>
+		<b>
+			<span>
+			</span>
+		</b>
+	</p>
+	<p style="font-size:9pt">
+		<b>
+			<span>
+				Questions regarding this ICLP may be addressed to <textarea class="form-control1" cols="100" style="height:30px;" maxlength="20">@(formModel.ProviderName)</textarea><span id="ProviderName" style='display:none' class="input-value ">@(formModel.ProviderName)</span>
+			</span>
+		</b>
+	</p>	
+	<p style="font-size:8pt">
+		<b>
+			(Document Adapted)
+		</b>
+	</p>
+</div>
+<br/><br/>

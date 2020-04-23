@@ -378,6 +378,9 @@
     <Compile Include="Models\tblFormConferenceSummary.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblFormContinuousLearningPlan.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblFormIEPAmendment.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -790,7 +793,7 @@
     <Content Include="Content\IEPBackpackBackgroundImage.jpg" />
     <Content Include="Content\IEPBackpacklogo_black.png" />
     <Content Include="Content\IEPBackpacklogo_black2.png" />
-    <Content Include="Content\iepForm.css" />
+    <Content Include="Content\iepFormLayout.css" />
     <Content Include="Content\iepforms.css" />
     <Content Include="Content\Images\check_no.png" />
     <Content Include="Content\Images\check_yes.png" />
@@ -1195,6 +1198,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Form\TransportationRequest.cshtml" />
     <Content Include="Views\Home\MISNotes.cshtml" />
+    <Content Include="Views\Form\ContinuousLearningPlan.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

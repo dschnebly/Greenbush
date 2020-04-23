@@ -11,7 +11,7 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-	@Styles.Render("~/Content/iepForm.css")
+	@Styles.Render("~/Content/iepFormLayout.css")
 }
 
 
@@ -69,9 +69,7 @@
 						   { "formRevAll", Model.formRevAll },
 						   { "formRevPart", Model.formRevPart },
 						   { "formTransRequest", Model.formTransRequest },
-						   
-						   
-						   
+						   { "continuousLearningPlan", Model.continuousLearningPlan },
 
 					   })
                     </div>
@@ -151,9 +149,17 @@
 			nextParagraph.text(currentVal.replace(/\n/g, "new-line-val"));
 		});
 
-		 $("textarea").each(function(){
+		$("textarea").each(function(){
 			this.value = this.value.replace(/new-line-val/g,"\n");
 		});
+
+		//$(".isDate").each(function () {
+
+		//	var dtVal = this.value;
+		//	if (dtVal != null && dtVal != undefined && dtVal != "" && isDate(dtVal)) {				
+		//		this.value = dtVal.split(' ')[0];
+		//	}
+		//});		
 		
     });
 

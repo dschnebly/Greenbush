@@ -113,6 +113,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="34.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="9.375" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan" Width="1.5" PointX="35.375" PointY="7.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
