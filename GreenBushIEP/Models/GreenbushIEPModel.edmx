@@ -369,6 +369,104 @@
           <Property Name="Update_Date" Type="datetime" />
           <Property Name="PlacementCode" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tblFormContinuousLearningPlan">
+          <Key>
+            <PropertyRef Name="FormContinuousLearningPlanId" />
+          </Key>
+          <Property Name="FormContinuousLearningPlanId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="ICLPDate" Type="datetime" />
+          <Property Name="EffectiveDate" Type="datetime" />
+          <Property Name="EndingDate" Type="datetime" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ResponsibleBuilding" Type="nvarchar" MaxLength="100" />
+          <Property Name="Grade" Type="nvarchar" MaxLength="50" />
+          <Property Name="PrimaryDisability" Type="nvarchar" MaxLength="100" />
+          <Property Name="Provider" Type="nvarchar" MaxLength="200" />
+          <Property Name="AttendingBuilding" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="EvaluationCompletion" Type="datetime" />
+          <Property Name="IEPDate" Type="datetime" />
+          <Property Name="AccessToInternetBasedActivities_Yes" Type="bit" />
+          <Property Name="AccessToInternetBasedActivities_No" Type="bit" />
+          <Property Name="AccessToInternetBasedActivities_Home" Type="bit" />
+          <Property Name="AccessToInternetBasedActivities_HotSpot" Type="bit" />
+          <Property Name="AccessToServiceDelivery_Yes" Type="bit" />
+          <Property Name="AccessToServiceDelivery_No" Type="bit" />
+          <Property Name="AccessToEmailCommunication_Yes" Type="bit" />
+          <Property Name="AccessToEmailCommunication_No" Type="bit" />
+          <Property Name="AccessToWorkPacket_Yes" Type="bit" />
+          <Property Name="AccessToWorkPacket_No" Type="bit" />
+          <Property Name="AccessToWorkPacket_DateProvided" Type="datetime" />
+          <Property Name="AccessToWorkPacket_Method" Type="nvarchar" MaxLength="200" />
+          <Property Name="ServicesOffered" Type="bit" />
+          <Property Name="ServicesAccepted" Type="bit" />
+          <Property Name="ServicesDeclineded" Type="bit" />
+          <Property Name="Accommodations_HasNoCurrent" Type="bit" />
+          <Property Name="Accommodations_OfferedAndDeclined" Type="bit" />
+          <Property Name="Accommodation_Description1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Implementation1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Frequency1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Description2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Implementation2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Frequency2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Description3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Implementation3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Frequency3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Description4" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Implementation4" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Accommodation_Frequency4" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_OfferedAndDeclined" Type="bit" />
+          <Property Name="Services_ServiceProvided1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Setting1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Subject1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Minutes1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Frequency1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_StartDate1" Type="datetime" />
+          <Property Name="Services_EndDate1" Type="datetime" />
+          <Property Name="Services_ServiceProvided2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Setting2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Subject2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Minutes2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_Frequency2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Services_StartDate2" Type="datetime" />
+          <Property Name="Services_EndDate2" Type="datetime" />
+          <Property Name="Provider_WillContactPhone" Type="bit" />
+          <Property Name="Provider_WillContactPhone_Weekly" Type="bit" />
+          <Property Name="Provider_WillContactPhone_Biweekly" Type="bit" />
+          <Property Name="Provider_WillContactEmail" Type="bit" />
+          <Property Name="Provider_WillContactEmail_OnceWeek" Type="bit" />
+          <Property Name="Provider_WillContactEmail_TwiceWeek" Type="bit" />
+          <Property Name="Provider_WillContactEmail_Biweekly" Type="bit" />
+          <Property Name="Provider_ParentsContact" Type="bit" />
+          <Property Name="Goals_OfferedAndDeclined" Type="bit" />
+          <Property Name="Goals_Number1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Goal_TrackProgress_Engagement1" Type="bit" />
+          <Property Name="Goal_TrackProgress_Feedback1" Type="bit" />
+          <Property Name="Goal_TrackProgress_Other1" Type="bit" />
+          <Property Name="Goals_Number2" Type="nvarchar" MaxLength="50" />
+          <Property Name="Goal_TrackProgress_Engagement2" Type="bit" />
+          <Property Name="Goal_TrackProgress_Feedback2" Type="bit" />
+          <Property Name="Goal_TrackProgress_Other2" Type="bit" />
+          <Property Name="Goals_Number3" Type="nvarchar" MaxLength="50" />
+          <Property Name="Goal_TrackProgress_Engagement3" Type="bit" />
+          <Property Name="Goal_TrackProgress_Feedback3" Type="bit" />
+          <Property Name="Goal_TrackProgress_Other3" Type="bit" />
+          <Property Name="Goals_Number4" Type="nvarchar" MaxLength="50" />
+          <Property Name="Goal_TrackProgress_Engagement4" Type="bit" />
+          <Property Name="Goal_TrackProgress_Feedback4" Type="bit" />
+          <Property Name="Goal_TrackProgress_Other4" Type="bit" />
+          <Property Name="ActivitiesOfferedToEnableAccess" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ProviderName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="Goals_Statement1" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Goals_Statement2" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Goals_Statement3" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Goals_Statement4" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
         <EntityType Name="tblFormIEPAmendment">
           <Key>
             <PropertyRef Name="FormIEPAmendmentId" />
@@ -2199,11 +2297,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
         </Function>
-        <Function Name="up_ReportStudentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
-          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
-          <Parameter Name="ProviderId" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="up_ReportStudentsByBuilding" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Usd" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
@@ -2255,6 +2348,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblEvaluationProcedures" EntityType="Self.tblEvaluationProcedures" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormArchive" EntityType="Self.tblFormArchive" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormConferenceSummary" EntityType="Self.tblFormConferenceSummary" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormContinuousLearningPlan" EntityType="Self.tblFormContinuousLearningPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPAmendment" EntityType="Self.tblFormIEPAmendment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPMeetingConsentToInvite" EntityType="Self.tblFormIEPMeetingConsentToInvite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPMeetingExcusal" EntityType="Self.tblFormIEPMeetingExcusal" Schema="dbo" store:Type="Tables" />
@@ -2710,11 +2804,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="vw_StudentExport" EntityType="IndividualizedEducationProgramModel.vw_StudentExport" />
           <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
           <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
-          <FunctionImport Name="up_ReportStudentInfo" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportStudentInfo_Result)">
-            <Parameter Name="DistrictId" Mode="In" Type="String" />
-            <Parameter Name="BuildingId" Mode="In" Type="String" />
-            <Parameter Name="ProviderId" Mode="In" Type="String" />
-          </FunctionImport>
+          <EntitySet Name="tblFormContinuousLearningPlans" EntityType="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -5008,74 +5098,104 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <ComplexType Name="up_ReportStudentInfo_Result">
-          <Property Type="Int32" Name="IEPid" Nullable="false" />
-          <Property Type="Int32" Name="OriginalIEPid" Nullable="true" />
-          <Property Type="String" Name="IepStatus" Nullable="false" MaxLength="20" />
-          <Property Type="Int32" Name="StudentId" Nullable="false" />
-          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
-          <Property Type="Int64" Name="KIDSID" Nullable="false" />
-          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
-          <Property Type="String" Name="StudentLanguage" Nullable="false" MaxLength="213" />
-          <Property Type="String" Name="ParentLanguage" Nullable="false" MaxLength="213" />
-          <Property Type="String" Name="FundSource" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="FullDayKG" Nullable="false" MaxLength="3" />
-          <Property Type="String" Name="Gender" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NeighborhoodBuildingID" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="NeighborhoodBuildingName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="AssignedUSD" Nullable="true" MaxLength="50" />
-          <Property Type="Int32" Name="Grade" Nullable="true" />
-          <Property Type="String" Name="Primary_DisabilityCode" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="PrimaryDisabilityDesc" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Secondary_DisabilityCode" Nullable="false" MaxLength="2" />
-          <Property Type="String" Name="SecondaryDisabilityDesc" Nullable="true" MaxLength="100" />
-          <Property Type="Boolean" Name="ClaimingCode" Nullable="false" />
-          <Property Type="String" Name="County" Nullable="true" MaxLength="2" />
-          <Property Type="String" Name="PlacementCode" Nullable="false" MaxLength="1" />
-          <Property Type="String" Name="StatusCode" Nullable="true" MaxLength="1" />
-          <Property Type="DateTime" Name="ExitDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="InitialIEPDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="InitialEvalConsentSigned" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="InitialEvalDetermination" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="ReEvalConsentSigned" Nullable="true" Precision="23" />
-          <Property Type="String" Name="isGifted" Nullable="false" MaxLength="3" />
-          <Property Type="Int32" Name="ModifiedBy" Nullable="true" />
-          <Property Type="DateTime" Name="ReEvalCompleted" Nullable="true" Precision="23" />
-          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="BuildingAddress" Nullable="true" MaxLength="250" />
-          <Property Type="String" Name="BuildingCity" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="BuildingState" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="BuildingZip" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="BuidlingPhone" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="IepStartTime" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="OriginalIepDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="AssignedUSDName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="StudentCounty" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="PlacementDescription" Nullable="false" MaxLength="50" />
-          <Property Type="DateTime" Name="VisionDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="HearingDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="VisionResult" Nullable="false" MaxLength="14" />
-          <Property Type="String" Name="HearingResult" Nullable="false" MaxLength="14" />
-          <Property Type="String" Name="ServiceCode" Nullable="false" MaxLength="105" />
-          <Property Type="Int32" Name="ServiceID" Nullable="true" />
-          <Property Type="DateTime" Name="ServiceEndDate" Nullable="true" Precision="23" />
-          <Property Type="DateTime" Name="ServiceStartDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="ServiceBuidlingId" Nullable="true" MaxLength="50" />
-          <Property Type="Byte" Name="ServiceDaysPerWeek" Nullable="true" />
-          <Property Type="String" Name="ServiceLocationCode" Nullable="false" MaxLength="104" />
-          <Property Type="Int16" Name="ServiceMinutes" Nullable="true" />
-          <Property Type="String" Name="ServiceProviderName" Nullable="false" MaxLength="101" />
-          <Property Type="Int32" Name="ServiceProviderId" Nullable="true" />
-          <Property Type="String" Name="ServiceFY" Nullable="false" MaxLength="11" />
-          <Property Type="String" Name="ServiceFrequency" Nullable="false" MaxLength="21" />
-          <Property Type="String" Name="HistoryItems" Nullable="true" />
-          <Property Type="String" Name="ContactName" Nullable="false" MaxLength="201" />
-          <Property Type="String" Name="ContactAddress" Nullable="false" MaxLength="625" />
-          <Property Type="String" Name="ContactPhone" Nullable="true" MaxLength="15" />
-          <Property Type="String" Name="ContactEmail" Nullable="true" MaxLength="255" />
-        </ComplexType>
+        <EntityType Name="tblFormContinuousLearningPlan">
+          <Key>
+            <PropertyRef Name="FormContinuousLearningPlanId" />
+          </Key>
+          <Property Name="FormContinuousLearningPlanId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="ICLPDate" Type="DateTime" Precision="3" />
+          <Property Name="EffectiveDate" Type="DateTime" Precision="3" />
+          <Property Name="EndingDate" Type="DateTime" Precision="3" />
+          <Property Name="StudentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ResponsibleBuilding" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Grade" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryDisability" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Provider" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AttendingBuilding" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="EvaluationCompletion" Type="DateTime" Precision="3" />
+          <Property Name="IEPDate" Type="DateTime" Precision="3" />
+          <Property Name="AccessToInternetBasedActivities_Yes" Type="Boolean" />
+          <Property Name="AccessToInternetBasedActivities_No" Type="Boolean" />
+          <Property Name="AccessToInternetBasedActivities_Home" Type="Boolean" />
+          <Property Name="AccessToInternetBasedActivities_HotSpot" Type="Boolean" />
+          <Property Name="AccessToServiceDelivery_Yes" Type="Boolean" />
+          <Property Name="AccessToServiceDelivery_No" Type="Boolean" />
+          <Property Name="AccessToEmailCommunication_Yes" Type="Boolean" />
+          <Property Name="AccessToEmailCommunication_No" Type="Boolean" />
+          <Property Name="AccessToWorkPacket_Yes" Type="Boolean" />
+          <Property Name="AccessToWorkPacket_No" Type="Boolean" />
+          <Property Name="AccessToWorkPacket_DateProvided" Type="DateTime" Precision="3" />
+          <Property Name="AccessToWorkPacket_Method" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ServicesOffered" Type="Boolean" />
+          <Property Name="ServicesAccepted" Type="Boolean" />
+          <Property Name="ServicesDeclineded" Type="Boolean" />
+          <Property Name="Accommodations_HasNoCurrent" Type="Boolean" />
+          <Property Name="Accommodations_OfferedAndDeclined" Type="Boolean" />
+          <Property Name="Accommodation_Description1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Implementation1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Frequency1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Description2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Implementation2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Frequency2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Description3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Implementation3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Frequency3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Description4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Implementation4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodation_Frequency4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_OfferedAndDeclined" Type="Boolean" />
+          <Property Name="Services_ServiceProvided1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Setting1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Subject1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Minutes1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Frequency1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_StartDate1" Type="DateTime" Precision="3" />
+          <Property Name="Services_EndDate1" Type="DateTime" Precision="3" />
+          <Property Name="Services_ServiceProvided2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Setting2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Subject2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Minutes2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_Frequency2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Services_StartDate2" Type="DateTime" Precision="3" />
+          <Property Name="Services_EndDate2" Type="DateTime" Precision="3" />
+          <Property Name="Provider_WillContactPhone" Type="Boolean" />
+          <Property Name="Provider_WillContactPhone_Weekly" Type="Boolean" />
+          <Property Name="Provider_WillContactPhone_Biweekly" Type="Boolean" />
+          <Property Name="Provider_WillContactEmail" Type="Boolean" />
+          <Property Name="Provider_WillContactEmail_OnceWeek" Type="Boolean" />
+          <Property Name="Provider_WillContactEmail_TwiceWeek" Type="Boolean" />
+          <Property Name="Provider_WillContactEmail_Biweekly" Type="Boolean" />
+          <Property Name="Provider_ParentsContact" Type="Boolean" />
+          <Property Name="Goals_OfferedAndDeclined" Type="Boolean" />
+          <Property Name="Goals_Number1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Goal_TrackProgress_Engagement1" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Feedback1" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Other1" Type="Boolean" />
+          <Property Name="Goals_Number2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Goal_TrackProgress_Engagement2" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Feedback2" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Other2" Type="Boolean" />
+          <Property Name="Goals_Number3" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Goal_TrackProgress_Engagement3" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Feedback3" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Other3" Type="Boolean" />
+          <Property Name="Goals_Number4" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Goal_TrackProgress_Engagement4" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Feedback4" Type="Boolean" />
+          <Property Name="Goal_TrackProgress_Other4" Type="Boolean" />
+          <Property Name="ActivitiesOfferedToEnableAccess" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ProviderName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Goals_Statement1" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Goals_Statement2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Goals_Statement3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Goals_Statement4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7385,78 +7505,105 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="up_ReportStudentInfo" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportStudentInfo">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportStudentInfo_Result">
-                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
-                <ScalarProperty Name="OriginalIEPid" ColumnName="OriginalIEPid" />
-                <ScalarProperty Name="IepStatus" ColumnName="IepStatus" />
-                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
-                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
-                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
-                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
-                <ScalarProperty Name="StudentLanguage" ColumnName="StudentLanguage" />
-                <ScalarProperty Name="ParentLanguage" ColumnName="ParentLanguage" />
-                <ScalarProperty Name="FundSource" ColumnName="FundSource" />
-                <ScalarProperty Name="FullDayKG" ColumnName="FullDayKG" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="NeighborhoodBuildingID" ColumnName="NeighborhoodBuildingID" />
-                <ScalarProperty Name="NeighborhoodBuildingName" ColumnName="NeighborhoodBuildingName" />
-                <ScalarProperty Name="AssignedUSD" ColumnName="AssignedUSD" />
-                <ScalarProperty Name="Grade" ColumnName="Grade" />
-                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
-                <ScalarProperty Name="PrimaryDisabilityDesc" ColumnName="PrimaryDisabilityDesc" />
-                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
-                <ScalarProperty Name="SecondaryDisabilityDesc" ColumnName="SecondaryDisabilityDesc" />
-                <ScalarProperty Name="ClaimingCode" ColumnName="ClaimingCode" />
-                <ScalarProperty Name="County" ColumnName="County" />
-                <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="ExitDate" ColumnName="ExitDate" />
-                <ScalarProperty Name="InitialIEPDate" ColumnName="InitialIEPDate" />
-                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
-                <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
-                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
-                <ScalarProperty Name="isGifted" ColumnName="isGifted" />
+          <EntitySetMapping Name="tblFormContinuousLearningPlans">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan">
+              <MappingFragment StoreEntitySet="tblFormContinuousLearningPlan">
+                <ScalarProperty Name="Goals_Statement4" ColumnName="Goals_Statement4" />
+                <ScalarProperty Name="Goals_Statement3" ColumnName="Goals_Statement3" />
+                <ScalarProperty Name="Goals_Statement2" ColumnName="Goals_Statement2" />
+                <ScalarProperty Name="Goals_Statement1" ColumnName="Goals_Statement1" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
-                <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
-                <ScalarProperty Name="USD" ColumnName="USD" />
-                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
-                <ScalarProperty Name="BuildingAddress" ColumnName="BuildingAddress" />
-                <ScalarProperty Name="BuildingCity" ColumnName="BuildingCity" />
-                <ScalarProperty Name="BuildingState" ColumnName="BuildingState" />
-                <ScalarProperty Name="BuildingZip" ColumnName="BuildingZip" />
-                <ScalarProperty Name="BuidlingPhone" ColumnName="BuidlingPhone" />
-                <ScalarProperty Name="IepStartTime" ColumnName="IepStartTime" />
-                <ScalarProperty Name="OriginalIepDate" ColumnName="OriginalIepDate" />
-                <ScalarProperty Name="AssignedUSDName" ColumnName="AssignedUSDName" />
-                <ScalarProperty Name="StudentCounty" ColumnName="StudentCounty" />
-                <ScalarProperty Name="PlacementDescription" ColumnName="PlacementDescription" />
-                <ScalarProperty Name="VisionDate" ColumnName="VisionDate" />
-                <ScalarProperty Name="HearingDate" ColumnName="HearingDate" />
-                <ScalarProperty Name="VisionResult" ColumnName="VisionResult" />
-                <ScalarProperty Name="HearingResult" ColumnName="HearingResult" />
-                <ScalarProperty Name="ServiceCode" ColumnName="ServiceCode" />
-                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
-                <ScalarProperty Name="ServiceEndDate" ColumnName="ServiceEndDate" />
-                <ScalarProperty Name="ServiceStartDate" ColumnName="ServiceStartDate" />
-                <ScalarProperty Name="ServiceBuidlingId" ColumnName="ServiceBuidlingId" />
-                <ScalarProperty Name="ServiceDaysPerWeek" ColumnName="ServiceDaysPerWeek" />
-                <ScalarProperty Name="ServiceLocationCode" ColumnName="ServiceLocationCode" />
-                <ScalarProperty Name="ServiceMinutes" ColumnName="ServiceMinutes" />
-                <ScalarProperty Name="ServiceProviderName" ColumnName="ServiceProviderName" />
-                <ScalarProperty Name="ServiceProviderId" ColumnName="ServiceProviderId" />
-                <ScalarProperty Name="ServiceFY" ColumnName="ServiceFY" />
-                <ScalarProperty Name="ServiceFrequency" ColumnName="ServiceFrequency" />
-                <ScalarProperty Name="HistoryItems" ColumnName="HistoryItems" />
-                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
-                <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
-                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
-                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="ActivitiesOfferedToEnableAccess" ColumnName="ActivitiesOfferedToEnableAccess" />
+                <ScalarProperty Name="Goal_TrackProgress_Other4" ColumnName="Goal_TrackProgress_Other4" />
+                <ScalarProperty Name="Goal_TrackProgress_Feedback4" ColumnName="Goal_TrackProgress_Feedback4" />
+                <ScalarProperty Name="Goal_TrackProgress_Engagement4" ColumnName="Goal_TrackProgress_Engagement4" />
+                <ScalarProperty Name="Goals_Number4" ColumnName="Goals_Number4" />
+                <ScalarProperty Name="Goal_TrackProgress_Other3" ColumnName="Goal_TrackProgress_Other3" />
+                <ScalarProperty Name="Goal_TrackProgress_Feedback3" ColumnName="Goal_TrackProgress_Feedback3" />
+                <ScalarProperty Name="Goal_TrackProgress_Engagement3" ColumnName="Goal_TrackProgress_Engagement3" />
+                <ScalarProperty Name="Goals_Number3" ColumnName="Goals_Number3" />
+                <ScalarProperty Name="Goal_TrackProgress_Other2" ColumnName="Goal_TrackProgress_Other2" />
+                <ScalarProperty Name="Goal_TrackProgress_Feedback2" ColumnName="Goal_TrackProgress_Feedback2" />
+                <ScalarProperty Name="Goal_TrackProgress_Engagement2" ColumnName="Goal_TrackProgress_Engagement2" />
+                <ScalarProperty Name="Goals_Number2" ColumnName="Goals_Number2" />
+                <ScalarProperty Name="Goal_TrackProgress_Other1" ColumnName="Goal_TrackProgress_Other1" />
+                <ScalarProperty Name="Goal_TrackProgress_Feedback1" ColumnName="Goal_TrackProgress_Feedback1" />
+                <ScalarProperty Name="Goal_TrackProgress_Engagement1" ColumnName="Goal_TrackProgress_Engagement1" />
+                <ScalarProperty Name="Goals_Number1" ColumnName="Goals_Number1" />
+                <ScalarProperty Name="Goals_OfferedAndDeclined" ColumnName="Goals_OfferedAndDeclined" />
+                <ScalarProperty Name="Provider_ParentsContact" ColumnName="Provider_ParentsContact" />
+                <ScalarProperty Name="Provider_WillContactEmail_Biweekly" ColumnName="Provider_WillContactEmail_Biweekly" />
+                <ScalarProperty Name="Provider_WillContactEmail_TwiceWeek" ColumnName="Provider_WillContactEmail_TwiceWeek" />
+                <ScalarProperty Name="Provider_WillContactEmail_OnceWeek" ColumnName="Provider_WillContactEmail_OnceWeek" />
+                <ScalarProperty Name="Provider_WillContactEmail" ColumnName="Provider_WillContactEmail" />
+                <ScalarProperty Name="Provider_WillContactPhone_Biweekly" ColumnName="Provider_WillContactPhone_Biweekly" />
+                <ScalarProperty Name="Provider_WillContactPhone_Weekly" ColumnName="Provider_WillContactPhone_Weekly" />
+                <ScalarProperty Name="Provider_WillContactPhone" ColumnName="Provider_WillContactPhone" />
+                <ScalarProperty Name="Services_EndDate2" ColumnName="Services_EndDate2" />
+                <ScalarProperty Name="Services_StartDate2" ColumnName="Services_StartDate2" />
+                <ScalarProperty Name="Services_Frequency2" ColumnName="Services_Frequency2" />
+                <ScalarProperty Name="Services_Minutes2" ColumnName="Services_Minutes2" />
+                <ScalarProperty Name="Services_Subject2" ColumnName="Services_Subject2" />
+                <ScalarProperty Name="Services_Setting2" ColumnName="Services_Setting2" />
+                <ScalarProperty Name="Services_ServiceProvided2" ColumnName="Services_ServiceProvided2" />
+                <ScalarProperty Name="Services_EndDate1" ColumnName="Services_EndDate1" />
+                <ScalarProperty Name="Services_StartDate1" ColumnName="Services_StartDate1" />
+                <ScalarProperty Name="Services_Frequency1" ColumnName="Services_Frequency1" />
+                <ScalarProperty Name="Services_Minutes1" ColumnName="Services_Minutes1" />
+                <ScalarProperty Name="Services_Subject1" ColumnName="Services_Subject1" />
+                <ScalarProperty Name="Services_Setting1" ColumnName="Services_Setting1" />
+                <ScalarProperty Name="Services_ServiceProvided1" ColumnName="Services_ServiceProvided1" />
+                <ScalarProperty Name="Services_OfferedAndDeclined" ColumnName="Services_OfferedAndDeclined" />
+                <ScalarProperty Name="Accommodation_Frequency4" ColumnName="Accommodation_Frequency4" />
+                <ScalarProperty Name="Accommodation_Implementation4" ColumnName="Accommodation_Implementation4" />
+                <ScalarProperty Name="Accommodation_Description4" ColumnName="Accommodation_Description4" />
+                <ScalarProperty Name="Accommodation_Frequency3" ColumnName="Accommodation_Frequency3" />
+                <ScalarProperty Name="Accommodation_Implementation3" ColumnName="Accommodation_Implementation3" />
+                <ScalarProperty Name="Accommodation_Description3" ColumnName="Accommodation_Description3" />
+                <ScalarProperty Name="Accommodation_Frequency2" ColumnName="Accommodation_Frequency2" />
+                <ScalarProperty Name="Accommodation_Implementation2" ColumnName="Accommodation_Implementation2" />
+                <ScalarProperty Name="Accommodation_Description2" ColumnName="Accommodation_Description2" />
+                <ScalarProperty Name="Accommodation_Frequency1" ColumnName="Accommodation_Frequency1" />
+                <ScalarProperty Name="Accommodation_Implementation1" ColumnName="Accommodation_Implementation1" />
+                <ScalarProperty Name="Accommodation_Description1" ColumnName="Accommodation_Description1" />
+                <ScalarProperty Name="Accommodations_OfferedAndDeclined" ColumnName="Accommodations_OfferedAndDeclined" />
+                <ScalarProperty Name="Accommodations_HasNoCurrent" ColumnName="Accommodations_HasNoCurrent" />
+                <ScalarProperty Name="ServicesDeclineded" ColumnName="ServicesDeclineded" />
+                <ScalarProperty Name="ServicesAccepted" ColumnName="ServicesAccepted" />
+                <ScalarProperty Name="ServicesOffered" ColumnName="ServicesOffered" />
+                <ScalarProperty Name="AccessToWorkPacket_Method" ColumnName="AccessToWorkPacket_Method" />
+                <ScalarProperty Name="AccessToWorkPacket_DateProvided" ColumnName="AccessToWorkPacket_DateProvided" />
+                <ScalarProperty Name="AccessToWorkPacket_No" ColumnName="AccessToWorkPacket_No" />
+                <ScalarProperty Name="AccessToWorkPacket_Yes" ColumnName="AccessToWorkPacket_Yes" />
+                <ScalarProperty Name="AccessToEmailCommunication_No" ColumnName="AccessToEmailCommunication_No" />
+                <ScalarProperty Name="AccessToEmailCommunication_Yes" ColumnName="AccessToEmailCommunication_Yes" />
+                <ScalarProperty Name="AccessToServiceDelivery_No" ColumnName="AccessToServiceDelivery_No" />
+                <ScalarProperty Name="AccessToServiceDelivery_Yes" ColumnName="AccessToServiceDelivery_Yes" />
+                <ScalarProperty Name="AccessToInternetBasedActivities_HotSpot" ColumnName="AccessToInternetBasedActivities_HotSpot" />
+                <ScalarProperty Name="AccessToInternetBasedActivities_Home" ColumnName="AccessToInternetBasedActivities_Home" />
+                <ScalarProperty Name="AccessToInternetBasedActivities_No" ColumnName="AccessToInternetBasedActivities_No" />
+                <ScalarProperty Name="AccessToInternetBasedActivities_Yes" ColumnName="AccessToInternetBasedActivities_Yes" />
+                <ScalarProperty Name="IEPDate" ColumnName="IEPDate" />
+                <ScalarProperty Name="EvaluationCompletion" ColumnName="EvaluationCompletion" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="AttendingBuilding" ColumnName="AttendingBuilding" />
+                <ScalarProperty Name="Provider" ColumnName="Provider" />
+                <ScalarProperty Name="PrimaryDisability" ColumnName="PrimaryDisability" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="ResponsibleBuilding" ColumnName="ResponsibleBuilding" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="EndingDate" ColumnName="EndingDate" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="ICLPDate" ColumnName="ICLPDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormContinuousLearningPlanId" ColumnName="FormContinuousLearningPlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

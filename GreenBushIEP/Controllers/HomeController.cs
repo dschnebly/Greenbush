@@ -2302,14 +2302,18 @@ namespace GreenbushIep.Controllers
             IEPFormViewModel viewModel = new IEPFormViewModel();
 
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
-            if (student != null)
+
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+			if (student != null)
             {
                 viewModel.IEPForms = GetForms();
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
                 viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
+				viewModel.CanDelete = user != null && user.RoleID == owner ? true : false;
 
-                ViewBag.ReturnToHome = home;
+				ViewBag.ReturnToHome = home;
             }
 
             return PartialView("_IEPFormModule", viewModel);
@@ -2354,8 +2358,16 @@ namespace GreenbushIep.Controllers
             {
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
                 fileViewModel.building = building != null ? building.BuildingName : "";
+				fileViewModel.buildingAddress = building != null ? building.Address_Mailing : "";
+				fileViewModel.buildingPhone = building != null ? building.Phone : "";
+				fileViewModel.buildingCityStZip = building != null ? string.Format("{0}, {1} {2}", building.City, building.State, building.Zip) : "";
+				fileViewModel.buildingPhone = building != null ? building.Phone : "";
 
-                tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+				tblBuilding neighborhoodBuilding = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.NeighborhoodBuildingID).FirstOrDefault();
+				fileViewModel.buildingNeigborhood = neighborhoodBuilding != null ? neighborhoodBuilding.BuildingName : "";
+				
+				tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 if (MIS != null)
                 {
                     fileViewModel.districtContact = (from contact in db.tblContacts where contact.Active == 1 && contact.USD == fileViewModel.studentInfo.AssignedUSD select contact).FirstOrDefault();
@@ -2459,9 +2471,13 @@ namespace GreenbushIep.Controllers
             {
                 viewModel.formTransRequest = db.tblFormTransportationRequests.Where(o => o.StudentId == id).FirstOrDefault();
             }
+			else if (fileName == "ContinuousLearningPlan")
+			{
+				viewModel.continuousLearningPlan = db.tblFormContinuousLearningPlans.Where(o => o.StudentId == id).FirstOrDefault();
+			}
 
 
-            viewModel.fileModel = fileViewModel;
+			viewModel.fileModel = fileViewModel;
 
             return View("_IEPFormsFile", viewModel);
         }
@@ -2512,10 +2528,10 @@ namespace GreenbushIep.Controllers
             forms.Add(new SelectListItem { Text = "Summary Of Performance", Value = "SummaryOfPerformance" });
 
             forms.Add(new SelectListItem { Text = "Request for Transportation", Value = "TransportationRequest" });
+			forms.Add(new SelectListItem { Text = "Individual Continuous Learning Plan", Value = "ContinuousLearningPlan" });
 
 
-
-            return forms.OrderBy(x => x.Text).ToList();
+			return forms.OrderBy(x => x.Text).ToList();
         }
 
         [Authorize]
@@ -3008,7 +3024,9 @@ namespace GreenbushIep.Controllers
             return View(model);
         }
 
-        [Authorize]
+		#region StudentForms
+
+		[Authorize]
         public ActionResult DownloadArchive(int id)
         {
             //TODO: Check if user has permissions to update permissions
@@ -3027,8 +3045,52 @@ namespace GreenbushIep.Controllers
             else
                 return null;
         }
+		
+		[Authorize]
+		public ActionResult DeleteArchive(int id)
+		{
+			//TODO: Check if user has permissions to update permissions
+			var document = db.tblFormArchives.Where(o => o.FormArchiveID == id).FirstOrDefault();
 
-        [HttpPost]
+			tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+			if (document != null && (user.RoleID == owner))
+			{
+				document.isActive = false;
+				db.SaveChanges();
+				return Json(new { Result = true,  Message = "The document was successfully deleted." }, JsonRequestBehavior.AllowGet);
+			}
+			else
+				return Json(new { Result = false, Message = "Unable to delete the document. Please contact the system administrator for more assistance." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		[Authorize]
+		public ActionResult DeleteUploadForm(int studentId, int formId)
+		{
+			tblFormArchive form = db.tblFormArchives.Where(f => f.Student_UserID == studentId && f.FormArchiveID == formId).FirstOrDefault();
+			if (form != null)
+			{
+				//delete the form in the database
+				db.tblFormArchives.Remove(form);
+
+				try
+				{
+					db.SaveChanges();
+				}
+				catch (Exception e)
+				{
+					return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the file from the database: " + e.InnerException.ToString() }, JsonRequestBehavior.AllowGet);
+				}
+
+				return Json(new { Result = "success", Message = "The uploaded file was removed from the database." }, JsonRequestBehavior.AllowGet);
+			}
+
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the uploaded form." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpPost]
         public ActionResult UploadStudentFile(HttpPostedFileBase myFile, int studentId)
         {
             try
@@ -3053,6 +3115,7 @@ namespace GreenbushIep.Controllers
                     archive.FormFile = fileData;
                     archive.ArchiveDate = DateTime.Now;
                     archive.isUpload = true;
+					archive.isActive = true;
 
                     db.tblFormArchives.Add(archive);
                     db.SaveChanges();
@@ -3073,8 +3136,9 @@ namespace GreenbushIep.Controllers
                 return Json(new { result = false, message = ex.Message }, "text/plain");
             }
         }
+		#endregion
 
-        [HttpPost]
+		[HttpPost]
         public ActionResult SearchUserName(string username)
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
@@ -3764,8 +3828,8 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-                    //  result = System.Text.RegularExpressions.Regex.Replace(result, @"</?textarea>", "");
-                }
+                    
+				}
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
                 byte[] studentFile = null;
@@ -3773,7 +3837,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
+                    //result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -3781,7 +3845,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent2))
                 {
                     string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
+                    //secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
                     secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -3789,7 +3853,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent3))
                 {
                     string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
+                    //thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
                     thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -3845,8 +3909,8 @@ namespace GreenbushIep.Controllers
                         archive.Creator_UserID = teacher.UserID;
                         archive.Student_UserID = id;
                         archive.FormName = string.IsNullOrEmpty(formNameValue) ? "IEP" : formNameValue;
-                        archive.FormFile = mergedFile;//fileIn;
-                                                      //archive.IEPid = iepId;
+                        archive.FormFile = mergedFile;
+                        archive.isActive = true;
                         archive.ArchiveDate = DateTime.Now;
 
                         db.tblFormArchives.Add(archive);
@@ -3894,16 +3958,16 @@ namespace GreenbushIep.Controllers
             doc.OptionWriteEmptyNodes = true;
             doc.OptionFixNestedTags = true;
             doc.LoadHtml(cssTextResult + "<div class='" + className + "'>" + result2 + "</div>");
-            //var htmlBody = doc.DocumentNode.SelectSingleNode("//textarea");
-            //if (htmlBody.HasChildNodes)
-            //{
-            //	foreach (var node in htmlBody.ChildNodes) {
-            //		//HtmlNode node = htmlBody.ChildNodes
-            //		node.RemoveAll();
-            //	}
-            //}
+            var htmlBody = doc.DocumentNode.SelectNodes("//textarea");
+			if (htmlBody != null && htmlBody.Count > 0)
+			{				
+				foreach (var node in htmlBody)
+				{
+					node.Remove();			
+				}
+			}
 
-            string cleanHTML2 = doc.DocumentNode.OuterHtml;
+			string cleanHTML2 = doc.DocumentNode.OuterHtml;
 
             byte[] fileIn = null;
             byte[] printFile = null;
@@ -4274,8 +4338,7 @@ namespace GreenbushIep.Controllers
             if (sid == 0)
                 return;
 
-            //var formList = GetForms();
-
+         
             tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
 
             HtmlDocument htmlDocument = new HtmlDocument();
@@ -5122,7 +5185,116 @@ namespace GreenbushIep.Controllers
                 db.SaveChanges();
 
             }
-        }
+			else if (formNameStr == "INDIVIDUAL CONTINUOUS LEARNING PLAN")
+			{
+				var formICLP = db.tblFormContinuousLearningPlans.Any(o => o.StudentId == sid) ? db.tblFormContinuousLearningPlans.FirstOrDefault(o => o.StudentId == sid) : new tblFormContinuousLearningPlan();
+				formICLP.StudentId = sid;
+				formICLP.ICLPDate = GetInputValueDate("ICLPDate", spans);
+				formICLP.EffectiveDate = GetInputValueDate("EffectiveDate", spans);
+				formICLP.EndingDate = GetInputValueDate("EndingDate", spans);
+				formICLP.StudentName = GetInputValue("StudentName", spans);
+				formICLP.ResponsibleBuilding = GetInputValue("ResponsibleBuilding", spans);
+				formICLP.Grade = GetInputValue("Grade", spans);
+				formICLP.PrimaryDisability = GetInputValue("PrimaryDisability", spans);
+				formICLP.Provider = GetInputValue("Provider", spans);
+				formICLP.AttendingBuilding = GetInputValue("AttendingBuilding", spans);
+				formICLP.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
+				formICLP.EvaluationCompletion = GetInputValueDate("EvaluationCompletion", spans);
+				formICLP.IEPDate = GetInputValueDate("IEPDate", spans);
+				formICLP.AccessToInternetBasedActivities_Yes = GetCheckboxSingleInputValue("AccessToInternetBasedActivities_Yes", checkboxes);
+				formICLP.AccessToInternetBasedActivities_No = GetCheckboxSingleInputValue("AccessToInternetBasedActivities_No", checkboxes);
+				formICLP.AccessToInternetBasedActivities_Home = GetCheckboxSingleInputValue("AccessToInternetBasedActivities_Home", checkboxes);
+				formICLP.AccessToInternetBasedActivities_HotSpot = GetCheckboxSingleInputValue("AccessToInternetBasedActivities_HotSpot", checkboxes);
+				formICLP.AccessToServiceDelivery_Yes = GetCheckboxSingleInputValue("AccessToServiceDelivery_Yes", checkboxes);
+				formICLP.AccessToServiceDelivery_No = GetCheckboxSingleInputValue("AccessToServiceDelivery_No", checkboxes);
+				formICLP.AccessToEmailCommunication_Yes = GetCheckboxSingleInputValue("AccessToEmailCommunication_Yes", checkboxes);
+				formICLP.AccessToEmailCommunication_No = GetCheckboxSingleInputValue("AccessToEmailCommunication_No", checkboxes);
+				formICLP.AccessToWorkPacket_Yes = GetCheckboxSingleInputValue("AccessToWorkPacket_Yes", checkboxes);
+				formICLP.AccessToWorkPacket_No = GetCheckboxSingleInputValue("AccessToWorkPacket_No", checkboxes);
+				formICLP.AccessToWorkPacket_DateProvided = GetInputValueDate("AccessToWorkPacket_DateProvided", spans);
+				formICLP.AccessToWorkPacket_Method = GetInputValue("AccessToWorkPacket_Method", spans);
+				formICLP.ServicesOffered = GetCheckboxSingleInputValue("ServicesOffered", checkboxes);
+				formICLP.ServicesAccepted = GetCheckboxSingleInputValue("ServicesAccepted", checkboxes);
+				formICLP.ServicesDeclineded = GetCheckboxSingleInputValue("ServicesDeclineded", checkboxes);
+				formICLP.Accommodations_HasNoCurrent = GetCheckboxSingleInputValue("Accommodations_HasNoCurrent", checkboxes);
+				formICLP.Accommodations_OfferedAndDeclined = GetCheckboxSingleInputValue("Accommodations_OfferedAndDeclined", checkboxes);
+				formICLP.Accommodation_Description1 = GetInputValue("Accommodation_Description1", spans);
+				formICLP.Accommodation_Implementation1 = GetInputValue("Accommodation_Implementation1", spans);
+				formICLP.Accommodation_Frequency1 = GetInputValue("Accommodation_Frequency1", spans);
+				formICLP.Accommodation_Description2 = GetInputValue("Accommodation_Description2", spans);
+				formICLP.Accommodation_Implementation2 = GetInputValue("Accommodation_Implementation2", spans);
+				formICLP.Accommodation_Frequency2 = GetInputValue("Accommodation_Frequency2", spans);
+				formICLP.Accommodation_Description3 = GetInputValue("Accommodation_Description3", spans);
+				formICLP.Accommodation_Implementation3 = GetInputValue("Accommodation_Implementation3", spans);
+				formICLP.Accommodation_Frequency3 = GetInputValue("Accommodation_Frequency3", spans);
+				formICLP.Accommodation_Description4 = GetInputValue("Accommodation_Description4", spans);
+				formICLP.Accommodation_Implementation4 = GetInputValue("Accommodation_Implementation4", spans);
+				formICLP.Accommodation_Frequency4 = GetInputValue("Accommodation_Frequency4", spans);
+				formICLP.Services_OfferedAndDeclined = GetCheckboxSingleInputValue("Services_OfferedAndDeclined", checkboxes);
+				formICLP.Services_ServiceProvided1 = GetInputValue("Services_ServiceProvided1", spans);
+				formICLP.Services_Setting1 = GetInputValue("Services_Setting1", spans);
+				formICLP.Services_Subject1 = GetInputValue("Services_Subject1", spans);
+				formICLP.Services_Minutes1 = GetInputValue("Services_Minutes1", spans);
+				formICLP.Services_Frequency1 = GetInputValue("Services_Frequency1", spans);
+				formICLP.Services_StartDate1 = GetInputValueDate("Services_StartDate1", spans);
+				formICLP.Services_EndDate1 = GetInputValueDate("Services_EndDate1", spans);
+				formICLP.Services_ServiceProvided2 = GetInputValue("Services_ServiceProvided2", spans);
+				formICLP.Services_Setting2 = GetInputValue("Services_Setting2", spans);
+				formICLP.Services_Subject2 = GetInputValue("Services_Subject2", spans);
+				formICLP.Services_Minutes2 = GetInputValue("Services_Minutes2", spans);
+				formICLP.Services_Frequency2 = GetInputValue("Services_Frequency2", spans);
+				formICLP.Services_StartDate2 = GetInputValueDate("Services_StartDate2", spans);
+				formICLP.Services_EndDate2 = GetInputValueDate("Services_EndDate2", spans);
+				formICLP.Provider_WillContactPhone = GetCheckboxSingleInputValue("Provider_WillContactPhone", checkboxes);
+				formICLP.Provider_WillContactPhone_Weekly = GetCheckboxSingleInputValue("Provider_WillContactPhone_Weekly", checkboxes);
+				formICLP.Provider_WillContactPhone_Biweekly = GetCheckboxSingleInputValue("Provider_WillContactPhone_Biweekly", checkboxes);
+				formICLP.Provider_WillContactEmail = GetCheckboxSingleInputValue("Provider_WillContactEmail", checkboxes);
+				formICLP.Provider_WillContactEmail_OnceWeek = GetCheckboxSingleInputValue("Provider_WillContactEmail_OnceWeek", checkboxes);
+				formICLP.Provider_WillContactEmail_TwiceWeek = GetCheckboxSingleInputValue("Provider_WillContactEmail_TwiceWeek", checkboxes);
+				formICLP.Provider_WillContactEmail_Biweekly = GetCheckboxSingleInputValue("Provider_WillContactEmail_Biweekly", checkboxes);
+				formICLP.Provider_ParentsContact = GetCheckboxSingleInputValue("Provider_ParentsContact", checkboxes);
+				formICLP.Goals_OfferedAndDeclined = GetCheckboxSingleInputValue("Goals_OfferedAndDeclined", checkboxes);
+				formICLP.Goals_Number1 = GetInputValue("Goals_Number1", spans);
+				formICLP.Goal_TrackProgress_Engagement1 = GetCheckboxSingleInputValue("Goal_TrackProgress_Engagement1", checkboxes);
+				formICLP.Goal_TrackProgress_Feedback1 = GetCheckboxSingleInputValue("Goal_TrackProgress_Feedback1", checkboxes);
+				formICLP.Goal_TrackProgress_Other1 = GetCheckboxSingleInputValue("Goal_TrackProgress_Other1", checkboxes);
+				formICLP.Goals_Number2 = GetInputValue("Goals_Number2", spans);
+				formICLP.Goal_TrackProgress_Engagement2 = GetCheckboxSingleInputValue("Goal_TrackProgress_Engagement2", checkboxes);
+				formICLP.Goal_TrackProgress_Feedback2 = GetCheckboxSingleInputValue("Goal_TrackProgress_Feedback2", checkboxes);
+				formICLP.Goal_TrackProgress_Other2 = GetCheckboxSingleInputValue("Goal_TrackProgress_Other2", checkboxes);
+				formICLP.Goals_Number3 = GetInputValue("Goals_Number3", spans);
+				formICLP.Goal_TrackProgress_Engagement3 = GetCheckboxSingleInputValue("Goal_TrackProgress_Engagement3", checkboxes);
+				formICLP.Goal_TrackProgress_Feedback3 = GetCheckboxSingleInputValue("Goal_TrackProgress_Feedback3", checkboxes);
+				formICLP.Goal_TrackProgress_Other3 = GetCheckboxSingleInputValue("Goal_TrackProgress_Other3", checkboxes);
+				formICLP.Goals_Number4 = GetInputValue("Goals_Number4", spans);
+				formICLP.Goal_TrackProgress_Engagement4 = GetCheckboxSingleInputValue("Goal_TrackProgress_Engagement4", checkboxes);
+				formICLP.Goal_TrackProgress_Feedback4 = GetCheckboxSingleInputValue("Goal_TrackProgress_Feedback4", checkboxes);
+				formICLP.Goal_TrackProgress_Other4 = GetCheckboxSingleInputValue("Goal_TrackProgress_Other4", checkboxes);
+				formICLP.ActivitiesOfferedToEnableAccess = GetInputValue("ActivitiesOfferedToEnableAccess", spans);
+				formICLP.ProviderName = GetInputValue("ProviderName", spans);
+
+				formICLP.Goals_Statement1 = GetInputValue("Goals_Statement1", spans);
+				formICLP.Goals_Statement2 = GetInputValue("Goals_Statement2", spans);
+				formICLP.Goals_Statement3 = GetInputValue("Goals_Statement3", spans);
+				formICLP.Goals_Statement4 = GetInputValue("Goals_Statement4", spans);
+
+				if (formICLP.FormContinuousLearningPlanId == 0)
+				{
+					formICLP.CreatedBy = currentUser.UserID;
+					formICLP.Create_Date = DateTime.Now;
+					formICLP.ModifiedBy = currentUser.UserID;
+					formICLP.Update_Date = DateTime.Now;
+					db.tblFormContinuousLearningPlans.Add(formICLP);
+				}
+				else
+				{
+					formICLP.ModifiedBy = currentUser.UserID;
+					formICLP.Update_Date = DateTime.Now;
+				}
+				db.SaveChanges();
+
+			}
+		}
 
         private DateTime? GetInputValueDate(string inputName, List<HtmlNode> inputs)
         {

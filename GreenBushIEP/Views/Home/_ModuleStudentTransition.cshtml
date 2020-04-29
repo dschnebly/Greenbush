@@ -1597,6 +1597,16 @@
 							$('ul.setup-panel li:eq(2)').removeClass('disabled');
 							$('ul.setup-panel li a[href="#step-3"]').trigger('click');
 
+							//update drafts with db id								
+							if (data.DraftGoals != null && data.DraftGoals != undefined && data.DraftGoals.length > 0) {
+								
+								for (i = 0; i < data.DraftGoals.length; i++) {
+									var goalElementVal = formData.find("#" + data.DraftGoals[i].ElementName);
+									if (goalElementVal.length > 0) {
+										goalElementVal.val(data.DraftGoals[i].TransitionItemID);
+									}								
+								}
+							}							
 						}
 						else {
 							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1608,7 +1618,7 @@
 						}
 					},
 					error: function (data) {
-						console.log("Unable to delete the student goal.");
+						console.log("Unable to save the student goal.");
 					}
 				});
 			}
@@ -1631,6 +1641,17 @@
 							console.log("Services successfully updated.");
 							$('ul.setup-panel li:eq(3)').removeClass('disabled');
 							$('ul.setup-panel li a[href="#step-4"]').trigger('click');
+
+							//update drafts with db id								
+							if (data.DraftServices != null && data.DraftServices != undefined && data.DraftServices.length > 0) {
+								
+								for (i = 0; i < data.DraftServices.length; i++) {
+									var serviceElementVal = formData.find("#" + data.DraftServices[i].ElementName);
+									if (serviceElementVal.length > 0) {
+										serviceElementVal.val(data.DraftServices[i].TransitionItemID);
+									}								
+								}
+							}	
 						}
 						else {
 							if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1642,7 +1663,7 @@
 						}
 					},
 					error: function (data) {
-						console.log("Unable to delete the student goal.");
+						console.log("Unable to save the student goal.");
 					}
 				});
 			}

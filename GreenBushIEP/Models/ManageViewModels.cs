@@ -426,7 +426,11 @@ namespace GreenBushIEP.Models
         public tblIEPMath math { get; set; }
         public tblIEPWritten written { get; set; }
         public string building { get; set; }
-        public string districtName { get; set; }
+		public string buildingAddress { get; set; }
+		public string buildingCityStZip { get; set; }
+		public string buildingPhone { get; set; }
+		public string buildingNeigborhood { get; set; }		
+		public string districtName { get; set; }
         public string lastReEvalDate { get; set; }
         public string studentLanguage { get; set; }
     }
@@ -443,8 +447,9 @@ namespace GreenBushIEP.Models
         public List<tblFormArchive> Archives { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
+		public bool CanDelete { get; set; }
 
-    }
+	}
 
     public class IEPFormFileViewModel
     {
@@ -473,6 +478,7 @@ namespace GreenBushIEP.Models
 		public tblFormRevokeConsentAll formRevAll { get; set; }
 		public tblFormRevokeConsentPart formRevPart { get; set; }
 		public tblFormTransportationRequest formTransRequest { get; set; }
+		public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
 
 		public IEPFormFileViewModel()
         {
@@ -852,6 +858,16 @@ namespace GreenBushIEP.Models
         public string iepType { get; set; }
         public string iepDate { get; set; }
     }
+
+	public class TempTransitionItemViewModel
+	{
+		public TempTransitionItemViewModel()
+		{
+		}
+
+		public int TransitionItemID { get; set; }
+		public string ElementName { get; set; }		
+	}
 }
 public class IEPStatus
 {

@@ -39,17 +39,25 @@
                         <th class="name truncate">Form Name</th>
                         <th class="date">Date</th>
                         <th class="date">&nbsp;</th>
+						<th class="@(Model.CanDelete ? "" : "hidden")">&nbsp;</th>
+						
                     </tr>
                 </thead>               
                 <tbody>
                     @{
-                        foreach (var archive in Model.Archives.Where(a => !a.isUpload))
+                        foreach (var archive in Model.Archives.Where(a => !a.isUpload && a.isActive))
                         {
+							bool isDeleteable = archive.FormName.Contains("Annual IEP") ? false : true;
                             <tr>
 
                                 <td class="name truncate">@archive.FormName</td>
                                 <td class="name truncate">@archive.ArchiveDate</td>
-                                <td class="date pull-right"><button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa fa-download"></i><span>&nbsp;Download</span></button></td>
+                                <td class="date pull-right">
+								<button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa fa-download"></i><span>&nbsp;Download</span></button>
+								</td>
+								<td class="@(Model.CanDelete ? "" : "hidden")">
+									<button type="button" @(isDeleteable ? "" : "disabled") class="btn btn-default btn-lg deleteArchiveForm" data-val="@archive.FormArchiveID" data-name="@archive.FormName" title="Set to inactive"><i class="fa fa fa-trash"></i><span>&nbsp;Delete</span></button>
+								</td>
                             </tr>
                         }
                     }
@@ -122,9 +130,9 @@
     </div>
 
     <!-- loading the file even though it's an ajax call -->
-    <var data-reload="true" data-src="/Scripts/studentForms.js?v1.2"></var>
+    <var data-reload="true" data-src="/Scripts/studentForms.js?v1.3"></var>
     <var data-reload="true" data-src="/Scripts/jquery.fileupload.js"></var>
     @section scripts {
-        @Scripts.Render("~/Scripts/studentForms.js?v1.2")
+        @Scripts.Render("~/Scripts/studentForms.js?v1.3")
     }
 </div>

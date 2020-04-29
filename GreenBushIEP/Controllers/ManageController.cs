@@ -3579,31 +3579,7 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
-        [HttpGet]
-        [Authorize]
-        public ActionResult deleteUploadForm(int studentId, int formId)
-        {
-            tblFormArchive form = db.tblFormArchives.Where(f => f.Student_UserID == studentId && f.FormArchiveID == formId).FirstOrDefault();
-            if (form != null)
-            {
-                //delete the form in the database
-                db.tblFormArchives.Remove(form);
-
-                try
-                {
-                    db.SaveChanges();
-                }
-                catch (Exception e)
-                {
-                    return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the file from the database: " + e.InnerException.ToString() }, JsonRequestBehavior.AllowGet);
-                }
-
-                return Json(new { Result = "success", Message = "The uploaded file was removed from the database." }, JsonRequestBehavior.AllowGet);
-            }
-
-
-            return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to delete the uploaded form." }, JsonRequestBehavior.AllowGet);
-        }
+       
 
         [HttpGet]
         public ActionResult SaveBuildingsToUser(string USD, int userId, string[] buildings)
