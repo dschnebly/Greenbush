@@ -23,7 +23,7 @@ namespace GreenBushIEP.Controllers
         private const string student = "5";
         private const string nurse = "6"; //level 1
 
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         // GET: Manage
         public ActionResult Index()
@@ -36,7 +36,7 @@ namespace GreenBushIEP.Controllers
         public ActionResult Details(int id)
         {
             tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
-            var districts = db.tblDistricts.ToList();
+            List<tblDistrict> districts = db.tblDistricts.ToList();
             var buildings = from b in db.tblBuildings
                             join bm in db.tblBuildingMappings on b.BuildingID equals bm.BuildingID
                             where bm.UserID == id & b.Active == 1
@@ -69,7 +69,7 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
-                var emailPassword = RandomPassword.Generate(10);
+                string emailPassword = RandomPassword.Generate(10);
                 PasswordHash hash = new PasswordHash(emailPassword);
 
                 // CREATE new user
@@ -89,8 +89,8 @@ namespace GreenBushIEP.Controllers
                 // UPLOAD the image
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(adminpersona.FileName);
-                    var path = Path.Combine(Server.MapPath("~/Avatar/"), fileName);
+                    string fileName = Path.GetFileName(adminpersona.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), fileName);
                     user.ImageURL = fileName;
                     adminpersona.SaveAs(path);
                 }
@@ -141,34 +141,38 @@ namespace GreenBushIEP.Controllers
         [HttpPost]
         public ActionResult FilterReferrals(int searchType)
         {
-            var currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             bool? completeType = null;
 
             if (searchType == 1)
+            {
                 completeType = false;
+            }
             else if (searchType == 2)
+            {
                 completeType = true;
+            }
 
             List<ReferralViewModel> referralList = new List<ReferralViewModel>();
 
             if (currentUser.RoleID == nurse || currentUser.RoleID == teacher)
             {
 
-                var referrals = (from refInfo in db.tblReferralInfoes
-                                 join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
-                                 where
-                                 refInfo.UserID == currentUser.UserID
-                                 && rr.UserID_Requster == currentUser.UserID
-                                 && rr.Complete == false
-                                 && rr.Submit_Date == null
-                                 select refInfo).Distinct();
+                IQueryable<tblReferralInfo> referrals = (from refInfo in db.tblReferralInfoes
+                                                         join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
+                                                         where
+                                                         refInfo.UserID == currentUser.UserID
+                                                         && rr.UserID_Requster == currentUser.UserID
+                                                         && rr.Complete == false
+                                                         && rr.Submit_Date == null
+                                                         select refInfo).Distinct();
 
-                foreach (var referral in referrals)
+                foreach (tblReferralInfo referral in referrals)
                 {
 
                     ReferralViewModel model = new ReferralViewModel();
 
-                    var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                    tblReferralRequest request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                     if (request != null)
                     {
                         model.submitDate = request.Create_Date.ToShortDateString();
@@ -186,30 +190,30 @@ namespace GreenBushIEP.Controllers
             else
             {
 
-                var districts = (from org in db.tblOrganizationMappings
-                                 join user in db.tblUsers
-                                     on org.UserID equals user.UserID
-                                 where (user.UserID == currentUser.UserID)
-                                 select org).Distinct();
+                IQueryable<tblOrganizationMapping> districts = (from org in db.tblOrganizationMappings
+                                                                join user in db.tblUsers
+                                                                    on org.UserID equals user.UserID
+                                                                where (user.UserID == currentUser.UserID)
+                                                                select org).Distinct();
 
 
                 if (districts != null)
                 {
 
 
-                    foreach (var district in districts)
+                    foreach (tblOrganizationMapping district in districts)
                     {
 
-                        var referrals = (from refInfo in db.tblReferralInfoes
-                                         join rr in db.tblReferralRequests
-                                             on refInfo.ReferralID equals rr.ReferralID
-                                         where
-                                         (refInfo.AssignedUSD == district.USD)
-                                         && rr.Submit_Date != null
-                                         && ((completeType == null) || (rr.Complete == completeType.Value))
-                                         select refInfo).Distinct();
+                        IQueryable<tblReferralInfo> referrals = (from refInfo in db.tblReferralInfoes
+                                                                 join rr in db.tblReferralRequests
+                                                                     on refInfo.ReferralID equals rr.ReferralID
+                                                                 where
+                                                                 (refInfo.AssignedUSD == district.USD)
+                                                                 && rr.Submit_Date != null
+                                                                 && ((completeType == null) || (rr.Complete == completeType.Value))
+                                                                 select refInfo).Distinct();
 
-                        foreach (var referral in referrals)
+                        foreach (tblReferralInfo referral in referrals)
                         {
                             //if duplicated skip
 
@@ -217,11 +221,17 @@ namespace GreenBushIEP.Controllers
                             tblReferralRequest request = null;
 
                             if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType != null)
+                            {
                                 request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID && o.Complete == completeType).FirstOrDefault();
+                            }
                             else if (db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).Count() > 0 && completeType == null)
+                            {
                                 request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).OrderByDescending(o => o.Complete).FirstOrDefault();
+                            }
                             else
+                            {
                                 request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                            }
 
                             if (request != null)
                             {
@@ -247,27 +257,27 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult Referrals()
         {
-            var currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser currentUser = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
             if (currentUser.RoleID == nurse || currentUser.RoleID == teacher)
             {
                 List<ReferralViewModel> referralList = new List<ReferralViewModel>();
 
-                var referrals = (from refInfo in db.tblReferralInfoes
-                                 join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
-                                 where
-                                 refInfo.UserID == currentUser.UserID
-                                 && rr.UserID_Requster == currentUser.UserID
-                                 && rr.Complete == false
-                                 && rr.Submit_Date == null
-                                 select refInfo).Distinct();
+                IQueryable<tblReferralInfo> referrals = (from refInfo in db.tblReferralInfoes
+                                                         join rr in db.tblReferralRequests on refInfo.ReferralID equals rr.ReferralID
+                                                         where
+                                                         refInfo.UserID == currentUser.UserID
+                                                         && rr.UserID_Requster == currentUser.UserID
+                                                         && rr.Complete == false
+                                                         && rr.Submit_Date == null
+                                                         select refInfo).Distinct();
 
-                foreach (var referral in referrals)
+                foreach (tblReferralInfo referral in referrals)
                 {
 
                     ReferralViewModel model = new ReferralViewModel();
 
-                    var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                    tblReferralRequest request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                     if (request != null)
                     {
                         model.submitDate = request.Create_Date.ToShortDateString();
@@ -288,35 +298,35 @@ namespace GreenBushIEP.Controllers
 
             else
             {
-                var districts = (from org in db.tblOrganizationMappings
-                                 join user in db.tblUsers
-                                     on org.UserID equals user.UserID
-                                 where (user.UserID == currentUser.UserID)
-                                 select org).Distinct();
+                IQueryable<tblOrganizationMapping> districts = (from org in db.tblOrganizationMappings
+                                                                join user in db.tblUsers
+                                                                    on org.UserID equals user.UserID
+                                                                where (user.UserID == currentUser.UserID)
+                                                                select org).Distinct();
 
                 List<ReferralViewModel> referralList = new List<ReferralViewModel>();
                 if (districts != null)
                 {
-                    foreach (var district in districts)
+                    foreach (tblOrganizationMapping district in districts)
                     {
 
-                        var referrals = (from refInfo in db.tblReferralInfoes
-                                         join rr in db.tblReferralRequests
-                                             on refInfo.ReferralID equals rr.ReferralID
-                                         where
-                                         (refInfo.AssignedUSD == district.USD)
-                                         && rr.Complete == false
-                                         && rr.Submit_Date != null
-                                         select refInfo).Distinct();
+                        IQueryable<tblReferralInfo> referrals = (from refInfo in db.tblReferralInfoes
+                                                                 join rr in db.tblReferralRequests
+                                                                     on refInfo.ReferralID equals rr.ReferralID
+                                                                 where
+                                                                 (refInfo.AssignedUSD == district.USD)
+                                                                 && rr.Complete == false
+                                                                 && rr.Submit_Date != null
+                                                                 select refInfo).Distinct();
 
-                        foreach (var referral in referrals)
+                        foreach (tblReferralInfo referral in referrals)
                         {
                             //if duplicated skip
                             if (!referral.tblReferralRequests.Any(o => o.Complete == true))
                             {
                                 ReferralViewModel model = new ReferralViewModel();
 
-                                var request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
+                                tblReferralRequest request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                                 if (request != null)
                                 {
                                     model.submitDate = request.Submit_Date.HasValue ? request.Submit_Date.Value.ToShortDateString() : request.Create_Date.ToShortDateString();
@@ -364,7 +374,7 @@ namespace GreenBushIEP.Controllers
 
                 if (!string.IsNullOrEmpty(model.student.AttendingUSD))
                 {
-                    var attendingUSDs = model.student.AttendingUSD.Split(',');
+                    string[] attendingUSDs = model.student.AttendingUSD.Split(',');
                     model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where attendingUSDs.Contains(o.USD) select d).Distinct().ToList();
                 }
             }
@@ -442,13 +452,13 @@ namespace GreenBushIEP.Controllers
                     db.tblReferralRelationships.RemoveRange(relationships);
                 }
 
-                var referral = db.tblReferralInfoes.Where(r => r.ReferralID == referralId).FirstOrDefault();
+                tblReferralInfo referral = db.tblReferralInfoes.Where(r => r.ReferralID == referralId).FirstOrDefault();
                 if (referral != null)
                 {
                     db.tblReferralInfoes.Remove(referral);
                 }
 
-                var referralReq = db.tblReferralRequests.Where(r => r.ReferralID == referralId).FirstOrDefault();
+                tblReferralRequest referralReq = db.tblReferralRequests.Where(r => r.ReferralID == referralId).FirstOrDefault();
                 if (referralReq != null)
                 {
                     db.tblReferralRequests.Remove(referralReq);
@@ -491,7 +501,9 @@ namespace GreenBushIEP.Controllers
                     if (exsistingStudent != null)
                     {
                         if (referralReq != null && referralReq.Complete)
+                        {
                             return Json(new { Result = "error", Message = "This Referral was already completed and the student has been created. Please contact Greenbush." });
+                        }
 
                         //student has been created but it is not complete - don't create new record
                         return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
@@ -500,9 +512,11 @@ namespace GreenBushIEP.Controllers
 
                     if (!string.IsNullOrEmpty(collection["email"]))
                     {
-                        var email = collection["email"].ToString();
+                        string email = collection["email"].ToString();
                         if (db.tblUsers.Any(o => o.Email == email))
+                        {
                             return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                        }
                     }
 
                     // Create New StudentInfo
@@ -571,15 +585,15 @@ namespace GreenBushIEP.Controllers
                     catch (DbEntityValidationException ex)
                     {
                         // Retrieve the error messages as a list of strings.
-                        var errorMessages = ex.EntityValidationErrors
+                        IEnumerable<string> errorMessages = ex.EntityValidationErrors
                                 .SelectMany(x => x.ValidationErrors)
                                 .Select(x => x.ErrorMessage);
 
                         // Join the list to a single string.
-                        var fullErrorMessage = string.Join("; ", errorMessages);
+                        string fullErrorMessage = string.Join("; ", errorMessages);
 
                         // Combine the original exception message with the new one.
-                        var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                        string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                         return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + exceptionMessage });
                     }
@@ -593,15 +607,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -730,10 +744,10 @@ namespace GreenBushIEP.Controllers
                     int referralId = Convert.ToInt32(collection["referralId"]);
 
                     //delete old
-                    var relationships = db.tblReferralRelationships.Where(o => o.ReferralID == referralId).ToList();
+                    List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(o => o.ReferralID == referralId).ToList();
                     if (relationships.Any())
                     {
-                        foreach (var existingRelationship in relationships)
+                        foreach (tblReferralRelationship existingRelationship in relationships)
                         {
                             db.tblReferralRelationships.Remove(existingRelationship);
 
@@ -748,13 +762,15 @@ namespace GreenBushIEP.Controllers
                     while (++i < collection.AllKeys.Length)
                     {
 
-                        var nameColl = collection.AllKeys[i];
+                        string nameColl = collection.AllKeys[i];
                         int start = nameColl.IndexOf('[');
                         int end = nameColl.IndexOf(']');
-                        var val = nameColl.Substring(start + 1, (end - 1) - start);
+                        string val = nameColl.Substring(start + 1, (end - 1) - start);
 
                         if (num != val)
+                        {
                             uniqueKeys.Add(val);
+                        }
 
                         num = val;
 
@@ -762,7 +778,7 @@ namespace GreenBushIEP.Controllers
                     }
 
 
-                    foreach (var keyVal in uniqueKeys)
+                    foreach (string keyVal in uniqueKeys)
                     {
                         string labelName = string.Format("contact[{0}].", keyVal);
                         tblReferralRelationship contact = new tblReferralRelationship();
@@ -780,7 +796,9 @@ namespace GreenBushIEP.Controllers
                         contact.Email = collection[string.Format("{0}ContactEmail", labelName)].ToString();
 
                         if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
+                        {
                             contact.PrimaryContact = 1;
+                        }
 
                         db.tblReferralRelationships.Add(contact);
                     }
@@ -801,15 +819,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -838,11 +856,11 @@ namespace GreenBushIEP.Controllers
 
                         if (adminpersona.ContentLength > 0)
                         {
-                            var refer = db.tblReferralInfoes.Where(o => o.ReferralID == referralID).FirstOrDefault();
+                            tblReferralInfo refer = db.tblReferralInfoes.Where(o => o.ReferralID == referralID).FirstOrDefault();
 
-                            var fileName = Path.GetFileName(adminpersona.FileName);
-                            var random = Guid.NewGuid() + fileName;
-                            var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                            string fileName = Path.GetFileName(adminpersona.FileName);
+                            string random = Guid.NewGuid() + fileName;
+                            string path = Path.Combine(Server.MapPath("~/Avatar/"), random);
                             if (!Directory.Exists(Server.MapPath("~/Avatar/")))
                             {
                                 Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
@@ -871,7 +889,7 @@ namespace GreenBushIEP.Controllers
                 string teacherList = collection["selectedTeachers"];
                 if (!string.IsNullOrEmpty(teacherList))
                 {
-                    int[] teacherArray = Array.ConvertAll(teacherList.Split(','), Int32.Parse);
+                    int[] teacherArray = Array.ConvertAll(teacherList.Split(','), int.Parse);
                     StudentAssignments(studentId, teacherArray);
                 }
 
@@ -884,9 +902,9 @@ namespace GreenBushIEP.Controllers
                         //// UPLOAD the image
                         if (adminpersona != null && adminpersona.ContentLength > 0)
                         {
-                            var fileName = Path.GetFileName(adminpersona.FileName);
-                            var random = Guid.NewGuid() + fileName;
-                            var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                            string fileName = Path.GetFileName(adminpersona.FileName);
+                            string random = Guid.NewGuid() + fileName;
+                            string path = Path.Combine(Server.MapPath("~/Avatar/"), random);
                             if (!Directory.Exists(Server.MapPath("~/Avatar/")))
                             {
                                 Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
@@ -900,10 +918,10 @@ namespace GreenBushIEP.Controllers
                         }
                     }
 
-                    var rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralID);
+                    IQueryable<tblReferralRequest> rrList = db.tblReferralRequests.Where(o => o.ReferralID == referralID);
                     if (rrList != null)
                     {
-                        foreach (var rr in rrList)
+                        foreach (tblReferralRequest rr in rrList)
                         {
                             rr.Complete = true;
                             rr.Create_Date = DateTime.Now;
@@ -917,15 +935,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -945,7 +963,7 @@ namespace GreenBushIEP.Controllers
             try
             {
 
-                var referral = db.tblReferralInfoes.Where(o => o.ReferralID == referralId).FirstOrDefault();
+                tblReferralInfo referral = db.tblReferralInfoes.Where(o => o.ReferralID == referralId).FirstOrDefault();
                 if (referral != null)
                 {
 
@@ -1013,8 +1031,8 @@ namespace GreenBushIEP.Controllers
 
                     db.tblStudentInfoes.Add(studentInfo);
 
-                    var contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
-                    foreach (var contact in contacts)
+                    IQueryable<tblReferralRelationship> contacts = db.tblReferralRelationships.Where(o => o.ReferralID == referralId);
+                    foreach (tblReferralRelationship contact in contacts)
                     {
 
                         tblStudentRelationship newRelationship = new tblStudentRelationship();
@@ -1046,7 +1064,7 @@ namespace GreenBushIEP.Controllers
                     // save the user to all the districts that was selected.
                     // tblOrganizationMapping and tblBuildingMapping
 
-                    var districtValues = referral.AttendingUSD;
+                    string districtValues = referral.AttendingUSD;
 
                     if (!string.IsNullOrEmpty(districtValues))
                     {
@@ -1197,11 +1215,11 @@ namespace GreenBushIEP.Controllers
                 {
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-                    var submitterDistrict = (from org in db.tblOrganizationMappings
-                                             join user in db.tblUsers
-                                                 on org.UserID equals user.UserID
-                                             where user.UserID == submitter.UserID
-                                             select org).Distinct().FirstOrDefault();
+                    tblOrganizationMapping submitterDistrict = (from org in db.tblOrganizationMappings
+                                                                join user in db.tblUsers
+                                                                    on org.UserID equals user.UserID
+                                                                where user.UserID == submitter.UserID
+                                                                select org).Distinct().FirstOrDefault();
 
 
                     int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
@@ -1336,15 +1354,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -1386,15 +1404,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -1417,10 +1435,10 @@ namespace GreenBushIEP.Controllers
                     tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == referralId).FirstOrDefault();
 
                     //delete old
-                    var relationships = db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID).ToList();
+                    List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID).ToList();
                     if (relationships.Any())
                     {
-                        foreach (var existingRelationship in relationships)
+                        foreach (tblReferralRelationship existingRelationship in relationships)
                         {
                             db.tblReferralRelationships.Remove(existingRelationship);
 
@@ -1434,13 +1452,15 @@ namespace GreenBushIEP.Controllers
                     while (++i < collection.AllKeys.Length)
                     {
 
-                        var nameColl = collection.AllKeys[i];
+                        string nameColl = collection.AllKeys[i];
                         int start = nameColl.IndexOf('[');
                         int end = nameColl.IndexOf(']');
-                        var val = nameColl.Substring(start + 1, (end - 1) - start);
+                        string val = nameColl.Substring(start + 1, (end - 1) - start);
 
                         if (num != val)
+                        {
                             uniqueKeys.Add(val);
+                        }
 
                         num = val;
 
@@ -1448,7 +1468,7 @@ namespace GreenBushIEP.Controllers
                     }
 
 
-                    foreach (var keyVal in uniqueKeys)
+                    foreach (string keyVal in uniqueKeys)
                     {
                         string labelName = string.Format("contact[{0}].", keyVal);
                         tblReferralRelationship contact = new tblReferralRelationship();
@@ -1466,7 +1486,9 @@ namespace GreenBushIEP.Controllers
                         contact.Email = collection[string.Format("{0}ContactEmail", labelName)].ToString();
 
                         if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
+                        {
                             contact.PrimaryContact = 1;
+                        }
 
                         db.tblReferralRelationships.Add(contact);
                     }
@@ -1528,15 +1550,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -1551,21 +1573,21 @@ namespace GreenBushIEP.Controllers
             string neighborhoodBuilding = "";
             if (student.NeighborhoodBuildingID != null)
             {
-                var nb = db.tblBuildings.Where(o => o.BuildingID == student.NeighborhoodBuildingID).FirstOrDefault();
+                tblBuilding nb = db.tblBuildings.Where(o => o.BuildingID == student.NeighborhoodBuildingID).FirstOrDefault();
                 neighborhoodBuilding = nb.BuildingName;
             }
 
             string responsibleBuilding = "";
             if (student.ResponsibleBuildingID != null)
             {
-                var nb = db.tblBuildings.Where(o => o.BuildingID == student.ResponsibleBuildingID).FirstOrDefault();
+                tblBuilding nb = db.tblBuildings.Where(o => o.BuildingID == student.ResponsibleBuildingID).FirstOrDefault();
                 responsibleBuilding = nb.BuildingName;
             }
 
             string grade = "";
             if (student.Grade != null)
             {
-                var nb = db.tblGrades.Where(o => o.gradeID == student.Grade).FirstOrDefault();
+                tblGrade nb = db.tblGrades.Where(o => o.gradeID == student.Grade).FirstOrDefault();
                 grade = nb.description;
             }
 
@@ -1606,7 +1628,7 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.AppendFormat("<h3>Parent/Guardian Information</h3>");
             sb.Append("<br/>");
-            foreach (var pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
+            foreach (tblReferralRelationship pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
             {
                 sb.AppendFormat("<b>Relationship:</b><span style='text-transform: capitalize;'> {0}</span>", pc.Realtionship);
                 sb.Append("<br/>");
@@ -1654,7 +1676,7 @@ namespace GreenBushIEP.Controllers
                         MailMessage mailMessage = new MailMessage();
                         mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
 
-                        foreach (var misUser in list)
+                        foreach (tblUser misUser in list)
                         {
                             if (!string.IsNullOrEmpty(misUser.Email))
                             {
@@ -1678,14 +1700,14 @@ namespace GreenBushIEP.Controllers
 
                     }
 
-                    var submitterDistrict = (from org in db.tblOrganizationMappings
-                                             join user in db.tblUsers
-                                                 on org.UserID equals user.UserID
-                                             where user.UserID == submitter.UserID
-                                             select org).Distinct().FirstOrDefault();
+                    tblOrganizationMapping submitterDistrict = (from org in db.tblOrganizationMappings
+                                                                join user in db.tblUsers
+                                                                    on org.UserID equals user.UserID
+                                                                where user.UserID == submitter.UserID
+                                                                select org).Distinct().FirstOrDefault();
 
 
-                    var existingReferalReq = db.tblReferralRequests.Where(o => o.ReferralID == student.ReferralID).FirstOrDefault();
+                    tblReferralRequest existingReferalReq = db.tblReferralRequests.Where(o => o.ReferralID == student.ReferralID).FirstOrDefault();
 
                     if (existingReferalReq == null)
                     {
@@ -1713,15 +1735,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -1872,7 +1894,7 @@ namespace GreenBushIEP.Controllers
                     // save to organization chart
                     // save the user to all the districts that was selected.
                     // tblOrganizationMapping and tblBuildingMapping
-                    var districtValues = collection["misDistrict"];
+                    string districtValues = collection["misDistrict"];
 
                     if (!string.IsNullOrEmpty(districtValues))
                     {
@@ -1896,15 +1918,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -2077,15 +2099,15 @@ namespace GreenBushIEP.Controllers
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
-                    var errorMessages = ex.EntityValidationErrors
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
                             .SelectMany(x => x.ValidationErrors)
                             .Select(x => x.ErrorMessage);
 
                     // Join the list to a single string.
-                    var fullErrorMessage = string.Join("; ", errorMessages);
+                    string fullErrorMessage = string.Join("; ", errorMessages);
 
                     // Combine the original exception message with the new one.
-                    var exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
                 }
@@ -2114,11 +2136,11 @@ namespace GreenBushIEP.Controllers
             tblUser studentUser = db.tblUsers.Where(u => u.UserID == studentId).SingleOrDefault();
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-            var existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == studentId).ToList();
+            List<tblOrganizationMapping> existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == studentId).ToList();
 
             if (existingAssignments.Any())
             {
-                foreach (var existing in existingAssignments)
+                foreach (tblOrganizationMapping existing in existingAssignments)
                 {
                     db.tblOrganizationMappings.Remove(existing);
                     db.SaveChanges();
@@ -2150,9 +2172,9 @@ namespace GreenBushIEP.Controllers
                 //// UPLOAD the image
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(adminpersona.FileName);
-                    var random = Guid.NewGuid() + fileName;
-                    var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                    string fileName = Path.GetFileName(adminpersona.FileName);
+                    string random = Guid.NewGuid() + fileName;
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), random);
                     if (!Directory.Exists(Server.MapPath("~/Avatar/")))
                     {
                         Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
@@ -2298,7 +2320,7 @@ namespace GreenBushIEP.Controllers
                 // save to organization chart
                 // save the user to all the districts that was selected.
                 // tblOrganizationMapping and tblBuildingMapping
-                var districtValues = collection["misDistrict"];
+                string districtValues = collection["misDistrict"];
 
                 if (!string.IsNullOrEmpty(districtValues))
                 {
@@ -2315,7 +2337,7 @@ namespace GreenBushIEP.Controllers
                         {
                             if (fullList.Any(l => !l.USD.Contains(usd)))
                             {
-                                var mappingCount = db.tblOrganizationMappings.Where(o => o.AdminID == submitter.UserID && o.UserID == student.UserID && o.USD == usd).Count();
+                                int mappingCount = db.tblOrganizationMappings.Where(o => o.AdminID == submitter.UserID && o.UserID == student.UserID && o.USD == usd).Count();
 
                                 if (mappingCount == 0)
                                 {
@@ -2502,13 +2524,13 @@ namespace GreenBushIEP.Controllers
                     //check for exit code and send email if it was just changed to an exist code
                     if (currentStatusCode != info.StatusCode)
                     {
-                        var statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
+                        tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
 
                         if (statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive")
                         {
                             // keep an audit trail on the students that come and go due to real life circumstances 
                             tblArchiveIEPExit archive = db.tblArchiveIEPExits.Where(a => a.userID == studentId).FirstOrDefault();
-                            if(archive != null)
+                            if (archive != null)
                             {
                                 archive = new tblArchiveIEPExit();
                                 archive.exitDate = DateTime.Now;
@@ -2631,7 +2653,7 @@ namespace GreenBushIEP.Controllers
                 //get teachers list
                 tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == studentId).FirstOrDefault();
                 List<TeacherView> teachers = new List<TeacherView>();
-                var currentAssignments = new List<int>();
+                List<int> currentAssignments = new List<int>();
                 if (info != null)
                 {
                     teachers = GetTeacherByBuilding(info.BuildingID, info.AssignedUSD);
@@ -2656,7 +2678,7 @@ namespace GreenBushIEP.Controllers
             tblUser student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
             if (student != null)
             {
-                var filePath = Server.MapPath("~/Avatar/" + student.ImageURL);
+                string filePath = Server.MapPath("~/Avatar/" + student.ImageURL);
                 if (System.IO.File.Exists(filePath))
                 {
                     System.IO.File.Delete(filePath);
@@ -2666,9 +2688,9 @@ namespace GreenBushIEP.Controllers
                 // UPLOAD the image
                 if (adminpersona != null && adminpersona.ContentLength > 0)
                 {
-                    var fileName = Path.GetFileName(adminpersona.FileName);
-                    var random = Guid.NewGuid() + fileName;
-                    var path = Path.Combine(Server.MapPath("~/Avatar/"), random);
+                    string fileName = Path.GetFileName(adminpersona.FileName);
+                    string random = Guid.NewGuid() + fileName;
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), random);
                     if (!Directory.Exists(Server.MapPath("~/Avatar/")))
                     {
                         Directory.CreateDirectory(Server.MapPath("~/Avatar/"));
@@ -2905,7 +2927,7 @@ namespace GreenBushIEP.Controllers
                     //}
 
                     //delete from tlbOrganizationMapping all userId references.
-                    var mappings = db.tblOrganizationMappings.Where(u => u.UserID == user.UserID).ToList();
+                    List<tblOrganizationMapping> mappings = db.tblOrganizationMappings.Where(u => u.UserID == user.UserID).ToList();
                     if (mappings.Count > 0)
                     {
                         db.tblOrganizationMappings.RemoveRange(mappings);
@@ -2913,7 +2935,7 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //delete from tblBuildingMapping all userId references.
-                    var buildings = db.tblBuildingMappings.Where(u => u.UserID == user.UserID).ToList();
+                    List<tblBuildingMapping> buildings = db.tblBuildingMappings.Where(u => u.UserID == user.UserID).ToList();
                     if (buildings.Count > 0)
                     {
                         db.tblBuildingMappings.RemoveRange(buildings);
@@ -2991,7 +3013,7 @@ namespace GreenBushIEP.Controllers
                 NewPortalObject.Add("selectedBuilding", BuildingId);
                 NewPortalObject.Add("selectedRole", RoleId);
 
-                var members = new List<UserView>();
+                List<UserView> members = new List<UserView>();
 
                 if (RoleId != "999")
                 {
@@ -3083,25 +3105,25 @@ namespace GreenBushIEP.Controllers
 
                 if (BuildingId == "-1")
                 {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
+                    List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                     myBuildings.Add("0");
                 }
                 else
                 {
-                    var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
+                    List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                 }
 
 
-                var members = new List<UserView>();
+                List<UserView> members = new List<UserView>();
 
                 if (searchActiveType == null)
                 {
 
-                    var userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
+                    IQueryable<UserView> userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
 
                     members = (from u in userMembers
                                join o in db.tblOrganizationMappings on u.UserID equals o.UserID
@@ -3120,7 +3142,7 @@ namespace GreenBushIEP.Controllers
                 else
                 {
 
-                    var userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
+                    IQueryable<UserView> userMembers = db.vw_UserList.Where(ul => ul.RoleID == student && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID) && ((searchUserId == null) || (ul.UserID == searchUserId.Value)) && ((searchActiveType == null) || (ul.IsActive == searchActiveType.Value))).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID }).GroupBy(u => u.UserID).Select(u => u.FirstOrDefault());
 
                     members = (from u in userMembers
                                join o in db.tblOrganizationMappings on u.UserID equals o.UserID
@@ -3290,9 +3312,9 @@ namespace GreenBushIEP.Controllers
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(Iepid, user.UserID, false);
 
-                var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+                tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
-                var annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
+                tblIEP annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
                 int AnnualId = annual.IEPid;
 
                 if (studentDetails != null)
@@ -3319,9 +3341,9 @@ namespace GreenBushIEP.Controllers
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
                 db.uspCopyIEP(IepId, user.UserID, amend);
 
-                var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
+                tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
-                var amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
+                tblIEP amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
 
                 int AmendmentId = amendment.IEPid;
 
@@ -3348,36 +3370,36 @@ namespace GreenBushIEP.Controllers
 
             try
             {
-                var teacherBuildings = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.BuildingID).Distinct().ToList();
-                var studentsInTheBuildings = (from bm in db.tblBuildingMappings
-                                              join user in db.tblUsers on bm.UserID
-            equals user.UserID
-                                              where user.RoleID == "5"
-                                              && ((filterStudentName == null) || (user.FirstName.Contains(filterStudentName) || user.LastName.Contains(filterStudentName)))
-                                              && teacherBuildings.Contains(bm.BuildingID)
-                                              select bm.UserID).ToList();
-                var alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
+                List<string> teacherBuildings = (from bm in db.tblBuildingMappings where bm.UserID == teacher.UserID select bm.BuildingID).Distinct().ToList();
+                List<int> studentsInTheBuildings = (from bm in db.tblBuildingMappings
+                                                    join user in db.tblUsers on bm.UserID
+                  equals user.UserID
+                                                    where user.RoleID == "5"
+                                                    && ((filterStudentName == null) || (user.FirstName.Contains(filterStudentName) || user.LastName.Contains(filterStudentName)))
+                                                    && teacherBuildings.Contains(bm.BuildingID)
+                                                    select bm.UserID).ToList();
+                List<int> alreadyAssignedStudents = (from o in db.tblOrganizationMappings where o.AdminID == teacher.UserID select o.UserID).Distinct().ToList();
 
                 // Get all users that are students NOT archive, NOT already in the teachers list and in the Teachers's building!!!!
                 //var students = db.tblUsers.Where(u => u.Archive != true && studentsInTheBuildings.Contains(u.UserID) && !alreadyAssignedStudents.Contains(u.UserID)).ToList();
 
-                var students = (from u in db.tblUsers
-                                join su in db.tblStudentInfoes on u.UserID equals su.UserID
-                                join b in db.tblBuildings on su.BuildingID equals b.BuildingID
-                                where
-                                u.RoleID == "5"
-                                && !(u.Archive ?? false)
-                                && studentsInTheBuildings.Contains(u.UserID)
-                                && !alreadyAssignedStudents.Contains(u.UserID)
-                                && teacherBuildings.Contains(b.BuildingID)
-                                select new Student
-                                {
-                                    UserID = u.UserID,
-                                    FirstName = u.FirstName,
-                                    LastName = u.LastName,
-                                    ImageURL = u.ImageURL,
-                                    BuildingName = b.BuildingName
-                                }).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
+                List<Student> students = (from u in db.tblUsers
+                                          join su in db.tblStudentInfoes on u.UserID equals su.UserID
+                                          join b in db.tblBuildings on su.BuildingID equals b.BuildingID
+                                          where
+                                          u.RoleID == "5"
+                                          && !(u.Archive ?? false)
+                                          && studentsInTheBuildings.Contains(u.UserID)
+                                          && !alreadyAssignedStudents.Contains(u.UserID)
+                                          && teacherBuildings.Contains(b.BuildingID)
+                                          select new Student
+                                          {
+                                              UserID = u.UserID,
+                                              FirstName = u.FirstName,
+                                              LastName = u.LastName,
+                                              ImageURL = u.ImageURL,
+                                              BuildingName = b.BuildingName
+                                          }).Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
 
 
                 return Json(new { Result = "success", Message = students }, JsonRequestBehavior.AllowGet);
@@ -3425,16 +3447,16 @@ namespace GreenBushIEP.Controllers
             try
             {
                 // A list of all the building ids the current user has joined.
-                var mappings = from m in db.tblBuildingMappings
-                               where m.UserID == userId
-                               select m.BuildingID;
+                IQueryable<string> mappings = from m in db.tblBuildingMappings
+                                              where m.UserID == userId
+                                              select m.BuildingID;
 
                 // Give me the list of all the buildings in the current district that are user is NOT already in.
-                var listOfBuildings = from b in db.tblBuildings
-                                      where !(mappings).Contains(b.BuildingID)
-                                      && b.USD == id && b.Active == 1
-                                      orderby b.BuildingName
-                                      select b;
+                IOrderedQueryable<tblBuilding> listOfBuildings = from b in db.tblBuildings
+                                                                 where !(mappings).Contains(b.BuildingID)
+                                                                 && b.USD == id && b.Active == 1
+                                                                 orderby b.BuildingName
+                                                                 select b;
 
                 if (listOfBuildings != null)
                 {
@@ -3567,7 +3589,7 @@ namespace GreenBushIEP.Controllers
             {
                 if (!string.IsNullOrEmpty(districtId))
                 {
-                    var buildings = db.vw_BuildingList.Where(b => b.USD == districtId).ToList();
+                    List<vw_BuildingList> buildings = db.vw_BuildingList.Where(b => b.USD == districtId).ToList();
                     return Json(new { Result = "success", DistrictBuildings = buildings }, JsonRequestBehavior.AllowGet);
                 }
             }
@@ -3579,7 +3601,7 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
-       
+
 
         [HttpGet]
         public ActionResult SaveBuildingsToUser(string USD, int userId, string[] buildings)
@@ -3613,7 +3635,7 @@ namespace GreenBushIEP.Controllers
         {
             if (reEvaldate != null)
             {
-                var archives = db.tblArchiveEvaluationDateSigneds.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evaluationDateSigned) == reEvaldate.Date).AsQueryable();
+                IQueryable<tblArchiveEvaluationDateSigned> archives = db.tblArchiveEvaluationDateSigneds.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evaluationDateSigned) == reEvaldate.Date).AsQueryable();
                 if (archives.Count() == 0)
                 {
                     int createBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault().UserID;
@@ -3627,7 +3649,7 @@ namespace GreenBushIEP.Controllers
         {
             if (reCompleted != null)
             {
-                var archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reCompleted.Date).AsQueryable();
+                IQueryable<tblArchiveEvaluationDate> archives = db.tblArchiveEvaluationDates.Where(i => i.userID == studentId && DbFunctions.TruncateTime(i.evalutationDate) == reCompleted.Date).AsQueryable();
                 if (archives.Count() == 0)
                 {
                     int createBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault().UserID;
@@ -3645,13 +3667,13 @@ namespace GreenBushIEP.Controllers
             string usdName = assignedUSD;
             string misRole = "2"; //level 4
 
-            var list = (from org in db.tblOrganizationMappings
-                        join user in db.tblUsers
-                            on org.UserID equals user.UserID
-                        where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == assignedUSD
-                        select user).Distinct().ToList();
+            List<tblUser> list = (from org in db.tblOrganizationMappings
+                                  join user in db.tblUsers
+                                      on org.UserID equals user.UserID
+                                  where !(user.Archive ?? false) && (user.RoleID == misRole) && org.USD == assignedUSD
+                                  select user).Distinct().ToList();
 
-            var usd = db.tblDistricts.Where(o => o.USD == assignedUSD).FirstOrDefault();
+            tblDistrict usd = db.tblDistricts.Where(o => o.USD == assignedUSD).FirstOrDefault();
 
             if (list != null && list.Any())
             {
@@ -3660,10 +3682,12 @@ namespace GreenBushIEP.Controllers
                 MailMessage mailMessage = new MailMessage();
                 mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
 
-                foreach (var misUser in list)
+                foreach (tblUser misUser in list)
                 {
                     if (userDistrictId == 0)
+                    {
                         userDistrictId = misUser.UserID;
+                    }
 
                     if (!string.IsNullOrEmpty(misUser.Email))
                     {
@@ -3713,7 +3737,7 @@ namespace GreenBushIEP.Controllers
 
                 if (teachers != null && teachers.Count > 0)
                 {
-                    foreach (var teacher in teachers)
+                    foreach (vw_UserList teacher in teachers)
                     {
                         TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", teacher.LastName, teacher.FirstName), UserID = teacher.UserID };
                         list.Add(tv);

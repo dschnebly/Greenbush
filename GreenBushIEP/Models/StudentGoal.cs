@@ -6,53 +6,53 @@ namespace GreenBushIEP.Models
 {
     public class StudentGoal
     {
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         public tblGoal goal { get; set; }
         public string modifiedByFullName { get; set; }
         public List<tblGoalBenchmark> benchmarks { get; set; } = new List<tblGoalBenchmark>();
         public List<tblGoalEvaluationProcedure> evaluationProcedures { get; set; } = new List<tblGoalEvaluationProcedure>();
-		public List<tblGoalBenchmarkMethod> shortTermBenchmarkMethods { get; set; } = new List<tblGoalBenchmarkMethod>();
+        public List<tblGoalBenchmarkMethod> shortTermBenchmarkMethods { get; set; } = new List<tblGoalBenchmarkMethod>();
 
-		public StudentGoal(int? goalId = null)
-        {  
+        public StudentGoal(int? goalId = null)
+        {
             if (goalId != null && goalId != 0)
             {
-                this.goal = db.tblGoals.Where(g => g.goalID == goalId).FirstOrDefault();
-                this.benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goalId).ToList();
-                this.evaluationProcedures = db.tblGoalEvaluationProcedures.Where(o => o.goalID == goalId).ToList();
+                goal = db.tblGoals.Where(g => g.goalID == goalId).FirstOrDefault();
+                benchmarks = db.tblGoalBenchmarks.Where(o => o.goalID == goalId).ToList();
+                evaluationProcedures = db.tblGoalEvaluationProcedures.Where(o => o.goalID == goalId).ToList();
 
                 tblUser modifier = db.tblUsers.Where(u => u.UserID == goal.ModifiedBy).SingleOrDefault();
-                this.modifiedByFullName = (modifier != null) ? String.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
+                modifiedByFullName = (modifier != null) ? string.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
             }
             else
             {
-                this.goal = new tblGoal();
-                this.benchmarks = new List<tblGoalBenchmark>();
-                this.evaluationProcedures = new List<tblGoalEvaluationProcedure>();
+                goal = new tblGoal();
+                benchmarks = new List<tblGoalBenchmark>();
+                evaluationProcedures = new List<tblGoalEvaluationProcedure>();
             }
         }
 
         public void SaveGoal(string evalProcedures, string otherDesc)
         {
-            tblGoal ourGoal = db.tblGoals.Where(g => g.goalID == this.goal.goalID).FirstOrDefault();
+            tblGoal ourGoal = db.tblGoals.Where(g => g.goalID == goal.goalID).FirstOrDefault();
             if (ourGoal == null)
             {
-                this.goal.Create_Date = DateTime.Now;
-                this.goal.ProgressDate_Quarter1 = DateTime.Now;
-                this.goal.ProgressDate_Quarter2 = DateTime.Now;
-                this.goal.ProgressDate_Quarter3 = DateTime.Now;
-                this.goal.ProgressDate_Quarter4 = DateTime.Now;
-                db.tblGoals.Add(this.goal);
+                goal.Create_Date = DateTime.Now;
+                goal.ProgressDate_Quarter1 = DateTime.Now;
+                goal.ProgressDate_Quarter2 = DateTime.Now;
+                goal.ProgressDate_Quarter3 = DateTime.Now;
+                goal.ProgressDate_Quarter4 = DateTime.Now;
+                db.tblGoals.Add(goal);
             }
 
-            this.goal.Update_Date = DateTime.Now;
+            goal.Update_Date = DateTime.Now;
             db.SaveChanges();
 
-            foreach (tblGoalBenchmark benchmark in this.benchmarks)
+            foreach (tblGoalBenchmark benchmark in benchmarks)
             {
                 tblGoalBenchmark currentBenchmark = db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == benchmark.goalBenchmarkID).FirstOrDefault();
-                if(currentBenchmark != null)
+                if (currentBenchmark != null)
                 {
                     currentBenchmark.goalID = benchmark.goalID;
                     currentBenchmark.Method = benchmark.Method;
@@ -76,7 +76,7 @@ namespace GreenBushIEP.Models
                 {
                     tblGoalBenchmark goalBenchmark = new tblGoalBenchmark();
 
-                    goalBenchmark.goalID = this.goal.goalID;
+                    goalBenchmark.goalID = goal.goalID;
                     goalBenchmark.Method = benchmark.Method;
                     goalBenchmark.ObjectiveBenchmark = benchmark.ObjectiveBenchmark;
                     goalBenchmark.ProgressDate_Quarter1 = DateTime.Now;
@@ -93,45 +93,46 @@ namespace GreenBushIEP.Models
                 db.SaveChanges();
             }
 
-			foreach (tblGoalBenchmarkMethod benchmarkMethod in this.shortTermBenchmarkMethods)
-			{				
-				var currentMethods = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).ToList();
-				foreach (var cm in currentMethods)
-				{
-					db.tblGoalBenchmarkMethods.Remove(cm);
-				}
-			}
-			db.SaveChanges();
-
-			foreach (tblGoalBenchmarkMethod benchmarkMethod in this.shortTermBenchmarkMethods)
-			{
-				tblGoalBenchmarkMethod currentMethod = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).FirstOrDefault();
-				if (currentMethod == null)
-					db.tblGoalBenchmarkMethods.Add(benchmarkMethod);
-			
-			}
-			db.SaveChanges();
-
-			if (!string.IsNullOrEmpty(evalProcedures))
+            foreach (tblGoalBenchmarkMethod benchmarkMethod in shortTermBenchmarkMethods)
             {
-                var evalProceduresArray = evalProcedures.Split(',');
-                var currentList = db.tblGoalEvaluationProcedures.Where(o => o.goalID == this.goal.goalID);
+                List<tblGoalBenchmarkMethod> currentMethods = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).ToList();
+                foreach (tblGoalBenchmarkMethod cm in currentMethods)
+                {
+                    db.tblGoalBenchmarkMethods.Remove(cm);
+                }
+            }
+            db.SaveChanges();
+
+            foreach (tblGoalBenchmarkMethod benchmarkMethod in shortTermBenchmarkMethods)
+            {
+                tblGoalBenchmarkMethod currentMethod = db.tblGoalBenchmarkMethods.Where(b => b.goalBenchmarkID == benchmarkMethod.goalBenchmarkID).FirstOrDefault();
+                if (currentMethod == null)
+                {
+                    db.tblGoalBenchmarkMethods.Add(benchmarkMethod);
+                }
+            }
+            db.SaveChanges();
+
+            if (!string.IsNullOrEmpty(evalProcedures))
+            {
+                string[] evalProceduresArray = evalProcedures.Split(',');
+                IQueryable<tblGoalEvaluationProcedure> currentList = db.tblGoalEvaluationProcedures.Where(o => o.goalID == goal.goalID);
 
                 foreach (tblGoalEvaluationProcedure obj in currentList)
                 {
-                    db.tblGoalEvaluationProcedures.Remove(obj);                    
+                    db.tblGoalEvaluationProcedures.Remove(obj);
                 }
 
                 db.SaveChanges();//delete exting rows
 
-                foreach (var evalProc in evalProceduresArray)
+                foreach (string evalProc in evalProceduresArray)
                 {
                     int evalProcVal = 0;
-                    Int32.TryParse(evalProc, out evalProcVal);
+                    int.TryParse(evalProc, out evalProcVal);
 
                     if (evalProcVal > 0)
-                    {                        
-                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = this.goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });                        
+                    {
+                        db.tblGoalEvaluationProcedures.Add(new tblGoalEvaluationProcedure() { goalID = goal.goalID, evaluationProcedureID = evalProcVal, Create_Date = DateTime.Now, OtherDescription = otherDesc, Update_Date = DateTime.Now });
                     }
                 }
 

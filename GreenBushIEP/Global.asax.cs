@@ -21,7 +21,7 @@ namespace GreenBushIEP
             GlobalFilters.Filters.Add(new UserProfileFilter(), 0);
         }
 
-        protected void Application_PostAuthenticateRequest(Object sender, EventArgs e)
+        protected void Application_PostAuthenticateRequest(object sender, EventArgs e)
         {
             if (FormsAuthentication.CookiesSupported == true)
             {
