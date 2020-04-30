@@ -2303,6 +2303,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
           <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
           <Parameter Name="StatusCode" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
         </Function>
         <Function Name="uspCopyIEP" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="fromIEP" Type="int" Mode="In" />
@@ -2784,6 +2785,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
             <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
             <Parameter Name="StatusCode" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="uspCopyIEP" ReturnType="Collection(IndividualizedEducationProgramModel.uspCopyIEP_Result)">
             <Parameter Name="fromIEP" Mode="In" Type="Int32" />
