@@ -6,7 +6,7 @@ namespace GreenBushIEP.Models
 {
     public class IEP
     {
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         public bool isHealthCompleted { get; set; }
         public bool isMotorCompleted { get; set; }
@@ -126,9 +126,6 @@ namespace GreenBushIEP.Models
                 }
 
                 hasPlan = current.IepStatus != IEPStatus.PLAN;
-                //current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
-                //if (current == null) { listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault(); } // if they had reverted an amendement
-                //hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
             else
             {
@@ -165,7 +162,7 @@ namespace GreenBushIEP.Models
                 studentGoals = db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList();
                 studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
                 accommodations = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).ToList();
-                var transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
+                List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
 
                 // all our database information should be loaded by now. Just query our student lists.
                 isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;
@@ -201,8 +198,8 @@ namespace GreenBushIEP.Models
                 hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
                 hasBehavior = (studentSocial != null && studentSocial.BehaviorInterventionPlan);
                 iepStatusType = (current.Amendment & current.IsActive & current.IepStatus.ToUpper() == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
-                displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && this.anyStudentIEPActive && !this.current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (this.current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
-                iepStartTime = (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) ? originalIEP.begin_date : this.current.begin_date.HasValue ? this.current.begin_date : DateTime.Now ;
+                displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && anyStudentIEPActive && !current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
+                iepStartTime = (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) ? originalIEP.begin_date : current.begin_date.HasValue ? current.begin_date : DateTime.Now;
             }
         }
 
@@ -226,7 +223,7 @@ namespace GreenBushIEP.Models
                 throw new System.ArgumentException("There is already a draft IEP for this user");
             }
 
-			var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stid).FirstOrDefault();
+            tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stid).FirstOrDefault();
 
             current = new tblIEP();
             current.UserID = stid;
@@ -239,10 +236,12 @@ namespace GreenBushIEP.Models
             current.StateAssessment = string.Empty;
             current.IsActive = true;
 
-			if (studentDetails != null)
-				current.StatusCode = studentDetails.StatusCode;
+            if (studentDetails != null)
+            {
+                current.StatusCode = studentDetails.StatusCode;
+            }
 
-			try
+            try
             {
                 db.tblIEPs.Add(current);
                 db.SaveChanges();
@@ -523,36 +522,28 @@ namespace GreenBushIEP.Models
             return this;
         }
 
-		
-		public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
-		{
 
-			if (current.begin_date != null && !isDoc)
-			{
-				//check student age for transition plan using the begin date plus one year
-				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
-				return (now - dob) / 10000;
+        public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
+        {
+            if (current.begin_date != null && !isDoc)
+            {
+                //check student age for transition plan using the begin date plus one year
+                int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+                int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+                return (now - dob) / 10000;
 
-				//var endDate = theIEP.current.begin_date.Value.AddYears(1);
-				//model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-			}
-			else
-			{
-				//use current date
-				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
-				return (now - dob) / 10000;
+                //var endDate = theIEP.current.begin_date.Value.AddYears(1);
+                //model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+            }
+            else
+            {
+                //use current date
+                int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+                int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+                return (now - dob) / 10000;
 
-				//model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-			}
-
-
-
-		}
-
-
-		
-		
+                //model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+            }
+        }
     }
 }

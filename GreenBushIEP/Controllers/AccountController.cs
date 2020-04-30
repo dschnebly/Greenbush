@@ -11,7 +11,7 @@ namespace GreenbushIep.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         // GET: Account
         public ActionResult Index()
@@ -28,7 +28,7 @@ namespace GreenbushIep.Controllers
         [HttpPost]
         [AllowAnonymous]
         public ActionResult Register(FormCollection collection)
-        { 
+        {
             // Lets first check if the Model is valid or not
             if (ModelState.IsValid)
             {
@@ -37,7 +37,7 @@ namespace GreenbushIep.Controllers
                 tblUser user = db.tblUsers.Where(u => u.Email == email).FirstOrDefault();
 
                 // we silently fail if the email entered doesn't match a system user.
-                if(user != null)
+                if (user != null)
                 {
                     ResetPassword(user.UserID);
                 }
@@ -103,7 +103,7 @@ namespace GreenbushIep.Controllers
                 try
                 {
                     // generate ourselves a new random password of 8 characters in length.
-                    var emailPassword = RandomPassword.Generate(10);
+                    string emailPassword = RandomPassword.Generate(10);
                     PasswordHash hash = new PasswordHash(emailPassword);
 
                     user.Password = hash.Hash;

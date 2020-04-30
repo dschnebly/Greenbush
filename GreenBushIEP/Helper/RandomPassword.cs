@@ -18,15 +18,15 @@ namespace GreenBushIEP.Helper
     public class RandomPassword
     {
         // Define default min and max password lengths.
-        private static int DEFAULT_MIN_PASSWORD_LENGTH = 10;
-        private static int DEFAULT_MAX_PASSWORD_LENGTH = 10;
+        private static readonly int DEFAULT_MIN_PASSWORD_LENGTH = 10;
+        private static readonly int DEFAULT_MAX_PASSWORD_LENGTH = 10;
 
         // Define supported password characters divided into groups.
         // You can add (or remove) characters to (from) these groups.
-        private static string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
-        private static string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
-        private static string PASSWORD_CHARS_NUMERIC = "23456789";
-        private static string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
+        private static readonly string PASSWORD_CHARS_LCASE = "abcdefgijkmnopqrstwxyz";
+        private static readonly string PASSWORD_CHARS_UCASE = "ABCDEFGHJKLMNPQRSTWXYZ";
+        private static readonly string PASSWORD_CHARS_NUMERIC = "23456789";
+        private static readonly string PASSWORD_CHARS_SPECIAL = "*$-+?_&=!%{}/";
 
         /// <summary>
         /// Generates a random password.
@@ -81,7 +81,9 @@ namespace GreenBushIEP.Helper
         {
             // Make sure that input parameters are valid.
             if (minLength <= 0 || maxLength <= 0 || minLength > maxLength)
+            {
                 return null;
+            }
 
             // Create a local array containing supported password characters
             // grouped by types. You can remove character groups from this
@@ -100,14 +102,18 @@ namespace GreenBushIEP.Helper
 
             // Initially, all characters in each group are not used.
             for (int i = 0; i < charsLeftInGroup.Length; i++)
+            {
                 charsLeftInGroup[i] = charGroups[i].Length;
+            }
 
             // Use this array to track (iterate through) unused character groups.
             int[] leftGroupsOrder = new int[charGroups.Length];
 
             // Initially, all character groups are not used.
             for (int i = 0; i < leftGroupsOrder.Length; i++)
+            {
                 leftGroupsOrder[i] = i;
+            }
 
             // Because we cannot use the default randomizer, which is based on the
             // current time (it will produce the same "random" number within a
@@ -133,9 +139,13 @@ namespace GreenBushIEP.Helper
 
             // Allocate appropriate memory for the password.
             if (minLength < maxLength)
+            {
                 password = new char[random.Next(minLength, maxLength + 1)];
+            }
             else
+            {
                 password = new char[minLength];
+            }
 
             // Index of the next character to be added to password.
             int nextCharIdx;
@@ -161,10 +171,14 @@ namespace GreenBushIEP.Helper
                 // first position, increment the second parameter of the Next
                 // function call by one, i.e. lastLeftGroupsOrderIdx + 1.
                 if (lastLeftGroupsOrderIdx == 0)
+                {
                     nextLeftGroupsOrderIdx = 0;
+                }
                 else
+                {
                     nextLeftGroupsOrderIdx = random.Next(0,
                                                          lastLeftGroupsOrderIdx);
+                }
 
                 // Get the actual index of the character group, from which we will
                 // pick the next character.
@@ -176,17 +190,23 @@ namespace GreenBushIEP.Helper
                 // If only one unprocessed character is left, pick it; otherwise,
                 // get a random character from the unused character list.
                 if (lastCharIdx == 0)
+                {
                     nextCharIdx = 0;
+                }
                 else
+                {
                     nextCharIdx = random.Next(0, lastCharIdx + 1);
+                }
 
                 // Add this character to the password.
                 password[i] = charGroups[nextGroupIdx][nextCharIdx];
 
                 // If we processed the last character in this group, start over.
                 if (lastCharIdx == 0)
+                {
                     charsLeftInGroup[nextGroupIdx] =
                                               charGroups[nextGroupIdx].Length;
+                }
                 // There are more unprocessed characters left.
                 else
                 {
@@ -207,7 +227,9 @@ namespace GreenBushIEP.Helper
 
                 // If we processed the last group, start all over.
                 if (lastLeftGroupsOrderIdx == 0)
+                {
                     lastLeftGroupsOrderIdx = leftGroupsOrder.Length - 1;
+                }
                 // There are more unprocessed groups left.
                 else
                 {

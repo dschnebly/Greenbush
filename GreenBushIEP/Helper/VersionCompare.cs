@@ -9,16 +9,16 @@ namespace GreenBushIEP.Helper
         {
             int updateCount = 0;
 
-            var assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string assemblyLocation = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string fileVersion = System.Diagnostics.FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
 
-            user.LastVersionNumberSeen = (user.LastVersionNumberSeen == null ? user.LastVersionNumberSeen = fileVersion : user.LastVersionNumberSeen );
+            user.LastVersionNumberSeen = (user.LastVersionNumberSeen == null ? user.LastVersionNumberSeen = fileVersion : user.LastVersionNumberSeen);
 
 
             System.Version lastSeen = new System.Version(user.LastVersionNumberSeen);
-            var listVersion = new IndividualizedEducationProgramEntities().tblVersionLogs.ToList();
+            System.Collections.Generic.List<tblVersionLog> listVersion = new IndividualizedEducationProgramEntities().tblVersionLogs.ToList();
 
-            foreach (var version in listVersion)
+            foreach (tblVersionLog version in listVersion)
             {
                 System.Version versioning = new System.Version(version.VersionNumber);
                 if (versioning.CompareTo(lastSeen) > 0)

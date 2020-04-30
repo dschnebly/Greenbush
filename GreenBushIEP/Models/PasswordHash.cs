@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 
 namespace GreenBushIEP.Models
 {
@@ -39,8 +36,13 @@ namespace GreenBushIEP.Models
         {
             byte[] test = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
             for (int i = 0; i < HashSize; i++)
+            {
                 if (test[i] != _hash[i])
+                {
                     return false;
+                }
+            }
+
             return true;
         }
     }
