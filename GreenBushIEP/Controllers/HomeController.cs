@@ -1674,7 +1674,7 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name); // current teacher-esque user.
             tblUser mis = FindSupervisor.GetUSersMIS(teacher); // get the mis of the teacher
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).First(); // gimme the student's iep.
-            tblIEP original = (iep.OriginalIEPid.HasValue) ? db.tblIEPs.Where(i => i.OriginalIEPid == iep.OriginalIEPid.Value).FirstOrDefault() : iep;
+            tblIEP original = (iep.OriginalIEPid.HasValue) ? db.tblIEPs.Where(i => i.IEPid == iep.OriginalIEPid.Value).FirstOrDefault() : iep;
 
             if (iep != null)
             {

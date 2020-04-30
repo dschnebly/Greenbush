@@ -126,9 +126,6 @@ namespace GreenBushIEP.Models
                 }
 
                 hasPlan = current.IepStatus != IEPStatus.PLAN;
-                //current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
-                //if (current == null) { listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault(); } // if they had reverted an amendement
-                //hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
             else
             {
@@ -528,7 +525,6 @@ namespace GreenBushIEP.Models
 
         public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
         {
-
             if (current.begin_date != null && !isDoc)
             {
                 //check student age for transition plan using the begin date plus one year
@@ -548,13 +544,6 @@ namespace GreenBushIEP.Models
 
                 //model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
             }
-
-
-
         }
-
-
-
-
     }
 }

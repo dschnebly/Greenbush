@@ -966,7 +966,6 @@ $("input[name='AcademicNeeds']").on('click', function (event) {
     }
 });
 
-
 $(".module-section").on("click", function (e) {
     var tId = $("#tid").val();
     var stId = $("#stid").val();
