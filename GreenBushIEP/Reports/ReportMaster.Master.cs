@@ -41,14 +41,7 @@ namespace GreenBushIEP.Report
             DisplayName = string.Format("{0} {1}", user.FirstName, user.LastName);
         }
 
-        public string GetUserLevel
-        {
-            get
-            {
-                return UserLevel;
-            }
-
-        }
+        public string GetUserLevel => UserLevel;
 
         public static void StudentStatusList(HtmlSelect statusDD)
         {
@@ -206,15 +199,17 @@ namespace GreenBushIEP.Report
 
         public static List<SelectListItem> GetIEPStatuses()
         {
-            List<SelectListItem> statuses = new List<SelectListItem>();
-            statuses.Add(new SelectListItem() { Value = IEPStatus.ACTIVE, Text = IEPStatus.ACTIVE });
-            statuses.Add(new SelectListItem() { Value = "AMENDED", Text = "AMENDED" });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.AMENDMENT, Text = IEPStatus.AMENDMENT });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.ANNUAL, Text = IEPStatus.ANNUAL });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.ARCHIVE, Text = IEPStatus.ARCHIVE });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.DELETED, Text = IEPStatus.DELETED });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.DRAFT, Text = IEPStatus.DRAFT });
-            statuses.Add(new SelectListItem() { Value = IEPStatus.PLAN, Text = IEPStatus.PLAN });
+            List<SelectListItem> statuses = new List<SelectListItem>
+            {
+                new SelectListItem() { Value = IEPStatus.ACTIVE, Text = IEPStatus.ACTIVE },
+                new SelectListItem() { Value = "AMENDED", Text = "AMENDED" },
+                new SelectListItem() { Value = IEPStatus.AMENDMENT, Text = IEPStatus.AMENDMENT },
+                new SelectListItem() { Value = IEPStatus.ANNUAL, Text = IEPStatus.ANNUAL },
+                new SelectListItem() { Value = IEPStatus.ARCHIVE, Text = IEPStatus.ARCHIVE },
+                new SelectListItem() { Value = IEPStatus.DELETED, Text = IEPStatus.DELETED },
+                new SelectListItem() { Value = IEPStatus.DRAFT, Text = IEPStatus.DRAFT },
+                new SelectListItem() { Value = IEPStatus.PLAN, Text = IEPStatus.PLAN }
+            };
 
 
             return statuses;
@@ -252,9 +247,10 @@ namespace GreenBushIEP.Report
 
         public static List<tblServiceType> GetServices()
         {
-            List<tblServiceType> services = new List<tblServiceType>();
-
-            services.Add(new tblServiceType { Name = "All", ServiceCode = "-1" });
+            List<tblServiceType> services = new List<tblServiceType>
+            {
+                new tblServiceType { Name = "All", ServiceCode = "-1" }
+            };
 
             services.AddRange(db.tblServiceTypes.ToList());
 
@@ -283,9 +279,10 @@ namespace GreenBushIEP.Report
                                               orderby district.DistrictName
                                               select district).Distinct().ToList();
 
-            List<tblDistrict> districts = new List<tblDistrict>();
-
-            districts.Add(new tblDistrict { DistrictName = "All", USD = "-1" });
+            List<tblDistrict> districts = new List<tblDistrict>
+            {
+                new tblDistrict { DistrictName = "All", USD = "-1" }
+            };
 
             districts.AddRange(districtList);
 
@@ -400,8 +397,7 @@ namespace GreenBushIEP.Report
             using (IndividualizedEducationProgramEntities ctx = new IndividualizedEducationProgramEntities())
             {
                 //Execute stored procedure as a function
-                int buildingID = 0;
-                int.TryParse(id, out buildingID);
+                int.TryParse(id, out int buildingID);
                 System.Data.Entity.Core.Objects.ObjectResult<up_ReportBuildings_Result> list = ctx.up_ReportBuildings(buildingID);
 
                 foreach (up_ReportBuildings_Result cs in list)

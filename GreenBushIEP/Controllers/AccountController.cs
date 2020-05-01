@@ -157,13 +157,17 @@ namespace GreenbushIep.Controllers
             Session.Abandon();
 
             // Clear authentication cookie
-            HttpCookie rFormsCookie = new HttpCookie(FormsAuthentication.FormsCookieName, "");
-            rFormsCookie.Expires = DateTime.Now.AddYears(-1);
+            HttpCookie rFormsCookie = new HttpCookie(FormsAuthentication.FormsCookieName, "")
+            {
+                Expires = DateTime.Now.AddYears(-1)
+            };
             Response.Cookies.Add(rFormsCookie);
 
             // Clear session cookie 
-            HttpCookie rSessionCookie = new HttpCookie("ASP.NET_SessionId", "");
-            rSessionCookie.Expires = DateTime.Now.AddYears(-1);
+            HttpCookie rSessionCookie = new HttpCookie("ASP.NET_SessionId", "")
+            {
+                Expires = DateTime.Now.AddYears(-1)
+            };
             Response.Cookies.Add(rSessionCookie);
 
             return RedirectToAction("Index", "Home");

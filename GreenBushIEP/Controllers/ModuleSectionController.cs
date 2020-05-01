@@ -266,12 +266,13 @@ namespace GreenBushIEP.Controllers
                     int mathID = Convert.ToInt32(collection["Math.IEPMathID"]);
                     int writtenID = Convert.ToInt32(collection["Written.IEPWrittenID"]);
 
-                    ModuleAcademicViewModel viewModel = new ModuleAcademicViewModel();
-
-                    viewModel.Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == academicID).SingleOrDefault();
-                    viewModel.Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == readingID).SingleOrDefault();
-                    viewModel.Math = db.tblIEPMaths.Where(m => m.IEPMathID == mathID).SingleOrDefault();
-                    viewModel.Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == writtenID).SingleOrDefault();
+                    ModuleAcademicViewModel viewModel = new ModuleAcademicViewModel
+                    {
+                        Academic = db.tblIEPAcademics.Where(a => a.IEPAcademicID == academicID).SingleOrDefault(),
+                        Reading = db.tblIEPReadings.Where(r => r.IEPReadingID == readingID).SingleOrDefault(),
+                        Math = db.tblIEPMaths.Where(m => m.IEPMathID == mathID).SingleOrDefault(),
+                        Written = db.tblIEPWrittens.Where(w => w.IEPWrittenID == writtenID).SingleOrDefault()
+                    };
 
                     int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
@@ -460,8 +461,7 @@ namespace GreenBushIEP.Controllers
                 }
                 else
                 {
-                    int behaviorBaselineID = 0;
-                    int.TryParse(tbid, out behaviorBaselineID);
+                    int.TryParse(tbid, out int behaviorBaselineID);
                     tblBehaviorBaseline existingtb1 = db.tblBehaviorBaselines.Where(o => o.BehaviorID == behaviorId && o.BehaviorBaselineID == behaviorBaselineID).FirstOrDefault();
                     if (existingtb1 != null)
                     {
@@ -481,8 +481,7 @@ namespace GreenBushIEP.Controllers
                 }
                 else
                 {
-                    int behaviorBaselineID = 0;
-                    int.TryParse(tbid, out behaviorBaselineID);
+                    int.TryParse(tbid, out int behaviorBaselineID);
                     tblBehaviorBaseline existingtb2 = db.tblBehaviorBaselines.Where(o => o.BehaviorID == behaviorId && o.BehaviorBaselineID == behaviorBaselineID).FirstOrDefault();
                     if (existingtb2 != null)
                     {
@@ -502,8 +501,7 @@ namespace GreenBushIEP.Controllers
                 }
                 else
                 {
-                    int behaviorBaselineID = 0;
-                    int.TryParse(tbid, out behaviorBaselineID);
+                    int.TryParse(tbid, out int behaviorBaselineID);
                     tblBehaviorBaseline existingtb3 = db.tblBehaviorBaselines.Where(o => o.BehaviorID == behaviorId && o.BehaviorBaselineID == behaviorBaselineID).FirstOrDefault();
                     if (existingtb3 != null)
                     {
@@ -743,16 +741,18 @@ namespace GreenBushIEP.Controllers
                 }
                 else
                 {
-                    tblAccommodation newAccomodation = new tblAccommodation();
-                    newAccomodation.AccomType = model.AccomType;
-                    newAccomodation.Completed = model.Completed;
-                    newAccomodation.Description = model.Description;
-                    newAccomodation.Duration = model.Duration;
-                    newAccomodation.Frequency = model.Frequency;
-                    newAccomodation.Location = model.Location;
-                    newAccomodation.IEPid = model.IEPid;
-                    newAccomodation.Module = model.Module;
-                    newAccomodation.ModifiedBy = ModifiedBy;
+                    tblAccommodation newAccomodation = new tblAccommodation
+                    {
+                        AccomType = model.AccomType,
+                        Completed = model.Completed,
+                        Description = model.Description,
+                        Duration = model.Duration,
+                        Frequency = model.Frequency,
+                        Location = model.Location,
+                        IEPid = model.IEPid,
+                        Module = model.Module,
+                        ModifiedBy = ModifiedBy
+                    };
 
                     if (model.AnticipatedStartDate.HasValue)
                     {
@@ -1014,8 +1014,7 @@ namespace GreenBushIEP.Controllers
 
                                     foreach (string methodItem in methodsArray)
                                     {
-                                        int methodItemVal = 0;
-                                        int.TryParse(methodItem, out methodItemVal);
+                                        int.TryParse(methodItem, out int methodItemVal);
                                         tblGoalBenchmarkMethod tempShortTerm = new tblGoalBenchmarkMethod();
 
                                         if (methodItemVal > 0)
@@ -1128,7 +1127,6 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-                    DateTime temp;
                     string verification = collection[0];
                     int goalId = Convert.ToInt32(collection["progressGoalId"]);
                     int studentId = Convert.ToInt32(collection["studentId"]);
@@ -1139,7 +1137,7 @@ namespace GreenBushIEP.Controllers
                     StudentGoal studentGoal = new StudentGoal(goalId);
                     studentGoal.goal.IEPid = iepId;
                     string printGoal = collection[++j].ToString();
-                    studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
+                    studentGoal.goal.ProgressDate_Quarter1 = DateTime.TryParse(collection[++j], out DateTime temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter2 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter3 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
                     studentGoal.goal.ProgressDate_Quarter4 = DateTime.TryParse(collection[++j], out temp) ? temp : DateTime.Now;
@@ -1160,8 +1158,7 @@ namespace GreenBushIEP.Controllers
                     {
                         while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
                         {
-                            int BenchmarkID;
-                            bool isBenchmarkID = int.TryParse(collection[j], out BenchmarkID);
+                            bool isBenchmarkID = int.TryParse(collection[j], out int BenchmarkID);
                             tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
                             if (benchmark != null)
                             {
@@ -1228,7 +1225,6 @@ namespace GreenBushIEP.Controllers
                     studentGoal.goal.Completed = Convert.ToBoolean(collection["completed"]);
                     studentGoal.goal.ModifiedBy = ModifiedBy;
 
-                    int tempInt;
                     studentGoal.benchmarks.Clear();
 
                     int keyNum = ++j;
@@ -1237,14 +1233,13 @@ namespace GreenBushIEP.Controllers
                     {
                         while (keyName.Substring(0, Math.Min(keyName.Length, 20)) == "StudentGoalBenchmark")
                         {
-                            int BenchmarkID;
-                            bool isBenchmarkID = int.TryParse(collection[j], out BenchmarkID);
+                            bool isBenchmarkID = int.TryParse(collection[j], out int BenchmarkID);
                             tblGoalBenchmark benchmark = (!isBenchmarkID) ? new tblGoalBenchmark() : db.tblGoalBenchmarks.Where(b => b.goalBenchmarkID == BenchmarkID).FirstOrDefault();
 
                             if (benchmark != null)
                             {
                                 benchmark.goalID = studentGoal.goal.goalID;
-                                benchmark.Method = collection[++j] != null && collection[j] != "" ? int.TryParse(collection[j], out tempInt) ? tempInt : 0 : 0;
+                                benchmark.Method = collection[++j] != null && collection[j] != "" ? int.TryParse(collection[j], out int tempInt) ? tempInt : 0 : 0;
                                 benchmark.ObjectiveBenchmark = collection[++j].ToString();
                                 benchmark.TransitionActivity = (collection[++j].ToLower() == "true") ? true : false;
                                 benchmark.Update_Date = DateTime.Now;

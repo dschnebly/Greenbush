@@ -239,8 +239,7 @@ namespace GreenBushIEP.Models
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
                 if (otherConsideration != null)
                 {
-                    int extendYear = 0;
-                    int.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out extendYear);
+                    int.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out int extendYear);
                     ExtendYear = extendYear;
                     RequireAssistiveTechnology = otherConsideration.AssistiveTechnology_Require.HasValue ? otherConsideration.AssistiveTechnology_Require.Value : false;
                 }

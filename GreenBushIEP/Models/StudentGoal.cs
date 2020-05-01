@@ -74,18 +74,19 @@ namespace GreenBushIEP.Models
                 }
                 else
                 {
-                    tblGoalBenchmark goalBenchmark = new tblGoalBenchmark();
-
-                    goalBenchmark.goalID = goal.goalID;
-                    goalBenchmark.Method = benchmark.Method;
-                    goalBenchmark.ObjectiveBenchmark = benchmark.ObjectiveBenchmark;
-                    goalBenchmark.ProgressDate_Quarter1 = DateTime.Now;
-                    goalBenchmark.ProgressDate_Quarter2 = DateTime.Now;
-                    goalBenchmark.ProgressDate_Quarter3 = DateTime.Now;
-                    goalBenchmark.ProgressDate_Quarter4 = DateTime.Now;
-                    goalBenchmark.TransitionActivity = benchmark.TransitionActivity;
-                    goalBenchmark.Create_Date = DateTime.Now;
-                    goalBenchmark.Update_Date = DateTime.Now;
+                    tblGoalBenchmark goalBenchmark = new tblGoalBenchmark
+                    {
+                        goalID = goal.goalID,
+                        Method = benchmark.Method,
+                        ObjectiveBenchmark = benchmark.ObjectiveBenchmark,
+                        ProgressDate_Quarter1 = DateTime.Now,
+                        ProgressDate_Quarter2 = DateTime.Now,
+                        ProgressDate_Quarter3 = DateTime.Now,
+                        ProgressDate_Quarter4 = DateTime.Now,
+                        TransitionActivity = benchmark.TransitionActivity,
+                        Create_Date = DateTime.Now,
+                        Update_Date = DateTime.Now
+                    };
 
                     db.tblGoalBenchmarks.Add(goalBenchmark);
                 }
@@ -127,8 +128,7 @@ namespace GreenBushIEP.Models
 
                 foreach (string evalProc in evalProceduresArray)
                 {
-                    int evalProcVal = 0;
-                    int.TryParse(evalProc, out evalProcVal);
+                    int.TryParse(evalProc, out int evalProcVal);
 
                     if (evalProcVal > 0)
                     {

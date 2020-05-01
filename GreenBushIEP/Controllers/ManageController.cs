@@ -53,9 +53,10 @@ namespace GreenBushIEP.Controllers
         // GET: Manage/Create
         public ActionResult Create()
         {
-            UserDetailsViewModel model = new UserDetailsViewModel();
-
-            model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            UserDetailsViewModel model = new UserDetailsViewModel
+            {
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name)
+            };
             model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
 
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
@@ -107,20 +108,24 @@ namespace GreenBushIEP.Controllers
                 // save the user to all the districts that was selected.
                 foreach (string usd in collection["misDistrict"].ToString().Split(','))
                 {
-                    tblOrganizationMapping org = new tblOrganizationMapping();
-                    org.AdminID = submitter.UserID;
-                    org.UserID = user.UserID;
-                    org.USD = usd;
-                    org.Create_Date = DateTime.Now;
+                    tblOrganizationMapping org = new tblOrganizationMapping
+                    {
+                        AdminID = submitter.UserID,
+                        UserID = user.UserID,
+                        USD = usd,
+                        Create_Date = DateTime.Now
+                    };
 
                     db.tblOrganizationMappings.Add(org);
                     db.SaveChanges();
 
-                    tblBuildingMapping district = new tblBuildingMapping();
-                    district.BuildingID = "0";
-                    district.USD = usd;
-                    district.UserID = user.UserID;
-                    district.Create_Date = DateTime.Now;
+                    tblBuildingMapping district = new tblBuildingMapping
+                    {
+                        BuildingID = "0",
+                        USD = usd,
+                        UserID = user.UserID,
+                        Create_Date = DateTime.Now
+                    };
 
                     db.tblBuildingMappings.Add(district);
                     db.SaveChanges();
@@ -781,19 +786,20 @@ namespace GreenBushIEP.Controllers
                     foreach (string keyVal in uniqueKeys)
                     {
                         string labelName = string.Format("contact[{0}].", keyVal);
-                        tblReferralRelationship contact = new tblReferralRelationship();
-
-                        contact.ReferralID = referralId;
-                        contact.FirstName = collection[string.Format("{0}ContactFirstName", labelName)].ToString();
-                        contact.LastName = collection[string.Format("{0}ContactLastName", labelName)].ToString();
-                        contact.Realtionship = collection[string.Format("{0}ContactRelationship", labelName)].ToString();
-                        contact.Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString();
-                        contact.Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString();
-                        contact.City = collection[string.Format("{0}ContactCity", labelName)].ToString();
-                        contact.State = collection[string.Format("{0}ContactState", labelName)].ToString();
-                        contact.Zip = collection[string.Format("{0}ContactZipCode", labelName)].ToString();
-                        contact.Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString();
-                        contact.Email = collection[string.Format("{0}ContactEmail", labelName)].ToString();
+                        tblReferralRelationship contact = new tblReferralRelationship
+                        {
+                            ReferralID = referralId,
+                            FirstName = collection[string.Format("{0}ContactFirstName", labelName)].ToString(),
+                            LastName = collection[string.Format("{0}ContactLastName", labelName)].ToString(),
+                            Realtionship = collection[string.Format("{0}ContactRelationship", labelName)].ToString(),
+                            Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString(),
+                            Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString(),
+                            City = collection[string.Format("{0}ContactCity", labelName)].ToString(),
+                            State = collection[string.Format("{0}ContactState", labelName)].ToString(),
+                            Zip = collection[string.Format("{0}ContactZipCode", labelName)].ToString(),
+                            Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString(),
+                            Email = collection[string.Format("{0}ContactEmail", labelName)].ToString()
+                        };
 
                         if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
                         {
@@ -1035,22 +1041,23 @@ namespace GreenBushIEP.Controllers
                     foreach (tblReferralRelationship contact in contacts)
                     {
 
-                        tblStudentRelationship newRelationship = new tblStudentRelationship();
-
-                        newRelationship.UserID = newStudent.UserID;
-                        newRelationship.FirstName = contact.FirstName;
-                        newRelationship.LastName = contact.LastName;
-                        newRelationship.Realtionship = contact.Realtionship;
-                        newRelationship.Address1 = contact.Address1;
-                        newRelationship.Address2 = contact.Address2;
-                        newRelationship.City = contact.City;
-                        newRelationship.State = contact.State;
-                        newRelationship.Zip = contact.Zip;
-                        newRelationship.Phone = contact.Phone;
-                        newRelationship.Email = contact.Email;
-                        newRelationship.PrimaryContact = contact.PrimaryContact.HasValue && contact.PrimaryContact.Value == 1 ? 1 : 0;
-                        newRelationship.Create_Date = DateTime.Now;
-                        newRelationship.Update_Date = DateTime.Now;
+                        tblStudentRelationship newRelationship = new tblStudentRelationship
+                        {
+                            UserID = newStudent.UserID,
+                            FirstName = contact.FirstName,
+                            LastName = contact.LastName,
+                            Realtionship = contact.Realtionship,
+                            Address1 = contact.Address1,
+                            Address2 = contact.Address2,
+                            City = contact.City,
+                            State = contact.State,
+                            Zip = contact.Zip,
+                            Phone = contact.Phone,
+                            Email = contact.Email,
+                            PrimaryContact = contact.PrimaryContact.HasValue && contact.PrimaryContact.Value == 1 ? 1 : 0,
+                            Create_Date = DateTime.Now,
+                            Update_Date = DateTime.Now
+                        };
                         db.tblStudentRelationships.Add(newRelationship);
 
                     }
@@ -1072,11 +1079,13 @@ namespace GreenBushIEP.Controllers
 
                         foreach (string usd in districtArray)
                         {
-                            tblOrganizationMapping org = new tblOrganizationMapping();
-                            org.AdminID = submitterId;
-                            org.UserID = newStudent.UserID;
-                            org.USD = usd;
-                            org.Create_Date = DateTime.Now;
+                            tblOrganizationMapping org = new tblOrganizationMapping
+                            {
+                                AdminID = submitterId,
+                                UserID = newStudent.UserID,
+                                USD = usd,
+                                Create_Date = DateTime.Now
+                            };
 
                             db.tblOrganizationMappings.Add(org);
                             db.SaveChanges();
@@ -1097,10 +1106,11 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult CreateReferral(int? id)
         {
-            ReferralDetailsViewModel model = new ReferralDetailsViewModel();
-
-            model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            model.allDistricts = db.tblDistricts.Where(d => d.Active == 1).ToList();
+            ReferralDetailsViewModel model = new ReferralDetailsViewModel
+            {
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name),
+                allDistricts = db.tblDistricts.Where(d => d.Active == 1).ToList()
+            };
             model.student.DateOfBirth = DateTime.Now.AddYears(-5);
             model.placementCode = db.tblPlacementCodes.ToList();
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
@@ -1284,12 +1294,14 @@ namespace GreenBushIEP.Controllers
                             db.tblReferralInfoes.Add(studentInfo);
                             db.SaveChanges();
 
-                            tblReferralRequest request = new tblReferralRequest();
-                            request.UserID_Requster = submitter.UserID;
-                            request.UserID_District = submitterDistrict != null ? submitterDistrict.USD : "";
-                            request.ReferralID = studentInfo.ReferralID;
-                            request.Create_Date = DateTime.Now;
-                            request.Update_Date = DateTime.Now;
+                            tblReferralRequest request = new tblReferralRequest
+                            {
+                                UserID_Requster = submitter.UserID,
+                                UserID_District = submitterDistrict != null ? submitterDistrict.USD : "",
+                                ReferralID = studentInfo.ReferralID,
+                                Create_Date = DateTime.Now,
+                                Update_Date = DateTime.Now
+                            };
                             db.tblReferralRequests.Add(request);
                             db.SaveChanges();
 
@@ -1471,19 +1483,20 @@ namespace GreenBushIEP.Controllers
                     foreach (string keyVal in uniqueKeys)
                     {
                         string labelName = string.Format("contact[{0}].", keyVal);
-                        tblReferralRelationship contact = new tblReferralRelationship();
-
-                        contact.ReferralID = referralId;
-                        contact.FirstName = collection[string.Format("{0}ContactFirstName", labelName)].ToString();
-                        contact.LastName = collection[string.Format("{0}ContactLastName", labelName)].ToString();
-                        contact.Realtionship = collection[string.Format("{0}ContactRelationship", labelName)].ToString();
-                        contact.Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString();
-                        contact.Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString();
-                        contact.City = collection[string.Format("{0}ContactCity", labelName)].ToString();
-                        contact.State = collection[string.Format("{0}ContactState", labelName)].ToString();
-                        contact.Zip = collection[string.Format("{0}ContactZipCode", labelName)].ToString();
-                        contact.Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString();
-                        contact.Email = collection[string.Format("{0}ContactEmail", labelName)].ToString();
+                        tblReferralRelationship contact = new tblReferralRelationship
+                        {
+                            ReferralID = referralId,
+                            FirstName = collection[string.Format("{0}ContactFirstName", labelName)].ToString(),
+                            LastName = collection[string.Format("{0}ContactLastName", labelName)].ToString(),
+                            Realtionship = collection[string.Format("{0}ContactRelationship", labelName)].ToString(),
+                            Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString(),
+                            Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString(),
+                            City = collection[string.Format("{0}ContactCity", labelName)].ToString(),
+                            State = collection[string.Format("{0}ContactState", labelName)].ToString(),
+                            Zip = collection[string.Format("{0}ContactZipCode", labelName)].ToString(),
+                            Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString(),
+                            Email = collection[string.Format("{0}ContactEmail", labelName)].ToString()
+                        };
 
                         if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
                         {
@@ -1711,13 +1724,15 @@ namespace GreenBushIEP.Controllers
 
                     if (existingReferalReq == null)
                     {
-                        tblReferralRequest request = new tblReferralRequest();
-                        request.UserID_Requster = submitter.UserID;
-                        request.UserID_District = submitterDistrict.USD;
-                        request.ReferralID = student.ReferralID;
-                        request.Create_Date = DateTime.Now;
-                        request.Update_Date = DateTime.Now;
-                        request.Submit_Date = DateTime.Now;
+                        tblReferralRequest request = new tblReferralRequest
+                        {
+                            UserID_Requster = submitter.UserID,
+                            UserID_District = submitterDistrict.USD,
+                            ReferralID = student.ReferralID,
+                            Create_Date = DateTime.Now,
+                            Update_Date = DateTime.Now,
+                            Submit_Date = DateTime.Now
+                        };
                         db.tblReferralRequests.Add(request);
                     }
                     else
@@ -1756,9 +1771,10 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult CreateStudent()
         {
-            StudentDetailsViewModel model = new StudentDetailsViewModel();
-
-            model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            StudentDetailsViewModel model = new StudentDetailsViewModel
+            {
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name)
+            };
             model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
             model.allDistricts = db.tblDistricts.ToList();
             model.student.DateOfBirth = DateTime.Now.AddYears(-5);
@@ -1902,11 +1918,13 @@ namespace GreenBushIEP.Controllers
 
                         foreach (string usd in districtArray)
                         {
-                            tblOrganizationMapping org = new tblOrganizationMapping();
-                            org.AdminID = submitter.UserID;
-                            org.UserID = student.UserID;
-                            org.Create_Date = DateTime.Now;
-                            org.USD = usd;
+                            tblOrganizationMapping org = new tblOrganizationMapping
+                            {
+                                AdminID = submitter.UserID,
+                                UserID = student.UserID,
+                                Create_Date = DateTime.Now,
+                                USD = usd
+                            };
 
                             db.tblOrganizationMappings.Add(org);
                             db.SaveChanges();
@@ -2194,9 +2212,10 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult EditStudent(int id, bool backToStudentIEP = false)
         {
-            StudentDetailsViewModel model = new StudentDetailsViewModel();
-
-            model.student = new Student();
+            StudentDetailsViewModel model = new StudentDetailsViewModel
+            {
+                student = new Student()
+            };
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             if (student != null)
             {
@@ -2532,18 +2551,22 @@ namespace GreenBushIEP.Controllers
                             tblArchiveIEPExit archive = db.tblArchiveIEPExits.Where(a => a.userID == studentId).FirstOrDefault();
                             if (archive != null)
                             {
-                                archive = new tblArchiveIEPExit();
-                                archive.exitDate = DateTime.Now;
-                                archive.exitNotes = info.ExitNotes;
-                                archive.ModifiedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
-                                archive.Update_Date = DateTime.Now;
+                                archive = new tblArchiveIEPExit
+                                {
+                                    exitDate = DateTime.Now,
+                                    exitNotes = info.ExitNotes,
+                                    ModifiedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID,
+                                    Update_Date = DateTime.Now
+                                };
                             }
                             else
                             {
-                                archive = new tblArchiveIEPExit();
-                                archive.userID = studentId;
-                                archive.exitDate = DateTime.Now;
-                                archive.CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID;
+                                archive = new tblArchiveIEPExit
+                                {
+                                    userID = studentId,
+                                    exitDate = DateTime.Now,
+                                    CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID
+                                };
                                 archive.ModifiedBy = archive.CreatedBy;
                                 archive.exitNotes = info.ExitNotes;
                                 archive.Create_Date = DateTime.Now;
@@ -2708,10 +2731,11 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            UserDetailsViewModel model = new UserDetailsViewModel();
-
-            model.user = db.tblUsers.Where(u => u.UserID == id).SingleOrDefault();
-            model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            UserDetailsViewModel model = new UserDetailsViewModel
+            {
+                user = db.tblUsers.Where(u => u.UserID == id).SingleOrDefault(),
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name)
+            };
             model.selectedDistrict = (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.user.UserID == bm.UserID && bm.BuildingID == "0" select d).Distinct().ToList();
             model.districts = (model.submitter.RoleID == "1") ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
             model.buildings = (from bm in db.tblBuildingMappings
@@ -3008,10 +3032,12 @@ namespace GreenBushIEP.Controllers
                 int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
                 bool? searchActiveType = activeType.HasValue && activeType == 1 ? true : activeType.HasValue && activeType == 2 ? false : (bool?)null;
 
-                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
-                NewPortalObject.Add("selectedDistrict", DistrictId);
-                NewPortalObject.Add("selectedBuilding", BuildingId);
-                NewPortalObject.Add("selectedRole", RoleId);
+                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
+                {
+                    { "selectedDistrict", DistrictId },
+                    { "selectedBuilding", BuildingId },
+                    { "selectedRole", RoleId }
+                };
 
                 List<UserView> members = new List<UserView>();
 
@@ -3087,9 +3113,11 @@ namespace GreenBushIEP.Controllers
                 List<string> myBuildings = new List<string>();
                 List<string> myRoles = new List<string>() { "5" };
 
-                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>();
-                NewPortalObject.Add("selectedDistrict", DistrictId);
-                NewPortalObject.Add("selectedBuilding", BuildingId);
+                Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
+                {
+                    { "selectedDistrict", DistrictId },
+                    { "selectedBuilding", BuildingId }
+                };
 
 
                 if (DistrictId == "-1")
