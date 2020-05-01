@@ -328,7 +328,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportStudentsByBuilding_Result> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string statusCode)
+        public virtual ObjectResult<up_ReportStudentsByBuilding_Result> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string statusCode, string teacherId)
         {
             var usdParameter = usd != null ?
                 new ObjectParameter("Usd", usd) :
@@ -350,7 +350,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("StatusCode", statusCode) :
                 new ObjectParameter("StatusCode", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentsByBuilding_Result>("up_ReportStudentsByBuilding", usdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, statusCodeParameter);
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentsByBuilding_Result>("up_ReportStudentsByBuilding", usdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, statusCodeParameter, teacherIdParameter);
         }
     
         public virtual ObjectResult<uspCopyIEP_Result> uspCopyIEP(Nullable<int> fromIEP, Nullable<int> byUserID, Nullable<bool> ammend)
