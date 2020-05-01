@@ -1,6 +1,15 @@
 ﻿$(function () {
 
-    function init() {
+	function init() {
+
+		$(".startIEP").on("click", function () {
+			//open iep like this to prevent true false button switches from not working right in firefox
+			var stid = $(this).attr("data-id");
+			window.location.href = '/Home/StudentProcedures?stid=' + stid;
+			return false;
+		});
+		
+
         $(".chosen-select").chosen({
             width: "95%",
             disable_search_threshold: 10
