@@ -2426,16 +2426,25 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult IEPFormFile(int id, string fileName)
         {
-            IEPFormFileViewModel viewModel = new IEPFormFileViewModel
+			tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+			tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+
+			var iep = db.tblIEPs.Where(u => u.UserID == id && u.IepStatus == IEPStatus.ACTIVE).FirstOrDefault();
+
+			IEP theIEP = new IEP();
+			
+			if(iep != null)
+				theIEP = GetIEPPrint(id, iep.IEPid);
+
+			IEPFormFileViewModel viewModel = new IEPFormFileViewModel
             {
                 studentId = id,
-                fileName = fileName
-            };
+                fileName = fileName,
+				ActiveIEP = theIEP
 
-            tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            tblIEP iep = db.tblIEPs.Where(u => u.UserID == id).FirstOrDefault();
+			};
 
+            
             List<SelectListItem> forms = GetForms();
 
             SelectListItem form = forms.Where(o => o.Value == fileName).FirstOrDefault();
@@ -2450,13 +2459,13 @@ namespace GreenbushIep.Controllers
                 teacher = teacher,
                 studentInfo = db.tblStudentInfoes.Where(u => u.UserID == student.UserID).FirstOrDefault(),
                 contacts = db.tblStudentRelationships.Where(u => u.UserID == student.UserID).ToList(),
-                studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
-                transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
-                academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
-                socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
-                reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
-                math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
-                written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
+                //studentTransition = iep != null ? db.tblTransitions.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblTransition(),
+                //transitionGoals = iep != null ? db.tblTransitionGoals.Where(u => u.IEPid == iep.IEPid).ToList() : new List<tblTransitionGoal>(),
+                //academicGoals = iep != null ? db.tblIEPAcademics.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPAcademic(),
+                //socialGoals = iep != null ? db.tblIEPSocials.Where(u => u.IEPid == iep.IEPid).FirstOrDefault() : new tblIEPSocial(),
+                //reading = iep != null ? db.tblIEPReadings.Where(r => r.IEPReadingID == iep.IEPReadingID).FirstOrDefault() : new tblIEPReading(),
+                //math = iep != null ? db.tblIEPMaths.Where(m => m.IEPMathID == iep.IEPMathID).FirstOrDefault() : new tblIEPMath(),
+                //written = iep != null ? db.tblIEPWrittens.Where(w => w.IEPWrittenID == iep.IEPWrittenID).FirstOrDefault() : new tblIEPWritten()
             };
 
             if (fileViewModel.studentInfo != null)
