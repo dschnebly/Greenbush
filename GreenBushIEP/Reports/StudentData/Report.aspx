@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.Owner.Report" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.Owner.Report"  %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -11,7 +11,7 @@
 				<label for="districtDD">District</label>
 			</div>
 			<div class="col-md-6" >
-				<select id="districtDD" runat="server" class="chosen-select" data-placeholder="Select District">
+				<select id="districtDD" runat="server"  class="chosen-select" data-placeholder="Select District" >
 					<option value="">Select</option>
 				</select>
 			</div>
@@ -21,7 +21,7 @@
 				<label for="building">Building</label>
 			</div>
 			<div class="col-md-6" >
-				<select id="buildingDD" runat="server" class="chosen-select" data-placeholder="Select Building">
+				<select id="buildingDD" runat="server"  class="chosen-select" data-placeholder="Select Building"  >
 					<option value="">Select</option>
 				</select>
 			</div>

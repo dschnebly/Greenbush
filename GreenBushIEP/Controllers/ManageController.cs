@@ -3088,8 +3088,7 @@ namespace GreenBushIEP.Controllers
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
                     myBuildings.Add("0");
                 }
-                else
-                {
+                else{
                     var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID && buildingMap.BuildingID == BuildingId select building).Distinct().ToList();
                     NewPortalObject.Add("buildings", buildings);
                     myBuildings = buildings.Select(b => b.BuildingID).ToList();
@@ -3729,10 +3728,270 @@ namespace GreenBushIEP.Controllers
 
         }
 
+		#region ReportFilters
 
-        #region helpers
+		//[HttpGet]
+		//public ActionResult FilterDistrict()
+		//{
+		//	try
+		//	{
+		//		tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-        [NonAction]
+		//		var districtList = (from org in db.tblOrganizationMappings
+		//							join district in db.tblDistricts on org.USD equals district.USD
+		//							where org.UserID == user.UserID
+		//							orderby district.DistrictName
+		//							select new DistrictViewModel { USD = district.USD, Name = district.DistrictName }).Distinct().ToList();
+
+		//		List<DistrictViewModel> districts = new List<DistrictViewModel>();
+
+		//		//districts.Add(new DistrictViewModel { Name = "All", USD = "-1" });
+
+		//		districts.AddRange(districtList);
+
+
+		//		return Json(new { Result = "success", Districts = districts }, JsonRequestBehavior.AllowGet);
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+		//	}			
+		//}
+
+		[HttpGet]
+		public ActionResult ReportFilterProviderByDistrictId(string districtId)
+		{
+			try
+			{
+				if (!string.IsNullOrEmpty(districtId))
+				{
+					var providerList = new List<ProviderViewModel>();
+
+					providerList.Add(new ProviderViewModel { Name = "All", ProviderID = -1 });
+
+					var providers = db.uspServiceProviders(districtId)
+						.Select(u => new ProviderViewModel() { ProviderID = u.ProviderID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+						.Distinct()
+						.OrderBy(o => o.Name)
+						.ToList();
+
+					providerList.AddRange(providers);
+					
+					return Json(new { Result = "success", Providers = providerList }, JsonRequestBehavior.AllowGet);
+				}
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+		}
+
+
+		[HttpGet]
+		public ActionResult ReportFilterBuildingsByDistrictId(string districtId)
+		{
+			try
+			{
+				if (!string.IsNullOrEmpty(districtId))
+				{					
+
+					tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+					var buildings = new List<BuildingsViewModel>();
+										
+					var buildingList = (from bm in db.tblBuildingMappings
+										join b in db.tblBuildings on bm.USD equals b.USD
+										where b.Active == 1 
+										&& bm.BuildingID == b.BuildingID 
+										&& bm.UserID == user.UserID
+										&& b.USD == districtId
+										orderby b.BuildingName
+										select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+
+					if (buildingList.Count() > 1 || districtId == "-1")
+					{
+						var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
+						buildings.Add(allOption);
+					}
+
+
+					buildings.AddRange(buildingList);
+
+					return Json(new { Result = "success", DistrictBuildings = buildings }, JsonRequestBehavior.AllowGet);
+				}
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public ActionResult ReportFilterTeacher(string selectedDistrict, string selectedBuilding)
+		{
+			try
+			{
+				if (!string.IsNullOrEmpty(selectedDistrict))
+				{					
+					tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+					{
+						//just add themselves to the list				
+						List<TeacherView> teacherList = new List<TeacherView>();
+						TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", user.LastName, user.FirstName), UserID = user.UserID };
+						teacherList.Add(tv);
+
+						return Json(new { Result = "success", TeacherList = teacherList }, JsonRequestBehavior.AllowGet);
+					}
+					else
+					{
+						List<string> myRoles = new List<string>() { "3", "4", "6" };
+
+						if (user.RoleID == mis || user.RoleID == owner)
+							myRoles.Add("2");
+
+						if (selectedBuilding == "-1")
+							selectedBuilding = null;						
+
+						var teachers = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+							.Where(ul => myRoles.Contains(ul.RoleID))
+							.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+							.OrderBy(o => o.Name).ToList();
+
+						if (teachers.Count() > 1)
+						{
+							var allOption = new TeacherView() { Name = "All", UserID = -1 };
+							teachers.Insert(0, allOption);
+						}
+
+						return Json(new { Result = "success", TeacherList = teachers }, JsonRequestBehavior.AllowGet);
+					}
+
+					
+				}
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+		}
+
+		[HttpGet]
+		public ActionResult ReportFilterStudent(string selectedDistrict, string selectedBuilding, string selectedTeacher)
+		{
+			try
+			{
+				if (!string.IsNullOrEmpty(selectedDistrict))
+				{
+					tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					List<string> myRoles = new List<string>() { "5" }; //students
+
+					if (selectedBuilding == "-1")
+						selectedBuilding = null;
+
+					if (selectedTeacher == "-1")
+						selectedTeacher = null;
+
+
+					if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+					{
+						//can only see their own students
+						var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+								.Where(ul => myRoles.Contains(ul.RoleID))
+								.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+								.OrderBy(o => o.Name);
+
+
+						var teacherStudents = (from student in students
+											   join o in db.tblOrganizationMappings on student.UserID equals o.UserID
+											   where o.AdminID == user.UserID
+											   select new TeacherView()
+											   {
+												   UserID = student.UserID,
+												   Name = student.Name
+											   }).Distinct().ToList();
+
+						teacherStudents.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+
+						return Json(new { Result = "success", StudentList = teacherStudents }, JsonRequestBehavior.AllowGet);
+					}
+					else
+					{
+
+						if (string.IsNullOrEmpty(selectedTeacher))
+						{
+							//get based on user id and district and building
+							var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+							.Where(ul => myRoles.Contains(ul.RoleID))
+							.Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
+							.OrderBy(o => o.Name).ToList();
+
+							students.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+
+							return Json(new { Result = "success", StudentList = students }, JsonRequestBehavior.AllowGet);
+						}
+						else
+						{
+							//get based on selected teachers
+							selectedTeacher = selectedTeacher.TrimEnd(',');
+							var studentList = new List<TeacherView>();
+
+							List<string> myTeachers = string.IsNullOrEmpty(selectedTeacher) ? new List<string>() : selectedTeacher.Split(',').ToList();
+
+							foreach (var teacher in myTeachers)
+							{
+								var teacherId = 0;
+								Int32.TryParse(teacher, out teacherId);
+
+								var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null)
+								.Where(ul => myRoles.Contains(ul.RoleID))
+								.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+								.OrderBy(o => o.Name);
+
+								var teacherStudents = (from student in students
+													   join o in db.tblOrganizationMappings on student.UserID equals o.UserID
+													   where o.AdminID == teacherId
+													   select new TeacherView()
+													   {
+														   UserID = student.UserID,
+														   Name = student.Name
+													   }).Distinct().ToList();
+
+
+								studentList.AddRange(teacherStudents);
+							}
+
+							studentList.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+
+							return Json(new { Result = "success", StudentList = studentList.Distinct().OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
+
+						}
+					}
+					
+				}
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+		}
+
+
+		#endregion
+
+		#region helpers
+
+		[NonAction]
         public string ConvertToRoleName(string roleId)
         {
             switch (roleId)

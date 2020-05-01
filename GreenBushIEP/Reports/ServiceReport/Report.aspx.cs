@@ -21,7 +21,11 @@ namespace GreenBushIEP.Reports.ServiceReport
 			{
 				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 			}
 		}
 
@@ -47,18 +51,17 @@ namespace GreenBushIEP.Reports.ServiceReport
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
-			
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
+
 			DateTime startDate = DateTime.Parse(this.startDate.Value);
 			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
 			serviceIds = serviceIds.Trim().Trim(',');
 
-			if (user.RoleID == "4" || user.RoleID == "6")
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				//limit report
 				teacherIds = user.UserID.ToString();
-			}			
+			}
 
 			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);

@@ -38,8 +38,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="/Content/greenbush_logo.png" width="45" height="45" class="pull-left" style="margin: auto 0; margin-right: 12px; margin-left: 2px; height: 40px; width: 40px; margin-top: 5px;" alt="Greenbush Logo" />
-                <a class="navbar-brand" href="/Home/Portal">Greenbush</a>
-				<
+                <a class="navbar-brand" href="/Home/Portal">Greenbush</a>				
             </div>
             <div class="navbar-collapse collapse">
                 <div class="navbar-collapse collapse">
@@ -67,8 +66,7 @@
         <div>
 			 <div class="col-md-2 pull-right">
 				<a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Reports" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to reports list"> </a>
-			</div>
-			<hr />
+			</div>			
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 				
 			</asp:ContentPlaceHolder>
@@ -90,11 +88,181 @@
 			 });
 
 			 $('#ContentPlaceHolder1_districtDD').change(function (e) {
-				 var districtId = $(this).val();
-				 var args = { ids: districtId };
+				 _districtChange($(this));
+				 return false;
+			 });
+
+			 $('#ContentPlaceHolder1_buildingDD').change(function (e) {
+				 _buildingChange($(this));
+				 return false;
+			 });
+
+			  $('#ContentPlaceHolder1_teacherDD').change(function (e) {
+				 _teacherChange($(this));
+				 return false;
+			  });		
+
+			  $('#ContentPlaceHolder1_providerDD').change(function (e) {
+				 var selectedValues = $(this).val();
+				$("#ContentPlaceHolder1_providerVals").val(selectedValues);	
+				 return false;
+			 });
+			 
+			 //_getDistricts();
+		});
+	
+
+		function _teacherChange(dropdown) {			
+				var selectedValues = dropdown.val();
+				$("#ContentPlaceHolder1_teacherVals").val(selectedValues);			
+
+				 if ($("#ContentPlaceHolder1_studentDD").length > 0) {
+
+					 var districtElement = $("#ContentPlaceHolder1_districtDD");
+					 var buildingElement = $("#ContentPlaceHolder1_buildingDD");
+
+					 var buildingId = buildingElement.val();
+					 var districtId = districtElement.val();
+					 var teacherId = "";
+
+					 $("#ContentPlaceHolder1_teacherDD option:selected").each(function () {
+						 teacherId += $(this).val() + ",";
+					});
+
+					 var args = { selectedDistrict: districtId, selectedBuilding: buildingId, selectedTeacher: teacherId };
+					 $.ajax({
+						 type: 'GET',
+						 url: '/Manage/ReportFilterStudent',
+						 data: args,
+						 dataType: "json",
+						 async: false,
+						 success: function (data) {
+							 if (data.Result === "success") {
+								 var students = data.StudentList;
+								 var studentElement = $("#ContentPlaceHolder1_studentDD");
+								 studentElement.find('option').remove().end();
+
+								 var sHtml = studentElement.html();
+								 sHtml += "<option value='-1'>All</option>";
+
+								 //district only
+								 $.each(students, function (key, value) {
+									 sHtml += "<option value='" + value.UserID + "'>" + value.Name + "</option>";
+								 });
+
+								 studentElement.html(sHtml);
+
+								 studentElement.trigger("change");
+								 studentElement.trigger("chosen:updated");
+							 }
+						 },
+						 error: function (data) {
+							 alert("There was an error retrieving the student information.");
+							 console.log(data);
+						 }
+					 });
+				 }
+		}
+
+		function _buildingChange(dropdown) {
+			 if ($("#ContentPlaceHolder1_teacherDD").length > 0) {
+
+					 var districtElement = $("#ContentPlaceHolder1_districtDD");
+					 var buildingId = dropdown.val();
+					 var districtId = districtElement.val();
+					 var args = { selectedDistrict: districtId, selectedBuilding: buildingId };
+					 $.ajax({
+						 type: 'GET',
+						 url: '/Manage/ReportFilterTeacher',
+						 data: args,
+						 dataType: "json",
+						 async: false,
+						 success: function (data) {
+							 if (data.Result === "success") {
+								 var teachers = data.TeacherList;
+								 var teacherElement = $("#ContentPlaceHolder1_teacherDD");
+								 teacherElement.find('option').remove().end();
+
+								 var teacherHtml = teacherElement.html();
+								 //teacherHtml += "<option value='-1'>All</option>";
+
+								 //district only
+								 $.each(teachers, function (key, value) {
+									 if (teachers.length == 1)
+										 teacherHtml += "<option selected value='" + value.UserID + "'>" + value.Name + "</option>";
+									 else
+										 teacherHtml += "<option value='" + value.UserID + "'>" + value.Name + "</option>";
+								 });
+
+								 teacherElement.html(teacherHtml);
+
+								 teacherElement.trigger("change");
+								 teacherElement.trigger("chosen:updated");
+							 }
+						 },
+						 error: function (data) {
+							 alert("There was an error retrieving the teacher information.");
+							 console.log(data);
+						 }
+					 });
+				 }
+
+				 if ($("#ContentPlaceHolder1_studentDD").length > 0) {
+
+					 var districtElement = $("#ContentPlaceHolder1_districtDD");
+					 var teacherElement = $("#ContentPlaceHolder1_teacherDD");
+
+					 var buildingId = dropdown.val();
+					 var districtId = districtElement.val();
+					 var teacherId = "";
+
+					 $("#ContentPlaceHolder1_teacherDD option:selected").each(function () {
+						 teacherId += $(this).val() + ",";
+					});
+
+
+					 var args = { selectedDistrict: districtId, selectedBuilding: buildingId, selectedTeacher: teacherId };
+					 $.ajax({
+						 type: 'GET',
+						 url: '/Manage/ReportFilterStudent',
+						 data: args,
+						 dataType: "json",
+						 async: false,
+						 success: function (data) {
+							 if (data.Result === "success") {
+								 var students = data.StudentList;
+								 var studentElement = $("#ContentPlaceHolder1_studentDD");
+								 studentElement.find('option').remove().end();
+
+								 var sHtml = studentElement.html();
+								 //sHtml += "<option value='-1'>All</option>";
+
+								 //district only
+								 $.each(students, function (key, value) {
+									 sHtml += "<option value='" + value.UserID + "'>" + value.Name + "</option>";
+								 });
+
+								 studentElement.html(sHtml);
+
+								 studentElement.trigger("change");
+								 studentElement.trigger("chosen:updated");
+							 }
+						 },
+						 error: function (data) {
+							 alert("There was an error retrieving the student information.");
+							 console.log(data);
+						 }
+					 });
+				 }
+		}
+
+		function _districtChange(dropdown) {
+			var districtId = dropdown.val();
+			var args = { districtId: districtId };
+
 				 $.ajax({
 						type: 'GET',
-						url: '/Manage/GetBuildingsByDistrictId',
+						url: '/Manage/ReportFilterBuildingsByDistrictId',
 						data: args,
 						dataType: "json",
 						async: false,
@@ -105,7 +273,7 @@
 								buildingElement.find('option').remove().end();					
 					
 								var buildingHtml = buildingElement.html();
-								buildingHtml += "<option value='-1'>All</option>";
+								//buildingHtml += "<option value='-1'>All</option>";
 
 								//district only
 								$.each(buildings, function (key, value) {
@@ -122,15 +290,82 @@
 							alert("There was an error retrieving the building information.");
 							console.log(data);
 						}	
-					});
+				 });
 
+				if ($("#ContentPlaceHolder1_providerDD").length > 0) {
+					 $.ajax({
+								type: 'GET',
+								url: '/Manage/ReportFilterProviderByDistrictId',
+								data: args,
+								dataType: "json",
+								async: false,
+								success: function (data) {
+									if (data.Result === "success") {
+										var providers = data.Providers;
+										var providerElement = $("#ContentPlaceHolder1_providerDD");
+										providerElement.find('option').remove().end();					
+					
+										var providerHtml = providerElement.html();
+										//providerHtml += "<option value='-1'>All</option>";
+																				
+										$.each(providers, function (key, value) {
+											providerHtml += "<option value='" + value.ProviderID + "'>" + value.Name + "</option>";									
+										});
 
-			 });
+										providerElement.html(providerHtml);
+								
+										providerElement.trigger("change");
+										providerElement.trigger("chosen:updated");								
+									}
+								},
+								error: function (data) {
+									alert("There was an error retrieving the provider information.");
+									console.log(data);
+								}	
+						 });
 
-		});
+				}
 
-		
+		}
 
+			//	function _getDistricts() {
+		//	 if ($("#ContentPlaceHolder1_districtDD").length > 0) {
+		//		  $.ajax({
+		//				 type: 'GET',
+		//				 url: '/Manage/FilterDistrict',						 
+		//				 dataType: "json",
+		//				 async: false,
+		//				 success: function (data) {
+		//					 if (data.Result === "success") {
+								 
+		//						 var districts = data.Districts;
+		//						 var districtElement = $("#ContentPlaceHolder1_districtDD");
+		//						 districtElement.find('option').remove().end();
+
+		//						 var dHtml = districtElement.html();
+
+		//						 if (data.Districts.length > 1)
+		//							dHtml += "<option value='-1'>All</option>";
+
+		//						 $.each(districts, function (key, value) {
+		//							 dHtml += "<option value='" + value.USD + "'>" + value.Name + "</option>";
+		//						 });
+
+		//						 districtElement.html(dHtml);
+
+		//						 districtElement.trigger("change");
+		//						 districtElement.trigger("chosen:updated");
+		//					 }
+		//				 },
+		//				 error: function (data) {
+		//					 alert("There was an error retrieving the district information.");
+		//					 console.log(data);
+		//				 }
+		//			 });
+		//		 }
+
+				
+		//}
     </script>
 	
 </body>

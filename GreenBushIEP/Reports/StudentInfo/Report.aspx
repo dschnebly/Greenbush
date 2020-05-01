@@ -43,6 +43,7 @@
 				<select id="providerDD" runat="server" multiple="true" class="chosen-select" data-placeholder="All Providers">
 					<option value="">Select</option>
 				</select>
+				<input type="hidden" id="providerVals" runat="server" />
 			</div>
 		</div>
     </div>

@@ -9,6 +9,7 @@ using System.Security.Principal;
 using System.Data;
 using System.Web.Mvc;
 using System.Web.UI.HtmlControls;
+using System.Web.Services;
 
 namespace GreenBushIEP.Report
 {	
@@ -72,13 +73,39 @@ namespace GreenBushIEP.Report
 			statusDD.DataBind();
 		}		
 
-		public static void TeacherList(HtmlSelect teacherDD)
+		public static void TeacherList(HtmlSelect teacherDD, string selectedDistrict, string selectedBuilding, HtmlInputHidden teacherValsInput)
 		{
-			var teacherList = GreenBushIEP.Report.ReportMaster.GetTeachers(HttpContext.Current.User.Identity.Name);
+			string selectedTeacher = teacherValsInput.Value;
+
+			var teacherList = GreenBushIEP.Report.ReportMaster.GetTeachers(HttpContext.Current.User.Identity.Name,  selectedDistrict,  selectedBuilding);
+
+
+			if (teacherList.Count() > 1)
+			{
+				var allOption = new TeacherView() { Name = "All", UserID =-1 };
+				teacherList.Insert(0, allOption);
+			}
+
+
 			teacherDD.DataSource = teacherList;
 			teacherDD.DataTextField = "Name";
 			teacherDD.DataValueField = "UserID";
 			teacherDD.DataBind();
+
+			if (!string.IsNullOrEmpty(selectedTeacher) || selectedTeacher != "-1")
+			{
+				var teacherIds = selectedTeacher.Split(',');
+
+				if (teacherIds != null)
+				{
+					foreach (var t in teacherIds)
+					{
+						var item = teacherDD.Items.FindByValue(t);
+						if (item != null)
+							item.Selected = true;
+					}
+				}
+			}
 		}
 
 		public static void DistrictList(HtmlSelect districtDD)
@@ -90,27 +117,56 @@ namespace GreenBushIEP.Report
 			districtDD.DataBind();
 		}
 
-		public static void BuildingList(HtmlSelect buildingDD)
+		public static void BuildingList(HtmlSelect buildingDD, string selectedDistrict)
 		{
+			var selectedBuilding = buildingDD.Value;
 
 			var buildingList = GreenBushIEP.Report.ReportMaster.GetBuildings(HttpContext.Current.User.Identity.Name);
+
+			if (!string.IsNullOrEmpty(selectedDistrict) && selectedDistrict != "-1")
+				buildingList = buildingList.Where(o => o.BuildingUSD == selectedDistrict).ToList();
+
+			if (buildingList.Count() > 1)
+			{
+				var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
+				buildingList.Insert(0,allOption);
+			}
+
 			buildingDD.DataSource = buildingList;
 			buildingDD.DataTextField = "BuildingName";
 			buildingDD.DataValueField = "BuildingID";
 			buildingDD.DataBind();
+
+
+			if (!string.IsNullOrEmpty(selectedBuilding) || selectedBuilding != "-1")
+			{
+				var item = buildingDD.Items.FindByValue(selectedBuilding);
+				if(item != null)
+					item.Selected = true;				
+			}
+
 		}
 
-		public static void StudentList(HtmlSelect studentDD)
+		public static void StudentList(HtmlSelect studentDD, string selectedDistrict, string selectedBuilding, string selectedTeacher)
 		{
-			// List<Student> GetStudents(string userName)
-			var studentList = GreenBushIEP.Report.ReportMaster.GetStudents(HttpContext.Current.User.Identity.Name);
+			var selectedStudent = studentDD.Value;
+
+			var studentList = GreenBushIEP.Report.ReportMaster.GetStudents(HttpContext.Current.User.Identity.Name, selectedDistrict, selectedBuilding, selectedTeacher);
 			studentDD.DataSource = studentList;
-			studentDD.DataTextField = "FormattedName";
+			studentDD.DataTextField = "LastName";
 			studentDD.DataValueField = "UserID";
 			studentDD.DataBind();
+
+			if (!string.IsNullOrEmpty(selectedStudent) || selectedStudent != "-1")
+			{
+				var item = studentDD.Items.FindByValue(selectedStudent);
+				if (item != null)
+					item.Selected = true;
+			}
+
 		}
 
-		
+
 		public static void ServiceList(HtmlSelect serviceDD)
 		{
 			var services = GreenBushIEP.Report.ReportMaster.GetServices();
@@ -118,90 +174,91 @@ namespace GreenBushIEP.Report
 			serviceDD.DataTextField = "Name";
 			serviceDD.DataValueField = "ServiceCode";
 			serviceDD.DataBind();
+
 		}
 
-		public static void ProviderList(HtmlSelect providerDD)
+		public static void ProviderList(HtmlSelect providerDD, string selectedDistricts, HtmlInputHidden providerValsInput)
 		{
-			var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(HttpContext.Current.User.Identity.Name);
+			var selectedProvider = providerValsInput.Value;
+
+			var providerList = GreenBushIEP.Report.ReportMaster.GetProviders(selectedDistricts);
 			providerDD.DataSource = providerList;
 			providerDD.DataTextField = "Name";
 			providerDD.DataValueField = "ProviderID";
 			providerDD.DataBind();
+
+
+			if (!string.IsNullOrEmpty(selectedProvider) || selectedProvider != "-1")
+			{
+				var providerIds = selectedProvider.Split(',');
+
+				if (providerIds != null)
+				{
+					foreach (var t in providerIds)
+					{
+						var item = providerDD.Items.FindByValue(t);
+						if (item != null)
+							item.Selected = true;
+					}
+				}
+
+			}
 		}
 
-		public static List<TeacherView> GetTeachers(string userName)
+		
+
+		public static List<TeacherView> GetTeachers(string userName, string selectedDistricts, string selectedBuildings)
 		{
-			//List<tblUser> teachers = new List<tblUser>();
+			
 			List<TeacherView> teacherList = new List<TeacherView>();
  			tblUser usr = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 			if (usr.RoleID == GreenBushIEP.Report.ReportMaster.teacher || usr.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				//just add themselves to the list
-				
+				//just add themselves to the list				
 				TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", usr.LastName, usr.FirstName), UserID = usr.UserID };
-				teacherList.Add(tv);
-				
+				teacherList.Add(tv);				
 			}
 			else
 			{
-				teacherList = GetTeacherByRole(usr.UserID, usr.RoleID);				
-			}
-						
+				teacherList = GetTeacherByDistrictBuilding(usr, selectedBuildings, selectedDistricts);			
+			}						
 
 			return teacherList.OrderBy(o => o.Name).ToList();
 		}
 
-		private static List<TeacherView> GetTeacherByRole(int userId, string userRoleId)
+
+		private static List<TeacherView> GetTeacherByDistrictBuilding(tblUser user, string selectedBuildings, string selectedDistricts)
 		{
-			List<TeacherView> list = new List<TeacherView>();
+			List<TeacherView> teachers = new List<TeacherView>();
 
 			try
 			{
-
-				List<String> myDistricts = new List<string>();
-				List<String> myBuildings = new List<string>();
-				List<String> myRoles = new List<string>() { "3", "4", "6" };
-				List<vw_UserList> teachers = new List<vw_UserList>();
-
-				var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == userId select new { district.USD, district.DistrictName }).Distinct().ToList();
-				myDistricts = districts.Select(d => d.USD).ToList();
 				
-				if (userRoleId == "2" || userRoleId == "1")
-				{
+				List<string> myDistricts = string.IsNullOrEmpty(selectedDistricts) ? new List<string>() : selectedDistricts.Split(',').ToList();
+				List<string> myBuildings = string.IsNullOrEmpty(selectedBuildings) ? new List<string>() : selectedBuildings.Split(',').ToList();
+
+				List<string> myRoles = new List<string>() { "3", "4", "6" };
+
+				if (user.RoleID == mis || user.RoleID == owner)
 					myRoles.Add("2");
-					teachers = db.vw_UserList
-								.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD))
-								.GroupBy(u => u.UserID)
-								.Select(u => u.FirstOrDefault()).ToList();
 
-				}
-				else
-				{
-					var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == userId && myDistricts.Contains(buildingMap.USD) select building).Distinct().ToList();
-					myBuildings = buildings.Select(b => b.BuildingID).ToList();
-					myBuildings.Add("0");
-					
-					teachers = db.vw_UserList
-							.Where(ul => myRoles.Contains(ul.RoleID) && myDistricts.Contains(ul.USD) && myBuildings.Contains(ul.BuildingID))
-							.GroupBy(u => u.UserID)
-							.Select(u => u.FirstOrDefault()).ToList();
-				}
+				teachers = db.vw_UserList.Where(ul => 
+				myRoles.Contains(ul.RoleID)
+				&& (myBuildings.Any() && myBuildings.Contains(ul.BuildingID)
+				&& (myBuildings.Any() && myDistricts.Contains(ul.USD))))
+				.Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
+				.Distinct()
+				.OrderBy(o => o.Name)
+				.ToList();
 
-				if (teachers != null && teachers.Count > 0)
-				{
-					foreach (var teacher in teachers)
-					{
-						TeacherView tv = new TeacherView() { Name = string.Format("{0}, {1}", teacher.LastName, teacher.FirstName), UserID = teacher.UserID };
-						list.Add(tv);
-					}
-				}
+				
 			}
 			catch (Exception ex)
 			{
 				string error = ex.ToString();
 			}
 
-			return list;
+			return teachers;
 
 		}
 
@@ -223,31 +280,41 @@ namespace GreenBushIEP.Report
 
 		}
 
-		public static List<ProviderViewModel> GetProviders(string userName)
-		{
-			var providerList = new List<ProviderViewModel>();
-			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
-						
-			var MISDistrictList = (from buildingMaps in db.tblBuildingMappings
-								   join districts in db.tblDistricts
-										on buildingMaps.USD equals districts.USD
-								   where buildingMaps.UserID == user.UserID
-								   select districts).Distinct().ToList();
+		public static List<ProviderViewModel> GetProviders(string selectedDistrict)
+		{			
 
-			List<string> listOfUSD = MISDistrictList.Select(d => d.USD).ToList();
+			if (selectedDistrict == "" || selectedDistrict == "-1")
+			{
+				var providerList = new List<ProviderViewModel>();
+				
+				var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(HttpContext.Current.User.Identity.Name);
 
-			List<tblProvider> listOfProviders = new List<tblProvider>();
-			listOfProviders = (from providers in db.tblProviders
-							   join districts in db.tblProviderDistricts
-									on providers.ProviderID equals districts.ProviderID
-							   where listOfUSD.Contains(districts.USD)
-							   select providers).Distinct().ToList();
+				foreach (var district in districts)
+				{
+					var districtProvider = db.uspServiceProviders(district.USD)
+						.Select(u => new ProviderViewModel() { ProviderID = u.ProviderID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+						;
 
-			foreach (var provider in listOfProviders)
-				providerList.Add(new ProviderViewModel() { Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName), ProviderCode = provider.ProviderCode, ProviderID = provider.ProviderID });
+					providerList.AddRange(districtProvider);					
+					
+				}
 
+				var all = providerList
+					.GroupBy(o => o.ProviderID)
+					.Select(u => u.FirstOrDefault())		
+					.OrderBy(o => o.Name)
+					.ToList();
 
-			return providerList.OrderBy(o => o.Name).ToList();
+				return all;
+
+			}
+			else
+			{
+				var providers = db.uspServiceProviders(selectedDistrict)
+					.Select(u => new ProviderViewModel() { ProviderCode = u.ProviderCode, ProviderID = u.ProviderID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) });
+
+				return providers.Distinct().OrderBy(o => o.Name).ToList();
+			}			
 		}
 
 		public static List<tblServiceType> GetServices()
@@ -285,7 +352,8 @@ namespace GreenBushIEP.Report
 
 			List<tblDistrict> districts = new List<tblDistrict>();
 
-			districts.Add(new tblDistrict {  DistrictName = "All",  USD = "-1" });
+			if(districtList.Count() > 1)
+				districts.Add(new tblDistrict {  DistrictName = "All",  USD = "-1" });
 
 			districts.AddRange(districtList);
 
@@ -298,9 +366,6 @@ namespace GreenBushIEP.Report
 
 			var buildings = new List<BuildingsViewModel>();
 
-			var allOption = new BuildingsViewModel() { BuildingName = "All", BuildingID = "-1", BuildingUSD = "-1" };
-			buildings.Add(allOption);
-
 			var buildingList = (from bm in db.tblBuildingMappings
 								join b in db.tblBuildings on bm.USD equals b.USD
 								where b.Active == 1 && bm.BuildingID == b.BuildingID && bm.UserID == user.UserID
@@ -312,79 +377,105 @@ namespace GreenBushIEP.Report
 			return buildings;
 		}
 
-		public static List<Student> GetStudents(string userName)
+		public static List<Student> GetStudents(string userName, string selectedDistrict, string selectedBuilding, string selectedTeacher)
 		{
-			tblUser teacherObj = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
+			List<string> myRoles = new List<string>() { "5" };
 			List<Student> studentList = new List<Student>();
 
-			var allOption = new Student() { FirstName = "All", UserID = -1 };
+			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
-
-			studentList.Add(allOption);
-
-			if (teacherObj.RoleID == teacher || teacherObj.RoleID == nurse)
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				var list = (from u in db.tblUsers
-								join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								where o.AdminID == teacherObj.UserID && u.RoleID == student
-								select new Student()
-								{
-									UserID = u.UserID,
-									FirstName = u.FirstName,
-									MiddleName = u.MiddleName,
-									LastName = u.LastName,
-								}).Distinct();
+				//can only see their own students
+				var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+						.Where(ul => myRoles.Contains(ul.RoleID))
+						.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName });
 
-				studentList.AddRange(list.OrderBy(o => o.LastName).ThenBy(o => o.FirstName));
+
+				var teacherStudents = (from student in students
+									   join o in db.tblOrganizationMappings on student.UserID equals o.UserID
+									   where o.AdminID == user.UserID
+									   select new Student()
+									   {
+										   UserID = student.UserID,										   
+										   LastName = student.LastName,
+									   }).OrderBy(o => o.LastName).ThenBy(o => o.FirstName).Distinct().ToList();
+
+				teacherStudents.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+				return teacherStudents;
+
+
 			}
 			else
 			{
 
-				var teachers = (from u in db.tblUsers
-								join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								where o.AdminID == teacherObj.UserID && (u.RoleID != student)
-								select new TeacherView()
-								{
-									UserID = u.UserID,									
-								}).Distinct().ToList();
+				if (string.IsNullOrEmpty(selectedTeacher))
+				{
+					//get based on user id and district and building
+					var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+					.Where(ul => myRoles.Contains(ul.RoleID))
+					.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
+					.OrderBy(o => o.LastName).ThenBy(o => o.FirstName).Distinct().ToList();
 
-				var teacherIds = teachers.Select(d => d.UserID).ToList();
+					students.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+					return students;
+
+				}
+				else
+				{
+					//get based on selected teachers
+					selectedTeacher = selectedTeacher.TrimEnd(',');
+
+					List<string> myTeachers = string.IsNullOrEmpty(selectedTeacher) ? new List<string>() : selectedTeacher.Split(',').ToList();
+
+					foreach (var teacher in myTeachers)
+					{
+						var teacherId = 0;
+						Int32.TryParse(teacher, out teacherId);
+
+						var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null)
+						.Where(ul => myRoles.Contains(ul.RoleID))
+						.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName });
 
 
-				var list = (from u in db.tblUsers
-								join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-								where (teacherIds.Contains(o.AdminID) || o.AdminID == teacherObj.UserID) && u.RoleID == student && (!u.Archive.HasValue || u.Archive.Value)
-								select new Student()
-								{
-									UserID = u.UserID,
-									FirstName = u.FirstName,
-									MiddleName = u.MiddleName,
-									LastName = u.LastName,
-								}).Distinct();
+						var teacherStudents = (from student in students
+											   join o in db.tblOrganizationMappings on student.UserID equals o.UserID
+											   where o.AdminID == teacherId
+											   select new Student()
+											   {
+												   UserID = student.UserID,												   
+												   LastName = student.LastName
+											   }).ToList();
 
-				studentList.AddRange(list.OrderBy(o => o.LastName).ThenBy(o=> o.FirstName));
 
+						studentList.AddRange(teacherStudents);
+					}
+
+					studentList.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+					return studentList.Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
+
+				}
 			}
-			
-
-			return studentList;
-
+				
 		}
 
 		public static List<BuildingsViewModel> GetBuildingsByDistrict(string userName, string usd)
 		{
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
 
-			var buildings = new List<BuildingsViewModel>();
-
-			var buildingList = (from bm in db.tblBuildingMappings
-								join b in db.tblBuildings on bm.USD equals b.USD
-								where bm.UserID == user.UserID && b.Active == 1 && bm.BuildingID == b.BuildingID && b.USD == usd
-								select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
-
-			buildings.AddRange(buildingList);
-
-			return buildings;
+			var buidlingList = GetBuildings(userName);
+					
+			if (!string.IsNullOrEmpty(usd) && usd != "-1")
+			{
+				return buidlingList.Where(o => o.BuildingUSD == usd).ToList();
+			}
+			else
+			{
+				return buidlingList;
+			}
 		}
 
 		public static DataTable GetBuildingData(string id)
@@ -411,46 +502,71 @@ namespace GreenBushIEP.Report
 			return dt;
 		}
 
-		public static string GetTeacherFilter(HtmlSelect teacherDD, string teacherId)
+		public static string GetTeacherFilter(HtmlSelect teacherDD, tblUser user, string selectedBuildings, string selectedDistricts, HtmlInputHidden teacherValsInput)
 		{
-			string teacherList = "";
+			string teacherIds = "";
+			string selectedTeacher = teacherValsInput.Value; 
 
-			if (teacherId == "")
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				foreach (ListItem li in teacherDD.Items)
-				{
-					if (li.Selected)
-					{
-						teacherList += string.Format("{0},", li.Value);
-					}
-				}
-
-				if (string.IsNullOrEmpty(teacherList))
-				{
-					//get all, but limit list
-					var providerList = GreenBushIEP.Report.ReportMaster.GetTeachers(HttpContext.Current.User.Identity.Name);
-					teacherList = string.Join(",", providerList.Select(o => o.UserID));
-				}
+				teacherIds = user.UserID.ToString();
 			}
 			else
 			{
-				teacherList = teacherId;
+				if (selectedTeacher == "-1" || selectedTeacher == "")
+				{
+					var teachers = GetTeacherByDistrictBuilding(user, selectedBuildings, selectedDistricts);
+					teacherIds = string.Join(",", teachers.Select(p => p.UserID.ToString()));					
+				}
+				else
+				{
+					teacherIds = selectedTeacher;
+
+					//fallback just in case
+					if (teacherIds == "")
+						teacherIds = teacherDD.Value;					
+				}
 			}
 
-			return teacherList;
+			return teacherIds.TrimEnd(',');
+		}
+
+		public static string GetProviderFilter(HtmlSelect providerDD, string selectedDistricts, HtmlInputHidden providerValsInput)
+		{
+			string providerIds = "";
+			string selectedprovider = providerValsInput.Value;
+			
+			if (selectedprovider == "-1" || selectedprovider == "")
+			{
+				var providers = GetProviders(selectedDistricts);
+				providerIds = string.Join(",", providers.Select(p => p.ProviderID.ToString()));				
+			}
+			else
+			{
+				providerIds = selectedprovider;
+
+				//fallback just in case
+				if (providerIds == "")
+					providerIds = providerDD.Value;
+				
+			}			
+
+			return providerIds.TrimEnd(',');
 		}
 
 		public static string GetServiceFilter(HtmlSelect ServiceType)
 		{
-			string serviceIds = "";
-			foreach (ListItem li in ServiceType.Items)
-			{
-				if (li.Selected)
-				{
-					serviceIds += string.Format("{0},", li.Value);
-				}
-			}
-			return serviceIds;
+			string serviceIds = ServiceType.Value;
+			//foreach (ListItem li in ServiceType.Items)
+			//{
+			//	if (li.Selected)
+			//	{
+			//		serviceIds += string.Format("{0},", li.Value);
+			//	}
+			//}
+
+			return serviceIds.TrimEnd(',');
+			
 		}
 
 		public static string GetDistrictFilter(HtmlSelect districtDD, string districtID)
@@ -462,77 +578,42 @@ namespace GreenBushIEP.Report
 				{
 					districtList += string.Format("{0},", districtItem.Value);
 				}
-
 			}
 			else
 			{
 				districtList = districtID;
 			}
 
-			return districtList;
+			return districtList.TrimEnd(',');
 		}
+			   		 
 
-
-
-
-
-		public static string GetBuildingFilter(HtmlSelect districtDD, string buildingID, string districtID)
+		public static string GetBuildingFilter(HtmlSelect buildingDD, string username)
 		{
 			string buildingList = "";
+
+			string buildingID = buildingDD.Value;
+
 			if (buildingID == "-1")
 			{
-				if (districtID == "-1")
-				{
-					foreach (ListItem districtItem in districtDD.Items)
-					{
-						var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(HttpContext.Current.User.Identity.Name, districtItem.Value);
-						foreach (var b in selectedBuildings)
-						{
-							buildingList += string.Format("{0},", b.BuildingID);
-						}
-					}
-				}
-				else
-				{
-					var selectedBuildings = GreenBushIEP.Report.ReportMaster.GetBuildingsByDistrict(HttpContext.Current.User.Identity.Name, districtID);
-					foreach (var b in selectedBuildings)
-					{
-						buildingList += string.Format("{0},", b.BuildingID);
-					}
-				}
+				var userBuildings = GetBuildings(username);
+				buildingList = string.Join(",", userBuildings.Select(p => p.BuildingID.ToString()));				
 			}
 			else
 			{
-				buildingList = buildingID;
+				foreach (ListItem li in buildingDD.Items)
+				{
+					if (li.Selected)
+					{
+						buildingList += string.Format("{0},", li.Value);
+					}
+				}
 			}
 
-			return buildingList;
+			return buildingList.TrimEnd(',');
 		}
 
-
-
-		//public static bool IsStudent(string userName)
-		//{
-		//	tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == userName);
-		//	if (MIS != null)
-		//	{
-				
-				
-		//		var districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct();
-		//		var buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct();
-		//		var students = (from buildingMap in db.tblBuildingMappings join user in db.tblUsers on buildingMap.UserID equals user.UserID where ( ) lect new StudentIEPViewModel() { UserID = user.UserID, FirstName = user.FirstName, MiddleName = user.MiddleName, LastName = user.LastName, RoleID = user.RoleID }).Distinct().OrderBy(s => s.LastName).ThenBy(s => s.FirstName).Any(m => m.RoleID == student && m.user);
-
-		//		foreach (var student in model.members.Where(m => m.RoleID == student))
-		//		{
-		//			student.hasIEP = db.tblIEPs.Where(i => i.UserID == student.UserID && i.IsActive && i.IepStatus != IEPStatus.ARCHIVE).Any();
-		//		}
-
-		//		// show the latest updated version changes
-		//		ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
-
-		//		return View("MISPortal", model);
-		//	}
-		//}
+			   		
 
 	}
 }

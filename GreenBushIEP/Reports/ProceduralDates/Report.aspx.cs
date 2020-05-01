@@ -22,8 +22,13 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			if (!IsPostBack)
 			{				
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
-				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD);				
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);				
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);
 			}
 		}
 
@@ -37,45 +42,33 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string teacherIds = "";
+			
 			string teacherNames = "";
-			string buildingID = this.buildingDD.Value;
-			string teacher = "";
+
+			//string buildingID = this.buildingDD.Value;			
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 			string districtID = this.districtDD.Value;
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 
-			foreach (ListItem li in teacherDD.Items)
-			{
-				if (li.Selected)
-				{
-					teacherNames += string.Format("{0},", li.Text);
-				}
-			}
+			string teacherIds = GreenBushIEP.Report.ReportMaster.GetTeacherFilter(this.teacherDD, user, buildingFilter, districtFilter, this.teacherVals);
 
-			foreach (ListItem li in teacherDD.Items)
-			{
-				if (li.Selected)
-				{
-					teacherIds += string.Format("{0},", li.Value);
-				}
-			}
-						
-			if (string.IsNullOrEmpty(teacherIds))
-			{
-				//get all, but limit list
-				var providerList = GreenBushIEP.Report.ReportMaster.GetTeachers(User.Identity.Name);
-				teacherIds = string.Join(",", providerList.Select(o => o.UserID));
-			}
-
-			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
-			{
-				teacher = user.UserID.ToString();
-			}
-
+			//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+			//{
+			//	teacherIds = user.UserID.ToString();
+			//}
+			//else
+			//{
+			//	foreach (ListItem li in teacherDD.Items)
+			//	{
+			//		if (li.Selected)
+			//		{
+			//			teacherIds += string.Format("{0},", li.Value);
+			//		}
+			//	}
+			//}
 
 			DataTable dt = GetData(districtFilter, teacherIds, buildingFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);

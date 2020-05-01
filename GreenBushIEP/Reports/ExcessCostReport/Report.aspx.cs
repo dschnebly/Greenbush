@@ -22,7 +22,11 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 			}
 
 		}
@@ -45,8 +49,8 @@ namespace GreenBushIEP.Reports.ExcessCostReport
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
-			
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
+
 			DataTable dt = GetData(districtFilter, buildingFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;

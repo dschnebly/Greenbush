@@ -809,7 +809,13 @@ namespace GreenBushIEP.Models
         public string Name { get; set; }
     }
 
-    public class UserView
+	public class DistrictViewModel
+	{
+		public string USD { get; set; }
+		public string Name { get; set; }
+	}
+
+	public class UserView
     {
         public int UserID;
         public string FirstName;

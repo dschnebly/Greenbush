@@ -20,8 +20,12 @@ namespace GreenBushIEP.Reports.Owner
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.StudentStatusList(this.statusDD);
+			}
+			else
+			{				
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 			}
 		}
 
@@ -43,7 +47,14 @@ namespace GreenBushIEP.Reports.Owner
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
+
+			string teacherIds = "-1";
+
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+			{
+				teacherIds = user.UserID.ToString();
+			}
 
 			string statusCodes = "";
 
@@ -67,7 +78,7 @@ namespace GreenBushIEP.Reports.Owner
 			if (!string.IsNullOrEmpty(this.endDate.Value))
 				endDate = DateTime.Parse(this.endDate.Value);
 
-			DataTable dt = GetData(districtFilter, buildingFilter, startDate, endDate, statusCodes);
+			DataTable dt = GetData(districtFilter, buildingFilter, startDate, endDate, statusCodes, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -94,7 +105,7 @@ namespace GreenBushIEP.Reports.Owner
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtIds, string buildingID, DateTime? startDate, DateTime? endDate, string statusCodes)
+		private DataTable GetData(string districtIds, string buildingID, DateTime? startDate, DateTime? endDate, string statusCodes, string teacherIds)
 		{
 			DataSet ds = new DataSet();
 
@@ -112,6 +123,7 @@ namespace GreenBushIEP.Reports.Owner
 					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
 					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;					
 					cmd.Parameters.Add("@StatusCode", SqlDbType.VarChar, 8000).Value = statusCodes;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
 
 
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))

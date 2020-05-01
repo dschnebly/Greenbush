@@ -20,8 +20,13 @@ namespace GreenBushIEP.Reports.StudentInfo
 			if (!IsPostBack)
 			{
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
-				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD);
-				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
 			}
 		}
 
@@ -35,25 +40,24 @@ namespace GreenBushIEP.Reports.StudentInfo
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string providerIds = "";
-			foreach (ListItem li in providerDD.Items)
-			{
-				if (li.Selected)
-				{
-					providerIds += string.Format("{0},", li.Value);
-				}
-			}
-
-			string buildingID = this.buildingDD.Value;
-			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+			
 
 			string districtID = this.districtDD.Value;
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.districtDD, buildingID, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 			
-			DataTable dt = GetData(districtFilter, buildingFilter, providerIds);
+			string providerIds = GreenBushIEP.Report.ReportMaster.GetProviderFilter(this.providerDD, districtFilter, this.providerVals);
+
+			string teacherIds = "-1";
+
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+			{
+				teacherIds = user.UserID.ToString();
+			}
+
+			DataTable dt = GetData(districtFilter, buildingFilter, providerIds, teacherIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 						
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/StudentInfo/rptStudentInfo.rdlc");
@@ -62,7 +66,7 @@ namespace GreenBushIEP.Reports.StudentInfo
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtIds, string buildingID, string providerIds)
+		private DataTable GetData(string districtIds, string buildingID, string providerIds, string teacherIds)
 		{
 			DataSet ds = new DataSet();
 
@@ -78,6 +82,7 @@ namespace GreenBushIEP.Reports.StudentInfo
 					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtIds;
 					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
 					cmd.Parameters.Add("@ProviderId", SqlDbType.VarChar, 8000).Value = providerIds;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
 
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
 					{					
@@ -88,9 +93,6 @@ namespace GreenBushIEP.Reports.StudentInfo
 			}
 
 
-			if (!string.IsNullOrEmpty(providerIds))
-			{
-			}
 
 			return ds.Tables[0];
 
