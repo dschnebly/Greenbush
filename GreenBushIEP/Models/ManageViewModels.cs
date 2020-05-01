@@ -218,9 +218,13 @@ namespace GreenBushIEP.Models
             get
             {
                 if (UserID == -1)
+                {
                     return string.Format("{0}", FirstName);
+                }
                 else
+                {
                     return string.Format("{0}, {1} {2}", LastName, FirstName, MiddleName);
+                }
             }
         }
 
@@ -383,11 +387,19 @@ namespace GreenBushIEP.Models
             if (thisIEP != null)
             {
                 if (thisIEP.Amendment && thisIEP.IsActive && thisIEP.IepStatus.ToUpper() == IEPStatus.DRAFT)
+                {
                     return IEPStatus.AMENDMENT;
+                }
+
                 if (!thisIEP.IsActive)
+                {
                     return IEPStatus.ARCHIVE;
+                }
+
                 if (thisIEP.AmendingIEPid != null && thisIEP.IsActive && thisIEP.IepStatus.ToUpper() == IEPStatus.ANNUAL)
+                {
                     return IEPStatus.ANNUAL;
+                }
 
                 return thisIEP.IepStatus.ToUpper();
             }
@@ -426,11 +438,11 @@ namespace GreenBushIEP.Models
         public tblIEPMath math { get; set; }
         public tblIEPWritten written { get; set; }
         public string building { get; set; }
-		public string buildingAddress { get; set; }
-		public string buildingCityStZip { get; set; }
-		public string buildingPhone { get; set; }
-		public string buildingNeigborhood { get; set; }		
-		public string districtName { get; set; }
+        public string buildingAddress { get; set; }
+        public string buildingCityStZip { get; set; }
+        public string buildingPhone { get; set; }
+        public string buildingNeigborhood { get; set; }
+        public string districtName { get; set; }
         public string lastReEvalDate { get; set; }
         public string studentLanguage { get; set; }
     }
@@ -447,9 +459,9 @@ namespace GreenBushIEP.Models
         public List<tblFormArchive> Archives { get; set; }
         public int StudentId { get; set; }
         public string StudentName { get; set; }
-		public bool CanDelete { get; set; }
+        public bool CanDelete { get; set; }
 
-	}
+    }
 
     public class IEPFormFileViewModel
     {
@@ -462,25 +474,25 @@ namespace GreenBushIEP.Models
         public StudentLegalView fileModel { get; set; }
         public tblFormTeamEval teamEval { get; set; }
         public tblFormSummaryPerformance summaryPerformance { get; set; }
-		public tblFormConferenceSummary conferenceSummary { get; set; }
-		public tblFormIEPAmendment formAmend { get; set; }
-		public tblFormIEPMeetingConsentToInvite formMtgConsent { get; set; }
-		public tblFormIEPMeetingExcusal formMtgExcusal { get; set; }
-		public tblFormIEPTeamConsideration formIEPTeamConsider { get; set; }
-		public tblFormManifestationDeterminiation formMani { get; set; }
-		public tblFormNoticeOfMeeting formNotice { get; set; }
-		public tblFormParentConsent formConsentMedicaid { get; set; }
-		public tblFormPhysicianScript formPhysician { get; set; }
-		public tblFormPriorWritten_Ident formPWN { get; set; }
-		public tblFormPriorWritten_Eval formPWNEval { get; set; }
-		public tblFormPriorWritten_ReokeAll formPWNRevAll { get; set; }
-		public tblFormPriorWritten_ReokePart formPWNRevPart { get; set; }
-		public tblFormRevokeConsentAll formRevAll { get; set; }
-		public tblFormRevokeConsentPart formRevPart { get; set; }
-		public tblFormTransportationRequest formTransRequest { get; set; }
-		public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
+        public tblFormConferenceSummary conferenceSummary { get; set; }
+        public tblFormIEPAmendment formAmend { get; set; }
+        public tblFormIEPMeetingConsentToInvite formMtgConsent { get; set; }
+        public tblFormIEPMeetingExcusal formMtgExcusal { get; set; }
+        public tblFormIEPTeamConsideration formIEPTeamConsider { get; set; }
+        public tblFormManifestationDeterminiation formMani { get; set; }
+        public tblFormNoticeOfMeeting formNotice { get; set; }
+        public tblFormParentConsent formConsentMedicaid { get; set; }
+        public tblFormPhysicianScript formPhysician { get; set; }
+        public tblFormPriorWritten_Ident formPWN { get; set; }
+        public tblFormPriorWritten_Eval formPWNEval { get; set; }
+        public tblFormPriorWritten_ReokeAll formPWNRevAll { get; set; }
+        public tblFormPriorWritten_ReokePart formPWNRevPart { get; set; }
+        public tblFormRevokeConsentAll formRevAll { get; set; }
+        public tblFormRevokeConsentPart formRevPart { get; set; }
+        public tblFormTransportationRequest formTransRequest { get; set; }
+        public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
 
-		public IEPFormFileViewModel()
+        public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;
@@ -536,7 +548,7 @@ namespace GreenBushIEP.Models
             Locations = new List<System.Web.Mvc.SelectListItem>();
             modulesNeedingAccommodations = string.Empty;
             ModuleList = new List<tblModule>();
-			AccommModules = new List<tblAccommodationModule>();
+            AccommModules = new List<tblAccommodationModule>();
         }
 
         public int StudentId { get; set; }
@@ -561,33 +573,33 @@ namespace GreenBushIEP.Models
         public string modulesNeedingAccommodations { get; set; }
         public string Module { get; set; }
         public List<tblModule> ModuleList { get; set; }
-		public List<tblAccommodationModule> AccommModules { get; set; }
-		public int[] SelectedModules { get; set; }
+        public List<tblAccommodationModule> AccommModules { get; set; }
+        public int[] SelectedModules { get; set; }
 
 
-	}
+    }
 
-	public class AccomodationPrintViewModel
-	{
-		public AccomodationPrintViewModel()
-		{
-			
-		}
+    public class AccomodationPrintViewModel
+    {
+        public AccomodationPrintViewModel()
+        {
 
-		public int StudentId { get; set; }		
-		public string AccomType { get; set; }
-		public int AccommodationID { get; set; }
-		public int IEPid { get; set; }		
-		public string Description { get; set; }
-		public string Location { get; set; }
-		public string Frequency { get; set; }
-		public string Duration { get; set; }
-		public DateTime? AnticipatedStartDate { get; set; }
-		public DateTime? AnticipatedEndDate { get; set; }
-		public string Module { get; set; }
-	}
+        }
 
-	public class BehaviorViewModel
+        public int StudentId { get; set; }
+        public string AccomType { get; set; }
+        public int AccommodationID { get; set; }
+        public int IEPid { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
+        public string Frequency { get; set; }
+        public string Duration { get; set; }
+        public DateTime? AnticipatedStartDate { get; set; }
+        public DateTime? AnticipatedEndDate { get; set; }
+        public string Module { get; set; }
+    }
+
+    public class BehaviorViewModel
     {
         public BehaviorViewModel()
         {
@@ -704,49 +716,49 @@ namespace GreenBushIEP.Models
     }
 
 
-	public class StudentDetailsPrintViewModel
-	{
-		public StudentDetailsPrintViewModel()
-		{
-			student = new tblStudentInfo();
-			teacher = new tblUser();
-			contacts = new List<tblStudentRelationship>();
-			building = new tblBuilding();
-			teacherBuilding = new tblBuilding();
-			neighborhoodBuilding = new tblBuilding();
-			reevalDates = new List<tblArchiveEvaluationDate>();
-			printProgressGoals = new List<int>();
-			printStudentInfo = false;
-			printIEPDetails = false;
-			printHealth = false;
-			printMotor = false;
-			printComm = false;
-			printSocial = false;
-			printGeneral = false;
-			printAcademic = false;
-			printAcc = false;
-			printBehavior = false;
-			printTrans = false;
-			printOther = false;
-			printGoals = false;
-			printServices = false;
-			printNotice = false;
-			printProgressReport = false;
-			isArchive = false;
-			history = new List<IEPHistoryViewModel>();
-			accommodationList = new List<AccomodationPrintViewModel>();
+    public class StudentDetailsPrintViewModel
+    {
+        public StudentDetailsPrintViewModel()
+        {
+            student = new tblStudentInfo();
+            teacher = new tblUser();
+            contacts = new List<tblStudentRelationship>();
+            building = new tblBuilding();
+            teacherBuilding = new tblBuilding();
+            neighborhoodBuilding = new tblBuilding();
+            reevalDates = new List<tblArchiveEvaluationDate>();
+            printProgressGoals = new List<int>();
+            printStudentInfo = false;
+            printIEPDetails = false;
+            printHealth = false;
+            printMotor = false;
+            printComm = false;
+            printSocial = false;
+            printGeneral = false;
+            printAcademic = false;
+            printAcc = false;
+            printBehavior = false;
+            printTrans = false;
+            printOther = false;
+            printGoals = false;
+            printServices = false;
+            printNotice = false;
+            printProgressReport = false;
+            isArchive = false;
+            history = new List<IEPHistoryViewModel>();
+            accommodationList = new List<AccomodationPrintViewModel>();
 
-		}
+        }
 
-		public tblUser teacher { get; set; }
-		public tblStudentInfo student { get; set; }
-		public List<tblStudentRelationship> contacts { get; set; }
-		public List<tblArchiveEvaluationDate> reevalDates { get; set; }
-		public List<int> printProgressGoals { get; set; }
-		public List<IEPHistoryViewModel> history { get; set; }
-		public List<AccomodationPrintViewModel> accommodationList { get; set; }
+        public tblUser teacher { get; set; }
+        public tblStudentInfo student { get; set; }
+        public List<tblStudentRelationship> contacts { get; set; }
+        public List<tblArchiveEvaluationDate> reevalDates { get; set; }
+        public List<int> printProgressGoals { get; set; }
+        public List<IEPHistoryViewModel> history { get; set; }
+        public List<AccomodationPrintViewModel> accommodationList { get; set; }
 
-		public string ethnicity { get; set; }
+        public string ethnicity { get; set; }
         public string gender { get; set; }
         public string parentLang { get; set; }
         public string studentLang { get; set; }
@@ -764,9 +776,9 @@ namespace GreenBushIEP.Models
         public string placementCodeDesc { get; set; }
         public string edStatusCodeDesc { get; set; }
         public bool isDOC { get; set; }
-		public bool isArchive{ get; set; }
+        public bool isArchive { get; set; }
 
-		public bool printStudentInfo { get; set; }
+        public bool printStudentInfo { get; set; }
         public bool printIEPDetails { get; set; }
         public bool printHealth { get; set; }
         public bool printMotor { get; set; }
@@ -865,15 +877,15 @@ namespace GreenBushIEP.Models
         public string iepDate { get; set; }
     }
 
-	public class TempTransitionItemViewModel
-	{
-		public TempTransitionItemViewModel()
-		{
-		}
+    public class TempTransitionItemViewModel
+    {
+        public TempTransitionItemViewModel()
+        {
+        }
 
-		public int TransitionItemID { get; set; }
-		public string ElementName { get; set; }		
-	}
+        public int TransitionItemID { get; set; }
+        public string ElementName { get; set; }
+    }
 }
 public class IEPStatus
 {

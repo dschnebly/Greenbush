@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 
 namespace GreenBushIEP.Models
 {
     public sealed class PasswordHash
     {
-        const int SaltSize = 16, HashSize = 20, HashIter = 10000;
-        readonly byte[] _salt, _hash;
+        private const int SaltSize = 16, HashSize = 20, HashIter = 10000;
+        private readonly byte[] _salt, _hash;
 
         public PasswordHash(string password)
         {
@@ -33,14 +30,19 @@ namespace GreenBushIEP.Models
             Array.Copy(_hash, 0, hashBytes, SaltSize, HashSize);
             return hashBytes;
         }
-        public byte[] Salt { get { return (byte[])_salt.Clone(); } }
-        public byte[] Hash { get { return (byte[])_hash.Clone(); } }
+        public byte[] Salt => (byte[])_salt.Clone();
+        public byte[] Hash => (byte[])_hash.Clone();
         public bool Verify(string password)
         {
             byte[] test = new Rfc2898DeriveBytes(password, _salt, HashIter).GetBytes(HashSize);
             for (int i = 0; i < HashSize; i++)
+            {
                 if (test[i] != _hash[i])
+                {
                     return false;
+                }
+            }
+
             return true;
         }
     }

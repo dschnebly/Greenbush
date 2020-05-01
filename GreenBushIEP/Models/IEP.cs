@@ -6,7 +6,7 @@ namespace GreenBushIEP.Models
 {
     public class IEP
     {
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         public bool isHealthCompleted { get; set; }
         public bool isMotorCompleted { get; set; }
@@ -126,9 +126,6 @@ namespace GreenBushIEP.Models
                 }
 
                 hasPlan = current.IepStatus != IEPStatus.PLAN;
-                //current = (iepId != null) ? listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault() : listOfStudentsIEPs.FirstOrDefault();
-                //if (current == null) { listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault(); } // if they had reverted an amendement
-                //hasPlan = current.IepStatus != IEPStatus.PLAN;
             }
             else
             {
@@ -165,7 +162,7 @@ namespace GreenBushIEP.Models
                 studentGoals = db.tblGoals.Where(g => g.IEPid == current.IEPid).ToList();
                 studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
                 accommodations = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).ToList();
-                var transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
+                List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
 
                 // all our database information should be loaded by now. Just query our student lists.
                 isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;
@@ -176,7 +173,7 @@ namespace GreenBushIEP.Models
                 isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
                 isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
 
-                bool allModulesCompleted = isHealthCompleted && isMotorCompleted && isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted;
+                bool allModulesCompleted = (isHealthCompleted || studentHealth.NoConcerns) && (isMotorCompleted || studentMotor.NoConcerns) && (isCommunicationCompleted || studentCommunication.NoConcerns) && (isSocialCompleted || studentSocial.NoConcerns) && (isIntelligenceCompleted || !studentIntelligence.Concerns) && (isAcademicCompleted && studentAcademic.NoConcerns);
                 bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
                 bool studentHasAccommodations = (studentHealth != null && (studentHealth.NeedMetByAccommodation ?? false)) || (studentMotor.NeedMetByAccommodation ?? false) || (studentCommunication.NeedMetByAccommodation ?? false) || (studentSocial.NeedMetByAccommodation ?? false) || (studentAcademic.NeedMetByAccommodation ?? false) || (studentWritten.NeedMetByAccommodation ?? false) || (studentReading.NeedMetByAccommodation ?? false) || (studentMath.NeedMetByAccommodation ?? false);
 
@@ -201,8 +198,8 @@ namespace GreenBushIEP.Models
                 hasAccommodations = healthNeeds | motorNeeds | communicationNeeds | socialNeeds | academicNeeds | intelligenceNeeds | readingNeeds | writtensNeeds | mathNeeds;
                 hasBehavior = (studentSocial != null && studentSocial.BehaviorInterventionPlan);
                 iepStatusType = (current.Amendment & current.IsActive & current.IepStatus.ToUpper() == IEPStatus.DRAFT) ? IEPStatus.AMENDMENT : ((!current.IsActive) ? IEPStatus.ARCHIVE : current.IepStatus).ToUpper();
-                displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && this.anyStudentIEPActive && !this.current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (this.current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
-                iepStartTime = (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) ? originalIEP.begin_date : this.current.begin_date.HasValue ? this.current.begin_date : DateTime.Now ;
+                displayIEPStatus = (iepStatusType == IEPStatus.DRAFT && anyStudentIEPActive && !current.Amendment ? "ANNUAL" : string.Empty) + " " + iepStatusType + " " + (current.Amendment && iepStatusType != IEPStatus.ACTIVE ? "DRAFT" : string.Empty);
+                iepStartTime = (iepStatusType != IEPStatus.ANNUAL && originalIEP != null) ? originalIEP.begin_date : current.begin_date.HasValue ? current.begin_date : DateTime.Now;
             }
         }
 
@@ -226,23 +223,27 @@ namespace GreenBushIEP.Models
                 throw new System.ArgumentException("There is already a draft IEP for this user");
             }
 
-			var studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stid).FirstOrDefault();
+            tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stid).FirstOrDefault();
 
-            current = new tblIEP();
-            current.UserID = stid;
-            current.IepStatus = IEPStatus.PLAN;
-            current.Create_Date = DateTime.Now;
-            current.end_Date = null;
-            current.Update_Date = DateTime.Now;
-            current.begin_date = null;
-            current.Amendment = false;
-            current.StateAssessment = string.Empty;
-            current.IsActive = true;
+            current = new tblIEP
+            {
+                UserID = stid,
+                IepStatus = IEPStatus.PLAN,
+                Create_Date = DateTime.Now,
+                end_Date = null,
+                Update_Date = DateTime.Now,
+                begin_date = null,
+                Amendment = false,
+                StateAssessment = string.Empty,
+                IsActive = true
+            };
 
-			if (studentDetails != null)
-				current.StatusCode = studentDetails.StatusCode;
+            if (studentDetails != null)
+            {
+                current.StatusCode = studentDetails.StatusCode;
+            }
 
-			try
+            try
             {
                 db.tblIEPs.Add(current);
                 db.SaveChanges();
@@ -253,22 +254,24 @@ namespace GreenBushIEP.Models
             }
 
             // Adding Health Table
-            studentHealth = new tblIEPHealth();
-            studentHealth.IEPid = current.IEPid;
-            studentHealth.NoConcerns = true;
-            studentHealth.Concerns = false;
-            studentHealth.Diagnosis = false;
-            studentHealth.HearingDate = DateTime.Now;
-            studentHealth.HearingResult = -1;
-            studentHealth.VisionDate = DateTime.Now;
-            studentHealth.VisionResult = -1;
-            studentHealth.VisionImpaired = false;
-            studentHealth.HearingImpaired = false;
-            studentHealth.HealthCarePlan = false;
-            studentHealth.Completed = false;
-            studentHealth.Notes = string.Empty;
-            studentHealth.Update_Date = DateTime.Now;
-            studentHealth.Create_Date = DateTime.Now;
+            studentHealth = new tblIEPHealth
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                Concerns = false,
+                Diagnosis = false,
+                HearingDate = DateTime.Now,
+                HearingResult = -1,
+                VisionDate = DateTime.Now,
+                VisionResult = -1,
+                VisionImpaired = false,
+                HearingImpaired = false,
+                HealthCarePlan = false,
+                Completed = false,
+                Notes = string.Empty,
+                Update_Date = DateTime.Now,
+                Create_Date = DateTime.Now
+            };
 
             try
             {
@@ -284,12 +287,14 @@ namespace GreenBushIEP.Models
             }
 
             // Adding Other Considerations Table
-            studentOtherConsiderations = new tblOtherConsideration();
-            studentOtherConsiderations.IEPid = current.IEPid;
-            studentOtherConsiderations.Completed = false;
-            studentOtherConsiderations.Create_Date = DateTime.Now;
-            studentOtherConsiderations.Parental_CopyIEP_flag = true;
-            studentOtherConsiderations.Parental_RightsBook_flag = true;
+            studentOtherConsiderations = new tblOtherConsideration
+            {
+                IEPid = current.IEPid,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Parental_CopyIEP_flag = true,
+                Parental_RightsBook_flag = true
+            };
             studentOtherConsiderations.Create_Date = DateTime.Now;
             studentOtherConsiderations.Update_Date = DateTime.Now;
 
@@ -308,15 +313,17 @@ namespace GreenBushIEP.Models
 
 
             // Adding Motor Table
-            studentMotor = new tblIEPMotor();
-            studentMotor.IEPid = current.IEPid;
-            studentMotor.NoConcerns = true;
-            studentMotor.ProgressTowardGenEd = false;
-            studentMotor.Needs = false;
-            studentMotor.Participation = -1;
-            studentMotor.Completed = false;
-            studentMotor.Create_Date = DateTime.Now;
-            studentMotor.Update_Date = DateTime.Now;
+            studentMotor = new tblIEPMotor
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                Needs = false,
+                Participation = -1,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -332,16 +339,18 @@ namespace GreenBushIEP.Models
             }
 
             // Add Communication Table
-            studentCommunication = new tblIEPCommunication();
-            studentCommunication.IEPid = current.IEPid;
-            studentCommunication.NoConcerns = true;
-            studentCommunication.ProgressTowardGenEd = false;
-            studentCommunication.SpeechImpactPerformance = false;
-            studentCommunication.Deaf = false;
-            studentCommunication.LimitedEnglish = false;
-            studentCommunication.Completed = false;
-            studentCommunication.Create_Date = DateTime.Now;
-            studentCommunication.Update_Date = DateTime.Now;
+            studentCommunication = new tblIEPCommunication
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                SpeechImpactPerformance = false,
+                Deaf = false,
+                LimitedEnglish = false,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -357,18 +366,20 @@ namespace GreenBushIEP.Models
             }
 
             // Add Social Table
-            studentSocial = new tblIEPSocial();
-            studentSocial.IEPid = current.IEPid;
-            studentSocial.NoConcerns = true;
-            studentSocial.ProgressTowardGenEd = false;
-            studentSocial.AreaOfNeed = false;
-            studentSocial.MentalHealthDiagnosis = false;
-            studentSocial.SignificantBehaviors = false;
-            studentSocial.BehaviorImepedeLearning = false;
-            studentSocial.BehaviorInterventionPlan = false;
-            studentSocial.Completed = false;
-            studentSocial.Create_Date = DateTime.Now;
-            studentSocial.Update_Date = DateTime.Now;
+            studentSocial = new tblIEPSocial
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                AreaOfNeed = false,
+                MentalHealthDiagnosis = false,
+                SignificantBehaviors = false,
+                BehaviorImepedeLearning = false,
+                BehaviorInterventionPlan = false,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -384,12 +395,14 @@ namespace GreenBushIEP.Models
             }
 
             // Add Intelligence Table
-            studentIntelligence = new tblIEPIntelligence();
-            studentIntelligence.IEPid = current.IEPid;
-            studentIntelligence.Concerns = false;
-            studentIntelligence.Completed = false;
-            studentIntelligence.Create_Date = DateTime.Now;
-            studentIntelligence.Update_Date = DateTime.Now;
+            studentIntelligence = new tblIEPIntelligence
+            {
+                IEPid = current.IEPid,
+                Concerns = false,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -405,13 +418,15 @@ namespace GreenBushIEP.Models
             }
 
             // Add Academic Table
-            studentAcademic = new tblIEPAcademic();
-            studentAcademic.IEPid = current.IEPid;
-            studentAcademic.NoConcerns = true;
-            studentAcademic.AreaOfNeed = false;
-            studentAcademic.Completed = false;
-            studentAcademic.Create_Date = DateTime.Now;
-            studentAcademic.Update_Date = DateTime.Now;
+            studentAcademic = new tblIEPAcademic
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                AreaOfNeed = false,
+                Completed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -427,16 +442,18 @@ namespace GreenBushIEP.Models
             }
 
             // Add Reading Table
-            studentReading = new tblIEPReading();
-            studentReading.IEPid = current.IEPid;
-            studentReading.NoConcerns = true;
-            studentReading.ProgressTowardGenEd = false;
-            studentReading.InstructionalTier1 = false;
-            studentReading.InstructionalTier2 = false;
-            studentReading.InstructionalTier3 = false;
-            studentReading.AreaOfNeed = false;
-            studentReading.Create_Date = DateTime.Now;
-            studentReading.Update_Date = DateTime.Now;
+            studentReading = new tblIEPReading
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                InstructionalTier1 = false,
+                InstructionalTier2 = false,
+                InstructionalTier3 = false,
+                AreaOfNeed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -452,16 +469,18 @@ namespace GreenBushIEP.Models
             }
 
             // Add Math Table
-            studentMath = new tblIEPMath();
-            studentMath.IEPid = current.IEPid;
-            studentMath.NoConcerns = true;
-            studentMath.ProgressTowardGenEd = false;
-            studentMath.InstructionalTier1 = false;
-            studentMath.InstructionalTier2 = false;
-            studentMath.InstructionalTier3 = false;
-            studentMath.AreaOfNeed = false;
-            studentMath.Create_Date = DateTime.Now;
-            studentMath.Update_Date = DateTime.Now;
+            studentMath = new tblIEPMath
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                InstructionalTier1 = false,
+                InstructionalTier2 = false,
+                InstructionalTier3 = false,
+                AreaOfNeed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -477,16 +496,18 @@ namespace GreenBushIEP.Models
             }
 
             // Add Written Table
-            studentWritten = new tblIEPWritten();
-            studentWritten.IEPid = current.IEPid;
-            studentWritten.NoConcerns = true;
-            studentWritten.ProgressTowardGenEd = false;
-            studentWritten.InstructionalTier1 = false;
-            studentWritten.InstructionalTier2 = false;
-            studentWritten.InstructionalTier3 = false;
-            studentWritten.AreaOfNeed = false;
-            studentWritten.Create_Date = DateTime.Now;
-            studentWritten.Update_Date = DateTime.Now;
+            studentWritten = new tblIEPWritten
+            {
+                IEPid = current.IEPid,
+                NoConcerns = true,
+                ProgressTowardGenEd = false,
+                InstructionalTier1 = false,
+                InstructionalTier2 = false,
+                InstructionalTier3 = false,
+                AreaOfNeed = false,
+                Create_Date = DateTime.Now,
+                Update_Date = DateTime.Now
+            };
 
             try
             {
@@ -523,36 +544,28 @@ namespace GreenBushIEP.Models
             return this;
         }
 
-		
-		public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
-		{
 
-			if (current.begin_date != null && !isDoc)
-			{
-				//check student age for transition plan using the begin date plus one year
-				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
-				return (now - dob) / 10000;
+        public int GetCalculatedAge(DateTime dateOfBirth, bool isDoc)
+        {
+            if (current.begin_date != null && !isDoc)
+            {
+                //check student age for transition plan using the begin date plus one year
+                int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+                int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+                return (now - dob) / 10000;
 
-				//var endDate = theIEP.current.begin_date.Value.AddYears(1);
-				//model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-			}
-			else
-			{
-				//use current date
-				int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
-				int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
-				return (now - dob) / 10000;
+                //var endDate = theIEP.current.begin_date.Value.AddYears(1);
+                //model.studentAge = (endDate.Year - info.DateOfBirth.Year - 1) + (((endDate.Month > info.DateOfBirth.Month) || ((endDate.Month == info.DateOfBirth.Month) && (endDate.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+            }
+            else
+            {
+                //use current date
+                int now = int.Parse(iepStartTime.Value.AddYears(1).ToString("yyyyMMdd"));
+                int dob = int.Parse(dateOfBirth.ToString("yyyyMMdd"));
+                return (now - dob) / 10000;
 
-				//model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
-			}
-
-
-
-		}
-
-
-		
-		
+                //model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
+            }
+        }
     }
 }

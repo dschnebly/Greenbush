@@ -9,7 +9,7 @@ namespace GreenBushIEP.Helper
         /// </summary>
         public static string ToTitleCase(this string str)
         {
-            var cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
+            CultureInfo cultureInfo = System.Threading.Thread.CurrentThread.CurrentCulture;
             return cultureInfo.TextInfo.ToTitleCase(str.ToLower());
         }
 
@@ -18,7 +18,7 @@ namespace GreenBushIEP.Helper
         /// </summary>
         public static string ToTitleCase(this string str, string cultureInfoName)
         {
-            var cultureInfo = new CultureInfo(cultureInfoName);
+            CultureInfo cultureInfo = new CultureInfo(cultureInfoName);
             return cultureInfo.TextInfo.ToTitleCase(str.ToLower());
         }
 

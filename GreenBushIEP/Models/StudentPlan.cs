@@ -7,7 +7,7 @@ namespace GreenBushIEP.Models
     public class StudentPlan
     {
         // connection to our database.
-        private IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         // Private Properties
         public DateTime HealthVisionDate { get; set; }
@@ -62,68 +62,72 @@ namespace GreenBushIEP.Models
         // Create the student's plan
         public StudentPlan()
         {
-            this.HealthHearingDate = DateTime.Now;
-            this.HealthVisionDate = DateTime.Now;
-            this.HealthNoConcern = true;
-            this.HealthDiagnosis = false;
-            this.HealthMedications = false;
-            this.HealthHearingResult = -1;
-            this.HealthVisionResult = -1;
-            this.HealthVisionImpaired = false;
-            this.HealthProgressTowardGenEd = false;
-            this.HealthCarePlan = false;
-            this.MotorNoConcern = true;
-            this.MotorProgress = false;
-            this.MotorNeeds = false;
-            this.MotorParticipation = -1;
-            this.CommunicationNoConcern = true;
-            this.CommunicationAreaOfNeed = false;
-            this.CommunicationDeaf = false;
-            this.CommunicationEnglish = false;
-            this.CommunicationProgressTowardGenEd = false;
-            this.SocialNoConcern = true;
-            this.SocialProgress = false;
-            this.SocialAreaOfNeed = false;
-            this.SocialMental = false;
-            this.SocialBehaviorSignificant = false;
-            this.SocialBehaviorImpede = false;
-            this.SocialInterventionPlan = false;
-            this.SocialProgressTowardGenEd = false;
-            this.SocialSkillsDeficit = false;
-            this.IntelligenceNoConcern = false;
-            this.IntelligenceProgressTowardGenEd = false;
-            this.IntelligenceAreaOfNeed = false;
-            this.AcademicModuleNoConcern = true;
-            this.AcademicCompleted = false;
-            this.AcademicNoConcern = true;
-            this.AcademicNeeds = false;
-            this.AcademicProgressTowardGenEd = false;
-            this.ReadingNoConcern = true;
-            this.ReadingProgress = false;
-            this.ReadingNeed = false;
-            this.MathNoConcern = true;
-            this.MathProgress = false;
-            this.MathNeed = false;
-            this.WrittenNoConcern = true;
-            this.WrittenProgress = false;
-            this.WrittenNeed = false;
-            this.RequireAssistiveTechnology = false;
-            this.ExtendYear = 0;
-            this.isDOC = false;
+            HealthHearingDate = DateTime.Now;
+            HealthVisionDate = DateTime.Now;
+            HealthNoConcern = true;
+            HealthDiagnosis = false;
+            HealthMedications = false;
+            HealthHearingResult = -1;
+            HealthVisionResult = -1;
+            HealthVisionImpaired = false;
+            HealthProgressTowardGenEd = false;
+            HealthCarePlan = false;
+            MotorNoConcern = true;
+            MotorProgress = false;
+            MotorNeeds = false;
+            MotorParticipation = -1;
+            CommunicationNoConcern = true;
+            CommunicationAreaOfNeed = false;
+            CommunicationDeaf = false;
+            CommunicationEnglish = false;
+            CommunicationProgressTowardGenEd = false;
+            SocialNoConcern = true;
+            SocialProgress = false;
+            SocialAreaOfNeed = false;
+            SocialMental = false;
+            SocialBehaviorSignificant = false;
+            SocialBehaviorImpede = false;
+            SocialInterventionPlan = false;
+            SocialProgressTowardGenEd = false;
+            SocialSkillsDeficit = false;
+            IntelligenceNoConcern = false;
+            IntelligenceProgressTowardGenEd = false;
+            IntelligenceAreaOfNeed = false;
+            AcademicModuleNoConcern = true;
+            AcademicCompleted = false;
+            AcademicNoConcern = true;
+            AcademicNeeds = false;
+            AcademicProgressTowardGenEd = false;
+            ReadingNoConcern = true;
+            ReadingProgress = false;
+            ReadingNeed = false;
+            MathNoConcern = true;
+            MathProgress = false;
+            MathNeed = false;
+            WrittenNoConcern = true;
+            WrittenProgress = false;
+            WrittenNeed = false;
+            RequireAssistiveTechnology = false;
+            ExtendYear = 0;
+            isDOC = false;
         }
 
         // Read the student's plan
         public StudentPlan(int stid, int? iepID = null)
         {
 
-			tblIEP studentIEP = null;
+            tblIEP studentIEP = null;
 
-			if(iepID.HasValue)
-				studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IEPid == iepID.Value);
-			else
-				studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
+            if (iepID.HasValue)
+            {
+                studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IEPid == iepID.Value);
+            }
+            else
+            {
+                studentIEP = db.tblIEPs.FirstOrDefault(i => i.UserID == stid && i.IsActive);
+            }
 
-			if (studentIEP != null)
+            if (studentIEP != null)
             {
 
                 if (studentIEP.IepStatus == IEPStatus.PLAN)
@@ -135,92 +139,92 @@ namespace GreenBushIEP.Models
                 tblIEPHealth studentHealth = db.tblIEPHealths.FirstOrDefault(h => h.IEPHealthID == studentIEP.IEPHealthID);
                 if (studentHealth != null)
                 {
-                    this.HealthDiagnosis = studentHealth.Diagnosis;
-                    this.HealthHearingDate = studentHealth.HearingDate;
-                    this.HealthHearingResult = studentHealth.HearingResult;
-                    this.HealthMedications = studentHealth.Medications;
-                    this.HealthNoConcern = studentHealth.NoConcerns;
-                    this.HealthVisionDate = studentHealth.VisionDate;
-                    this.HealthVisionImpaired = studentHealth.VisionImpaired;
-                    this.HealthVisionResult = studentHealth.VisionResult;
-                    this.HealthProgressTowardGenEd = studentHealth.ProgressTowardGenEd;
-                    this.HealthCarePlan = studentHealth.HealthCarePlan ?? false;
+                    HealthDiagnosis = studentHealth.Diagnosis;
+                    HealthHearingDate = studentHealth.HearingDate;
+                    HealthHearingResult = studentHealth.HearingResult;
+                    HealthMedications = studentHealth.Medications;
+                    HealthNoConcern = studentHealth.NoConcerns;
+                    HealthVisionDate = studentHealth.VisionDate;
+                    HealthVisionImpaired = studentHealth.VisionImpaired;
+                    HealthVisionResult = studentHealth.VisionResult;
+                    HealthProgressTowardGenEd = studentHealth.ProgressTowardGenEd;
+                    HealthCarePlan = studentHealth.HealthCarePlan ?? false;
                 }
 
                 tblIEPMotor studentMotor = db.tblIEPMotors.FirstOrDefault(m => m.IEPMotorID == studentIEP.IEPMotorID);
                 if (studentMotor != null)
                 {
-                    this.MotorNeeds = studentMotor.Needs;
-                    this.MotorNoConcern = studentMotor.NoConcerns;
-                    this.MotorParticipation = studentMotor.Participation;
-                    this.MotorProgress = studentMotor.ProgressTowardGenEd;
+                    MotorNeeds = studentMotor.Needs;
+                    MotorNoConcern = studentMotor.NoConcerns;
+                    MotorParticipation = studentMotor.Participation;
+                    MotorProgress = studentMotor.ProgressTowardGenEd;
                 }
 
                 tblIEPCommunication studentCommunication = db.tblIEPCommunications.FirstOrDefault(s => s.IEPCommunicationID == studentIEP.IEPCommunicationID);
                 if (studentCommunication != null)
                 {
-                    this.CommunicationDeaf = studentCommunication.Deaf;
-                    this.CommunicationEnglish = studentCommunication.LimitedEnglish;
-                    this.CommunicationNoConcern = studentCommunication.NoConcerns;
-                    this.CommunicationAreaOfNeed = studentCommunication.AreaOfNeed == true ? true : false;
-                    this.CommunicationProgressTowardGenEd = studentCommunication.ProgressTowardGenEd;
+                    CommunicationDeaf = studentCommunication.Deaf;
+                    CommunicationEnglish = studentCommunication.LimitedEnglish;
+                    CommunicationNoConcern = studentCommunication.NoConcerns;
+                    CommunicationAreaOfNeed = studentCommunication.AreaOfNeed == true ? true : false;
+                    CommunicationProgressTowardGenEd = studentCommunication.ProgressTowardGenEd;
                 }
 
                 tblIEPSocial studentSocial = db.tblIEPSocials.FirstOrDefault(s => s.IEPSocialID == studentIEP.IEPSocialID);
                 if (studentSocial != null)
                 {
-                    this.SocialBehaviorImpede = studentSocial.BehaviorImepedeLearning;
-                    this.SocialBehaviorSignificant = studentSocial.SignificantBehaviors;
-                    this.SocialInterventionPlan = studentSocial.BehaviorInterventionPlan;
-                    this.SocialMental = studentSocial.MentalHealthDiagnosis;
-                    this.SocialNoConcern = studentSocial.NoConcerns;
-                    this.SocialProgress = studentSocial.ProgressTowardGenEd;
-                    this.SocialAreaOfNeed = studentSocial.AreaOfNeed == true ? true : false;
-                    this.SocialSkillsDeficit = studentSocial.SkillDeficit;
+                    SocialBehaviorImpede = studentSocial.BehaviorImepedeLearning;
+                    SocialBehaviorSignificant = studentSocial.SignificantBehaviors;
+                    SocialInterventionPlan = studentSocial.BehaviorInterventionPlan;
+                    SocialMental = studentSocial.MentalHealthDiagnosis;
+                    SocialNoConcern = studentSocial.NoConcerns;
+                    SocialProgress = studentSocial.ProgressTowardGenEd;
+                    SocialAreaOfNeed = studentSocial.AreaOfNeed == true ? true : false;
+                    SocialSkillsDeficit = studentSocial.SkillDeficit;
                 }
 
                 tblIEPIntelligence studentInt = db.tblIEPIntelligences.FirstOrDefault(i => i.IEPIntelligenceID == studentIEP.IEPIntelligenceID);
                 if (studentInt != null)
                 {
-                    this.IntelligenceNoConcern = !studentInt.Concerns;
-                    this.IntelligenceProgressTowardGenEd = studentInt.ProgressTowardGenEd;
-                    this.IntelligenceAreaOfNeed = studentInt.AreaOfNeed == true ? true : false;
+                    IntelligenceNoConcern = !studentInt.Concerns;
+                    IntelligenceProgressTowardGenEd = studentInt.ProgressTowardGenEd;
+                    IntelligenceAreaOfNeed = studentInt.AreaOfNeed == true ? true : false;
                 }
 
                 tblIEPAcademic studentAcademic = db.tblIEPAcademics.FirstOrDefault(a => a.IEPAcademicID == studentIEP.IEPAcademicID);
                 if (studentAcademic != null)
                 {
-                    this.AcademicCompleted = studentAcademic.Completed;
-                    this.AcademicNeeds = studentAcademic.AreaOfNeed;
-                    this.AcademicNoConcern = studentAcademic.NoConcerns;
-                    this.AcademicProgressTowardGenEd = studentAcademic.ProgressTowardGenEd;
+                    AcademicCompleted = studentAcademic.Completed;
+                    AcademicNeeds = studentAcademic.AreaOfNeed;
+                    AcademicNoConcern = studentAcademic.NoConcerns;
+                    AcademicProgressTowardGenEd = studentAcademic.ProgressTowardGenEd;
                 }
 
                 tblIEPReading studentReading = db.tblIEPReadings.FirstOrDefault(r => r.IEPReadingID == studentIEP.IEPReadingID);
                 if (studentReading != null)
                 {
-                    this.ReadingNeed = studentReading.AreaOfNeed;
-                    this.ReadingNoConcern = studentReading.NoConcerns;
-                    this.ReadingProgress = studentReading.ProgressTowardGenEd;
+                    ReadingNeed = studentReading.AreaOfNeed;
+                    ReadingNoConcern = studentReading.NoConcerns;
+                    ReadingProgress = studentReading.ProgressTowardGenEd;
                 }
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
                 if (studentMath != null)
                 {
-                    this.MathNeed = studentMath.AreaOfNeed;
-                    this.MathNoConcern = studentMath.NoConcerns;
-                    this.MathProgress = studentMath.ProgressTowardGenEd;
+                    MathNeed = studentMath.AreaOfNeed;
+                    MathNoConcern = studentMath.NoConcerns;
+                    MathProgress = studentMath.ProgressTowardGenEd;
                 }
 
                 tblIEPWritten studentWritten = db.tblIEPWrittens.FirstOrDefault(s => s.IEPWrittenID == studentIEP.IEPWrittenID);
                 if (studentWritten != null)
                 {
-                    this.WrittenNeed = studentWritten.AreaOfNeed;
-                    this.WrittenNoConcern = studentWritten.NoConcerns;
-                    this.WrittenProgress = studentWritten.ProgressTowardGenEd;
+                    WrittenNeed = studentWritten.AreaOfNeed;
+                    WrittenNoConcern = studentWritten.NoConcerns;
+                    WrittenProgress = studentWritten.ProgressTowardGenEd;
                 }
 
-                this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
+                AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
 
                 tblStudentInfo info = db.tblStudentInfoes.Where(si => si.UserID == stid).FirstOrDefault();
                 if (info != null)
@@ -235,10 +239,9 @@ namespace GreenBushIEP.Models
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
                 if (otherConsideration != null)
                 {
-                    int extendYear = 0;
-                    Int32.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out extendYear);
-                    this.ExtendYear = extendYear;
-                    this.RequireAssistiveTechnology = otherConsideration.AssistiveTechnology_Require.HasValue ? otherConsideration.AssistiveTechnology_Require.Value : false;
+                    int.TryParse(otherConsideration.ExtendedSchoolYear_Necessary, out int extendYear);
+                    ExtendYear = extendYear;
+                    RequireAssistiveTechnology = otherConsideration.AssistiveTechnology_Require.HasValue ? otherConsideration.AssistiveTechnology_Require.Value : false;
                 }
             }
         }
@@ -260,42 +263,42 @@ namespace GreenBushIEP.Models
 
                 if (studentHealth != null)
                 {
-					if (this.HealthNoConcern)
-					{
-						this.HealthProgressTowardGenEd = false;
-						this.HealthDiagnosis = false;
-						studentHealth.Completed = true;
-					}
-					else
-					{
-						if (studentHealth.Completed == false)
-						{
-							//only update if it hasn't already been marked as completed
-							studentHealth.Completed = this.HealthNoConcern;
-						}
-						
-					}
-
-                    studentHealth.Diagnosis = this.HealthDiagnosis;
-                    studentHealth.HearingDate = this.HealthHearingDate;
-                    studentHealth.HearingResult = this.HealthHearingResult;
-                    studentHealth.Medications = this.HealthMedications;
-                    studentHealth.VisionDate = this.HealthVisionDate;
-                    studentHealth.VisionImpaired = this.HealthVisionImpaired;
-                    studentHealth.VisionResult = this.HealthVisionResult;
-                    studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
-                    studentHealth.HealthCarePlan = this.HealthCarePlan;
-
-                    if (this.HealthProgressTowardGenEd || this.HealthDiagnosis)
+                    if (HealthNoConcern)
                     {
-                        studentHealth.NoConcerns = false;
-						studentHealth.ProgressTowardGenEd = this.HealthProgressTowardGenEd;
-						studentHealth.Diagnosis = this.HealthDiagnosis;
-						studentHealth.Concerns = true;
-					}
+                        HealthProgressTowardGenEd = false;
+                        HealthDiagnosis = false;
+                        studentHealth.Completed = true;
+                    }
                     else
                     {
-                        studentHealth.NoConcerns = this.HealthNoConcern;
+                        if (studentHealth.Completed == false)
+                        {
+                            //only update if it hasn't already been marked as completed
+                            studentHealth.Completed = HealthNoConcern;
+                        }
+
+                    }
+
+                    studentHealth.Diagnosis = HealthDiagnosis;
+                    studentHealth.HearingDate = HealthHearingDate;
+                    studentHealth.HearingResult = HealthHearingResult;
+                    studentHealth.Medications = HealthMedications;
+                    studentHealth.VisionDate = HealthVisionDate;
+                    studentHealth.VisionImpaired = HealthVisionImpaired;
+                    studentHealth.VisionResult = HealthVisionResult;
+                    studentHealth.ProgressTowardGenEd = HealthProgressTowardGenEd;
+                    studentHealth.HealthCarePlan = HealthCarePlan;
+
+                    if (HealthProgressTowardGenEd || HealthDiagnosis)
+                    {
+                        studentHealth.NoConcerns = false;
+                        studentHealth.ProgressTowardGenEd = HealthProgressTowardGenEd;
+                        studentHealth.Diagnosis = HealthDiagnosis;
+                        studentHealth.Concerns = true;
+                    }
+                    else
+                    {
+                        studentHealth.NoConcerns = HealthNoConcern;
                         studentHealth.ProgressTowardGenEd = false;
                         studentHealth.Diagnosis = false;
                     }
@@ -306,13 +309,15 @@ namespace GreenBushIEP.Models
 
                 if (studentMotor != null)
                 {
-                    studentMotor.Needs = this.MotorNeeds;
-                    studentMotor.NoConcerns = this.MotorNoConcern;
-                    studentMotor.Participation = this.MotorParticipation;
-                    studentMotor.ProgressTowardGenEd = this.MotorProgress;
+                    studentMotor.Needs = MotorNeeds;
+                    studentMotor.NoConcerns = MotorNoConcern;
+                    studentMotor.Participation = MotorParticipation;
+                    studentMotor.ProgressTowardGenEd = MotorProgress;
 
-					if(studentMotor.Completed == false)
-						studentMotor.Completed = this.MotorNoConcern;
+                    if (studentMotor.Completed == false)
+                    {
+                        studentMotor.Completed = MotorNoConcern;
+                    }
                 }
                 db.SaveChanges();
 
@@ -320,13 +325,15 @@ namespace GreenBushIEP.Models
 
                 if (studentCommunication != null)
                 {
-                    studentCommunication.Deaf = this.CommunicationDeaf;
-                    studentCommunication.LimitedEnglish = this.CommunicationEnglish;
-                    studentCommunication.NoConcerns = this.CommunicationNoConcern;
-                    studentCommunication.AreaOfNeed = this.CommunicationAreaOfNeed;
-                    studentCommunication.ProgressTowardGenEd = this.CommunicationProgressTowardGenEd;
-					if (studentCommunication.Completed == false)
-						studentCommunication.Completed = this.CommunicationNoConcern;
+                    studentCommunication.Deaf = CommunicationDeaf;
+                    studentCommunication.LimitedEnglish = CommunicationEnglish;
+                    studentCommunication.NoConcerns = CommunicationNoConcern;
+                    studentCommunication.AreaOfNeed = CommunicationAreaOfNeed;
+                    studentCommunication.ProgressTowardGenEd = CommunicationProgressTowardGenEd;
+                    if (studentCommunication.Completed == false)
+                    {
+                        studentCommunication.Completed = CommunicationNoConcern;
+                    }
                 }
                 db.SaveChanges();
 
@@ -334,16 +341,18 @@ namespace GreenBushIEP.Models
 
                 if (studentSocial != null)
                 {
-                    studentSocial.BehaviorImepedeLearning = this.SocialBehaviorImpede;
-                    studentSocial.SignificantBehaviors = this.SocialBehaviorSignificant;
-                    studentSocial.BehaviorInterventionPlan = this.SocialInterventionPlan;
-                    studentSocial.MentalHealthDiagnosis = this.SocialMental;
-                    studentSocial.NoConcerns = this.SocialNoConcern;
-                    studentSocial.ProgressTowardGenEd = this.SocialProgressTowardGenEd;
-                    studentSocial.AreaOfNeed = this.SocialAreaOfNeed;
-                    studentSocial.SkillDeficit = this.SocialSkillsDeficit;
-					if (studentSocial.Completed == false)
-						studentSocial.Completed = this.SocialNoConcern;
+                    studentSocial.BehaviorImepedeLearning = SocialBehaviorImpede;
+                    studentSocial.SignificantBehaviors = SocialBehaviorSignificant;
+                    studentSocial.BehaviorInterventionPlan = SocialInterventionPlan;
+                    studentSocial.MentalHealthDiagnosis = SocialMental;
+                    studentSocial.NoConcerns = SocialNoConcern;
+                    studentSocial.ProgressTowardGenEd = SocialProgressTowardGenEd;
+                    studentSocial.AreaOfNeed = SocialAreaOfNeed;
+                    studentSocial.SkillDeficit = SocialSkillsDeficit;
+                    if (studentSocial.Completed == false)
+                    {
+                        studentSocial.Completed = SocialNoConcern;
+                    }
                 }
                 db.SaveChanges();
 
@@ -351,11 +360,13 @@ namespace GreenBushIEP.Models
 
                 if (studentInt != null)
                 {
-                    studentInt.Concerns = !this.IntelligenceNoConcern;
-                    studentInt.ProgressTowardGenEd = this.IntelligenceProgressTowardGenEd;
-                    studentInt.AreaOfNeed = this.IntelligenceAreaOfNeed;
-					if (studentInt.Completed == false)
-						studentInt.Completed = this.IntelligenceNoConcern;
+                    studentInt.Concerns = !IntelligenceNoConcern;
+                    studentInt.ProgressTowardGenEd = IntelligenceProgressTowardGenEd;
+                    studentInt.AreaOfNeed = IntelligenceAreaOfNeed;
+                    if (studentInt.Completed == false)
+                    {
+                        studentInt.Completed = IntelligenceNoConcern;
+                    }
                 }
                 db.SaveChanges();
 
@@ -363,9 +374,9 @@ namespace GreenBushIEP.Models
 
                 if (studentAcademic != null)
                 {
-                    studentAcademic.AreaOfNeed = this.AcademicNeeds;
-                    studentAcademic.NoConcerns = this.AcademicNoConcern;
-                    studentAcademic.ProgressTowardGenEd = this.AcademicProgressTowardGenEd;					
+                    studentAcademic.AreaOfNeed = AcademicNeeds;
+                    studentAcademic.NoConcerns = AcademicNoConcern;
+                    studentAcademic.ProgressTowardGenEd = AcademicProgressTowardGenEd;
                 }
                 db.SaveChanges();
 
@@ -373,19 +384,19 @@ namespace GreenBushIEP.Models
 
                 if (studentReading != null)
                 {
-                    studentReading.AreaOfNeed = this.ReadingNeed;
-                    studentReading.NoConcerns = this.ReadingNoConcern;
-                    studentReading.ProgressTowardGenEd = this.ReadingProgress;
-				}
+                    studentReading.AreaOfNeed = ReadingNeed;
+                    studentReading.NoConcerns = ReadingNoConcern;
+                    studentReading.ProgressTowardGenEd = ReadingProgress;
+                }
                 db.SaveChanges();
 
                 tblIEPMath studentMath = db.tblIEPMaths.FirstOrDefault(m => m.IEPMathID == studentIEP.IEPReadingID);
 
                 if (studentMath != null)
                 {
-                    studentMath.AreaOfNeed = this.MathNeed;
-                    studentMath.NoConcerns = this.MathNoConcern;
-                    studentMath.ProgressTowardGenEd = this.MathProgress;
+                    studentMath.AreaOfNeed = MathNeed;
+                    studentMath.NoConcerns = MathNoConcern;
+                    studentMath.ProgressTowardGenEd = MathProgress;
                 }
                 db.SaveChanges();
 
@@ -393,36 +404,36 @@ namespace GreenBushIEP.Models
 
                 if (studentWritten != null)
                 {
-                    studentWritten.AreaOfNeed = this.WrittenNeed;
-                    studentWritten.NoConcerns = this.WrittenNoConcern;
-                    studentWritten.ProgressTowardGenEd = this.WrittenProgress;
+                    studentWritten.AreaOfNeed = WrittenNeed;
+                    studentWritten.NoConcerns = WrittenNoConcern;
+                    studentWritten.ProgressTowardGenEd = WrittenProgress;
                 }
                 db.SaveChanges();
 
-                this.AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
+                AcademicModuleNoConcern = AcademicNoConcern & ReadingNoConcern & MathNoConcern & WrittenNoConcern;
 
 
-				if (!studentAcademic.Completed)
-				{
-					
-					if (!this.AcademicModuleNoConcern) // if any of the four types has a problem than the module is not completed
-					{						
-						studentAcademic.Completed = false;				
-					}
-					else
-					{					
-						studentAcademic.Completed = true;				
-					}
+                if (!studentAcademic.Completed)
+                {
 
-					db.SaveChanges();
-				}
+                    if (!AcademicModuleNoConcern) // if any of the four types has a problem than the module is not completed
+                    {
+                        studentAcademic.Completed = false;
+                    }
+                    else
+                    {
+                        studentAcademic.Completed = true;
+                    }
+
+                    db.SaveChanges();
+                }
 
                 tblOtherConsideration otherConsideration = db.tblOtherConsiderations.FirstOrDefault(s => s.IEPid == studentIEP.IEPid);
 
                 if (otherConsideration != null)
                 {
-                    otherConsideration.ExtendedSchoolYear_Necessary = this.ExtendYear.ToString();
-                    otherConsideration.AssistiveTechnology_Require = this.RequireAssistiveTechnology;
+                    otherConsideration.ExtendedSchoolYear_Necessary = ExtendYear.ToString();
+                    otherConsideration.AssistiveTechnology_Require = RequireAssistiveTechnology;
                     //otherConsideration.Completed = !(this.RequireAssistiveTechnology | this.ExtendYear > 0);
                 }
                 db.SaveChanges();
@@ -440,7 +451,7 @@ namespace GreenBushIEP.Models
 
                 //Convert.ChangeType does not handle conversion to nullable types
                 //if the property type is nullable, we need to get the underlying type of the property
-                var targetType = IsNullableType(myPropInfo.PropertyType) ? Nullable.GetUnderlyingType(myPropInfo.PropertyType) : myPropInfo.PropertyType;
+                Type targetType = IsNullableType(myPropInfo.PropertyType) ? Nullable.GetUnderlyingType(myPropInfo.PropertyType) : myPropInfo.PropertyType;
 
                 //Returns an System.Object with the specified System.Type and whose value is
                 //equivalent to the specified object.

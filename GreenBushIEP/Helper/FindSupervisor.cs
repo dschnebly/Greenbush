@@ -5,7 +5,7 @@ namespace GreenBushIEP.Helper
 {
     public class FindSupervisor
     {
-        private static IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
+        private static readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         private const string owner = "1"; //level 5
         private const string mis = "2"; //level 4
@@ -16,7 +16,7 @@ namespace GreenBushIEP.Helper
 
         public static tblUser GetUSersMIS(tblUser user)
         {
-            if(user == null)
+            if (user == null)
             {
                 return null;
             }
