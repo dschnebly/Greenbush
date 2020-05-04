@@ -118,7 +118,9 @@ namespace GreenBushIEP.Models
                 if (iepId.HasValue)
                 {
                     // get the first iep by id, else it must be an ammendment.
-                    current = listOfStudentsIEPs.Where(i => i.IEPid == iepId).First() ?? listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).First();
+                    tblIEP studentIEP = listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault();
+                    tblIEP studentAmendment = listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault();
+                    current = studentIEP == null ? studentAmendment : studentIEP ;
                 }
                 else
                 {
