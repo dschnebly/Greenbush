@@ -1,5 +1,6 @@
 ﻿@{
 	var formModel = ViewData["continuousLearningPlan"] != null ? ViewData["continuousLearningPlan"] as GreenBushIEP.Models.tblFormContinuousLearningPlan : new GreenBushIEP.Models.tblFormContinuousLearningPlan();
+	var iepModel = ViewData["IEPObj"] != null ? ViewData["IEPObj"] as GreenBushIEP.Models.IEP : new GreenBushIEP.Models.IEP();
 
 	string strICLPDate = "";
 	string strEffectiveDate = "";
@@ -15,7 +16,7 @@
 
 	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
 
-	
+
 	string grade = Model.studentInfo != null ? Model.studentInfo.Grade.ToString() : "";
 	string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
 	string provider = Model.districtName;
@@ -33,29 +34,54 @@
 
 	if (formModel.FormContinuousLearningPlanId == 0)
 	{
+		strEvaluationCompletion = "";
+		var equal = Nullable.Compare<DateTime>(Model.studentInfo.ReEvalCompleted, Model.studentInfo.InitialIEPDate );
+		if (Model.studentInfo.ReEvalCompleted != null && Model.studentInfo.InitialIEPDate != null)
+		{
+			if (Model.studentInfo.ReEvalCompleted > Model.studentInfo.InitialIEPDate)
+			{
+				strEvaluationCompletion = Model.studentInfo.ReEvalCompleted.ToString("MM/dd/yyyy");
+			}
+			else
+			{
+				strEvaluationCompletion = Model.studentInfo.InitialIEPDate.ToString("MM/dd/yyyy");
+			}
+		}
+		else
+		{
+			if (Model.studentInfo.ReEvalCompleted != null)
+			{
+				strEvaluationCompletion = Model.studentInfo.ReEvalCompleted.ToString("MM/dd/yyyy");
+			}
+			else if (Model.studentInfo.InitialIEPDate != null)
+			{
+				strEvaluationCompletion = Model.studentInfo.InitialIEPDate.ToString("MM/dd/yyyy");
+			}
+		}
+
 		formModel.StudentName = studentFormattedName;
 		formModel.Grade = grade;
 		formModel.PrimaryDisability = primeD;
 		formModel.AttendingBuilding = buildingName;
 		formModel.ResponsibleBuilding = buildingNeigborhood;
 		formModel.Provider = provider;
-		strIEPDate = Model.studentInfo.InitialIEPDate != null ? Model.studentInfo.InitialIEPDate.ToString("MM/dd/yyyy") : "";
-		strEvaluationCompletion = Model.studentInfo.InitialEvalConsentSigned != null ? Model.studentInfo.InitialEvalConsentSigned.ToString("MM/dd/yyyy") : "";
+		strIEPDate = iepModel != null && iepModel.iepStartTime != null && iepModel.iepStartTime.Value != DateTime.MinValue ? iepModel.iepStartTime.Value.ToString("MM/dd/yyyy") : "";		
 		strDateOfBirth = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
 	}
 	else
 	{
-		 strICLPDate =formModel.ICLPDate != null ? formModel.ICLPDate.Value.ToString("MM/dd/yyyy") : "";
-		 strEffectiveDate =formModel.EffectiveDate != null ? formModel.EffectiveDate.Value.ToString("MM/dd/yyyy") : "";
-		 strEndingDate =formModel.EndingDate != null ? formModel.EndingDate.Value.ToString("MM/dd/yyyy") : "";
-		 strDateOfBirth =formModel.DateOfBirth != null ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
-		 strEvaluationCompletion =formModel.EvaluationCompletion != null ? formModel.EvaluationCompletion.Value.ToString("MM/dd/yyyy") : "";
-		 strIEPDate =formModel.IEPDate != null ? formModel.IEPDate.Value.ToString("MM/dd/yyyy") : "";
-		 strAccessToWorkPacket_DateProvided =formModel.AccessToWorkPacket_DateProvided != null ? formModel.AccessToWorkPacket_DateProvided.Value.ToString("MM/dd/yyyy") : "";
-		 strServices_StartDate1 =formModel.Services_StartDate1 != null ? formModel.Services_StartDate1.Value.ToString("MM/dd/yyyy") : "";
-		 strServices_EndDate1 =formModel.Services_EndDate1 != null ? formModel.Services_EndDate1.Value.ToString("MM/dd/yyyy") : "";
-		 strServices_StartDate2 =formModel.Services_StartDate2 != null ? formModel.Services_StartDate2.Value.ToString("MM/dd/yyyy") : "";
-		 strServices_EndDate2 =formModel.Services_EndDate2 != null ? formModel.Services_EndDate2.Value.ToString("MM/dd/yyyy") : "";
+		strEvaluationCompletion = formModel.EvaluationCompletion != null ? formModel.EvaluationCompletion.Value.ToString("MM/dd/yyyy") : "";
+		strICLPDate =formModel.ICLPDate != null ? formModel.ICLPDate.Value.ToString("MM/dd/yyyy") : "";
+		strEffectiveDate =formModel.EffectiveDate != null ? formModel.EffectiveDate.Value.ToString("MM/dd/yyyy") : "";
+		strEndingDate =formModel.EndingDate != null ? formModel.EndingDate.Value.ToString("MM/dd/yyyy") : "";
+		strDateOfBirth =formModel.DateOfBirth != null ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
+		strEvaluationCompletion =formModel.EvaluationCompletion != null ? formModel.EvaluationCompletion.Value.ToString("MM/dd/yyyy") : "";
+		strIEPDate =formModel.IEPDate != null ? formModel.IEPDate.Value.ToString("MM/dd/yyyy") : "";
+		strAccessToWorkPacket_DateProvided =formModel.AccessToWorkPacket_DateProvided != null ? formModel.AccessToWorkPacket_DateProvided.Value.ToString("MM/dd/yyyy") : "";
+		strServices_StartDate1 =formModel.Services_StartDate1 != null ? formModel.Services_StartDate1.Value.ToString("MM/dd/yyyy") : "";
+		strServices_EndDate1 =formModel.Services_EndDate1 != null ? formModel.Services_EndDate1.Value.ToString("MM/dd/yyyy") : "";
+		strServices_StartDate2 =formModel.Services_StartDate2 != null ? formModel.Services_StartDate2.Value.ToString("MM/dd/yyyy") : "";
+		strServices_EndDate2 =formModel.Services_EndDate2 != null ? formModel.Services_EndDate2.Value.ToString("MM/dd/yyyy") : "";
 	}
 }
 
@@ -93,7 +119,7 @@
 							<td><span style="font-size:11pt"><b>Effective date:</b></span>							
 								<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strEffectiveDate)</textarea><span id="EffectiveDate" style='display:none;text-align:left' class="input-value isDate">@(strEffectiveDate)</span>
 							</td>
-							<td><span style="font-size:11pt"><b>Ending date</b></span> <i style="font-size:7pt">(anticipated)</i>							
+							<td><span style="font-size:11pt"><b>Ending date</b></span> <i style="font-size:7pt">(anticipated)</i>
 								<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strEndingDate)</textarea><span id="EndingDate" style='display:none;text-align:left' class="input-value isDate">@(strEndingDate)</span>
 							</td>
 						</tr>
@@ -201,7 +227,7 @@
 					</p>
 				</td>
 				<td>
-					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(formModel.EvaluationCompletion)</textarea><span id="EvaluationCompletion" style='display:none;text-align:left' class="input-value isDate">@(formModel.EvaluationCompletion)</span>
+					<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(strEvaluationCompletion)</textarea><span id="EvaluationCompletion" style='display:none;text-align:left' class="input-value isDate">@(strEvaluationCompletion)</span>
 				</td>
 				<td>
 					<b>

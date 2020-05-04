@@ -6,117 +6,118 @@ using System.Web.UI;
 
 namespace GreenBushIEP.Reports.ServiceReport
 {
-    public partial class Report : System.Web.UI.Page
-    {
+	public partial class Report : System.Web.UI.Page
+	{
 
-        protected void Page_Load(object sender, EventArgs e)
-        {
+		protected void Page_Load(object sender, EventArgs e)
+		{
 
-            if (!Page.User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("~/Account/Login");
-            }
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
 
-            if (!IsPostBack)
-            {
-                GreenBushIEP.Report.ReportMaster.ServiceList(ServiceType);
-                GreenBushIEP.Report.ReportMaster.DistrictList(districtDD);
-                GreenBushIEP.Report.ReportMaster.BuildingList(buildingDD);
-            }
-        }
+			if (!IsPostBack)
+			{
+				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+		}
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            ShowReport();
-        }
+		protected void Button1_Click(object sender, EventArgs e)
+		{
+			ShowReport();
+		}
 
-        private void ShowReport()
-        {
-            ReportViewer MReportViewer = Master.FindControl("ReportViewer1") as ReportViewer;
-            MReportViewer.Reset();
-            tblUser user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
+		private void ShowReport()
+		{
+			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
+			MReportViewer.Reset();
+			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 
-            string teacherIds = "-1";
+			string teacherIds = "-1";
 
-            string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(ServiceType);
+			string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(this.ServiceType);
 
-            string buildingID = buildingDD.Value;
-            string buildingName = buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+			string buildingID = this.buildingDD.Value;
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
-            string districtID = districtDD.Value;
-            string districtName = districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
-            string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(districtDD, districtID);
-            string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(districtDD, buildingID, districtID);
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 
-            DateTime startDate = DateTime.Parse(this.startDate.Value);
-            DateTime endDate = DateTime.Parse(this.endDate.Value);
+			DateTime startDate = DateTime.Parse(this.startDate.Value);
+			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
-            serviceIds = serviceIds.Trim().Trim(',');
+			serviceIds = serviceIds.Trim().Trim(',');
 
-            if (user.RoleID == "4" || user.RoleID == "6")
-            {
-                //limit report
-                teacherIds = user.UserID.ToString();
-            }
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+			{
+				teacherIds = user.UserID.ToString();
+			}
 
-            DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
-            ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-            ReportDataSource rds2 = null;
-            if (buildingDD.Value != "-1")
-            {
-                DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
-                rds2 = new ReportDataSource("DataSet2", dt2);
-            }
-            else
-            {
-                DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
-                rds2 = new ReportDataSource("DataSet2", dt2);
-            }
-            ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
-            ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
-            ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
-            ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
-            ReportParameter p5 = new ReportParameter("Building", buildingName);
-            ReportParameter p6 = new ReportParameter("District", districtName);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
+			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingID);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
+			ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
+			ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
+			ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
+			ReportParameter p5 = new ReportParameter("Building", buildingName);
+			ReportParameter p6 = new ReportParameter("District", districtName);
+			
+			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ServiceReport/rptServices.rdlc");
+			MReportViewer.LocalReport.DataSources.Add(rds);
+			MReportViewer.LocalReport.DataSources.Add(rds2);
+			
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5, p6 });
+			MReportViewer.LocalReport.Refresh();
+		}
 
-            MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ServiceReport/rptServices.rdlc");
-            MReportViewer.LocalReport.DataSources.Add(rds);
-            MReportViewer.LocalReport.DataSources.Add(rds2);
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
+		{
+			DataTable dt = new DataTable();
+			dt.Columns.Add("StudentFirstName", typeof(string));
+			dt.Columns.Add("StudentLastName", typeof(string));
+			dt.Columns.Add("ServiceType", typeof(string));
+			dt.Columns.Add("Provider", typeof(string));
+			dt.Columns.Add("Frequency", typeof(int));
+			dt.Columns.Add("Location", typeof(string));
+			dt.Columns.Add("DaysPerWeek", typeof(byte));
+			dt.Columns.Add("Minutes", typeof(short));
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
+			dt.Columns.Add("FrequencyDesc", typeof(string));
 
-            MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5, p6 });
-            MReportViewer.LocalReport.Refresh();
-        }
+			using (var ctx = new IndividualizedEducationProgramEntities())
+			{
+				//Execute stored procedure as a function
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
 
-        private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("StudentFirstName", typeof(string));
-            dt.Columns.Add("StudentLastName", typeof(string));
-            dt.Columns.Add("ServiceType", typeof(string));
-            dt.Columns.Add("Provider", typeof(string));
-            dt.Columns.Add("Frequency", typeof(int));
-            dt.Columns.Add("Location", typeof(string));
-            dt.Columns.Add("DaysPerWeek", typeof(byte));
-            dt.Columns.Add("Minutes", typeof(short));
-            dt.Columns.Add("USD", typeof(string));
-            dt.Columns.Add("BuildingName", typeof(string));
-            dt.Columns.Add("FrequencyDesc", typeof(string));
+				foreach (var cs in list)
+					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider
+						, cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes, cs.USD, cs.BuildingName
+						, cs.FrequencyDesc);
+			}
 
-            using (IndividualizedEducationProgramEntities ctx = new IndividualizedEducationProgramEntities())
-            {
-                //Execute stored procedure as a function
-                System.Data.Entity.Core.Objects.ObjectResult<up_ReportServices_Result> list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
-
-                foreach (up_ReportServices_Result cs in list)
-                {
-                    dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider
-                        , cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes, cs.USD, cs.BuildingName
-                        , cs.FrequencyDesc);
-                }
-            }
-
-            return dt;
-        }
-    }
+			return dt;
+		}
+	}
 }

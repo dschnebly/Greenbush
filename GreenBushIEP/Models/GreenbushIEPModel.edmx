@@ -2310,6 +2310,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="byUserID" Type="int" Mode="In" />
           <Parameter Name="ammend" Type="bit" Mode="In" />
         </Function>
+        <Function Name="uspServiceProviders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="USD" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="uspServiceProviderStudents" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ProviderID" Type="int" Mode="In" />
+        </Function>
         <Function Name="uspUserList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="USD" Type="nvarchar" Mode="In" />
@@ -2807,6 +2813,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="vw_UserList" EntityType="IndividualizedEducationProgramModel.vw_UserList" />
           <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
           <EntitySet Name="tblFormContinuousLearningPlans" EntityType="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan" />
+          <FunctionImport Name="uspServiceProviders" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviders_Result)">
+            <Parameter Name="USD" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="uspServiceProviderStudents" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviderStudents_Result)">
+            <Parameter Name="ProviderID" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -5198,6 +5210,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Goals_Statement3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Goals_Statement4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="uspServiceProviders_Result">
+          <Property Type="Int32" Name="ProviderID" Nullable="false" />
+          <Property Type="String" Name="ProviderCode" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="uspServiceProviderStudents_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="Int64" Name="KIDSID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7606,6 +7631,27 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="uspServiceProviders" FunctionName="IndividualizedEducationProgramModel.Store.uspServiceProviders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspServiceProviders_Result">
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="uspServiceProviderStudents" FunctionName="IndividualizedEducationProgramModel.Store.uspServiceProviderStudents">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspServiceProviderStudents_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

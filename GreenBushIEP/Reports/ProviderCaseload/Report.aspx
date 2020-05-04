@@ -37,12 +37,24 @@
 		</div>
 		<div class="col-md-12" <%=toggleElement %>>
 			<div class="col-md-2" >
+				<label for="teacherDD">Teacher</label>
+			</div>
+			<div class="col-md-6" >
+				<select id="teacherDD" runat="server" multiple="true" class="chosen-select" data-placeholder="All Teachers">
+					<option value="">Select</option>
+				</select>
+				<input type="hidden" id="teacherVals" runat="server" />
+			</div>
+		</div>
+		<div class="col-md-12" <%=toggleElement %>>
+			<div class="col-md-2" >
 				<label for="providerDD">Provider</label>
 			</div>
 			<div class="col-md-6" >
 				<select id="providerDD" runat="server" multiple="true" class="chosen-select" data-placeholder="All Providers">
 					<option value="">Select</option>
 				</select>
+				<input type="hidden" id="providerVals" runat="server" />
 			</div>
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">

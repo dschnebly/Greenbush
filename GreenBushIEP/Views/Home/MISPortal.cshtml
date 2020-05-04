@@ -203,7 +203,7 @@
 
                                     if (user.hasIEP)
                                     {
-                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                        <a href="#" data-id="@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
                                     }
@@ -336,6 +336,6 @@
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/misportal.js")
+    @Scripts.Render("~/Scripts/misportal.js?v1.1")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

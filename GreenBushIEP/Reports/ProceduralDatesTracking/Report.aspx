@@ -43,6 +43,7 @@
 				<select id="teacherDD" runat="server" multiple="true" class="chosen-select" data-placeholder="All Teachers">
 					<option value="">Select</option>
 				</select>
+				<input type="hidden" id="teacherVals" runat="server" />
 			</div>
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">

@@ -1,129 +1,134 @@
 ﻿using GreenBushIEP.Models;
 using Microsoft.Reporting.WebForms;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace GreenBushIEP.Reports.ExceptionalityReport
 {
-    public partial class Report : System.Web.UI.Page
-    {
-        protected void Page_Load(object sender, EventArgs e)
-        {
-            if (!Page.User.Identity.IsAuthenticated)
-            {
-                Response.Redirect("~/Account/Login");
-            }
+	public partial class Report : System.Web.UI.Page
+	{
+		protected void Page_Load(object sender, EventArgs e)
+		{
+			if (!Page.User.Identity.IsAuthenticated)
+			{
+				Response.Redirect("~/Account/Login");
+			}
 
-            if (!IsPostBack)
-            {
-                GreenBushIEP.Report.ReportMaster.ServiceList(ServiceType);
-                GreenBushIEP.Report.ReportMaster.DistrictList(districtDD);
-                GreenBushIEP.Report.ReportMaster.BuildingList(buildingDD);
-            }
+			if (!IsPostBack)
+			{
+				GreenBushIEP.Report.ReportMaster.ServiceList(this.ServiceType);
+				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+			else
+			{
+				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
+			}
+		}
 
-        }
+		protected void Button1_Click(object sender, EventArgs e)
+		{
+			ShowReport();
+		}
 
-        protected void Button1_Click(object sender, EventArgs e)
-        {
-            ShowReport();
-        }
+		private void ShowReport()
+		{
+			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
+			MReportViewer.Reset();
+			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
+			string serviceIds = "";
+			
+			string buildingID = this.buildingDD.Value;
+			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
-        private void ShowReport()
-        {
-            ReportViewer MReportViewer = Master.FindControl("ReportViewer1") as ReportViewer;
-            MReportViewer.Reset();
-            tblUser user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-            string serviceIds = "";
-            string teacherIds = "-1";
-            string buildingID = buildingDD.Value;
-            string buildingName = buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
+			string districtID = this.districtDD.Value;
+			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
-            string districtID = districtDD.Value;
-            string districtName = districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
+			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 
-            string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(districtDD, districtID);
-            string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(districtDD, buildingID, districtID);
+			string teacherIds = "-1";
 
-            if (user.RoleID == "4" || user.RoleID == "6")
-            {
-                //limit report
-                teacherIds = user.UserID.ToString();
-            }
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+			{
+				teacherIds = user.UserID.ToString();
+			}
 
-            foreach (ListItem li in ServiceType.Items)
-            {
-                if (li.Selected)
-                {
-                    serviceIds += string.Format("{0},", li.Value);
-                }
-            }
+			foreach (ListItem li in ServiceType.Items)
+			{
+				if (li.Selected)
+				{
+					serviceIds += string.Format("{0},", li.Value);
+				}
+			}
 
-            DateTime startDate = DateTime.Parse(this.startDate.Value);
-            DateTime endDate = DateTime.Parse(this.endDate.Value);
+			DateTime startDate = DateTime.Parse(this.startDate.Value);
+			DateTime endDate = DateTime.Parse(this.endDate.Value);
 
-            serviceIds = serviceIds.Trim().Trim(',');
+			serviceIds = serviceIds.Trim().Trim(',');
 
-            DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
-            ReportDataSource rds = new ReportDataSource("DataSet1", dt);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
+			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 
-            ReportDataSource rds2 = null;
-            if (buildingDD.Value != "-1")
-            {
-                DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
-                rds2 = new ReportDataSource("DataSet2", dt2);
-            }
-            else
-            {
-                DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
-                rds2 = new ReportDataSource("DataSet2", dt2);
-            }
+			ReportDataSource rds2 = null;
+			if (this.buildingDD.Value != "-1")
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			else
+			{
+				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
+				rds2 = new ReportDataSource("DataSet2", dt2);
+			}
+			
+			ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
+			ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
+			ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
+			ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
+			ReportParameter p5 = new ReportParameter("Building", buildingName);
+			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ExceptionalityReport/rptExceptionalityReport.rdlc");
+			MReportViewer.LocalReport.DataSources.Add(rds);
+			MReportViewer.LocalReport.DataSources.Add(rds2);
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5 });
+			MReportViewer.LocalReport.Refresh();
+		}
 
-            ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
-            ReportParameter p2 = new ReportParameter("StartDate", this.startDate.Value);
-            ReportParameter p3 = new ReportParameter("EndDate", this.endDate.Value);
-            ReportParameter p4 = new ReportParameter("ServiceCode", serviceIds);
-            ReportParameter p5 = new ReportParameter("Building", buildingName);
-            MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ExceptionalityReport/rptExceptionalityReport.rdlc");
-            MReportViewer.LocalReport.DataSources.Add(rds);
-            MReportViewer.LocalReport.DataSources.Add(rds2);
-            MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4, p5 });
-            MReportViewer.LocalReport.Refresh();
-        }
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
+		{
+			DataTable dt = new DataTable();
+			dt.Columns.Add("StudentFirstName", typeof(string));
+			dt.Columns.Add("StudentLastName", typeof(string));
+			dt.Columns.Add("ServiceType", typeof(string));
+			dt.Columns.Add("Provider", typeof(string));			
+			dt.Columns.Add("Frequency", typeof(int));
+			dt.Columns.Add("Location", typeof(string));
+			dt.Columns.Add("DaysPerWeek", typeof(byte));
+			dt.Columns.Add("Minutes", typeof(short));
+			dt.Columns.Add("DateOfBirth", typeof(DateTime));
+			dt.Columns.Add("PrimaryExceptionality", typeof(string));
+			dt.Columns.Add("SecondaryExceptionality", typeof(string));
+			dt.Columns.Add("USD", typeof(string));
+			dt.Columns.Add("BuildingName", typeof(string));
+			dt.Columns.Add("FrequencyDesc", typeof(string));
+			using (var ctx = new IndividualizedEducationProgramEntities())
+			{
+				//Execute stored procedure as a function
+				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
 
-        private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
-        {
-            DataTable dt = new DataTable();
-            dt.Columns.Add("StudentFirstName", typeof(string));
-            dt.Columns.Add("StudentLastName", typeof(string));
-            dt.Columns.Add("ServiceType", typeof(string));
-            dt.Columns.Add("Provider", typeof(string));
-            dt.Columns.Add("Frequency", typeof(int));
-            dt.Columns.Add("Location", typeof(string));
-            dt.Columns.Add("DaysPerWeek", typeof(byte));
-            dt.Columns.Add("Minutes", typeof(short));
-            dt.Columns.Add("DateOfBirth", typeof(DateTime));
-            dt.Columns.Add("PrimaryExceptionality", typeof(string));
-            dt.Columns.Add("SecondaryExceptionality", typeof(string));
-            dt.Columns.Add("USD", typeof(string));
-            dt.Columns.Add("BuildingName", typeof(string));
-            dt.Columns.Add("FrequencyDesc", typeof(string));
-            using (IndividualizedEducationProgramEntities ctx = new IndividualizedEducationProgramEntities())
-            {
-                //Execute stored procedure as a function
-                System.Data.Entity.Core.Objects.ObjectResult<up_ReportServices_Result> list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
+				foreach (var cs in list)
+					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,
+						cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes,
+						cs.DateOfBirth, cs.PrimaryExceptionality, cs.SecondaryExceptionality
+						, cs.USD, cs.BuildingName, cs.FrequencyDesc);
+			}
 
-                foreach (up_ReportServices_Result cs in list)
-                {
-                    dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,
-                        cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes,
-                        cs.DateOfBirth, cs.PrimaryExceptionality, cs.SecondaryExceptionality
-                        , cs.USD, cs.BuildingName, cs.FrequencyDesc);
-                }
-            }
-
-            return dt;
-        }
-    }
+			return dt;
+		}
+	}
 }

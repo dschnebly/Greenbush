@@ -1491,8 +1491,9 @@ namespace GreenBushIEP.Controllers
                         transitionService.ServiceType = collection[i++].ToString();
                         transitionService.ServiceDescription = collection[i++].ToString();
                         transitionService.Frequency = collection[i++].ToString();
-                        transitionService.Duration = collection[i++].ToString();
-                        transitionService.Location = collection[i++].ToString();
+						transitionService.Location = collection[i++].ToString();
+						transitionService.Duration = collection[i++].ToString();
+						
                         transitionService.ModifiedBy = ModifiedBy;
 
                         string startDateStr = collection[i++].ToString();
