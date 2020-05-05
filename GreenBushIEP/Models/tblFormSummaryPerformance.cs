@@ -78,5 +78,23 @@ namespace GreenBushIEP.Models
         public int CreatedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public string student_Name { get; set; }
+        public Nullable<System.DateTime> DateOfBirth { get; set; }
+        public string student_phone { get; set; }
+        public Nullable<int> GraduationExitYear { get; set; }
+        public string CurrentSchool { get; set; }
+        public string CurrentCity { get; set; }
+        public string PrimaryLanguage { get; set; }
+        public string ContactName { get; set; }
+        public string ContactTitle { get; set; }
+        public string ContactSchool { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactPhone { get; set; }
+        public string Team_StudentName { get; set; }
+        public string Team_ParentName { get; set; }
+        public string Team_TeacherName1 { get; set; }
+        public string Team_TeacherName2 { get; set; }
+        public string Team_OtherProvider1 { get; set; }
+        public string Team_OtherProvider2 { get; set; }
     }
 }

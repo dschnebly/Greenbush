@@ -38,7 +38,7 @@ namespace GreenBushIEP.Models
         public Nullable<bool> AccessToEmailCommunication_No { get; set; }
         public Nullable<bool> AccessToWorkPacket_Yes { get; set; }
         public Nullable<bool> AccessToWorkPacket_No { get; set; }
-        public Nullable<System.DateTime> AccessToWorkPacket_DateProvided { get; set; }
+        public string AccessToWorkPacket_DateProvided { get; set; }
         public string AccessToWorkPacket_Method { get; set; }
         public Nullable<bool> ServicesOffered { get; set; }
         public Nullable<bool> ServicesAccepted { get; set; }
@@ -107,5 +107,6 @@ namespace GreenBushIEP.Models
         public string Goals_Statement2 { get; set; }
         public string Goals_Statement3 { get; set; }
         public string Goals_Statement4 { get; set; }
+        public string District { get; set; }
     }
 }

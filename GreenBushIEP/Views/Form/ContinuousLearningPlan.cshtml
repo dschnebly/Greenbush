@@ -65,7 +65,7 @@
 		formModel.AttendingBuilding = buildingName;
 		formModel.ResponsibleBuilding = buildingNeigborhood;
 		formModel.Provider = provider;
-		strIEPDate = iepModel != null && iepModel.iepStartTime != null && iepModel.iepStartTime.Value != DateTime.MinValue ? iepModel.iepStartTime.Value.ToString("MM/dd/yyyy") : "";		
+		strIEPDate = iepModel != null && iepModel.iepStartTime != null && iepModel.iepStartTime.Value != DateTime.MinValue ? iepModel.iepStartTime.Value.ToString("MM/dd/yyyy") : "";
 		strDateOfBirth = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
 	}
 	else
@@ -77,11 +77,12 @@
 		strDateOfBirth =formModel.DateOfBirth != null ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
 		strEvaluationCompletion =formModel.EvaluationCompletion != null ? formModel.EvaluationCompletion.Value.ToString("MM/dd/yyyy") : "";
 		strIEPDate =formModel.IEPDate != null ? formModel.IEPDate.Value.ToString("MM/dd/yyyy") : "";
-		strAccessToWorkPacket_DateProvided =formModel.AccessToWorkPacket_DateProvided != null ? formModel.AccessToWorkPacket_DateProvided.Value.ToString("MM/dd/yyyy") : "";
+		strAccessToWorkPacket_DateProvided = formModel.AccessToWorkPacket_DateProvided;
 		strServices_StartDate1 =formModel.Services_StartDate1 != null ? formModel.Services_StartDate1.Value.ToString("MM/dd/yyyy") : "";
 		strServices_EndDate1 =formModel.Services_EndDate1 != null ? formModel.Services_EndDate1.Value.ToString("MM/dd/yyyy") : "";
 		strServices_StartDate2 =formModel.Services_StartDate2 != null ? formModel.Services_StartDate2.Value.ToString("MM/dd/yyyy") : "";
 		strServices_EndDate2 =formModel.Services_EndDate2 != null ? formModel.Services_EndDate2.Value.ToString("MM/dd/yyyy") : "";
+		usdName = formModel.District;
 	}
 }
 
@@ -146,7 +147,7 @@
 				</td>
 				<td>
 				<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(usdName)</textarea>
-					@*<span id="" style='display:none;text-align:left' class="input-value">@()</span>*@
+					<span id="District" style='display:none;text-align:left' class="input-value">@(usdName)</span>
 				</td>
 			</tr>
 			<tr>
@@ -301,8 +302,8 @@
 			<span style='mso-tab-count:1'>            </span><span style='mso-spacerun:yes'></span>
 		</span>
 		<span>
-			(If yes, dates packets provided:<textarea class="form-control1" cols="10" style="height:30px;"  maxlength="20">@(strAccessToWorkPacket_DateProvided)</textarea><span id="AccessToWorkPacket_DateProvided" style='display:none' class="input-value isDate">@(strAccessToWorkPacket_DateProvided)</span>;
-			Method:<textarea class="form-control1" cols="30" style="height:30px;"  maxlength="200">@(formModel.AccessToWorkPacket_Method)</textarea><span id="AccessToWorkPacket_Method" style='display:none' class="input-value">@(formModel.AccessToWorkPacket_Method)</span>)
+			(If yes, dates packets provided:<textarea class="form-control1" cols="10" style="height:30px;"  maxlength="20">@(strAccessToWorkPacket_DateProvided)</textarea><span id="AccessToWorkPacket_DateProvided" style='display:none' class="input-value">@(strAccessToWorkPacket_DateProvided)</span>;
+			Method: <textarea class="form-control1" cols="30" style="height:30px;"  maxlength="200">@(formModel.AccessToWorkPacket_Method)</textarea><span id="AccessToWorkPacket_Method" style='display:none' class="input-value">@(formModel.AccessToWorkPacket_Method)</span>)
 		</span>
 	</p>
 	<p>

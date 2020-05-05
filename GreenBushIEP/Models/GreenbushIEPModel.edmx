@@ -397,7 +397,7 @@
           <Property Name="AccessToEmailCommunication_No" Type="bit" />
           <Property Name="AccessToWorkPacket_Yes" Type="bit" />
           <Property Name="AccessToWorkPacket_No" Type="bit" />
-          <Property Name="AccessToWorkPacket_DateProvided" Type="datetime" />
+          <Property Name="AccessToWorkPacket_DateProvided" Type="nvarchar" MaxLength="200" />
           <Property Name="AccessToWorkPacket_Method" Type="nvarchar" MaxLength="200" />
           <Property Name="ServicesOffered" Type="bit" />
           <Property Name="ServicesAccepted" Type="bit" />
@@ -466,6 +466,7 @@
           <Property Name="Goals_Statement2" Type="nvarchar" MaxLength="2000" />
           <Property Name="Goals_Statement3" Type="nvarchar" MaxLength="2000" />
           <Property Name="Goals_Statement4" Type="nvarchar" MaxLength="2000" />
+          <Property Name="District" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="tblFormIEPAmendment">
           <Key>
@@ -958,6 +959,24 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="student_Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="student_phone" Type="nvarchar" MaxLength="20" />
+          <Property Name="GraduationExitYear" Type="int" />
+          <Property Name="CurrentSchool" Type="nvarchar" MaxLength="500" />
+          <Property Name="CurrentCity" Type="nvarchar" MaxLength="100" />
+          <Property Name="PrimaryLanguage" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContactTitle" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContactSchool" Type="nvarchar" MaxLength="500" />
+          <Property Name="ContactEmail" Type="nvarchar" MaxLength="200" />
+          <Property Name="ContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="Team_StudentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Team_ParentName" Type="nvarchar" MaxLength="200" />
+          <Property Name="Team_TeacherName1" Type="nvarchar" MaxLength="200" />
+          <Property Name="Team_TeacherName2" Type="nvarchar" MaxLength="200" />
+          <Property Name="Team_OtherProvider1" Type="nvarchar" MaxLength="200" />
+          <Property Name="Team_OtherProvider2" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tblFormTeamEval">
           <Key>
@@ -2814,10 +2833,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblAccommodationModules" EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" />
           <EntitySet Name="tblFormContinuousLearningPlans" EntityType="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan" />
           <FunctionImport Name="uspServiceProviders" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviders_Result)">
-            <Parameter Name="USD" Mode="In" Type="String" />
+          <Parameter Name="USD" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="uspServiceProviderStudents" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviderStudents_Result)">
-            <Parameter Name="ProviderID" Mode="In" Type="Int32" />
+          <Parameter Name="ProviderID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblAccommodation">
@@ -3670,6 +3689,24 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="student_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="student_phone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="GraduationExitYear" Type="Int32" />
+          <Property Name="CurrentSchool" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CurrentCity" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PrimaryLanguage" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContactName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactTitle" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactSchool" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ContactEmail" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Team_StudentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Team_ParentName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Team_TeacherName1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Team_TeacherName2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Team_OtherProvider1" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Team_OtherProvider2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblFormTeamEval">
           <Key>
@@ -5140,7 +5177,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="AccessToEmailCommunication_No" Type="Boolean" />
           <Property Name="AccessToWorkPacket_Yes" Type="Boolean" />
           <Property Name="AccessToWorkPacket_No" Type="Boolean" />
-          <Property Name="AccessToWorkPacket_DateProvided" Type="DateTime" Precision="3" />
+          <Property Name="AccessToWorkPacket_DateProvided" Type="String" />
           <Property Name="AccessToWorkPacket_Method" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ServicesOffered" Type="Boolean" />
           <Property Name="ServicesAccepted" Type="Boolean" />
@@ -5209,6 +5246,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Goals_Statement2" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Goals_Statement3" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="Goals_Statement4" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="District" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <ComplexType Name="uspServiceProviders_Result">
           <Property Type="Int32" Name="ProviderID" Nullable="false" />
@@ -6049,6 +6087,24 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormSummaryPerformances">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormSummaryPerformance">
               <MappingFragment StoreEntitySet="tblFormSummaryPerformance">
+                <ScalarProperty Name="Team_OtherProvider2" ColumnName="Team_OtherProvider2" />
+                <ScalarProperty Name="Team_OtherProvider1" ColumnName="Team_OtherProvider1" />
+                <ScalarProperty Name="Team_TeacherName2" ColumnName="Team_TeacherName2" />
+                <ScalarProperty Name="Team_TeacherName1" ColumnName="Team_TeacherName1" />
+                <ScalarProperty Name="Team_ParentName" ColumnName="Team_ParentName" />
+                <ScalarProperty Name="Team_StudentName" ColumnName="Team_StudentName" />
+                <ScalarProperty Name="ContactPhone" ColumnName="ContactPhone" />
+                <ScalarProperty Name="ContactEmail" ColumnName="ContactEmail" />
+                <ScalarProperty Name="ContactSchool" ColumnName="ContactSchool" />
+                <ScalarProperty Name="ContactTitle" ColumnName="ContactTitle" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="PrimaryLanguage" ColumnName="PrimaryLanguage" />
+                <ScalarProperty Name="CurrentCity" ColumnName="CurrentCity" />
+                <ScalarProperty Name="CurrentSchool" ColumnName="CurrentSchool" />
+                <ScalarProperty Name="GraduationExitYear" ColumnName="GraduationExitYear" />
+                <ScalarProperty Name="student_phone" ColumnName="student_phone" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="student_Name" ColumnName="student_Name" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -7535,6 +7591,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormContinuousLearningPlans">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan">
               <MappingFragment StoreEntitySet="tblFormContinuousLearningPlan">
+                <ScalarProperty Name="District" ColumnName="District" />
                 <ScalarProperty Name="Goals_Statement4" ColumnName="Goals_Statement4" />
                 <ScalarProperty Name="Goals_Statement3" ColumnName="Goals_Statement3" />
                 <ScalarProperty Name="Goals_Statement2" ColumnName="Goals_Statement2" />

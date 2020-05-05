@@ -4132,7 +4132,7 @@ namespace GreenbushIep.Controllers
                         using (MemoryStream stream2 = new System.IO.MemoryStream())
                         {
 
-                            Document pdfDoc = new Document(PageSize.LETTER, 25, 25, 35, 50);
+                            Document pdfDoc = new Document(PageSize.LETTER, 25, 25, 40, 50);
 
                             PdfWriter writer = PdfWriter.GetInstance(pdfDoc, stream);
                             pdfDoc.Open();
@@ -4215,7 +4215,7 @@ namespace GreenbushIep.Controllers
 
                         if (studentName != string.Empty)
                         {
-                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 25f, 750f, 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 20f, 750f, 0);
                         }
 
                         //Footer
@@ -4585,7 +4585,35 @@ namespace GreenbushIep.Controllers
                 tblFormSummaryPerformance summaryPerf = db.tblFormSummaryPerformances.Any(o => o.StudentId == sid) ? db.tblFormSummaryPerformances.FirstOrDefault(o => o.StudentId == sid) : new tblFormSummaryPerformance();
 
                 summaryPerf.StudentId = sid;
-                summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
+				summaryPerf.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
+				summaryPerf.student_phone = GetInputValue("student_phone", spans);
+				summaryPerf.student_Name = GetInputValue("student_Name", spans);
+
+				var exitYear = GetInputValue("GraduationExitYear", spans);
+				int exitYearVal = 0;
+					Int32.TryParse(exitYear, out exitYearVal);
+				if(exitYearVal > 0)
+					summaryPerf.GraduationExitYear = exitYearVal;
+
+				summaryPerf.CurrentSchool = GetInputValue("CurrentSchool", spans);
+				summaryPerf.CurrentCity = GetInputValue("CurrentCity", spans);
+				summaryPerf.PrimaryLanguage = GetInputValue("PrimaryLanguage", spans);
+				summaryPerf.ContactName = GetInputValue("ContactName", spans);
+				summaryPerf.ContactTitle = GetInputValue("ContactTitle", spans);
+				summaryPerf.ContactSchool = GetInputValue("ContactSchool", spans);
+				summaryPerf.ContactEmail = GetInputValue("ContactEmail", spans);
+				summaryPerf.ContactPhone = GetInputValue("ContactPhone", spans);
+				summaryPerf.Team_StudentName = GetInputValue("Team_StudentName", spans);
+				summaryPerf.Team_ParentName = GetInputValue("Team_ParentName", spans);
+				summaryPerf.Team_TeacherName1 = GetInputValue("Team_TeacherName1", spans);
+				summaryPerf.Team_TeacherName2 = GetInputValue("Team_TeacherName2", spans);
+				summaryPerf.Team_OtherProvider1 = GetInputValue("Team_OtherProvider1", spans);
+				summaryPerf.Team_OtherProvider2 = GetInputValue("Team_OtherProvider2", spans);
+
+
+
+
+				summaryPerf.Goal_Learning = GetInputValue("Goal_Learning", spans);
                 summaryPerf.Goal_LearningRecommendation = GetInputValue("Goal_LearningRecommendation", spans);
                 summaryPerf.Goal_Working = GetInputValue("Goal_Working", spans);
                 summaryPerf.Goal_WorkingRecommendation = GetInputValue("Goal_WorkingRecommendation", spans);
@@ -5375,7 +5403,8 @@ namespace GreenbushIep.Controllers
                 formICLP.PrimaryDisability = GetInputValue("PrimaryDisability", spans);
                 formICLP.Provider = GetInputValue("Provider", spans);
                 formICLP.AttendingBuilding = GetInputValue("AttendingBuilding", spans);
-                formICLP.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
+				formICLP.District = GetInputValue("District", spans);
+				formICLP.DateOfBirth = GetInputValueDate("DateOfBirth", spans);
                 formICLP.EvaluationCompletion = GetInputValueDate("EvaluationCompletion", spans);
                 formICLP.IEPDate = GetInputValueDate("IEPDate", spans);
                 formICLP.AccessToInternetBasedActivities_Yes = GetCheckboxSingleInputValue("AccessToInternetBasedActivities_Yes", checkboxes);
@@ -5388,7 +5417,7 @@ namespace GreenbushIep.Controllers
                 formICLP.AccessToEmailCommunication_No = GetCheckboxSingleInputValue("AccessToEmailCommunication_No", checkboxes);
                 formICLP.AccessToWorkPacket_Yes = GetCheckboxSingleInputValue("AccessToWorkPacket_Yes", checkboxes);
                 formICLP.AccessToWorkPacket_No = GetCheckboxSingleInputValue("AccessToWorkPacket_No", checkboxes);
-                formICLP.AccessToWorkPacket_DateProvided = GetInputValueDate("AccessToWorkPacket_DateProvided", spans);
+                formICLP.AccessToWorkPacket_DateProvided = GetInputValue("AccessToWorkPacket_DateProvided", spans);
                 formICLP.AccessToWorkPacket_Method = GetInputValue("AccessToWorkPacket_Method", spans);
                 formICLP.ServicesOffered = GetCheckboxSingleInputValue("ServicesOffered", checkboxes);
                 formICLP.ServicesAccepted = GetCheckboxSingleInputValue("ServicesAccepted", checkboxes);

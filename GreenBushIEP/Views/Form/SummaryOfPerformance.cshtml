@@ -3,115 +3,180 @@
 
 @{
 	var formModel = ViewData["summaryPerf"] != null ? ViewData["summaryPerf"] as GreenBushIEP.Models.tblFormSummaryPerformance : new GreenBushIEP.Models.tblFormSummaryPerformance();
-	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-	string studentSchool = Model.building;
-	string studentLanguage = Model.studentLanguage;
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+	string dobStr = "";
+	string studentSchool = "";
+	string studentLanguage = "";
+	string studentFormattedName = "";
+	string teacherFormattedName =  "";
 	string parents =  "";
+	string parentPhone = "";
 	string studentAddress = Model.student != null ? Model.student.Address1 + " " + Model.student.Address2 : "";
 	string studentCityStZip = Model.student != null ? studentAddress + " " + Model.student.City + ", " + Model.student.State + " " + Model.student.Zip : "";
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-	string districtContactAddr = Model.districtContact != null ? string.Format("{0} {1} {2}, {3} {4}", Model.districtContact.Address1, Model.districtContact.Address2, Model.districtContact.City, Model.districtContact.State, Model.districtContact.Zip) : "";
-	string districtCity = Model.districtContact != null ? string.Format("{0}", Model.districtContact.City) : "";
-	string graduation = Model.studentTransition != null ? string.Format("{0}", Model.studentTransition.Planning_GraduationYear) : "";
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var learningGoal = Model.transitionGoals.Where(o => o.GoalType == "education").FirstOrDefault();
-	var workingGoal = Model.transitionGoals.Where(o => o.GoalType == "employment").FirstOrDefault();
-	var livingGoal = Model.transitionGoals.Where(o => o.GoalType == "independent").FirstOrDefault();
+	string studentCity = Model.student != null ? Model.student.City : "";
 
-	if (string.IsNullOrEmpty(formModel.Goal_Learning) && learningGoal != null)
+	string districtContactName = "";
+	string districtContactPhone = "";
+	string districtName = "";	
+	string graduation = "";
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");		
+
+	if (formModel.FormSummaryPerformanceId > 0)
 	{
-		formModel.Goal_Learning = string.Format("{0} {1} {2}", learningGoal.CompletetionType, learningGoal.Behavior, learningGoal.WhereAndHow);
+		dobStr = formModel.DateOfBirth != null ? formModel.DateOfBirth.Value.ToString("MM/dd/yyyy") : "";
+		studentFormattedName = formModel.student_Name;
+		graduation = formModel.GraduationExitYear.HasValue ? formModel.GraduationExitYear.Value.ToString() : "";
+		parents = formModel.Team_ParentName;
+		parentPhone = formModel.student_phone;
+		studentSchool = formModel.CurrentSchool;
+		studentCity = formModel.CurrentCity;
+		studentLanguage = formModel.PrimaryLanguage;
+		districtContactName = formModel.ContactName;
+		districtContactPhone = formModel.ContactPhone;
+		districtName = formModel.ContactSchool;
+		teacherFormattedName = formModel.Team_TeacherName1;
 	}
-
-	if (string.IsNullOrEmpty(formModel.Goal_Working) && workingGoal != null)
+	else
 	{
-		formModel.Goal_Working = string.Format("{0} {1} {2}", workingGoal.CompletetionType, workingGoal.Behavior, workingGoal.WhereAndHow);
-	}
+		var learningGoal = Model.transitionGoals.Where(o => o.GoalType == "education").FirstOrDefault();
+		var workingGoal = Model.transitionGoals.Where(o => o.GoalType == "employment").FirstOrDefault();
+		var livingGoal = Model.transitionGoals.Where(o => o.GoalType == "independent").FirstOrDefault();
+		districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
+		districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+		graduation = Model.studentTransition != null ? string.Format("{0}", Model.studentTransition.Planning_GraduationYear) : "";
+		studentLanguage = Model.studentLanguage;
+		studentSchool = Model.building;
+		districtName = Model.districtName;
+		studentFormattedName = Model.student != null ? Model.student.FirstName.Trim() + " " + Model.student.LastName.Trim() : "";
+	    teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName.Trim() + " " + Model.teacher.LastName.Trim() : "";
+		dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
 
-	if (string.IsNullOrEmpty(formModel.Goal_Living) && livingGoal != null)
-	{
-		formModel.Goal_Living = string.Format("{0} {1} {2}", livingGoal.CompletetionType, livingGoal.Behavior, livingGoal.WhereAndHow);
-	}
-
-	if (string.IsNullOrEmpty(formModel.AC_ReadingPerformance) && Model.reading != null)
-	{
-		formModel.AC_ReadingPerformance = string.Format("{0}", Model.reading.LevelOfPerformance);
-	}
-
-	if (string.IsNullOrEmpty(formModel.AC_MathPerformance) && Model.math != null)
-	{
-		formModel.AC_MathPerformance = string.Format("{0}", Model.math.LevelOfPerformance);
-	}
-
-	if (string.IsNullOrEmpty(formModel.AC_LanguagePerformance) && Model.written != null)
-	{
-		formModel.AC_LanguagePerformance = string.Format("{0}", Model.written.LevelOfPerformance);
-	}
-
-	if (string.IsNullOrEmpty(formModel.AC_OtherPerformance) && Model.academicGoals != null)
-	{
-		formModel.AC_OtherPerformance = string.Format("{0}", Model.academicGoals.LevelOfPerformance);
-	}
-
-	if (string.IsNullOrEmpty(formModel.Functional_SocialPerformance) && Model.socialGoals != null)
-	{
-		formModel.Functional_SocialPerformance = string.Format("{0}", Model.socialGoals.LevelOfPerformance);
-	}
-
-	
-	string currentDate = DateTime.Now.ToShortDateString();
-
-	if (Model.contacts != null)
-	{
-		foreach (var contact in Model.contacts)
+		if (Model.contacts != null)
 		{
-			parents += string.Format("{0} {1} ", contact.FirstName, contact.LastName);
+			foreach (var contact in Model.contacts.Where(o => o.PrimaryContact == 1))
+			{
+				parents += string.Format("{0} {1} ", contact.FirstName, contact.LastName);
+				parentPhone = contact.Phone;
+			}
+		}
+
+		if (string.IsNullOrEmpty(formModel.Goal_Learning) && learningGoal != null)
+		{
+			formModel.Goal_Learning = string.Format("{0} {1} {2}", learningGoal.CompletetionType, learningGoal.Behavior, learningGoal.WhereAndHow);
+		}
+
+		if (string.IsNullOrEmpty(formModel.Goal_Working) && workingGoal != null)
+		{
+			formModel.Goal_Working = string.Format("{0} {1} {2}", workingGoal.CompletetionType, workingGoal.Behavior, workingGoal.WhereAndHow);
+		}
+
+		if (string.IsNullOrEmpty(formModel.Goal_Living) && livingGoal != null)
+		{
+			formModel.Goal_Living = string.Format("{0} {1} {2}", livingGoal.CompletetionType, livingGoal.Behavior, livingGoal.WhereAndHow);
+		}
+
+		if (string.IsNullOrEmpty(formModel.AC_ReadingPerformance) && Model.reading != null)
+		{
+			formModel.AC_ReadingPerformance = string.Format("{0}", Model.reading.LevelOfPerformance);
+		}
+
+		if (string.IsNullOrEmpty(formModel.AC_MathPerformance) && Model.math != null)
+		{
+			formModel.AC_MathPerformance = string.Format("{0}", Model.math.LevelOfPerformance);
+		}
+
+		if (string.IsNullOrEmpty(formModel.AC_LanguagePerformance) && Model.written != null)
+		{
+			formModel.AC_LanguagePerformance = string.Format("{0}", Model.written.LevelOfPerformance);
+		}
+
+		if (string.IsNullOrEmpty(formModel.AC_OtherPerformance) && Model.academicGoals != null)
+		{
+			formModel.AC_OtherPerformance = string.Format("{0}", Model.academicGoals.LevelOfPerformance);
+		}
+
+		if (string.IsNullOrEmpty(formModel.Functional_SocialPerformance) && Model.socialGoals != null)
+		{
+			formModel.Functional_SocialPerformance = string.Format("{0}", Model.socialGoals.LevelOfPerformance);
 		}
 	}
 
 }
 
 <div class="module-page savdDraftAllowed">
-	<p class=MsoNormal align=center style='text-align:center;margin-bottom:8px'><b>My Summary of Performance</b></p>
+	<p class=MsoNormal align=center style='text-align:center;margin-bottom:12px;font-size:12pt'><b>My Summary of Performance</b></p>
 		
-	<p class=MsoNormal>
+	<p class="MsoNormal" style='margin-bottom:8px'>
 		Name:
-		<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentFormattedName.Length) > 103 ? studentFormattedName : String.Format(studentFormattedName).PadRight(103 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentFormattedName.Length) > 103 ? studentFormattedName : String.Format(studentFormattedName).PadRight(103 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-		Date of Birth: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((dobStr.Length) > 25 ? dobStr : String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((dobStr.Length) > 25 ? dobStr : String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</span></span> 
+		<span style="text-decoration:underline;">
+			<textarea class="form-control1" cols="30" style="height:30px;" maxlength="20">@(studentFormattedName)</textarea><span id="student_Name" style='display:none;text-align:left' class="input-value">@(studentFormattedName)</span>									
+		</span>
+		&nbsp;Date of Birth: 
+		<span style="text-decoration:underline;">
+			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(dobStr)</textarea><span id="DateOfBirth" style='display:none;text-align:left' class="input-value isDate">@(dobStr)</span>
+		</span> 
 	</p>
 
-	<p class=MsoNormal>
-		Address:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	<p class="MsoNormal"  style='margin-bottom:8px'>
+		Address: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="70" style="height:30px;">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 	</p>
 
-	<p class=MsoNormal>
-		Telephone Number:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span> Year of Graduation/Exit: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((graduation.Length) > 103 ? graduation : String.Format(graduation).PadRight(103 - String.Format(graduation).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((graduation.Length) > 103 ? graduation : String.Format(graduation).PadRight(103 - String.Format(graduation).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	<p class=MsoNormal  style='margin-bottom:8px'>
+		Telephone Number:
+		<span style="text-decoration:underline;">
+			<textarea class="form-control1" cols="20" style="height:30px;" maxlength="20">@(parentPhone)</textarea><span id="student_phone" style='display:none;text-align:left' class="input-value">@(parentPhone)</span>									
+		</span>
+		&nbsp;Year of Graduation/Exit: 
+		<span style="text-decoration:underline;">
+			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(graduation)</textarea><span id="GraduationExitYear" style='display:none;text-align:left' class="input-value">@(graduation)</span>									
+		</span>
 	</p>
 
-	<p class=MsoNormal>
-		Current School: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentSchool.Length) > 103 ? studentSchool : String.Format(studentSchool).PadRight(103 - String.Format(studentSchool).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentSchool.Length) > 103 ? studentSchool : String.Format(studentSchool).PadRight(103 - String.Format(studentSchool).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-		City:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((districtCity.Length) > 103 ? districtCity : String.Format(districtCity).PadRight(103 - String.Format(districtCity).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((districtCity.Length) > 103 ? districtCity : String.Format(districtCity).PadRight(103 - String.Format(districtCity).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	<p class=MsoNormal  style='margin-bottom:8px'>
+		Current School: <span style="text-decoration:underline;">
+		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="500">@(studentSchool)</textarea>
+		<span id="CurrentSchool" style='display:none;text-align:left' class="input-value">@(studentSchool)</span>											
+		</span>
+		&nbsp;City:<span style="text-decoration:underline;">
+		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="100">@(studentCity)</textarea>
+		<span id="CurrentCity" style='display:none;text-align:left' class="input-value">@(studentCity)</span>											
+		</span>
 	</p>
 
-	<p class=MsoNormal>
-		Primary Language or mode of communication:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((studentLanguage.Length) > 103 ? studentLanguage : String.Format(studentLanguage).PadRight(103 - String.Format(studentLanguage).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentLanguage.Length) > 103 ? studentLanguage : String.Format(studentLanguage).PadRight(103 - String.Format(studentLanguage).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+	<p class=MsoNormal  style='margin-bottom:8px'>
+		Primary Language or mode of communication:<span style="text-decoration:underline;">
+		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="500">@(studentLanguage)</textarea>
+		<span id="PrimaryLanguage" style='display:none;text-align:left' class="input-value">@(studentLanguage)</span>													
+		</span>
+	</p>
+	<p class=MsoNormal style='margin-bottom:8px'>
+		School Representative Contact: 
+	</p>
+	<p class=MsoNormal  style='margin-bottom:8px'>
+		Name:<span style="text-decoration:underline;">
+		<textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(districtContactName)</textarea>
+		<span id="ContactName" style='display:none;text-align:left' class="input-value">@(districtContactName)</span>															
+		</span>
+		&nbsp;Title: <span style="text-decoration:underline;">
+		<textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(formModel.ContactTitle)</textarea>
+		<span id="ContactTitle" style='display:none;text-align:left' class="input-value">@(formModel.ContactTitle)</span>																
+		</span>
 	</p>
 
-	<p class=MsoNormal>
-		School Representative Contact: Name:<span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((districtContactName.Length) > 60 ? districtContactName : String.Format(districtContactName).PadRight(60 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((districtContactName.Length) > 60 ? districtContactName : String.Format(districtContactName).PadRight(60 - String.Format(districtContactName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-		Title: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+	<p class=MsoNormal  style='margin-bottom:8px'>
+		School: <span style="text-decoration:underline;"><textarea class="form-control1" cols="40" style="height:30px;" maxlength="200">@(districtName)</textarea>
+		<span id="ContactSchool" style='display:none;text-align:left' class="input-value">@(districtName)</span></span>
+		&nbsp;E-mail: <span style="text-decoration:underline;"><textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(formModel.ContactEmail)</textarea>
+		<span id="ContactEmail" style='display:none;text-align:left' class="input-value">@(formModel.ContactEmail)</span></span> 
+		
 	</p>
 
-	<p class=MsoNormal>
-		School: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;">@((Model.districtName.Length) > 103 ? Model.districtName : String.Format(Model.districtName).PadRight(103 - String.Format(Model.districtName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((Model.districtName.Length) > 103 ? Model.districtName : String.Format(Model.districtName).PadRight(103 - String.Format(Model.districtName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-		E-mail: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span> Telephone Number: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="30" style="height:30px;"></textarea><span style="display:none;text-decoration:underline" class="input-value"></span></span>
+	<p class=MsoNormal>		
+		Telephone Number: <span style="text-decoration:underline;"><textarea class="form-control1" cols="20" style="height:30px;" maxlength="20">@(districtContactPhone)</textarea>
+		<span id="ContactPhone" style='display:none;text-align:left' class="input-value">@(districtContactPhone)</span></span>
 	</p>
 
-	<p class=MsoNormal style="margin-top:15px"><b>My Goals for one year after high school:</b> </p>
-	<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style=''>
+	<p class=MsoNormal style="margin-top:15px;margin-bottom:15px"><b>My Goals for one year after high school:</b> </p>
+	<table class="MsoTableGrid" border=1 cellspacing=2 cellpadding=5 >
 		<tr>
 			<td width=78 valign=top style='width:58.25pt;border:none;padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:12.0pt;line-height:normal'>Learning</p>
@@ -176,7 +241,7 @@
 			</td>
 		</tr>
 	</table>
-	<p class=MsoNormal style="margin-top:15px"><b>My performance in academic content areas:</b></p>
+	<p class=MsoNormal style="margin-top:15px;margin-bottom:15px"><b>My performance in academic content areas:</b></p>
 	<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5>
 		<tr>
 			<td width=162 valign=top style='width:121.25pt; padding:0in 5.4pt 0in 5.4pt'>
@@ -293,8 +358,8 @@
 		</tr>
 	</table>
 
-<p class=MsoNormal>  <b>My performance in functional areas: </b></p>
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5>
+<p class=MsoNormal style="margin-top:15px;margin-bottom:15px">  <b>My performance in functional areas: </b></p>
+<table class=MsoTableGrid border=1 cellspacing=2 cellpadding=5>
  <tr>
   <td width=208 valign=top style='width:155.8pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
@@ -407,10 +472,10 @@
 </table>
 
 
-<p class=MsoNormal>Date this Summary was completed: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</textarea><span id="DateCompleted" style='display:none' class="input-value">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</span></p>
+<p class=MsoNormal style="margin-top:15px;margin-bottom:15px">Date this Summary was completed: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</textarea><span id="DateCompleted" style='display:none' class="input-value">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</span></p>
 
-<p class=MsoNormal><b>Team participants providing input into the Summary of Performance </b></p>
-<table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style='text-align:left'>
+<p class=MsoNormal style="margin-top:15px;margin-bottom:15px"><b>Team participants providing input into the Summary of Performance </b></p>
+<table class=MsoTableGrid border=1 cellspacing=2 cellpadding=5 style='text-align:left;width:100%'>
  <tr>
   <td width="50%">
   <p><b>Name/Title</b></p>
@@ -421,35 +486,48 @@
  </tr>
  <tr>
   <td>
-  <p><textarea class="form-control">@(studentFormattedName)</textarea><span style="display:none;" class="input-value">@(studentFormattedName)</span><span> (Student)</span></p>
+  <p><textarea class="form-control" maxlength="200">@(studentFormattedName)</textarea>
+	  <span id="Team_StudentName" style="display:none;" class="input-value">@(studentFormattedName)</span>
+	  <br/><span>(Student)</span></p>
   </td>
   <td >
-  <p><textarea class="form-control">@(string.IsNullOrEmpty(parents) ? "" : parents)</textarea><span style="display:none;" class="input-value">@(parents)</span><span> (Parent(s))</span></p>  
+  <p><textarea class="form-control" maxlength="200">@(parents)</textarea>
+	  <span id="Team_ParentName" style="display:none;" class="input-value">@(parents)</span>
+	  <br/><span>(Parent(s))</span></p>  
   </td>
  </tr>
  <tr>
   <td>
-  <p><textarea class="form-control">@(string.IsNullOrEmpty(teacherFormattedName) ? "" : teacherFormattedName)</textarea><span style="display:none;" class="input-value">@(teacherFormattedName)</span><span> (Teacher)</span></p>       
+	<p>
+	  <textarea class="form-control" maxlength="200">@(teacherFormattedName)</textarea>
+	  <span id="Team_TeacherName1" style="display:none;" class="input-value">@(teacherFormattedName)</span>
+	  <br/><span>(Teacher)</span>
+	</p>
   </td>
-  <td >
-  <p><textarea class="form-control"></textarea><span style="display:none;" class="input-value"></span><span> (Teacher)</span></p>  
+<td>
+	<p>
+	  <textarea class="form-control" maxlength="200">@(formModel.Team_TeacherName2)</textarea>
+	  <span id="Team_TeacherName2" style="display:none;" class="input-value">@(formModel.Team_TeacherName2)</span>
+	  <br/><span>(Teacher)</span></p>  
   </td>
  </tr>
  <tr>
   <td>
-	 <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span><span> (Other Service Provider)</span></p>    
+	 <p><textarea class="form-control" maxlength="200">@(formModel.Team_OtherProvider1)</textarea>
+	  <span id="Team_OtherProvider1" style="display:none;" class="input-value">@(formModel.Team_OtherProvider1)</span><br/><span>(Other Service Provider)</span></p>    
   </td>
   <td>
-  <p><textarea class="form-control"></textarea><span style="display:none;font-size:9pt" class="input-value"></span><span> (Other Service Provider)</span></p>    
+  <p><textarea class="form-control" maxlength="200">@(formModel.Team_OtherProvider2)</textarea>
+	  <span id="Team_OtherProvider2" style="display:none;" class="input-value">@(formModel.Team_OtherProvider2)</span><br/><span>(Other Service Provider)</span></p>    
   </td>
  </tr>
 </table>
 
-<p class=MsoNormal> </p>
 
-<p class=MsoNormal><b><u>OPTIONAL </u></b></p>
 
-<p class=MsoNormal><b>Documentation of special needs:  </b></p>
+<p class=MsoNormal style="margin-top:15px;"><b><u>OPTIONAL </u></b></p>
+
+<p class=MsoNormal  style="margin-top:15px;margin-bottom:15px;"><b>Documentation of special needs:</b></p>
 
 <table class=MsoTableGrid border=1 cellspacing=0 cellpadding=5 style='text-align:left'>
  <tr>
