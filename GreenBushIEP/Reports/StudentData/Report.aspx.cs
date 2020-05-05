@@ -56,18 +56,7 @@ namespace GreenBushIEP.Reports.Owner
 				teacherIds = user.UserID.ToString();
 			}
 
-			string statusCodes = "";
-
-			if (statusDD.Value != "All")
-			{
-				foreach (ListItem li in statusDD.Items)
-				{
-					if (li.Selected)
-					{
-						statusCodes += string.Format("{0},", li.Text);
-					}
-				}
-			}
+			string statusCodes = this.studentStatusVals.Value;
 			
 			DateTime? startDate = null;
 			DateTime? endDate = null;

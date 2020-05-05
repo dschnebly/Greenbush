@@ -78,37 +78,44 @@
 	</div>
 	<script type="text/javascript">
          var submit_clicked = false;
-         $(document).ready(function () {
-			 
-			 $('.chosen-select').chosen({ width: "100%", placeholder_text_single: "Select..." });
-			 $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true
-			 });
+		$(document).ready(function () {
 
-			 $('#ContentPlaceHolder1_districtDD').change(function (e) {
-				 _districtChange($(this));
-				 return false;
-			 });
+			$('.chosen-select').chosen({ width: "100%", placeholder_text_single: "Select..." });
+			$('.dtField').datepicker({
+				dateFormat: "mm/dd/yy",
+				changeYear: true,
+				changeMonth: true
+			});
 
-			 $('#ContentPlaceHolder1_buildingDD').change(function (e) {
-				 _buildingChange($(this));
-				 return false;
-			 });
+			$('#ContentPlaceHolder1_districtDD').change(function (e) {
+				_districtChange($(this));
+				return false;
+			});
 
-			  $('#ContentPlaceHolder1_teacherDD').change(function (e) {
-				 _teacherChange($(this));
-				 return false;
-			  });		
+			$('#ContentPlaceHolder1_buildingDD').change(function (e) {
+				_buildingChange($(this));
+				return false;
+			});
 
-			  $('#ContentPlaceHolder1_providerDD').change(function (e) {
-				 var selectedValues = $(this).val();
-				$("#ContentPlaceHolder1_providerVals").val(selectedValues);	
-				 return false;
-			 });
-			 
-			 //_getDistricts();
+			$('#ContentPlaceHolder1_teacherDD').change(function (e) {
+				_teacherChange($(this));
+				return false;
+			});
+
+			$('#ContentPlaceHolder1_providerDD').change(function (e) {
+				var selectedValues = $(this).val();
+				$("#ContentPlaceHolder1_providerVals").val(selectedValues);
+				return false;
+			});
+
+			$('#ContentPlaceHolder1_statusDD').change(function (e) {
+				var selectedValues = $(this).val();
+				$("#ContentPlaceHolder1_studentStatusVals").val(selectedValues);
+				return false;
+			});
+
+			//_getDistricts();
+
 		});
 	
 
@@ -328,7 +335,7 @@
 
 		}
 
-			//	function _getDistricts() {
+		//	function _getDistricts() {
 		//	 if ($("#ContentPlaceHolder1_districtDD").length > 0) {
 		//		  $.ajax({
 		//				 type: 'GET',
@@ -366,7 +373,7 @@
 
 				
 		//}
-    </script>
+	</script>
 	
 </body>
 </html>

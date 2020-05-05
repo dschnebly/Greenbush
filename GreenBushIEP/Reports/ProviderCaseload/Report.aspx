@@ -46,7 +46,7 @@
 				<input type="hidden" id="teacherVals" runat="server" />
 			</div>
 		</div>
-		<div class="col-md-12" <%=toggleElement %>>
+		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="providerDD">Provider</label>
 			</div>

@@ -55,11 +55,18 @@ namespace GreenBushIEP.Report
 		public static void StudentStatusList(HtmlSelect statusDD)
 		{
 
-			var statusList = db.tblStatusCodes.ToList();
+			var statusList = db.tblStatusCodes;
+			var statuses = new List<SelectListItem>();
+
 			//statusList.Insert(0, new tblStatusCode() { StatusCode = "All" });
-			statusDD.DataSource = statusList;
-			statusDD.DataTextField = "StatusCode";
-			statusDD.DataValueField = "StatusCode";
+
+			foreach (var status in statusList)
+			{
+				statuses.Add(new SelectListItem() { Text = string.Format("({0}) {1}", status.StatusCode, status.Description), Value=status.StatusCode });
+			}
+			statusDD.DataSource = statuses;
+			statusDD.DataTextField = "Text";
+			statusDD.DataValueField = "Value";
 			statusDD.DataBind();
 		}
 
@@ -557,14 +564,7 @@ namespace GreenBushIEP.Report
 		public static string GetServiceFilter(HtmlSelect ServiceType)
 		{
 			string serviceIds = ServiceType.Value;
-			//foreach (ListItem li in ServiceType.Items)
-			//{
-			//	if (li.Selected)
-			//	{
-			//		serviceIds += string.Format("{0},", li.Value);
-			//	}
-			//}
-
+			
 			return serviceIds.TrimEnd(',');
 			
 		}
@@ -601,13 +601,7 @@ namespace GreenBushIEP.Report
 			}
 			else
 			{
-				foreach (ListItem li in buildingDD.Items)
-				{
-					if (li.Selected)
-					{
-						buildingList += string.Format("{0},", li.Value);
-					}
-				}
+				buildingList += buildingID;
 			}
 
 			return buildingList.TrimEnd(',');

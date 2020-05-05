@@ -34,6 +34,7 @@
 				<select id="statusDD" runat="server" class="chosen-select" data-placeholder="Select Status" multiple="true">
 					<option value="">Select</option>
 				</select>
+				<input type="hidden" id="studentStatusVals" runat="server" />
 			</div>
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
