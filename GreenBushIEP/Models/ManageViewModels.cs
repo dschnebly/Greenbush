@@ -663,6 +663,7 @@ namespace GreenBushIEP.Models
         public List<int> fiscalYears { get; set; }
         public DateTime IEPStartDate { get; set; }
         public DateTime MeetingDate { get; set; }
+        public DateTime CreateDate { get; set; }
         public string providedfor { get; set; }
         public string IEPStatus { get; set; }
         public bool isOriginalIEPService { get; set; }
@@ -679,6 +680,7 @@ namespace GreenBushIEP.Models
             fiscalYears = new List<int>();
             IEPStartDate = new DateTime();
             MeetingDate = new DateTime();
+            CreateDate = new DateTime();
             providedfor = "";
             IEPStatus = "Draft";
         }
