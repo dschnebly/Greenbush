@@ -383,7 +383,7 @@
                                                     <label for="Frequency">Initiation Date</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" @(Model.isOriginalIEPService && service.Create_Date.ToString("MM/dd/yy H:mm:ss") == Model.CreateDate.ToString("MM/dd/yy H:mm:ss") ? "readonly" : string.Empty) aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" @(Model.isOriginalIEPService && service.Create_Date.ToString("MM/dd/yy H:mm:ss") == Model.CreateDate.ToString("MM/dd/yy H:mm:ss") && service.StartDate < Model.IEPStartDate ? "readonly" : string.Empty) aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
