@@ -154,9 +154,9 @@ namespace GreenBushIEP.Report
 
 		}
 
-		public static void StudentList(HtmlSelect studentDD, string selectedDistrict, string selectedBuilding, string selectedTeacher)
+		public static void StudentList(HtmlSelect studentDD, string selectedDistrict, string selectedBuilding, string selectedTeacher, HtmlInputHidden studentValsInput)
 		{
-			var selectedStudent = studentDD.Value;
+			var selectedStudent = studentValsInput.Value;
 
 			var studentList = GreenBushIEP.Report.ReportMaster.GetStudents(HttpContext.Current.User.Identity.Name, selectedDistrict, selectedBuilding, selectedTeacher);
 			studentDD.DataSource = studentList;

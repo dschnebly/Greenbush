@@ -25,7 +25,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "");
+				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "", this.studentVals);
 
 				var sid =  Request.QueryString["sid"];
 				
@@ -39,7 +39,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			{
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "");
+				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "", this.studentVals);
 			}
 
 		}
@@ -71,8 +71,8 @@ namespace GreenBushIEP.Reports.ProgressReport
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 
-			string studentFilter = this.studentDD.Value == "-1" ? "" : studentDD.Value;
-			
+			string studentFilter = this.studentVals.Value == "-1" ? "" : studentVals.Value;
+
 			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				teacherIds = user.UserID.ToString();
