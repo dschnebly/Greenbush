@@ -1308,7 +1308,6 @@ namespace GreenBushIEP.Controllers
 
                         tblTransitionAssessment assessment = db.tblTransitionAssessments.Where(a => a.TransitionAssementID == asmtId).FirstOrDefault() ?? new tblTransitionAssessment();
                         assessment.TransitionID = transition.TransitionID;
-                        assessment.Narrative = collection[i++].ToString();
                         string completedOn = collection[i++];
                         if (completedOn != null && completedOn != "")
                         {
@@ -1316,6 +1315,7 @@ namespace GreenBushIEP.Controllers
                         }
 
                         assessment.Performance = collection[i++].ToString();
+                        assessment.Narrative = collection[i++].ToString();
                         assessment.IEPid = transition.IEPid;
                         assessment.Update_Date = DateTime.Now;
 
@@ -1328,7 +1328,6 @@ namespace GreenBushIEP.Controllers
                         db.SaveChanges();
 
                         assessmentFound = true;
-
                     }
 
                 }
