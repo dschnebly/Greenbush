@@ -111,6 +111,8 @@ namespace GreenBushIEP.Models
         public bool hasIEP;
         public string KidsID;
         public bool isAssigned;
+        public string StatusCode;
+        public int StatusActive;
     }
 
     public class UserOrganizationViewModel
