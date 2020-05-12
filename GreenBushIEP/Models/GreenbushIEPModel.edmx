@@ -1098,10 +1098,10 @@
           <Property Name="ProgressDate_Quarter2" Type="datetime" />
           <Property Name="ProgressDate_Quarter3" Type="datetime" />
           <Property Name="ProgressDate_Quarter4" Type="datetime" />
-          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="1000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1140,10 +1140,10 @@
           <Property Name="ProgressDate_Quarter2" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter3" Type="datetime" Nullable="false" />
           <Property Name="ProgressDate_Quarter4" Type="datetime" Nullable="false" />
-          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="500" />
-          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="500" />
+          <Property Name="ProgressDescription_Quarter1" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter2" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter3" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProgressDescription_Quarter4" Type="nvarchar" MaxLength="1000" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="EvaluationProcedures" Type="int" />
@@ -3828,10 +3828,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ProgressDate_Quarter2" Type="DateTime" Precision="3" />
           <Property Name="ProgressDate_Quarter3" Type="DateTime" Precision="3" />
           <Property Name="ProgressDate_Quarter4" Type="DateTime" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" />
@@ -3870,10 +3870,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ProgressDate_Quarter2" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter3" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ProgressDate_Quarter4" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter1" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter2" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter3" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProgressDescription_Quarter4" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="EvaluationProcedures" Type="Int32" />
@@ -5177,7 +5177,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="AccessToEmailCommunication_No" Type="Boolean" />
           <Property Name="AccessToWorkPacket_Yes" Type="Boolean" />
           <Property Name="AccessToWorkPacket_No" Type="Boolean" />
-          <Property Name="AccessToWorkPacket_DateProvided" Type="String" />
+          <Property Name="AccessToWorkPacket_DateProvided" Type="String" MaxLength="200" Unicode="true" FixedLength="false" />
           <Property Name="AccessToWorkPacket_Method" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ServicesOffered" Type="Boolean" />
           <Property Name="ServicesAccepted" Type="Boolean" />
