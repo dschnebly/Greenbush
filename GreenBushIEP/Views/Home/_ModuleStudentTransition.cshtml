@@ -326,14 +326,6 @@
                                     <div id="collapse" class="panel-collapse">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-md-12">
-                                                    <fieldset class="form-group" style="margin-bottom: 5px;">
-                                                        <label for="narrative">Narrative</label>
-                                                        <textarea rows="3" name="transitionAssessmentNarrativeDefault" id="transitionAssessmentNarrativeDefault" style="width: 100%;" maxlength="2000"></textarea>
-                                                    </fieldset>
-                                                </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                     <div class="input-group" style="margin-bottom: 5px;">
@@ -343,7 +335,15 @@
                                                 </div>
                                                 <div class="col-md-9">
                                                     <label for="performance">Assessment Name</label>
-                                                    <textarea rows="2"  name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group" maxlength="2000"></textarea>
+                                                    <textarea rows="2" name="transitionAssessmentPerformanceDefault" id="transitionAssessmentPerformanceDefault" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group" maxlength="2000"></textarea>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                        <label for="narrative">Narrative</label>
+                                                        <textarea rows="3" name="transitionAssessmentNarrativeDefault" id="transitionAssessmentNarrativeDefault" style="width: 100%;" maxlength="2000"></textarea>
+                                                    </fieldset>
                                                 </div>
                                             </div>
                                         </div>
@@ -386,14 +386,6 @@
                                                         <div id="collapseAssessment@(assessment.TransitionAssementID)" class="panel-collapse collapse in">
                                                             <div class="panel-body">
                                                                 <div class="row">
-                                                                    <div class="col-md-12">
-                                                                        <fieldset class="form-group" style="margin-bottom: 5px;">
-                                                                            <label for="narrative">Narrative</label>
-                                                                            <textarea rows="3" name="transitionAssessmentNarrative@(assessment.TransitionAssementID)" id="transitionAssessmentNarrative@(assessment.TransitionAssementID)" style="width: 100%;">@(assessment.Narrative)</textarea>
-                                                                        </fieldset>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
                                                                     <div class="col-md-3">
                                                                         <label for="completed">Completed On&nbsp;&nbsp;</label>
                                                                         <div class="input-group" style="margin-bottom: 5px;">
@@ -404,6 +396,14 @@
                                                                     <div class="col-md-9">
                                                                         <label for="performance">Assessment Name</label>
                                                                         <textarea rows="2" name="transitionAssessmentPerformance@(assessment.TransitionAssementID)" style="width: 100%; margin-bottom: 5px; padding: 14px 12px; max-height: 49px;" class="form-group">@(assessment.Performance)</textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-12">
+                                                                        <fieldset class="form-group" style="margin-bottom: 5px;">
+                                                                            <label for="narrative">Narrative</label>
+                                                                            <textarea rows="3" name="transitionAssessmentNarrative@(assessment.TransitionAssementID)" id="transitionAssessmentNarrative@(assessment.TransitionAssementID)" style="width: 100%;">@(assessment.Narrative)</textarea>
+                                                                        </fieldset>
                                                                     </div>
                                                                 </div>
                                                             </div>
