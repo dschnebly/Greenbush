@@ -2340,6 +2340,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="USD" Type="nvarchar" Mode="In" />
           <Parameter Name="BuildingID" Type="nvarchar" Mode="In" />
           <Parameter Name="isAssgined" Type="bit" Mode="In" />
+          <Parameter Name="isArchived" Type="bit" Mode="In" />
         </Function>
         <Function Name="uspUserListByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
@@ -2822,6 +2823,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="USD" Mode="In" Type="String" />
             <Parameter Name="BuildingID" Mode="In" Type="String" />
             <Parameter Name="isAssgined" Mode="In" Type="Boolean" />
+            <Parameter Name="isArchived" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="uspUserListByUserID" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserListByUserID_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />

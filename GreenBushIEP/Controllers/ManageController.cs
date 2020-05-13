@@ -3022,7 +3022,7 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType)
+        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType, int? statusActive)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)

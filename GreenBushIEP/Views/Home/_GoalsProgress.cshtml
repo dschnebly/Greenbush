@@ -23,7 +23,6 @@
 			
             <div class="form-group" style="margin-bottom: 8px;padding:3px">
                 <div class="input-group" style="background-color: #F9F9F9;">
-                  
                     <input type="text" value="@(benchmark.ObjectiveBenchmark.ToString())" name="StudentGoalBenchmarkTitle@(benchmark.goalBenchmarkID)" class="StudentGoalBenchmarkTitle form-control" placeholder="Enter a new student benchmark" @if (isReadOnly) { @Html.Raw("disabled='disabled'")   ; } />
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-default deleteBenchmark" style="height:49px; border-radius: 0;" @if (isReadOnly) { @Html.Raw("disabled='disabled'")  ; }>

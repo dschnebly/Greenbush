@@ -374,7 +374,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     
-        public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined)
+        public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined, Nullable<bool> isArchived)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
@@ -392,7 +392,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("isAssgined", isAssgined) :
                 new ObjectParameter("isAssgined", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter);
+            var isArchivedParameter = isArchived.HasValue ?
+                new ObjectParameter("isArchived", isArchived) :
+                new ObjectParameter("isArchived", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter, isArchivedParameter);
         }
     
         public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)

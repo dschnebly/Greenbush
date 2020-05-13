@@ -130,8 +130,11 @@
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
             var selectedActive = this.value;
+            var selectedStatus = $("#statusActive option:selected").val() + "";
 
             $(".ajax-loader").show();
+
+            alert(selectedStatus);
 
             $.ajax({
                 type: "POST",
@@ -141,7 +144,8 @@
                     DistrictId: selectedDistrict,
                     BuildingId: selectedBuilding,
                     RoleId: selectedRole,
-                    activeType: selectedActive
+                    activeType: selectedActive,
+                    statusActive: selectedStatus
                 },
                 async: false,
                 success: function (data) {
