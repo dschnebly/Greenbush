@@ -2436,7 +2436,9 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                                         <Style />
                                                       </TextRun>
                                                     </TextRuns>
-                                                    <Style />
+                                                    <Style>
+                                                      <TextAlign>Left</TextAlign>
+                                                    </Style>
                                                   </Paragraph>
                                                 </Paragraphs>
                                                 <rd:DefaultName>Grade</rd:DefaultName>
