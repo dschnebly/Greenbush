@@ -114,6 +114,12 @@
 				return false;
 			});
 
+			$('#ContentPlaceHolder1_studentDD').change(function (e) {
+				var selectedValues = $(this).val();
+				$("#ContentPlaceHolder1_studentVals").val(selectedValues);
+				return false;
+			});
+
 			//_getDistricts();
 
 		});

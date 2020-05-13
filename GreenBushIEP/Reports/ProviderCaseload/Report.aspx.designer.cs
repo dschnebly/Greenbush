@@ -76,6 +76,15 @@ namespace GreenBushIEP.Reports.ProviderCaseload {
         protected global::System.Web.UI.HtmlControls.HtmlSelect studentDD;
         
         /// <summary>
+        /// studentVals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputHidden studentVals;
+        
+        /// <summary>
         /// fiscalYear control.
         /// </summary>
         /// <remarks>

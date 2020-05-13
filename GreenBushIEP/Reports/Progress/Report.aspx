@@ -68,6 +68,7 @@
 				<select id="studentDD" runat="server" class="chosen-select" data-placeholder="Select Student">
 					<option value="">Select</option>
 				</select>
+				<input type="hidden" id="studentVals" runat="server" />
 			</div>
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
