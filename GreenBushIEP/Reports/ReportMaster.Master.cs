@@ -394,7 +394,7 @@ namespace GreenBushIEP.Report
 			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				//can only see their own students
-				var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+				var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null, null)
 						.Where(ul => myRoles.Contains(ul.RoleID))
 						.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName });
 
@@ -420,7 +420,7 @@ namespace GreenBushIEP.Report
 				if (string.IsNullOrEmpty(selectedTeacher))
 				{
 					//get based on user id and district and building
-					var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+					var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null, null)
 					.Where(ul => myRoles.Contains(ul.RoleID))
 					.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
 					.OrderBy(o => o.LastName).ThenBy(o => o.FirstName).Distinct().ToList();
@@ -442,7 +442,7 @@ namespace GreenBushIEP.Report
 						var teacherId = 0;
 						Int32.TryParse(teacher, out teacherId);
 
-						var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null)
+						var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null, null)
 						.Where(ul => myRoles.Contains(ul.RoleID))
 						.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName });
 

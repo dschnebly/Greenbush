@@ -3043,7 +3043,7 @@ namespace GreenBushIEP.Controllers
 
                 if (RoleId != "999")
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
@@ -3062,7 +3062,7 @@ namespace GreenBushIEP.Controllers
                 }
                 else // Unassigned Users.
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
@@ -3911,7 +3911,7 @@ namespace GreenBushIEP.Controllers
 						if (selectedBuilding == "-1")
 							selectedBuilding = null;						
 
-						var teachers = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+						var teachers = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null, null)
 							.Where(ul => myRoles.Contains(ul.RoleID))
 							.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
 							.OrderBy(o => o.Name).ToList();
@@ -3957,7 +3957,7 @@ namespace GreenBushIEP.Controllers
 					if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 					{
 						//can only see their own students
-						var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+						var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null, null)
 								.Where(ul => myRoles.Contains(ul.RoleID))
 								.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
 								.OrderBy(o => o.Name);
@@ -3982,7 +3982,7 @@ namespace GreenBushIEP.Controllers
 						if (string.IsNullOrEmpty(selectedTeacher))
 						{
 							//get based on user id and district and building
-							var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null)
+							var students = db.uspUserList(user.UserID, selectedDistrict, selectedBuilding, null, null)
 							.Where(ul => myRoles.Contains(ul.RoleID))
 							.Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
 							.OrderBy(o => o.Name).ToList();
@@ -4004,7 +4004,7 @@ namespace GreenBushIEP.Controllers
 								var teacherId = 0;
 								Int32.TryParse(teacher, out teacherId);
 
-								var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null)
+								var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null, null)
 								.Where(ul => myRoles.Contains(ul.RoleID))
 								.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
 								.OrderBy(o => o.Name);
