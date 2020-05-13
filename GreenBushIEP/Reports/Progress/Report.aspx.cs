@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -100,69 +101,34 @@ namespace GreenBushIEP.Reports.ProgressReport
 
 		private DataTable GetData(string districtFilter, string providerIds, string buildingID, string status, string teacherIds, string studentIds)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("begin_date", typeof(string));
-			dt.Columns.Add("end_Date", typeof(string));
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			//dt.Columns.Add("ProviderName", typeof(string));
-			dt.Columns.Add("Grade", typeof(string));
-			dt.Columns.Add("goalID", typeof(int));
-			dt.Columns.Add("GoalDescription", typeof(string));
-			dt.Columns.Add("StateStandards", typeof(string));
-			dt.Columns.Add("Baseline", typeof(string));
-			dt.Columns.Add("goalBenchmarkID", typeof(int));
-			dt.Columns.Add("ObjectiveBenchmark", typeof(string));
-			dt.Columns.Add("Method", typeof(string));
-			dt.Columns.Add("BencharkDateQ1", typeof(string));
-			dt.Columns.Add("BencharkDateQ2", typeof(string));
-			dt.Columns.Add("BencharkDateQ3", typeof(string));
-			dt.Columns.Add("BencharkDateQ4", typeof(string));
-			dt.Columns.Add("ProgressDateQ1", typeof(string));
-			dt.Columns.Add("ProgressDateQ2", typeof(string));
-			dt.Columns.Add("ProgressDateQ3", typeof(string));
-			dt.Columns.Add("ProgressDateQ4", typeof(string));
-			dt.Columns.Add("ProgressNotes1", typeof(string));
-			dt.Columns.Add("ProgressNotes2", typeof(string));
-			dt.Columns.Add("ProgressNotes3", typeof(string));
-			dt.Columns.Add("ProgressNotes4", typeof(string));			
-			dt.Columns.Add("Progress_Quarter1", typeof(string));
-			dt.Columns.Add("Progress_Quarter2", typeof(string));
-			dt.Columns.Add("Progress_Quarter3", typeof(string));
-			dt.Columns.Add("Progress_Quarter4", typeof(string));
-			dt.Columns.Add("StudentId", typeof(string));
-			dt.Columns.Add("GoalModule", typeof(string));
-			dt.Columns.Add("AnnualGoal", typeof(string));
-			dt.Columns.Add("BenchmarkNotes1", typeof(string));
-			dt.Columns.Add("BenchmarkNotes2", typeof(string));
-			dt.Columns.Add("BenchmarkNotes3", typeof(string));
-			dt.Columns.Add("BenchmarkNotes4", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter1", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter2", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter3", typeof(string));
-			dt.Columns.Add("BenchmarkProgress_Quarter4", typeof(string));
+			DataSet ds = new DataSet();
 
 
-			using (var ctx = new IndividualizedEducationProgramEntities())
+			using (var context = new IndividualizedEducationProgramEntities())
 			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportProgress(districtFilter, status, buildingID, providerIds, teacherIds, studentIds);
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportProgress", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName
-						, cs.Grade, cs.goalID, cs.GoalDescription, cs.StateStandards, cs.Baseline
-						, cs.goalBenchmarkID, cs.ObjectiveBenchmark, cs.Method
-						, cs.BencharkDateQ1, cs.BencharkDateQ2, cs.BencharkDateQ3, cs.BencharkDateQ4
-						, cs.ProgressDateQ1, cs.ProgressDateQ2, cs.ProgressDateQ3, cs.ProgressDateQ4
-						, cs.ProgressNotes1, cs.ProgressNotes2, cs.ProgressNotes3, cs.ProgressNotes4
-						, cs.Progress_Quarter1, cs.Progress_Quarter2, cs.Progress_Quarter3, cs.Progress_Quarter4
-						, cs.StudentId, cs.GoalModule, cs.AnnualGoal
-						, cs.BenchmarkNotes1, cs.BenchmarkNotes2, cs.BenchmarkNotes3, cs.BenchmarkNotes4
-						, cs.BenchmarkProgress_Quarter1, cs.BenchmarkProgress_Quarter2, cs.BenchmarkProgress_Quarter3, cs.BenchmarkProgress_Quarter4
-						);
+					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
+					cmd.Parameters.Add("@Status", SqlDbType.VarChar, 8000).Value = status;
+					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@ProviderId", SqlDbType.VarChar, 8000).Value = providerIds;					
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
+					cmd.Parameters.Add("@StudentId", SqlDbType.VarChar, 8000).Value = studentIds;
+
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
+			return ds.Tables[0];
+
+			
 		}
 	}
 }
