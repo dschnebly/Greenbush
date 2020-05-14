@@ -66,12 +66,18 @@ namespace GreenbushIep.Controllers
                     {
                         tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == email);
 
-                        byte[] saltBytes = user.Salt;
+						if (user != null && user.Archive.HasValue && user.Archive.Value)
+						{
+							return RedirectToAction("Index", "Home");
+						}
+
+
+						byte[] saltBytes = user.Salt;
                         byte[] hashBytes = user.Password;
                         PasswordHash hash = new PasswordHash(saltBytes, hashBytes);
 
-                        if (hash.Verify(password))
-                        {
+						if (hash.Verify(password))
+						{
                             //User found in the database
                             if (user != null)
                             {

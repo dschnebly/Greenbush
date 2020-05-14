@@ -50,7 +50,7 @@
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
             <h3 class="panel-title">Users </h3>
-            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option></select>
+            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option><option value="-2">Inactive</option></select>
             <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
@@ -199,7 +199,7 @@
                                     break;
                                 case "6": //Nurse
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide" >
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
@@ -245,6 +245,8 @@
 
                 </div>
             }
+
+			 <div class="list-group list-group-root well inactive-list hidden"></div>
         </div>
     </div>
 </div>
@@ -349,6 +351,6 @@
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/misportal.js?v1.1")
+    @Scripts.Render("~/Scripts/misportal.js?v1.2")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

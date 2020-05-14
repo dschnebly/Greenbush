@@ -4,6 +4,7 @@
     ViewBag.Title = "Edit this User";
     Layout = "~/Views/Shared/_Layout.cshtml";
     bool isOwner = ViewBag.RoleName == "Level 5";
+	
 }
 
 @section stylesheets {
@@ -11,7 +12,6 @@
     @Styles.Render("~/Content/chosen.css")
     @Styles.Render("~/Content/editUser.css")
 }
-
 
 @using (Html.BeginForm("Edit", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
 {
@@ -46,7 +46,7 @@
             <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
         </div>
-
+		 
         <div class="form-group">
             <div class="col-md-12">
                 <div class="input-group">
@@ -166,7 +166,7 @@
                 </div>
             </div>
         }
-
+		
         <div class="form-group" id="listOfDistricts">
             <div class="col-md-12">
                 <div class="input-group">
@@ -204,6 +204,21 @@
                 </div>
             </div>
         </div>
+		@if (Model.submitter.RoleID == "1" || Model.submitter.RoleID == "2")
+		{	
+            <div class="col-md-12">
+                <div class="input-group">                    
+					<div class="enabledisableswitch" style="display: inline-block; vertical-align: top;">
+                                                <input type="checkbox" name="isArchived" id="isArchived" class="enabledisableswitch-checkbox" @(Model.user.Archive.HasValue && Model.user.Archive.Value ? "checked='checked'" : "" )>
+                                                <label class="enabledisableswitch-label" for="isArchived">
+                                                    <span class="enabledisableswitch-inner"></span>
+                                                    <span class="enabledisableswitch-switch"></span>
+                                                </label>
+					</div>
+                </div>
+            </div>			
+		}
+
         <div class="form-group">
             <button type="submit" class="btn btn-info btn-lg" id="submitForm" data_ftrans="slide reverse">
                 <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Update</span>
@@ -293,6 +308,7 @@
 
 <!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/EditUsers.js"></var>
+
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
