@@ -272,7 +272,7 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
-
+			$('.inactive-list').html("");	
             $(".ajax-loader").show();
 
             if (selectedRole === "5") {
@@ -280,52 +280,63 @@
             }
             else {
                 $(".activeIEPCol").addClass("hidden");
-            }
+			}
 
-            $.ajax({
-                type: 'POST',
-                url: '/Manage/FilterUserList',
-                dataType: 'json',
-                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+			var isInactiveFilter = (selectedRole == "-2") ? true : false;
 
-                        // hide all the users in the list.
-                        var filterCollection = $('.list-group-root').find('.list-group-item');
+			if (isInactiveFilter) {
+				filterListInactive(selectedDistrict, selectedBuilding, selectedRole);
+			}
+			else {
 
-                        var i = filterCollection.length;
-                        while (i >= 0) {
-                            $(filterCollection[i]).addClass('hidden');
-                            i--;
-                        }
+				$.ajax({
+					type: 'POST',
+					url: '/Manage/FilterUserList',
+					dataType: 'json',
+					data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+					async: false,
+					success: function (data) {
+						if (data.Result === "success") {
+							var container = document.querySelector(".list-group-root");
+							$(".inactive-list").addClass("hidden");
+							$(container).removeClass("hidden");
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
+							// hide all the users in the list.
+							var filterCollection = $('.list-group-root').find('.list-group-item');
 
-                            var j = results.members.length - 1;
-                            while (j >= 0) {
-                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-                                $(filterCollection[foundIndex]).removeClass('hidden');
-                                j--;
-                            }
-                        }
-                    }
-                    else {
-                        alert('doh');
-                    }
-                },
-                error: function (data) {
-                    alert('ERROR!!!');
+							var i = filterCollection.length;
+							while (i >= 0) {
+								$(filterCollection[i]).addClass('hidden');
+								i--;
+							}
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+							var results = data.Message;
+							if (results.members.length > 0) {
+
+								var j = results.members.length - 1;
+								while (j >= 0) {
+									var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
+									$(filterCollection[foundIndex]).removeClass('hidden');
+									j--;
+								}
+							}
+						}
+						else {
+							alert('doh');
+						}
+					},
+					error: function (data) {
+						alert('ERROR!!!');
+
+						console.log(data);
+					},
+					complete: function (data) {
+						$(".ajax-loader").hide();
+						//A function to be called when the request finishes 
+						// (after success and error callbacks are executed). 
+					}
+				});
+			}
         });
 
         // attach event
@@ -592,7 +603,37 @@
                 });
             });
         }
-    }
+
+		function filterListInactive(selectedDistrict, selectedBuilding, selectedRole) {
+		
+			$.ajax({
+				type: "POST",
+				url: "/Manage/FilterUserListInactive",
+				data: {
+					DistrictId: selectedDistrict,
+					BuildingId: selectedBuilding,
+					RoleId: selectedRole
+				},
+				dataType: "html",
+				success: function (response) {
+										
+					$('.inactive-list').html(response);
+					var container = document.querySelector(".list-group-root");
+					$(".inactive-list").removeClass("hidden");
+					$(container).addClass("hidden");
+				},
+				failure: function (response) {
+					alert("There was a problem loading the users.");
+				},
+				error: function (response) {
+					alert("There was a problem loading the users.");
+				},
+				complete: function (data) {
+					$(".ajax-loader").hide();
+				}
+			});
+		}
+	}
     init();
 
     //SET UP FOR TRANSITIONS

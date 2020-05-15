@@ -1202,6 +1202,7 @@
     <Content Include="Views\Form\TransportationRequest.cshtml" />
     <Content Include="Views\Home\MISNotes.cshtml" />
     <Content Include="Views\Form\ContinuousLearningPlan.cshtml" />
+    <Content Include="Views\Home\_InactiveUsers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

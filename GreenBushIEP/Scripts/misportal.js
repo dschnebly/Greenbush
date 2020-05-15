@@ -351,6 +351,7 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
+			$('.inactive-list').html("");	
 
             $(".ajax-loader").show();
 
@@ -358,40 +359,50 @@
                 $(".activeIEPCol").removeClass("hidden");
             } else {
                 $(".activeIEPCol").addClass("hidden");
-            }
+			}
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+			var isInactiveFilter = (selectedRole == "-2") ? true : false;
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("ERROR!!!");
+			if (isInactiveFilter) {
+				filterListInactive(selectedDistrict, selectedBuilding, selectedRole);
+			}
+			else {
+				$.ajax({
+					type: "POST",
+					url: "/Manage/FilterUserList",
+					dataType: "json",
+					data: {
+						DistrictId: selectedDistrict,
+						BuildingId: selectedBuilding,
+						RoleId: selectedRole
+					},
+					async: false,
+					success: function (data) {
+						var container = document.querySelector(".list-group-root");
+						$(".inactive-list").addClass("hidden");
+						$(container).removeClass("hidden");
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+						if (data.Result === "success") {
+							var results = data.Message;
+							if (results.members.length > 0) {
+								filterList(results.members);
+							}							
+						} else {
+							alert("doh");
+						}
+					},
+					error: function (data) {
+						alert("ERROR!!!");
+
+						console.log(data);
+					},
+					complete: function (data) {
+						$(".ajax-loader").hide();
+						//A function to be called when the request finishes 
+						// (after success and error callbacks are executed). 
+					}
+				});
+			}
         });
 
         // attach event
@@ -620,24 +631,54 @@
 });
 
 function filterList(members) {
-    var container = document.querySelector(".list-group-root");
+	var container = document.querySelector(".list-group-root");
+	
+	// hide all the users in the list.
+	var filterCollection = container.querySelectorAll(".list-group-item");
+	var i = filterCollection.length - 1;
+	while (i >= 0) {
+		filterCollection[i].classList.add("hidden");
+		i--;
+	}
 
-    // hide all the users in the list.
-    var filterCollection = container.querySelectorAll(".list-group-item");
-    var i = filterCollection.length - 1;
-    while (i >= 0) {
-        filterCollection[i].classList.add("hidden");
-        i--;
-    }
+	var j = members.length - 1;
+	while (j >= 0) {
+		var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
+		if (matchFound[0] != null) {
+			matchFound[0].classList.remove("hidden");
+		}
+		j--;
+	}
+}
 
-    var j = members.length - 1;
-    while (j >= 0) {
-        var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
-        if (matchFound[0] != null) {
-            matchFound[0].classList.remove("hidden");
-        }
-        j--;
-    }
+function filterListInactive(selectedDistrict, selectedBuilding, selectedRole) {
+	
+	$.ajax({
+		type: "POST",
+		url: "/Manage/FilterUserListInactive",
+		data: {
+			DistrictId: selectedDistrict,
+			BuildingId: selectedBuilding,
+			RoleId: selectedRole
+		},		
+		dataType: "html",
+		success: function (response) {
+			$('.inactive-list').html(response);
+
+			var container = document.querySelector(".list-group-root");
+			$(".inactive-list").removeClass("hidden");
+			$(container).addClass("hidden");
+		},
+		failure: function (response) {
+			alert("There was a problem loading the users.");
+		},
+		error: function (response) {
+			alert("There was a problem loading the users.");
+		},
+		complete: function (data) {
+			$(".ajax-loader").hide();			
+		}
+	});
 }
 
 jQuery.fn.extend({
