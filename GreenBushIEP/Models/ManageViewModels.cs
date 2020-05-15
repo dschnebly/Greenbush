@@ -841,6 +841,8 @@ namespace GreenBushIEP.Models
         public string RoleID;
         public bool hasIEP;
         public string KidsID;
+        public string statusCode;
+        public int statusActive;
         public bool isAssigned;
     }
 

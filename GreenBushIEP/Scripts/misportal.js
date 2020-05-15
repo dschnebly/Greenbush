@@ -23,10 +23,6 @@
             template: "<div class='popover' role='tooltip'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><center><a href='#' class='btn btn-class'>Add Note <i class='glyphicon glyphicon-plus'></i></a></center></div>"
         });
 
-        $(".viewStudentNotes").on("click", function () {
-
-        });
-
         // filter to only active students
         var filterCollection = $(".list-group-root").find(".list-group-item");
 
@@ -124,17 +120,15 @@
 
         // attach event
         // fires when the MIS chooses active/inactive
-        $("#filterActive").change(function () {
+        $("#statusActive").change(function () {
 
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
-            var selectedActive = this.value;
-            var selectedStatus = $("#statusActive option:selected").val() + "";
+            var selectedActive = $("#filterActive option:selected").val() + "";
+            var selectedStatus = this.value;
 
             $(".ajax-loader").show();
-
-            alert(selectedStatus);
 
             $.ajax({
                 type: "POST",
@@ -145,7 +139,55 @@
                     BuildingId: selectedBuilding,
                     RoleId: selectedRole,
                     activeType: selectedActive,
-                    statusActive: selectedStatus
+                    statusType: selectedStatus
+                },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
+
+                        var results = data.Message;
+                        if (results.members.length > 0) {
+                            filterList(results.members);
+                        }
+                    } else {
+                        alert("doh");
+                    }
+                },
+                error: function (data) {
+                    alert("Not connected to the network!");
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
+                }
+            });
+        });
+
+        // attach event
+        // fires when the MIS chooses active/inactive
+        $("#filterActive").change(function () {
+
+            var selectedDistrict = $("#userDistricts option:selected").val() + "";
+            var selectedBuilding = $("#userBuildings option:selected").val() + "";
+            var selectedRole = $("#userRoles option:selected").val() + "";
+            var selectedActive = this.value;
+            var selectedStatus = $("#statusActive option:selected").val() + "";
+
+            $(".ajax-loader").show();
+
+            $.ajax({
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole,
+                    activeType: selectedActive,
+                    statusType: selectedStatus
                 },
                 async: false,
                 success: function (data) {
