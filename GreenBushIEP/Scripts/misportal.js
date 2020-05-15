@@ -1,14 +1,14 @@
 ﻿$(function () {
 
-	function init() {
+    function init() {
 
-		$(".startIEP").on("click", function () {
-			//open iep like this to prevent true false button switches from not working right in firefox
-			var stid = $(this).attr("data-id");
-			window.location.href = '/Home/StudentProcedures?stid=' + stid;
-			return false;
-		});
-		
+        $(".startIEP").on("click", function () {
+            //open iep like this to prevent true false button switches from not working right in firefox
+            var stid = $(this).attr("data-id");
+            window.location.href = '/Home/StudentProcedures?stid=' + stid;
+            return false;
+        });
+
 
         $(".chosen-select").chosen({
             width: "95%",
@@ -139,7 +139,7 @@
                     BuildingId: selectedBuilding,
                     RoleId: selectedRole,
                     activeType: selectedActive,
-                    statusType: selectedStatus
+                    statusActive: selectedStatus
                 },
                 async: false,
                 success: function (data) {
@@ -187,7 +187,7 @@
                     BuildingId: selectedBuilding,
                     RoleId: selectedRole,
                     activeType: selectedActive,
-                    statusType: selectedStatus
+                    statusActive: selectedStatus
                 },
                 async: false,
                 success: function (data) {
@@ -351,7 +351,6 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
-			$('.inactive-list').html("");	
 
             $(".ajax-loader").show();
 
@@ -359,50 +358,40 @@
                 $(".activeIEPCol").removeClass("hidden");
             } else {
                 $(".activeIEPCol").addClass("hidden");
-			}
+            }
 
-			var isInactiveFilter = (selectedRole == "-2") ? true : false;
+            $.ajax({
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole
+                },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
 
-			if (isInactiveFilter) {
-				filterListInactive(selectedDistrict, selectedBuilding, selectedRole);
-			}
-			else {
-				$.ajax({
-					type: "POST",
-					url: "/Manage/FilterUserList",
-					dataType: "json",
-					data: {
-						DistrictId: selectedDistrict,
-						BuildingId: selectedBuilding,
-						RoleId: selectedRole
-					},
-					async: false,
-					success: function (data) {
-						var container = document.querySelector(".list-group-root");
-						$(".inactive-list").addClass("hidden");
-						$(container).removeClass("hidden");
+                        var results = data.Message;
+                        if (results.members.length > 0) {
+                            filterList(results.members);
+                        }
+                    } else {
+                        alert("doh");
+                    }
+                },
+                error: function (data) {
+                    alert("ERROR!!!");
 
-						if (data.Result === "success") {
-							var results = data.Message;
-							if (results.members.length > 0) {
-								filterList(results.members);
-							}							
-						} else {
-							alert("doh");
-						}
-					},
-					error: function (data) {
-						alert("ERROR!!!");
-
-						console.log(data);
-					},
-					complete: function (data) {
-						$(".ajax-loader").hide();
-						//A function to be called when the request finishes 
-						// (after success and error callbacks are executed). 
-					}
-				});
-			}
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
+                }
+            });
         });
 
         // attach event
@@ -612,73 +601,42 @@
 
     //SET UP FOR TRANSITIONS
     var params = //All params are optional, you can just assign {} 
-        {
-            "navB": "slide", //Effect for navigation button, leave it empty to disable it
-            "but": true, //Flag to enable transitions on button, false by default
-            "cBa": function () {
-                init();
+    {
+        "navB": "slide", //Effect for navigation button, leave it empty to disable it
+        "but": true, //Flag to enable transitions on button, false by default
+        "cBa": function () {
+            init();
 
-                var ajax =  document.querySelector(".ajax-loader");
-                if(ajax != null)
-                {
-                    ajax.classList.add("fadeIntoYou");
-                }
-                //document.querySelector(".ajax-loader").style.display = "none";
-            } //callback function
-        };
+            var ajax = document.querySelector(".ajax-loader");
+            if (ajax != null) {
+                ajax.classList.add("fadeIntoYou");
+            }
+            //document.querySelector(".ajax-loader").style.display = "none";
+        } //callback function
+    };
     new ft(params);
-    
+
 });
 
 function filterList(members) {
-	var container = document.querySelector(".list-group-root");
-	
-	// hide all the users in the list.
-	var filterCollection = container.querySelectorAll(".list-group-item");
-	var i = filterCollection.length - 1;
-	while (i >= 0) {
-		filterCollection[i].classList.add("hidden");
-		i--;
-	}
+    var container = document.querySelector(".list-group-root");
 
-	var j = members.length - 1;
-	while (j >= 0) {
-		var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
-		if (matchFound[0] != null) {
-			matchFound[0].classList.remove("hidden");
-		}
-		j--;
-	}
-}
+    // hide all the users in the list.
+    var filterCollection = container.querySelectorAll(".list-group-item");
+    var i = filterCollection.length - 1;
+    while (i >= 0) {
+        filterCollection[i].classList.add("hidden");
+        i--;
+    }
 
-function filterListInactive(selectedDistrict, selectedBuilding, selectedRole) {
-	
-	$.ajax({
-		type: "POST",
-		url: "/Manage/FilterUserListInactive",
-		data: {
-			DistrictId: selectedDistrict,
-			BuildingId: selectedBuilding,
-			RoleId: selectedRole
-		},		
-		dataType: "html",
-		success: function (response) {
-			$('.inactive-list').html(response);
-
-			var container = document.querySelector(".list-group-root");
-			$(".inactive-list").removeClass("hidden");
-			$(container).addClass("hidden");
-		},
-		failure: function (response) {
-			alert("There was a problem loading the users.");
-		},
-		error: function (response) {
-			alert("There was a problem loading the users.");
-		},
-		complete: function (data) {
-			$(".ajax-loader").hide();			
-		}
-	});
+    var j = members.length - 1;
+    while (j >= 0) {
+        var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
+        if (matchFound[0] != null) {
+            matchFound[0].classList.remove("hidden");
+        }
+        j--;
+    }
 }
 
 jQuery.fn.extend({

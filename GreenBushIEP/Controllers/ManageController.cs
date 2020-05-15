@@ -3023,7 +3023,7 @@ namespace GreenBushIEP.Controllers
 
         // POST: Manage/FilterUserList
         [HttpPost]
-        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType, int? statusType)
+        public ActionResult FilterUserList(string DistrictId, string BuildingId, string RoleId, int? userId, int? activeType, int? statusActive)
         {
             tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
             if (submitter != null)
@@ -3031,8 +3031,8 @@ namespace GreenBushIEP.Controllers
                 string selectedDistrict = Convert.ToInt32(DistrictId) == -1 ? null : DistrictId;
                 string selectedBuilding = Convert.ToInt32(BuildingId) == -1 ? null : BuildingId;
                 int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
-                bool? searchActiveType = activeType.HasValue && activeType == 1 ? true : activeType.HasValue && activeType == 2 ? false : (bool?)null;
-                bool archieved = submitter.RoleID == "1" ? true : false;
+                int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1 ;
+                bool? searchArchieve = submitter.RoleID == "1" ? true : false;
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
                 {
@@ -3045,7 +3045,7 @@ namespace GreenBushIEP.Controllers
 
                 if (RoleId != "999")
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, searchActiveType, archieved).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, statusActive = u.StatusActive, statusCode = u.StatusCode, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, searchArchieve).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
@@ -3057,19 +3057,20 @@ namespace GreenBushIEP.Controllers
                         members = members.Where(u => u.RoleID == RoleId).ToList();
                     }
 
-                    if (searchActiveType != null)
+                    if (searchHasIEP.HasValue && searchHasIEP != -1 && RoleId == "5")
                     {
-                        members = members.Where(u => u.hasIEP == searchActiveType).ToList();
+                        bool hasIEP = searchHasIEP == 1;
+                        members = members.Where(u => u.hasIEP == hasIEP).ToList();
                     }
 
-                    if (statusType.HasValue)
+                    if(statusActive.HasValue && RoleId == "5")
                     {
-                        members = members.Where(u => u.statusActive == statusType).ToList();
+                        members = members.Where(u => u.statusActive == statusActive).ToList();
                     }
                 }
                 else // Unassigned Users.
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false, archieved).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false, searchArchieve).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
