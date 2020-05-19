@@ -2783,7 +2783,10 @@ namespace GreenBushIEP.Controllers
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
 
-                    if (collection.AllKeys.Contains("password"))
+					if (submitter.RoleID == "1" || submitter.RoleID == "2")
+						user.Archive = collection["isArchived"] != null ? true : false;
+
+					if (collection.AllKeys.Contains("password"))
                     {
                         string password = collection["password"].ToString();
 
