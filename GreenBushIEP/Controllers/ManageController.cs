@@ -132,6 +132,9 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                 }
 
+                db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = user.UserID, Value = "Created User " + user.FirstName + " " + user.LastName });
+                db.SaveChanges();
+
                 // Email the new password to the user.
                 EmailPassword.Send(user, emailPassword);
 
@@ -1855,6 +1858,7 @@ namespace GreenBushIEP.Controllers
                         else
                         {
                             db.tblUsers.Add(student);
+                            db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = user.UserID, Value = "Created User " + user.FirstName + " " + user.LastName });
                             db.SaveChanges();
                         }
                     }
@@ -1862,7 +1866,6 @@ namespace GreenBushIEP.Controllers
                     {
                         return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
                     }
-
 
                     // Create New StudentInfo
                     // tblStudentInfo
@@ -2981,6 +2984,9 @@ namespace GreenBushIEP.Controllers
 
                     // archive user
                     user.Archive = true;
+
+                    tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                    db.tblAuditLogs.Add(new tblAuditLog() { UserID = user.UserID, ModifiedBy =  submitter.UserID, Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", Value = "Archived User " + user.FirstName + " " + user.LastName });
 
                     //db.tblUsers.Remove(user);
                     db.SaveChanges();
