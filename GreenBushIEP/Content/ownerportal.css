@@ -1,5 +1,5 @@
 ﻿.ajax-loader {
-    display: none;
+    /*display: none;*/
     background-color: #ffffff;
     background-color: rgba(255,255,255,0.7);
     position: fixed;
@@ -17,8 +17,8 @@
         left: 40%;
     }
 
-.filterable {
-    margin-bottom: 55px;
+h3 a {
+    margin: 0 5px;
 }
 
 hr {
