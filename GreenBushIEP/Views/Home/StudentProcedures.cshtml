@@ -101,8 +101,8 @@
                             }
                             @if (Model.studentIEP.iepStatusType == IEPStatus.ACTIVE)
                             {
-                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
-                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendment" class="list-group-item @Html.Raw((Model.studentIEP.isAllCompleted && !Model.studentIEP.anyStudentIEPAmendment) || Model.studentIEP.iepStatusType == IEPStatus.ACTIVE ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Amendment</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAnnual" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted && !(Model.studentIEP.anyStudentIEPAnnual || Model.studentIEP.anyStudentIEPDraft) || Model.studentIEP.iepStatusType == IEPStatus.ACTIVE ? string.Empty : "disabled")"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Create An Annual</a></li>
                                 if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && !Model.studentIEP.anyStudentIEPDraft)
                                 {
                                     <li class="list-group-item"><a href="#" id="revertToDraft" class="list-group-item @Html.Raw(Model.studentIEP.anyStudentIEPDraft ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;<span class="text-warning">Revert to Draft</span></a></li>
