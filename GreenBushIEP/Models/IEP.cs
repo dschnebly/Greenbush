@@ -120,7 +120,7 @@ namespace GreenBushIEP.Models
                     // get the first iep by id, else it must be an ammendment.
                     tblIEP studentIEP = listOfStudentsIEPs.Where(i => i.IEPid == iepId).FirstOrDefault();
                     tblIEP studentAmendment = listOfStudentsIEPs.Where(i => i.AmendingIEPid == iepId).FirstOrDefault();
-                    current = studentIEP == null ? studentAmendment : studentIEP ;
+                    current = studentIEP ?? studentAmendment;
                 }
                 else
                 {
