@@ -1,6 +1,5 @@
 ﻿using GreenBushIEP.Helper;
 using GreenBushIEP.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -204,7 +203,6 @@ namespace GreenBushIEP.Controllers
 																	on org.UserID equals user.UserID
 																where (user.UserID == currentUser.UserID)
 																select org).Distinct();
-
 
 				if (districts != null)
 				{
