@@ -31,24 +31,6 @@ namespace GreenBushIEP.Reports.ProviderCaseload {
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
         
         /// <summary>
-        /// teacherDD control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlSelect teacherDD;
-        
-        /// <summary>
-        /// teacherVals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlInputHidden teacherVals;
-        
-        /// <summary>
         /// providerDD control.
         /// </summary>
         /// <remarks>

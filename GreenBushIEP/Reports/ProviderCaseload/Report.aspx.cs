@@ -24,18 +24,18 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			{				
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
-				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);
-				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);				
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.teacherDD.Value, studentVals);
-				
-				
+				//GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);
+				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
+				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
+
+
 			}
 			else
 			{
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.teacherDD.Value, studentVals);
+				//GreenBushIEP.Report.ReportMaster.TeacherList(this.teacherDD, this.districtDD.Value, this.buildingDD.Value, this.teacherVals);
+				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
 			}
 		}
 
@@ -61,8 +61,8 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
-
-			string teacherIds = GreenBushIEP.Report.ReportMaster.GetTeacherFilter(this.teacherDD, user, buildingFilter, districtFilter, this.teacherVals);
+			string teacherIds = "";
+			//string teacherIds = GreenBushIEP.Report.ReportMaster.GetTeacherFilter(this.teacherDD, user, buildingFilter, districtFilter, this.teacherVals);
 
 			string studentFilter = this.studentVals.Value == "-1" ? "" : studentVals.Value;
 

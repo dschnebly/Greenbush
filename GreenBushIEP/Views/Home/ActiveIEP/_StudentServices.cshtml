@@ -60,9 +60,9 @@
                     <tr>
 
                         <th>Fiscal Year</th>
-                        <th>Service Type</th>
+                        <th>Service Setting</th>
                         <th>Provider</th>
-
+						<th>Setting</th>	
                         <th>Attend Blg</th>
                         <th>Mins</th>
                         <th>Days</th>
@@ -112,17 +112,17 @@
                                     <text>&nbsp;&nbsp;&nbsp;</text>
                                 }
                             </td>
+							<td>
+								@service.LocationCode							
+							</td>
                             <td>
-                                @if (Model.serviceLocations.Count > 0)
-                                {
-                                    foreach (var serviceLocation in Model.serviceLocations)
-                                    {
-                                        if (service.LocationCode == serviceLocation.LocationCode)
-                                        {
-                                            <text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
-                                        }
-                                    }
-                                }
+                               @{
+									var building = Model.attendanceBuildings.FirstOrDefault(o => o.BuildingID == service.BuildingID);
+									if (building != null)
+									{
+										<text>@building.BuildingName</text>
+									}
+								}
                             </td>
                             <td>
                                 @service.Minutes

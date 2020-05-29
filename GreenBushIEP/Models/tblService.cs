@@ -40,6 +40,7 @@ namespace GreenBushIEP.Models
         public string USD { get; set; }
         public string BuildingID { get; set; }
         public string ProvidedFor { get; set; }
+        public Nullable<int> PreviousServiceID { get; set; }
     
         public virtual tblProvider tblProvider { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

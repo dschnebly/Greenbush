@@ -4056,6 +4056,73 @@ namespace GreenBushIEP.Controllers
 			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
 		}
 
+		[HttpGet]
+		public ActionResult ReportFilterStudentByProvider(string selectedDistrict, string selectedBuilding, string selectedProvider)
+		{
+			try
+			{
+				if (!string.IsNullOrEmpty(selectedDistrict))
+				{
+					tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+					List<string> myRoles = new List<string>() { "5" }; //students
+
+					if (selectedBuilding == "-1")
+						selectedBuilding = null;
+
+					if (selectedProvider == "-1")
+						selectedProvider = null;
+
+					if (selectedDistrict == "-1")
+						selectedDistrict = null;
+
+					if (string.IsNullOrEmpty(selectedProvider))
+					{
+						//get based on user id and district and building
+						var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)							
+						.Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
+						.OrderBy(o => o.Name).ToList();
+
+						//students.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+
+						return Json(new { Result = "success", StudentList = students }, JsonRequestBehavior.AllowGet);
+					}
+					else
+					{
+						//get based on selected teachers
+						selectedProvider = selectedProvider.TrimEnd(',');
+						var studentList = new List<TeacherView>();
+
+						List<string> myProviders = string.IsNullOrEmpty(selectedProvider) ? new List<string>() : selectedProvider.Split(',').ToList();
+
+						foreach (var provider in myProviders)
+						{
+							var providerId = 0;
+							Int32.TryParse(provider, out providerId);
+
+							var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, providerId)								
+							.Select(u => new TeacherView() { UserID = u.UserID, Name = string.Format("{0}, {1}", u.LastName, u.FirstName) })
+							.OrderBy(o => o.Name);
+
+							studentList.AddRange(students);
+						}
+
+						//studentList.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+
+						return Json(new { Result = "success", StudentList = studentList.Distinct().OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
+
+					}
+					
+
+				}
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+
+			return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+		}
 
 		#endregion
 

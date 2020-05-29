@@ -429,5 +429,26 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspServiceProviderStudents_Result>("uspServiceProviderStudents", providerIDParameter);
         }
+    
+        public virtual ObjectResult<uspUserListByProvider_Result> uspUserListByProvider(Nullable<int> userID, string uSD, string buildingID, Nullable<int> providerID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var uSDParameter = uSD != null ?
+                new ObjectParameter("USD", uSD) :
+                new ObjectParameter("USD", typeof(string));
+    
+            var buildingIDParameter = buildingID != null ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(string));
+    
+            var providerIDParameter = providerID.HasValue ?
+                new ObjectParameter("ProviderID", providerID) :
+                new ObjectParameter("ProviderID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByProvider_Result>("uspUserListByProvider", userIDParameter, uSDParameter, buildingIDParameter, providerIDParameter);
+        }
     }
 }

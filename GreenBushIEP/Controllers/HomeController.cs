@@ -2926,7 +2926,10 @@ namespace GreenbushIep.Controllers
                     tblBuilding studentNeighborhoodBuilding = db.tblBuildings.Where(c => c.BuildingID == info.NeighborhoodBuildingID).Take(1).FirstOrDefault();
                     tblCounty studentCounty = db.tblCounties.Where(c => c.CountyCode == info.County).FirstOrDefault();
                     tblDistrict studentUSD = db.tblDistricts.Where(c => c.USD == info.AssignedUSD).FirstOrDefault();
-                    int studentAgeAtIEP = 0;
+					var serviceBuildingIds = theIEP.studentServices != null ? theIEP.studentServices.Select(o => o.BuildingID).ToList() : new List<string>();
+					var serviceBuildings =	db.vw_BuildingList.Where(c => serviceBuildingIds.Contains(c.BuildingID)).ToList();
+
+					int studentAgeAtIEP = 0;
 
 
                     if (theIEP.iepStartTime.HasValue)
@@ -2944,7 +2947,8 @@ namespace GreenbushIep.Controllers
                     studentDetails.contacts = contacts;
                     studentDetails.building = studentBuilding;
                     studentDetails.neighborhoodBuilding = studentNeighborhoodBuilding;
-                    studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
+					studentDetails.serviceAttendanceBuildings = serviceBuildings;
+					studentDetails.studentCounty = studentCounty != null ? studentCounty.CountyName : "";
                     studentDetails.parentLang = GetLanguage(info.ParentLanguage);
                     studentDetails.studentLang = GetLanguage(info.StudentLanguage);
                     studentDetails.primaryDisability = GetDisability(info.Primary_DisabilityCode);
