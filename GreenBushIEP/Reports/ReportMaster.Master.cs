@@ -173,6 +173,25 @@ namespace GreenBushIEP.Report
 
 		}
 
+		public static void StudentListByProvider(HtmlSelect studentDD, string selectedDistrict, string selectedBuilding, string selectedProvider, HtmlInputHidden studentValsInput)
+		{
+			var selectedStudent = studentValsInput.Value;
+
+			var studentList = GreenBushIEP.Report.ReportMaster.GetStudentsByProvider(HttpContext.Current.User.Identity.Name, selectedDistrict, selectedBuilding, selectedProvider);
+			studentDD.DataSource = studentList;
+			studentDD.DataTextField = "LastName";
+			studentDD.DataValueField = "UserID";
+			studentDD.DataBind();
+
+			if (!string.IsNullOrEmpty(selectedStudent) || selectedStudent != "-1")
+			{
+				var item = studentDD.Items.FindByValue(selectedStudent);
+				if (item != null)
+					item.Selected = true;
+			}
+
+		}
+
 
 		public static void ServiceList(HtmlSelect serviceDD)
 		{
@@ -467,6 +486,63 @@ namespace GreenBushIEP.Report
 				}
 			}
 				
+		}
+
+		public static List<Student> GetStudentsByProvider(string userName, string selectedDistrict, string selectedBuilding, string selectedProvider)
+		{
+			List<string> myRoles = new List<string>() { "5" };
+			List<Student> studentList = new List<Student>();
+
+			if (selectedBuilding == "-1")
+				selectedBuilding = null;
+
+			if (selectedProvider == "-1")
+				selectedProvider = null;
+
+			if (selectedDistrict == "-1")
+				selectedDistrict = null;
+
+			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
+					
+
+			if (string.IsNullOrEmpty(selectedProvider))
+			{
+				//get based on user id and district and building
+				var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)
+					
+				.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
+				.OrderBy(o => o.LastName).ThenBy(o => o.FirstName).Distinct().ToList();
+
+				students.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+				return students;
+
+			}
+			else
+			{
+				//get based on selected provider
+				selectedProvider = selectedProvider.TrimEnd(',');
+
+				List<string> myProviders = string.IsNullOrEmpty(selectedProvider) ? new List<string>() : selectedProvider.Split(',').ToList();
+
+				foreach (var provider in myProviders)
+				{
+					var providerId = 0;
+					Int32.TryParse(provider, out providerId);
+
+					var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, providerId)
+					.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
+					.OrderBy(o => o.LastName);
+
+					studentList.AddRange(students);
+				}
+
+				studentList.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+				return studentList.Distinct().OrderBy(o => o.LastName).ThenBy(o => o.FirstName).ToList();
+
+			}		
+
 		}
 
 		public static List<BuildingsViewModel> GetBuildingsByDistrict(string userName, string usd)

@@ -26,7 +26,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "", this.studentVals);
+				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
 
 				var sid =  Request.QueryString["sid"];
 				
@@ -40,7 +40,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			{
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				GreenBushIEP.Report.ReportMaster.StudentList(this.studentDD, this.districtDD.Value, this.buildingDD.Value, "", this.studentVals);
+				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
 			}
 
 		}

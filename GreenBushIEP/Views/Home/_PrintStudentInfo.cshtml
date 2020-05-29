@@ -253,12 +253,14 @@
 			var serviceCount = 1;
 			<table class="table table-bordered accTable" border="1">
 				<tr>
-					<td><b>Ln#</b></td>
+					
 					<td><b>FY</b></td>
 					<td><b>Service<br />Setting</b></td>
 					<td><b>Provider</b></td>
 					<td><b>LEA</b></td>
-					<td><b>AttendBlg</b></td>
+					<td><b>Setting</b></td>					
+					<td><b>Attend<br />Blg</b></td>
+					<td><b>Instruction<br />Provided<br />For</b></td>
 					<td><b>Mins</b></td>
 					<td><b>Days</b></td>
 					<td><b>Start<br />Date</b></td>
@@ -270,17 +272,7 @@
 				{
 					<tr>
 						<td>
-							@serviceCount
-						</td>
-						<td>
-							@switch (@service.SchoolYear)
-							{
-								case 2018:<text>2017 - 2018</text>; break;
-								case 2019: <text>2018 - 2019</text>; break;
-								case 2020: <text>2019 - 2020</text>; break;
-								case 2021: <text>2020 - 2021</text>; break;
-								case 2022: <text>2021 - 2022</text>; break;
-							}
+							@service.SchoolYear
 						</td>
 						<td>
 							@if (Model.serviceTypes.Count > 0)
@@ -299,7 +291,7 @@
 							@if (service.tblProvider != null)
 							{
 									<text>@service.tblProvider.FirstName @service.tblProvider.LastName</text>
-							}							
+							}
 							else
 							{
 								<text>&nbsp;&nbsp;&nbsp;</text>
@@ -309,16 +301,20 @@
 							@Model.studentDetails.student.PlacementCode
 						</td>
 						<td>
-							@if (Model.locations.Count > 0)
-							{
-								foreach (var serviceLocation in Model.locations)
+							@service.LocationCode							
+						</td>
+						<td>
+							@{
+								var building = Model.studentDetails.serviceAttendanceBuildings.FirstOrDefault(o => o.BuildingID == service.BuildingID);
+								if (building != null)
 								{
-									if (service.LocationCode == serviceLocation.LocationCode)
-									{
-										<text>(@serviceLocation.LocationCode) @serviceLocation.Name</text>
-									}
+									<text>@building.BuildingName</text>
 								}
 							}
+
+						</td>
+						<td>
+							@service.ProvidedFor
 						</td>
 						<td>
 							@service.Minutes

@@ -752,8 +752,9 @@ namespace GreenBushIEP.Models
             isArchive = false;
             history = new List<IEPHistoryViewModel>();
             accommodationList = new List<AccomodationPrintViewModel>();
+			serviceAttendanceBuildings = new List<vw_BuildingList>();
 
-        }
+		}
 
         public tblUser teacher { get; set; }
         public tblStudentInfo student { get; set; }
@@ -762,8 +763,8 @@ namespace GreenBushIEP.Models
         public List<int> printProgressGoals { get; set; }
         public List<IEPHistoryViewModel> history { get; set; }
         public List<AccomodationPrintViewModel> accommodationList { get; set; }
-
-        public string ethnicity { get; set; }
+		public List<vw_BuildingList> serviceAttendanceBuildings { get; set; }
+		public string ethnicity { get; set; }
         public string gender { get; set; }
         public string parentLang { get; set; }
         public string studentLang { get; set; }

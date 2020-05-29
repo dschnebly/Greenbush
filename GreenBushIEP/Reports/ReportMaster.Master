@@ -98,6 +98,8 @@
 			});
 
 			$('#ContentPlaceHolder1_teacherDD').change(function (e) {
+				var selectedValues = $(this).val();
+				$("#ContentPlaceHolder1_teacherVals").val(selectedValues);
 				_teacherChange($(this));
 				return false;
 			});
@@ -105,6 +107,7 @@
 			$('#ContentPlaceHolder1_providerDD').change(function (e) {
 				var selectedValues = $(this).val();
 				$("#ContentPlaceHolder1_providerVals").val(selectedValues);
+				_providerChange($(this));
 				return false;
 			});
 
@@ -123,7 +126,58 @@
 			//_getDistricts();
 
 		});
-	
+
+		function _providerChange(dropdown) {			
+				var selectedValues = dropdown.val();
+				$("#ContentPlaceHolder1_providerVals").val(selectedValues);			
+
+				 if ($("#ContentPlaceHolder1_studentDD").length > 0) {
+
+					 var districtElement = $("#ContentPlaceHolder1_districtDD");
+					 var buildingElement = $("#ContentPlaceHolder1_buildingDD");
+
+					 var buildingId = buildingElement.val();
+					 var districtId = districtElement.val();
+					 var providerId = "";
+
+					 $("#ContentPlaceHolder1_providerDD option:selected").each(function () {
+						 providerId += $(this).val() + ",";
+					});
+
+					 var args = { selectedDistrict: districtId, selectedBuilding: buildingId, selectedProvider: providerId };
+					 $.ajax({
+						 type: 'GET',
+						 url: '/Manage/ReportFilterStudentByProvider',
+						 data: args,
+						 dataType: "json",
+						 async: false,
+						 success: function (data) {
+							 if (data.Result === "success") {
+								 var students = data.StudentList;
+								 var studentElement = $("#ContentPlaceHolder1_studentDD");
+								 studentElement.find('option').remove().end();
+
+								 var sHtml = studentElement.html();
+								 sHtml += "<option value='-1'>All</option>";
+
+								 //district only
+								 $.each(students, function (key, value) {
+									 sHtml += "<option value='" + value.UserID + "'>" + value.Name + "</option>";
+								 });
+
+								 studentElement.html(sHtml);
+
+								 studentElement.trigger("change");
+								 studentElement.trigger("chosen:updated");
+							 }
+						 },
+						 error: function (data) {
+							 alert("There was an error retrieving the student information.");
+							 console.log(data);
+						 }
+					 });
+				 }
+		}
 
 		function _teacherChange(dropdown) {			
 				var selectedValues = dropdown.val();

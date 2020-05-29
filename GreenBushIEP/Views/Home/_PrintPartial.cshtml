@@ -1903,7 +1903,7 @@
 					</table>
 				}
 			</div>
-			<div class="row">
+			<div class="row voffset1">
 				<div class="col-md-12">
 					<div class="input-group">
 						<label>Transition Needs</label>
@@ -3306,24 +3306,54 @@
 		{
 			var serviceCount = 1;
 			<table class="table table-bordered" border="1">
+				<tr>
+					
+					<td><b>FY</b></td>
+					<td><b>Service<br />Setting</b></td>					
+					<td><b>LEA</b></td>
+					<td><b>Setting</b></td>					
+					<td><b>Attend<br />Blg</b></td>
+					<td><b>Instruction<br />Provided<br />For</b></td>
+					<td><b>Mins</b></td>
+					<td><b>Days</b></td>
+					<td><b>Start<br />Date</b></td>
+					<td><b>End<br />Date</b></td>
+					<td><b>Freq</b></td>
+				</tr>
+
 				@foreach (var service in Model.studentServices)
 				{
 					<tr>
-						<td style="width:150px"><b>Service</b></td>
-						<td style="width:300px"><b>Instruction Provided For:</b></td>
-						<td style="width:75px"><b>Minutes</b></td>
-						<td style="width:75px"><b>Days</b></td>
-					</tr>
-					<tr>
+						<td>
+							@service.SchoolYear
+						</td>
 						<td>
 							@if (Model.serviceTypes.Count > 0)
 							{
-								var serviceObj = Model.serviceTypes.FirstOrDefault(o => o.ServiceCode == service.ServiceCode);
-								if (serviceObj != null)
+								var serviceName = Model.serviceTypes.Where(o => o.ServiceCode == service.ServiceCode).FirstOrDefault();
+								<text>(@service.ServiceCode) @(serviceName != null ? serviceName.Name : "")</text>
+							}
+							else
+							{
+								<text>@service.ServiceCode</text>
+							}
+
+						</td>
+						<td>
+							@Model.studentDetails.student.PlacementCode
+						</td>
+						<td>
+							@service.LocationCode							
+						</td>
+						<td>
+							@{
+								var building = Model.studentDetails.serviceAttendanceBuildings.FirstOrDefault(o => o.BuildingID == service.BuildingID);
+								if (building != null)
 								{
-									<text>@serviceObj.Name</text>
+									<text>@building.BuildingName</text>
 								}
 							}
+
 						</td>
 						<td>
 							@service.ProvidedFor
@@ -3334,50 +3364,32 @@
 						<td>
 							@service.DaysPerWeek
 						</td>
-					</tr>
-					<tr>
-						<td><b>Location</b></td>
-						<td><b>Anticipated Start Date</b></td>
-						<td><b>Anticipated End Date</b></td>
-						<td><b>Frequency</b></td>
-					</tr>
-					<tr>
-						<td>
-							@{
-								var locObj = Model.locations.FirstOrDefault(o => o.LocationCode == service.LocationCode);
-								if (locObj != null)
-								{
-									<text>@locObj.Name</text>
-								}
-							}
-						</td>
 						<td>@(service.StartDate.ToString("MM/dd/yyyy"))</td>
-						<td>@(service.EndDate.Value.ToString("MM/dd/yyyy"))</td>
+						<td>  @(service.EndDate.Value.ToString("MM/dd/yyyy"))</td>
 						<td>
 							@switch (@service.Frequency)
 							{
-								case 1:<text>Every week</text>; break;
-								case 2: <text>Every 2 weeks</text>; break;
-								case 3: <text>Every 3 weeks</text>; break;
-								case 4: <text>Every 4 weeks</text>; break;
-								case 8: <text>Every 8 weeks</text>; break;
-								case 9: <text>Every 9 weeks</text>; break;
-								case 12: <text>Every 12 weeks</text>; break;
-								case 18: <text>Every 18 weeks</text>; break;
-								case 19: <text>3 out of 4 weeks</text>; break;
-								case 99: <text>1 day per year</text>; break;
+								case 1:<text>Every week(1)</text>; break;
+								case 2: <text>Every 2 weeks(2)</text>; break;
+								case 3:	<text>Every 3 weeks(3)</text>; break;
+								case 4: <text>Every 4 weeks(4)</text>; break;
+								case 8: <text>Every 8 weeks(8)</text>; break;
+								case 9: <text>Every 9 weeks(9)</text>; break;
+								case 12: <text>Every 12 weeks(12)</text>; break;
+								case 18: <text>Every 18 weeks(18)</text>; break;
+								case 19: <text>3 out of 4 weeks(19)</text>; break;
+								case 99: <text>1 day per year(99)</text>; break;
 							}
 						</td>
 					</tr>
-
-									serviceCount++;
-								}
+					serviceCount++;
+				}
 			</table>
-								}
-								else
-								{
-			<p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>
-								}
+			}
+			else
+			{
+				<p class="text-center">The Team has no services for @Model.studentFirstName at this time.</p>
+			}
 	</div>
 }
 @if (@Model.studentDetails.printNotice)

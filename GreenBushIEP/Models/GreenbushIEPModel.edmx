@@ -1696,6 +1696,7 @@
           <Property Name="USD" Type="nvarchar" MaxLength="50" />
           <Property Name="BuildingID" Type="nvarchar" MaxLength="50" />
           <Property Name="ProvidedFor" Type="nvarchar" MaxLength="2000" />
+          <Property Name="PreviousServiceID" Type="int" />
         </EntityType>
         <EntityType Name="tblServiceTypes">
           <Key>
@@ -2342,6 +2343,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="isAssgined" Type="bit" Mode="In" />
           <Parameter Name="isArchived" Type="bit" Mode="In" />
         </Function>
+        <Function Name="uspUserListByProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="USD" Type="nvarchar" Mode="In" />
+          <Parameter Name="BuildingID" Type="nvarchar" Mode="In" />
+          <Parameter Name="ProviderID" Type="int" Mode="In" />
+        </Function>
         <Function Name="uspUserListByUserID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="isAssgined" Type="bit" Mode="In" />
@@ -2839,6 +2846,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </FunctionImport>
           <FunctionImport Name="uspServiceProviderStudents" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviderStudents_Result)">
           <Parameter Name="ProviderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="uspUserListByProvider" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserListByProvider_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="USD" Mode="In" Type="String" />
+            <Parameter Name="BuildingID" Mode="In" Type="String" />
+            <Parameter Name="ProviderID" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="tblAccommodation">
@@ -4431,6 +4444,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="ProvidedFor" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblProvider" Relationship="IndividualizedEducationProgramModel.FK_tblServices_ProviderID" FromRole="tblService" ToRole="tblProvider" />
           <NavigationProperty Name="tblGoals" Relationship="IndividualizedEducationProgramModel.tblServiceGoals" FromRole="tblService" ToRole="tblGoal" />
+          <Property Name="PreviousServiceID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblServiceType">
           <Key>
@@ -5262,6 +5276,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
           <Property Type="Int64" Name="KIDSID" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="uspUserListByProvider_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="Provider_FirstName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Provider_LastName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProviderCode" Nullable="true" MaxLength="25" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -6891,6 +6914,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblServices">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblService">
               <MappingFragment StoreEntitySet="tblServices">
+                <ScalarProperty Name="PreviousServiceID" ColumnName="PreviousServiceID" />
                 <ScalarProperty Name="ProvidedFor" ColumnName="ProvidedFor" />
                 <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
                 <ScalarProperty Name="USD" ColumnName="USD" />
@@ -7708,6 +7732,19 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="uspUserListByProvider" FunctionName="IndividualizedEducationProgramModel.Store.uspUserListByProvider">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspUserListByProvider_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Provider_FirstName" ColumnName="Provider_FirstName" />
+                <ScalarProperty Name="Provider_LastName" ColumnName="Provider_LastName" />
+                <ScalarProperty Name="ProviderCode" ColumnName="ProviderCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
