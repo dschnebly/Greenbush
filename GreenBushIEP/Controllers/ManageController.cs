@@ -1,6 +1,5 @@
 ﻿using GreenBushIEP.Helper;
 using GreenBushIEP.Models;
-using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -204,7 +203,6 @@ namespace GreenBushIEP.Controllers
 																	on org.UserID equals user.UserID
 																where (user.UserID == currentUser.UserID)
 																select org).Distinct();
-
 
 				if (districts != null)
 				{
@@ -1858,7 +1856,7 @@ namespace GreenBushIEP.Controllers
 						else
 						{
 							db.tblUsers.Add(student);
-							db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = submitter.UserID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName });
+							db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = student.UserID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName });
 							db.SaveChanges();
 						}
 					}
@@ -2894,6 +2892,7 @@ namespace GreenBushIEP.Controllers
 				// add back the connections to the database.
 				db.tblOrganizationMappings.AddRange(districtMappings);
 				db.tblBuildingMappings.AddRange(buildingMappings);
+				db.tblAuditLogs.Add(new tblAuditLog() { UserID = user.UserID, Create_Date = DateTime.Now, Update_Date = DateTime.Now, ModifiedBy = submitter.UserID, TableName = "tblUsers, tblOrginzation, tbleBuildingMapping", Value = "The student " + user.FirstName + " " + user.LastName + " was edit" });
 				db.SaveChanges();
 
 				return RedirectToAction("Portal", "Home");

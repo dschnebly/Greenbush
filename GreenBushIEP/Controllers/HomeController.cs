@@ -245,8 +245,7 @@ namespace GreenbushIep.Controllers
                 List<Student> users = (from u in db.tblUsers
                                        join o in db.tblOrganizationMappings on u.UserID equals o.UserID
                                        where o.AdminID == nurse.UserID
-                                       select new Student()
-                                       {
+                                       select new Student(){
                                            UserID = u.UserID,
                                            FirstName = u.FirstName,
                                            MiddleName = u.MiddleName,
@@ -268,8 +267,7 @@ namespace GreenbushIep.Controllers
                                           join i in info
                                           on user.UserID equals i.UserID
                                           where !(user.Archive ?? false)
-                                          select new Student()
-                                          {
+                                          select new Student() {
                                               UserID = user.UserID,
                                               FirstName = user.FirstName,
                                               MiddleName = user.MiddleName,
@@ -1123,6 +1121,7 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
+                db.tblAuditLogs.Add(new tblAuditLog(){ IEPid = model.studentIEP.current.IEPid, ModifiedBy = currentUser.UserID, Create_Date = DateTime.Now, TableName = "tblIEP", UserID = student.UserID, Update_Date = DateTime.Now, Value = "Created IEP" });
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
                 //need to check if transition plan is required and completed
