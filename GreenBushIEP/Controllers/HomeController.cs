@@ -1122,6 +1122,7 @@ namespace GreenbushIep.Controllers
                 }
 
                 db.tblAuditLogs.Add(new tblAuditLog(){ IEPid = model.studentIEP.current.IEPid, ModifiedBy = currentUser.UserID, Create_Date = DateTime.Now, TableName = "tblIEP", UserID = student.UserID, Update_Date = DateTime.Now, Value = "Created IEP" });
+                db.SaveChanges();
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
                 //need to check if transition plan is required and completed
@@ -1158,6 +1159,7 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult UpdateIEPDates(int stId, int IepId, string IEPStartDate, string IEPMeetingDate)
         {
+            tblUser submitter = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == stId && i.IEPid == IepId).FirstOrDefault();
 
             if (iep != null)
@@ -1174,6 +1176,7 @@ namespace GreenbushIep.Controllers
                             iep.begin_date = meetingDate;
                         }
 
+                        db.tblAuditLogs.Add(new tblAuditLog() { IEPid = IepId, ModifiedBy = submitter.UserID, Create_Date = DateTime.Now, TableName = "tblIEP", UserID = stId, Update_Date = DateTime.Now, Value = "Updated IEP" });
                         db.SaveChanges();
                     }
 
@@ -1219,7 +1222,6 @@ namespace GreenbushIep.Controllers
                 try
                 {
                     db.SaveChanges();
-
 
                     return Json(new { Result = "success", Message = "IEP Amendment status changed to Active." }, JsonRequestBehavior.AllowGet);
                 }
