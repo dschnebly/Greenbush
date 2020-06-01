@@ -114,6 +114,8 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="6.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblAccommodationModule" Width="1.5" PointX="9.375" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormContinuousLearningPlan" Width="1.5" PointX="35.375" PointY="7.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.zArchive_Services" Width="1.5" PointX="3" PointY="39.125" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_zArchiveServices_ProviderID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

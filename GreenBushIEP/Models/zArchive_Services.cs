@@ -12,38 +12,32 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblService
+    public partial class zArchive_Services
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblService()
-        {
-            this.tblGoals = new HashSet<tblGoal>();
-        }
-    
-        public int ServiceID { get; set; }
-        public int IEPid { get; set; }
-        public int SchoolYear { get; set; }
-        public System.DateTime StartDate { get; set; }
+        public int ID { get; set; }
+        public string ArchiveCode { get; set; }
+        public System.DateTime Archive_Date { get; set; }
+        public int OriginalServiceID { get; set; }
+        public Nullable<int> IEPid { get; set; }
+        public Nullable<int> SchoolYear { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> EndDate { get; set; }
         public string ServiceCode { get; set; }
-        public int Frequency { get; set; }
-        public byte DaysPerWeek { get; set; }
-        public short Minutes { get; set; }
+        public Nullable<int> Frequency { get; set; }
+        public Nullable<byte> DaysPerWeek { get; set; }
+        public Nullable<short> Minutes { get; set; }
         public Nullable<int> ProviderID { get; set; }
         public string LocationCode { get; set; }
-        public System.DateTime Create_Date { get; set; }
-        public System.DateTime Update_Date { get; set; }
         public Nullable<System.DateTime> FiledOn { get; set; }
-        public bool Completed { get; set; }
+        public Nullable<bool> Completed { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public string USD { get; set; }
         public string BuildingID { get; set; }
         public string ProvidedFor { get; set; }
-
-
+        public System.DateTime Create_Date { get; set; }
+        public System.DateTime Update_Date { get; set; }
+    
         public virtual tblProvider tblProvider { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblGoal> tblGoals { get; set; }
     }
 }

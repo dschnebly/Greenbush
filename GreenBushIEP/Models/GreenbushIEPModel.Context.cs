@@ -128,6 +128,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblFormContinuousLearningPlan> tblFormContinuousLearningPlans { get; set; }
+        public virtual DbSet<zArchive_Services> zArchive_Services { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -449,6 +450,27 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByProvider_Result>("uspUserListByProvider", userIDParameter, uSDParameter, buildingIDParameter, providerIDParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportStudentInfo_Result> up_ReportStudentInfo(string districtId, string buildingId, string providerId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentInfo_Result>("up_ReportStudentInfo", districtIdParameter, buildingIdParameter, providerIdParameter, teacherIdParameter);
         }
     }
 }
