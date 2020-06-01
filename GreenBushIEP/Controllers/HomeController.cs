@@ -2961,10 +2961,13 @@ namespace GreenbushIep.Controllers
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
 
-                    studentDetails.inititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
-                    studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
+					studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
+					//studentDetails.inititationDateNext = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.AddYears(1).ToShortDateString() : "";
 
-                    IOrderedQueryable<tblIEP> historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
+					studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
+					studentDetails.inititationDateNext = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.AddYears(1).ToShortDateString() : "";
+
+					IOrderedQueryable<tblIEP> historicalIEPs = db.tblIEPs.Where(o => o.UserID == info.UserID && (o.IepStatus == IEPStatus.ARCHIVE || o.IepStatus == IEPStatus.ACTIVE)).OrderByDescending(o => o.begin_date);
                     //var originalIEP = historicalIEPs.Where(o => o.OriginalIEPid == null && o.Amendment == false).Take(1).FirstOrDefault();
                     List<IEPHistoryViewModel> historicalIEPList = new List<IEPHistoryViewModel>();
                     //int firstIEPId = originalIEP != null ? originalIEP.IEPid : 0;
@@ -2973,7 +2976,7 @@ namespace GreenbushIep.Controllers
                     {
                         //add draft to history
                         string iepType = string.Format("{0}", theIEP.anyStudentIEPActive && !theIEP.current.Amendment ? "Annual" : theIEP.anyStudentIEPActive && theIEP.current.Amendment ? "Amendment" : string.Empty);
-                        IEPHistoryViewModel historyItem = new IEPHistoryViewModel() { edStatus = theIEP.current.StatusCode, iepDate = theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "", iepType = iepType };
+                        IEPHistoryViewModel historyItem = new IEPHistoryViewModel() { edStatus = theIEP.current.StatusCode, iepDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "", iepType = iepType };
                         historicalIEPList.Add(historyItem);
                     }
 
@@ -2995,7 +2998,7 @@ namespace GreenbushIep.Controllers
                         }
 
                         historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? studentDetails.student.StatusCode : history.StatusCode;
-                        historyItem.iepDate = history.begin_date.HasValue ? history.begin_date.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture) : "";
+                        historyItem.iepDate = history.MeetingDate.HasValue ? history.MeetingDate.Value.ToShortDateString() : "";
                         historicalIEPList.Add(historyItem);
                     }
 
