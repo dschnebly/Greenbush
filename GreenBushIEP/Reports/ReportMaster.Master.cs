@@ -213,8 +213,11 @@ namespace GreenBushIEP.Report
 			providerDD.DataValueField = "ProviderID";
 			providerDD.DataBind();
 
+			if (selectedProvider != "-1")
+				selectedDistricts = "";
 
-			if (!string.IsNullOrEmpty(selectedProvider) || selectedProvider != "-1")
+
+			if (!string.IsNullOrEmpty(selectedProvider))
 			{
 				var providerIds = selectedProvider.Split(',');
 

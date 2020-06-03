@@ -29,10 +29,6 @@
           <DataField>DateOfBirth</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
         </Field>
-        <Field Name="BuildingID">
-          <DataField>BuildingID</DataField>
-          <rd:TypeName>System.String</rd:TypeName>
-        </Field>
         <Field Name="UserID">
           <DataField>UserID</DataField>
           <rd:TypeName>System.Int32</rd:TypeName>
@@ -59,6 +55,14 @@
         </Field>
         <Field Name="USD">
           <DataField>USD</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="StudentBuildingID">
+          <DataField>StudentBuildingID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ServiceBuildingID">
+          <DataField>ServiceBuildingID</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
       </Fields>
@@ -429,6 +433,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -741,7 +746,7 @@
                 </Paragraph>
               </Paragraphs>
               <rd:DefaultName>Textbox61</rd:DefaultName>
-              <Top>0.41042in</Top>
+              <Top>0.40208in</Top>
               <Left>0.04767in</Left>
               <Height>0.25in</Height>
               <Width>1.49584in</Width>

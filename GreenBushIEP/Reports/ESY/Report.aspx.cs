@@ -60,12 +60,20 @@ namespace GreenBushIEP.Reports.ESY
 				teacherIds = user.UserID.ToString();
 			}
 
-			if (string.IsNullOrEmpty(providerIds))
+			if (string.IsNullOrEmpty(providerIds) && this.buildingDD.Value == "-1")
 			{
 				providerIds = GreenBushIEP.Report.ReportMaster.GetProviderFilter(this.providerDD, districtFilter, this.providerVals);
 			}
 
-			DataTable dt = GetData(districtFilter, providerIds, teacherIds, buildingFilter);
+			DateTime? startDate = null;
+			if(this.startDate.Value != "")
+				startDate= DateTime.Parse(this.startDate.Value);
+
+			DateTime? endDate = null;
+			if (this.endDate.Value != "")
+				endDate = DateTime.Parse(this.endDate.Value);
+			
+			DataTable dt = GetData(districtFilter, providerIds, teacherIds, buildingFilter, startDate, endDate);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportParameter p3 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/ESY/rptESY.rdlc");
@@ -74,7 +82,7 @@ namespace GreenBushIEP.Reports.ESY
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string providerIds, string teacherIds, string buildingFilter)
+		private DataTable GetData(string districtFilter, string providerIds, string teacherIds, string buildingFilter, DateTime? startDate, DateTime? endDate)
 		{
 			DataSet ds = new DataSet();
 
@@ -90,7 +98,9 @@ namespace GreenBushIEP.Reports.ESY
 					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingFilter;
 					cmd.Parameters.Add("@ProviderId", SqlDbType.VarChar, 8000).Value = providerIds;
 					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
-					
+					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
+					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;
+
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
 					{
 						sda.Fill(ds);
