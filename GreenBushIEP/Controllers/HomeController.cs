@@ -1380,8 +1380,6 @@ namespace GreenbushIep.Controllers
             tblIEP studentActiveIEP = studentIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
             if (studentActiveIEP != null)
             {
-                db.tblAuditLogs.Add(new tblAuditLog() { TableName = "tblIEP", ColumnName = "IEPStatus", Update_Date = DateTime.Now, Create_Date = DateTime.Now, IEPid = IepId, Value = MyReason, UserID = submitter.UserID, ModifiedBy = submitter.UserID });
-
                 // if ammended is in play then they can't revert.
                 tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid == IepId && i.IsActive).FirstOrDefault();
                 if (studentAmmendedIEP != null)
@@ -1400,14 +1398,30 @@ namespace GreenbushIep.Controllers
                 tblIEP studentDraftIep = studentIEPs.Where(i => i.IepStatus == IEPStatus.DRAFT && i.IsActive && !i.Amendment && i.IsActive).FirstOrDefault();
                 if (studentDraftIep == null)
                 {
+                    db.tblAuditLogs.Add(new tblAuditLog() { TableName = "tblIEP", ColumnName = "IEPStatus", Update_Date = DateTime.Now, Create_Date = DateTime.Now, IEPid = IepId, Value = MyReason, UserID = submitter.UserID, ModifiedBy = submitter.UserID });
+
                     studentActiveIEP.IepStatus = IEPStatus.DRAFT;
                     studentActiveIEP.begin_date = null;
                     studentActiveIEP.MeetingDate = null;
                     studentActiveIEP.Update_Date = DateTime.Now;
                     db.SaveChanges();
 
+                    //revert old copy to make it active again
+                    tblIEP tblArchivedIEP = db.tblIEPs.Where(i => i.IEPid == studentActiveIEP.AmendingIEPid && i.UserID == studentActiveIEP.UserID).FirstOrDefault();
+                    if (tblArchivedIEP != null)
+                    {
+                        db.tblAuditLogs.Add(new tblAuditLog() { TableName = "tblIEP", ColumnName = "IEPStatus", Update_Date = DateTime.Now, Create_Date = DateTime.Now, IEPid = tblArchivedIEP.IEPid, Value = "Changing status of archived iep to Active due to current active iep being reverted to draft.", UserID = submitter.UserID, ModifiedBy = submitter.UserID });
+
+                        tblArchivedIEP.IepStatus = IEPStatus.ACTIVE;
+                        tblArchivedIEP.ModifiedBy = submitter.UserID;
+                        tblArchivedIEP.IsActive = true;
+                        studentActiveIEP.Update_Date = DateTime.Now;
+                        db.SaveChanges();
+                    }
+
                     return Json(new { Result = "success", Message = "IEP is reverted." }, JsonRequestBehavior.AllowGet);
                 }
+
 
                 return Json(new { Result = "error", Message = "There is already another Draft in play. Unable make to revert this IEP" }, JsonRequestBehavior.AllowGet);
             }
