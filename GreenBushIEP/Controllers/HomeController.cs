@@ -1373,12 +1373,15 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize(Roles = "1,2")]
-        public ActionResult UpdateRevertIEPtoDraft(int Stid, int IepId)
+        public ActionResult UpdateRevertIEPtoDraft(int Stid, int IepId, string MyReason)
         {
+            tblUser submitter = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
             List<tblIEP> studentIEPs = db.tblIEPs.Where(i => i.UserID == Stid && i.IsActive).ToList();
             tblIEP studentActiveIEP = studentIEPs.Where(i => i.UserID == Stid && i.IEPid == IepId).FirstOrDefault();
             if (studentActiveIEP != null)
             {
+                db.tblAuditLogs.Add(new tblAuditLog() { TableName = "tblIEP", ColumnName = "IEPStatus", Update_Date = DateTime.Now, Create_Date = DateTime.Now, IEPid = IepId, Value = MyReason, UserID = submitter.UserID, ModifiedBy = submitter.UserID });
+
                 // if ammended is in play then they can't revert.
                 tblIEP studentAmmendedIEP = studentIEPs.Where(i => i.AmendingIEPid == IepId && i.IsActive).FirstOrDefault();
                 if (studentAmmendedIEP != null)

@@ -1,4 +1,4 @@
-﻿$(function() {
+﻿$(function () {
 
     // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
     if ($("#modal-studentPlanning").hasClass('needsPlan')) {
@@ -479,18 +479,29 @@
 
         var answer = confirm("Are you sure you want to revert this IEP from ACTIVE to DRAFT?");
         if (answer) {
+
+            $('#reasonsRevertDraft').modal('show');
+        }
+    });
+
+    $("#saveRevertDraft").on('click', function () {
+        console.log($("#yourReasoning").val());
+        if ($("#yourReasoning").val().length > 0) {
+
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
 
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
+            var reasons = $("#yourReasoning").val();
 
             $.ajax({
                 type: 'GET',
                 url: '/Home/UpdateRevertIEPtoDraft',
                 data: {
                     Stid: stId,
-                    IepId: iepId
+                    IepId: iepId,
+                    MyReason: reasons
                 },
                 dataType: 'json',
                 success: function (data) {
@@ -510,8 +521,12 @@
                 }
             });
         }
+        else {
+            alert("This field cannot be blank.");
+        }
     });
 });
+
 
 function getParameterByName(name, url) {
     if (!url) {
