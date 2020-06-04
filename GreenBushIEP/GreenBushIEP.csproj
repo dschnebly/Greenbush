@@ -658,6 +658,15 @@
     <Compile Include="Reports\DraftIEP\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\ESY\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\ESY\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\IEPDue\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -885,6 +894,9 @@
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
     </Content>
     <Content Include="Reports\DraftIEP\Report.aspx" />
+    <Content Include="Reports\ESY\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
@@ -1250,6 +1262,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
+    <EmbeddedResource Include="Reports\ESY\rptESY.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />

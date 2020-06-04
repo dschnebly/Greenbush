@@ -141,36 +141,6 @@ namespace GreenBushIEP.Reports.ProviderCaseload
 			return ds.Tables[0];
 
 		}
-
-		//private DataTable GetData(string districtFilter, string providerId, string fiscalYear, string teacher, string buildingID, string studentIds)
-		//{
-		//	DataTable dt = new DataTable();
-		//	dt.Columns.Add("LastName", typeof(string));
-		//	dt.Columns.Add("FirstName", typeof(string));
-		//	dt.Columns.Add("ProviderName", typeof(string));
-		//	dt.Columns.Add("GoalTitle", typeof(string));
-		//	dt.Columns.Add("Location", typeof(string));
-		//	dt.Columns.Add("Minutes", typeof(string));
-		//	dt.Columns.Add("DaysPerWeek", typeof(string));
-		//	dt.Columns.Add("Frequency", typeof(string));
-		//	dt.Columns.Add("ServiceType", typeof(string));
-		//	dt.Columns.Add("USD", typeof(string));
-		//	dt.Columns.Add("BuildingName", typeof(string));
-		//	dt.Columns.Add("FrequencyDesc", typeof(string));
-		//	using (var ctx = new IndividualizedEducationProgramEntities())
-		//	{
-		//		//Execute stored procedure as a function
-		//		var list = ctx.up_ReportProviderCaseload(districtFilter,providerId, fiscalYear, teacher, buildingID, studentIds);
-
-		//		foreach (var cs in list)
-		//			dt.Rows.Add(cs.LastName, cs.FirstName, cs.ProviderName, cs.GoalTitle
-		//				,cs.Location, cs.Minutes, cs.DaysPerWeek, cs.Frequency, cs.ServiceType
-		//				,cs.USD, cs.BuildingName, cs.FrequencyDesc);
-		//	}
-
-		//	return dt;
-		//}
-
 		
 	}
 }
