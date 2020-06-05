@@ -3040,7 +3040,7 @@ namespace GreenBushIEP.Controllers
 				string selectedBuilding = Convert.ToInt32(BuildingId) == -1 ? null : BuildingId;
 				int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
 				int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1;
-				bool? searchArchieve = submitter.RoleID == "1" ? true : false;
+				//bool? searchArchieve = submitter.RoleID == "1" ? true : false;
 
 				Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
 				{
@@ -3053,7 +3053,7 @@ namespace GreenBushIEP.Controllers
 
 				if (RoleId != "999")
 				{
-					members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, searchArchieve).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
+					members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
 
 					if (searchUserId != -1)
 					{
@@ -3078,16 +3078,11 @@ namespace GreenBushIEP.Controllers
 				}
 				else // Unassigned Users.
 				{
-					members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, false, searchArchieve).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+					members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
 
 					if (searchUserId != -1)
 					{
 						members = members.Where(u => u.UserID == searchUserId).ToList();
-					}
-
-					if (RoleId != "-1")
-					{
-						members = members.Where(u => u.RoleID == RoleId).ToList();
 					}
 				}
 

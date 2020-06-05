@@ -25,8 +25,8 @@
         });
 
         // attach event
-        // fires when the owner chooses a user
-        $('#filterName').change(function () {
+        // fires when the MIS chooses a user
+        $("#filterName").change(function () {
             var userId = this.value;
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
@@ -35,50 +35,29 @@
             $(".ajax-loader").show();
 
             $.ajax({
-                type: 'POST',
-                url: '/Manage/FilterUserList',
-                dataType: 'json',
-                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole, userId: userId },
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole,
+                    userId: userId
+                },
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
+
                         var results = data.Message;
-
-                        // blow away the building list 
-                        $('#userBuildings').empty();
-
-                        // hide all the users in the list.
-                        var filterCollection = $('.list-group-root').find('.list-group-item');
-
-                        $.each(filterCollection, function (index, value) {
-                            $(value).addClass('hidden');
-                        });
-
-                        $('#userBuildings').append('<option value="-1">All Buildings</option>');
-                        if (results.selectedBuilding.length > 0) {
-                            $.each(results.buildings, function (index, value) {
-                                console.log(value);
-                                $('#userBuildings').append('<option value="' + value.BuildingID + '">' + value.BuildingName + '</option>');
-                            });
-                        }
-
                         if (results.members.length > 0) {
-                            $.each(filterCollection, function (filterIndex, filterValue) {
-                                $.each(results.members, function (index, value) {
-                                    if ($(filterValue).data('id') === value.UserID) {
-                                        $(filterValue).removeClass('hidden');
-                                        return false;
-                                    }
-                                });
-                            });
+                            filterList(results.members);
                         }
-                    }
-                    else {
-                        alert('doh');
+                    } else {
+                        alert("doh");
                     }
                 },
                 error: function (data) {
-                    alert('Not connected to the network!');
+                    alert("Not connected to the network!");
 
                     console.log(data);
                 },
@@ -91,8 +70,8 @@
         });
 
         // attach event
-        // fires when the owner chooses a district
-        $("#userDistricts").on('change', function () {
+        // fires when the MIS chooses a district
+        $("#userDistricts").on("change", function () {
             var selectedDistrict = $(this).val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
@@ -100,40 +79,28 @@
             $(".ajax-loader").show();
 
             $.ajax({
-                type: 'POST',
-                url: '/Manage/FilterUserList',
-                dataType: 'json',
-                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole
+                },
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $('.list-group-root').find('.list-group-item');
-
-                        var i = filterCollection.length;
-                        while (i >= 0) {
-                            $(filterCollection[i]).addClass('hidden');
-                            i--;
-                        }
-
                         var results = data.Message;
                         if (results.members.length > 0) {
-
-                            var j = results.members.length - 1;
-                            while (j >= 0) {
-                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-                                $(filterCollection[foundIndex]).removeClass('hidden');
-                                j--;
-                            }
+                            filterList(results.members);
                         }
-                    }
-                    else {
-                        alert('doh');
+                    } else {
+                        alert("doh");
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert("ERROR!!!");
 
                     console.log(data);
                 },
@@ -146,8 +113,8 @@
         });
 
         // attach event
-        // fires when the owner chooses a building
-        $("#userBuildings").on('change', function () {
+        // fires when the MIS chooses a building
+        $("#userBuildings").on("change", function () {
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $(this).val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
@@ -155,40 +122,28 @@
             $(".ajax-loader").show();
 
             $.ajax({
-                type: 'POST',
-                url: '/Manage/FilterUserList',
-                dataType: 'json',
-                data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole
+                },
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
 
-                        // hide all the users in the list.
-                        var filterCollection = $('.list-group-root').find('.list-group-item');
-
-                        var i = filterCollection.length;
-                        while (i >= 0) {
-                            $(filterCollection[i]).addClass('hidden');
-                            i--;
-                        }
-
                         var results = data.Message;
                         if (results.members.length > 0) {
-
-                            var j = results.members.length - 1;
-                            while (j >= 0) {
-                                var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-                                $(filterCollection[foundIndex]).removeClass('hidden');
-                                j--;
-                            }
+                            filterList(results.members);
                         }
-                    }
-                    else {
-                        alert('doh');
+                    } else {
+                        alert("doh");
                     }
                 },
                 error: function (data) {
-                    alert('ERROR!!!');
+                    alert("ERROR!!!");
 
                     console.log(data);
                 },
@@ -201,80 +156,56 @@
         });
 
         // attach event
-        // fires when the owner chooses a role
-        $("#userRoles").on('change', function () {
+        // fires when the MIS chooses a role
+        $("#userRoles").on("change", function () {
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
-			$('.inactive-list').html("");	
+
             $(".ajax-loader").show();
 
             if (selectedRole === "5") {
                 $(".activeIEPCol").removeClass("hidden");
-            }
-            else {
+            } else {
                 $(".activeIEPCol").addClass("hidden");
-			}
+            }
 
-			var isInactiveFilter = (selectedRole == "-2") ? true : false;
+            $.ajax({
+                type: "POST",
+                url: "/Manage/FilterUserList",
+                dataType: "json",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole
+                },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
 
-			if (isInactiveFilter) {
-				filterListInactive(selectedDistrict, selectedBuilding, selectedRole);
-			}
-			else {
+                        var results = data.Message;
+                        if (results.members.length > 0) {
+                            filterList(results.members);
+                        }
+                    } else {
+                        alert("doh");
+                    }
+                },
+                error: function (data) {
+                    alert("ERROR!!!");
 
-				$.ajax({
-					type: 'POST',
-					url: '/Manage/FilterUserList',
-					dataType: 'json',
-					data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, RoleId: selectedRole },
-					async: false,
-					success: function (data) {
-						if (data.Result === "success") {
-							var container = document.querySelector(".list-group-root");
-							$(".inactive-list").addClass("hidden");
-							$(container).removeClass("hidden");
-
-							// hide all the users in the list.
-							var filterCollection = $('.list-group-root').find('.list-group-item');
-
-							var i = filterCollection.length;
-							while (i >= 0) {
-								$(filterCollection[i]).addClass('hidden');
-								i--;
-							}
-
-							var results = data.Message;
-							if (results.members.length > 0) {
-
-								var j = results.members.length - 1;
-								while (j >= 0) {
-									var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
-									$(filterCollection[foundIndex]).removeClass('hidden');
-									j--;
-								}
-							}
-						}
-						else {
-							alert('doh');
-						}
-					},
-					error: function (data) {
-						alert('ERROR!!!');
-
-						console.log(data);
-					},
-					complete: function (data) {
-						$(".ajax-loader").hide();
-						//A function to be called when the request finishes 
-						// (after success and error callbacks are executed). 
-					}
-				});
-			}
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
+                }
+            });
         });
 
         // attach event
-        // fires when the owner chooses active/inactive
+        // fires when the MIS chooses active/inactive
         $("#statusActive").change(function () {
 
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
@@ -322,7 +253,7 @@
         });
 
         // attach event
-        // fires when the owner chooses active/inactive
+        // fires when the MIS chooses active/inactive
         $("#filterActive").change(function () {
 
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
@@ -634,36 +565,36 @@
             });
         }
 
-		function filterListInactive(selectedDistrict, selectedBuilding, selectedRole) {
-		
-			$.ajax({
-				type: "POST",
-				url: "/Manage/FilterUserListInactive",
-				data: {
-					DistrictId: selectedDistrict,
-					BuildingId: selectedBuilding,
-					RoleId: selectedRole
-				},
-				dataType: "html",
-				success: function (response) {
-										
-					$('.inactive-list').html(response);
-					var container = document.querySelector(".list-group-root");
-					$(".inactive-list").removeClass("hidden");
-					$(container).addClass("hidden");
-				},
-				failure: function (response) {
-					alert("There was a problem loading the users.");
-				},
-				error: function (response) {
-					alert("There was a problem loading the users.");
-				},
-				complete: function (data) {
-					$(".ajax-loader").hide();
-				}
-			});
-		}
-	}
+        function filterListInactive(selectedDistrict, selectedBuilding, selectedRole) {
+
+            $.ajax({
+                type: "POST",
+                url: "/Manage/FilterUserListInactive",
+                data: {
+                    DistrictId: selectedDistrict,
+                    BuildingId: selectedBuilding,
+                    RoleId: selectedRole
+                },
+                dataType: "html",
+                success: function (response) {
+
+                    $('.inactive-list').html(response);
+                    var container = document.querySelector(".list-group-root");
+                    $(".inactive-list").removeClass("hidden");
+                    $(container).addClass("hidden");
+                },
+                failure: function (response) {
+                    alert("There was a problem loading the users.");
+                },
+                error: function (response) {
+                    alert("There was a problem loading the users.");
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                }
+            });
+        }
+    }
     init();
 
     //SET UP FOR TRANSITIONS
@@ -689,7 +620,9 @@ function filterList(members) {
 
     var j = members.length - 1;
     while (j >= 0) {
-        var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
+        console.log(members[j].UserID);
+        var matchFound = document.querySelectorAll("div [data-id='" + members[j].UserID + "']");
+        console.log(matchFound);
         if (matchFound[0] != null) {
             matchFound[0].classList.remove("hidden");
         }
