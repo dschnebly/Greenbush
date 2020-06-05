@@ -45,23 +45,23 @@
             <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
-            <div class="col-xs-12 col-md-2 pull-left">
+            <div class="col-xs-12 col-md-3 pull-left">
                 <div class="form-group">
-                    <label for="filterName">Name</label>
+                    <label for="filterName">Name or KIDS ID</label>
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
-                        <select class="form-control chosen-select" name="filterName" id="filterName">
+                        <select class="form-control chosen-select form-control" name="filterName" id="filterName">
                             <option value="-1">All Users</option>
-                            @if (Model.districts.Count > 0)
+                            @foreach (var user in Model.members)
                             {
-                                foreach (var user in Model.members)
+                                if (user.RoleID == "5")
                                 {
                                     <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
                                 }
-                            }
-                            else
-                            {
-                                <option>Currently no users are assigned to you</option>
+                                else
+                                {
+                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName)</option>
+                                }
                             }
                         </select>
                     </div>
@@ -89,7 +89,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-3 pull-left">
+            <div class="col-xs-12 col-md-2 pull-left">
                 <div class="form-group">
                     <label for="userBuildings">Building</label>
                     <div class="input-group">
@@ -140,7 +140,7 @@
         <div class="ajax-loader">
             <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
         </div>
-        <div>
+        <div style="margin-bottom: 30px;">
             @if (Model.members.Count > 0)
             {
                 <div class="list-group list-group-root well">
@@ -216,6 +216,7 @@
         </div>
     </div>
 </div>
+
 <!-- Modal -->
 <div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
     <div class="modal-dialog">
@@ -268,7 +269,10 @@
 </div>
 <!-- end modal -->
 
+
 @section scripts {
+    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
     @Scripts.Render("~/Scripts/adminportal.js?v1.1")
+    @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }
