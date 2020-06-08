@@ -81,12 +81,13 @@
     //// fires off a new password when the reset password button is clicked
     $('#confirmNewPassword button[type=submit]').on('click', function (e) {
         var userId = $("#hidden-userid").val();
+        var newPassword = $("input[type='password']").eq(1).val();
 
         $.ajax({
             type: 'POST',
             url: '/Account/ResetMyPassword',
             dataType: 'json',
-            data: { id: userId, password: $("input[type='password']").val() },
+            data: { id: userId, password: newPassword },
             async: false,
             success: function (data) {
                 if (data.Result === "Success") {

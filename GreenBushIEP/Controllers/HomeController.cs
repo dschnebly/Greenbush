@@ -154,9 +154,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = teacher)]
-#pragma warning disable IDE0060 // Remove unused parameter
         public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
-#pragma warning restore IDE0060 // Remove unused parameter
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
@@ -209,7 +207,7 @@ namespace GreenbushIep.Controllers
                 foreach (Student student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = (theIEP.current != null) ? theIEP.current.IEPid != 0 : false; //theIEP.current == null ? false : theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE;
+                    student.hasIEP = (theIEP.current != null) ? theIEP.current.IEPid != 0 : false;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                     {
