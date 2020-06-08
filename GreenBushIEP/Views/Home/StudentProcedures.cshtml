@@ -328,7 +328,7 @@
                         </div>
                     </li>
                 </ul>
-                <div id="missingIEPDates" @(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "class='visible'" : String.Empty)></div>
+                <div id="missingIEPDates" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visible" : "hidden")"></div>
             </div>
         </div>
 
