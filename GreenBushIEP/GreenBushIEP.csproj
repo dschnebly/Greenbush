@@ -651,6 +651,15 @@
     <Compile Include="Models\zArchive_Services.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Reports\BehaviorPlan\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\BehaviorPlan\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\DraftIEP\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -892,6 +901,9 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>GreenbushIEPModel.edmx</DependentUpon>
       <LastGenOutput>GreenbushIEPModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Reports\BehaviorPlan\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\DraftIEP\Report.aspx" />
     <Content Include="Reports\ESY\Report.aspx">
@@ -1261,6 +1273,9 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Reports\BehaviorPlan\rptBehaviorPlan.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
     <EmbeddedResource Include="Reports\ESY\rptESY.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
