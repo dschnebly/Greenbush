@@ -12,7 +12,7 @@
 		}
 	%>		
 	<div class="row"  style="margin-bottom: 15px;">
-		<h2>Extended School Year</h2>
+		<h2>Behavior Plan</h2>
 	</div>
 	<div class="row"  style="margin-bottom: 15px;">
 		<div class="col-md-12" style="margin-bottom: 12px;">
