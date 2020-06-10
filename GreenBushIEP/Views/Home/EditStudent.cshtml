@@ -788,7 +788,7 @@
                             <div class="step11">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label class="control-label required" for="kidsid">KIDS ID</label>
+                                        <label class="required" for="kidsid">KIDS ID</label>
                                         @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
                                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
@@ -796,7 +796,7 @@
                                         <div class="bootstrap-iso">
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <label class="control-label required" for="dob">Birthdate</label>
+                                                    <label class="required" for="dob">Birthdate</label>
                                                     @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required sdob", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
                                                     @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
                                                 </div>
@@ -817,7 +817,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="control-label required" for="assignChildCount">Assign Child Count</label>
+                                        <label class="required" for="assignChildCount">Assign Child Count</label>
                                         <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a district...">
                                             @if (Model.allDistricts != null)
                                             {
@@ -842,17 +842,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label class="control-label required" for="firstname">First Name</label>
+                                        <label class="required" for="firstname">First Name</label>
                                         @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="control-label" for="middlename">Middle Name</label>
+                                        <label for="middlename">Middle Name</label>
                                         @Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name" } })
                                         @Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="control-label required" for="lastname">Last Name</label>
+                                        <label class="required" for="lastname">Last Name</label>
                                         @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
@@ -902,7 +902,7 @@
                                         @Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="control-label required" for="misDistrict">Attending District</label>
+                                        <label class="required" for="misDistrict">Attending District</label>
                                         <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                                             @if (Model.districts != null)
                                             {
@@ -915,6 +915,7 @@
                                         </select>
                                     </div>
                                 </div>
+                                <br/>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Building Assignment</label>
@@ -922,7 +923,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
-                                        <span class="control-label required">Neighborhood School</span>
+                                        <span class="required">Neighborhood School</span>
                                     </div>
                                     <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
 
@@ -960,7 +961,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 nopadding" style="display: flex; align-items: center; height: 49px;">
-                                        <span class="control-label required">Responsible Building</span>
+                                        <span class="required">Responsible Building</span>
                                     </div>
                                     <div class="col-md-10" style="display: flex; align-items: center; height: 49px;">
 
@@ -1304,7 +1305,7 @@
                                             <label>&nbsp;</label>
                                             <div class="row vertical-align">
                                                 <div class="col-md-2" style="padding: 0; text-align: right;">
-                                                    <label class="control-label required" for="statusCode">Status Code</label>
+                                                    <label class="required" for="statusCode">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
@@ -1335,7 +1336,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="initialIEPDate" class="control-label">Initial IEP Date</label>
+                                                        <label for="initialIEPDate">Initial IEP Date</label>
                                                         <input id="initialIEPDate" name="initialIEPDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialIEPDate.HasValue ? Model.info.InitialIEPDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
@@ -1347,7 +1348,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="initialConsentSignature" class="control-label">Initial Evaluation Consent Received</label>
+                                                        <label for="initialConsentSignature">Initial Evaluation Consent Received</label>
                                                         <input id="initialConsentSignature" name="initialConsentSignature" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalConsentSigned.HasValue ? Model.info.InitialEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
@@ -1357,7 +1358,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="initialEvaluationDetermination" class="control-label">Initial Evaluation Determination</label>
+                                                        <label for="initialEvaluationDetermination">Initial Evaluation Determination</label>
                                                         <input id="initialEvaluationDetermination" name="initialEvaluationDetermination" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.InitialEvalDetermination.HasValue ? Model.info.InitialEvalDetermination.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
@@ -1370,7 +1371,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="reEvaluationSignature" class="control-label">Re-Evaluation Consent Signed</label>
+                                                        <label for="reEvaluationSignature">Re-Evaluation Consent Signed</label>
                                                         <div class="input-group">
                                                             <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999;" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")"
                                                                    data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
@@ -1384,7 +1385,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="reEvalCompleted" class="control-label">Re-Evaluation Completed</label>
+                                                        <label for="reEvalCompleted">Re-Evaluation Completed</label>
                                                         <div class="input-group">
                                                             <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")"
                                                                    data-placement="top" data-trigger="manual" data-toggle="popover" data-content="" />
@@ -1400,7 +1401,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="exitDate" class="control-label">Exit Date</label>
+                                                        <label for="exitDate">Exit Date</label>
                                                         <input id="exitDate" name="exitDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ExitDate.HasValue ? Model.info.ExitDate.Value.ToString("MM/dd/yyyy") : "")" />
                                                     </div>
                                                 </div>
@@ -1410,7 +1411,7 @@
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
-                                                        <label for="exitNotes" class="control-label">Exit Notes</label>
+                                                        <label for="exitNotes">Exit Notes</label>
                                                         <input id="exitNotes" name="exitNotes" type="text" style="height:49px; z-index: 99999" class="form-control norequired" placeholder="" value="@(Model.info.ExitNotes)" />
                                                     </div>
                                                 </div>
