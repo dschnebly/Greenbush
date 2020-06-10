@@ -176,12 +176,10 @@ namespace GreenBushIEP.Models
                 isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
 
                 bool allModulesCompleted = (isHealthCompleted || studentHealth.NoConcerns) && (isMotorCompleted || studentMotor.NoConcerns) && (isCommunicationCompleted || studentCommunication.NoConcerns) && (isSocialCompleted || studentSocial.NoConcerns) && (isIntelligenceCompleted || !studentIntelligence.Concerns) && (isAcademicCompleted || studentAcademic.NoConcerns);
-                bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
-                bool studentHasAccommodations = (studentHealth != null && (studentHealth.NeedMetByAccommodation ?? false)) || (studentMotor.NeedMetByAccommodation ?? false) || (studentCommunication.NeedMetByAccommodation ?? false) || (studentSocial.NeedMetByAccommodation ?? false) || (studentAcademic.NeedMetByAccommodation ?? false) || (studentWritten.NeedMetByAccommodation ?? false) || (studentReading.NeedMetByAccommodation ?? false) || (studentMath.NeedMetByAccommodation ?? false);
-
-                isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : studentHasGoals ? false : allModulesCompleted;
-                isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
-                isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : studentHasAccommodations ? false : allModulesCompleted;
+                
+				CheckCompleted();
+				
+				isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;                
                 isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed || studentSocial.Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
                 isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
                 isTransitionCompleted = transitions != null ? transitions.Any(o => o.Completed) : false;
@@ -569,5 +567,96 @@ namespace GreenBushIEP.Models
                 //model.studentAge = (DateTime.Now.Year - info.DateOfBirth.Year - 1) + (((DateTime.Now.Month > info.DateOfBirth.Month) || ((DateTime.Now.Month == info.DateOfBirth.Month) && (DateTime.Now.Day >= info.DateOfBirth.Day))) ? 1 : 0);
             }
         }
-    }
+
+		private void CheckCompleted()
+		{
+			
+				int accommodationsCount = 0;
+
+				if (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+				if (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value))
+				{
+					accommodationsCount++;
+				}
+
+				if (accommodations.Count > 0)
+				{
+					//how many modules have accommodations that are complete
+					int completedCount = accommodations.Count(g => g.Completed);
+					if (completedCount == accommodationsCount)
+						isAccommodationsCompleted = true;
+				}
+
+			int goalsCount = 0;
+
+			if (studentHealth != null && (studentHealth.NeedMetByGoal.HasValue && studentHealth.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentMotor != null && (studentMotor.NeedMetByGoal.HasValue && studentMotor.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentCommunication != null && (studentCommunication.NeedMetByGoal.HasValue && studentCommunication.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentSocial != null && (studentSocial.NeedMetByGoal.HasValue && studentSocial.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentAcademic != null && (studentAcademic.NeedMetByGoal.HasValue && studentAcademic.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentWritten != null && (studentWritten.NeedMetByGoal.HasValue && studentWritten.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentReading != null && (studentReading.NeedMetByGoal.HasValue && studentReading.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+			if (studentMath != null && (studentMath.NeedMetByGoal.HasValue && studentMath.NeedMetByGoal.Value))
+			{
+				goalsCount++;
+			}
+
+			if (studentGoals.Count > 0)
+			{
+				//how many modules have goals that are complete
+				int completedGoalCount = studentGoals.Count(g => g.Completed);
+				if (completedGoalCount == goalsCount)
+					isGoalCompleted = true;
+			}
+
+		}
+	}
 }

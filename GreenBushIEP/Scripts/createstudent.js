@@ -337,16 +337,16 @@ function tabValidates() {
     $inputs.each(function () {
         var input = $(this);
         var is_valid = input.val();
-
+		
         if (is_valid === "" || is_valid === null) {
             if (input.is("select")) {
-                $(this).next().addClass('contact-tooltip');
-                input.addClass('contact-tooltip');
+				$(this).next().addClass('contact-tooltip');
+				input.addClass('contact-tooltip');				
             }
             else {
-                input.addClass('contact-tooltip');
+				input.addClass('contact-tooltip');				
             }
-            validates = false;
+			validates = false;			
         }
         else {
             input.removeClass('contact-tooltip');
@@ -369,6 +369,116 @@ function tabValidates() {
     $(".studentNameLabel").html(studentName);
 
     return validates;
+}
+
+function checkPrimarySelected() {
+
+	//check if primary selected
+	var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
+	var primaryChecked = $('input.primaryContactCheckbox:checkbox:checked').length;
+	if (numberOfContacts > 0 && primaryChecked == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+function createStudentContacts() {	
+		$.ajax({
+			url: '/Manage/CreateStudentContacts',
+			type: 'POST',
+			data: $("#createStudentContacts").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+
+					// clear out the ul list
+					$("ul#teacherList").empty();
+
+					// our array to user for appending
+					var items = [];
+
+					if (!$.isEmptyObject(data.teacherList)) {
+
+						$.each(data.teacherList, function (key, value) {
+							var userImage = '/Content/Images/newUser.png';
+							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+						});
+
+						$("ul#teacherList").append.apply($("ul#teacherList"), items);
+						$(".listrap").listrap().getSelection();
+					}
+				} else {
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+	
+}
+
+
+function editStudentContacts() {	
+
+		$.ajax({
+			url: '/Manage/EditStudentContacts',
+			type: 'POST',
+			data: $("#editStudentContacts").serialize(),
+			success: function (data) {
+				if (data.Result === "success") {
+
+					var $active = $('.wizard .nav-tabs li.active');
+					$active.next().removeClass('disabled');
+					$($active).next().find('a[data-toggle="tab"]').click();
+
+					// clear out the ul list
+					$("ul#teacherList").empty();
+
+					// our array to user for appending
+					var items = [];
+					var assignments = null;
+
+					if (!$.isEmptyObject(data.assignments)) {
+						assignments = data.assignments;
+					}
+
+					if (!$.isEmptyObject(data.teacherList)) {
+
+						$.each(data.teacherList, function (key, value) {
+							var userImage = '/Content/Images/newUser.png';
+							var isActive = "";
+							var isActiveImage = "";
+							if (assignments !== null) {
+								var isAssigned = assignments.indexOf(value.UserID);
+								if (isAssigned >= 0) {
+									isActive = "active";
+									isActiveImage = "img-selection-correction";
+								}
+							}
+
+							items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+						});
+
+						$("ul#teacherList").append.apply($("ul#teacherList"), items);
+						$(".listrap").listrap().getSelection();
+					}
+				} else {
+
+					alert(data.Message);
+				}
+			},
+			error: function (data) {
+				alert("There was an error when attempt to connect to the server.");
+			}
+		});
+
+	
 }
 
 $("#next2").on("click", function () {
@@ -416,6 +526,8 @@ $("#next3").on("click", function () {
 
     var theForm = document.getElementById("createStudentContacts");
 
+	
+
     if (tabValidates()) {
 
         $.ajax({
@@ -444,48 +556,22 @@ $("#next3").on("click", function () {
     }
 });
 $("#next4").on("click", function () {
+	if (tabValidates()) {
+		//var theForm = document.getElementById("editStudentContacts");
+		var primary = checkPrimarySelected();
+		if (!primary) {
+			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
 
-    var theForm = document.getElementById("editStudentContacts");
+			if (answer) {
+				createStudentContacts();
+			}
+		}
+		else {
+			createStudentContacts();
+		}
+	}
 
-    if (tabValidates()) {
-        $.ajax({
-            url: '/Manage/CreateStudentContacts',
-            type: 'POST',
-            data: $("#createStudentContacts").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-
-
-                    // clear out the ul list
-                    $("ul#teacherList").empty();
-
-                    // our array to user for appending
-                    var items = [];
-
-                    if (!$.isEmptyObject(data.teacherList)) {
-
-                        $.each(data.teacherList, function (key, value) {
-                            var userImage = '/Content/Images/newUser.png';
-                            items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
-                        });
-
-                        $("ul#teacherList").append.apply($("ul#teacherList"), items);
-                        $(".listrap").listrap().getSelection();
-                    }
-                } else {
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+    
 });
 $("#next5").on("click", function () {
 
@@ -542,66 +628,25 @@ $("#next6").on("click", function () {
 
     }
 });
+
 $("#next7").on("click", function () {
 
-    var theForm = document.getElementById("editStudentContacts");
+	if (tabValidates()) {
+		var primary = checkPrimarySelected();
+		if (!primary) {
+			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
 
-    if (tabValidates()) {
-
-        $.ajax({
-            url: '/Manage/EditStudentContacts',
-            type: 'POST',
-            data: $("#editStudentContacts").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-
-                    var $active = $('.wizard .nav-tabs li.active');
-                    $active.next().removeClass('disabled');
-                    $($active).next().find('a[data-toggle="tab"]').click();
-
-                    // clear out the ul list
-                    $("ul#teacherList").empty();
-
-                    // our array to user for appending
-                    var items = [];
-                    var assignments = null;
-
-                    if (!$.isEmptyObject(data.assignments)) {
-                        assignments = data.assignments;
-                    }
-
-                    if (!$.isEmptyObject(data.teacherList)) {
-
-                        $.each(data.teacherList, function (key, value) {
-                            var userImage = '/Content/Images/newUser.png';
-                            var isActive = "";
-                            var isActiveImage = "";
-                            if (assignments !== null) {
-                                var isAssigned = assignments.indexOf(value.UserID);
-                                if (isAssigned >= 0) {
-                                    isActive = "active";
-                                    isActiveImage = "img-selection-correction";
-                                }
-                            }
-
-                            items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
-                        });
-
-                        $("ul#teacherList").append.apply($("ul#teacherList"), items);
-                        $(".listrap").listrap().getSelection();
-                    }
-                } else {
-
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
-
-    }
+			if (answer) {
+				editStudentContacts();
+			}
+		}
+		else {
+			editStudentContacts();
+		}
+	}
+    
 });
+
 $("#next8").on("click", function () {
 
 
