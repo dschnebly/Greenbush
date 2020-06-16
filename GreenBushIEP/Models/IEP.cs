@@ -610,7 +610,7 @@ namespace GreenBushIEP.Models
 				{
 					//how many modules have accommodations that are complete
 					int completedCount = accommodations.Count(g => g.Completed);
-					if (completedCount == accommodationsCount)
+					if (completedCount >= accommodationsCount)
 						isAccommodationsCompleted = true;
 				}
 
@@ -653,7 +653,7 @@ namespace GreenBushIEP.Models
 			{
 				//how many modules have goals that are complete
 				int completedGoalCount = studentGoals.Count(g => g.Completed);
-				if (completedGoalCount == goalsCount)
+				if (completedGoalCount >= goalsCount)
 					isGoalCompleted = true;
 			}
 

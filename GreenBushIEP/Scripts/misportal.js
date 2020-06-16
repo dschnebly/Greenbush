@@ -609,7 +609,8 @@
             if (ajax != null) {
                 ajax.classList.add("fadeIntoYou");
             }
-            //document.querySelector(".ajax-loader").style.display = "none";
+
+          //document.querySelector(".ajax-loader").style.display = "";
         } //callback function
     };
     new ft(params);
