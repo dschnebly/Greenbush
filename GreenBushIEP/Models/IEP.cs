@@ -176,10 +176,14 @@ namespace GreenBushIEP.Models
                 isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
 
                 bool allModulesCompleted = (isHealthCompleted || studentHealth.NoConcerns) && (isMotorCompleted || studentMotor.NoConcerns) && (isCommunicationCompleted || studentCommunication.NoConcerns) && (isSocialCompleted || studentSocial.NoConcerns) && (isIntelligenceCompleted || !studentIntelligence.Concerns) && (isAcademicCompleted || studentAcademic.NoConcerns);
-                
-				CheckCompleted();
-				
-				isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;                
+                //bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
+                //bool studentHasAccommodations = (studentHealth != null && (studentHealth.NeedMetByAccommodation ?? false)) || (studentMotor.NeedMetByAccommodation ?? false) || (studentCommunication.NeedMetByAccommodation ?? false) || (studentSocial.NeedMetByAccommodation ?? false) || (studentAcademic.NeedMetByAccommodation ?? false) || (studentWritten.NeedMetByAccommodation ?? false) || (studentReading.NeedMetByAccommodation ?? false) || (studentMath.NeedMetByAccommodation ?? false);
+
+                CheckCompleted();
+
+                //isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : studentHasGoals ? false : allModulesCompleted;
+                isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
+                //isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : studentHasAccommodations ? false : allModulesCompleted;
                 isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed || studentSocial.Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
                 isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
                 isTransitionCompleted = transitions != null ? transitions.Any(o => o.Completed) : false;
@@ -610,7 +614,7 @@ namespace GreenBushIEP.Models
 				{
 					//how many modules have accommodations that are complete
 					int completedCount = accommodations.Count(g => g.Completed);
-					if (completedCount >= accommodationsCount)
+					if (accommodationsCount >= completedCount)
 						isAccommodationsCompleted = true;
 				}
 
