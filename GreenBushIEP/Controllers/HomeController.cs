@@ -3912,8 +3912,9 @@ namespace GreenbushIep.Controllers
             string isIEP = collection["isIEP"];
             string formName = collection["formName"];
             string isSave = collection["isSave"];
+			string fileName = collection["fileName"];
 
-            if (isSave == "1")
+			if (isSave == "1")
             {
                 try
                 {
@@ -3928,12 +3929,11 @@ namespace GreenbushIep.Controllers
                     }
 
                     TempData["Error"] = error;
-                    return RedirectToAction("Index", "Error");
-                    //return RedirectToAction("IEPFormModule", "Home", new { studentId = Int32.Parse(studentId), saved = 2 });
+                    return RedirectToAction("Index", "Error");                    
                 }
 
-                return RedirectToAction("IEPFormModule", "Home", new { studentId = int.Parse(studentId), saved = 1 });
-            }
+				return RedirectToAction("IEPFormFile", "Home", new { id = int.Parse(studentId), saved = 1, fileName = fileName });
+			}
             else
             {
                 byte[] mergedFile = CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);

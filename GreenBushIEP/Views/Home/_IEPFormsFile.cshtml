@@ -36,13 +36,14 @@
                     <input type="hidden" id="iepID" name="iepID" value="@Model.iepId" />   
                     <input type="hidden" id="isIEP" name="isIEP" value="0" /> 
                     <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
+					<input type="hidden" id="fileName" name="fileName" value="@Model.fileName" /> 
 					<input type="hidden" id="isSave" name="isSave" />
                 </form>				
             </div>
         </div>
         <div class="row">
             <div class="col-md-2 pull-right">
-                @Html.ActionLink(" ", null, null, null, new { href = Request.UrlReferrer, id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
+                @Html.ActionLink(" ", null, null, null, new { href = string.Format("/Home/IEPFormModule?studentId={0}", Model.studentId), id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
             </div>
         </div>
         <div class="row">
@@ -80,6 +81,13 @@
 </div>
 <script>	
     document.addEventListener("DOMContentLoaded", function (event) {
+
+		var id = getUrlParameter('saved');
+		if (id == 2) {
+				_showAlert('There was an error while trying to save the data.', false);
+			}else if (id == 1) {
+				_showAlert('The form was successfully saved.', true);			
+			}
 
 		if ( $( ".savdDraftAllowed" ).length ) {
 			$("#btnSave").show();
@@ -162,6 +170,39 @@
 		//});		
 		
     });
+
+	function _showAlert(message, positive) {
+		
+        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+			if (positive)
+			{
+				$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
+			}
+			else {
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+			}
+
+            $("#alertMessage .moreinfo").html(message);
+            $("#alertMessage").fadeTo(3000, 1000).slideUp(2000, function () {
+                $("#alertMessage").slideUp(5000);
+            });
+        }
+	}
+
+	function getUrlParameter(sParam) {
+		var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+			sURLVariables = sPageURL.split('&'),
+			sParameterName,
+			i;
+
+		for (i = 0; i < sURLVariables.length; i++) {
+			sParameterName = sURLVariables[i].split('=');
+
+			if (sParameterName[0] === sParam) {
+				return sParameterName[1] === undefined ? true : sParameterName[1];
+			}
+		}
+	}
 
     function PrintText() {
 		var form1 = document.getElementById("frmPrint");		
