@@ -2640,7 +2640,7 @@
 							}
 							@if (Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value)
 							{
-								<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed.</p>
+								<p class="@(Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.HasValue && Model.studentOtherConsiderations.DistrictAssessment_GradeNotAssessed.Value ? "" : "hidden")">Grade in which student is enrolled is not being assessed or is not required.</p>
 							}
 						</div>
 						<div class="form-check voffset2" id="StateAssessment_TextArea">
@@ -2684,7 +2684,7 @@
 							}
 							@if (Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.HasValue && Model.studentOtherConsiderations.StateAssessment_RequiredCompleted.Value)
 							{
-								<p>Student has completed all required State Assessments.</p>
+								<p>Grade in which student is enrolled is not being assessed or is not required.</p>
 							}
 						</div>
 						<div class="form-check voffset2" id="StateAssessment_TextArea">
