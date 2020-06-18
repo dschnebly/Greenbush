@@ -3794,33 +3794,31 @@ namespace GreenBushIEP.Controllers
 
 		#region ReportFilters
 
-		//[HttpGet]
-		//public ActionResult FilterDistrict()
-		//{
-		//	try
-		//	{
-		//		tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+		[HttpGet]
+		public ActionResult ReportFilterDistrict()
+		{
+			try
+			{
+				tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-		//		var districtList = (from org in db.tblOrganizationMappings
-		//							join district in db.tblDistricts on org.USD equals district.USD
-		//							where org.UserID == user.UserID
-		//							orderby district.DistrictName
-		//							select new DistrictViewModel { USD = district.USD, Name = district.DistrictName }).Distinct().ToList();
+				var districtList = (from org in db.tblOrganizationMappings
+									join district in db.tblDistricts on org.USD equals district.USD
+									where org.UserID == user.UserID
+									orderby district.DistrictName
+									select new DistrictViewModel { USD = district.USD, Name = district.DistrictName }).Distinct().ToList();
 
-		//		List<DistrictViewModel> districts = new List<DistrictViewModel>();
+				List<DistrictViewModel> districts = new List<DistrictViewModel>();
 
-		//		//districts.Add(new DistrictViewModel { Name = "All", USD = "-1" });
-
-		//		districts.AddRange(districtList);
+				districts.AddRange(districtList);
 
 
-		//		return Json(new { Result = "success", Districts = districts }, JsonRequestBehavior.AllowGet);
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
-		//	}			
-		//}
+				return Json(new { Result = "success", Districts = districts }, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+		}
 
 		[HttpGet]
 		public ActionResult ReportFilterProviderByDistrictId(string districtId)
