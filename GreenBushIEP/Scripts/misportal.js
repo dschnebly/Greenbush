@@ -186,7 +186,13 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-                        }
+						}
+
+						if (results.buildings != null && results.buildings.length > 0) {
+							filterBuildingList(results.buildings);
+						}
+
+
                     } else {
                         alert("doh");
                     }
@@ -636,6 +642,21 @@ function filterList(members) {
         }
         j--;
     }
+}
+
+function filterBuildingList(buildingList) {
+	var buildingElement = $("#userBuildings");
+	buildingElement.find('option').remove().end();	
+
+	var buildingHtml = buildingElement.html();
+	buildingHtml += "<option value='-1'>All</option>";
+
+	//district only
+	$.each(buildingList, function (key, value) {
+		buildingHtml += "<option data-district='" + value.BuildingUSD +"' value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+	});
+
+	buildingElement.html(buildingHtml);
 }
 
 jQuery.fn.extend({
