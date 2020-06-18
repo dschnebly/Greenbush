@@ -1,4 +1,4 @@
-﻿@model GreenBushIEP.Models.ModuleAcademicViewModel
+﻿                                            @model GreenBushIEP.Models.ModuleAcademicViewModel
 
 <style>
     @@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
@@ -563,8 +563,10 @@
 
                     if (data.Completed)
                     {
-						$("#AcademicWidget .hero-widget").addClass("module-completed");					
-						$('#moduleSection').modal('hide'); 						
+						//$("#AcademicWidget .hero-widget").addClass("module-completed");					
+                        //$('#moduleSection').modal('hide'); 	
+
+                        location.reload();
                     }
                     
                 } else {
