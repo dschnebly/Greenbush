@@ -170,6 +170,16 @@
 
         return false;
     });
+
+    $("#nokidsId").on('click', function () {
+        if($("#kidsid").attr("disabled") !== undefined) {
+            $("#kidsid").removeAttr("disabled");
+            $("#kidsid").val("");
+        } else {
+            $("#kidsid").attr("disabled", "disabled");
+            $("#kidsid").val("0000000000");
+        }
+    });
 });
 
 function editSignedDate(Id) {

@@ -688,9 +688,9 @@
         </div>
     </div>
     <div class="row">
-		<div class="ajax-loader" style="visibility: hidden;">
-			<img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-		</div>
+        <div class="ajax-loader" style="visibility: hidden;">
+            <img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+        </div>
         <section>
             <div class="wizard">
                 <div class="wizard-inner">
@@ -717,16 +717,16 @@
                                 </span>
                             </a>
                         </li>
-						@if (ViewBag.CanAssignTeacher)
-						{
-						 <li role="presentation" class="disabled">
-                            <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
-                                <span class="round-tab">
-                                    <i class="fa fa-users"></i>
-                                </span>
-                            </a>
-                        </li>
-						}
+                        @if (ViewBag.CanAssignTeacher)
+                        {
+                            <li role="presentation" class="disabled">
+                                <a href="#step4" data-toggle="tab" aria-controls="step4" role="tab" title="Step 4">
+                                    <span class="round-tab">
+                                        <i class="fa fa-users"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        }
                         <li role="presentation" class="disabled">
                             <a href="#complete" data-toggle="tab" aria-controls="complete" role="tab" title="Complete">
                                 <span class="round-tab">
@@ -738,6 +738,12 @@
                 </div>
                 <div class="tab-content">
                     <div id="step1" class="tab-pane active" role="tabpanel">
+                        <div class="row">
+                            <div class="col-md-5 checkbox">
+                                <label style="padding-left: 0;"><input type="checkbox" id="nokidsId"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>KIDS ID not available</label>
+                            </div>
+                        </div>
+
                         @using (Html.BeginForm("CreateStudent", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
                         {
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -745,7 +751,7 @@
                             <div class="step11">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <label class="control-label required" for="kidsid">KIDS ID</label>
+                                        <label class="required" for="kidsid">KIDS ID</label>
                                         @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
                                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                                     </div>
@@ -753,7 +759,7 @@
                                         <div class="bootstrap-iso">
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    <label class="control-label required" for="dob">Birthdate</label>
+                                                    <label class="required" for="dob">Birthdate</label>
                                                     @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required sdob", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
                                                     @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
                                                 </div>
@@ -774,7 +780,7 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2">
-                                        <label class="control-label required" for="assignChildCount">Assign Child Count</label>
+                                        <label class="required" for="assignChildCount">Assign Child Count</label>
                                         <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a district...">
                                             @if (Model.allDistricts != null)
                                             {
@@ -798,17 +804,17 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <label class="control-label required" for="firstname">First Name</label>
+                                        <label class="required" for="firstname">First Name</label>
                                         @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="control-label" for="middlename">Middle Name</label>
+                                        <label for="middlename">Middle Name</label>
                                         @Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name" } })
                                         @Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-4">
-                                        <label class="control-label required" for="lastname">Last Name</label>
+                                        <label class="required" for="lastname">Last Name</label>
                                         @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
                                         @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
                                     </div>
@@ -858,7 +864,7 @@
                                         @Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
-                                        <label class="control-label required" for="misDistrict">Attending District</label>
+                                        <label class="required" for="misDistrict">Attending District</label>
                                         <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a district..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
                                             @if (Model.districts != null)
                                             {
@@ -925,11 +931,11 @@
                                 @Html.Hidden("studentId", 0)
 
                                 <div class="step22">
-									<div class="row">
-										<div class="col-md-12">
-											<h3 class="control-label studentNameLabel"></h3>										
-										</div>                                    
-									</div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h3 class="control-label studentNameLabel"></h3>
+                                        </div>
+                                    </div>
                                     <div class="row voffset2">
                                         <div class="col-sm-4">
                                             <div class="form-group">
@@ -1135,7 +1141,7 @@
                                         <div class="col-md-2">
                                             <label for="studentGrade">Student Grade</label>
                                             <select name="studentGrade" id="studentGrade" class="form-control">
-                                                @foreach(tblGrade grade in Model.grades)
+                                                @foreach (tblGrade grade in Model.grades)
                                                 {
                                                     <option value="@(grade.gradeID)">@(grade.description)</option>
                                                 }
@@ -1143,8 +1149,8 @@
                                         </div>
                                         <div class="col-md-2">
                                             <label for="studentRace">Student Race</label>
-											<select name="studentRace" id="studentRace" class="form-control">
-                                                @foreach(tblRace race in Model.races)
+                                            <select name="studentRace" id="studentRace" class="form-control">
+                                                @foreach (tblRace race in Model.races)
                                                 {
                                                     <option value="@(race.RaceCode)">@(race.RaceDescription)</option>
                                                 }
@@ -1236,24 +1242,24 @@
                                             <label>&nbsp;</label>
                                             <div class="row vertical-align">
                                                 <div class="col-md-2" style="padding: 0; text-align: right;">
-                                                    <label class="control-label required" for="statusCode">Status Code</label>
+                                                    <label class="required" for="statusCode">Status Code</label>
                                                 </div>
                                                 <div class="col-md-10">
                                                     <select name="statusCode" id="statusCode" class="form-control">
                                                         @if (Model.statusCode != null)
                                                         {
-															<optgroup label="Active">
-                                                            @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
-                                                            {
-                                                                <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
-                                                            }
-															 </optgroup>
-															<optgroup label="Inactive">
-															@foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
-                                                            {
-                                                                <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
-                                                            }
-															</optgroup>
+                                                            <optgroup label="Active">
+                                                                @foreach (var code in Model.statusCode.Where(o => o.Type == "Active"))
+                                                                {
+                                                                    <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
+                                                                }
+                                                            </optgroup>
+                                                            <optgroup label="Inactive">
+                                                                @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
+                                                                {
+                                                                    <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
+                                                                }
+                                                            </optgroup>
                                                         }
                                                     </select>
                                                 </div>
@@ -1315,7 +1321,7 @@
                                                 </div>
                                             </div>
                                         </div>
-										<div class="col-md-6">
+                                        <div class="col-md-6">
                                             <div class="bootstrap-iso">
                                                 <div class="container-fluid">
                                                     <div class="row">
@@ -1335,11 +1341,11 @@
                         </div>
                     </div>
                     <div id="step3" class="tab-pane" role="tabpanel">
-						<div class="row">
-							<div class="col-md-12">
-								<h3 class="control-label studentNameLabel"></h3>										
-							</div>                                    
-						</div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3 class="control-label studentNameLabel"></h3>
+                            </div>
+                        </div>
                         <h4 style="font-size:1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
                         @using (Html.BeginForm("CreateStudentContacts", "Manage", null, FormMethod.Post, new { id = "createStudentContacts", @class = "newstudent" }))
                         {
@@ -1363,31 +1369,31 @@
                             }
                         }
                     </div>
-					@if (ViewBag.CanAssignTeacher)
-					{
-					<div id="step4" class="tab-pane" role="tabpanel">
+                    @if (ViewBag.CanAssignTeacher)
+                    {
+                        <div id="step4" class="tab-pane" role="tabpanel">
 
-						@using (Html.BeginForm("CreateStudentAssignments", "Manage", null, FormMethod.Post, new { id = "createStudentAssignments", onsubmit = "return false;" }))
-						{
-							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
-							@Html.Hidden("studentId", 0)
-							<div class="row">
-								<div class="col-md-12">
-									<h3 class="control-label studentNameLabel"></h3>										
-								</div>                                    
-							</div>
-							
-							<h4 style="font-size:1.5em; margin-bottom: 1.5em;">Assign Providers</h4>							
-							<div class="row">
-								<ul id="teacherList" class="listrap"></ul>
-							</div>
-							 <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
+                            @using (Html.BeginForm("CreateStudentAssignments", "Manage", null, FormMethod.Post, new { id = "createStudentAssignments", onsubmit = "return false;" }))
+                            {
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                @Html.Hidden("studentId", 0)
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="control-label studentNameLabel"></h3>
+                                    </div>
+                                </div>
+
+                                <h4 style="font-size:1.5em; margin-bottom: 1.5em;">Assign Providers</h4>
+                                <div class="row">
+                                    <ul id="teacherList" class="listrap"></ul>
+                                </div>
+                                <ul class="list-inline pull-right saveandcontinue" style="margin-bottom: 55px;">
                                     <li><button type="button" class="btn btn-default prev-step">Previous</button></li>
                                     <li><button type="button" class="btn btn-info next-step" id="next8">Save and continue</button></li>
                                 </ul>
-						}
-					</div>
-					}
+                            }
+                        </div>
+                    }
                     <div class="tab-pane" role="tabpanel" id="complete">
                         @using (Html.BeginForm("CreateStudentAvatar", "Manage", null, FormMethod.Post, new { id = "createStudentAvatar", enctype = "multipart/form-data", onsubmit = "return false;" }))
                         {
@@ -1443,7 +1449,7 @@
                 <input name="contacts[#].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
             </div>
         </div>
-       
+
         <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Last Name</label>
