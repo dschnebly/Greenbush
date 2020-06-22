@@ -1824,7 +1824,7 @@ namespace GreenBushIEP.Controllers
 
                     // check that the kidsIS doesn't already exsist in the system.
                     long kidsID = Convert.ToInt64(collection["kidsid"]);
-                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
                     if (exsistingStudent != null)
                     {
                         return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });

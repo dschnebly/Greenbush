@@ -2434,7 +2434,7 @@ namespace GreenbushIep.Controllers
                 viewModel.IEPForms = GetForms();
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
-                viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
+                viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId && u.isActive).OrderByDescending(o => o.ArchiveDate).ToList();
                 viewModel.CanDelete = user != null && user.RoleID == owner ? true : false;
 
                 ViewBag.ReturnToHome = home;

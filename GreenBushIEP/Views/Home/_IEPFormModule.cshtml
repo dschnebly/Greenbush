@@ -33,6 +33,16 @@
     </ul>
     <div class="tab-content container">
         <div id="sectionB" class="tab-pane fade">
+            <div class="container" style="padding-left: 0;">
+                <br/>
+                <div class="form-group col-md-4">
+                    <label for="hideArchived">Archived Forms</label>
+                    <select id="hideArchived" class="form-control">
+                        <option value="1">Show Active</option>
+                        <option value="2">Show Hidden</option>
+                    </select>
+                </div>
+            </div>
             <table class="table" id="tblArchives">
                 <thead>
                     <tr>
@@ -94,7 +104,7 @@
             <div class="drive-wrapper drive-list-view">
                 <div class="form-group">
                     <form enctype="multipart/form-data" method="post">
-                        <label class="file-upload btn btn-primary" style="color:#fff">
+                        <label class="file-upload btn btn-default">
                             <i class="fa fa-upload"></i> Upload a File
                             <input type="file" name="myFile" class="studentFile" accept="application/pdf" />
                         </label>
