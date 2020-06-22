@@ -19,7 +19,7 @@
 			position: relative;
 		}
 
-		
+
 
 		.btn-group-primary .dropdown-menu {
 			background-color: #214680 !important;
@@ -37,13 +37,11 @@
 					text-decoration: underline;
 				}
 
-	
-		.alert-danger-iep {			
-			padding: 3px 4px;
-			color: #b94a48;			
-		}
 
-		
+		.alert-danger-iep {
+			padding: 3px 4px;
+			color: #b94a48;
+		}
 	</style>
 }
 
@@ -56,64 +54,87 @@
 		<h2>SPED Pro Export</h2>
 		<div class="container" style="overflow:hidden; margin: 0 auto 75px;">
 			<div class="row">
+				<div class="col-md-12" style="margin-bottom: 12px;">
+					<div class="col-md-2">
+						<label for="districtDD">District</label>
+					</div>
+					<div class="col-md-6">
+						<select id="districtDD" name="districtDD" class="chosen-select form-control" data-placeholder="Select District">
+							<option value="">Select</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12" style="margin-bottom: 12px;">
+					<div class="col-md-2">
+						<label for="building">Building</label>
+					</div>
+					<div class="col-md-4">
+						<select id="buildingDD" name="buildingDD" class="chosen-select form-control" onchange="_getStudents();" data-placeholder="Select Building" style="width:100%">
+							<option value="">Select</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-2">
 						<label for="fiscalYear">Fiscal Year</label>
-						<div class="form-group">
-							<select class="form-control" id="fiscalYear" name="fiscalYear" onchange="_getStudents();"  style="border-color: #ccc; display: inline-block;" required>
-								<option value="2018">2017 - 2018</option>
-								<option value="2019">2018 - 2019</option>
-								<option value="2020">2019 - 2020</option>
-								<option value="2021">2020 - 2021</option>
-								<option value="2022">2021 - 2022</option>
-							</select>
-						</div>
 					</div>
-						
+					<div class="col-md-6">
+						<select class="form-control" id="fiscalYear" name="fiscalYear" onchange="_getStudents();" style="border-color: #ccc; display: inline-block;" required>
+							<option value="2018">2017 - 2018</option>
+							<option value="2019">2018 - 2019</option>
+							<option value="2020">2019 - 2020</option>
+							<option value="2021">2020 - 2021</option>
+							<option value="2022">2021 - 2022</option>
+						</select>
+					</div>
 				</div>
 			</div>
 			@if (ViewBag.canReset != null && ViewBag.canReset)
 			{
 				<div class="row">
-					<div class="col-md-12 voffset2">					
-						<div class="col-md-6">	
-								<input type="checkbox" id="cbReset" name="cbReset" runat="server" onclick="_getStudents();"/> Reset Previously Submitted IEPs
+					<div class="col-md-12 voffset2">
+						<div class="col-md-6">
+							<input type="checkbox" id="cbReset" name="cbReset" runat="server" onclick="_getStudents();" /> Reset Previously Submitted IEPs
 						</div>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 col-md-offset-1 voffset2">					
-						<div class="col-md-6" id="divStudents">	
-								
+					<div class="col-md-12 voffset2">
+						<div class="col-md-6" id="divStudents">
+
 						</div>
 					</div>
 				</div>
 			}
 			<div class="row">
 				<div class="col-md-12">
-					<div class="col-md-2 voffset4">						
-						<button type="button" id="exportButton" class="btn btn-default btn-lg "><i class="fa fa-file-export"></i> Submit</button>                                    
+					<div class="col-md-2 voffset2">
+						<button type="button" id="exportButton" class="btn btn-default btn-lg "><i class="fa fa-file-export"></i> Submit</button>
 					</div>
 				</div>
 			</div>
 			<div class="row voffset4">
 				<div class="col-md-12">
-				@if (ViewBag.errors != null)
-				{
-					<ul class="errorList">
+					@if (ViewBag.errors != null)
+					{
+						<ul class="errorList">
 
-						@foreach (var error in ViewBag.errors)
-						{
-							<li class="alert-danger-iep">@error.UserID @error.Description</li>
-						}
+							@foreach (var error in ViewBag.errors)
+							{
+								<li class="alert-danger-iep">@error.UserID @error.Description</li>
+							}
 
-					</ul>
-				}
+						</ul>
+					}
 
-				@if (ViewBag.message != null)
-				{
-					<span style="color:green">@ViewBag.message</span>					
-				}
+					@if (ViewBag.message != null)
+					{
+						<span style="color:green">@ViewBag.message</span>
+					}
 
 				</div>
 			</div>
@@ -125,65 +146,147 @@
 
 @section scripts {
 
-<script>
-	$(document).ready(function () {
+	<script>
+		$(document).ready(function () {
+		
+			_getDistricts();
 
-		$("#exportButton").click(function () {
-			$("ul.errorList").empty();		
-			$( ".form-inline" ).submit();
+			
+			$('#districtDD').change(function (e) {
+				_districtChange($(this));
+				return false;
+			});
+
+			$("#exportButton").click(function () {
+				$("ul.errorList").empty();
+				$(".form-inline").submit();
+			});
+
+			$(this).find('.dtField').each(function () {
+				$(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
+				$('.dtField').datepicker({
+					dateFormat: "mm/dd/yy",
+					changeYear: true,
+					changeMonth: true
+				});
+			});
 		});
 
-        $(this).find('.dtField').each(function () {           
-            $(this).removeAttr('id').removeClass('hasDatepicker'); // added the removeClass part.
-            $('.dtField').datepicker({
-                dateFormat: "mm/dd/yy",
-                changeYear: true,
-                changeMonth: true
-            });
-		});
-	});
+		function _districtChange(dropdown) {
+			var districtId = dropdown.val();
+			var args = { districtId: districtId };
 
-
-	function _getStudents() {
-		var isChecked = $('#cbReset').is(':checked'); 
-		var fiscalYear = $('#fiscalYear').val();
-		if (isChecked) {
 			$.ajax({
-				type: 'POST',
-				url: '/Home/GetSpedProStudentList',
-				data: { fiscalYear: fiscalYear },
+				type: 'GET',
+				url: '/Manage/ReportFilterBuildingsByDistrictId',
+				data: args,
 				dataType: "json",
+				async: false,
 				success: function (data) {
-					if (data.result && data.students != undefined) {
-						$("#divStudents").html("");
-						var students = data.students;
+					if (data.Result === "success") {
+						var buildings = data.DistrictBuildings;
+						var buildingElement = $("#buildingDD");
+						buildingElement.find('option').remove().end();
 
-						if (students.length == 0) {
-							$("#divStudents").html("No IEPs found to reset.");
-							return false;
-						}
+						var buildingHtml = buildingElement.html();
+						//buildingHtml += "<option value='-1'>All</option>";
 
-						if (students != null && students != undefined) {
-							var i;
+						//district only
+						$.each(buildings, function (key, value) {
+							buildingHtml += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+						});
 
-							for (i = 0; i < students.length; i++) {
-								var student = students[i];
+						buildingElement.html(buildingHtml);			
 
-								$("#divStudents").append('<input class="form-control" type="checkbox" name="studentReset" value="' + student.UserID + '" />&nbsp;' + student.LastName + ", " + student.FirstName + "<br/>");
-							}
-						}
+						_getStudents();
 					}
 				},
 				error: function (data) {
-					console.log("Error getting baseline goal text.");
+					alert("There was an error retrieving the building information.");
+					console.log(data);
 				}
 			});
 		}
-		else {
-			$("#divStudents").html("");
-		}
 
-	}
-</script>
+		function _getDistricts() {
+
+			$.ajax({
+				type: 'GET',
+				url: '/Manage/ReportFilterDistrict',
+				dataType: "json",
+				async: false,
+				success: function (data) {
+					if (data.Result === "success") {
+
+						var districts = data.Districts;
+						var districtElement = $("#districtDD");
+						districtElement.find('option').remove().end();
+
+						var dHtml = districtElement.html();
+
+						if (data.Districts.length > 1)
+							dHtml += "<option value='-1'>All</option>";
+
+						$.each(districts, function (key, value) {
+							dHtml += "<option value='" + value.USD + "'>" + value.Name + "</option>";
+						});
+
+						districtElement.html(dHtml);
+						
+					}
+				},
+				error: function (data) {
+					alert("There was an error retrieving the district information.");
+					console.log(data);
+				}
+			});
+		}
+				 
+
+		function _getStudents() {
+			var isChecked = $('#cbReset').is(':checked');
+			var fiscalYear = $('#fiscalYear').val();
+
+			var districtId = $('#districtDD').val();
+			var buildingId = $('#buildingDD').val();
+
+			if (isChecked) {
+				$.ajax({
+					type: 'POST',
+					url: '/Home/GetSpedProStudentList',
+					data: { fiscalYear: fiscalYear, buildingId: buildingId, districtId: districtId },
+					dataType: "json",
+					success: function (data) {
+						if (data.result && data.students != undefined) {
+							$("#divStudents").html("");
+							var students = data.students;
+
+							if (students.length == 0) {
+								$("#divStudents").html("No IEPs found to reset.");
+								return false;
+							}
+
+							if (students != null && students != undefined) {
+								var i;
+
+								for (i = 0; i < students.length; i++) {
+									var student = students[i];
+
+									$("#divStudents").append('<input class="form-control" type="checkbox" name="studentReset" value="' + student.UserID + '" />&nbsp;' + student.LastName + ", " + student.FirstName + "<br/>");
+								}
+							}
+						}
+					},
+					error: function (data) {
+						console.log("Error getting baseline goal text.");
+					}
+				});
+			}
+			else {
+				$("#divStudents").html("");
+			}
+
+		}
+	</script>
 
 }

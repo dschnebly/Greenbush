@@ -3358,7 +3358,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetSpedProStudentList(int fiscalYear)
+        public ActionResult GetSpedProStudentList(int fiscalYear, string buildingId, string districtId)
         {
             string iepStatus = IEPStatus.ACTIVE;
             List<tblUser> studentsList = new List<tblUser>();
@@ -3367,10 +3367,22 @@ namespace GreenbushIep.Controllers
             if (MIS != null)
             {
                 bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
-                List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
-                List<string> myBuildings = buildings.Select(b => b.BuildingID).ToList();
 
-                var query = (from iep in db.tblIEPs
+                List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
+				if (!string.IsNullOrEmpty(districtId) && districtId != "-1")
+				{
+					buildings = buildings.Where(o => o.USD == districtId).ToList();
+				}
+
+				List<string> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+
+				if (!string.IsNullOrEmpty(buildingId) && buildingId != "-1")
+				{
+					myBuildings.Clear();
+					myBuildings.Add(buildingId);
+				}
+
+				var query = (from iep in db.tblIEPs
                              join student in db.tblUsers
                                  on iep.UserID equals student.UserID
                              join services in db.tblServices
@@ -3401,7 +3413,11 @@ namespace GreenbushIep.Controllers
             bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
             string fiscalYearStr = collection["fiscalYear"];
             int.TryParse(fiscalYearStr, out int fiscalYear);
-            string studentResetList = collection["studentReset"];
+
+			string districtId = collection["districtDD"];
+			string buildingId = collection["buildingDD"];
+
+			string studentResetList = collection["studentReset"];
 
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
@@ -3410,9 +3426,19 @@ namespace GreenbushIep.Controllers
                 ViewBag.canReset = canReset;
 
                 List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
-                List<string> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+				if (!string.IsNullOrEmpty(districtId) && districtId != "-1")
+				{
+					buildings = buildings.Where(o => o.USD == districtId).ToList();
+				}
 
-                string iepStatus = IEPStatus.ACTIVE;
+				List<string> myBuildings = buildings.Select(b => b.BuildingID).ToList();
+				if (!string.IsNullOrEmpty(buildingId) && buildingId != "-1")
+				{
+					myBuildings.Clear();
+					myBuildings.Add(buildingId);
+				}
+
+				string iepStatus = IEPStatus.ACTIVE;
                 List<ExportErrorView> exportErrors = new List<ExportErrorView>();
 
 

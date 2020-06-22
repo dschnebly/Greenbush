@@ -3036,8 +3036,8 @@ namespace GreenBushIEP.Controllers
 			tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 			if (submitter != null)
 			{
-				string selectedDistrict = Convert.ToInt32(DistrictId) == -1 ? null : DistrictId;
-				string selectedBuilding = Convert.ToInt32(BuildingId) == -1 ? null : BuildingId;
+				string selectedDistrict = DistrictId == "-1" ? null : DistrictId;
+				string selectedBuilding = BuildingId == "-1" ? null : BuildingId;
 				int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
 				int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1;
 				//bool? searchArchieve = submitter.RoleID == "1" ? true : false;
@@ -3085,6 +3085,29 @@ namespace GreenBushIEP.Controllers
 						members = members.Where(u => u.UserID == searchUserId).ToList();
 					}
 				}
+
+				string districtVal = DistrictId;
+
+				if (string.IsNullOrEmpty(DistrictId) || DistrictId == "-1")
+				{
+					districtVal = null;
+				}				
+
+				var buildings = new List<BuildingsViewModel>();
+
+				var buildingList = (from bm in db.tblBuildingMappings
+									join b in db.tblBuildings on bm.USD equals b.USD
+									where b.Active == 1
+									&& bm.BuildingID == b.BuildingID
+									&& bm.UserID == submitter.UserID
+									&& ((districtVal == null) || (b.USD == districtVal))
+									orderby b.BuildingName
+									select new BuildingsViewModel { BuildingName = b.BuildingName, BuildingID = b.BuildingID, BuildingUSD = b.USD }).Distinct().ToList();
+
+				buildings.AddRange(buildingList);
+
+				NewPortalObject.Add("buildings", buildings);
+				
 
 				NewPortalObject.Add("members", members);
 				return Json(new { Result = "success", Message = NewPortalObject }, JsonRequestBehavior.AllowGet);
@@ -3794,33 +3817,31 @@ namespace GreenBushIEP.Controllers
 
 		#region ReportFilters
 
-		//[HttpGet]
-		//public ActionResult FilterDistrict()
-		//{
-		//	try
-		//	{
-		//		tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+		[HttpGet]
+		public ActionResult ReportFilterDistrict()
+		{
+			try
+			{
+				tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-		//		var districtList = (from org in db.tblOrganizationMappings
-		//							join district in db.tblDistricts on org.USD equals district.USD
-		//							where org.UserID == user.UserID
-		//							orderby district.DistrictName
-		//							select new DistrictViewModel { USD = district.USD, Name = district.DistrictName }).Distinct().ToList();
+				var districtList = (from org in db.tblOrganizationMappings
+									join district in db.tblDistricts on org.USD equals district.USD
+									where org.UserID == user.UserID
+									orderby district.DistrictName
+									select new DistrictViewModel { USD = district.USD, Name = district.DistrictName }).Distinct().ToList();
 
-		//		List<DistrictViewModel> districts = new List<DistrictViewModel>();
+				List<DistrictViewModel> districts = new List<DistrictViewModel>();
 
-		//		//districts.Add(new DistrictViewModel { Name = "All", USD = "-1" });
-
-		//		districts.AddRange(districtList);
+				districts.AddRange(districtList);
 
 
-		//		return Json(new { Result = "success", Districts = districts }, JsonRequestBehavior.AllowGet);
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
-		//	}			
-		//}
+				return Json(new { Result = "success", Districts = districts }, JsonRequestBehavior.AllowGet);
+			}
+			catch (Exception e)
+			{
+				return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+			}
+		}
 
 		[HttpGet]
 		public ActionResult ReportFilterProviderByDistrictId(string districtId)
