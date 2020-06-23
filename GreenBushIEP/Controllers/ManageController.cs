@@ -3852,9 +3852,30 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(districtId))
+				tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+				var providerList = new List<ProviderViewModel>();
+
+				//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+				//{
+				//	var providerId = 0;
+
+				//	if (user.TeacherID != null)
+				//	{
+				//		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
+				//		providerList.Add(teacherProvider);
+
+				//	}
+				//	else
+				//	{
+				//		providerList.Add(new ProviderViewModel { Name = string.Format("{0}, {1}", user.LastName, user.FirstName), ProviderID = providerId });
+				//	}
+
+				//}
+				
+				if (!string.IsNullOrEmpty(districtId))
                 {
-                    var providerList = new List<ProviderViewModel>();
+                    
 
                     providerList.Add(new ProviderViewModel { Name = "All", ProviderID = -1 });
 
@@ -4080,10 +4101,23 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-                if (!string.IsNullOrEmpty(selectedDistrict))
-                {
-                    tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+				tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
+				//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+				//{
+				//	selectedProvider = "0";
+
+				//	if (user.TeacherID != null)
+				//	{
+				//		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
+				//		selectedProvider = teacherProvider.ProviderID.ToString();
+
+				//	}					
+				//}
+
+				if (!string.IsNullOrEmpty(selectedDistrict))
+                {
+                    
                     List<string> myRoles = new List<string>() { "5" }; //students
 
                     if (selectedBuilding == "-1")
@@ -4165,8 +4199,22 @@ namespace GreenBushIEP.Controllers
             }
         }
 
+		private ProviderViewModel GetProviderByProviderCode(string providerCode)
+		{
+			var providerObj = new ProviderViewModel();
+			var provider = (from p in db.tblProviders
+							select p).FirstOrDefault();
 
+			if (provider != null)
+			{
+				providerObj.Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName);
+				providerObj.ProviderID = provider.ProviderID;
+				providerObj.ProviderCode = provider.ProviderCode;
+			}
 
-        #endregion
-    }
+			return providerObj;
+		}
+
+		#endregion
+	}
 }

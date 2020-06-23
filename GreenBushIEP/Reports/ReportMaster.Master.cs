@@ -309,13 +309,58 @@ namespace GreenBushIEP.Report
 
 		}
 
-		public static List<ProviderViewModel> GetProviders(string selectedDistrict)
-		{			
+		public static ProviderViewModel GetProviderByProviderCode(string providerCode)
+		{
+			var providerObj = new ProviderViewModel();
+			providerObj.ProviderID = 0;
 
+			string providerVal = string.IsNullOrEmpty(providerCode) ? "" : providerCode.Trim();
+
+			var provider = (from p in db.tblProviders
+							where p.ProviderCode == providerVal
+							select p).FirstOrDefault();
+
+			if (provider != null)
+			{
+				providerObj.Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName);
+				providerObj.ProviderID = provider.ProviderID;
+				providerObj.ProviderCode = provider.ProviderCode;
+			}
+
+			return providerObj;
+		}
+
+		public static List<ProviderViewModel> GetProviders(string selectedDistrict)
+		{
+			//tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == HttpContext.Current.User.Identity.Name);
+			
+			//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			//{
+			//	var providerList = new List<ProviderViewModel>();
+
+			//	var providerId = 0;
+
+			//	if (user.TeacherID != null)
+			//	{
+			//		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
+			//		providerList.Add(teacherProvider);
+
+			//	}
+			//	else
+			//	{
+			//		providerList.Add(new ProviderViewModel { Name = string.Format("{0}, {1}", user.LastName, user.FirstName), ProviderID = providerId });
+			//	}
+
+			//	return providerList;
+
+			//}
+			
+			
 			if (selectedDistrict == "" || selectedDistrict == "-1")
 			{
+
 				var providerList = new List<ProviderViewModel>();
-				
+
 				var districts = GreenBushIEP.Report.ReportMaster.GetDistricts(HttpContext.Current.User.Identity.Name);
 
 				foreach (var district in districts)
