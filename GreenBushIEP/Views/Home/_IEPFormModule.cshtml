@@ -36,9 +36,8 @@
             <div class="container" style="padding-left: 0;">
                 <br/>
                 <div class="form-group col-md-4">
-                    <label for="hideArchived">Archived Forms</label>
                     <select id="hideArchived" class="form-control">
-                        <option value="1">Show Active</option>
+                        <option value="1">Show Archived</option>
                         <option value="2">Show Hidden</option>
                     </select>
                 </div>
@@ -46,6 +45,7 @@
             <table class="table" id="tblArchives">
                 <thead>
                     <tr>
+                        <th>&nbsp;</th>
                         <th class="name truncate">Form Name</th>
                         <th class="date">Date</th>
                         <th class="date">&nbsp;</th>
@@ -55,11 +55,17 @@
                 </thead>               
                 <tbody>
                     @{
-                        foreach (var archive in Model.Archives.Where(a => !a.isUpload && a.isActive))
+                        foreach (var archive in Model.Archives.Where(a => !a.isUpload))
                         {
 							bool isDeleteable = archive.FormName.Contains("Annual IEP") ? false : true;
-                            <tr>
 
+                            <tr class='@(!archive.isActive ? "hidden notActiveForm" : "ActiveForm")'>
+                                <td>
+                                    @if (!archive.isActive)
+                                    {
+                                        <span class="glyphicon glyphicon-eye-close"></span>
+                                    }
+                                </td>
                                 <td class="name truncate">@archive.FormName</td>
                                 <td class="name truncate">@archive.ArchiveDate</td>
                                 <td class="date pull-right">

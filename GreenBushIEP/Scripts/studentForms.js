@@ -51,7 +51,17 @@
                 }
             });
         });
-				
+
+        $("#hideArchived").on("change", function () {
+            if ($(this).val() == 2) {
+                $('table tr.notActiveForm').removeClass("hidden");
+                $('table tr.ActiveForm').addClass("hidden"); 
+            } else {
+                $('table tr.notActiveForm').addClass("hidden");
+                $('table tr.ActiveForm').removeClass("hidden"); 
+
+            }
+        });        
 		
         $(".closeForms").on("click", function (e) {
             window.location.href = '/Home/TeacherPortal';
