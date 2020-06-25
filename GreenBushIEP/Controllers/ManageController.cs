@@ -494,15 +494,15 @@ namespace GreenBushIEP.Controllers
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
                     // check that the kidsIS doesn't already exsist in the system.
-                    long kidsID = Convert.ToInt64(collection["kidsid"]);
+                    long kidsID = collection["kidsid"] == null ? 000000000 :  Convert.ToInt64(collection["kidsid"]);
                     int referralId = Convert.ToInt32(collection["referralId"]);
 
-                    if (kidsID == 0)
-                    {
-                        return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
-                    }
+                    //if (kidsID == 0)
+                    //{
+                    //    return Json(new { Result = "error", Message = "The KIDS ID is invalid. Please enter another KIDS ID." });
+                    //}
 
-                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
                     tblReferralRequest referralReq = db.tblReferralRequests.Where(o => o.ReferralID == referralId).FirstOrDefault();
 
                     if (exsistingStudent != null)
@@ -1237,7 +1237,7 @@ namespace GreenBushIEP.Controllers
                     int studentId = (collection["studentId"] == null || collection["studentId"] == "") ? 0 : Convert.ToInt32(collection["studentId"]);
 
                     // check that the kidsIS doesn't already exsist in the system.
-                    string kidsIdStr = collection["kidsid"].ToString();
+                    string kidsIdStr = collection["kidsid"] == null ? "0" : collection["kidsid"].ToString();
                     long kidsID = 0;
                     int referralRequestId = 0;
 
@@ -1246,7 +1246,7 @@ namespace GreenBushIEP.Controllers
                         kidsID = Convert.ToInt64(kidsIdStr);
                         if (kidsID > 0)
                         {
-                            tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID).FirstOrDefault();
+                            tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
                             if (exsistingStudent != null)
                             {
                                 return Json(new { Result = "error", Message = "The student is already in the system. Please contact Greenbush." });

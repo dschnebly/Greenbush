@@ -3,6 +3,17 @@
     init();
     initContacts();
 
+
+	$("#nokidsId").on('click', function () {
+		if ($("#kidsid").attr("disabled") !== undefined) {
+			$("#kidsid").removeAttr("disabled");
+			$("#kidsid").val("");
+		} else {
+			$("#kidsid").attr("disabled", "disabled");
+			$("#kidsid").val("0000000000");
+		}
+	});
+
     // fires when an avatar is uploaded
     $("#adminpersona").on('change', function (e) {
         var oFReader = new FileReader();

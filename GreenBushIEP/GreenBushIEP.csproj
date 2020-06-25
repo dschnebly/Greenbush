@@ -811,6 +811,8 @@
     <Content Include="Content\brands.min.css" />
     <Content Include="Content\chosen-sprite.png" />
     <Content Include="Content\chosen.css" />
+    <Content Include="Content\createReferral.css" />
+    <Content Include="Content\editReferral.css" />
     <Content Include="Content\editUser.css" />
     <Content Include="Content\font-awesome-min.css" />
     <Content Include="Content\fontawesome-all.css" />
