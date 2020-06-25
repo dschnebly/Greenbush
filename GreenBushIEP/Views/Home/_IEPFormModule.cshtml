@@ -36,6 +36,13 @@
             <div class="container" style="padding-left: 0;">
                 <br/>
                 <div class="form-group col-md-4">
+                    <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
+                        <input type="checkbox" name="AcademicModuleNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicModuleNoConcern ? "checked" : String.Empty )>
+                        <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
+                            <span class="truefalseswitch-inner"></span>
+                            <span class="truefalseswitch-switch"></span>
+                        </label>
+                    </div>
                     <select id="hideArchived" class="form-control">
                         <option value="1">Show Archived</option>
                         <option value="2">Show Hidden</option>
@@ -50,7 +57,6 @@
                         <th class="date">Date</th>
                         <th class="date">&nbsp;</th>
 						<th class="@(Model.CanDelete ? "" : "hidden")">&nbsp;</th>
-						
                     </tr>
                 </thead>               
                 <tbody>

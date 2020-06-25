@@ -647,6 +647,12 @@ $(window).on('shown.bs.modal', function (e) {
     // Create a save listener for when saving content in a module
     $(window).on('saving.bs.modal', function (e) {
         moduleFormSerialize = $("#moduleSection form").serialize();
+
+        setTimeout(function () {
+            if (!$('#moduleSection').is(':visible')) {
+                window.location.reload();
+            }
+        }, 5);
     });
 
     // Create a delete listener for when deleteing content in a module
