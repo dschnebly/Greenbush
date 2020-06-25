@@ -2,7 +2,9 @@
 using Microsoft.Reporting.WebForms;
 using System;
 using System.Data;
+using System.Data.SqlClient;
 using System.Web.UI;
+using System.Linq;
 
 namespace GreenBushIEP.Reports.ServiceReport
 {
@@ -41,6 +43,7 @@ namespace GreenBushIEP.Reports.ServiceReport
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 
 			string teacherIds = "-1";
+			string providerIds = "0";
 
 			string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(this.ServiceType);
 
@@ -63,7 +66,25 @@ namespace GreenBushIEP.Reports.ServiceReport
 				teacherIds = user.UserID.ToString();
 			}
 
-			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			{				
+				var providerObj = GreenBushIEP.Report.ReportMaster.GetProviderByProviderCode(user.TeacherID);
+				if (providerObj != null)
+				{
+					providerIds = providerObj.ProviderID.ToString();
+				}
+			}
+			else
+			{
+
+				var providers = GreenBushIEP.Report.ReportMaster.GetProviders(districtFilter);
+				if (providers != null)
+				{
+					providerIds = string.Join(",", providers.Select(p => p.ProviderID.ToString()));
+				}
+			}
+			
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds, providerIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -91,33 +112,36 @@ namespace GreenBushIEP.Reports.ServiceReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID,
+			DateTime startDate, DateTime endDate, string teacherIds, string providerIds)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("ServiceType", typeof(string));
-			dt.Columns.Add("Provider", typeof(string));
-			dt.Columns.Add("Frequency", typeof(int));
-			dt.Columns.Add("Location", typeof(string));
-			dt.Columns.Add("DaysPerWeek", typeof(byte));
-			dt.Columns.Add("Minutes", typeof(short));
-			dt.Columns.Add("USD", typeof(string));
-			dt.Columns.Add("BuildingName", typeof(string));
-			dt.Columns.Add("FrequencyDesc", typeof(string));
+			DataSet ds = new DataSet();
 
-			using (var ctx = new IndividualizedEducationProgramEntities())
+			using (var context = new IndividualizedEducationProgramEntities())
 			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportServices", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider
-						, cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes, cs.USD, cs.BuildingName
-						, cs.FrequencyDesc);
+					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
+					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@ProviderId", SqlDbType.VarChar, 8000).Value = providerIds;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
+					cmd.Parameters.Add("@ServiceId", SqlDbType.VarChar, 8000).Value = serviceIds;
+					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
+					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
+			return ds.Tables[0];
+
 		}
+
 	}
 }
