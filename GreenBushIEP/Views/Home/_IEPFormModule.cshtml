@@ -33,53 +33,47 @@
     </ul>
     <div class="tab-content container">
         <div id="sectionB" class="tab-pane fade">
-            <div class="container" style="padding-left: 0;">
-                <br/>
-                <div class="form-group col-md-4">
-                    <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                        <input type="checkbox" name="AcademicModuleNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicModuleNoConcern ? "checked" : String.Empty )>
-                        <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
-                            <span class="truefalseswitch-inner"></span>
-                            <span class="truefalseswitch-switch"></span>
-                        </label>
-                    </div>
-                    <select id="hideArchived" class="form-control">
-                        <option value="1">Show Archived</option>
-                        <option value="2">Show Hidden</option>
-                    </select>
-                </div>
-            </div>
+            <br />
             <table class="table" id="tblArchives">
                 <thead>
                     <tr>
-                        <th>&nbsp;</th>
+                        <th style="width:5%;">
+                            <select id="hideArchived" class="btn btn-default center-block">
+                                <option value="1">Active</option>
+                                <option value="2">Inactive</option>
+                            </select>
+                        </th>
                         <th class="name truncate">Form Name</th>
                         <th class="date">Date</th>
                         <th class="date">&nbsp;</th>
-						<th class="@(Model.CanDelete ? "" : "hidden")">&nbsp;</th>
+                        <th class="@(Model.CanDelete ? "" : "hidden")">&nbsp;</th>
                     </tr>
-                </thead>               
+                </thead>
                 <tbody>
                     @{
                         foreach (var archive in Model.Archives.Where(a => !a.isUpload))
                         {
-							bool isDeleteable = archive.FormName.Contains("Annual IEP") ? false : true;
+                            bool isDeleteable = archive.FormName.Contains("Annual IEP") ? false : true;
 
                             <tr class='@(!archive.isActive ? "hidden notActiveForm" : "ActiveForm")'>
                                 <td>
                                     @if (!archive.isActive)
                                     {
-                                        <span class="glyphicon glyphicon-eye-close"></span>
+                                        <span class="glyphicon glyphicon-eye-close center-block" style="width: 45px;"></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="glyphicon glyphicon-eye-open center-block btn btn-default hideArchivedForm" style="width: 45px;"></span>
                                     }
                                 </td>
                                 <td class="name truncate">@archive.FormName</td>
                                 <td class="name truncate">@archive.ArchiveDate</td>
                                 <td class="date pull-right">
-								<button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa fa-download"></i><span>&nbsp;Download</span></button>
-								</td>
-								<td class="@(Model.CanDelete ? "" : "hidden")">
-									<button type="button" @(isDeleteable ? "" : "disabled") class="btn btn-default btn-lg deleteArchiveForm" data-val="@archive.FormArchiveID" data-name="@archive.FormName" title="Set to inactive"><i class="fa fa fa-trash"></i><span>&nbsp;Delete</span></button>
-								</td>
+                                    <button type="button" class="btn btn-default btn-lg downloadForm" id="@archive.FormArchiveID"><i class="fa fa fa-download"></i><span>&nbsp;Download</span></button>
+                                </td>
+                                <td class="@(Model.CanDelete ? "" : "hidden")">
+                                    <button type="button" @(isDeleteable ? "" : "disabled") class="btn btn-default btn-lg deleteArchiveForm" data-val="@archive.FormArchiveID" data-name="@archive.FormName" title="Set to inactive"><i class="fa fa fa-trash"></i><span>&nbsp;Delete</span></button>
+                                </td>
                             </tr>
                         }
                     }
@@ -91,11 +85,11 @@
                 <div class="table-responsive drive-items-table-wrapper">
                     <table class="table">
                         @*<thead>
-                            <tr>
-                                <th class="name truncate" colspan="2">Form Name</th>
-                                <th class="date">&nbsp;</th>
-                            </tr>
-                        </thead>*@
+                                <tr>
+                                    <th class="name truncate" colspan="2">Form Name</th>
+                                    <th class="date">&nbsp;</th>
+                                </tr>
+                            </thead>*@
                         <tbody>
                             @{
                                 foreach (var form in Model.IEPForms)

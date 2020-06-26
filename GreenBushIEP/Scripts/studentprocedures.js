@@ -652,7 +652,7 @@ $(window).on('shown.bs.modal', function (e) {
             if (!$('#moduleSection').is(':visible')) {
                 window.location.reload();
             }
-        }, 1);
+        }, 10);
     });
 
     // Create a delete listener for when deleteing content in a module
