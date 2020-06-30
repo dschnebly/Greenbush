@@ -27,7 +27,7 @@
 
             $.ajax({
                 type: 'GET',
-				url: '/Home/DeleteUploadForm',
+                url: '/Home/DeleteUploadForm',
                 data: { studentId: id, formId: formid },
                 dataType: 'json',
                 success: function (data) {
@@ -52,16 +52,22 @@
             });
         });
 
-        $("#hideArchived").on("change", function () {
+        $("#hideArchived").on("click", function () {
             if ($(this).val() == 2) {
                 $('table tr.notActiveForm').removeClass("hidden");
-                $('table tr.ActiveForm').addClass("hidden"); 
+                $('table tr.ActiveForm').addClass("hidden");
             } else {
                 $('table tr.notActiveForm').addClass("hidden");
-                $('table tr.ActiveForm').removeClass("hidden"); 
-
+                $('table tr.ActiveForm').removeClass("hidden");
             }
-        });        
+        });
+
+        $(".hideArchivedForm").on("click", function {
+            var answer = confirm("are you sure you want to hide this?");
+            if (answer) {
+                alert("set the 'isActive' flag to false.");
+            }
+        });
 		
         $(".closeForms").on("click", function (e) {
             window.location.href = '/Home/TeacherPortal';
