@@ -141,9 +141,12 @@
                     if (data.Result === "success") {
                         
                         var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        }
+						if (results.members.length > 0) {
+							filterList(results.members);
+						}
+						else {
+							hideAllUsers(null);
+						}
                     } else {
                         alert("doh");
                     }
@@ -186,6 +189,8 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
+						} else {
+							hideAllUsers(null);
 						}
 
 						if (results.buildings != null && results.buildings.length > 0) {
@@ -235,7 +240,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-                        }
+						} else {
+							hideAllUsers(null);
+						}
                     } else {
                         alert("doh");
                     }
@@ -284,7 +291,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-                        }
+						} else {
+							hideAllUsers(null);
+						}
                     } else {
                         alert("doh");
                     }
@@ -332,7 +341,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-                        }
+						} else {
+							hideAllUsers(null);
+						}
                     } else {
                         alert("doh");
                     }
@@ -380,7 +391,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-                        }
+						} else {
+							hideAllUsers(null);
+						}
                     } else {
                         alert("doh");
                     }
@@ -624,15 +637,9 @@
 });
 
 function filterList(members) {
-    var container = document.querySelector(".list-group-root");
+	var container = document.querySelector(".list-group-root");
 
-    // hide all the users in the list.
-    var filterCollection = container.querySelectorAll(".list-group-item");
-    var i = filterCollection.length - 1;
-    while (i >= 0) {
-        filterCollection[i].classList.add("hidden");
-        i--;
-    }
+	hideAllUsers(container);   
 
     var j = members.length - 1;
     while (j >= 0) {
@@ -642,6 +649,21 @@ function filterList(members) {
         }
         j--;
     }
+}
+
+function hideAllUsers(container) {
+	// hide all the users in the list.
+
+	if (container == null) {
+		container = document.querySelector(".list-group-root");
+	}
+
+	var filterCollection = container.querySelectorAll(".list-group-item");
+	var i = filterCollection.length - 1;
+	while (i >= 0) {
+		filterCollection[i].classList.add("hidden");
+		i--;
+	}
 }
 
 function filterBuildingList(buildingList) {
