@@ -55,7 +55,7 @@
                         {
                             bool isDeleteable = archive.FormName.Contains("Annual IEP") ? false : true;
 
-                            <tr class='@(!archive.isActive ? "hidden notActiveForm" : "ActiveForm")'>
+                            <tr class='@(!archive.isActive ? "hidden notActiveForm" : "ActiveForm")' data-id="@(archive.FormArchiveID)">
                                 <td>
                                     @if (!archive.isActive)
                                     {
@@ -84,12 +84,12 @@
             <div class="drive-wrapper drive-list-view">
                 <div class="table-responsive drive-items-table-wrapper">
                     <table class="table">
-                        @*<thead>
-                                <tr>
-                                    <th class="name truncate" colspan="2">Form Name</th>
-                                    <th class="date">&nbsp;</th>
-                                </tr>
-                            </thead>*@
+                        <thead>
+                            <tr>
+                                <th class="name truncate" colspan="2">Form Name</th>
+                                <th class="date">&nbsp;</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             @{
                                 foreach (var form in Model.IEPForms)
