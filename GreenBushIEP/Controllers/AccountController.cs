@@ -129,7 +129,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        public ActionResult ResetMyPassword(int id, string password)
+        public ActionResult ResetMyPassword(int id, string password, bool sendEmail = false)
         {
             tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             if (user != null)
@@ -143,7 +143,10 @@ namespace GreenbushIep.Controllers
 
                     db.SaveChanges();
 
-                    EmailPassword.Send(user, password);
+                    if (sendEmail)
+                    {
+                        EmailPassword.Send(user, password);
+                    }
                 }
                 catch (Exception e)
                 {

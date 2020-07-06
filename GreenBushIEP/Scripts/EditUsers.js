@@ -87,7 +87,7 @@
             type: 'POST',
             url: '/Account/ResetMyPassword',
             dataType: 'json',
-            data: { id: userId, password: newPassword },
+            data: { id: userId, password: newPassword, sendEmail: false },
             async: false,
             success: function (data) {
                 if (data.Result === "Success") {
