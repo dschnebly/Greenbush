@@ -91,7 +91,7 @@
             async: false,
             success: function (data) {
                 if (data.Result === "Success") {
-                    $("#alertMessage .moreinfo").html('An email was sent to the user with their new password.');
+                    $("#alertMessage .moreinfo").html('You have successfully reset the user\'s password');
                     $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
                         $("#alertMessage").slideUp(500);
                     });
