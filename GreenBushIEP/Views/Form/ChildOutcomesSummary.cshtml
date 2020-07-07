@@ -1,0 +1,641 @@
+﻿@{
+	var formModel = ViewData["childOutcome"] != null ? ViewData["childOutcome"] as GreenBushIEP.Models.tblFormChildOutcome : new GreenBushIEP.Models.tblFormChildOutcome();
+	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
+	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
+	var ratingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.RatingDate.HasValue)
+	{
+		ratingDate = String.Format("{0:MM/dd/yyyy}", formModel.RatingDate.Value);
+	}
+
+	var serviceDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.ServiceDate.HasValue)
+	{
+		serviceDate = String.Format("{0:MM/dd/yyyy}", formModel.ServiceDate.Value);
+	}
+
+	if (formModel.FormChildOutcomeID == 0)
+	{
+		formModel.FirstName = Model.student.FirstName;
+		formModel.LastName = Model.student.LastName;
+		formModel.MiddleName = Model.student.MiddleName;
+		formModel.KIDSID = Model.studentInfo.KIDSID;
+	}
+}
+<div class="module-page savdDraftAllowed">
+	<p class="MsoBodyText text-center">
+		<b>
+			<span style='font-size:18.0pt;font-style:normal'>CHILD OUTCOMES SUMMARY FORM</span>
+		</b>
+	</p>
+	
+	<p class=MsoBodyText>
+		<span>
+			Date of Rating: <u><textarea maxlength="10" style="width:125px;height:30px">@(ratingDate)</textarea><span id="RatingDate" style="display:none;" class="input-value isDate">@(ratingDate)</span></u>
+		</span>
+		@*<span style="float:right">First/Last</span>*@	
+	</p>
+	<p>
+		<span>Date of Services: </span><u><textarea maxlength="10" style="width:125px;height:30px">@(serviceDate)</textarea><span id="ServiceDate" style="display:none;" class="input-value isDate">@(serviceDate)</span></u>
+	</p>
+	
+	<p class=MsoBodyText  style="font-size:12pt;margin-top:8px;font-weight:bold">Child Information:</p>
+	<p class=MsoBodyText>
+		<span>
+			Legal Name: 
+		</span>
+		<span>
+			<textarea placeholder="First" maxlength="100" style="width:125px;height:30px">@(formModel.FirstName)</textarea><span id="FirstName" style="display:none;" class="input-value ">@(formModel.FirstName)</span>
+			<textarea placeholder="Middle" maxlength="100" style="width:125px;height:30px">@(formModel.MiddleName)</textarea><span id="MiddleName" style="display:none;" class="input-value ">@(formModel.MiddleName)</span>
+			<textarea placeholder="Last" maxlength="100" style="width:125px;height:30px">@(formModel.LastName)</textarea><span id="LastName" style="display:none;" class="input-value ">@(formModel.LastName)</span>
+		</span>
+	</p>
+
+	<p class=MsoBodyText>
+		<span>
+			Date of birth:
+		</span>
+		<u><textarea maxlength="10" style="width:125px;height:30px">@(dobStr)</textarea><span id="DateOfBirth" style="display:none;" class="input-value isDate">@(dobStr)</span></u>
+	</p>
+
+	<p class=MsoBodyText>
+		<span>
+			KIDS ID#:<u><textarea maxlength="20" style="width:125px;height:30px">@(formModel.KIDSID)</textarea><span id="KIDSID" style="display:none;" class="input-value ">@(formModel.KIDSID)</span></u>
+		</span>
+	</p>
+	<p class=MsoBodyText  style="font-size:12pt;margin-top:8px;font-weight:bold">Persons involved in deciding the summary ratings:</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td style="width:50%;text-align:center">
+				<p><b>Name (First, Middle Initial, Last)</b></p>
+			</td>
+			<td style="width:50%;text-align:center">
+				<p><b>Role</b></p>
+			</td>
+		</tr>
+		@foreach (var person in formModel.tblFormChildOutcomes_PersonsInvolved)
+		{
+			<tr>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@person.Name</textarea>
+					<span style="display:none" class="input-value person personName" id="@(string.Format("personName_{0}",person.PersonsInvolvedId))">@person.Name</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@person.Role</textarea> 
+					<span id="@(string.Format("personRole_{0}",person.PersonsInvolvedId))" style="display:none" class="input-value person personRole">@person.Role</span>
+				</td>
+			</tr>
+		}
+		@{
+			int missingRows = 7 - formModel.tblFormChildOutcomes_PersonsInvolved.Count();
+			for (int i = 0;  i < missingRows; i++)
+			{
+				<tr>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value person personName" id="@(string.Format("personName_{0}",i))"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("personRole_{0}",i))" style="display:none" class="input-value person personRole"></span></td>
+				</tr>
+			}
+		}
+	</table>	
+	<p class=MsoBodyText style="margin-top:5px">		
+			<span style="font-size:12pt;margin-top:8px;font-weight:bold">
+				Family information on child	functioning
+			</span> (Check all that apply):
+	</p>
+	<p class=MsoBodyText>
+		<label class="checkbox-inline" style="font-weight:normal">
+			<input type="checkbox" @(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? "checked" : "")/><img id="FamilyInfo_ReceivedInTeamMeeting" class='imgCheck' src="@(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Received in team meeting
+		</label>
+	</p>
+	<p class=MsoBodyText>
+		<label class="checkbox-inline" style="font-weight:normal">
+			<input type="checkbox" @(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? "checked" : "")/><img id="FamilyInfo_CollectedSeperately" class='imgCheck' src="@(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Collected separately 
+		</label>
+	</p>
+	<p class=MsoBodyText>
+		<label class="checkbox-inline" style="font-weight:normal">
+			<input type="checkbox" @(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? "checked" : "")/><img id="FamilyInfo_IncoporatedIntoAssessment" class='imgCheck' src="@(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Incorporated into assessment(s) 
+		</label>
+	</p>
+	<p class=MsoBodyText>
+		<label class="checkbox-inline" style="font-weight:normal">
+			<input type="checkbox" @(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? "checked" : "")/><img id="FamilyInfo_NotIncluded" class='imgCheck' src="@(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Not included
+		</label>
+	</p>
+	<p class=MsoBodyText>
+		<span style='font-size:9.0pt;font-style:normal'>
+			2005 SRI
+			International. Version: 11-29-05. Permission is granted to reproduce this form
+			for state and local program use. Developed by the Early Childhood Outcomes
+			Center with support from the Office of Special Education Programs, U.S.
+			Department of Education.” Please contact <span>staff@the-ECO-center.or</span> if you wish to use or adapt the form.
+		</span>
+	</p>
+	<p class=MsoBodyText>
+		<span style='font-size:9.0pt;font-style:normal;float:right'>
+			Adapted permission.	Updated for TC 7/16
+		</span>
+	</p>
+<div class=WordSection2 style="clear:both;padding-top:15px">
+	<b>
+		<span style="font-size:12pt">1. POSITIVE SOCIAL-EMOTIONAL SKILLS (INCLUDING SOCIAL RELATIONSHIPS)</span>
+	</b>
+	<p class=MsoBodyText>
+		To answer the questions below, think about the child’s
+		functioning in these and closely related areas (as indicated by assessments and
+		based on observations from individuals in close contact with the child):
+	</p>
+	<p class=MsoListParagraph>
+		<ul>
+			<li>Relating with adults</li>
+			<li>Relating with other children</li>
+			<li>Following rules related to groups or interacting with others (if older than 18 months)</li>
+		</ul>
+	</p>
+	<p class=MsoBodyText>
+		<b>
+			<span>
+				1a. To what extend does this
+				child show behaviors and skills related to this outcome appropriate for his or
+				her age across a variety of settings and situations?
+			</span>
+		</b>(check one number)
+	</p>	
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td style="width:14%;text-align:center">
+				<p>
+					<b>
+						Not	Yet
+					</b>
+				</p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Emerging</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Somewhat</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Completely</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:14%;text-align:center">				
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">				
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						3 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
+						<img id="SocialEmotional_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						4 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
+						<img id="SocialEmotional_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+			<td style="width:14%;">				
+						6 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+		</tr>
+	</table>
+</div>
+	<p class=MsoBodyText style="margin-top:15px;">
+		<b>
+			<span>
+				Supporting evidence for answer to Question 1a
+			</span>
+		</b>
+	</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td>
+				<p>
+					<b>
+						Source of Information
+					</b>
+				</p>
+			</td>
+			<td>
+				<p><b>Date</b></p>
+			</td>
+			<td>
+				<p><b>Summary of Relevant Results</b></p>
+			</td>
+		</tr>
+		@foreach (var evidence in formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "1A_"))
+		{
+			<tr>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.Source</textarea>
+					<span style="display:none" class="input-value evidence evidenceName 1A" id="@(string.Format("evidenceName_{0}",evidence.SupportingEvidenceId))">@evidence.Source</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "") </textarea> 
+					<span id="@(string.Format("evidenceDate_{0}",evidence.SupportingEvidenceId))" style="display:none" class="input-value isDate evidence evidenceDate">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "")</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.SummaryOfResults</textarea>
+					<span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",evidence.SupportingEvidenceId))">@evidence.SummaryOfResults</span>
+				</td>
+			</tr>
+		}
+
+		@{
+			int missingEvidenceRows = 5 - formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "1A_").Count();
+			for (int i = 0;  i < missingEvidenceRows; i++)
+			{
+				<tr>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceName 1A" id="@(string.Format("evidenceName_{0}",i))"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("evidenceDate_{0}",i))" style="display:none" class="input-value isDate evidence evidenceDate"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",i))"></span></td>
+				</tr>
+			}
+
+		}
+	</table>
+	<p style="margin-top:15px;">
+		<b><span>1b. </span></b>(If Question 1a has been answered previously): 
+		<b>
+			<span>
+				Has the child shown any new skills or behaviors related to positive
+				socio-emotional skills (including positive social relationships) since the last
+				outcomes summary?
+			</span>
+		</b>(Check one number)
+	</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+				</label>
+			</td>
+			<td>
+				<p>1 --&gt;</p>
+			</td>
+			<td>
+				<p><span style='font-size:9.0pt'>If yes, describe progress:</span></p>
+				<textarea maxlength="2000" rows="1" cols="75" >@(formModel.SocialEmotional_ShownNewBehaviors_YesDescription)</textarea><span id="SocialEmotional_ShownNewBehaviors_YesDescription" style="display:none;" class="input-value ">@(formModel.SocialEmotional_ShownNewBehaviors_YesDescription)</span>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+				</label>
+			<td>
+				<p>2</p>
+			</td>
+		</tr>
+	</table>
+<div class='WordSection3' style="margin-top:15px">
+	<b>
+		<span style="font-size:12pt">2.  ACQUIRING AND USING KNOWLEDGE AND SKILLS</span>
+	</b>
+	<p>
+		To answer the questions below, think about the child’s
+		functioning in these and closely related areas (as indicated by assessments and
+		based on observations from individuals in close contact with the child):
+	</p>
+	<p class=MsoListParagraph style="font:italic">
+		<ul>
+			<li>Thinking, reasoning, remembering, and problem solving </li>
+			<li>Understanding symbols</li>
+			<li>Understanding the physical and social worlds</li>
+		</ul>
+	</p>
+	<p class="MsoBodyText">
+		<b>
+			<span>
+				2a. To what extent does this child show behaviors and skills related to this outcome appropriate for his or her age across a variety of settings and situations?
+			</span>
+		</b>(check one number)
+	</p>	
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td style="width:14%;text-align:center">
+				<p>
+					<b>
+						Not	Yet
+					</b>
+				</p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Emerging</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Somewhat</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Completely</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:14%;text-align:center">				
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">				
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						3 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
+						<img id="AquireUsing_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						4 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
+						<img id="AquireUsing_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+			<td style="width:14%;">				
+						6 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+		</tr>
+	</table>	
+	<p>
+		<b>
+			<span>Supporting evidence for answer to Question 2a</span>
+		</b>
+	</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td>
+				<p>
+					<b>
+						Source of Information
+					</b>
+				</p>
+			</td>
+			<td>
+				<p><b>Date</b></p>
+			</td>
+			<td>
+				<p><b>Summary of Relevant Results</b></p>
+			</td>
+		</tr>
+		@foreach (var evidence in formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "2A_"))
+		{
+			<tr>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.Source</textarea>
+					<span style="display:none" class="input-value evidence evidenceName 2A" id="@(string.Format("evidenceName_{0}",evidence.SupportingEvidenceId))">@evidence.Source</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "")</textarea> 
+					<span id="@(string.Format("evidenceDate_{0}",evidence.SupportingEvidenceId))" style="display:none" class="input-value isDate evidence evidenceDate">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "")</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.SummaryOfResults</textarea>
+					<span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",evidence.SupportingEvidenceId))">@evidence.SummaryOfResults</span>
+				</td>
+			</tr>
+		}
+
+		@{
+			int missingEvidenceRows2 = 5 - formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "2A_").Count();
+			for (int i = 0;  i < missingEvidenceRows2; i++)
+			{
+				<tr>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceName 2A" id="@(string.Format("evidenceName_{0}",i))"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("evidenceDate_{0}",i))" style="display:none" class="input-value isDate evidence evidenceDate"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",i))"></span></td>
+				</tr>
+			}
+		}
+	</table>
+	<p>
+		<b><span>2b. </span></b>(If Question 2a	has been answered previously): 
+		<b>	
+		<span>Has the child shown any	new skills or behaviors related to acquiring andusing knowledge and skills since the last outcomes summary?</span>
+		</b>(Check one number)
+	</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+				</label>
+			</td>
+			<td>
+				<p>1 --&gt;</p>
+			</td>
+			<td>
+				<p><span style='font-size:9.0pt'>If yes, describe progress:</span></p>
+				<textarea maxlength="2000" rows="1" cols="75" >@(formModel.AquireUsing_ShownNewBehaviors_YesDescription)</textarea><span id="AquireUsing_ShownNewBehaviors_YesDescription" style="display:none;" class="input-value ">@(formModel.AquireUsing_ShownNewBehaviors_YesDescription)</span>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+				</label>
+			<td>
+				<p>2</p>
+			</td>
+		</tr>
+	</table>
+</div>
+<div class=WordSection4 style="margin-top:15px">	
+	<b>
+		<span style="font-size:12pt">3.  TAKING APPROPRIATE ACTION TO MEET NEEDS </span>
+	</b>
+	<p>
+		To answer the questions below, think about
+		the child’s functioning in these and closely related areas (as indicated by
+		assessments and based on observations from individuals in close contact with
+		the child):
+	</p>
+	<p style="font:italic">
+		<ul>
+		<li>Taking care of basic needs (e.g., showing hunger, dressing, feeding, toileting, etc.)</li>
+		<li>Contributing to own health and safety (e.g., follows rules, assists with hand washing, avoids inedible objects) (if older than 24months)</li>
+		<li>Getting from place to place (mobility) and using tools (e.g., forks, pencils, strings attached to objects) </li>
+		</ul>
+	</p>		
+	<p><b>
+		3a. To what extent does this child show behaviors and skills
+		related to this outcome appropriate for his or her age across a variety of
+		settings and situations? </b><i>
+			<span style='font-weight:normal'>
+				(Check one	number)
+			</span>
+		</i>
+	</p>
+		<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td style="width:14%;text-align:center">
+				<p>
+					<b>
+						Not	Yet
+					</b>
+				</p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Emerging</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Somewhat</b></p>
+			</td>
+			<td style="width:14%;text-align:center">
+				&nbsp;
+			</td>
+			<td style="width:14%;text-align:center">
+				<p><b>Completely</b></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:14%;text-align:center">				
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">				
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						3 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
+						<img id="AppropriateAction_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">				
+						4 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
+						<img id="AppropriateAction_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+			</td>
+			<td style="width:14%;">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+			<td style="width:14%;">				
+						6 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			</td>
+			<td style="width:14%;">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			</td>
+		</tr>
+	</table>	
+	<p>
+		<b>
+			<span>
+				Supporting evidence for answer to Question 3a
+			</span>
+		</b>
+	</p>
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr style="background-color:#ffcc99">
+			<td>
+				<p>
+					<b>
+						Source of Information
+					</b>
+				</p>
+			</td>
+			<td>
+				<p><b>Date</b></p>
+			</td>
+			<td>
+				<p><b>Summary of Relevant Results</b></p>
+			</td>
+		</tr>
+		@foreach (var evidence in formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "3A_"))
+		{
+			<tr>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.Source</textarea>
+					<span style="display:none" class="input-value evidence evidenceName 3A" id="@(string.Format("evidenceName_{0}",evidence.SupportingEvidenceId))">@evidence.Source</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "")</textarea> 
+					<span id="@(string.Format("evidenceDate_{0}",evidence.SupportingEvidenceId))" style="display:none" class="input-value isDate evidence evidenceDate">@(evidence.Date.HasValue ? evidence.Date.Value.ToShortDateString() : "")</span>
+				</td>
+				<td>
+					<textarea maxlength="200" style="height:30px;width:100%">@evidence.SummaryOfResults</textarea>
+					<span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",evidence.SupportingEvidenceId))">@evidence.SummaryOfResults</span>
+				</td>
+			</tr>
+		}
+
+		@{
+			int missingEvidenceRows3 = 5 - formModel.tblFormChildOutcomes_SupportingEvidence.Where(o => o.Question == "3A_").Count();
+			for (int i = 0;  i < missingEvidenceRows3; i++)
+			{
+				<tr>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceName 3A" id="@(string.Format("evidenceName_{0}",i))"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span id="@(string.Format("evidenceDate_{0}",i))" style="display:none" class="input-value isDate evidence evidenceDate"></span></td>
+					<td><textarea maxlength="200" style="height:30px;width:100%"></textarea><span style="display:none" class="input-value evidence evidenceResult" id="@(string.Format("evidenceResult_{0}",i))"></span></td>
+				</tr>
+			}
+		}
+	</table>
+</div>
+<div class=WordSection5>
+	<p><b>3b.</b> (If Question 3a has been answered previously): <b>Has the child
+				shown any new skills or behaviors related to taking appropriate
+				action to meet needs since the last outcomes summary?</b>
+			<i>
+			<span style='font-weight:normal'>
+				(Check one number)
+			</span>
+		</i>
+	</p>	
+	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+				</label>
+			</td>
+			<td>
+				<p>1 --&gt;</p>
+			</td>
+			<td>
+				<p><span style='font-size:9.0pt'>If yes, describe progress:</span></p>
+				<textarea maxlength="2000" rows="1" cols="75" >@(formModel.AppropriateAction_ShownNewBehaviors_YesDescription)</textarea><span id="AppropriateAction_ShownNewBehaviors_YesDescription" style="display:none;" class="input-value ">@(formModel.AppropriateAction_ShownNewBehaviors_YesDescription)</span>
+			</td>
+		</tr>
+		<tr>
+			<td style="background-color:#ffcc99">
+				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+				</label>
+			<td>
+				<p>2</p>
+			</td>
+		</tr>
+	</table>
+</div>
+</div><!--end div-->
+<br/><br/><br/>

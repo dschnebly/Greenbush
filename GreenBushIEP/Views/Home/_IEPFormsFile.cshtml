@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div align="left">
-                    <div class="col-md-12 ">						
+                    <div class="col-md-12">						
                         @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel, new ViewDataDictionary {
 						   { "IEPObj", Model.ActiveIEP },
 						   { "teamEval", Model.teamEval },
@@ -71,7 +71,8 @@
 						   { "formRevPart", Model.formRevPart },
 						   { "formTransRequest", Model.formTransRequest },
 						   { "continuousLearningPlan", Model.continuousLearningPlan },
-
+						   { "childOutcome", Model.childOutcome }
+						   
 					   })
                     </div>
                 </div>
@@ -135,10 +136,24 @@
         $('input:checkbox').change(function () {
 			if ($(this).is(":checked")) {				
                 $(this).addClass("menuitemshow");
-                $(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
+				$(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
+
+				//if ($(this).hasClass("cirlce_check"))
+				//{
+				//	$(this).parent().addClass("circle-with-text");               
+				//}
             } else {
-                $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');                				
-            }
+				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');
+				
+				//if ($(this).hasClass("cirlce_check"))
+				//{
+				//	$(this).parent().removeClass("circle-with-text");               
+				//}
+			}
+
+
+			
+
         });
 
 				

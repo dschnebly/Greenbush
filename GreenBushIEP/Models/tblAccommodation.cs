@@ -30,6 +30,7 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public string Module { get; set; }
+        public string Title { get; set; }
     
         public virtual tblLocation tblLocation { get; set; }
     }

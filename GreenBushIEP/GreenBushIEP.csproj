@@ -372,6 +372,15 @@
     <Compile Include="Models\tblFormArchive.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblFormChildOutcome.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblFormChildOutcomes_PersonsInvolved.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblFormChildOutcomes_SupportingEvidence.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblFormConferenceSummary.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -1238,6 +1247,7 @@
     <Content Include="Views\Home\MISNotes.cshtml" />
     <Content Include="Views\Form\ContinuousLearningPlan.cshtml" />
     <Content Include="Views\Home\_InactiveUsers.cshtml" />
+    <Content Include="Views\Form\ChildOutcomesSummary.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

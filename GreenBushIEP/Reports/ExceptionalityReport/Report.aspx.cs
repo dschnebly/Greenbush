@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -41,8 +42,11 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			ReportViewer MReportViewer = this.Master.FindControl("ReportViewer1") as ReportViewer;
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
-			string serviceIds = "";
-			
+			string serviceIds = GreenBushIEP.Report.ReportMaster.GetServiceFilter(this.ServiceType);
+			string providerIds = "0";
+
+			serviceIds = serviceIds.Trim().Trim(',');
+
 			string buildingID = this.buildingDD.Value;
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 
@@ -59,11 +63,26 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 				teacherIds = user.UserID.ToString();
 			}
 
-			foreach (ListItem li in ServiceType.Items)
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
-				if (li.Selected)
+				teacherIds = user.UserID.ToString();
+			}
+
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+			{
+				var providerObj = GreenBushIEP.Report.ReportMaster.GetProviderByProviderCode(user.TeacherID);
+				if (providerObj != null)
 				{
-					serviceIds += string.Format("{0},", li.Value);
+					providerIds = providerObj.ProviderID.ToString();
+				}
+			}
+			else
+			{
+
+				var providers = GreenBushIEP.Report.ReportMaster.GetProviders(districtFilter);
+				if (providers != null)
+				{
+					providerIds = string.Join(",", providers.Select(p => p.ProviderID.ToString()));
 				}
 			}
 
@@ -72,7 +91,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 
 			serviceIds = serviceIds.Trim().Trim(',');
 
-			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds, providerIds);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 
 			ReportDataSource rds2 = null;
@@ -99,36 +118,37 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string serviceIds, string buildingID, DateTime startDate, DateTime endDate, string teacherIds)
+		private DataTable GetData(string districtFilter, string serviceIds, string buildingID,
+			DateTime startDate, DateTime endDate, string teacherIds, string providerIds)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("ServiceType", typeof(string));
-			dt.Columns.Add("Provider", typeof(string));			
-			dt.Columns.Add("Frequency", typeof(int));
-			dt.Columns.Add("Location", typeof(string));
-			dt.Columns.Add("DaysPerWeek", typeof(byte));
-			dt.Columns.Add("Minutes", typeof(short));
-			dt.Columns.Add("DateOfBirth", typeof(DateTime));
-			dt.Columns.Add("PrimaryExceptionality", typeof(string));
-			dt.Columns.Add("SecondaryExceptionality", typeof(string));
-			dt.Columns.Add("USD", typeof(string));
-			dt.Columns.Add("BuildingName", typeof(string));
-			dt.Columns.Add("FrequencyDesc", typeof(string));
-			using (var ctx = new IndividualizedEducationProgramEntities())
-			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportServices(districtFilter, serviceIds, buildingID, startDate, endDate, teacherIds);
+			DataSet ds = new DataSet();
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.StudentFirstName, cs.StudentLastName, cs.ServiceType, cs.Provider,
-						cs.Frequency, cs.Location, cs.DaysPerWeek, cs.Minutes,
-						cs.DateOfBirth, cs.PrimaryExceptionality, cs.SecondaryExceptionality
-						, cs.USD, cs.BuildingName, cs.FrequencyDesc);
+			using (var context = new IndividualizedEducationProgramEntities())
+			{
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportServices", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
+
+					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
+					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@ProviderId", SqlDbType.VarChar, 8000).Value = providerIds;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
+					cmd.Parameters.Add("@ServiceId", SqlDbType.VarChar, 8000).Value = serviceIds;
+					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
+					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
+			return ds.Tables[0];
+
 		}
+
+		
 	}
 }

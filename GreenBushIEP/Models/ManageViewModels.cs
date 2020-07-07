@@ -495,7 +495,9 @@ namespace GreenBushIEP.Models
         public tblFormTransportationRequest formTransRequest { get; set; }
         public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
 
-        public IEPFormFileViewModel()
+		public tblFormChildOutcome childOutcome { get; set; }
+
+		public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;

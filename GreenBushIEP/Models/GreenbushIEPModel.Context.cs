@@ -129,6 +129,9 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblFormContinuousLearningPlan> tblFormContinuousLearningPlans { get; set; }
         public virtual DbSet<zArchive_Services> zArchive_Services { get; set; }
+        public virtual DbSet<tblFormChildOutcome> tblFormChildOutcomes { get; set; }
+        public virtual DbSet<tblFormChildOutcomes_PersonsInvolved> tblFormChildOutcomes_PersonsInvolved { get; set; }
+        public virtual DbSet<tblFormChildOutcomes_SupportingEvidence> tblFormChildOutcomes_SupportingEvidence { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -300,7 +303,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProviderCaseload_Result>("up_ReportProviderCaseload", districtIdParameter, providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter, studentIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportServices_Result> up_ReportServices(string districtId, string serviceId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string teacherId)
+        public virtual ObjectResult<up_ReportServices_Result> up_ReportServices(string districtId, string serviceId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string teacherId, string providerId)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -326,7 +329,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("TeacherId", teacherId) :
                 new ObjectParameter("TeacherId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter);
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter);
         }
     
         public virtual ObjectResult<up_ReportStudentsByBuilding_Result> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string statusCode, string teacherId)
