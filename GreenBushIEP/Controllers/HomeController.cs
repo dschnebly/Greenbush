@@ -2445,7 +2445,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult MakeFormInactive (int formId)
+        public ActionResult MakeFormInactive(int formId)
         {
             tblFormArchive theForm = db.tblFormArchives.Where(f => f.FormArchiveID == formId).FirstOrDefault();
             if(theForm != null)
@@ -2457,6 +2457,22 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { result = "error", message = "Unable to change the status to inactive." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult MakeFormActive(int formId)
+        {
+            tblFormArchive theForm = db.tblFormArchives.Where(f => f.FormArchiveID == formId).FirstOrDefault();
+            if (theForm != null)
+            {
+                theForm.isActive = true;
+                db.SaveChanges();
+
+                return Json(new { result = "success", message = "The form was set to active." }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { result = "error", message = "Unable to change the status to active." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

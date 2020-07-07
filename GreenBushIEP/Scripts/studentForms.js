@@ -51,7 +51,7 @@
             });
         });
 
-        $("#hideArchived").on("click", function () {
+        $("#hideArchived").on("change", function () {
             if ($(this).val() == 2) {
                 $('table tr.notActiveForm').removeClass("hidden");
                 $('table tr.ActiveForm').addClass("hidden");
@@ -62,7 +62,7 @@
         });
 
         $(".hideArchivedForm").on("click", function () {
-            var answer = confirm("are you sure you want to hide this?");
+            var answer = confirm("Are you sure you want to hide this?");
             if (answer) {
 
                 var button = $(this);
@@ -77,7 +77,36 @@
                     success: function (data) {
                         if (data.result != "error") {
                             tablerow.removeClass("ActiveForm").addClass("notActiveForm hidden");
-                            button.removeClass("glyphicon-eye-open btn btn-default hideArchivedForm").addClass("glyphicon-eye-close");
+                            button.removeClass("glyphicon-eye-open hideArchivedForm").addClass("glyphicon-eye-close unhideArchivedForm");
+                            _showAlert(data.message, true);
+                        } else {
+                            _showAlert(data.message, false);
+                        }
+                    },
+                    error: function (data) {
+                        _showAlert("Unable to connect or other related problem.", false);
+                    }
+                });
+            }
+        });
+
+        $(".unhideArchivedForm").on("click", function () {
+            var answer = confirm("Are you sure you want to unhide this?");
+            if (answer) {
+
+                var button = $(this);
+                var tablerow = $(this).closest('tr')
+                var formArchiveID = tablerow.data('id');
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/MakeFormActive',
+                    data: { formId: formArchiveID },
+                    dataType: "json",
+                    async: false,
+                    success: function (data) {
+                        if (data.result != "error") {
+                            tablerow.removeClass("notActiveForm").addClass("ActiveForm hidden");
+                            button.removeClass("glyphicon-eye-close unhideArchivedForm").addClass("glyphicon-eye-open hideArchivedForm");
                             _showAlert(data.message, true);
                         } else {
                             _showAlert(data.message, false);
