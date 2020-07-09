@@ -41,5 +41,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> ModifiedBy { get; set; }
         public Nullable<int> OriginalIEPid { get; set; }
         public string StatusCode { get; set; }
+        public Nullable<int> Grade { get; set; }
     }
 }
