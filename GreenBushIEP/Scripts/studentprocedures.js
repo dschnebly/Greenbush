@@ -397,7 +397,7 @@
 
         var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
         if (answer) {
-            $('.ajax-loader').css("visibility", "visible");
+            $('.ajax-loader').css("visibility", "visible").removeClass("hidden");
             $(".ajax-loader img").css("visibility", "visible");
 
             var stId = $("#stid").val();
