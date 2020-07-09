@@ -768,7 +768,8 @@ namespace GreenBushIEP.Models
 		public List<vw_BuildingList> serviceAttendanceBuildings { get; set; }
 		public string ethnicity { get; set; }
         public string gender { get; set; }
-        public string parentLang { get; set; }
+		public string grade { get; set; }
+		public string parentLang { get; set; }
         public string studentLang { get; set; }
         public string studentCounty { get; set; }
         public string primaryDisability { get; set; }
