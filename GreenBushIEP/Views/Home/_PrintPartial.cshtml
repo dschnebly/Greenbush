@@ -7,24 +7,9 @@
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
 	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
 	var iepType = string.Format("{0}", Model.anyStudentIEPActive && !Model.current.Amendment ? "ANNUAL" : Model.anyStudentIEPActive && Model.current.Amendment ? "AMENDMENT" : string.Empty);
-	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";
-	var studentGrade = "";
-	
-
-	if (Model.studentDetails.student.Grade != null)
-	{
-		switch (Model.studentDetails.student.Grade.Value)
-		{
-			case -4: { studentGrade = "P3"; break; }
-			case -3: { studentGrade = "P4"; break; }
-			case -2: { studentGrade = "P5"; break; }
-			case -1: { studentGrade = "P6"; break; }
-			case 0: { studentGrade = "K"; break; }
-			default: { studentGrade = Model.studentDetails.student.Grade.Value.ToString(); break; }
-
-		}
-	}
+	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";		
 }
+
 @if (@Model.studentDetails.printStudentInfo)
 {
 <div class="studentInformationPage" >
@@ -119,7 +104,7 @@
 		</tr>
 		<tr>
 			<td><label>Grade:</label></td>
-			<td>@(studentGrade)</td>
+			<td>@(Model.studentDetails.grade)</td>
 			<td><label>Fund Source:</label></td>
 			<td>@Model.studentDetails.placementCodeDesc</td>
 		</tr>
@@ -164,7 +149,6 @@
 
 				@(Model.studentDetails.student.InitialEvalDetermination.Value.AddYears(3).ToShortDateString())
 			}
-
 			</td>
 		</tr>		
 		<tr>			
@@ -184,9 +168,7 @@
 				</tr>
 			}
 			
-		}
-		
-		
+		}		
 		<tr>
 			<td class="voffset4"><label>Vision Screening:</label></td>
 			<td>@(Model.studentHealth != null && Model.studentHealth.VisionDate != null ? Model.studentHealth.VisionDate.ToShortDateString() : string.Empty)			
@@ -258,7 +240,6 @@
 }
 <div class="module-page voffset2" style="margin-top:10px">
 
-
 @if (@Model.studentDetails.printIEPDetails)
 {
 	<div >
@@ -288,7 +269,7 @@
 		</tr>
 		<tr>
 			<td><label>Grade:</label></td>
-			<td>@(studentGrade)</td>
+			<td>@(Model.studentDetails.grade)</td>
 			<td><label><span>@(string.IsNullOrEmpty(iepType) ? "Annual" : char.ToUpper(iepType[0]) + iepType.Substring(1).ToLower())</span> Date:</label></td>
 			<td style="width:150px;">@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
 		</tr>

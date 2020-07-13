@@ -3019,7 +3019,7 @@ namespace GreenbushIep.Controllers
                     studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-
+					studentDetails.grade = GetGrade(theIEP.current.Grade);
 					studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";					
 					studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
 
@@ -3047,38 +3047,25 @@ namespace GreenbushIep.Controllers
 
                     foreach (tblIEP history in historicalIEPs)
                     {
-
                         IEPHistoryViewModel historyItem = new IEPHistoryViewModel();
-
-                        if (history.OriginalIEPid == null)
-                        {
-                            historyItem.iepType = "Annual";
-                        }
-                        else
-                        {
-                            if (history.Amendment)
-                            {
-                                historyItem.iepType = "Amendment";
-                            }
-                        }
-
-                        historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? studentDetails.student.StatusCode : history.StatusCode;
+						historyItem.iepType = history.OriginalIEPid == null ? "Annual" : "Amendment";						
+                        historyItem.edStatus = string.IsNullOrEmpty(history.StatusCode) ? "" : history.StatusCode;
                         historyItem.iepDate = history.MeetingDate.HasValue ? history.MeetingDate.Value.ToShortDateString() : "";
                         historicalIEPList.Add(historyItem);
                     }
 
+					if (studentDetails.student.ExitDate.HasValue)
+					{
+						IEPHistoryViewModel exitItem = new IEPHistoryViewModel
+						{
+							iepType = "Exit",
+							iepDate = studentDetails.student.ExitDate.Value.ToShortDateString(),
+							edStatus = studentDetails.student.StatusCode //"D"
 
-                    if (studentDetails.student.ExitDate.HasValue)
-                    {
-                        IEPHistoryViewModel exitItem = new IEPHistoryViewModel
-                        {
-                            iepType = "Exit",
-                            iepDate = studentDetails.student.ExitDate.Value.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture),
-                            edStatus = "D"
-                        };
-                        historicalIEPList.Add(exitItem);
-                    }
-
+						};
+						historicalIEPList.Add(exitItem);
+					}
+					
                     studentDetails.history = historicalIEPList;
                 }
 
@@ -4484,7 +4471,28 @@ namespace GreenbushIep.Controllers
 
         }
 
-        private string GetDisability(string value)
+		private string GetGrade(int? value)
+		{
+			string studentGrade = "";
+
+			if (value.HasValue)
+			{
+				switch (value)
+				{
+					case -4: { studentGrade = "P3"; break; }
+					case -3: { studentGrade = "P4"; break; }
+					case -2: { studentGrade = "P5"; break; }
+					case -1: { studentGrade = "P6"; break; }
+					case 0: { studentGrade = "K"; break; }
+					default: { studentGrade = value.Value.ToString(); break; }
+				}
+			}
+			
+			return studentGrade;
+
+		}
+
+		private string GetDisability(string value)
         {
             string fullName = "";
             tblDisability disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
