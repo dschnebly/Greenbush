@@ -39,7 +39,7 @@
                         $("#reEvaluationSignature").popover('show');
                     }
                     else {
-                        $(this).attr("disabled", "disabled");
+                        folder.attr("disabled", "disabled");
                     }
                 }
             },
@@ -75,7 +75,7 @@
                         $("#reEvalCompleted").popover('show');
                     }
                     else {
-                        $(this).attr("disabled", "disabled");
+                        folder.attr("disabled", "disabled");
                     }
                 }
             },

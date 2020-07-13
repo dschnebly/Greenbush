@@ -722,7 +722,7 @@
             </ul>
         </div>
         <div class="col-md-2 pull-right">
-            @if(ViewBag.backToStudentIEP)
+            @if (ViewBag.backToStudentIEP)
             {
                 @Html.ActionLink(" ", "StudentProcedures", "Home", new { stid = Model.student.UserID }, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
             }
@@ -915,7 +915,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <br/>
+                                <br />
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Building Assignment</label>
@@ -1365,6 +1365,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <hr style="color: #333; height: 10px;" />
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1373,7 +1374,8 @@
                                                     <div class="row">
                                                         <label for="reEvaluationSignature">Re-Evaluation Consent Signed</label>
                                                         <div class="input-group">
-                                                            <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999;" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")" />
+                                                            <input id="reEvaluationSignature" name="reEvaluationSignature" type="text" style="height:49px; z-index: 99999;" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalConsentSigned.HasValue ? Model.info.ReEvalConsentSigned.Value.ToString("MM/dd/yyyy") : "")"
+                                                                   data-toggle="popover" data-placement="top" data-trigger="manual" data-content="" />
                                                             <span class="input-group-addon btn toggle-reEvaluationPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
                                                         </div>
                                                     </div>
@@ -1386,7 +1388,8 @@
                                                     <div class="row">
                                                         <label for="reEvalCompleted">Re-Evaluation Completed</label>
                                                         <div class="input-group">
-                                                            <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")" />
+                                                            <input id="reEvalCompleted" name="reEvalCompleted" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.info.ReEvalCompleted.HasValue ? Model.info.ReEvalCompleted.Value.ToString("MM/dd/yyyy") : "")"
+                                                                   data-toggle="popover" data-placement="top" data-trigger="manual" data-content="" />
                                                             <span class="input-group-addon btn toggle-reCompletedPopover"><i class="glyphicon glyphicon-folder-open"></i></span>
                                                         </div>
                                                     </div>
