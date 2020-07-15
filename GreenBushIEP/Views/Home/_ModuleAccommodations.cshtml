@@ -97,6 +97,14 @@ li.search-field input.default {
                                                 </select>
 											</div>                                           
                                         </div>
+										<div class="row form-group voffset2">
+                                            <div class="col-md-12">
+                                                <label style="font-size: 18px;" for="Title">Title</label>
+                                                <div>
+                                                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control standard-font-size accommodationTitle", @maxlength = 500, @title = "500 character limit." })
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="row form-group">
                                             <div class="col-md-12">
                                                 <label style="font-size: 18px;" for="AccType">Type</label>
@@ -377,6 +385,8 @@ li.search-field input.default {
 					var toggleButton = $(this).closest('.oneStudentGoal').find('.btnToggle');
 					var modules = $(this).closest('.oneStudentGoal').find('.selectModules option:selected');
 
+					
+					var title = $(this).closest('.oneStudentGoal').find('.accommodationTitle');
                     var desc = $(this).closest('.oneStudentGoal').find('.accommodationDescription');
                     var freq = $(this).closest('.oneStudentGoal').find('.accommodationFrequency');
                     var location = $(this).closest('.oneStudentGoal').find('.accommodationLocation');
