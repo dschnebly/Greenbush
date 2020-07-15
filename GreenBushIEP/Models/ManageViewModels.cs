@@ -560,7 +560,9 @@ namespace GreenBushIEP.Models
 
         [Required(ErrorMessage = "Please select a Type: Accommodation or Modification.")]
         public int AccomType { get; set; }
-        public int AccommodationID { get; set; }
+
+		public string Title { get; set; }
+		public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string LocationCode { get; set; } //not currently used
         public string Description { get; set; }
