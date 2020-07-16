@@ -1119,12 +1119,12 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
-                db.tblAuditLogs.Add(new tblAuditLog(){ IEPid = model.studentIEP.current.IEPid, ModifiedBy = currentUser.UserID, Create_Date = DateTime.Now, TableName = "tblIEP", UserID = student.UserID, Update_Date = DateTime.Now, Value = "Created IEP" });
-                db.SaveChanges();
+                //db.tblAuditLogs.Add(new tblAuditLog(){ IEPid = model.studentIEP.current.IEPid, ModifiedBy = currentUser.UserID, Create_Date = DateTime.Now, TableName = "tblIEP", UserID = student.UserID, Update_Date = DateTime.Now, Value = "Editing the student" });
+                //db.SaveChanges();
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
                 //need to check if transition plan is required and completed
-                if ((model.studentAge > 13 || (model.isDoc && model.studentAge <= 21)) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
+                if ((model.studentAge > 13 || model.isDoc) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
                 {
                     if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
                     {

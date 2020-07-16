@@ -300,7 +300,7 @@
                             </div>
                         </div>
                     </li>
-                    <li class="ui-state-default filter planning @((Model.studentAge > 13 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
+                    <li class="ui-state-default filter planning @((Model.studentAge > 13 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 25 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
                         <div class="hero-widget well @(Model.studentIEP.isTransitionCompleted ? "module-completed" : string.Empty )">
                             <div class="icon">
                                 <i class="glyphicon glyphicon-random" aria-hidden="true"></i>
