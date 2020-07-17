@@ -1123,8 +1123,8 @@ namespace GreenbushIep.Controllers
                 //db.SaveChanges();
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
-                //need to check if transition plan is required and completed
-                if ((model.studentAge > 13 || model.isDoc) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
+                // need to check if transition plan is required and completed
+                if (theIEP.isTransitionNeeded(model.studentAge, model.isDoc) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
                 {
                     if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
                     {

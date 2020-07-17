@@ -571,95 +571,103 @@ namespace GreenBushIEP.Models
             }
         }
 
-		private void CheckCompleted()
-		{
-			
-				int accommodationsCount = 0;
+        public bool isTransitionNeeded(int studentAge, bool isDoc)
+        {
+            List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
+            bool isReleaseBefore21 = transitions != null ? transitions.Any(t => t.isReleaseBefore21 == true) : false ;
+            bool isTransitionNeeded = ((!isDoc && studentAge > 13) || (isDoc && isReleaseBefore21)) ? true : false ;
 
-				if (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
-				if (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value))
-				{
-					accommodationsCount++;
-				}
+            return isTransitionNeeded;
+        }
 
-				if (accommodations.Count > 0)
-				{
-					//how many modules have accommodations that are complete
-					int completedCount = accommodations.Count(g => g.Completed);
-					if (accommodationsCount >= completedCount)
-						isAccommodationsCompleted = true;
-				}
+        private void CheckCompleted()
+        {
+            int accommodationsCount = 0;
 
-			int goalsCount = 0;
+            if (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentCommunication != null && (studentCommunication.NeedMetByAccommodation.HasValue && studentCommunication.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentSocial != null && (studentSocial.NeedMetByAccommodation.HasValue && studentSocial.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentAcademic != null && (studentAcademic.NeedMetByAccommodation.HasValue && studentAcademic.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentWritten != null && (studentWritten.NeedMetByAccommodation.HasValue && studentWritten.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentReading != null && (studentReading.NeedMetByAccommodation.HasValue && studentReading.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
+            if (studentMath != null && (studentMath.NeedMetByAccommodation.HasValue && studentMath.NeedMetByAccommodation.Value))
+            {
+                accommodationsCount++;
+            }
 
-			if (studentHealth != null && (studentHealth.NeedMetByGoal.HasValue && studentHealth.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentMotor != null && (studentMotor.NeedMetByGoal.HasValue && studentMotor.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentCommunication != null && (studentCommunication.NeedMetByGoal.HasValue && studentCommunication.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentSocial != null && (studentSocial.NeedMetByGoal.HasValue && studentSocial.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentAcademic != null && (studentAcademic.NeedMetByGoal.HasValue && studentAcademic.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentWritten != null && (studentWritten.NeedMetByGoal.HasValue && studentWritten.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentReading != null && (studentReading.NeedMetByGoal.HasValue && studentReading.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
-			if (studentMath != null && (studentMath.NeedMetByGoal.HasValue && studentMath.NeedMetByGoal.Value))
-			{
-				goalsCount++;
-			}
+            if (accommodations.Count > 0)
+            {
+                //how many modules have accommodations that are complete
+                int completedCount = accommodations.Count(g => g.Completed);
+                if (accommodationsCount >= completedCount)
+                    isAccommodationsCompleted = true;
+            }
 
-			if (studentGoals.Count > 0)
-			{
-				//how many modules have goals that are complete
-				int completedGoalCount = studentGoals.Count(g => g.Completed);
-				if (completedGoalCount >= goalsCount)
-					isGoalCompleted = true;
-			}
+            int goalsCount = 0;
 
-		}
-	}
+            if (studentHealth != null && (studentHealth.NeedMetByGoal.HasValue && studentHealth.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentMotor != null && (studentMotor.NeedMetByGoal.HasValue && studentMotor.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentCommunication != null && (studentCommunication.NeedMetByGoal.HasValue && studentCommunication.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentSocial != null && (studentSocial.NeedMetByGoal.HasValue && studentSocial.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentAcademic != null && (studentAcademic.NeedMetByGoal.HasValue && studentAcademic.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentWritten != null && (studentWritten.NeedMetByGoal.HasValue && studentWritten.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentReading != null && (studentReading.NeedMetByGoal.HasValue && studentReading.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+            if (studentMath != null && (studentMath.NeedMetByGoal.HasValue && studentMath.NeedMetByGoal.Value))
+            {
+                goalsCount++;
+            }
+
+            if (studentGoals.Count > 0)
+            {
+                //how many modules have goals that are complete
+                int completedGoalCount = studentGoals.Count(g => g.Completed);
+                if (completedGoalCount >= goalsCount)
+                    isGoalCompleted = true;
+            }
+
+        }
+    }
 }
