@@ -284,7 +284,10 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!ProviderName.Value</Value>
+                                  <Value>=LTRIM(
+IIF(LEFT(LTRIM(Fields!ProviderName.Value),1) = ",", 
+Replace(Fields!ProviderName.Value,",","",1,1)
+, Fields!ProviderName.Value))</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
@@ -303,6 +306,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>

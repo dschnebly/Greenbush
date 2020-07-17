@@ -1,32 +1,30 @@
 ﻿@model GreenBushIEP.Models.tblAccommodation
 
 @{
-	string shortDesc = "Accommodation ";
+	string shortDesc = Model.Title;
 
-	if (Model.AccomType == 1)
+	if (string.IsNullOrEmpty(shortDesc))
 	{
-		shortDesc = "Accommodation ";
-	}
-	else if (Model.AccomType == 2)
-	{
-		shortDesc = "Modification ";
-	}
-	else if (Model.AccomType == 3)
-	{
-		shortDesc = "Supplemental Aids and Services ";
-	}
-	else if (Model.AccomType == 4)
-	{
-		shortDesc = "Support for School Personnel ";
-	}
-	else if (Model.AccomType == 5)
-	{
-		shortDesc = "Transportation ";
-	}
-
-	if (Model.AnticipatedStartDate.HasValue)
-	{
-		shortDesc += Model.AnticipatedStartDate.Value.ToShortDateString();
+		if (Model.AccomType == 1)
+		{
+			shortDesc = "Accommodation ";
+		}
+		else if (Model.AccomType == 2)
+		{
+			shortDesc = "Modification ";
+		}
+		else if (Model.AccomType == 3)
+		{
+			shortDesc = "Supplemental Aids and Services ";
+		}
+		else if (Model.AccomType == 4)
+		{
+			shortDesc = "Support for School Personnel ";
+		}
+		else if (Model.AccomType == 5)
+		{
+			shortDesc = "Transportation ";
+		}
 	}
 
 	List<GreenBushIEP.Models.tblModule> modules = new List<GreenBushIEP.Models.tblModule>();
@@ -68,7 +66,7 @@
 								<div class="row form-group">
 									<div class="col-md-3">
 											  <label style="font-size: 18px;" for="ModuleType">Module</label>
-											  <select name="SelectedModules" data-placeholder="Choose Module(s)" class="chosen-selected standard-font-size selectModules existingModules" multiple="multiple" style="min-height: 49px; " data-validate="true">
+											  <select name="SelectedModules" data-placeholder="Choose Module(s)" class="chosen-selected standard-font-size selectModules existingModules" multiple="multiple" style="min-height: 49px; " data-validate="true">												  
 												@foreach (var module in modules)
 												{
 													var selected = "";
@@ -77,11 +75,19 @@
 														selected = "selected";
 													}
 													<option @(selected) value="@(module.ModuleID)">@(module.ModuleName)</option>
-                                                }                                                        
+                                                }                                                      
                                                 </select>
 											</div>
                                       
 							</div>
+							 <div class="row form-group voffset2">
+                                <div class="col-md-12">
+                                    <label style="font-size: 18px;">Title</label>
+                                    <div>
+                                        @Html.TextBoxFor(x => x.Title, new { @class = "form-control standard-font-size accommodationTitle", @maxlength = 500 })
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row form-group voffset3">
                                 <div class="col-md-12">
                                     <label style="font-size: 18px;" for="AccType">Type</label>

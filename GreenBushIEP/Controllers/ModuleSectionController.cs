@@ -689,11 +689,36 @@ namespace GreenBushIEP.Controllers
 
             if (ModelState.IsValid)
             {
-                tblAccommodation accommodation = db.tblAccommodations.Where(a => a.AccommodationID == model.AccommodationID).FirstOrDefault();
+				if (string.IsNullOrEmpty(model.Title))
+				{
+					if (model.AccomType == 1)
+					{
+						model.Title = "Accommodation ";
+					}
+					else if (model.AccomType == 2)
+					{
+						model.Title = "Modification ";
+					}
+					else if (model.AccomType == 3)
+					{
+						model.Title = "Supplemental Aids and Services ";
+					}
+					else if (model.AccomType == 4)
+					{
+						model.Title = "Support for School Personnel ";
+					}
+					else if (model.AccomType == 5)
+					{
+						model.Title = "Transportation ";
+					}
+				}
+
+				tblAccommodation accommodation = db.tblAccommodations.Where(a => a.AccommodationID == model.AccommodationID).FirstOrDefault();
                 int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
                 if (accommodation != null)
                 {
+					accommodation.Title = model.Title;
                     accommodation.AccomType = model.AccomType;
                     accommodation.Completed = model.Completed;
                     accommodation.Description = model.Description;
@@ -744,6 +769,7 @@ namespace GreenBushIEP.Controllers
                     tblAccommodation newAccomodation = new tblAccommodation
                     {
                         AccomType = model.AccomType,
+						Title= model.Title,
                         Completed = model.Completed,
                         Description = model.Description,
                         Duration = model.Duration,
