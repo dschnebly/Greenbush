@@ -1123,15 +1123,16 @@ namespace GreenbushIep.Controllers
                 //db.SaveChanges();
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
-                // need to check if transition plan is required and completed
-                if (theIEP.isTransitionNeeded(model.studentAge, model.isDoc) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
-                {
-                    if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
-                    {
-                        //transition plan must be completed
-                        theIEP.isAllCompleted = false;
-                    }
-                }
+				// need to check if transition plan is required and completed
+				if (theIEP.isTransitionNeeded(model.studentAge, model.isDoc) && !model.isGiftedOnly && (theIEP.iepStatusType == "DRAFT" || theIEP.iepStatusType == "AMENDMENT"))
+				{
+					if (theIEP.isTransitionCompleted == false && theIEP.isAllCompleted)
+					{
+						//transition plan must be completed
+						theIEP.isAllCompleted = false;
+					}
+				}
+				
             }
 
             switch (model.studentIEP.iepStatusType)
@@ -3806,7 +3807,7 @@ namespace GreenbushIep.Controllers
             //if exit data exists
             if (studentIEP.studentDetails.student.ExitDate.HasValue)
             {
-                serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
+				serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
             }
 
             int count = 1;
@@ -3925,8 +3926,24 @@ namespace GreenbushIep.Controllers
                 //13 Service Start Date
                 sb.AppendFormat("\t{0}", service.StartDate.ToShortDateString());
 
-                //14 Service end Date
-                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(serviceEndDateOverride) ? service.EndDate.Value.ToShortDateString() : serviceEndDateOverride);
+				//14 Service end Date
+				if (string.IsNullOrEmpty(serviceEndDateOverride))
+					sb.AppendFormat("\t{0}", service.EndDate.Value.ToShortDateString());
+				else
+				{
+
+					var studentExitDate = db.tblCalendars.Where(o => o.calendarDate == studentIEP.studentDetails.student.ExitDate.Value && o.BuildingID == service.BuildingID).FirstOrDefault();
+
+					if (studentExitDate != null && studentExitDate.SchoolYear == service.SchoolYear)
+					{
+						//only use exit date if it is in the same school year
+						sb.AppendFormat("\t{0}", serviceEndDateOverride);
+					}
+					else
+					{
+						sb.AppendFormat("\t{0}", service.EndDate.Value.ToShortDateString());
+					}
+				}
 
                 //15 minutes
                 sb.AppendFormat("\t{0}", service.Minutes);
