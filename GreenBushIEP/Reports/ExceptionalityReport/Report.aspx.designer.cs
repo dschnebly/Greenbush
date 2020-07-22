@@ -58,6 +58,15 @@ namespace GreenBushIEP.Reports.ExceptionalityReport {
         protected global::System.Web.UI.HtmlControls.HtmlSelect ServiceType;
         
         /// <summary>
+        /// SelectGifted control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlSelect SelectGifted;
+        
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>

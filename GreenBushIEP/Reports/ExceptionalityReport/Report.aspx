@@ -44,11 +44,23 @@
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
-				 <label   for="ServiceType">Service Type</label>
+				 <label   for="ServiceType">Exceptionality Type</label>
 			</div>
 			<div class="col-md-6" >
 				 <select id="ServiceType" runat="server" class="chosen-select">
                       <option value="">Select</option>
+                </select>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				 <label for="SelectGifted">Gifted</label>
+			</div>
+			<div class="col-md-6" >
+				 <select id="SelectGifted" runat="server" class="chosen-select">
+                      <option value="0">Select</option>
+					  <option value="1">No</option>
+					 <option value="2">Yes</option>
                 </select>
 			</div>
 		</div>
