@@ -2911,13 +2911,11 @@ namespace GreenbushIep.Controllers
                 if (theIEP.studentGoalBenchmarkMethods == null)
                 {
                     theIEP.studentGoalBenchmarkMethods = new List<tblGoalBenchmarkMethod>();
-
                 }
 
                 if (theIEP.studentGoalEvalProcs == null)
                 {
                     theIEP.studentGoalEvalProcs = new List<tblGoalEvaluationProcedure>();
-
                 }
 
                 foreach (tblGoal goal in theIEP.studentGoals)
@@ -2931,9 +2929,7 @@ namespace GreenbushIep.Controllers
                         List<int> benchmarkIds = theIEP.studentGoalBenchmarks.Select(o => o.goalBenchmarkID).ToList();
                         theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
                     }
-
                 }
-
 
                 tblBehavior studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
                 theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
@@ -3020,9 +3016,28 @@ namespace GreenbushIep.Controllers
                     studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-					studentDetails.grade = GetGrade(theIEP.current.Grade);
+					studentDetails.grade = GetGrade(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
 					studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";					
 					studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
+
+					var schoolYear = db.tblCalendars.FirstOrDefault(o => o.calendarDate == DateTime.Today);
+					if (schoolYear != null)
+					{
+						studentDetails.schoolYear = string.Format("{0} - {1}", schoolYear.SchoolYear - 1, schoolYear.SchoolYear);
+					}
+
+					//teacher
+					List<tblOrganizationMapping> existingAssignments = db.tblOrganizationMappings.Where(u => u.UserID == stid).ToList();
+
+					if (existingAssignments.Any())
+					{
+						var assignedTeacher = existingAssignments.Take(1).FirstOrDefault();
+						if (assignedTeacher != null)
+						{
+							var teachObj = db.tblUsers.SingleOrDefault(u => u.UserID == assignedTeacher.AdminID);
+							studentDetails.teacherName = teachObj  == null ? "" : string.Format("{0}, {1}", teachObj.LastName, teachObj.FirstName);
+						}
+					}
 
 					if (theIEP.current.Amendment)
 					{

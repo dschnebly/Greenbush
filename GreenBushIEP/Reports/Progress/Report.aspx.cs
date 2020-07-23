@@ -70,8 +70,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 			string districtName = this.districtDD.Value == "-1" ? "All" : districtDD.Items[districtDD.SelectedIndex].Text;
 
 			string districtFilter = GreenBushIEP.Report.ReportMaster.GetDistrictFilter(this.districtDD, districtID);
-			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
-
+			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);			
 			string studentFilter = this.studentVals.Value == "-1" ? "" : studentVals.Value;
 
 			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
@@ -85,17 +84,18 @@ namespace GreenBushIEP.Reports.ProgressReport
 			}
 
 			DataTable dt = GetData(districtFilter, providerIds, buildingFilter, status, teacherIds, studentFilter);
-			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
+			ReportDataSource rds = new ReportDataSource("DataSet1", dt);		
 			
 			ReportParameter p1 = new ReportParameter("pPrintGoal", cbPrintGoal.ToString());
 			ReportParameter p2 = new ReportParameter("pPrintGoalBenchmark", cbPrintGoalBenchmarks.ToString());
 			ReportParameter p3 = new ReportParameter("pQuarter", quarter);
-
+			ReportParameter p4 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
+			
 
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/Progress/rptProgressReport.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 			
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3 });
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3, p4 });
 			MReportViewer.LocalReport.Refresh();
 		}
 

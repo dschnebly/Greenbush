@@ -1124,6 +1124,15 @@
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
+              <xs:element name="NeighborhoodBuilding" msprop:Generator_ColumnVarNameInTable="columnNeighborhoodBuilding" msprop:Generator_ColumnPropNameInRow="NeighborhoodBuilding" msprop:Generator_ColumnPropNameInTable="NeighborhoodBuildingColumn" msprop:Generator_UserColumnName="NeighborhoodBuilding" type="xs:string" minOccurs="0" />
+              <xs:element name="DateOfBirth" msprop:Generator_ColumnVarNameInTable="columnDateOfBirth" msprop:Generator_ColumnPropNameInRow="DateOfBirth" msprop:Generator_ColumnPropNameInTable="DateOfBirthColumn" msprop:Generator_UserColumnName="DateOfBirth" type="xs:string" minOccurs="0" />
+              <xs:element name="BuildingAddress" msprop:Generator_ColumnVarNameInTable="columnBuildingAddress" msprop:Generator_ColumnPropNameInRow="BuildingAddress" msprop:Generator_ColumnPropNameInTable="BuildingAddressColumn" msprop:Generator_UserColumnName="BuildingAddress" type="xs:string" minOccurs="0" />
+              <xs:element name="BuildingCityStateZip" msprop:Generator_ColumnVarNameInTable="columnBuildingCityStateZip" msprop:Generator_ColumnPropNameInRow="BuildingCityStateZip" msprop:Generator_ColumnPropNameInTable="BuildingCityStateZipColumn" msprop:Generator_UserColumnName="BuildingCityStateZip" type="xs:string" minOccurs="0" />
+              <xs:element name="BuildingPhone" msprop:Generator_ColumnVarNameInTable="columnBuildingPhone" msprop:Generator_ColumnPropNameInRow="BuildingPhone" msprop:Generator_ColumnPropNameInTable="BuildingPhoneColumn" msprop:Generator_UserColumnName="BuildingPhone" type="xs:string" minOccurs="0" />
+              <xs:element name="TeacherName" msprop:Generator_ColumnVarNameInTable="columnTeacherName" msprop:Generator_ColumnPropNameInRow="TeacherName" msprop:Generator_ColumnPropNameInTable="TeacherNameColumn" msprop:Generator_UserColumnName="TeacherName" type="xs:string" minOccurs="0" />
+              <xs:element name="AmendmentDate" msprop:Generator_ColumnVarNameInTable="columnAmendmentDate" msprop:Generator_ColumnPropNameInRow="AmendmentDate" msprop:Generator_ColumnPropNameInTable="AmendmentDateColumn" msprop:Generator_UserColumnName="AmendmentDate" type="xs:string" minOccurs="0" />
+              <xs:element name="AnnualDate" msprop:Generator_ColumnVarNameInTable="columnAnnualDate" msprop:Generator_ColumnPropNameInRow="AnnualDate" msprop:Generator_ColumnPropNameInTable="AnnualDateColumn" msprop:Generator_UserColumnName="AnnualDate" type="xs:string" minOccurs="0" />
+              <xs:element name="SchoolYear" msprop:Generator_ColumnVarNameInTable="columnSchoolYear" msprop:Generator_ColumnPropNameInRow="SchoolYear" msprop:Generator_ColumnPropNameInTable="SchoolYearColumn" msprop:Generator_UserColumnName="SchoolYear" type="xs:string" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

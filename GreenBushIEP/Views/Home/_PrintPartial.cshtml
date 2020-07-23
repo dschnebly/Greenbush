@@ -2973,6 +2973,87 @@
 
 @if (@Model.studentDetails.printProgressReport)
 {
+	<div class="row">
+		<div class="col-md-7 col-md-offset-5">
+			<table class="text-center"  cellpadding="3" cellspacing="2">
+			<tr>
+				<td>				
+					@if (@Model.studentDetails.building != null)
+					{
+						<h5>@Model.studentDetails.building.BuildingName</h5>
+						<h5>@Model.studentDetails.building.Address_Physical</h5>
+						<h5>@Model.studentDetails.building.City@(@Model.studentDetails.building.State == null ? "" : ", " + @Model.studentDetails.building.State) @Model.studentDetails.building.Zip</h5>
+						<h5 x-ms-format-detection="none">@Model.studentDetails.building.Phone</h5>
+					}
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-8" style="text-align:right">
+			<table cellpadding="3" cellspacing="2">
+			<tr>
+				<td>Report Date: @(DateTime.Today.ToShortDateString())</td>				
+			</tr>
+			<tr>
+				<td>Printed By: @(string.Format("{0} {1}", Model.studentDetails.teacher.FirstName, Model.studentDetails.teacher.LastName))</td>			
+			</tr>
+			<tr>
+				<td>Most recent status</td>
+			</tr>
+			</table>
+		</div>
+	</div>	
+	<div class="text-center" style="font-size:14pt"><b>PROGRESS REPORT</b></div>
+	<p>This report shall inform the parents/guardians about the student's progress towards meeting the Annual Goals.</p>
+	<hr/>
+	<table class="table table-borderless" border="0">
+		<tr>
+			<td><label>Student's Name:</label></td>
+			<td>@(studentFullName)</td>
+			<td><label>Grade:</label></td>
+			<td>@(Model.studentDetails.grade)</td>
+			<td><label>Teacher:</label></td>
+			<td>@(Model.studentDetails.teacherName)</td>
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><label>Attendance School:</label></td>
+			<td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>
+			<td><label>Birthdate:</label></td>
+			<td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>			
+			<td><label>Annual Meeting:</label></td>
+			<td>@Model.studentDetails.annualInititationDate</td>		
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td><label>Neighborhood School:</label></td>
+			<td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>			
+			<td></td>
+			<td></td>
+			<td><label>Amendment Date:</label></td>
+			<td>
+				@if (iepType == "AMENDMENT")
+				{
+				 <text>@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</text>
+				}
+			</td>			
+		<td></td>
+			<td></td>
+		</tr>
+		<tr>			
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td><label>School Year:</label></td>
+			<td>@Model.studentDetails.schoolYear</td>		
+		</tr>
+	</table>
+	<hr />
 	<div>		
     @if (Model.studentGoals.Count > 0)
 	{

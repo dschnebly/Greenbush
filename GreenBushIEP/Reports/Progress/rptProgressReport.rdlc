@@ -213,6 +213,42 @@
           <DataField>BuildingName</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="NeighborhoodBuilding">
+          <DataField>NeighborhoodBuilding</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="DateOfBirth">
+          <DataField>DateOfBirth</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BuildingAddress">
+          <DataField>BuildingAddress</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BuildingCityStateZip">
+          <DataField>BuildingCityStateZip</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="BuildingPhone">
+          <DataField>BuildingPhone</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="TeacherName">
+          <DataField>TeacherName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AmendmentDate">
+          <DataField>AmendmentDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="AnnualDate">
+          <DataField>AnnualDate</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchoolYear">
+          <DataField>SchoolYear</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -232,12 +268,12 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>7.54786in</Width>
+                  <Width>7.86376in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>7.34723in</Height>
+                  <Height>8.71008in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -251,20 +287,17 @@
                                   <TextRuns>
                                     <TextRun>
                                       <Value>=Fields!StudentFirstName.Value &amp; " " &amp;  Fields!StudentLastName.Value</Value>
-                                      <Style>
-                                        <FontSize>16pt</FontSize>
-                                        <FontWeight>Bold</FontWeight>
-                                      </Style>
+                                      <Style />
                                     </TextRun>
                                   </TextRuns>
                                   <Style />
                                 </Paragraph>
                               </Paragraphs>
                               <rd:DefaultName>Textbox265</rd:DefaultName>
-                              <Top>0.52951in</Top>
-                              <Left>0.08674in</Left>
-                              <Height>0.3125in</Height>
-                              <Width>7.41037in</Width>
+                              <Top>2.06125in</Top>
+                              <Left>1.79021in</Left>
+                              <Height>0.21875in</Height>
+                              <Width>1.47284in</Width>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -279,7 +312,7 @@
                               <TablixBody>
                                 <TablixColumns>
                                   <TablixColumn>
-                                    <Width>7.41037in</Width>
+                                    <Width>7.8285in</Width>
                                   </TablixColumn>
                                 </TablixColumns>
                                 <TablixRows>
@@ -339,7 +372,7 @@
                                                       <Width>2.25902in</Width>
                                                     </TablixColumn>
                                                     <TablixColumn>
-                                                      <Width>3.44372in</Width>
+                                                      <Width>3.68331in</Width>
                                                     </TablixColumn>
                                                   </TablixColumns>
                                                   <TablixRows>
@@ -1019,7 +1052,7 @@
                                                 <Top>2.13576in</Top>
                                                 <Left>0.11187in</Left>
                                                 <Height>1.25in</Height>
-                                                <Width>7.28679in</Width>
+                                                <Width>7.52638in</Width>
                                                 <Style>
                                                   <Border>
                                                     <Style>None</Style>
@@ -1140,8 +1173,8 @@
                                                     <rd:DefaultName>GoalModule</rd:DefaultName>
                                                     <Top>0.35in</Top>
                                                     <Left>1.86944in</Left>
-                                                    <Height>0.25in</Height>
-                                                    <Width>5.28473in</Width>
+                                                    <Height>0.2375in</Height>
+                                                    <Width>5.61044in</Width>
                                                     <ZIndex>3</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1170,8 +1203,8 @@
                                                     <rd:DefaultName>StateStandards</rd:DefaultName>
                                                     <Top>0.9632in</Top>
                                                     <Left>1.86944in</Left>
-                                                    <Height>0.25in</Height>
-                                                    <Width>5.28473in</Width>
+                                                    <Height>0.2375in</Height>
+                                                    <Width>5.61044in</Width>
                                                     <ZIndex>4</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1200,8 +1233,8 @@
                                                     <rd:DefaultName>Baseline</rd:DefaultName>
                                                     <Top>1.28611in</Top>
                                                     <Left>1.86944in</Left>
-                                                    <Height>0.25in</Height>
-                                                    <Width>5.28473in</Width>
+                                                    <Height>0.2375in</Height>
+                                                    <Width>5.61044in</Width>
                                                     <ZIndex>5</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1262,8 +1295,8 @@
                                                     <rd:DefaultName>AnnualGoal</rd:DefaultName>
                                                     <Top>0.64167in</Top>
                                                     <Left>1.86944in</Left>
-                                                    <Height>0.25in</Height>
-                                                    <Width>5.28473in</Width>
+                                                    <Height>0.2375in</Height>
+                                                    <Width>5.61044in</Width>
                                                     <ZIndex>7</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1282,9 +1315,9 @@
                                                       <Paragraph>
                                                         <TextRuns>
                                                           <TextRun>
-                                                            <Value>=Fields!GoalDescription.Value</Value>
+                                                            <Value>=RTRIM(Fields!GoalDescription.Value)</Value>
                                                             <Style>
-                                                              <FontSize>16pt</FontSize>
+                                                              <FontSize>14pt</FontSize>
                                                               <FontWeight>Bold</FontWeight>
                                                             </Style>
                                                           </TextRun>
@@ -1295,10 +1328,10 @@
                                                       </Paragraph>
                                                     </Paragraphs>
                                                     <rd:DefaultName>GoalDescription</rd:DefaultName>
-                                                    <Top>0.04444in</Top>
-                                                    <Left>0.03125in</Left>
+                                                    <Top>0.03056in</Top>
+                                                    <Left>0.01875in</Left>
                                                     <Height>0.25in</Height>
-                                                    <Width>7.12292in</Width>
+                                                    <Width>7.46113in</Width>
                                                     <ZIndex>8</ZIndex>
                                                     <Style>
                                                       <Border>
@@ -1311,11 +1344,9 @@
                                                     </Style>
                                                   </Textbox>
                                                 </ReportItems>
-                                                <KeepTogether>true</KeepTogether>
-                                                <Top>0.01389in</Top>
                                                 <Left>0.03272in</Left>
                                                 <Height>1.625in</Height>
-                                                <Width>7.31804in</Width>
+                                                <Width>7.61452in</Width>
                                                 <ZIndex>1</ZIndex>
                                                 <Visibility>
                                                   <Hidden>=IIF(Parameters!pPrintGoal.Value = "True" , False, True)</Hidden>
@@ -1348,7 +1379,7 @@
                                                 </Paragraphs>
                                                 <rd:DefaultName>Textbox15</rd:DefaultName>
                                                 <Top>1.82049in</Top>
-                                                <Left>2.49381in</Left>
+                                                <Left>2.74381in</Left>
                                                 <Height>0.25in</Height>
                                                 <Width>2.58333in</Width>
                                                 <ZIndex>2</ZIndex>
@@ -1375,7 +1406,7 @@
                                                       <Width>1.71527in</Width>
                                                     </TablixColumn>
                                                     <TablixColumn>
-                                                      <Width>2.19651in</Width>
+                                                      <Width>2.4611in</Width>
                                                     </TablixColumn>
                                                   </TablixColumns>
                                                   <TablixRows>
@@ -2217,7 +2248,7 @@
                                                 <Top>3.87187in</Top>
                                                 <Left>0.12089in</Left>
                                                 <Height>1.25in</Height>
-                                                <Width>7.25277in</Width>
+                                                <Width>7.51736in</Width>
                                                 <ZIndex>3</ZIndex>
                                                 <Visibility>
                                                   <Hidden>=IIF(Parameters!pPrintGoalBenchmark.Value = True, False, True)</Hidden>
@@ -2250,7 +2281,7 @@
                                                 </Paragraphs>
                                                 <rd:DefaultName>Textbox15</rd:DefaultName>
                                                 <Top>3.56805in</Top>
-                                                <Left>2.50209in</Left>
+                                                <Left>2.75209in</Left>
                                                 <Height>0.25in</Height>
                                                 <Width>2.58333in</Width>
                                                 <ZIndex>4</ZIndex>
@@ -2268,7 +2299,6 @@
                                                 </Style>
                                               </Textbox>
                                             </ReportItems>
-                                            <KeepTogether>true</KeepTogether>
                                             <Style>
                                               <Border>
                                                 <Style>None</Style>
@@ -2297,12 +2327,11 @@
                                   </TablixMember>
                                 </TablixMembers>
                               </TablixRowHierarchy>
-                              <KeepTogether>true</KeepTogether>
                               <DataSetName>DataSet1</DataSetName>
-                              <Top>1.94584in</Top>
-                              <Left>0.04568in</Left>
+                              <Top>3.36681in</Top>
+                              <Left>0.03526in</Left>
                               <Height>5.26424in</Height>
-                              <Width>7.41037in</Width>
+                              <Width>7.8285in</Width>
                               <ZIndex>1</ZIndex>
                               <Style>
                                 <Border>
@@ -2310,27 +2339,30 @@
                                 </Border>
                               </Style>
                             </Tablix>
-                            <Textbox Name="Textbox272">
+                            <Textbox Name="Textbox2">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>IEP Start Date:</Value>
+                                      <Value>PROGRESS REPORT</Value>
                                       <Style>
+                                        <FontSize>14pt</FontSize>
                                         <FontWeight>Bold</FontWeight>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox272</rd:DefaultName>
-                              <Top>0.92534in</Top>
-                              <Left>0.10618in</Left>
-                              <Height>0.26042in</Height>
-                              <Width>1.08333in</Width>
+                              <rd:DefaultName>Textbox2</rd:DefaultName>
+                              <Top>1.25972in</Top>
+                              <Left>2.57506in</Left>
+                              <Height>0.35417in</Height>
+                              <Width>2.59777in</Width>
                               <ZIndex>2</ZIndex>
                               <Style>
                                 <Border>
@@ -2342,27 +2374,29 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
-                            <Textbox Name="Textbox273">
+                            <Textbox Name="Textbox11">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>IEP End Date:</Value>
+                                      <Value>=Fields!BuildingName.Value</Value>
                                       <Style>
-                                        <FontWeight>Bold</FontWeight>
+                                        <FontSize>9pt</FontSize>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
-                                  <Style />
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox272</rd:DefaultName>
-                              <Top>1.20729in</Top>
-                              <Left>0.10618in</Left>
-                              <Height>0.26042in</Height>
-                              <Width>1.08333in</Width>
+                              <rd:DefaultName>Textbox8</rd:DefaultName>
+                              <Top>0.08375in</Top>
+                              <Left>2.66576in</Left>
+                              <Height>0.26277in</Height>
+                              <Width>2.45706in</Width>
                               <ZIndex>3</ZIndex>
                               <Style>
                                 <Border>
@@ -2374,7 +2408,428 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
-                            <Textbox Name="Textbox274">
+                            <Textbox Name="Textbox12">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!BuildingAddress.Value</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox10</rd:DefaultName>
+                              <Top>0.3525in</Top>
+                              <Left>2.66576in</Left>
+                              <Height>0.26277in</Height>
+                              <Width>2.45706in</Width>
+                              <ZIndex>4</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox13">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>= Fields!BuildingCityStateZip.Value</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox12</rd:DefaultName>
+                              <Top>0.62723in</Top>
+                              <Left>2.66576in</Left>
+                              <Height>0.26277in</Height>
+                              <Width>2.45706in</Width>
+                              <ZIndex>5</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox14">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!BuildingPhone.Value</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Center</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox13</rd:DefaultName>
+                              <Top>0.9025in</Top>
+                              <Left>2.66576in</Left>
+                              <Height>0.26277in</Height>
+                              <Width>2.45706in</Width>
+                              <ZIndex>6</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox60">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>="Report Date: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox59</rd:DefaultName>
+                              <Top>0.53862in</Top>
+                              <Left>5.74442in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.93808in</Width>
+                              <ZIndex>7</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox62">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>="Printed By: " &amp; Parameters!PrintedBy.Value</Value>
+                                      <Style>
+                                        <FontSize>9pt</FontSize>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox60</rd:DefaultName>
+                              <Top>0.8025in</Top>
+                              <Left>5.74442in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.93808in</Width>
+                              <ZIndex>8</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox26">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Most recent status</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Right</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox26</rd:DefaultName>
+                              <Top>1.09417in</Top>
+                              <Left>5.74442in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.93808in</Width>
+                              <ZIndex>9</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox29">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>This report shall inform the parents/guardians about the student's progress towards meeting the Annual Goals.</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox29</rd:DefaultName>
+                              <Top>1.64458in</Top>
+                              <Left>0.04568in</Left>
+                              <Height>0.25in</Height>
+                              <Width>7.63682in</Width>
+                              <ZIndex>10</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Line Name="Line1">
+                              <Top>1.96125in</Top>
+                              <Height>0in</Height>
+                              <Width>7.86376in</Width>
+                              <ZIndex>11</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Color>Silver</Color>
+                                  <Style>Solid</Style>
+                                  <Width>0.5pt</Width>
+                                </Border>
+                                <TopBorder>
+                                  <Color>Silver</Color>
+                                  <Style>Solid</Style>
+                                  <Width>0.5pt</Width>
+                                </TopBorder>
+                                <BottomBorder>
+                                  <Color>Silver</Color>
+                                  <Style>Solid</Style>
+                                  <Width>0.5pt</Width>
+                                </BottomBorder>
+                                <LeftBorder>
+                                  <Color>Silver</Color>
+                                  <Style>Solid</Style>
+                                  <Width>0.5pt</Width>
+                                </LeftBorder>
+                                <RightBorder>
+                                  <Color>Silver</Color>
+                                  <Style>Solid</Style>
+                                  <Width>0.5pt</Width>
+                                </RightBorder>
+                              </Style>
+                            </Line>
+                            <Textbox Name="Textbox30">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Student's Name:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox30</rd:DefaultName>
+                              <Top>2.06125in</Top>
+                              <Left>0.06651in</Left>
+                              <Height>0.21875in</Height>
+                              <Width>1.69592in</Width>
+                              <ZIndex>12</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox32">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Attendance School:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox32</rd:DefaultName>
+                              <Top>2.35639in</Top>
+                              <Left>0.06651in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.69592in</Width>
+                              <ZIndex>13</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="ProgressNotes41">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Neighborhood School:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>ProgressNotes41</rd:DefaultName>
+                              <Top>2.63417in</Top>
+                              <Left>0.06651in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.69592in</Width>
+                              <ZIndex>14</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="BuildingName">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!BuildingName.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>BuildingName</rd:DefaultName>
+                              <Top>2.35639in</Top>
+                              <Left>1.79021in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.47284in</Width>
+                              <ZIndex>15</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox35">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!NeighborhoodBuilding.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox35</rd:DefaultName>
+                              <Top>2.64806in</Top>
+                              <Left>1.79021in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.48673in</Width>
+                              <ZIndex>16</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox36">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
@@ -2390,42 +2845,12 @@
                                   <Style />
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox272</rd:DefaultName>
-                              <Top>1.48923in</Top>
-                              <Left>0.10618in</Left>
-                              <Height>0.26042in</Height>
-                              <Width>1.08333in</Width>
-                              <ZIndex>4</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="begin_date">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=IIF(Fields!begin_date.Value = DateTime.MinValue,"", FormatDateTime(Fields!begin_date.Value, DateFormat.ShortDate))</Value>
-                                      <Style />
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>begin_date</rd:DefaultName>
-                              <Top>0.93576in</Top>
-                              <Left>1.20687in</Left>
+                              <rd:DefaultName>Textbox36</rd:DefaultName>
+                              <Top>2.06125in</Top>
+                              <Left>3.41729in</Left>
                               <Height>0.25in</Height>
-                              <Width>2.55208in</Width>
-                              <ZIndex>5</ZIndex>
+                              <Width>0.71875in</Width>
+                              <ZIndex>17</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2436,49 +2861,14 @@
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
-                            <Textbox Name="end_Date">
+                            <Textbox Name="Textbox38">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>=IIF(Fields!end_Date.Value = DateTime.MinValue,"", FormatDateTime(Fields!end_Date.Value, DateFormat.ShortDate))</Value>
-                                      <Style />
-                                    </TextRun>
-                                  </TextRuns>
-                                  <Style />
-                                </Paragraph>
-                              </Paragraphs>
-                              <rd:DefaultName>end_Date</rd:DefaultName>
-                              <Top>1.21771in</Top>
-                              <Left>1.20687in</Left>
-                              <Height>0.25in</Height>
-                              <Width>2.55208in</Width>
-                              <ZIndex>6</ZIndex>
-                              <Style>
-                                <Border>
-                                  <Style>None</Style>
-                                </Border>
-                                <PaddingLeft>2pt</PaddingLeft>
-                                <PaddingRight>2pt</PaddingRight>
-                                <PaddingTop>2pt</PaddingTop>
-                                <PaddingBottom>2pt</PaddingBottom>
-                              </Style>
-                            </Textbox>
-                            <Textbox Name="Grade">
-                              <CanGrow>true</CanGrow>
-                              <KeepTogether>true</KeepTogether>
-                              <Paragraphs>
-                                <Paragraph>
-                                  <TextRuns>
-                                    <TextRun>
-                                      <Value>=IIF(Fields!Grade.Value = "0", "K", 
-IIF(Fields!Grade.Value = "-4", "Preschooler age 3", 
-IIF(Fields!Grade.Value = "-3", "Preschooler age 4", 
-IIF(Fields!Grade.Value = "-2", "Preschooler age 5", 
-IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
-)</Value>
+                                      <Value>=Fields!Grade.Value</Value>
                                       <Style />
                                     </TextRun>
                                   </TextRuns>
@@ -2487,12 +2877,12 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Grade</rd:DefaultName>
-                              <Top>1.48923in</Top>
-                              <Left>1.20687in</Left>
+                              <rd:DefaultName>Textbox38</rd:DefaultName>
+                              <Top>2.06125in</Top>
+                              <Left>4.18118in</Left>
                               <Height>0.25in</Height>
-                              <Width>2.55208in</Width>
-                              <ZIndex>7</ZIndex>
+                              <Width>1in</Width>
+                              <ZIndex>18</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2503,31 +2893,322 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                 <PaddingBottom>2pt</PaddingBottom>
                               </Style>
                             </Textbox>
-                            <Textbox Name="Textbox2">
+                            <Textbox Name="Textbox40">
                               <CanGrow>true</CanGrow>
                               <KeepTogether>true</KeepTogether>
                               <Paragraphs>
                                 <Paragraph>
                                   <TextRuns>
                                     <TextRun>
-                                      <Value>Progress Report</Value>
+                                      <Value>Birthdate:</Value>
                                       <Style>
-                                        <FontSize>18pt</FontSize>
                                         <FontWeight>Bold</FontWeight>
                                       </Style>
                                     </TextRun>
                                   </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox40</rd:DefaultName>
+                              <Top>2.35639in</Top>
+                              <Left>3.40687in</Left>
+                              <Height>0.25in</Height>
+                              <Width>0.71875in</Width>
+                              <ZIndex>19</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox42">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!DateOfBirth.Value</Value>
+                                      <Style>
+                                        <Format>d</Format>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
                                   <Style>
-                                    <TextAlign>Center</TextAlign>
+                                    <TextAlign>Left</TextAlign>
                                   </Style>
                                 </Paragraph>
                               </Paragraphs>
-                              <rd:DefaultName>Textbox2</rd:DefaultName>
-                              <Top>0in</Top>
-                              <Left>2.53333in</Left>
-                              <Height>0.35417in</Height>
-                              <Width>2.46875in</Width>
-                              <ZIndex>8</ZIndex>
+                              <rd:DefaultName>Textbox42</rd:DefaultName>
+                              <Top>2.35639in</Top>
+                              <Left>4.18118in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1in</Width>
+                              <ZIndex>20</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox44">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Teacher:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox44</rd:DefaultName>
+                              <Top>2.06125in</Top>
+                              <Left>5.22283in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.29177in</Width>
+                              <ZIndex>21</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox45">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Annual Meeting:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox45</rd:DefaultName>
+                              <Top>2.35639in</Top>
+                              <Left>5.22283in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.29177in</Width>
+                              <ZIndex>22</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox46">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>Amendment Date:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox46</rd:DefaultName>
+                              <Top>2.64806in</Top>
+                              <Left>5.22283in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.29177in</Width>
+                              <ZIndex>23</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox47">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>School Year:</Value>
+                                      <Style>
+                                        <FontWeight>Bold</FontWeight>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style />
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox47</rd:DefaultName>
+                              <Top>2.93972in</Top>
+                              <Left>5.22283in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.29177in</Width>
+                              <ZIndex>24</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="TeacherName">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!TeacherName.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>TeacherName</rd:DefaultName>
+                              <Top>2.06125in</Top>
+                              <Left>6.57016in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.10335in</Width>
+                              <ZIndex>25</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox50">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(Fields!AnnualDate.Value is nothing, "", Fields!AnnualDate.Value)</Value>
+                                      <Style>
+                                        <Format>d</Format>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox50</rd:DefaultName>
+                              <Top>2.36681in</Top>
+                              <Left>6.57016in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.10335in</Width>
+                              <ZIndex>26</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox51">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=IIF(Fields!AmendmentDate.Value is nothing, "", Fields!AmendmentDate.Value)</Value>
+                                      <Style>
+                                        <Format>d</Format>
+                                      </Style>
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox51</rd:DefaultName>
+                              <Top>2.64806in</Top>
+                              <Left>6.57016in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.10335in</Width>
+                              <ZIndex>27</ZIndex>
+                              <Style>
+                                <Border>
+                                  <Style>None</Style>
+                                </Border>
+                                <PaddingLeft>2pt</PaddingLeft>
+                                <PaddingRight>2pt</PaddingRight>
+                                <PaddingTop>2pt</PaddingTop>
+                                <PaddingBottom>2pt</PaddingBottom>
+                              </Style>
+                            </Textbox>
+                            <Textbox Name="Textbox52">
+                              <CanGrow>true</CanGrow>
+                              <KeepTogether>true</KeepTogether>
+                              <Paragraphs>
+                                <Paragraph>
+                                  <TextRuns>
+                                    <TextRun>
+                                      <Value>=Fields!SchoolYear.Value</Value>
+                                      <Style />
+                                    </TextRun>
+                                  </TextRuns>
+                                  <Style>
+                                    <TextAlign>Left</TextAlign>
+                                  </Style>
+                                </Paragraph>
+                              </Paragraphs>
+                              <rd:DefaultName>Textbox52</rd:DefaultName>
+                              <Top>2.95014in</Top>
+                              <Left>6.57016in</Left>
+                              <Height>0.25in</Height>
+                              <Width>1.10335in</Width>
+                              <ZIndex>28</ZIndex>
                               <Style>
                                 <Border>
                                   <Style>None</Style>
@@ -2575,8 +3256,8 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
             <Left>0.13624in</Left>
-            <Height>7.34723in</Height>
-            <Width>7.54786in</Width>
+            <Height>8.71008in</Height>
+            <Width>7.86376in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -2584,10 +3265,10 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>7.51389in</Height>
+        <Height>8.79514in</Height>
         <Style />
       </Body>
-      <Width>7.75219in</Width>
+      <Width>8in</Width>
       <Page>
         <PageFooter>
           <Height>0.59376in</Height>
@@ -2683,8 +3364,8 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
         </PageFooter>
         <LeftMargin>0.25in</LeftMargin>
         <RightMargin>0.25in</RightMargin>
-        <TopMargin>0.5in</TopMargin>
-        <BottomMargin>0.5in</BottomMargin>
+        <TopMargin>0.25in</TopMargin>
+        <BottomMargin>0.25in</BottomMargin>
         <Style />
       </Page>
     </ReportSection>
@@ -2702,6 +3383,12 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
     </ReportParameter>
     <ReportParameter Name="pQuarter">
       <DataType>String</DataType>
+      <AllowBlank>true</AllowBlank>
+      <Prompt>ReportParameter1</Prompt>
+    </ReportParameter>
+    <ReportParameter Name="PrintedBy">
+      <DataType>String</DataType>
+      <Nullable>true</Nullable>
       <AllowBlank>true</AllowBlank>
       <Prompt>ReportParameter1</Prompt>
     </ReportParameter>
@@ -2725,6 +3412,11 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
           <ColumnIndex>2</ColumnIndex>
           <RowIndex>0</RowIndex>
           <ParameterName>pQuarter</ParameterName>
+        </CellDefinition>
+        <CellDefinition>
+          <ColumnIndex>3</ColumnIndex>
+          <RowIndex>0</RowIndex>
+          <ParameterName>PrintedBy</ParameterName>
         </CellDefinition>
       </CellDefinitions>
     </GridLayoutDefinition>

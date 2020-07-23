@@ -787,9 +787,10 @@ namespace GreenBushIEP.Models
         public string assignChildCount { get; set; }
         public string placementCodeDesc { get; set; }
         public string edStatusCodeDesc { get; set; }
-        public bool isDOC { get; set; }
+		public string schoolYear { get; set; }
+		public string teacherName { get; set; }
+		public bool isDOC { get; set; }
         public bool isArchive { get; set; }
-
         public bool printStudentInfo { get; set; }
         public bool printIEPDetails { get; set; }
         public bool printHealth { get; set; }
