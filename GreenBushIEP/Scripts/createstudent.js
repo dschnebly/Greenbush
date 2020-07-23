@@ -336,7 +336,6 @@ function initContacts() {
             });
         });
     });
-
 }
 
 function tabValidates() {

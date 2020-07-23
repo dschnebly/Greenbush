@@ -1,13 +1,5 @@
-﻿$(document).ready(function () {
-
-    // attach event
-    // fires when the document is loaded, adds the districts to the drop down.
-    $(".chosen-select").chosen({
-        disable_search_threshold: 10,
-        no_results_text: "Oops, nothing found!",
-        width: "100%"
-    });
-
+﻿$(document).ready(function ()
+{
     // attach event
     // fires when an avatar is uploaded
     $("#adminpersona").on('change', function (e) {
@@ -19,6 +11,8 @@
         };
     });
 
+    // attach event
+    // fires when the user sumbits the form
     $("#UserForm").on("submit", function (e) {
 
         e.preventDefault();
@@ -35,8 +29,9 @@
             return false;
         }
 
+        // if there are errors, don't allow them to submit.
         if ($("input.input-validation-error").length > 0) {
-
+            alert("errors");
             return false;
         }
 
@@ -67,6 +62,73 @@
         });
 
         return true;
+    });
+
+    // attach event
+    // fires when the user chooses a district
+    $(".chosen-select").chosen().change(function () {
+
+        // must have a district selected.
+        var item = $(this).val();
+        if (item.length <= 0)
+        {
+            $("#alertMessage .moreinfo").html("The user must be assigned to a district. Please choose a district.");
+            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                $("#alertMessage").slideUp(500);
+            });
+
+            $('#AttendanceBuildingId').find('option').remove().end();
+            $('#AttendanceBuildingId').multiselect('rebuild');
+            $("button[type='submit']").prop('disabled', true);
+        }
+        else
+        {
+            // add our buildings.
+
+            $(".ajax-loader").show();
+
+            var selectedDistricts = $(this).val() + "";
+            $.ajax({
+                type: "GET",
+                url: "/Manage/GetAllBuilingsByDistrictIds",
+                dataType: "json",
+                data: {
+                    districtIds: selectedDistricts,
+                },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
+
+                        // clear the select
+                        var responsibleBuildingElement = $('#AttendanceBuildingId');
+                        $('#AttendanceBuildingId').find('option').remove().end();
+
+                        // add the new options to the select
+                        var responsibleBuilding = responsibleBuildingElement.html();
+                        $.each(data.DistrictBuildings, function (key, value) {
+                            responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+                        });
+
+                        // trigger chosen select to update.
+                        responsibleBuildingElement.html(responsibleBuilding);
+                        $('#AttendanceBuildingId').multiselect('rebuild');
+
+                        // enable the submit button
+                        $("button[type='submit']").prop('disabled', false);
+                    } else {
+                        alert("Oops, something happened on the server side. Please contact our organization.");
+                    }
+                },
+                error: function (data) {
+                    alert("ERROR!!!");
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                }
+            });
+        }
     });
 });
 

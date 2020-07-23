@@ -112,7 +112,6 @@
         });
     });
 
-    //$(".chosen-choices").chosen().change(function () {
     $(".chosen-select").chosen().change(function () {
 
         // must have a district selected.
@@ -138,4 +137,3 @@
         return true;
     });
 });
-

@@ -186,7 +186,7 @@ namespace GreenBushIEP.Models
                 isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : studentHasAccommodations ? false : allModulesCompleted;
                 isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed || studentSocial.Completed : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
                 isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
-                isTransitionCompleted = transitions != null ? transitions.Any(o => o.Completed) : false;
+                isTransitionCompleted = transitions.Count > 0 ? transitions.Any(o => o.Completed) : false;
 
                 bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));
                 bool motorNeeds = (studentMotor != null && (studentMotor.NeedMetByAccommodation.HasValue && studentMotor.NeedMetByAccommodation.Value));
@@ -574,7 +574,7 @@ namespace GreenBushIEP.Models
         public bool isTransitionNeeded(int studentAge, bool isDoc)
         {
             List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
-            bool isReleaseBefore21 = transitions != null ? transitions.Any(t => t.isReleaseBefore21 == true) : false ;
+            bool isReleaseBefore21 = transitions.Count > 0 ? transitions.Any(t => t.isReleaseBefore21 == true) : false ;
             bool isTransitionNeeded = ((!isDoc && studentAge > 13) || (isDoc && isReleaseBefore21)) ? true : false ;
 
             return isTransitionNeeded;

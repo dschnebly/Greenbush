@@ -105,7 +105,22 @@ namespace GreenBushIEP.Controllers
                 db.tblUsers.Add(user);
                 db.SaveChanges();
 
-                // save the user to all the districts that was selected.
+                List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
+                List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
+                List<string> districts = new List<string>();
+                List<string> buildings = new List<string>();
+
+                if (collection["misDistrict"] != null)
+                {
+                    districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                }
+
+                if (collection["AttendanceBuildingId"] != null)
+                {
+                    buildings = new List<string>(collection["AttendanceBuildingId"].ToString().Split(','));
+                }
+
+                // save the user to all the districts that were selected.
                 foreach (string usd in collection["misDistrict"].ToString().Split(','))
                 {
                     tblOrganizationMapping org = new tblOrganizationMapping
@@ -131,6 +146,24 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                 }
 
+                // removes any buildings not in the current list of usd's.
+                List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD) && b.BuildingID != "0").ToList();
+
+                if (buildings != null)
+                {
+                    foreach (tblBuilding building in userBuildings)
+                    {
+                        buildingMappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = building.BuildingID,
+                            UserID = user.UserID,
+                            USD = building.USD,
+                            Create_Date = DateTime.Now,
+                        });
+                    }
+                }
+
+                db.tblBuildingMappings.AddRange(buildingMappings);
                 db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = user.UserID, Value = "Created User " + user.FirstName + " " + user.LastName });
                 db.SaveChanges();
 
@@ -245,6 +278,7 @@ namespace GreenBushIEP.Controllers
                                 model.submitDate = request.Create_Date.ToShortDateString();
                                 model.isComplete = request.Complete;
                             }
+
                             model.referralId = referral.ReferralID;
                             model.lastName = referral.LastName;
                             model.firstName = referral.FirstName;
@@ -1077,7 +1111,7 @@ namespace GreenBushIEP.Controllers
 
                     if (!string.IsNullOrEmpty(districtValues))
                     {
-                        string[] districtArray = districtValues.Split(','); ;
+                        string[] districtArray = districtValues.Split(',');
 
                         foreach (string usd in districtArray)
                         {
@@ -3667,6 +3701,27 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        public ActionResult GetAllBuilingsByDistrictIds(string districtIds)
+        {
+            try
+            {
+                string[] countrycode = null;
+                countrycode = districtIds.Split(',');
+
+                if (districtIds.Length > 0)
+                {
+                    List<vw_BuildingList> buildings = db.vw_BuildingList.Where(b => countrycode.Contains(b.USD)).ToList();
+                    return Json(new { Result = "success", DistrictBuildings = buildings }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { Result = "error", Message = "<strong>Error!</strong> An unknown error happened while trying to get buildings. Contact Greenbush admin." }, JsonRequestBehavior.AllowGet);
+        }
 
 
         [HttpGet]
@@ -4058,7 +4113,7 @@ namespace GreenBushIEP.Controllers
 
                             foreach (var teacher in myTeachers)
                             {
-                                var teacherId = 0;
+                                int teacherId = 0;
                                 Int32.TryParse(teacher, out teacherId);
 
                                 var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null, null)
