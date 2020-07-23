@@ -1293,7 +1293,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
-    <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc" />
+    <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
@@ -1301,7 +1303,7 @@
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
     <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
     <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\StudentInfo\rptStudentInfo.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

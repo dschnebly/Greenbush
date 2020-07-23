@@ -58,6 +58,17 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 
 			string teacherIds = "-1";
 
+			int? isGifted = null;
+
+			if (this.SelectGifted.Value == "2")
+			{
+				isGifted = 1;
+			}
+			else if (this.SelectGifted.Value == "1")
+			{
+				isGifted = 0;
+			}
+
 			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
 			{
 				teacherIds = user.UserID.ToString();
@@ -91,7 +102,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 
 			serviceIds = serviceIds.Trim().Trim(',');
 
-			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds, providerIds);
+			DataTable dt = GetData(districtFilter, serviceIds, buildingFilter, startDate, endDate, teacherIds, providerIds, isGifted);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 
 			ReportDataSource rds2 = null;
@@ -119,7 +130,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 		}
 
 		private DataTable GetData(string districtFilter, string serviceIds, string buildingID,
-			DateTime startDate, DateTime endDate, string teacherIds, string providerIds)
+			DateTime startDate, DateTime endDate, string teacherIds, string providerIds, int? isGifted)
 		{
 			DataSet ds = new DataSet();
 
@@ -138,6 +149,7 @@ namespace GreenBushIEP.Reports.ExceptionalityReport
 					cmd.Parameters.Add("@ServiceId", SqlDbType.VarChar, 8000).Value = serviceIds;
 					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
 					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;
+					cmd.Parameters.Add("@Gifted", SqlDbType.Int).Value = isGifted;
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
 					{
 						sda.Fill(ds);
