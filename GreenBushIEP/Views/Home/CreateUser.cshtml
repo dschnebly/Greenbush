@@ -120,14 +120,33 @@
                 </div>
             </div>
         </div>
+        <div class="form-group" id="userWorksAtTheseBuildings">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-building" title="User Building" aria-hidden="true"></i>
+                    </span>
+                    @*<select id="AttendanceBuildingId" name="AttendanceBuildingId" class="list-group form-control studentBuilding districtOnly chosen-select" data-validate="true" data-placeholder="Choose a building...">*@
+                    <select id="AttendanceBuildingId" Name="AttendanceBuildingId" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect">
+                        @if (Model.buildings != null)
+                        {
+                            foreach (var building in Model.buildings)
+                            {
+                                <option value="@building.BuildingID" data-icon="glyphicon-home" selected="selected">@building.BuildingName</option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
         <div class="form-group" style="padding: 0 20px 20px;">
-            <button type="submit" class="btn btn-info btn-lg" data_ftrans="slide reverse" style="width: 100%;">
+            <button type="submit" class="btn btn-info btn-lg" disabled="disabled" data_ftrans="slide reverse" style="width: 100%;">
                 <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Save</span>
             </button>
         </div>
     </div>
     <br />
-    <div class="ajax-loader" style="visibility: hidden;">
+    <div class="ajax-loader" style="visibility: hidden; width: 100%;">
         <img src="~/Content/Images/processing.gif" class="img-responsive" alt="loading content" />
     </div>
 }
@@ -136,6 +155,7 @@
 <var data-reload="true" data-src="/Scripts/AddUsers.js"></var>
 
 @section scripts {
+
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/AddUsers.js")
