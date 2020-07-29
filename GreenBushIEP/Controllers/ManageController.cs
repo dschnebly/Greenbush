@@ -40,7 +40,7 @@ namespace GreenBushIEP.Controllers
             var buildings = from b in db.tblBuildings
                             join bm in db.tblBuildingMappings on b.BuildingID equals bm.BuildingID
                             where bm.UserID == id & b.Active == 1
-                            select new { BuildingName = b.BuildingName, BuildingID = b.BuildingID, USD = b.USD };
+                            select new { b.BuildingName, b.BuildingID, b.USD };
 
             if (user != null)
             {
@@ -2937,7 +2937,7 @@ namespace GreenBushIEP.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("Edit", "Manage", new { id = id, message = e.Message.ToString() });
+                return RedirectToAction("Edit", "Manage", new { id, message = e.Message.ToString() });
             }
         }
 
@@ -3574,7 +3574,6 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult EditReevalSigned(int studentId)
         {
-            string url = Request.RawUrl;
             int id = Convert.ToInt32(Request.QueryString["userId"]);
             int dateId = Convert.ToInt32(Request.QueryString["ourDateId"]);
             string editDate = Request.QueryString["dateValue"].ToString();

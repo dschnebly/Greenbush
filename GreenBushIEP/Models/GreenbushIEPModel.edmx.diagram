@@ -121,6 +121,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormChildOutcomes_SupportingEvidence" Width="1.5" PointX="37.625" PointY="32" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblFormChildOutcomes_PersonsInvolved_FormChildOutcomeID" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblFormChildOutcomes_SupportingEvidence_FormsChildOutcomeID" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblContingencyPlan" Width="1.5" PointX="11.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

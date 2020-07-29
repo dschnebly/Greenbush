@@ -28,7 +28,7 @@ namespace GreenBushIEP.Controllers
 
                         HealthIEP.NoConcerns = collection["HealthNoConcerns"] == "on" ? true : false;
                         HealthIEP.Concerns = !HealthIEP.NoConcerns;
-                        HealthIEP.ProgressTowardGenEd = collection["HealthProgressTowardGenEd"] == "on" ? true : false;
+                        HealthIEP.ProgressTowardGenEd = (collection["HealthProgressTowardGenEd"] == "on");
                         HealthIEP.Diagnosis = collection["HealthDiagnosis"] == "on" ? true : false;
                         HealthIEP.HearingImpaired = (!string.IsNullOrEmpty(collection["HearingImpaired"])) ? true : false;
                         HealthIEP.HearingDate = Convert.ToDateTime(collection["HearingDate"]);
@@ -1622,10 +1622,10 @@ namespace GreenBushIEP.Controllers
                     transition.Planning_Occupation = (collection["occupationText"] != null) ? collection["occupationText"].ToString() : string.Empty;
                     transition.CareerPathID = (collection["CareerPathID"] != null && collection["CareerPathID"] != "") ? Convert.ToInt32(collection["CareerPathID"]) : 0;
                     transition.Planning_BenefitKRS_OtherAgencies = collection["otherAgencies"];
-                    transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" || collection["isReleaseBefore21"] == "True" ? true : false;
+                    transition.isReleaseBefore21 = collection["isReleaseBefore21"] == "1" || collection["isReleaseBefore21"] == "True";
                     transition.ModifiedBy = ModifiedBy;
 
-                    transition.Completed = (collection["isComplete"] != null) ? true : false;
+                    transition.Completed = (collection["isComplete"] != null);
                     db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "The Student Transition Study was added.", IsComplete = transition.Completed }, JsonRequestBehavior.AllowGet);

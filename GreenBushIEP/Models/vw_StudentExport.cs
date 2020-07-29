@@ -38,5 +38,6 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> IEPEndDate { get; set; }
         public bool isTestDistrict { get; set; }
         public bool isTestUser { get; set; }
+        public Nullable<bool> isValidKIDSID { get; set; }
     }
 }

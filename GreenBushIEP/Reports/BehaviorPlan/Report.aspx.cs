@@ -45,7 +45,7 @@ namespace GreenBushIEP.Reports.BehaviorPlan
 			MReportViewer.Reset();
 			var user = GreenBushIEP.Report.ReportMaster.GetUser(User.Identity.Name);
 
-			string teacherNames = "";
+			//string teacherNames = "";
 
 			string buildingName = this.buildingDD.Value == "-1" ? "All" : buildingDD.Items[buildingDD.SelectedIndex].Text;
 			string districtID = this.districtDD.Value;

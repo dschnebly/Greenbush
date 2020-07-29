@@ -37,5 +37,6 @@ namespace GreenBushIEP.Models
         public bool isGBMedicaid { get; set; }
         public bool isTestDistrict { get; set; }
         public bool isTestUser { get; set; }
+        public Nullable<bool> isValidKIDSID { get; set; }
     }
 }

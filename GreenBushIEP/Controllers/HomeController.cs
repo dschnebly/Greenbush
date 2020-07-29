@@ -1663,7 +1663,7 @@ namespace GreenbushIep.Controllers
 
                         item.LocationCode = service.LocationCode;
                         item.Minutes = service.Minutes;
-                        item.ProviderID = service.ProviderID.HasValue ? service.ProviderID.Value : -1;
+                        item.ProviderID = service.ProviderID ?? -1;
                         item.SchoolYear = service.SchoolYear;
                         item.ServiceCode = service.ServiceCode;
                         item.Frequency = service.Frequency;
@@ -2117,8 +2117,7 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentTransition(int studentId, int IEPid)
         {
             IEP theIEP = new IEP(studentId, IEPid);
-            tblIEP iep = theIEP.current; //db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
-
+            tblIEP iep = theIEP.current;
 
             bool isReadOnly = false;
             if (iep != null)
@@ -2172,6 +2171,22 @@ namespace GreenbushIep.Controllers
                 {
                     return PartialView("_ModuleStudentTransition", model);
                 }
+            }
+
+            return RedirectToAction("StudentProcedures", new { stid = studentId });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult StudentContingency(int studentId, int IEPid)
+        {
+            IEP theIEP = new IEP(studentId, IEPid);
+            tblIEP iep = theIEP.current;
+
+            if (iep != null)
+            {
+
+                    return PartialView("_ModuleStudentContingency");
             }
 
             return RedirectToAction("StudentProcedures", new { stid = studentId });
@@ -4732,7 +4747,7 @@ namespace GreenbushIep.Controllers
 				summaryPerf.student_Name = GetInputValue("student_Name", spans);
 
 				var exitYear = GetInputValue("GraduationExitYear", spans);
-				int exitYearVal = 0;
+                int exitYearVal = 0;
 				Int32.TryParse(exitYear, out exitYearVal);
 				if (exitYearVal > 0)
 					summaryPerf.GraduationExitYear = exitYearVal;
@@ -5652,9 +5667,8 @@ namespace GreenbushIep.Controllers
 				formChild.FirstName = GetInputValue("FirstName", spans);
 				formChild.MiddleName = GetInputValue("MiddleName", spans);
 				formChild.LastName = GetInputValue("LastName", spans);
-				long kidsId = 0;
-				var kidIdStr = GetInputValue("KIDSID", spans);
-				long.TryParse(kidIdStr, out kidsId);
+                var kidIdStr = GetInputValue("KIDSID", spans);
+                long.TryParse(kidIdStr, out long kidsId);
 				formChild.KIDSID = kidsId;
 
 				formChild.FamilyInfo_ReceivedInTeamMeeting = GetCheckboxSingleInputValue("FamilyInfo_ReceivedInTeamMeeting", checkboxes);				

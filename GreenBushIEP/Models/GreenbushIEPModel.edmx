@@ -305,6 +305,21 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="ModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="tblContingencyPlan">
+          <Key>
+            <PropertyRef Name="ContingencyPlanID" />
+          </Key>
+          <Property Name="ContingencyPlanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IEPid" Type="int" Nullable="false" />
+          <Property Name="NoContingencyPlan" Type="bit" Nullable="false" />
+          <Property Name="RemoteLearning_DistrictResponse" Type="bit" Nullable="false" />
+          <Property Name="RemoteLearning_ParentRequest" Type="bit" Nullable="false" />
+          <Property Name="NatureProposedPlan" Type="nvarchar(max)" />
+          <Property Name="Services" Type="nvarchar(max)" />
+          <Property Name="Accommodations" Type="nvarchar(max)" />
+          <Property Name="Goals" Type="nvarchar(max)" />
+          <Property Name="OtherConsiderations" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="tblCounties">
           <Key>
             <PropertyRef Name="CountyCode" />
@@ -2073,6 +2088,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
           <Property Name="isTestDistrict" Type="bit" Nullable="false" />
           <Property Name="isTestUser" Type="bit" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleAccommodationFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2139,7 +2155,6 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
             <PropertyRef Name="ServiceCode" />
             <PropertyRef Name="Sessions" />
             <PropertyRef Name="ServiceStartDate" />
-            <PropertyRef Name="ServiceEndDate" />
             <PropertyRef Name="RawSessions" />
             <PropertyRef Name="RawMinutes" />
             <PropertyRef Name="IepStatus" />
@@ -2149,6 +2164,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
             <PropertyRef Name="isGBMedicaid" />
             <PropertyRef Name="isTestDistrict" />
             <PropertyRef Name="isTestUser" />
+            <PropertyRef Name="ServiceEndDate" />
           </Key>
           <Property Name="AssignedUSD" Type="nvarchar" MaxLength="50" />
           <Property Name="KIDSID" Type="nvarchar" MaxLength="10" />
@@ -2173,6 +2189,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
           <Property Name="isGBMedicaid" Type="bit" Nullable="false" />
           <Property Name="isTestDistrict" Type="bit" Nullable="false" />
           <Property Name="isTestUser" Type="bit" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2215,6 +2232,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="IEPEndDate" Type="datetime" />
           <Property Name="isTestDistrict" Type="bit" Nullable="false" />
           <Property Name="isTestUser" Type="bit" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -2270,7 +2288,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_tblFormChildOutcomes_SupportingEvidence_FormsChildOutcomeID">
+        <Association Name="FK_tblFormChildOutcomes_SupportingEvidence_FormChildOutcomeID">
           <End Role="tblFormChildOutcomes" Type="Self.tblFormChildOutcomes" Multiplicity="1" />
           <End Role="tblFormChildOutcomes_SupportingEvidence" Type="Self.tblFormChildOutcomes_SupportingEvidence" Multiplicity="*" />
           <ReferentialConstraint>
@@ -2445,6 +2463,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="ProviderId" Type="varchar" Mode="In" />
+          <Parameter Name="Gifted" Type="int" Mode="In" />
         </Function>
         <Function Name="up_ReportStudentInfo" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -2511,6 +2530,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblCalendarTemplate" EntityType="Self.tblCalendarTemplate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCareerPaths" EntityType="Self.tblCareerPaths" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblContacts" EntityType="Self.tblContacts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblContingencyPlan" EntityType="Self.tblContingencyPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCounties" EntityType="Self.tblCounties" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDisabilities" EntityType="Self.tblDisabilities" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblDistricts" EntityType="Self.tblDistricts" Schema="dbo" store:Type="Tables" />
@@ -2616,7 +2636,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_GoalExport].[Service_Billable] AS [Service_Billable], 
     [vw_GoalExport].[isGBMedicaid] AS [isGBMedicaid], 
     [vw_GoalExport].[isTestDistrict] AS [isTestDistrict], 
-    [vw_GoalExport].[isTestUser] AS [isTestUser]
+    [vw_GoalExport].[isTestUser] AS [isTestUser], 
+    [vw_GoalExport].[isValidKIDSID] AS [isValidKIDSID]
     FROM [dbo].[vw_GoalExport] AS [vw_GoalExport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="Self.vw_ModuleAccommodationFlags" store:Type="Views" store:Schema="dbo">
@@ -2680,7 +2701,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_ServiceExport].[Export] AS [Export], 
     [vw_ServiceExport].[isGBMedicaid] AS [isGBMedicaid], 
     [vw_ServiceExport].[isTestDistrict] AS [isTestDistrict], 
-    [vw_ServiceExport].[isTestUser] AS [isTestUser]
+    [vw_ServiceExport].[isTestUser] AS [isTestUser], 
+    [vw_ServiceExport].[isValidKIDSID] AS [isValidKIDSID]
     FROM [dbo].[vw_ServiceExport] AS [vw_ServiceExport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_StudentExport" EntityType="Self.vw_StudentExport" store:Type="Views" store:Schema="dbo">
@@ -2708,7 +2730,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_StudentExport].[IEPStartDate] AS [IEPStartDate], 
     [vw_StudentExport].[IEPEndDate] AS [IEPEndDate], 
     [vw_StudentExport].[isTestDistrict] AS [isTestDistrict], 
-    [vw_StudentExport].[isTestUser] AS [isTestUser]
+    [vw_StudentExport].[isTestUser] AS [isTestUser], 
+    [vw_StudentExport].[isValidKIDSID] AS [isValidKIDSID]
     FROM [dbo].[vw_StudentExport] AS [vw_StudentExport]</DefiningQuery>
           </EntitySet>
           <EntitySet Name="vw_UserList" EntityType="Self.vw_UserList" store:Type="Views" store:Schema="dbo">
@@ -2736,7 +2759,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblFormChildOutcomes" EntitySet="tblFormChildOutcomes" />
             <End Role="tblFormChildOutcomes_PersonsInvolved" EntitySet="tblFormChildOutcomes_PersonsInvolved" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblFormChildOutcomes_SupportingEvidence_FormsChildOutcomeID" Association="Self.FK_tblFormChildOutcomes_SupportingEvidence_FormsChildOutcomeID">
+          <AssociationSet Name="FK_tblFormChildOutcomes_SupportingEvidence_FormChildOutcomeID" Association="Self.FK_tblFormChildOutcomes_SupportingEvidence_FormChildOutcomeID">
             <End Role="tblFormChildOutcomes" EntitySet="tblFormChildOutcomes" />
             <End Role="tblFormChildOutcomes_SupportingEvidence" EntitySet="tblFormChildOutcomes_SupportingEvidence" />
           </AssociationSet>
@@ -2963,6 +2986,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
+            <Parameter Name="Gifted" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportStudentsByBuilding" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportStudentsByBuilding_Result)">
             <Parameter Name="Usd" Mode="In" Type="String" />
@@ -3027,6 +3051,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblFormChildOutcome" EntitySet="tblFormChildOutcomes" />
             <End Role="tblFormChildOutcomes_SupportingEvidence" EntitySet="tblFormChildOutcomes_SupportingEvidence" />
           </AssociationSet>
+          <EntitySet Name="tblContingencyPlans" EntityType="IndividualizedEducationProgramModel.tblContingencyPlan" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -4889,6 +4914,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
           <Property Name="isTestUser" Type="Boolean" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="Boolean" />
         </EntityType>
         <EntityType Name="vw_ModuleAccommodationFlags">
           <Key>
@@ -4977,6 +5003,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="isGBMedicaid" Type="Boolean" Nullable="false" />
           <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
           <Property Name="isTestUser" Type="Boolean" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="Boolean" />
         </EntityType>
         <Association Name="FK_tblAccommodations_LocationCode">
           <End Type="IndividualizedEducationProgramModel.tblLocation" Role="tblLocation" Multiplicity="0..1" />
@@ -5314,6 +5341,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="IEPEndDate" Type="DateTime" Precision="3" />
           <Property Name="isTestDistrict" Type="Boolean" Nullable="false" />
           <Property Name="isTestUser" Type="Boolean" Nullable="false" />
+          <Property Name="isValidKIDSID" Type="Boolean" />
         </EntityType>
         <EntityType Name="vw_UserList">
           <Key>
@@ -5662,6 +5690,21 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="tblContingencyPlan">
+          <Key>
+            <PropertyRef Name="ContingencyPlanID" />
+          </Key>
+          <Property Name="ContingencyPlanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IEPid" Type="Int32" Nullable="false" />
+          <Property Name="NoContingencyPlan" Type="Boolean" Nullable="false" />
+          <Property Name="RemoteLearning_DistrictResponse" Type="Boolean" Nullable="false" />
+          <Property Name="RemoteLearning_ParentRequest" Type="Boolean" Nullable="false" />
+          <Property Name="NatureProposedPlan" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Services" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Accommodations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Goals" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OtherConsiderations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7569,6 +7612,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="vw_GoalExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_GoalExport">
               <MappingFragment StoreEntitySet="vw_GoalExport">
+                <ScalarProperty Name="isValidKIDSID" ColumnName="isValidKIDSID" />
                 <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
                 <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
@@ -7636,6 +7680,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="vw_ServiceExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ServiceExport">
               <MappingFragment StoreEntitySet="vw_ServiceExport">
+                <ScalarProperty Name="isValidKIDSID" ColumnName="isValidKIDSID" />
                 <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
                 <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="isGBMedicaid" ColumnName="isGBMedicaid" />
@@ -7938,6 +7983,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="vw_StudentExport">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_StudentExport">
               <MappingFragment StoreEntitySet="vw_StudentExport">
+                <ScalarProperty Name="isValidKIDSID" ColumnName="isValidKIDSID" />
                 <ScalarProperty Name="isTestUser" ColumnName="isTestUser" />
                 <ScalarProperty Name="isTestDistrict" ColumnName="isTestDistrict" />
                 <ScalarProperty Name="IEPEndDate" ColumnName="IEPEndDate" />
@@ -8289,6 +8335,22 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="Question" ColumnName="Question" />
                 <ScalarProperty Name="FormChildOutcomeID" ColumnName="FormChildOutcomeID" />
                 <ScalarProperty Name="SupportingEvidenceId" ColumnName="SupportingEvidenceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblContingencyPlans">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblContingencyPlan">
+              <MappingFragment StoreEntitySet="tblContingencyPlan">
+                <ScalarProperty Name="OtherConsiderations" ColumnName="OtherConsiderations" />
+                <ScalarProperty Name="Goals" ColumnName="Goals" />
+                <ScalarProperty Name="Accommodations" ColumnName="Accommodations" />
+                <ScalarProperty Name="Services" ColumnName="Services" />
+                <ScalarProperty Name="NatureProposedPlan" ColumnName="NatureProposedPlan" />
+                <ScalarProperty Name="RemoteLearning_ParentRequest" ColumnName="RemoteLearning_ParentRequest" />
+                <ScalarProperty Name="RemoteLearning_DistrictResponse" ColumnName="RemoteLearning_DistrictResponse" />
+                <ScalarProperty Name="NoContingencyPlan" ColumnName="NoContingencyPlan" />
+                <ScalarProperty Name="IEPid" ColumnName="IEPid" />
+                <ScalarProperty Name="ContingencyPlanID" ColumnName="ContingencyPlanID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
