@@ -3728,7 +3728,13 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-            tblGrade grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
+            tblGrade grade = db.tblGrades.Where(o => o.gradeID == studentIEP.current.Grade).FirstOrDefault();
+
+			if (grade == null)
+			{
+				//try current grade from profile
+				grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
+			}
 
             string gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
 
@@ -3737,7 +3743,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 8 - Grade")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: 8 - Grade")
                 });
             }
             else
@@ -3746,7 +3752,7 @@ namespace GreenbushIep.Controllers
             }
 
             //9 status code req
-            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.StatusCode);
+            sb.AppendFormat("\t{0}", string.IsNullOrEmpty(studentIEP.current.StatusCode) ? studentIEP.studentDetails.student.StatusCode : studentIEP.current.StatusCode);
 
             //10 exit date
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
@@ -3781,7 +3787,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: 19 - Placed By KDCF/JJA/LEA/Parent")
                 });
             }
             else
@@ -3795,7 +3801,7 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 20 County of Residence")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: 20 County of Residence")
                 });
             }
             else
@@ -3809,26 +3815,21 @@ namespace GreenbushIep.Controllers
                 errors.Add(new ExportErrorView()
                 {
                     UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: 21 Language of Parent")
+                    Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: 21 Language of Parent")
                 });
             }
             else
             {
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.parentLang);
             }
-
-            string serviceEndDateOverride = "";
-
-            //if exit data exists
-            if (studentIEP.studentDetails.student.ExitDate.HasValue)
-            {
-				serviceEndDateOverride = studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString();
-            }
-
+			
+			
             int count = 1;
             foreach (tblService service in studentIEP.studentServices.Distinct())
             {
-                if (count == 25)
+				string serviceEndDateOverride = "";
+
+				if (count == 25)
                 {
                     break;
                 }
@@ -3842,39 +3843,60 @@ namespace GreenbushIep.Controllers
                 {
                     //need to look up date from the iep this service is from
                     tblIEP serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
-
-
+					
                     if (serviceIEP.OriginalIEPid != null)
                     {
-                        //look up date of orginal iep
+                        //look up date of orginal iep -- these are amendments?
                         tblIEP originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
                         if (originalIEP != null && originalIEP.begin_date.HasValue)
                         {
-                            serviceIEPDate = originalIEP.begin_date.Value;
-                        }
-                    }
-                    else
+                            serviceIEPDate = originalIEP.begin_date.Value;						
+							
+						}					
+
+					}
+					else
                     {
                         if (serviceIEP.begin_date.HasValue)
                         {
                             serviceIEPDate = serviceIEP.begin_date.Value;
                         }
-                    }
+
+
+						//need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
+						//to be the last valid day before the begin date of the new iep
+						if (studentIEP.current.begin_date <= service.EndDate)
+						{
+							//we have a problem, we need need to end 1 day prior to the new annual beginning date, if it is a valid date
+							int endDayCount = 1;
+							while (endDayCount < 15)
+							{
+								var newEndDate = studentIEP.current.begin_date.Value.AddDays(-endDayCount);
+								var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == service.SchoolYear && c.calendarDate == newEndDate);
+								if (isValidEndDate)
+								{
+									serviceEndDateOverride = newEndDate.ToShortDateString();
+									break;
+								}
+								endDayCount++;
+							}
+						}
+					}
 
                     if (!serviceIEPDate.HasValue)
                     {
                         errors.Add(new ExportErrorView()
                         {
                             UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                            Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+                            Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: R1 IEP date")
                         });
                     }
                     else
                     {
                         sb.AppendFormat("\t{0}", serviceIEPDate.Value.ToShortDateString());
-                    }
+                    }					
 
-                }
+				}
                 else
                 {
                     if (studentIEP.current.OriginalIEPid != null)
@@ -3896,7 +3918,7 @@ namespace GreenbushIep.Controllers
                         errors.Add(new ExportErrorView()
                         {
                             UserID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
-                            Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentFirstName, studentIEP.studentLastName, "Missing required field: R1 IEP date")
+                            Description = string.Format("Student: {0}, {1} Error: {2}", studentIEP.studentLastName, studentIEP.studentFirstName, "Missing required field: R1 IEP date")
                         });
                     }
                     else
@@ -3905,8 +3927,9 @@ namespace GreenbushIep.Controllers
                     }
                 }
 
-                //2 gap allow
-                sb.AppendFormat("\t{0}", "");
+				
+				//2 gap allow
+				sb.AppendFormat("\t{0}", "");
 
                 //3 Responsible School req
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
@@ -3942,16 +3965,27 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", service.StartDate.ToShortDateString());
 
 				//14 Service end Date
-				if (string.IsNullOrEmpty(serviceEndDateOverride))
+				if (!studentIEP.studentDetails.student.ExitDate.HasValue && string.IsNullOrEmpty(serviceEndDateOverride))
 					sb.AppendFormat("\t{0}", service.EndDate.Value.ToShortDateString());
 				else
 				{
-
-					var studentExitDate = db.tblCalendars.Where(o => o.calendarDate == studentIEP.studentDetails.student.ExitDate.Value && o.BuildingID == service.BuildingID).FirstOrDefault();
-
-					if (studentExitDate != null && studentExitDate.SchoolYear == service.SchoolYear)
+					bool isOverwritten = false;
+					//check if exit date applies
+					if (studentIEP.studentDetails.student.ExitDate.HasValue)
 					{
-						//only use exit date if it is in the same school year
+						var studentExitDate = db.tblCalendars.Where(o => o.calendarDate == studentIEP.studentDetails.student.ExitDate.Value && o.BuildingID == service.BuildingID).FirstOrDefault();
+
+						if (studentExitDate != null && studentExitDate.SchoolYear == service.SchoolYear)
+						{
+							//only use exit date if it is in the same school year
+							sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString());
+							isOverwritten = true;
+						}						
+					}
+					
+					if (!string.IsNullOrEmpty(serviceEndDateOverride) && !isOverwritten)
+					{
+						//there is an override due to a previous IEP that was ended early
 						sb.AppendFormat("\t{0}", serviceEndDateOverride);
 					}
 					else

@@ -9,7 +9,7 @@
 <head runat="server">
     <title>Reports</title>
 	<meta name="viewport" content="width=device-width" />
-	<script src="/Scripts/jquery-3.4.1.js"></script>
+	<script src="/Scripts/jquery-3.5.1.js"></script>
 	<script src="/Scripts/jquery-ui.min.js"></script>
 	<link href="/Content/chosen.css" rel="stylesheet" />
 	<script  src="/Scripts/chosen.jquery.min.js"></script>

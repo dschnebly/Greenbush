@@ -1297,7 +1297,9 @@
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc" />
     <EmbeddedResource Include="Reports\ProceduralDates\rptProceduralDates.rdlc" />
-    <EmbeddedResource Include="Reports\Progress\rptProgressReport.rdlc" />
+    <EmbeddedResource Include="Reports\Progress\rptProgressReport.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
     <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
     <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc">
