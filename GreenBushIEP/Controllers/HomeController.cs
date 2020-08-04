@@ -2177,6 +2177,16 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("StudentProcedures", new { stid = studentId });
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult StudentContingency(int studentId, int IEPid)
+        {
+            ContingencyPlanModel model = new ContingencyPlanModel() { StudentId = studentId, IEPId = IEPid };
+            model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan();
+
+            return PartialView("_ModuleStudentContingency", model);
+        }
+
         [Authorize]
         public ActionResult BehaviorPlan(int studentId, int iepID)
         {
