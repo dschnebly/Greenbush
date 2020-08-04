@@ -1,7 +1,10 @@
 ﻿using GreenBushIEP.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace GreenBushIEP.Controllers
@@ -689,36 +692,36 @@ namespace GreenBushIEP.Controllers
 
             if (ModelState.IsValid)
             {
-				if (string.IsNullOrEmpty(model.Title))
-				{
-					if (model.AccomType == 1)
-					{
-						model.Title = "Accommodation ";
-					}
-					else if (model.AccomType == 2)
-					{
-						model.Title = "Modification ";
-					}
-					else if (model.AccomType == 3)
-					{
-						model.Title = "Supplemental Aids and Services ";
-					}
-					else if (model.AccomType == 4)
-					{
-						model.Title = "Support for School Personnel ";
-					}
-					else if (model.AccomType == 5)
-					{
-						model.Title = "Transportation ";
-					}
-				}
+                if (string.IsNullOrEmpty(model.Title))
+                {
+                    if (model.AccomType == 1)
+                    {
+                        model.Title = "Accommodation ";
+                    }
+                    else if (model.AccomType == 2)
+                    {
+                        model.Title = "Modification ";
+                    }
+                    else if (model.AccomType == 3)
+                    {
+                        model.Title = "Supplemental Aids and Services ";
+                    }
+                    else if (model.AccomType == 4)
+                    {
+                        model.Title = "Support for School Personnel ";
+                    }
+                    else if (model.AccomType == 5)
+                    {
+                        model.Title = "Transportation ";
+                    }
+                }
 
-				tblAccommodation accommodation = db.tblAccommodations.Where(a => a.AccommodationID == model.AccommodationID).FirstOrDefault();
+                tblAccommodation accommodation = db.tblAccommodations.Where(a => a.AccommodationID == model.AccommodationID).FirstOrDefault();
                 int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
                 if (accommodation != null)
                 {
-					accommodation.Title = model.Title;
+                    accommodation.Title = model.Title;
                     accommodation.AccomType = model.AccomType;
                     accommodation.Completed = model.Completed;
                     accommodation.Description = model.Description;
@@ -769,7 +772,7 @@ namespace GreenBushIEP.Controllers
                     tblAccommodation newAccomodation = new tblAccommodation
                     {
                         AccomType = model.AccomType,
-						Title= model.Title,
+                        Title = model.Title,
                         Completed = model.Completed,
                         Description = model.Description,
                         Duration = model.Duration,
@@ -1516,9 +1519,9 @@ namespace GreenBushIEP.Controllers
                         transitionService.ServiceType = collection[i++].ToString();
                         transitionService.ServiceDescription = collection[i++].ToString();
                         transitionService.Frequency = collection[i++].ToString();
-						transitionService.Location = collection[i++].ToString();
-						transitionService.Duration = collection[i++].ToString();
-						
+                        transitionService.Location = collection[i++].ToString();
+                        transitionService.Duration = collection[i++].ToString();
+
                         transitionService.ModifiedBy = ModifiedBy;
 
                         string startDateStr = collection[i++].ToString();
@@ -1637,6 +1640,81 @@ namespace GreenBushIEP.Controllers
             }
 
             return Json(new { Result = "failure", Message = "The Student Course of Study was not added." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult EditContingency(FormCollection collection)
+        {
+            int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
+
+            if (ValidateRequest)
+            {
+                Int32.TryParse(collection["studentId"], out int studentId);
+                Int32.TryParse(collection["iepId"], out int iepId);
+
+                try
+                {
+                    bool isAdding = false;
+                    Boolean.TryParse(collection["noRemote"], out bool NoContingencyPlan);
+                    Boolean.TryParse(collection["remoteDistrict"], out bool RemoteLearning_DistrictResponse);
+                    Boolean.TryParse(collection["remoteParent"], out bool RemoteLearning_ParentRequest);
+
+                    tblContingencyPlan plan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
+                    if(plan == null)
+                    {
+                        plan = new tblContingencyPlan();
+                        plan.IEPid = iepId;
+                        isAdding = true;
+                    }
+
+                    plan.NoContingencyPlan = NoContingencyPlan;
+                    plan.RemoteLearning_DistrictResponse = RemoteLearning_DistrictResponse;
+                    plan.RemoteLearning_ParentRequest = RemoteLearning_ParentRequest;
+
+                    if (plan.RemoteLearning_ParentRequest)
+                    {
+                        plan.Services = collection["remoteParentServices"].ToString();
+                        plan.Accommodations = collection["remoteParentAccomodations"].ToString();
+                        plan.Goals = collection["remoteParentGoals"].ToString();
+                        plan.OtherConsiderations = collection["remoteParentOther"].ToString();
+                    }
+                    else if (plan.RemoteLearning_DistrictResponse)
+                    {
+                        plan.Services = collection["remoteDistrictServices"].ToString();
+                        plan.Accommodations = collection["remoteDistrictAccommodations"].ToString();
+                        plan.Goals = collection["remoteDistrictGoals"].ToString();
+                        plan.OtherConsiderations = collection["remoteDistrictOther"].ToString();
+                    }
+                    else
+                    {
+                        plan.Services = string.Empty;
+                        plan.Accommodations = string.Empty;
+                        plan.Goals = string.Empty;
+                        plan.OtherConsiderations = string.Empty;
+                    }
+
+                    if (isAdding)
+                    {
+                        db.tblContingencyPlans.Add(plan);
+                        tblAuditLog log = new tblAuditLog() { IEPid = plan.IEPid, Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "ContingencyPlan", ModifiedBy = ModifiedBy, UserID = studentId, Value = "Continency Plan Created." };
+                    }
+                    else
+                    {
+                        tblAuditLog log = new tblAuditLog() { IEPid = plan.IEPid, Update_Date = DateTime.Now, TableName = "ContingencyPlan", ModifiedBy = ModifiedBy, UserID = studentId, Value = "Continency Plan Edited." };
+                    }
+
+                    db.SaveChanges();
+
+                    return RedirectToAction("StudentProcedures", "Home", new { stid = studentId, iepId = plan.IEPid });
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Unable to save changes to Student Contingency Plan: " + e.Message.ToString());
+                }
+            }
+
+            return Json(new { Result = "failure", Message = "The contingency plan was not saved." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]

@@ -550,7 +550,7 @@
                             <h5 style="font-size: 18px;font-weight:bold;"><i class="fa fa-university" aria-hidden="true"></i> Academic Performance</h5>
                             <label style="font-size: 16px; font-weight: normal;">Concerns</label>&nbsp;&nbsp;
                             <div class="truefalseswitch" style="display: inline-block; vertical-align: middle;">
-                                <input type="checkbox" name="AcademicModuleNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicModuleNoConcern ? "checked" : String.Empty  )>
+                                <input type="checkbox" name="AcademicModuleNoConcern" class="truefalseswitch-checkbox" id="truefalseSwitchAcademicConcerns" @(Model.studentPlan.AcademicModuleNoConcern ? "checked" : String.Empty )>
                                 <label class="truefalseswitch-label" for="truefalseSwitchAcademicConcerns">
                                     <span class="truefalseswitch-inner"></span>
                                     <span class="truefalseswitch-switch"></span>
@@ -655,11 +655,11 @@
         <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
     </div>
     <!-- End fullscreen IEP Module Section-->
-    <div class="ajax-loader hidden">
+    @*<div class="ajax-loader hidden">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
         <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
         <strong class="failure hidden"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
-    </div>
+    </div>*@
     <div class="needDates-loader hidden"></div>
 </div>
 

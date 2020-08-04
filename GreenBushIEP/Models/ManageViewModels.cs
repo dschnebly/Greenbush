@@ -606,6 +606,20 @@ namespace GreenBushIEP.Models
         public string Module { get; set; }
     }
 
+    public class ContingencyPlanModel
+    {
+        public ContingencyPlanModel()
+        {
+            IEPId = 0;
+            StudentId = 0;
+            Plan = new tblContingencyPlan(){ NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
+        }
+
+        public int StudentId { get; set; }
+        public int IEPId { get; set; }
+        public tblContingencyPlan Plan { get; set; }
+    }
+
     public class BehaviorViewModel
     {
         public BehaviorViewModel()

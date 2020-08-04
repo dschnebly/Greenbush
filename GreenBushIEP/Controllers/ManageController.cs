@@ -4112,8 +4112,7 @@ namespace GreenBushIEP.Controllers
 
                             foreach (var teacher in myTeachers)
                             {
-                                int teacherId = 0;
-                                Int32.TryParse(teacher, out teacherId);
+                                Int32.TryParse(teacher, out int teacherId);
 
                                 var students = db.uspUserList(teacherId, selectedDistrict, selectedBuilding, null, null)
                                 .Where(ul => myRoles.Contains(ul.RoleID))
