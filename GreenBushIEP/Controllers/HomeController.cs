@@ -2758,8 +2758,10 @@ namespace GreenbushIep.Controllers
                 theIEP.studentDetails.printServices = true;
                 theIEP.studentDetails.printNotice = true;
                 theIEP.studentDetails.printProgressReport = false;
+				theIEP.studentDetails.printContingencyPlan = true;
 
-                return View("PrintIEP", theIEP);
+
+				return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.
@@ -2882,8 +2884,9 @@ namespace GreenbushIep.Controllers
                 theIEP.studentDetails.printServices = true;
                 theIEP.studentDetails.printNotice = true;
                 theIEP.studentDetails.printProgressReport = false;
+				theIEP.studentDetails.printContingencyPlan = false;
 
-                return View("PrintIEP", theIEP);
+				return View("PrintIEP", theIEP);
             }
 
             // Unknow error happened.
@@ -2941,6 +2944,8 @@ namespace GreenbushIep.Controllers
                     }
                 }
 
+				
+
                 tblBehavior studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
                 theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
 
@@ -2959,6 +2964,7 @@ namespace GreenbushIep.Controllers
                 }
                 theIEP.studentTransition = stvw;
                 tblStudentInfo info = null;
+
                 if (student != null)
                 {
 
@@ -3029,6 +3035,7 @@ namespace GreenbushIep.Controllers
 					studentDetails.grade = GetGrade(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
 					studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";					
 					studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
+					studentDetails.contingencyPlan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
 
 					var schoolYear = db.tblCalendars.FirstOrDefault(o => o.calendarDate == DateTime.Today);
 					if (schoolYear != null)

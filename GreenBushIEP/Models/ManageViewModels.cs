@@ -771,10 +771,11 @@ namespace GreenBushIEP.Models
             history = new List<IEPHistoryViewModel>();
             accommodationList = new List<AccomodationPrintViewModel>();
 			serviceAttendanceBuildings = new List<vw_BuildingList>();
+			contingencyPlan = null;
+			printContingencyPlan = false;
+	}
 
-		}
-
-        public tblUser teacher { get; set; }
+		public tblUser teacher { get; set; }
         public tblStudentInfo student { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public List<tblArchiveEvaluationDate> reevalDates { get; set; }
@@ -794,7 +795,8 @@ namespace GreenBushIEP.Models
         public tblBuilding neighborhoodBuilding { get; set; }
         public tblBuilding teacherBuilding { get; set; }
         public int studentAgeAtIEP { get; set; }
-        public string inititationDate { get; set; }
+		public tblContingencyPlan contingencyPlan { get; set; }
+		public string inititationDate { get; set; }
 		public string annualInititationDate { get; set; }		
 		public string inititationDateNext { get; set; }
         public int studentAgeAtAnnualMeeting { get; set; }
@@ -821,7 +823,9 @@ namespace GreenBushIEP.Models
         public bool printServices { get; set; }
         public bool printNotice { get; set; }
         public bool printProgressReport { get; set; }
-    }
+
+		public bool printContingencyPlan { get; set; }
+	}
 
     public class StudentServiceObject
     {
