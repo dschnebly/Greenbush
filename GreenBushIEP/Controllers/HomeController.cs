@@ -207,7 +207,7 @@ namespace GreenbushIep.Controllers
                 foreach (Student student in students)
                 {
                     IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = (theIEP.current != null) ? theIEP.current.IEPid != 0 : false;
+                    student.hasIEP = (theIEP.current != null) && theIEP.current.IEPid != 0;
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                     {
@@ -816,7 +816,7 @@ namespace GreenbushIep.Controllers
             ViewBag.modifiedByFullName = string.Empty;
             ViewBag.studentName = student.FirstName + " " + student.LastName;
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
-            bool isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+            bool isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
 
             try
             {
@@ -1452,7 +1452,7 @@ namespace GreenbushIep.Controllers
         {
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == IEPid).FirstOrDefault();
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            bool isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+            bool isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
 
             if (iep != null)
             {
@@ -1465,8 +1465,8 @@ namespace GreenbushIep.Controllers
                 {
                     studentId = studentId,
                     iepId = iep.IEPid,
-                    isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false,
-                    canAddProgress = (teacher != null && teacher.RoleID == nurse) ? false : true
+                    isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse),
+                    canAddProgress = teacher == null || teacher.RoleID != nurse
                 };
 
                 List<vw_ModuleGoalFlags> GoalFlag = db.vw_ModuleGoalFlags.Where(vm => vm.IEPid == iep.IEPid).ToList();
@@ -1722,7 +1722,7 @@ namespace GreenbushIep.Controllers
 
             if (iep != null)
             {
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse);
 
                 StudentServiceViewModel model = new StudentServiceViewModel();
                 tblUser student = db.tblUsers.Where(s => s.UserID == studentId).FirstOrDefault();
@@ -2130,7 +2130,7 @@ namespace GreenbushIep.Controllers
                 string studentFirstName = string.Format("{0}", student.FirstName);
                 string studentLastName = string.Format("{0}", student.LastName);
 
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse);
 
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
                 tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
@@ -2149,7 +2149,7 @@ namespace GreenbushIep.Controllers
 
                 int studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDOC);
 
-                model.isRequired = (studentAge > 13 || (model.isDOC && studentAge <= 21)) ? true : false;
+                model.isRequired = studentAge > 13 || (model.isDOC && studentAge <= 21);
                 model.gender = info.Gender;
                 model.careers = db.tblCareerPaths.Where(o => o.Active == true).ToList();
 
@@ -2182,7 +2182,8 @@ namespace GreenbushIep.Controllers
         public ActionResult StudentContingency(int studentId, int IEPid)
         {
             ContingencyPlanModel model = new ContingencyPlanModel() { StudentId = studentId, IEPId = IEPid };
-            model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan();
+            tblContingencyPlan tempPlan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
+            model.plan = tempPlan;
 
             return PartialView("_ModuleStudentContingency", model);
         }
@@ -2198,7 +2199,7 @@ namespace GreenbushIep.Controllers
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
 
                 BehaviorViewModel model = GetBehaviorModel(studentId, iep.IEPid);
 
@@ -2228,7 +2229,7 @@ namespace GreenbushIep.Controllers
 
             if (iep != null)
             {
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
 
                 model.StudentId = studentId;
                 model.IEPid = iep.IEPid;
@@ -2297,7 +2298,7 @@ namespace GreenbushIep.Controllers
             {
                 tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse) ? true : false;
+                isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
 
                 model.IEPid = iep.IEPid;
                 IQueryable<tblOtherConsideration> oc = db.tblOtherConsiderations.Where(i => i.IEPid == iep.IEPid);
@@ -2447,7 +2448,7 @@ namespace GreenbushIep.Controllers
                 viewModel.StudentId = studentId;
                 viewModel.StudentName = string.Format("{0} {1}", !string.IsNullOrEmpty(student.FirstName) ? student.FirstName : "", !string.IsNullOrEmpty(student.LastName) ? student.LastName : "");
                 viewModel.Archives = db.tblFormArchives.Where(u => u.Student_UserID == studentId).OrderByDescending(o => o.ArchiveDate).ToList();
-                viewModel.CanDelete = user != null && user.RoleID == owner ? true : false;
+                viewModel.CanDelete = user != null && user.RoleID == owner;
 
                 ViewBag.ReturnToHome = home;
             }
@@ -3418,7 +3419,7 @@ namespace GreenbushIep.Controllers
         public ActionResult SpedProReport()
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-            bool canReset = (user != null && (user.RoleID == owner || user.RoleID == mis)) ? true : false;
+            bool canReset = (user != null && (user.RoleID == owner || user.RoleID == mis));
             ViewBag.canReset = canReset;
             return View("~/Reports/SpedPro/Index.cshtml");
         }
@@ -3432,7 +3433,7 @@ namespace GreenbushIep.Controllers
 
             if (MIS != null)
             {
-                bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+                bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis));
 
                 List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
 				if (!string.IsNullOrEmpty(districtId) && districtId != "-1")
@@ -3476,7 +3477,7 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult DownloadSpedPro(FormCollection collection)
         {
-            bool isReset = !string.IsNullOrEmpty(collection["cbReset"]) ? true : false;
+            bool isReset = !string.IsNullOrEmpty(collection["cbReset"]);
             string fiscalYearStr = collection["fiscalYear"];
             int.TryParse(fiscalYearStr, out int fiscalYear);
 
@@ -3488,7 +3489,7 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis)) ? true : false;
+                bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis));
                 ViewBag.canReset = canReset;
 
                 List<tblBuilding> buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList();
@@ -3582,7 +3583,7 @@ namespace GreenbushIep.Controllers
                     foreach (var item in query)
                     {
                         //this is either a new iep or a new annual iep, we will need to resend any services for the fy
-                        checkPrevious = item.iep.OriginalIEPid == null ? true : false;
+                        checkPrevious = item.iep.OriginalIEPid == null;
 
                         IEP theIEP = new IEP()
                         {
@@ -4242,12 +4243,12 @@ namespace GreenbushIep.Controllers
                     {
                         string errorMessage = "";
 
-                        if (ex is DbEntityValidationException)
+                        if (ex is DbEntityValidationException exception)
                         {
 
-                            if (((DbEntityValidationException)(ex)).EntityValidationErrors.Any())
+                            if (exception.EntityValidationErrors.Any())
                             {
-                                IEnumerable<DbEntityValidationResult> errors = ((DbEntityValidationException)(ex)).EntityValidationErrors;
+                                IEnumerable<DbEntityValidationResult> errors = exception.EntityValidationErrors;
                                 foreach (DbEntityValidationResult failure in errors)
                                 {
                                     foreach (DbValidationError error in failure.ValidationErrors)
