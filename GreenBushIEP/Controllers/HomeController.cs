@@ -3,6 +3,7 @@ using GreenBushIEP.Models;
 using HtmlAgilityPack;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using iTextSharp.text.pdf.qrcode;
 using iTextSharp.tool.xml;
 using System;
 using System.Collections.Generic;
@@ -2181,9 +2182,10 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult StudentContingency(int studentId, int IEPid)
         {
-            ContingencyPlanModel model = new ContingencyPlanModel() { StudentId = studentId, IEPId = IEPid };
-            tblContingencyPlan tempPlan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
-            model.plan = tempPlan;
+            ContingencyPlanModel model = new ContingencyPlanModel();
+            model.StudentId = studentId;
+            model.IEPId = IEPid;
+            model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
 
             return PartialView("_ModuleStudentContingency", model);
         }

@@ -25,7 +25,7 @@
                         <li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="@(Model.Plan.NoContingencyPlan)" name="noRemote" @(Model.Plan.NoContingencyPlan ? "checked='checked'" : string.Empty)>
+                                    <input type="checkbox" value="@(Model.Plan.NoContingencyPlan.ToString())" name="noRemote" @(Model.Plan.NoContingencyPlan ? "checked='checked'" : string.Empty)>
                                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                     No contingency plan is necessary at this time
                                 </label>
@@ -34,7 +34,7 @@
                         <li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_DistrictResponse)" name="remoteDistrict" data-target="#collapseRemoteDistrict" @(Model.Plan.RemoteLearning_DistrictResponse ? "checked='checked'" : string.Empty)>
+                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_DistrictResponse.ToString())" name="remoteDistrict" data-target="#collapseRemoteDistrict" @(Model.Plan.RemoteLearning_DistrictResponse ? "checked='checked'" : string.Empty)>
                                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                     Remote learning due to district response due to pandemic.
                                 </label>
@@ -43,7 +43,7 @@
                         <li>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_ParentRequest)" name="remoteParent" data-target="#collapseRemoteParent" @(Model.Plan.RemoteLearning_ParentRequest ? "checked='checked'" : string.Empty)>
+                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_ParentRequest.ToString())" name="remoteParent" data-target="#collapseRemoteParent" @(Model.Plan.RemoteLearning_ParentRequest ? "checked='checked'" : string.Empty)>
                                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                                     Remote learning due to parent request due to pandemic.
                                 </label>

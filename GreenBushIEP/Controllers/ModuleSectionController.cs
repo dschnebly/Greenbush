@@ -1656,6 +1656,7 @@ namespace GreenBushIEP.Controllers
                 try
                 {
                     bool isAdding = false;
+                    var whatever = collection["remoteDistrict"];
                     Boolean.TryParse(collection["noRemote"], out bool NoContingencyPlan);
                     Boolean.TryParse(collection["remoteDistrict"], out bool RemoteLearning_DistrictResponse);
                     Boolean.TryParse(collection["remoteParent"], out bool RemoteLearning_ParentRequest);
@@ -1663,8 +1664,7 @@ namespace GreenBushIEP.Controllers
                     tblContingencyPlan plan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
                     if(plan == null)
                     {
-                        plan = new tblContingencyPlan();
-                        plan.IEPid = iepId;
+                        plan = new tblContingencyPlan() { IEPid = iepId, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
                         isAdding = true;
                     }
 

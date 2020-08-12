@@ -608,12 +608,11 @@ namespace GreenBushIEP.Models
 
     public class ContingencyPlanModel
     {
-        internal tblContingencyPlan plan;
-
         public ContingencyPlanModel()
         {
             IEPId = 0;
             StudentId = 0;
+            Plan = new tblContingencyPlan() { NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
         }
 
         public int StudentId { get; set; }
