@@ -112,23 +112,6 @@
         });
     });
 
-    //$(".chosen-select").chosen().change(function () {
-
-    //    // must have a district selected.
-    //    var item = $(this).val();
-    //    if (item.length <= 0) {
-    //        $("#alertMessage .moreinfo").html("The user must be assigned to a district. Please choose a district.");
-    //        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-    //            $("#alertMessage").slideUp(500);
-    //        });
-
-    //        $("#submitForm").prop('disabled', true);
-    //    }
-    //    else
-    //    {
-    //        $("#submitForm").prop('disabled', false);
-    //    }
-    //});
 
     // attach event
     // fires when the user chooses a district
@@ -163,14 +146,24 @@
                 success: function (data) {
                     if (data.Result === "success") {
 
+                        // get the current selected building Ids
+                        var building = [];
+                        var $el = $("#buildingIds");
+                        $el.find('option:selected').each(function () {
+                            building.push({ value: $(this).val(), text: $(this).text() });
+                        });
+
                         // clear the select
                         var responsibleBuildingElement = $('#buildingIds');
-                        $('#buildingIds').find('option').not(':selected').remove().end();
+                        var listOfValues = $("#buildingIds option:selected").val();
+                        $("#buildingIds").find("option").remove().end();
 
                         // add the new options to the select
                         var responsibleBuilding = responsibleBuildingElement.html();
                         $.each(data.DistrictBuildings, function (key, value) {
-                            responsibleBuilding += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+                            var checked = building.find(b => b.value === value.BuildingID) !== undefined;
+                            var showChecked = checked ? "selected='selected'" : '';
+                            responsibleBuilding += "<option value='" + value.BuildingID + "' data-icon='glyphicon-home' " + showChecked + ">" + value.BuildingName + "</option>";
                         });
 
                         // trigger chosen select to update.
@@ -201,4 +194,6 @@
 
         return true;
     });
+
+    $(".chosen-select").trigger("chosen:updated").change();
 });
