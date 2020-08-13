@@ -112,6 +112,9 @@
         });
     });
 
+
+    // attach event
+    // fires when the user chooses a district
     $(".chosen-select").chosen().change(function () {
 
         // must have a district selected.
@@ -122,11 +125,66 @@
                 $("#alertMessage").slideUp(500);
             });
 
-            $("#submitForm").prop('disabled', true);
+            $('#AttendanceBuildingId').find('option').remove().end();
+            $('#AttendanceBuildingId').multiselect('rebuild');
+            $("button[type='submit']").prop('disabled', true);
         }
-        else
-        {
-            $("#submitForm").prop('disabled', false);
+        else {
+            // add our buildings.
+
+            $(".ajax-loader").show();
+
+            var selectedDistricts = $(this).val() + "";
+            $.ajax({
+                type: "GET",
+                url: "/Manage/GetAllBuilingsByDistrictIds",
+                dataType: "json",
+                data: {
+                    districtIds: selectedDistricts,
+                },
+                async: false,
+                success: function (data) {
+                    if (data.Result === "success") {
+
+                        // get the current selected building Ids
+                        var building = [];
+                        var $el = $("#buildingIds");
+                        $el.find('option:selected').each(function () {
+                            building.push({ value: $(this).val(), text: $(this).text() });
+                        });
+
+                        // clear the select
+                        var responsibleBuildingElement = $('#buildingIds');
+                        var listOfValues = $("#buildingIds option:selected").val();
+                        $("#buildingIds").find("option").remove().end();
+
+                        // add the new options to the select
+                        var responsibleBuilding = responsibleBuildingElement.html();
+                        $.each(data.DistrictBuildings, function (key, value) {
+                            var checked = building.find(b => b.value === value.BuildingID) !== undefined;
+                            var showChecked = checked ? "selected='selected'" : '';
+                            responsibleBuilding += "<option value='" + value.BuildingID + "' data-icon='glyphicon-home' " + showChecked + ">" + value.BuildingName + "</option>";
+                        });
+
+                        // trigger chosen select to update.
+                        responsibleBuildingElement.html(responsibleBuilding);
+                        $('#buildingIds').multiselect('rebuild');
+
+                        // enable the submit button
+                        $("button[type='submit']").prop('disabled', false);
+                    } else {
+                        alert("Oops, something happened on the server side. Please contact our organization.");
+                    }
+                },
+                error: function (data) {
+                    alert("ERROR!!!");
+
+                    console.log(data);
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                }
+            });
         }
     });
 
@@ -136,4 +194,6 @@
 
         return true;
     });
+
+    $(".chosen-select").trigger("chosen:updated").change();
 });
