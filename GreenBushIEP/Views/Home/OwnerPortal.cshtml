@@ -11,11 +11,16 @@
     @Styles.Render("~/Content/chosen.css")
 }
 
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+    @Scripts.Render("~/Scripts/owner.js")
+}
+
 <div class="container">
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide" alt="owner avatar">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL  )">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)">
         </a>
     </div>
     <h3>
@@ -148,10 +153,8 @@
             {
                 <div class="list-group list-group-root well">
 
-                    @for (int i = 0; i < Model.members.Count; i++)
+                    @foreach (var user in Model.members)
                     {
-                        var user = Model.members[i];
-
                         <div class="list-group-item" data-id="@(user.UserID)">
 
                             @switch (user.RoleID)
@@ -241,7 +244,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
@@ -338,9 +340,3 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- end modal -->
-@section scripts {
-    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
-    @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/owner.js?v1.2")
-    @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-}

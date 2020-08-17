@@ -140,7 +140,6 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList(),
 
-                    //model.members = db.vw_UserList.Where(ul => (ul.RoleID == teacher || ul.RoleID == student || ul.RoleID == nurse) && (myBuildings.Contains(ul.BuildingID) && myDistricts.Contains(ul.USD))).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, hasIEP = u.IsActive ?? false }).Distinct().OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList();
                     members = db.uspUserList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
