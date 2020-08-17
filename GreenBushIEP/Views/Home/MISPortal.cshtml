@@ -11,6 +11,11 @@
     @Styles.Render("~/Content/chosen.css")
 }
 
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+    @Scripts.Render("~/Scripts/misportal.js")
+}
+
 <div class="container">
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
@@ -154,10 +159,8 @@
             {
                 <div class="list-group list-group-root well">
 
-                    @for (int i = 0; i < Model.members.Count; i++)
+                    @foreach (var user in Model.members)
                     {
-                        var user = Model.members[i];
-
                         <div class="list-group-item" data-id="@(user.UserID)">
 
                             @switch (user.RoleID)
@@ -199,7 +202,7 @@
                                     break;
                                 case "6": //Nurse
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide" >
+                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
@@ -245,7 +248,7 @@
 
                 </div>
             }
-			 <div class="list-group list-group-root well inactive-list hidden"></div>
+            <div class="list-group list-group-root well inactive-list hidden"></div>
         </div>
     </div>
 </div>
@@ -346,11 +349,4 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
-
 <!-- end modal -->
-@section scripts {
-    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
-    @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/misportal.js?v1.4")
-    @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-}

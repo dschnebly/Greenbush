@@ -10,7 +10,8 @@ namespace GreenBushIEP
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js",
                         "~/Scripts/jquery-ui.min.js",
-                        "~/Scripts/jquery.fileupload.js"));
+                        "~/Scripts/jquery.fileupload.js",
+                        "~/Scripts/jquery.maskedinput.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.unobtrusive*",
@@ -24,12 +25,14 @@ namespace GreenBushIEP
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/chosen.jquery.min.js",
                       "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                      "~/Scripts/respond.js",
+                      "~/Scripts/bootstrap-mutliselect.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/fontawesome-all.min.css",
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/chosen.css"));
         }
     }
 }
