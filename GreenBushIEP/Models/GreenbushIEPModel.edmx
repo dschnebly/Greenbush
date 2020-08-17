@@ -843,11 +843,11 @@
           <Property Name="SubstantialChangeInPlacement" Type="bit" />
           <Property Name="OtherChanges" Type="bit" />
           <Property Name="LEARefusesToChangeIdentification" Type="bit" />
-          <Property Name="DescriptionOfAction" Type="nvarchar" MaxLength="2000" />
-          <Property Name="ExplaninationWhy" Type="nvarchar" MaxLength="2000" />
-          <Property Name="OptionsConsidered" Type="nvarchar" MaxLength="2000" />
-          <Property Name="DescriptionOfData" Type="nvarchar" MaxLength="2000" />
-          <Property Name="OtherFactors" Type="nvarchar" MaxLength="2000" />
+          <Property Name="DescriptionOfAction" Type="nvarchar(max)" />
+          <Property Name="ExplaninationWhy" Type="nvarchar(max)" />
+          <Property Name="OptionsConsidered" Type="nvarchar(max)" />
+          <Property Name="DescriptionOfData" Type="nvarchar(max)" />
+          <Property Name="OtherFactors" Type="nvarchar(max)" />
           <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
           <Property Name="DelieveredByHand" Type="bit" />
           <Property Name="DelieveredByMail" Type="bit" />
@@ -3709,11 +3709,11 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="SubstantialChangeInPlacement" Type="Boolean" />
           <Property Name="OtherChanges" Type="Boolean" />
           <Property Name="LEARefusesToChangeIdentification" Type="Boolean" />
-          <Property Name="DescriptionOfAction" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="ExplaninationWhy" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="OptionsConsidered" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="DescriptionOfData" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Name="OtherFactors" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionOfAction" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ExplaninationWhy" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OptionsConsidered" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionOfData" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OtherFactors" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelieveredByHand" Type="Boolean" />
           <Property Name="DelieveredByMail" Type="Boolean" />
