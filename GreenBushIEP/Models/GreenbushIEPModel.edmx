@@ -37,6 +37,25 @@
           <Property Name="Module" Type="nvarchar" MaxLength="50" />
           <Property Name="Title" Type="nvarchar" MaxLength="500" />
         </EntityType>
+        <EntityType Name="tblArchiveCalendar">
+          <Key>
+            <PropertyRef Name="archiveCalendarID" />
+          </Key>
+          <Property Name="archiveCalendarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Month" Type="int" Nullable="false" />
+          <Property Name="Day" Type="int" Nullable="false" />
+          <Property Name="NoService" Type="bit" Nullable="false" />
+          <Property Name="canHaveClass" Type="bit" Nullable="false" />
+          <Property Name="calendarDate" Type="date" StoreGeneratedPattern="Computed" />
+          <Property Name="SchoolYear" Type="smallint" StoreGeneratedPattern="Computed" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="tblArchiveEvaluationDate">
           <Key>
             <PropertyRef Name="archiveEvaluationDateID" />
@@ -2510,6 +2529,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
         <EntityContainer Name="IndividualizedEducationProgramModelStoreContainer">
           <EntitySet Name="tblAccommodationModules" EntityType="Self.tblAccommodationModules" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAccommodations" EntityType="Self.tblAccommodations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblArchiveCalendar" EntityType="Self.tblArchiveCalendar" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDate" EntityType="Self.tblArchiveEvaluationDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveEvaluationDateSigned" EntityType="Self.tblArchiveEvaluationDateSigned" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblArchiveIEPExit" EntityType="Self.tblArchiveIEPExit" Schema="dbo" store:Type="Tables" />
@@ -3052,6 +3072,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblFormChildOutcomes_SupportingEvidence" EntitySet="tblFormChildOutcomes_SupportingEvidence" />
           </AssociationSet>
           <EntitySet Name="tblContingencyPlans" EntityType="IndividualizedEducationProgramModel.tblContingencyPlan" />
+          <EntitySet Name="tblArchiveCalendars" EntityType="IndividualizedEducationProgramModel.tblArchiveCalendar" />
         </EntityContainer>
         <EntityType Name="tblAccommodation">
           <Key>
@@ -5705,6 +5726,25 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Goals" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OtherConsiderations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="tblArchiveCalendar">
+          <Key>
+            <PropertyRef Name="archiveCalendarID" />
+          </Key>
+          <Property Name="archiveCalendarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USD" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" Nullable="false" />
+          <Property Name="Month" Type="Int32" Nullable="false" />
+          <Property Name="Day" Type="Int32" Nullable="false" />
+          <Property Name="NoService" Type="Boolean" Nullable="false" />
+          <Property Name="canHaveClass" Type="Boolean" Nullable="false" />
+          <Property Name="calendarDate" Type="DateTime" annotation:StoreGeneratedPattern="Computed" Precision="0" />
+          <Property Name="SchoolYear" Type="Int16" Nullable="false" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8351,6 +8391,26 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="NoContingencyPlan" ColumnName="NoContingencyPlan" />
                 <ScalarProperty Name="IEPid" ColumnName="IEPid" />
                 <ScalarProperty Name="ContingencyPlanID" ColumnName="ContingencyPlanID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblArchiveCalendars">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveCalendar">
+              <MappingFragment StoreEntitySet="tblArchiveCalendar">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="SchoolYear" ColumnName="SchoolYear" />
+                <ScalarProperty Name="calendarDate" ColumnName="calendarDate" />
+                <ScalarProperty Name="canHaveClass" ColumnName="canHaveClass" />
+                <ScalarProperty Name="NoService" ColumnName="NoService" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="archiveCalendarID" ColumnName="archiveCalendarID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

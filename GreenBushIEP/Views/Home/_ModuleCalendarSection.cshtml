@@ -633,7 +633,8 @@
         <div id="calendarCopyModal" class="modal hidden" data-backdrop-limit="1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-modal-parent="#moduleSection" style="display: none !important;">
             <div class="modal-header">
                 <button type="button" class="close closeChildModal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Copy Calendar to:</h4>
+                
+                <h4 class="modal-title custom_align" id="Heading">Copy <span id="districtTitleText"></span> / <span id="buildingTitleText"></span> Calendar to: </h4>
             </div>
             <div class="modal-body">
                 <div class="col-md-12 district-selection">
@@ -685,13 +686,15 @@
 
 <script>
     var reports = []
+    
 
     var OnCalendarDayClick = function (events) {
         var usd = $('#selectedDistrict').val();
-        var bId = $('#selectedBuilding').val();
-
+        var bId = $('#selectedBuilding').val();      
+       
         if (usd == "" || bId == "") { alert("You must selected a District and a Building"); return; }
 
+       
         var selectedDay = $(this);
         var year = selectedDay.data("year");
         var month = selectedDay.data("month");
@@ -1523,6 +1526,17 @@
 
             if (usd == "" || bId == "") { alert("You must selected a District and a Building"); return; }
 
+             //show values to selected on dialog box
+            var usdText = $("ul").find("a[data-districtid='" + usd + "']").text();
+            var buildingText = $("ul").find("a[data-buildingid='" + bId + "']").text();
+
+            $('#districtTitleText').text(usdText);
+            $('#buildingTitleText').text(buildingText);
+
+            //set default drop-down
+            $('#copyModalSelectedDistrict').val(usd);
+            $('#copyModalSelectedDistrict').trigger("change");
+            
             var $m1 = $('#moduleSection');
             var $innermodal = $m1.find(".modal");     //get reference to nested modal
             $m1.after($innermodal);
