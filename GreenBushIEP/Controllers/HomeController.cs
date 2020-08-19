@@ -1918,7 +1918,6 @@ namespace GreenbushIep.Controllers
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
             int iepId = Convert.ToInt32(collection["iepId"]);
-            int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
             tblService service;
 
@@ -1932,11 +1931,10 @@ namespace GreenbushIep.Controllers
             string errorMessage = "There was a problem saving the service";
 
             DateTime temp;
+            int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
             tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
             if (iep != null)
             {
-                int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
-
                 if (StudentSerivceId == 0) // new service
                 {
                     service = new tblService
