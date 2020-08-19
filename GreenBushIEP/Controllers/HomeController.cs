@@ -88,7 +88,7 @@ namespace GreenbushIep.Controllers
                     user = OWNER,
                     districts = (from district in db.tblDistricts select district).Distinct().ToList(),
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
-
+                    //uspUserAssignedList
                     members = db.uspUserList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
@@ -1918,6 +1918,7 @@ namespace GreenbushIep.Controllers
             int studentId = Convert.ToInt32(collection["StudentId"]);
             bool isCompleted = Convert.ToBoolean(collection["completed"]);
             int iepId = Convert.ToInt32(collection["iepId"]);
+            int ModifiedBy = db.tblUsers.Where(u => u.Email == User.Identity.Name).SingleOrDefault().UserID;
 
             tblService service;
 

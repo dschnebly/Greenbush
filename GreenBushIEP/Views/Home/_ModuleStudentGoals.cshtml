@@ -136,7 +136,7 @@
     }
 </style>
 
-<link href="/Content/chosen.css" rel="stylesheet" />
+@*<link href="/Content/chosen.css" rel="stylesheet" />*@
 <div id="printModuleDiv">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span></button>
@@ -532,7 +532,6 @@
                 }
             </div>
         </div>
-
         <div class="completed-loader @(Model.studentGoals.Count != 0 && Model.studentGoals.All(sg => sg.goal.Completed) ? " completed-loader-visible" : "completed-loader-hidden" )">
             <div class="text-center completed-checkbox">
                 <div class="form-check">
@@ -542,17 +541,11 @@
                 </div>
             </div>
         </div>
-        <div class="ajax-loader" style="visibility: hidden;">
-            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-            <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
-            <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
-        </div>
     </div>
 </div>
 <!--end print-->
 
 <script>
-    debugger;
     var _newBenchmarks;
     var submitted = 0;
 
@@ -1054,7 +1047,6 @@
 
     }//end save goal
 
-
     initGoal();
     initObjective();
 
@@ -1114,5 +1106,4 @@
             });
         }
     })
-
 </script>

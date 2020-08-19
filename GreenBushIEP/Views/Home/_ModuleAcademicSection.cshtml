@@ -1,4 +1,4 @@
-﻿                                            @model GreenBushIEP.Models.ModuleAcademicViewModel
+﻿@model GreenBushIEP.Models.ModuleAcademicViewModel
 
 <style>
     @@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {
@@ -24,308 +24,302 @@
     }
 </style>
 <div id="printModuleDiv">
-<div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-  	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Academic');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
-	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-    <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-university" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Academic Performance</h4>
-    <div class="module-user-name">@(ViewBag.studentName)</div>
-</div>
-<div class="modal-body">
-    @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Academic.IEPAcademicID)
-        @Html.HiddenFor(model => model.Reading.IEPReadingID)
-        @Html.HiddenFor(model => model.Math.IEPMathID)
-        @Html.HiddenFor(model => model.Written.IEPWrittenID)
-        @Html.HiddenFor(model => model.Academic.Completed)
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Academic');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+        <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-university" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Academic Performance</h4>
+        <div class="module-user-name">@(ViewBag.studentName)</div>
+    </div>
+    <div class="modal-body">
+        @using (Html.BeginForm("EditAcademic", "ModuleSection", FormMethod.Post, new { }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.Academic.IEPAcademicID)
+            @Html.HiddenFor(model => model.Reading.IEPReadingID)
+            @Html.HiddenFor(model => model.Math.IEPMathID)
+            @Html.HiddenFor(model => model.Written.IEPWrittenID)
+            @Html.HiddenFor(model => model.Academic.Completed)
 
-        <div>
-            <ul class="nav nav-pills nav-stacked pull-left">
-                <li role="presentation" style="background-color: #eeeeee;"><a href="#reading" style="border-radius:0; @(Model.Reading.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="reading" role="tab" data-toggle="tab">Reading</a></li>
-                <li role="presentation" style="background-color: #eeeeee;"><a href="#math" style="border-radius:0; @(Model.Math.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="math" role="tab" data-toggle="tab">Math</a></li>
-                <li role="presentation" style="background-color: #eeeeee;"><a href="#written" style="border-radius:0; @(Model.Written.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="written" role="tab" data-toggle="tab">Written Language</a></li>
-                <li role="presentation" style="background-color: #eeeeee;" class="active"><a href="#academic" style="border-radius:0; @(Model.Academic.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="academic" role="tab" data-toggle="tab">Academic/Functional</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="col-md-10 tab-pane fade in active" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="academic">
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <input type="checkbox" name="ModuleAcademicNoConcern" id="ModuleAcademicNoConcern" @(Model.Academic.NoConcerns ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicNoConcern" class="standard-font-size">No concern</label>
+            <div>
+                <ul class="nav nav-pills nav-stacked pull-left">
+                    <li role="presentation" style="background-color: #eeeeee;"><a href="#reading" style="border-radius:0; @(Model.Reading.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="reading" role="tab" data-toggle="tab">Reading</a></li>
+                    <li role="presentation" style="background-color: #eeeeee;"><a href="#math" style="border-radius:0; @(Model.Math.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="math" role="tab" data-toggle="tab">Math</a></li>
+                    <li role="presentation" style="background-color: #eeeeee;"><a href="#written" style="border-radius:0; @(Model.Written.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="written" role="tab" data-toggle="tab">Written Language</a></li>
+                    <li role="presentation" style="background-color: #eeeeee;" class="active"><a href="#academic" style="border-radius:0; @(Model.Academic.NoConcerns ? "color:#bbbbbb;" : String.Empty)" aria-controls="academic" role="tab" data-toggle="tab">Academic/Functional</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="col-md-10 tab-pane fade in active" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="academic">
+                        <div class="funkyradio">
+                            <div class="funkyradio-success">
+                                <input type="checkbox" name="ModuleAcademicNoConcern" id="ModuleAcademicNoConcern" @(Model.Academic.NoConcerns ? "checked" : String.Empty) />
+                                <label for="ModuleAcademicNoConcern" class="standard-font-size">No concern</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.Academic.ProgressTowardGenEd ? "checked" : String.Empty) />
+                                <label for="ModuleAcademicProgressTowardGenEd" class="standard-font-size">Progressing with general education support</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.Academic.AreaOfNeed ? "checked" : String.Empty) />
+                                <label for="ModuleAcademicAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
+                            </div>
                         </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleAcademicProgressTowardGenEd" id="ModuleAcademicProgressTowardGenEd" @(Model.Academic.ProgressTowardGenEd ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicProgressTowardGenEd" class="standard-font-size">Progressing with general education support</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleAcademicAreaOfNeed" id="ModuleAcademicAreaOfNeed" @(Model.Academic.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleAcademicAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
-                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Strengths" name="ModuleAcademic_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Academic.PLAAFP_Strengths)</textarea>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Concerns" name="ModuleAcademic_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Academic.PLAAFP_Concerns)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.Academic.AreaOfNeedDescription)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+                            <div class="form-check">
+                                <div class="checkbox academicNeedsCheckbox">
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByGoal" @(Model.Academic.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByAccommodation" @(Model.Academic.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByOther" @(Model.Academic.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                                </div>
+                                <div class="form-check" id="AcademicMeetByOtherTextArea">
+                                    <br />
+                                    <p class="standard-font-size" style="display:@(Model.Academic.NeedMetByOther == true ? "block;" : "none;");">
+                                        *&nbsp;If other, please explain<br />
+                                        <textarea class="form-control standard-font-size" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Academic.NeedMetByOtherDescription)</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="row">
+                            <div class="col-md-12">
+                                @if (!String.IsNullOrEmpty(ViewBag.academicModifiedByFullName))
+                                {
+                                    <h6 class="pull-right modified">last updated on @(Model.Academic.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Academic.Update_Date.ToString("tt").ToLower()) by @(ViewData["academicModifiedByFullName"])</h6>
+                                }
+                            </div>
+                        </fieldset>
                     </div>
-                    <fieldset class="form-group">
-                        <div>
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Strengths" name="ModuleAcademic_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Academic.PLAAFP_Strengths)</textarea>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleAcademic_PLAAFP_Concerns" name="ModuleAcademic_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Academic.PLAAFP_Concerns)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleAcademicAreaOfNeedDescription" id="ModuleAcademicAreaOfNeedDescription" rows="3">@(Model.Academic.AreaOfNeedDescription)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
-                        <div class="form-check">
-                            <div class="checkbox academicNeedsCheckbox">
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByGoal" @(Model.Academic.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByAccommodation" @(Model.Academic.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleAcademicMetByOther" @(Model.Academic.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+                    <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="reading">
+                        <div class="funkyradio">
+                            <div class="funkyradio-success">
+                                <input type="checkbox" name="ModuleReadingNoConcern" id="ModuleReadingNoConcern" @(Model.Reading.NoConcerns ? "checked" : String.Empty ) />
+                                <label for="ModuleReadingNoConcern" class="standard-font-size">No concern</label>
                             </div>
-                            <div class="form-check" id="AcademicMeetByOtherTextArea">
-                                <br />
-                                <p class="standard-font-size" style="display:@(Model.Academic.NeedMetByOther == true ? "block;" : "none;");">
-                                    *&nbsp;If other, please explain<br />
-                                    <textarea class="form-control standard-font-size" name="ModuleAcademicMeetNeedByOtherDescription" id="ModuleAcademicMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Academic.NeedMetByOtherDescription)</textarea>
-                                </p>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.Reading.ProgressTowardGenEd ? "checked" : String.Empty) />
+                                <label for="ModuleReadingProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.Reading.AreaOfNeed ? "checked" : String.Empty) />
+                                <label for="ModuleReadingAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
                             </div>
                         </div>
-                    </fieldset>
-                    <fieldset class="row">
-                        <div class="col-md-12">
-                            @if (!String.IsNullOrEmpty(ViewBag.academicModifiedByFullName))
-                            {
-                                <h6 class="pull-right modified">last updated on @(Model.Academic.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Academic.Update_Date.ToString("tt").ToLower()) by @(ViewData["academicModifiedByFullName"])</h6>
-                            }
-                        </div>
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="reading">
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <input type="checkbox" name="ModuleReadingNoConcern" id="ModuleReadingNoConcern" @(Model.Reading.NoConcerns ? "checked" : String.Empty ) />
-                            <label for="ModuleReadingNoConcern" class="standard-font-size">No concern</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleReadingProgressTowardGenEd" id="ModuleReadingProgressTowardGenEd" @(Model.Reading.ProgressTowardGenEd ? "checked" : String.Empty) />
-                            <label for="ModuleReadingProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleReadingAreaOfNeed" id="ModuleReadingAreaOfNeed" @(Model.Reading.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleReadingAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
-                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Strengths" name="ModuleReading_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Reading.PLAAFP_Strengths)</textarea>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Concerns" name="ModuleReading_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Reading.PLAAFP_Concerns)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.Reading.AreaOfNeedDescription)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
+                            <div class="form-check">
+                                <div class="checkbox readingNeedsCheckbox">
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByGoal" @(Model.Reading.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByAccommodation" @(Model.Reading.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByOther" @(Model.Reading.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
+                                </div>
+                                <div class="form-check" id="ReadingMeetByOtherTextArea">
+                                    <br />
+                                    <p class="standard-font-size" style="display:@(Model.Reading.NeedMetByOther == true ? "block;" : "none;");">
+                                        *&nbsp;If other, please explain<br />
+                                        <textarea class="form-control standard-font-size" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Reading.NeedMetByOtherDescription)</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="row">
+                            <div class="col-md-12">
+                                @if (!String.IsNullOrEmpty(ViewBag.readingModifiedByFullName))
+                                {
+                                    <h6 class="pull-right modified">last updated on @(Model.Reading.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Reading.Update_Date.ToString("tt").ToLower()) by @(ViewData["readingModifiedByFullName"])</h6>
+                                }
+                            </div>
+                        </fieldset>
                     </div>
-                    <fieldset class="form-group">
-                        <div>
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Strengths" name="ModuleReading_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Reading.PLAAFP_Strengths)</textarea>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleReading_PLAAFP_Concerns" name="ModuleReading_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Reading.PLAAFP_Concerns)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.Reading.AreaOfNeedDescription)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
-                        <div class="form-check">
-                            <div class="checkbox readingNeedsCheckbox">
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByGoal" @(Model.Reading.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByAccommodation" @(Model.Reading.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleReadingMetByOther" @(Model.Reading.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
-                            </div>
-                            <div class="form-check" id="ReadingMeetByOtherTextArea">
-                                <br />
-                                <p class="standard-font-size" style="display:@(Model.Reading.NeedMetByOther == true ? "block;" : "none;");">
-                                    *&nbsp;If other, please explain<br />
-                                    <textarea class="form-control standard-font-size" name="ModuleReadingMeetNeedByOtherDescription" id="ModuleReadingMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Reading.NeedMetByOtherDescription)</textarea>
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="row">
-                        <div class="col-md-12">
-                            @if (!String.IsNullOrEmpty(ViewBag.readingModifiedByFullName))
-                            {
-                                <h6 class="pull-right modified">last updated on @(Model.Reading.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Reading.Update_Date.ToString("tt").ToLower()) by @(ViewData["readingModifiedByFullName"])</h6>
-                            }
-                        </div>
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="math">
+                    <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="math">
 
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <input type="checkbox" name="ModuleMathNoConcern" id="ModuleMathNoConcern" @(Model.Math.NoConcerns ? "checked" : String.Empty) />
-                            <label for="ModuleMathNoConcern" class="standard-font-size">No concern</label>
+                        <div class="funkyradio">
+                            <div class="funkyradio-success">
+                                <input type="checkbox" name="ModuleMathNoConcern" id="ModuleMathNoConcern" @(Model.Math.NoConcerns ? "checked" : String.Empty) />
+                                <label for="ModuleMathNoConcern" class="standard-font-size">No concern</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.Math.ProgressTowardGenEd ? "checked" : String.Empty) />
+                                <label for="ModuleMathProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.Math.AreaOfNeed ? "checked" : String.Empty) />
+                                <label for="ModuleMathAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
+                            </div>
                         </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleMathProgressTowardGenEd" id="ModuleMathProgressTowardGenEd" @(Model.Math.ProgressTowardGenEd ? "checked" : String.Empty) />
-                            <label for="ModuleMathProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleMathAreaOfNeed" id="ModuleMathAreaOfNeed" @(Model.Math.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleMathAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
-                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Strengths" name="ModuleMath_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Math.PLAAFP_Strengths)</textarea>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Concerns" name="ModuleMath_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Math.PLAAFP_Concerns)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3">@(Model.Math.AreaOfNeedDescription)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
+                            <div class="form-check">
+                                <div class="checkbox mathNeedsCheckbox">
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByGoal" @(Model.Math.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByAccommodation" @(Model.Math.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByOther" @(Model.Math.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
+                                </div>
+                                <div class="form-check" id="MathMeetByOtherTextArea">
+                                    <br />
+                                    <p class="standard-font-size" style="display:@(Model.Math.NeedMetByOther == true ? "block;" : "none;");">
+                                        *&nbsp;If other, please explain<br />
+                                        <textarea class="form-control standard-font-size" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Math.NeedMetByOtherDescription)</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="row">
+                            <div class="col-md-12">
+                                @if (!String.IsNullOrEmpty(ViewBag.mathModifiedByFullName))
+                                {
+                                    <h6 class="pull-right modified">last updated on @(Model.Math.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Math.Update_Date.ToString("tt").ToLower()) by @(ViewData["mathModifiedByFullName"])</h6>
+                                }
+                            </div>
+                        </fieldset>
                     </div>
-                    <fieldset class="form-group">
-                        <div>
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Strengths" name="ModuleMath_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Math.PLAAFP_Strengths)</textarea>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleMath_PLAAFP_Concerns" name="ModuleMath_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Math.PLAAFP_Concerns)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleMathAreaOfNeedDescription" id="ModuleMathAreaOfNeedDescription" rows="3">@(Model.Math.AreaOfNeedDescription)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
-                        <div class="form-check">
-                            <div class="checkbox mathNeedsCheckbox">
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByGoal" @(Model.Math.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByAccommodation" @(Model.Math.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleMathMetByOther" @(Model.Math.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
+                    <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="written">
+                        <div class="funkyradio">
+                            <div class="funkyradio-success">
+                                <input type="checkbox" name="ModuleWrittenNoConcern" id="ModuleWrittenNoConcern" @(Model.Written.NoConcerns ? "checked" : String.Empty) />
+                                <label for="ModuleWrittenNoConcern" class="standard-font-size">No concern</label>
                             </div>
-                            <div class="form-check" id="MathMeetByOtherTextArea">
-                                <br />
-                                <p class="standard-font-size" style="display:@(Model.Math.NeedMetByOther == true ? "block;" : "none;");">
-                                    *&nbsp;If other, please explain<br />
-                                    <textarea class="form-control standard-font-size" name="ModuleMathMeetNeedByOtherDescription" id="ModuleMathMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Math.NeedMetByOtherDescription)</textarea>
-                                </p>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.Written.ProgressTowardGenEd ? "checked" : String.Empty) />
+                                <label for="ModuleWrittenProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
+                            </div>
+                            <div class="funkyradio-primary">
+                                <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.Written.AreaOfNeed ? "checked" : String.Empty) />
+                                <label for="ModuleWrittenAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
                             </div>
                         </div>
-                    </fieldset>
-                    <fieldset class="row">
-                        <div class="col-md-12">
-                            @if (!String.IsNullOrEmpty(ViewBag.mathModifiedByFullName))
-                            {
-                                <h6 class="pull-right modified">last updated on @(Model.Math.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Math.Update_Date.ToString("tt").ToLower()) by @(ViewData["mathModifiedByFullName"])</h6>
-                            }
-                        </div>
-                    </fieldset>
-                </div>
-                <div role="tabpanel" class="col-md-10 tab-pane fade" style="border: 1px #337ab7 solid; padding: 25px 50px;" id="written">
-                    <div class="funkyradio">
-                        <div class="funkyradio-success">
-                            <input type="checkbox" name="ModuleWrittenNoConcern" id="ModuleWrittenNoConcern" @(Model.Written.NoConcerns ? "checked" : String.Empty) />
-                            <label for="ModuleWrittenNoConcern" class="standard-font-size">No concern</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleWrittenProgressTowardGenEd" id="ModuleWrittenProgressTowardGenEd" @(Model.Written.ProgressTowardGenEd ? "checked" : String.Empty) />
-                            <label for="ModuleWrittenProgressTowardGenEd" class="standard-font-size">Progressing towards standards with general education supports in place</label>
-                        </div>
-                        <div class="funkyradio-primary">
-                            <input type="checkbox" name="ModuleWrittenAreaOfNeed" id="ModuleWrittenAreaOfNeed" @(Model.Written.AreaOfNeed ? "checked" : String.Empty) />
-                            <label for="ModuleWrittenAreaOfNeed" class="standard-font-size">Area of need which impacts performance in general education</label>
-                        </div>
+                        <fieldset class="form-group">
+                            <div>
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Strengths" name="ModuleWritten_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Written.PLAAFP_Strengths)</textarea>
+                            </div>
+                            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Concerns" name="ModuleWritten_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Written.PLAAFP_Concerns)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+                            <div class="form-check">
+                                <textarea class="form-control standard-font-size" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3" Dstyle="font-size: 18px;">@(Model.Written.AreaOfNeedDescription)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
+                            <div class="form-check">
+                                <div class="checkbox writtenNeedsCheckbox">
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByGoal" @(Model.Written.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByAccommodation" @(Model.Written.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
+                                    <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByOther" @(Model.Written.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
+                                </div>
+                                <div class="form-check" id="WrittenMeetByOtherTextArea">
+                                    <br />
+                                    <p class="standard-font-size" style="display:@(Model.Written.NeedMetByOther == true ? "block;" : "none;");">
+                                        *&nbsp;If other, please explain<br />
+                                        <textarea class="form-control standard-font-size" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Written.NeedMetByOtherDescription)</textarea>
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <fieldset class="row">
+                            <div class="col-md-12">
+                                @if (!String.IsNullOrEmpty(ViewBag.writtenModifiedByFullName))
+                                {
+                                    <h6 class="pull-right modified">last updated on @(Model.Written.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Written.Update_Date.ToString("tt").ToLower()) by @(ViewData["writtenModifiedByFullName"])</h6>
+                                }
+                            </div>
+                        </fieldset>
                     </div>
-                    <fieldset class="form-group">
-                        <div>
-                            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Strengths" name="ModuleWritten_PLAAFP_Strengths" rows="3" placeholder="Describe Strengths">@(Model.Written.PLAAFP_Strengths)</textarea>
-                        </div>
-                        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" id="ModuleWritten_PLAAFP_Concerns" name="ModuleWritten_PLAAFP_Concerns" rows="3" placeholder="Describe Concerns (including Baseline)">@(Model.Written.PLAAFP_Concerns)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-                        <div class="form-check">
-                            <textarea class="form-control standard-font-size" name="ModuleWrittenAreaOfNeedDescription" id="ModuleWrittenAreaOfNeedDescription" rows="3" Dstyle="font-size: 18px;">@(Model.Written.AreaOfNeedDescription)</textarea>
-                        </div>
-                    </fieldset>
-                    <fieldset class="form-group">
-                        <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
-                        <div class="form-check">
-                            <div class="checkbox writtenNeedsCheckbox">
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByGoal" @(Model.Written.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByAccommodation" @(Model.Written.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), modification(s), and/or supplemental aid</label><br />
-                                <label class="standard-font-size"><input type="checkbox" name="ModuleWrittenMetByOther" @(Model.Written.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label>*<br />
-                            </div>
-                            <div class="form-check" id="WrittenMeetByOtherTextArea">
-                                <br />
-                                <p class="standard-font-size" style="display:@(Model.Written.NeedMetByOther == true ? "block;" : "none;");">
-                                    *&nbsp;If other, please explain<br />
-                                    <textarea class="form-control standard-font-size" name="ModuleWrittenMeetNeedByOtherDescription" id="ModuleWrittenMeetNeedByOtherDescription" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.Written.NeedMetByOtherDescription)</textarea>
-                                </p>
-                            </div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="row">
-                        <div class="col-md-12">
-                            @if (!String.IsNullOrEmpty(ViewBag.writtenModifiedByFullName))
-                            {
-                                <h6 class="pull-right modified">last updated on @(Model.Written.Update_Date.ToString("MM/dd/yyyy a\\t h:mm ") + Model.Written.Update_Date.ToString("tt").ToLower()) by @(ViewData["writtenModifiedByFullName"])</h6>
-                            }
-                        </div>
-                    </fieldset>
                 </div>
             </div>
-        </div>
-        <br/>
-        <div class="row">
-            <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
-                <div class="form-group">
-                    <button type="button" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveAcademicCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+            <br />
+            <div class="row">
+                <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
+                    <div class="form-group">
+                        <button type="button" class="formbtn btn btn-primary btn-lg" id="SaveForm"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                        <button type="button" class="formbtn btn btn-success btn-lg" id="saveAcademicCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    }
+        }
 
-    <div class="completed-loader @(Model.Academic.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
-        <div class="text-center completed-checkbox">
-            <div class="form-check">
-                <div class="checkbox">
-                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+        <div class="completed-loader @(Model.Academic.Completed ? "completed-loader-visible" : "completed-loader-hidden" )">
+            <div class="text-center completed-checkbox">
+                <div class="form-check">
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="ajax-loader" style="visibility: hidden;">
-        <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-        <strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
-        <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>
-    </div>
-</div>
-
 </div> <!--end print-->
 <br />
 <br />
 
 <script>
-	debugger;
+    debugger;
     //**************************/
     //  Academic Attached Events
     /***************************/
@@ -542,7 +536,7 @@
     $("#SaveForm").on("click", function (e) {
         $('.ajax-loader').css("visibility", "visible");
         $(".ajax-loader img").css("visibility", "visible");
-        
+
         var stid = getUrlParameter('stid');
 
         var form = $(this).closest("form");
@@ -559,16 +553,15 @@
                         $('.ajax-loader').css("visibility", "hidden");
                     });
 
-					$(window).trigger("saving.bs.modal");
+                    $(window).trigger("saving.bs.modal");
 
-                    if (data.Completed)
-                    {
-						//$("#AcademicWidget .hero-widget").addClass("module-completed");					
-                        //$('#moduleSection').modal('hide'); 	
+                    if (data.Completed) {
+                        //$("#AcademicWidget .hero-widget").addClass("module-completed");
+                        //$('#moduleSection').modal('hide');
 
                         location.reload();
                     }
-                    
+
                 } else {
                     $(".ajax-loader img").css("visibility", "hidden");
                     $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
