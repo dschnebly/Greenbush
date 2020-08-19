@@ -595,6 +595,9 @@ namespace GreenbushIep.Controllers
                     querySaveStuff.ExecuteNonQuery();
                 }
 
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar", UserID = null, Update_Date = DateTime.Now, Value = "CopyCalendar - INSERT" });
+                db.SaveChanges();
+
                 string saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([USD], [BuildingID], [SchoolYear]) SELECT DISTINCT @USD, @BuildingID, SchoolYear FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
                 using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
                 {
@@ -604,6 +607,9 @@ namespace GreenbushIep.Controllers
                     querySaveMoreStuff.Parameters.AddWithValue("@BuildingID", bId);
                     querySaveMoreStuff.ExecuteNonQuery();
                 }
+
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = "CopyCalendar - INSERT" });
+                db.SaveChanges();
             }
         }
 
@@ -656,8 +662,32 @@ namespace GreenbushIep.Controllers
                         if (calendarExists == 0)
                         {
                             //if calendar does not exist, first create calendar from template, the update
-                            CopyCalendar(districtUSD, selectedBuilding, MIS);
+                            CopyCalendar(districtUSD, selectedBuilding, MIS);                           
                         }
+
+                        //archive
+                        var archiveCalendars = db.tblCalendars.Where(o => o.BuildingID == selectedBuilding && o.USD == districtUSD);
+                        foreach (var ac in archiveCalendars)
+                        {
+                            db.tblArchiveCalendars.Add(new tblArchiveCalendar()
+                            {
+                                USD = ac.USD,
+                                BuildingID = ac.BuildingID,
+                                Year = ac.Year,
+                                Month = ac.Month,
+                                Day = ac.Day,
+                                NoService = ac.NoService,
+                                canHaveClass = ac.canHaveClass,
+                                calendarDate = ac.calendarDate,
+                                SchoolYear = ac.SchoolYear,
+                                Create_Date= ac.Create_Date,
+                                Update_Date = ac.Update_Date,
+                                CreatedBy = ac.CreatedBy,
+                                ModifiedBy = ac.ModifiedBy
+                            });
+                        }
+
+                        db.SaveChanges();
 
                         using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
                         {
@@ -709,9 +739,16 @@ namespace GreenbushIep.Controllers
                                 querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
                                 querySaveMoreStuff.ExecuteNonQuery();
                             }
+
+                            
                         }
                     }
                 }
+
+                string info = string.Format("CopyOverToCalendars District: {0} Building: {1}", district, building);
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = info });
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar", UserID = null, Update_Date = DateTime.Now, Value = info });
+                db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);
             }

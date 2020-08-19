@@ -295,6 +295,9 @@
     <Compile Include="Models\tblAccommodationModule.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblArchiveCalendar.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblArchiveEvaluationDate.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

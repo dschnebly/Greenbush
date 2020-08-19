@@ -133,6 +133,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormChildOutcomes_PersonsInvolved> tblFormChildOutcomes_PersonsInvolved { get; set; }
         public virtual DbSet<tblFormChildOutcomes_SupportingEvidence> tblFormChildOutcomes_SupportingEvidence { get; set; }
         public virtual DbSet<tblContingencyPlan> tblContingencyPlans { get; set; }
+        public virtual DbSet<tblArchiveCalendar> tblArchiveCalendars { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
