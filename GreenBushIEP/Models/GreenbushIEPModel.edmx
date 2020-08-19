@@ -572,7 +572,7 @@
           </Key>
           <Property Name="FormIEPAmendmentId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="StudentId" Type="int" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="2000" />
+          <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="AgreeToAmmend" Type="bit" />
           <Property Name="DisagreeToAmmend" Type="bit" />
           <Property Name="ConveneMeeting" Type="bit" />
@@ -3438,7 +3438,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           </Key>
           <Property Name="FormIEPAmendmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentId" Type="Int32" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="AgreeToAmmend" Type="Boolean" />
           <Property Name="DisagreeToAmmend" Type="Boolean" />
           <Property Name="ConveneMeeting" Type="Boolean" />
