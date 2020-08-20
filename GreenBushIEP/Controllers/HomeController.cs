@@ -594,10 +594,7 @@ namespace GreenbushIep.Controllers
                     querySaveStuff.Parameters.AddWithValue("@BuildingID", bId);
                     querySaveStuff.ExecuteNonQuery();
                 }
-
-                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar", UserID = null, Update_Date = DateTime.Now, Value = "CopyCalendar - INSERT" });
-                db.SaveChanges();
-
+             
                 string saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([USD], [BuildingID], [SchoolYear]) SELECT DISTINCT @USD, @BuildingID, SchoolYear FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
                 using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
                 {
@@ -608,7 +605,7 @@ namespace GreenbushIep.Controllers
                     querySaveMoreStuff.ExecuteNonQuery();
                 }
 
-                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = "CopyCalendar - INSERT" });
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = "CopyCalendar - INSERT" });
                 db.SaveChanges();
             }
         }
@@ -645,11 +642,14 @@ namespace GreenbushIep.Controllers
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
-                string district = collection["district"];
-                string building = collection["building"];
+                string district = collection["district"]; //from
+                string building = collection["building"]; //from 
+                string year = string.IsNullOrEmpty(collection["year"]) ? "0" : collection["year"].ToString(); //from
+                short schoolYear = Convert.ToInt16(year);
+                
 
-                string[] selectedDistricts = collection["selectedDistrict[]"].Split(',').Distinct().ToArray();
-                string[] selectedBuildings = collection["selectedBuilding[]"].Split(',');
+                string[] selectedDistricts = collection["selectedDistrict[]"].Split(',').Distinct().ToArray(); //copy to
+                string[] selectedBuildings = collection["selectedBuilding[]"].Split(','); //copy to
 
                 for (int i = 0; i < selectedDistricts.Length; i++)
                 {
@@ -665,38 +665,12 @@ namespace GreenbushIep.Controllers
                             CopyCalendar(districtUSD, selectedBuilding, MIS);                           
                         }
 
-                        //archive
-                        var archiveCalendars = db.tblCalendars.Where(o => o.BuildingID == selectedBuilding && o.USD == districtUSD);
-                        foreach (var ac in archiveCalendars)
-                        {
-                            db.tblArchiveCalendars.Add(new tblArchiveCalendar()
-                            {
-                                USD = ac.USD,
-                                BuildingID = ac.BuildingID,
-                                Year = ac.Year,
-                                Month = ac.Month,
-                                Day = ac.Day,
-                                NoService = ac.NoService,
-                                canHaveClass = ac.canHaveClass,
-                                calendarDate = ac.calendarDate,
-                                SchoolYear = ac.SchoolYear,
-                                Create_Date= ac.Create_Date,
-                                Update_Date = ac.Update_Date,
-                                CreatedBy = ac.CreatedBy,
-                                ModifiedBy = ac.ModifiedBy
-                            });
-                        }
-
-                        db.SaveChanges();
-
                         using (SqlConnection SQLConn = new SqlConnection(ConfigurationManager.ConnectionStrings["IndividualizedEducationProgramConnectionString"].ConnectionString))
                         {
                             if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
 
-                            string saveStuff = @"UPDATE Cal_Upd 
-											SET 
-											  Cal_Upd.[NoService] = Cal_Orig.[NoService]
-											, Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] 
+                            //archive
+                            string getChanges = @"select Cal_Upd.calendarID
 											FROM tblCalendar Cal_Upd
 											CROSS JOIN tblCalendar Cal_Orig
 											WHERE Cal_Orig.calendarDate = Cal_Upd.calendarDate 
@@ -704,6 +678,65 @@ namespace GreenbushIep.Controllers
 											AND Cal_Orig.BuildingID = @BuildingID_Orig 
 											AND Cal_Upd.USD = @USD_Upd 
 											AND Cal_Upd.BuildingID = @BuildingID_Upd 
+                                            AND Cal_Orig.SchoolYear = @SchoolYear                                           
+											AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
+
+                            using (SqlCommand queryGetChanges = new SqlCommand(getChanges))
+                            {
+                                queryGetChanges.Connection = SQLConn;
+                                queryGetChanges.Parameters.Clear();
+                                queryGetChanges.CommandTimeout = 180;
+                                queryGetChanges.Parameters.AddWithValue("@USD_Orig", district);
+                                queryGetChanges.Parameters.AddWithValue("@BuildingID_Orig", building);
+                                queryGetChanges.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
+                                queryGetChanges.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+                                queryGetChanges.Parameters.AddWithValue("@SchoolYear", schoolYear);
+
+                                using (var reader = queryGetChanges.ExecuteReader())
+                                {
+                                    while (reader.Read())
+                                    {
+                                        var calId = (int)reader.GetValue(0);
+
+                                        var ac = db.tblCalendars.Where(o => o.calendarID == calId).FirstOrDefault();
+                                        if (ac != null) { 
+                                            db.tblArchiveCalendars.Add(new tblArchiveCalendar()
+                                            {
+                                                USD = ac.USD,
+                                                BuildingID = ac.BuildingID,
+                                                Year = ac.Year,
+                                                Month = ac.Month,
+                                                Day = ac.Day,
+                                                NoService = ac.NoService,
+                                                canHaveClass = ac.canHaveClass,
+                                                calendarDate = ac.calendarDate,
+                                                SchoolYear = ac.SchoolYear,
+                                                Create_Date = ac.Create_Date,
+                                                Update_Date = ac.Update_Date,
+                                                CreatedBy = ac.CreatedBy,
+                                                ModifiedBy = ac.ModifiedBy
+                                            });
+                                        }
+                                    }
+
+                                    db.SaveChanges();
+                                }
+                            }
+
+
+                            string saveStuff = @"UPDATE Cal_Upd 
+											SET 
+											  Cal_Upd.[NoService] = Cal_Orig.[NoService]
+											, Cal_Upd.[canHaveClass] = Cal_Orig.[canHaveClass] 
+                                            ,Cal_Upd.ModifiedBy = @ModifiedBy
+											FROM tblCalendar Cal_Upd
+											CROSS JOIN tblCalendar Cal_Orig
+											WHERE Cal_Orig.calendarDate = Cal_Upd.calendarDate 
+											AND Cal_Orig.USD = @USD_Orig 
+											AND Cal_Orig.BuildingID = @BuildingID_Orig 
+											AND Cal_Upd.USD = @USD_Upd 
+											AND Cal_Upd.BuildingID = @BuildingID_Upd 
+                                            AND Cal_Orig.SchoolYear = @SchoolYear                                           
 											AND(Cal_Orig.canHaveClass != Cal_Upd.canHaveClass OR Cal_Orig.NoService != Cal_Upd.NoService)";
                             using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
                             {
@@ -714,6 +747,8 @@ namespace GreenbushIep.Controllers
                                 querySaveStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                                 querySaveStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
                                 querySaveStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+                                querySaveStuff.Parameters.AddWithValue("@SchoolYear", schoolYear);
+                                querySaveStuff.Parameters.AddWithValue("@ModifiedBy", MIS.UserID);
                                 querySaveStuff.ExecuteNonQuery();
                             }
 
@@ -721,12 +756,14 @@ namespace GreenbushIep.Controllers
 											SET CalR_Upd.DaysPerWeek = CalR_Orig.DaysPerWeek
 											, CalR_Upd.TotalDays = CalR_Orig.TotalDays
 											, CalR_Upd.TotalWeeks = CalR_Orig.TotalWeeks
+                                            , CalR_Upd.ModifiedBy = @ModifiedBy
 											FROM tblCalendarReporting CalR_Upd
 											CROSS JOIN tblCalendarReporting CalR_Orig
 											WHERE
 											CalR_Orig.SchoolYear = CalR_Upd.SchoolYear
 											AND CalR_Orig.USD = @USD_Orig
 											AND CalR_Orig.BuildingID = @BuildingID_Orig
+                                            AND CalR_Orig.SchoolYear = @SchoolYear 
 											AND CalR_Upd.USD = @USD_Upd AND CalR_Upd.BuildingID = @BuildingID_Upd";
                             using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
                             {
@@ -737,6 +774,8 @@ namespace GreenbushIep.Controllers
                                 querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Orig", building);
                                 querySaveMoreStuff.Parameters.AddWithValue("@USD_Upd", selectedDistricts[i]);
                                 querySaveMoreStuff.Parameters.AddWithValue("@BuildingID_Upd", selectedBuilding);
+                                querySaveMoreStuff.Parameters.AddWithValue("@SchoolYear", schoolYear);
+                                querySaveMoreStuff.Parameters.AddWithValue("@ModifiedBy", MIS.UserID);
                                 querySaveMoreStuff.ExecuteNonQuery();
                             }
 
@@ -745,9 +784,8 @@ namespace GreenbushIep.Controllers
                     }
                 }
 
-                string info = string.Format("CopyOverToCalendars District: {0} Building: {1}", district, building);
-                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = info });
-                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar", UserID = null, Update_Date = DateTime.Now, Value = info });
+                string info = string.Format("CopyOverToCalendars District: {0} Building: {1} to Districts: {2} Building {3}", district, building, string.Join(",", selectedDistricts) , string.Join(",", selectedBuildings));
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar, tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = info });
                 db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);

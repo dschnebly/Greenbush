@@ -1594,7 +1594,8 @@
 
             var usd = $('#selectedDistrict').val();
             var bId = $('#selectedBuilding').val();
-
+            var year = $('#selectedYear').val();
+            
             var formData = new FormData();
             var selectedDistricts = [];
             var selectedBuildings = [];
@@ -1607,6 +1608,7 @@
             formData.append("building", bId);
             formData.append('selectedDistrict[]', selectedDistricts);
             formData.append('selectedBuilding[]', selectedBuildings);
+            formData.append("year", year);
 
             var $m2 = $('#calendarCopyModal');
             var $m1 = $('#moduleSection').find(".container-fluid");
