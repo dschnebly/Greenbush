@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -70,35 +71,32 @@ namespace GreenBushIEP.Reports.ProceduralDatesTracking
 
 		private DataTable GetData(string districtFilter, string teacherIds, string buildingID, DateTime startDate, DateTime endDate)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("ReEvalConsentSigned", typeof(DateTime));
-			dt.Columns.Add("InitialEvalDetermination", typeof(DateTime));
-			dt.Columns.Add("InitialEvalConsentSigned", typeof(DateTime));
-			dt.Columns.Add("DaysSinceSigned", typeof(int));
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("StudentMiddleName", typeof(string));
-			dt.Columns.Add("TeacherFirstName", typeof(string));
-			dt.Columns.Add("TeacherLastName", typeof(string));
-			dt.Columns.Add("TeacherID", typeof(string));
-			dt.Columns.Add("USD", typeof(string));
-			dt.Columns.Add("BuildingName", typeof(string));
-			dt.Columns.Add("Teachers", typeof(string));
+			DataSet ds = new DataSet();
 
 
-
-			using (var ctx = new IndividualizedEducationProgramEntities())
+			using (var context = new IndividualizedEducationProgramEntities())
 			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportProceduralDatesTracking(districtFilter, teacherIds, buildingID, startDate, endDate);
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportProceduralDatesTracking", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.ReEvalConsentSigned, cs.InitialEvalDetermination, cs.InitialEvalConsentSigned, cs.DaysSinceSigned
-						, cs.StudentFirstName, cs.StudentLastName, cs.StudentMiddleName, cs.TeacherFirstName, cs.TeacherLastName
-						, cs.TeacherID, cs.USD, cs.BuildingName, cs.Teachers);
+					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
+					cmd.Parameters.Add("@buildingID", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@ReportStartDate", SqlDbType.DateTime).Value = startDate;
+					cmd.Parameters.Add("@ReportEndDate", SqlDbType.DateTime).Value = endDate;
+
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
-		}
+			return ds.Tables[0];
+
+		}		
 	}
 }
