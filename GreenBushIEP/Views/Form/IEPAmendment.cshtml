@@ -4,35 +4,21 @@
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
 }
-
-
 <div class="module-page savdDraftAllowed">
     <div>
-         <p class=MsoNormal align=center style='text-align:center'>
+         <p class=MsoNormal align=center style='text-align: center;margin-bottom: 12px'>
             <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
-                IEP
-                AMENDMENT BETWEEN<o:p></o:p>
+                IEP AMENDMENT BETWEEN
             </span>
         </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
+        <p class=MsoNormal align=center style='text-align:center;margin-bottom:12px'>
             <span style='font-size:14.0pt;font-family:"Cambria",serif;mso-bidi-font-family:Calibri'>
-                ANNUAL
-                IEP MEETINGS<o:p></o:p>
+                ANNUAL IEP MEETINGS
             </span>
         </p>
-
-        <p class=MsoNormal align=center style='text-align:center'>
-            <span style='font-size:14.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-        </p>
-
         <p class=MsoNormal  style='text-align:center;font-size:10.0pt; font-family:"Calibri",sans-serif'><u>@(String.Format(studentFormattedName).PadRight(75 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u><br/>Name of Student</p>
 
-        <p class=MsoNormal align=center style='text-align:center'>
-            <b style=''><span style='font-size:14.0pt;font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></b>
-        </p>
-
-        <p class=MsoNormal style='text-align:left'>
+        <p class=MsoNormal style='text-align:left;margin-top:10px'>
             <span style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
                 We understand that this student’s IEP must be reviewed at least annually at an IEP
                 meeting. However, after the annual IEP meeting for a school year, the law permits
@@ -41,21 +27,19 @@
                 agree that a meeting is not needed.<o:p></o:p>
             </span>
         </p>
-
-        <p>
-            <span style='font-size:11.0pt; font-family:"Calibri",sans-serif'>
+        <p class=MsoNormal>
+            <span style='margin-top:5px; font-size:11.0pt; font-family:"Calibri",sans-serif'>
                 Description of proposed IEP Change(s) and effective date(s):
             </span>
         </p>
-		 <p>
-			<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Description)</textarea><span id="Description" style='display:none' class="input-value timesfont">@(formModel.Description)</span>		                    
+		<p>
+			<textarea class="form-control" cols="100" rows="10" maxlength="5000">@(formModel.Description)</textarea><span id="Description" style='display:none;font-size:10pt' class="input-value">@(formModel.Description)</span>		                    
 		<p>
 		<p class=MsoNormal align=center style='text-align:center'>
             <span style='font-size:8.0pt;font-family:"Calibri",sans-serif'>
-                (Use additional pages if necessary. Changes in services must specify the frequency, location and duration of the change of services.)<o:p></o:p>
+                (Use additional pages if necessary. Changes in services must specify the frequency, location and duration of the change of services.)
             </span>
-        </p>
-       
+        </p>       
         <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0 style='width:6.0in;margin-left:.9pt;margin-top:10px;border-collapse:collapse;'>
             <tr style=''>
                 <td width=42 style='width:31.5pt;padding:0in 5.4pt 0in 5.4pt'>
@@ -129,21 +113,9 @@
                     <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span></p>
                 </td>
             </tr>
-        </table>
-        
-
-        <p class=MsoNormal>
-            <b style=''>
-                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-        <p class=MsoNormal>
-            <b style=''>
-                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
+        </table>              
         <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0
-               style='width:6.0in;margin-left:.9pt;border-collapse:collapse;'>
+               style='width:6.0in;margin-left:.9pt;border-collapse:collapse;margin-top:50px'>
             <tr style=''>
                 <td width=325 valign=top style='width:243.9pt;border:none;border:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
@@ -224,17 +196,8 @@
                     <p class=MsoNormal><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span></p>
                 </td>
             </tr>
-        </table>
-
-            
-
-        <p class=MsoNormal>
-            <b style=''>
-                <span style='font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
-            </b>
-        </p>
-
-        <p class=MsoNormal style="text-align:left">
+        </table> 
+        <p class=MsoNormal style="text-align:left;margin-top:15px">
             <span style='font-size:11.0pt;font-family:"Calibri",sans-serif'>
                 A prior written notice form accompanies this
                 agreement, and includes information the school is required to give to parents
@@ -243,11 +206,6 @@
                 form before the change may be implemented.<o:p></o:p>
             </span>
         </p>
-
     </div>
-
-
-
-
 
 </div><!--end center-->
