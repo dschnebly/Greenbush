@@ -574,8 +574,8 @@ namespace GreenBushIEP.Models
         public bool isTransitionNeeded(int studentAge, bool isDoc)
         {
             List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
-            bool isReleaseBefore21 = transitions.Count > 0 ? transitions.Any(t => t.isReleaseBefore21 == true) : false ;
-            bool isTransitionNeeded = ((!isDoc && studentAge > 13) || (isDoc && isReleaseBefore21)) ? true : false ;
+            bool isReleaseBefore21 = transitions.Count > 0 && transitions.Any(t => t.isReleaseBefore21 == true);
+            bool isTransitionNeeded = (!isDoc && studentAge > 13) || (isDoc && isReleaseBefore21);
 
             return isTransitionNeeded;
         }
