@@ -2198,6 +2198,7 @@ namespace GreenBushIEP.Controllers
 
             if (existingAssignments.Any())
             {
+                //delete assignments 
                 foreach (tblOrganizationMapping existing in existingAssignments)
                 {
                     db.tblOrganizationMappings.Remove(existing);
@@ -2205,17 +2206,23 @@ namespace GreenBushIEP.Controllers
                 }
             }
 
+            //add all assignments the user is submitting
             foreach (int teacher in teachers)
             {
-                tblOrganizationMapping newRelation = new tblOrganizationMapping()
+                var existingAssignment = db.tblOrganizationMappings.Any(u => u.UserID == studentId && u.AdminID == teacher);
+
+                if (!existingAssignment)
                 {
-                    AdminID = teacher,
-                    UserID = studentUser.UserID,
-                    Create_Date = DateTime.Now,
-                    USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
-                };
-                db.tblOrganizationMappings.Add(newRelation);
-                db.SaveChanges();
+                    tblOrganizationMapping newRelation = new tblOrganizationMapping()
+                    {
+                        AdminID = teacher,
+                        UserID = studentUser.UserID,
+                        Create_Date = DateTime.Now,
+                        USD = (from bm in db.tblBuildingMappings where bm.UserID == studentUser.UserID select bm.USD).FirstOrDefault(),
+                    };
+                    db.tblOrganizationMappings.Add(newRelation);
+                    db.SaveChanges();
+                }
             }
         }
 
@@ -2319,7 +2326,15 @@ namespace GreenBushIEP.Controllers
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();
             model.grades = db.tblGrades.ToList();
-            model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+            //model.selectedDistrict = (from d in db.tblDistricts join o in db.tblOrganizationMappings on d.USD equals o.USD where model.student.UserID == o.UserID select d).Distinct().ToList();
+
+            if (model.student.USD != null)
+            {
+                var attendingDistricts = model.student.USD.Split(',').ToList();
+                model.selectedDistrict = db.tblDistricts.Where(o => attendingDistricts.Contains(o.USD)).ToList();
+            }
+            
+
 
             string districtList = string.Join(", ", model.districts.Select(o => o.USD).Distinct());
 
