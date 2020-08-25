@@ -137,25 +137,29 @@
 			if ($(this).is(":checked")) {				
                 $(this).addClass("menuitemshow");
 				$(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
-
-				//if ($(this).hasClass("cirlce_check"))
-				//{
-				//	$(this).parent().addClass("circle-with-text");               
-				//}
             } else {
-				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');
-				
-				//if ($(this).hasClass("cirlce_check"))
-				//{
-				//	$(this).parent().removeClass("circle-with-text");               
-				//}
+				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');				
 			}
-
-
-			
-
         });
 
+		$("textarea").bind("paste", function(e){
+			// access the clipboard using the api
+			var pastedData = e.originalEvent.clipboardData.getData('text');
+
+			var nextParagraph = $(this).next(".input-value");
+			var currentVal = pastedData; //$(this).val();
+			var padVal = $(this).attr('data-val');
+			if (padVal != undefined && padVal != "") {
+				var currLength = currentVal.length;
+				var spacesToAdd = parseInt(padVal) - currLength;
+				for (var i = 0; i < spacesToAdd; i++){
+					currentVal = currentVal + '\u00A0';
+				}
+
+			}
+			nextParagraph.text(currentVal.replace(/\n/g, "new-line-val"));
+
+		});
 				
 		$("textarea").keyup(function () {
 			var nextParagraph = $(this).next(".input-value");
@@ -174,15 +178,7 @@
 
 		$("textarea").each(function(){
 			this.value = this.value.replace(/new-line-val/g,"\n");
-		});
-
-		//$(".isDate").each(function () {
-
-		//	var dtVal = this.value;
-		//	if (dtVal != null && dtVal != undefined && dtVal != "" && isDate(dtVal)) {				
-		//		this.value = dtVal.split(' ')[0];
-		//	}
-		//});		
+		});			
 		
     });
 

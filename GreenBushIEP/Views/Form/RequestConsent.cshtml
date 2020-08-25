@@ -57,23 +57,23 @@
 			<tr>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
-						<span style='font-size:  11.0pt'>
+						<span style='font-size:  10.0pt'>
 							<b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span>
 						</span>
-						<span style='font-size:11.0pt'><o:p></o:p></span>
+						<span style='font-size:10.0pt'><o:p></o:p></span>
 					</p>
 					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-						<span style='font-size:10.0pt'>
-							<span style=''>       </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
+						<span>
+							<span style='font-size:10.0pt'>      </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
 						</span>
 					</p>
 				</td>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
-						<span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span></span>
+						<span style='font-size:  10.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span></span>
 					</p>
 					<p class=MsoNormal style='tab-stops:.3in lined 261.0pt'>
-						<span style='font-size:11.0pt'>
+						<span style='font-size:10.0pt'>
 							<span style=''>       </span>&nbsp;<o:p></o:p>
 						</span>
 					</p>
@@ -83,17 +83,17 @@
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<b>
-							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+							<span style='font-size:  10.0pt'><o:p>&nbsp;</o:p></span>
 						</b>
 					</p>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<b>
-							<span style='font-size:  11.0pt'>On behalf of: </span>
-						</b><span style='font-size:11.0pt;mso-bidi-font-weight: bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
+							<span style='font-size:  10.0pt'>On behalf of: </span>
+						</b><span style='font-size:10.0pt;mso-bidi-font-weight: bold'><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span><span style='font-size:11.0pt'><o:p></o:p></span>
 					</p>
 					<p class=MsoNormal style='tab-stops:66.6pt lined 261.0pt'>
-						<span style='font-size:10.0pt'>
-							<span style='mso-tab-count:2'>                                     </span>(Student’s name)<o:p></o:p>
+						<span>
+							<span style='font-size:10.0pt'>                                  </span>(Student’s name)<o:p></o:p>
 						</span>
 					</p>
 					<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
@@ -101,15 +101,15 @@
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal style='tab-stops:lined 261.0pt'>
 						<b>
-							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
+							<span style='font-size:  10.0pt'><o:p>&nbsp;</o:p></span>
 						</b>
 					</p>
 					<p class=MsoNormal>
 						<b style='mso-bidi-font-weight:normal'>
-							<span style='font-size:11.0pt'>Address:</span>
-						</b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+							<span style='font-size:10.0pt'>Address:</span>
+						</b><span style='font-size:10.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
 					</p>
-					<p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
+					<p class=MsoNormal><span style='font-size:10.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
 				</td>
 			</tr>
 		</table>
@@ -306,8 +306,9 @@
 		<p style="padding-bottom:0px">
 			<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span>
 			at <textarea data-val="40" style="width:150px;height:30px;">@(districtContactPhone)</textarea><span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value">@(districtContactPhone)</span>
+			<br/><span>(School Contact/Phone)</span>
 		</p>
-		<p class=MsoNormal style="padding:0px;font-size:10pt;">(School Contact/Phone)</p>
+		
 
 		<div style="align-content:center;">
 			<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=5  style='width:100%;border-collapse:collapse'>
@@ -330,8 +331,7 @@
 					<td width=60 valign=top style='width:45.0pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
 						<p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? "checked" : "") /><img id="ExistingData_HealthMotor" class='imgCheck' src="@(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
 					</td>
-					<td width=605 valign=top style='width:453.5pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;
-  padding:0in .05in 0in .05in'>
+					<td width=605 valign=top style='width:453.5pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
 						<p class=MsoNormal><b>Health/Motor Ability -</b></p>						
 						<p class=MsoNormal>
 							May include assessment of gross and fine motor skills, and/or
@@ -515,7 +515,7 @@
 						<span style="font-size:11pt;font-weight:600">
 							PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS
 						</span>
-						<p class=MsoNormal style='text-align:left;margin-left:9.0pt;line-height:12.0pt;border:none;padding:0in;padding-top:10px'>
+						<p class=MsoNormal style='text-align:left;margin-left:9.0pt;border:none;padding:0in;padding-top:10px'>
 							<span style='color:black'>
 								Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
 								require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. The school is required to give you a copy of the rights of a parent at least one time each school year. To receive an additional copy of your rights and the procedural safeguards available to you, and if you have any questions
@@ -601,9 +601,9 @@
 
 	<p style="padding-top:15px;padding-bottom:0px;font-size:10pt">
 		<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span><span> at </span><textarea data-val="40" style="width:150px;height:30px;">@(districtContactPhone)</textarea><span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value">@(districtContactPhone)</span><span>&nbsp;immediately.</span>
+		<br/><span>(School Contact/Phone)</span>
 	</p>
-	<p class=MsoNormal style="padding:0px;font-size:10pt">(School Contact/Phone)</p>
-
+	
 	<p class="MsoNormal" style="text-align:left;padding-top:8px">
 		<b>
 			If you wish to consent to the special education actions
