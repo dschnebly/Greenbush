@@ -266,6 +266,7 @@
             var selectedDistrict = $("#userDistricts option:selected").val() + "";
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $(this).val() + "";
+            var selectedStatus = $("#statusActive option:selected").val() + "";
 
             $(".ajax-loader").show();
 
@@ -282,7 +283,8 @@
                 data: {
                     DistrictId: selectedDistrict,
                     BuildingId: selectedBuilding,
-                    RoleId: selectedRole
+                    RoleId: selectedRole,
+                    statusActive: selectedStatus
                 },
                 async: false,
                 success: function (data) {

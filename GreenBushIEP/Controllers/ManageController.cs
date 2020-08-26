@@ -3106,7 +3106,8 @@ namespace GreenBushIEP.Controllers
 
                 if (RoleId != "999")
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
+                    //members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
@@ -3124,14 +3125,15 @@ namespace GreenBushIEP.Controllers
                         members = members.Where(u => u.hasIEP == hasIEP).ToList();
                     }
 
-                    if (statusActive.HasValue && RoleId == "5")
+                    if (statusActive.HasValue && RoleId == "5") //educational status
                     {
                         members = members.Where(u => u.statusActive == statusActive).ToList();
                     }
                 }
                 else // Unassigned Users.
                 {
-                    members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    //members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
+                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {

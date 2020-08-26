@@ -130,7 +130,8 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="statusActive" id="statusActive">
-                            <option value="1">Active</option>
+                            <option value="">All</option>
+                            <option value="1" selected>Active</option>
                             <option value="0">Inactive</option>
                         </select>
                     </div>
@@ -149,7 +150,7 @@
                     {
                         var user = Model.members[i];
 
-                        <div class="list-group-item" data-id="@(user.UserID)">
+                        <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "") " data-id="@(user.UserID)">
 
                             @switch (user.RoleID)
                             {
@@ -273,6 +274,6 @@
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.1")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.2")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

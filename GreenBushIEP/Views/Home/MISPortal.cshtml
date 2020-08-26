@@ -13,7 +13,7 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/misportal.js")
+    @Scripts.Render("~/Scripts/misportal.js?v1.1")
 }
 
 <div class="container">
@@ -144,7 +144,8 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="statusActive" id="statusActive">
-                            <option value="1">Active</option>
+                            <option value="">All</option>
+                            <option value="1" selected>Active</option>
                             <option value="0">Inactive</option>
                         </select>
                     </div>
@@ -161,7 +162,7 @@
 
                     @foreach (var user in Model.members)
                     {
-                        <div class="list-group-item" data-id="@(user.UserID)">
+                        <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "")  " data-id="@(user.UserID)" >
 
                             @switch (user.RoleID)
                             {
