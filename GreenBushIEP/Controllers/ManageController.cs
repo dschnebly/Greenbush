@@ -321,14 +321,19 @@ namespace GreenBushIEP.Controllers
                     tblReferralRequest request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                     if (request != null)
                     {
+                        var submitter = db.tblUsers.Where(o => o.UserID == request.UserID_Requster).FirstOrDefault();
+
                         model.submitDate = request.Create_Date.ToShortDateString();
                         model.isComplete = false;
+                        model.submittedBy = submitter != null ? string.Format("{0} {1}", submitter.FirstName, submitter.LastName) : "";
                     }
+
                     model.referralId = referral.ReferralID;
                     model.lastName = referral.LastName;
                     model.firstName = referral.FirstName;
                     model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
                     model.notes = referral.ReferralNotes;
+                   
                     referralList.Add(model);
                 }
 
@@ -370,8 +375,11 @@ namespace GreenBushIEP.Controllers
                                 tblReferralRequest request = db.tblReferralRequests.Where(o => o.ReferralID == referral.ReferralID).FirstOrDefault();
                                 if (request != null)
                                 {
+                                    var submitter = db.tblUsers.Where(o => o.UserID == request.UserID_Requster).FirstOrDefault();
+
                                     model.submitDate = request.Submit_Date.HasValue ? request.Submit_Date.Value.ToShortDateString() : request.Create_Date.ToShortDateString();
                                     model.isComplete = request.Complete;
+                                    model.submittedBy = submitter != null ? string.Format("{0} {1}", submitter.FirstName, submitter.LastName) : "";
                                 }
                                 model.referralId = referral.ReferralID;
                                 model.lastName = referral.LastName;

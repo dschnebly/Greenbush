@@ -896,6 +896,7 @@ namespace GreenBushIEP.Models
         public string notes { get; set; }
         public bool isComplete { get; set; }
         public int referralId { get; set; }
+        public string submittedBy { get; set; }
     }
 
     public class IEPHistoryViewModel
