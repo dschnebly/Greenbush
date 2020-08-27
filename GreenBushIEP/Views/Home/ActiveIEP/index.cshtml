@@ -221,7 +221,7 @@
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="ContingencyWidget">
-                    <div class="hero-widget well">
+                    <div class="hero-widget well @(Model.studentIEP.isContingencyCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fas fa-head-side-mask"></i>
                         </div>
@@ -618,11 +618,6 @@
         <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
     </div>
     <!-- End fullscreen IEP Module Section-->
-    <div class="ajax-loader">
-        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
-        <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
-        <strong class="failure hidden"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
-    </div>
     <!-- Modal -->
     <div id="reasonsRevertDraft" class="modal" tabindex="-1" role="dialog" aria-labelledby="reasonsRevertDraftLabel">
         <div class="modal-dialog modal-lg" role="document">
@@ -640,6 +635,11 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="ajax-loader">
+        <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+        <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>
+        <strong class="failure hidden"><i class="glyphicon glyphicon-remove"></i> to save the data. Please try again.</strong>
     </div>
     <div class="needDates-loader hidden"></div>
 </div>

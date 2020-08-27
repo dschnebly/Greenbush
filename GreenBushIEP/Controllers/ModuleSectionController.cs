@@ -1657,6 +1657,7 @@ namespace GreenBushIEP.Controllers
                 {
                     bool isAdding = false;
                     var whatever = collection["remoteDistrict"];
+                    Boolean.TryParse(collection["isCompleted"], out bool IsCompleted);
                     Boolean.TryParse(collection["noRemote"], out bool NoContingencyPlan);
                     Boolean.TryParse(collection["remoteDistrict"], out bool RemoteLearning_DistrictResponse);
                     Boolean.TryParse(collection["remoteParent"], out bool RemoteLearning_ParentRequest);
@@ -1664,10 +1665,11 @@ namespace GreenBushIEP.Controllers
                     tblContingencyPlan plan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
                     if(plan == null)
                     {
-                        plan = new tblContingencyPlan() { IEPid = iepId, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
+                        plan = new tblContingencyPlan() { IEPid = iepId, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false, Completed = false };
                         isAdding = true;
                     }
 
+                    plan.Completed = IsCompleted;
                     plan.NoContingencyPlan = NoContingencyPlan;
                     plan.RemoteLearning_DistrictResponse = RemoteLearning_DistrictResponse;
                     plan.RemoteLearning_ParentRequest = RemoteLearning_ParentRequest;
@@ -1777,6 +1779,10 @@ namespace GreenBushIEP.Controllers
                     db.tblBehaviors.Where(b => b.IEPid == stdIEPId).ToList().ForEach(b => { b.Completed = false; b.ModifiedBy = ModifiedBy; });
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The Behavior Module was updated." }, JsonRequestBehavior.AllowGet);
+                case "Contingency":
+                    db.tblContingencyPlans.Where(p => p.IEPid == stdIEPId).ToList().ForEach(i => { i.Completed = false; });
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "The Contingency Module was updated." }, JsonRequestBehavior.AllowGet);
                 default:
                     return Json(new { Result = "error", Message = "Unable to find the module you requested to update." }, JsonRequestBehavior.AllowGet);
             }

@@ -612,7 +612,7 @@ namespace GreenBushIEP.Models
         {
             IEPId = 0;
             StudentId = 0;
-            Plan = new tblContingencyPlan() { NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
+            Plan = new tblContingencyPlan() { NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false, Completed = false };
         }
 
         public int StudentId { get; set; }
