@@ -338,6 +338,7 @@
           <Property Name="Accommodations" Type="nvarchar(max)" />
           <Property Name="Goals" Type="nvarchar(max)" />
           <Property Name="OtherConsiderations" Type="nvarchar(max)" />
+          <Property Name="Completed" Type="bit" />
         </EntityType>
         <EntityType Name="tblCounties">
           <Key>
@@ -5741,6 +5742,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Accommodations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Goals" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OtherConsiderations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Completed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblArchiveCalendar">
           <Key>
@@ -8409,6 +8411,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblContingencyPlans">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblContingencyPlan">
               <MappingFragment StoreEntitySet="tblContingencyPlan">
+                <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="OtherConsiderations" ColumnName="OtherConsiderations" />
                 <ScalarProperty Name="Goals" ColumnName="Goals" />
                 <ScalarProperty Name="Accommodations" ColumnName="Accommodations" />

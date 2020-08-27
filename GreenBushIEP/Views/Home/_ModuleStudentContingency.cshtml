@@ -10,6 +10,8 @@
 <div class="modal-content">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Contingency');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
         <h4 class="modal-title" style="font-size: 30px;"><i class="fas fa-head-side-mask" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Contingency</h4>
     </div>
     <div class="modal-body">
@@ -17,6 +19,7 @@
         {
             <input type="hidden" name="studentId" value="@(Model.StudentId)" />
             <input type="hidden" name="iepId" value="@(Model.IEPId)" />
+            <input type="hidden" name="isCompleted" value="@(Model.Plan.Completed == null ? "false" : Model.Plan.Completed.ToString().ToLower())" />
             <div class="container-fluid">
                 <div col-md-12>
                     <p>This IEP has been written for in-school, in-person services. However, due to the COVID-19 Pandemic, IEP teams will need to consider what supports and services will need to be in place if there is an interruption in students being able to attend the full-time brick and mortar school or if a parent/guardian chooses for their child to participate in remote learning. IEP teams will need to determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning whether by a school closure or parent choice. The services and supports specified in this section of the IEP are specifically related to a contingency or remote learning plan. </p>
@@ -79,12 +82,23 @@
                     </div>
                 </div>
             </div>
-        }
 
-        <div class="row">
-            <div class="col-md-offset-1 col-md-11" style="text-align:center; padding-top: 25px;">
-                <div class="form-group">
-                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveContingencyCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save Progress</button>
+            <div class="row noPrint">
+                <div class="col-md-12" style="text-align:center;">
+                    <div class="form-group">
+                        <button type="submit" class="formbtn btn btn-primary btn-lg" id="saveContingency"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                        <button type="button" class="formbtn btn btn-success btn-lg" id="saveContingencyCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="completed-loader @((bool)(Model.Plan.Completed) ? "completed-loader-visible" : "completed-loader-hidden" )">
+        <div class="text-center completed-checkbox">
+            <div class="form-check">
+                <div class="checkbox">
+                    <label><input type="checkbox" id="isCompletedModule" checked="checked" /><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span><span class="completed-label">Completed!</span></label>
                 </div>
             </div>
         </div>
@@ -125,7 +139,41 @@
         }
     });
 
-    $("#saveContingencyCompleted").on("click", function () {
+    $("#saveContingency").on("click", function () {
+        $("input[name='isCompleted']").val(false);
+
         $("form").submit();
+    });
+
+    $("#saveContingencyCompleted").on("click", function () {
+        $("input[name='isCompleted']").val(true);
+
+        $("form").submit();
+    });
+
+    // Attach Event
+    // when the use clicks the completed checkbox
+    $("#isCompletedModule").on("click", function () {
+        var IEPId = $("input[name='iepId']").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/ModuleSection/ModuleCompleted',
+            data: { stdIEPId: IEPId, module: "Contingency" },
+            dataType: "json",
+            success: function (data) {
+                if (data.Result == "success") {
+                    $(".completed-loader").fadeOut();
+                    $("input[name='isCompleted']").val(false);
+
+                    $("#ContingencyWidget .hero-widget").removeClass("module-completed");
+                } else {
+                    console.log("Error when updating the module.")
+                }
+            },
+            error: function (data) {
+                console.log("Unable to mark Contingency Module as complete.");
+            }
+        });
     });
 </script>

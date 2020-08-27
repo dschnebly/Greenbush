@@ -24,5 +24,6 @@ namespace GreenBushIEP.Models
         public string Accommodations { get; set; }
         public string Goals { get; set; }
         public string OtherConsiderations { get; set; }
+        public Nullable<bool> Completed { get; set; }
     }
 }
