@@ -3583,7 +3583,6 @@ namespace GreenbushIep.Controllers
 				string iepStatus = IEPStatus.ACTIVE;
                 List<ExportErrorView> exportErrors = new List<ExportErrorView>();
 
-
                 if (isReset && !string.IsNullOrEmpty(studentResetList))
                 {
 
@@ -3597,9 +3596,9 @@ namespace GreenbushIep.Controllers
                                                          join services in db.tblServices
                                                              on iep.IEPid equals services.IEPid
                                                          join building in db.tblBuildingMappings
-                                                             on student.UserID equals building.UserID
+                                                             on student.UserID equals building.UserID                                                        
                                                          where
-                                                         iep.IepStatus == iepStatus
+                                                         iep.IepStatus == iepStatus                                                        
                                                          && (student.Archive == null || student.Archive == false)
                                                          && services.SchoolYear == fiscalYear
                                                          && (iep.FiledOn != null)
@@ -3640,8 +3639,11 @@ namespace GreenbushIep.Controllers
                                  on iep.IEPid equals services.IEPid
                              join building in db.tblBuildingMappings
                                  on student.UserID equals building.UserID
+                             join studentInfo in db.tblStudentInfoes
+                                on student.UserID equals studentInfo.UserID
                              where
                              iep.IepStatus == iepStatus
+                             && (studentInfo.ExitDate == null || services.StartDate < studentInfo.ExitDate)
                              && (student.Archive == null || student.Archive == false)
                              && services.SchoolYear == fiscalYear
                              && (services.FiledOn == null || iep.FiledOn == null)
@@ -3715,8 +3717,11 @@ namespace GreenbushIep.Controllers
                                                           on iep.IEPid equals services.IEPid
                                                       join building in db.tblBuildingMappings
                                                           on student.UserID equals building.UserID
+                                                      join studentInfo in db.tblStudentInfoes
+                                                            on student.UserID equals studentInfo.UserID
                                                       where
                                                       iep.IepStatus == IEPStatus.ARCHIVE
+                                                      && (studentInfo.ExitDate == null || services.StartDate < studentInfo.ExitDate)
                                                       && (student.Archive == null || student.Archive == false)
                                                       && services.SchoolYear == fiscalYear
                                                       && services.ServiceCode != "NS"
@@ -3734,8 +3739,11 @@ namespace GreenbushIep.Controllers
                                                                   on iep.IEPid equals services.IEPid
                                                               join building in db.tblBuildingMappings
                                                                   on student.UserID equals building.UserID
+                                                              join studentInfo in db.tblStudentInfoes
+                                                                    on student.UserID equals studentInfo.UserID
                                                               where
                                                               iep.IepStatus == IEPStatus.ARCHIVE
+                                                               && (studentInfo.ExitDate == null || services.StartDate < studentInfo.ExitDate)
                                                               && (student.Archive == null || student.Archive == false)
                                                               && services.SchoolYear == fiscalYear
                                                               && services.ServiceCode != "NS"
