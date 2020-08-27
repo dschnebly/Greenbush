@@ -1031,7 +1031,7 @@ $(".goal-section").on('click', function (e) {
     var stId = $("#stid").val();
     var iepId = $("#studentIEPId").val();
 
-    //$('.ajax-loader').css("visibility", "visible");
+    $('.ajax-loader').css("visibility", "visible");
 
     $.ajax({
         type: 'GET',
