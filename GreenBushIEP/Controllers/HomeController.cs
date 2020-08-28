@@ -2258,7 +2258,7 @@ namespace GreenbushIep.Controllers
             ContingencyPlanModel model = new ContingencyPlanModel();
             model.StudentId = studentId;
             model.IEPId = IEPid;
-            model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false };
+            model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false, Completed = false };
 
             return PartialView("_ModuleStudentContingency", model);
         }
