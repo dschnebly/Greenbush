@@ -24,7 +24,7 @@ namespace GreenBushIEP.Models
         public string FrequencyType { get; set; }
         public Nullable<System.DateTime> IEPStartDate { get; set; }
         public System.DateTime ServiceStartDate { get; set; }
-        public System.DateTime ServiceEndDate { get; set; }
+        public Nullable<System.DateTime> ServiceEndDate { get; set; }
         public Nullable<System.DateTime> IEPEndDate { get; set; }
         public string RawFrequency { get; set; }
         public byte RawSessions { get; set; }

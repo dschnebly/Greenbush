@@ -12,19 +12,22 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblRole
+    public partial class tblPermission
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblRole()
+        public tblPermission()
         {
             this.tblRolePermissions = new HashSet<tblRolePermission>();
+            this.tblUserPermissions = new HashSet<tblUserPermission>();
         }
     
-        public int RoleID { get; set; }
-        public string RoleName { get; set; }
-        public string LevelName { get; set; }
+        public string PermissionID { get; set; }
+        public string Description { get; set; }
+        public Nullable<bool> Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblRolePermission> tblRolePermissions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
     }
 }

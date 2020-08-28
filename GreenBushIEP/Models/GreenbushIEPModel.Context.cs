@@ -27,7 +27,9 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
+        public virtual DbSet<tblArchiveCalendar> tblArchiveCalendars { get; set; }
         public virtual DbSet<tblArchiveEvaluationDate> tblArchiveEvaluationDates { get; set; }
         public virtual DbSet<tblArchiveEvaluationDateSigned> tblArchiveEvaluationDateSigneds { get; set; }
         public virtual DbSet<tblArchiveIEPExit> tblArchiveIEPExits { get; set; }
@@ -48,12 +50,18 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCalendarTemplate> tblCalendarTemplates { get; set; }
         public virtual DbSet<tblCareerPath> tblCareerPaths { get; set; }
         public virtual DbSet<tblContact> tblContacts { get; set; }
+        public virtual DbSet<tblContingencyPlan> tblContingencyPlans { get; set; }
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblErrorLog> tblErrorLogs { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
+        public virtual DbSet<tblFormChildOutcome> tblFormChildOutcomes { get; set; }
+        public virtual DbSet<tblFormChildOutcomes_PersonsInvolved> tblFormChildOutcomes_PersonsInvolved { get; set; }
+        public virtual DbSet<tblFormChildOutcomes_SupportingEvidence> tblFormChildOutcomes_SupportingEvidence { get; set; }
         public virtual DbSet<tblFormConferenceSummary> tblFormConferenceSummaries { get; set; }
+        public virtual DbSet<tblFormContinuousLearningPlan> tblFormContinuousLearningPlans { get; set; }
         public virtual DbSet<tblFormIEPAmendment> tblFormIEPAmendments { get; set; }
         public virtual DbSet<tblFormIEPMeetingConsentToInvite> tblFormIEPMeetingConsentToInvites { get; set; }
         public virtual DbSet<tblFormIEPMeetingExcusal> tblFormIEPMeetingExcusals { get; set; }
@@ -93,6 +101,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblModule> tblModules { get; set; }
         public virtual DbSet<tblOrganizationMapping> tblOrganizationMappings { get; set; }
         public virtual DbSet<tblOtherConsideration> tblOtherConsiderations { get; set; }
+        public virtual DbSet<tblPermission> tblPermissions { get; set; }
         public virtual DbSet<tblPlacementCode> tblPlacementCodes { get; set; }
         public virtual DbSet<tblProviderDistrict> tblProviderDistricts { get; set; }
         public virtual DbSet<tblProvider> tblProviders { get; set; }
@@ -100,6 +109,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblReferralInfo> tblReferralInfoes { get; set; }
         public virtual DbSet<tblReferralRelationship> tblReferralRelationships { get; set; }
         public virtual DbSet<tblReferralRequest> tblReferralRequests { get; set; }
+        public virtual DbSet<tblRolePermission> tblRolePermissions { get; set; }
         public virtual DbSet<tblRole> tblRoles { get; set; }
         public virtual DbSet<tblServiceFrequency> tblServiceFrequencies { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
@@ -113,9 +123,11 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransitionGoal> tblTransitionGoals { get; set; }
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
+        public virtual DbSet<tblUserPermission> tblUserPermissions { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
         public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
+        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
         public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
@@ -123,17 +135,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_PrimaryDisabilities> vw_PrimaryDisabilities { get; set; }
         public virtual DbSet<vw_SecondaryDisabilities> vw_SecondaryDisabilities { get; set; }
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
-        public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
-        public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
-        public virtual DbSet<tblFormContinuousLearningPlan> tblFormContinuousLearningPlans { get; set; }
-        public virtual DbSet<zArchive_Services> zArchive_Services { get; set; }
-        public virtual DbSet<tblFormChildOutcome> tblFormChildOutcomes { get; set; }
-        public virtual DbSet<tblFormChildOutcomes_PersonsInvolved> tblFormChildOutcomes_PersonsInvolved { get; set; }
-        public virtual DbSet<tblFormChildOutcomes_SupportingEvidence> tblFormChildOutcomes_SupportingEvidence { get; set; }
-        public virtual DbSet<tblContingencyPlan> tblContingencyPlans { get; set; }
-        public virtual DbSet<tblArchiveCalendar> tblArchiveCalendars { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -514,6 +517,52 @@ namespace GreenBushIEP.Models
         public virtual int uspYearlyAutoAdvance()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspYearlyAutoAdvance");
+        }
+    
+        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportESY_Result> up_ReportESY(string districtId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string teacherId, string providerId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var reportStartDateParameter = reportStartDate.HasValue ?
+                new ObjectParameter("ReportStartDate", reportStartDate) :
+                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
+    
+            var reportEndDateParameter = reportEndDate.HasValue ?
+                new ObjectParameter("ReportEndDate", reportEndDate) :
+                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportESY_Result>("up_ReportESY", districtIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter);
         }
     }
 }

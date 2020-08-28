@@ -370,6 +370,9 @@
     <Compile Include="Models\tblDistrict.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblErrorLog.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblEvaluationProcedure.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -508,6 +511,9 @@
     <Compile Include="Models\tblOtherConsideration.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblPermission.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblPlacementCode.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -530,6 +536,9 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblRole.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblRolePermission.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblService.cs">
@@ -571,16 +580,25 @@
     <Compile Include="Models\tblUser.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblUserPermission.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblVersionLog.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\uf_Split_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\up_ReportBehaviorPlan_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\up_ReportBuildings_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportDraftIEPS_Result.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\up_ReportESY_Result.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\up_ReportExcessCost_Result.cs">
@@ -662,9 +680,6 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\vw_UserList.cs">
-      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\zArchive_Services.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Reports\BehaviorPlan\Report.aspx.cs">

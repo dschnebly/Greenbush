@@ -14,6 +14,12 @@ namespace GreenBushIEP.Models
     
     public partial class tblUser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblUser()
+        {
+            this.tblUserPermissions = new HashSet<tblUserPermission>();
+        }
+    
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
@@ -37,5 +43,8 @@ namespace GreenBushIEP.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public bool isTest { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
     }
 }
