@@ -2925,7 +2925,11 @@ namespace GreenbushIep.Controllers
                             theIEP.studentDetails.printProgressReport = true;
                             break;
                         }
-
+                    case "Contingency":
+                        {
+                            theIEP.studentDetails.printContingencyPlan = true;
+                            break;
+                        }
 
                 }
 
