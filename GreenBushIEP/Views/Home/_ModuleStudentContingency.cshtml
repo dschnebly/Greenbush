@@ -94,7 +94,7 @@
         }
     </div>
 
-    <div class="completed-loader @(Model.Plan.Completed == true ? "completed-loader-visible" : "completed-loader-hidden" )">
+    <div class="completed-loader @(Model.Plan.Completed == true ? "completed-loader-visible" : "completed-loader-hidden")">
         <div class="text-center completed-checkbox">
             <div class="form-check">
                 <div class="checkbox">
@@ -108,7 +108,6 @@
 <br />
 
 <script>
-
     $("input[name='noRemote']").on("click", function () {
         if ($("input[name='noRemote']:checked").length) {
             $(this).val(true);
