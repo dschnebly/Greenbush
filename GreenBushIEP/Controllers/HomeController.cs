@@ -4087,16 +4087,18 @@ namespace GreenbushIep.Controllers
 							isOverwritten = true;
 						}						
 					}
-					
-					if (!string.IsNullOrEmpty(serviceEndDateOverride) && !isOverwritten)
-					{
-						//there is an override due to a previous IEP that was ended early
-						sb.AppendFormat("\t{0}", serviceEndDateOverride);
-					}
-					else
-					{
-						sb.AppendFormat("\t{0}", service.EndDate.Value.ToShortDateString());
-					}
+                    if (!isOverwritten)
+                    {
+                        if (!string.IsNullOrEmpty(serviceEndDateOverride))
+                        {
+                            //there is an override due to a previous IEP that was ended early
+                            sb.AppendFormat("\t{0}", serviceEndDateOverride);
+                        }
+                        else
+                        {
+                            sb.AppendFormat("\t{0}", service.EndDate.Value.ToShortDateString());
+                        }
+                    }
 				}
 
                 //15 minutes
