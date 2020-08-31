@@ -136,6 +136,18 @@
           <DataField>FrequencyDesc</DataField>
           <rd:TypeName>System.String</rd:TypeName>
         </Field>
+        <Field Name="isGifted">
+          <DataField>isGifted</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="SchoolYear">
+          <DataField>SchoolYear</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="ServiceID">
+          <DataField>ServiceID</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
       </Fields>
       <rd:DataSetInfo>
         <rd:DataSetName>IndividualizedEducationProgramDataSet</rd:DataSetName>
@@ -161,7 +173,10 @@
                   <Width>1in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.84375in</Width>
+                  <Width>0.625in</Width>
+                </TablixColumn>
+                <TablixColumn>
+                  <Width>0.51714in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.94399in</Width>
@@ -173,13 +188,13 @@
                   <Width>0.86411in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.91387in</Width>
+                  <Width>0.8097in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.5044in</Width>
+                  <Width>0.42107in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.63429in</Width>
+                  <Width>0.53012in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
@@ -271,6 +286,39 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox5</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <BackgroundColor>WhiteSmoke</BackgroundColor>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
+                        <Textbox Name="Textbox16">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>FY</Value>
+                                  <Style>
+                                    <FontWeight>Bold</FontWeight>
+                                  </Style>
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>Textbox16</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -580,6 +628,36 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
+                        <Textbox Name="SchoolYear1">
+                          <CanGrow>true</CanGrow>
+                          <KeepTogether>true</KeepTogether>
+                          <Paragraphs>
+                            <Paragraph>
+                              <TextRuns>
+                                <TextRun>
+                                  <Value>=Fields!SchoolYear.Value</Value>
+                                  <Style />
+                                </TextRun>
+                              </TextRuns>
+                              <Style />
+                            </Paragraph>
+                          </Paragraphs>
+                          <rd:DefaultName>SchoolYear1</rd:DefaultName>
+                          <Style>
+                            <Border>
+                              <Color>LightGrey</Color>
+                              <Style>Solid</Style>
+                            </Border>
+                            <PaddingLeft>2pt</PaddingLeft>
+                            <PaddingRight>2pt</PaddingRight>
+                            <PaddingTop>2pt</PaddingTop>
+                            <PaddingBottom>2pt</PaddingBottom>
+                          </Style>
+                        </Textbox>
+                      </CellContents>
+                    </TablixCell>
+                    <TablixCell>
+                      <CellContents>
                         <Textbox Name="ServiceType">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
@@ -779,6 +857,7 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
+                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -796,7 +875,7 @@
             <Top>0.10694in</Top>
             <Left>0.04767in</Left>
             <Height>0.5in</Height>
-            <Width>7.22501in</Width>
+            <Width>7.23173in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -807,7 +886,7 @@
         <Height>0.67583in</Height>
         <Style />
       </Body>
-      <Width>7.2875in</Width>
+      <Width>7.30649in</Width>
       <Page>
         <PageHeader>
           <Height>1.75in</Height>

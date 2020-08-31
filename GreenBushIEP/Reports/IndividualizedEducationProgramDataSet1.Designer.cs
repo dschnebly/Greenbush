@@ -2400,6 +2400,10 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnisGifted;
             
+            private global::System.Data.DataColumn columnSchoolYear;
+            
+            private global::System.Data.DataColumn columnServiceID;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public up_ReportServicesDataTable() {
@@ -2587,6 +2591,22 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn SchoolYearColumn {
+                get {
+                    return this.columnSchoolYear;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn ServiceIDColumn {
+                get {
+                    return this.columnServiceID;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -2640,7 +2660,9 @@ namespace GreenBushIEP.Reports {
                         string BuildingName, 
                         string USD, 
                         string FrequencyDesc, 
-                        string isGifted) {
+                        string isGifted, 
+                        string SchoolYear, 
+                        string ServiceID) {
                 up_ReportServicesRow rowup_ReportServicesRow = ((up_ReportServicesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         StudentFirstName,
@@ -2661,7 +2683,9 @@ namespace GreenBushIEP.Reports {
                         BuildingName,
                         USD,
                         FrequencyDesc,
-                        isGifted};
+                        isGifted,
+                        SchoolYear,
+                        ServiceID};
                 rowup_ReportServicesRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportServicesRow);
                 return rowup_ReportServicesRow;
@@ -2710,6 +2734,8 @@ namespace GreenBushIEP.Reports {
                 this.columnUSD = base.Columns["USD"];
                 this.columnFrequencyDesc = base.Columns["FrequencyDesc"];
                 this.columnisGifted = base.Columns["isGifted"];
+                this.columnSchoolYear = base.Columns["SchoolYear"];
+                this.columnServiceID = base.Columns["ServiceID"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -2753,6 +2779,10 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnFrequencyDesc);
                 this.columnisGifted = new global::System.Data.DataColumn("isGifted", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnisGifted);
+                this.columnSchoolYear = new global::System.Data.DataColumn("SchoolYear", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnSchoolYear);
+                this.columnServiceID = new global::System.Data.DataColumn("ServiceID", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnServiceID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnUserID}, true));
                 this.columnStudentFirstName.MaxLength = 255;
@@ -9148,6 +9178,38 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string SchoolYear {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportServices.SchoolYearColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'SchoolYear\' in table \'up_ReportServices\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportServices.SchoolYearColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string ServiceID {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportServices.ServiceIDColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ServiceID\' in table \'up_ReportServices\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportServices.ServiceIDColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsStudentFirstNameNull() {
                 return this.IsNull(this.tableup_ReportServices.StudentFirstNameColumn);
             }
@@ -9252,6 +9314,30 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetisGiftedNull() {
                 this[this.tableup_ReportServices.isGiftedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsSchoolYearNull() {
+                return this.IsNull(this.tableup_ReportServices.SchoolYearColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetSchoolYearNull() {
+                this[this.tableup_ReportServices.SchoolYearColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsServiceIDNull() {
+                return this.IsNull(this.tableup_ReportServices.ServiceIDColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetServiceIDNull() {
+                this[this.tableup_ReportServices.ServiceIDColumn] = global::System.Convert.DBNull;
             }
         }
         
