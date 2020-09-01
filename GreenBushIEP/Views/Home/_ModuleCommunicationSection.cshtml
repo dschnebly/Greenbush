@@ -54,7 +54,13 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control standard-font-size" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleCommunicationAreaOfNeedDescription" id="ModuleCommunicationAreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <div class="form-check">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <textarea class="form-control standard-font-size" id="HealthNotes" name="HealthNotes" type="text" rows="3">@(Model.Notes)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
@@ -70,7 +76,7 @@
                 <br />
                 <p class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>

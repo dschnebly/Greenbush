@@ -42,14 +42,14 @@
             </div>
         </div>
         <fieldset class="form-group">
-            <label  class="standard-font-size" style="padding: 25px 0 15px;">Does this student's behavior impede the learning of self or others?</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student's behavior impede the learning of self or others?</label>
             <div class="form-check">
                 <label class="radio-inline" style="font-size: 16px;">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "yes", Model.BehaviorImepedeLearning)Yes</label><br />
                 <label class="radio-inline" style="font-size: 16px;">@Html.RadioButton("ModuleSocialBehaviorImepedeLearning", "no", !Model.BehaviorImepedeLearning)No</label><br />
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label  class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a Behavior Intervention Plan?</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Does this student require a Behavior Intervention Plan?</label>
             <div class="form-check">
                 <label class="radio-inline" style="font-size: 16px;">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "yes", Model.BehaviorInterventionPlan)Yes</label><br />
                 <label class="radio-inline" style="font-size: 16px;">@Html.RadioButton("ModuleSocialBehaviorInterventionPlan", "no", !Model.BehaviorInterventionPlan)No</label><br />
@@ -71,11 +71,17 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control standard-font-size" name="ModuleSocialAreaOfNeedDescription" id="ModuleSocialAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleSocialAreaOfNeedDescription" id="ModuleSocialAreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label class="standard-font-size"  style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+            <div class="form-check">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <textarea class="form-control standard-font-size" id="HealthNotes" name="HealthNotes" type="text" rows="3">@(Model.Notes)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
             <div class="form-check">
                 <div class="checkbox needsCheckbox">
                     <label><input type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
@@ -87,7 +93,7 @@
                 <br />
                 <p s class="standard-font-size" style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
                     *if other, please explain<br />
-                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit." >@(Model.NeedMetByOtherDescription)</textarea>
+                    <textarea class="form-control standard-font-size" id="MeetNeedByOtherDescription" name="MeetNeedByOtherDescription" type="text" rows="3" maxlength="2000" data-toggle="tooltip" data-placement="bottom" title="2000 character limit.">@(Model.NeedMetByOtherDescription)</textarea>
                 </p>
             </div>
         </fieldset>
