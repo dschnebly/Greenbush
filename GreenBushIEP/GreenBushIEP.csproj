@@ -814,9 +814,11 @@
     <Compile Include="Reports\ServiceReport\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\ServiceReport\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\StudentInfo\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
@@ -956,7 +958,9 @@
     <Content Include="Reports\ProceduralDates\Report.aspx" />
     <Content Include="Reports\Progress\Report.aspx" />
     <Content Include="Reports\ProviderCaseload\Report.aspx" />
-    <Content Include="Reports\ServiceReport\Report.aspx" />
+    <Content Include="Reports\ServiceReport\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\StudentInfo\Report.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -1326,7 +1330,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ProviderCaseload\rptProviderCaseload.rdlc" />
-    <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc" />
+    <EmbeddedResource Include="Reports\ServiceReport\rptServices.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\StudentData\rptStudents.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
