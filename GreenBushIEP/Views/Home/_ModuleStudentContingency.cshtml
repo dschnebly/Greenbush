@@ -6,93 +6,91 @@
     }
 </style>
 
+<div class="modal-header">
 
-<div class="modal-content">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Contingency');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
-        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-        <h4 class="modal-title" style="font-size: 30px;"><i class="fas fa-head-side-mask" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Contingency</h4>
-    </div>
-    <div class="modal-body">
-        @using (Html.BeginForm("EditContingency", "ModuleSection", FormMethod.Post, new { }))
-        {
-            <input type="hidden" name="studentId" value="@(Model.StudentId)" />
-            <input type="hidden" name="iepId" value="@(Model.IEPId)" />
-            <input type="hidden" name="isCompleted" value="@(Model.Plan.Completed == null ? "false" : Model.Plan.Completed.ToString().ToLower())" />
-            <div class="container-fluid">
-                <div col-md-12>
-                    <p>This IEP has been written for in-school, in-person services. However, due to the COVID-19 Pandemic, IEP teams will need to consider what supports and services will need to be in place if there is an interruption in students being able to attend the full-time brick and mortar school or if a parent/guardian chooses for their child to participate in remote learning. IEP teams will need to determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning whether by a school closure or parent choice. The services and supports specified in this section of the IEP are specifically related to a contingency or remote learning plan. </p>
-                    <p>Contingency Plan in place as per the following:</p>
-                    <ul style="list-style:none; padding-left: 0; padding-top: 15px;">
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="@(Model.Plan.NoContingencyPlan.ToString())" name="noRemote" @(Model.Plan.NoContingencyPlan ? "checked='checked'" : string.Empty)>
-                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                    No contingency plan is necessary at this time
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_DistrictResponse.ToString())" name="remoteDistrict" data-target="#collapseRemoteDistrict" @(Model.Plan.RemoteLearning_DistrictResponse ? "checked='checked'" : string.Empty)>
-                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                    Remote learning due to district response due to pandemic.
-                                </label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" value="@(Model.Plan.RemoteLearning_ParentRequest.ToString())" name="remoteParent" data-target="#collapseRemoteParent" @(Model.Plan.RemoteLearning_ParentRequest ? "checked='checked'" : string.Empty)>
-                                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                                    Remote learning due to parent request due to pandemic.
-                                </label>
-                            </div>
-                        </li>
-                    </ul>
-                    <br />
-                    <div class="collapse" @(Model.Plan.RemoteLearning_DistrictResponse ? "style=display:block;" : string.Empty) id="collapseRemoteDistrict">
-                        <div class="well">
-                            <h5><b>Nature of Proposed Temporary Plan:</b></h5>
-                            <br />
-                            <p style="color:#6067ce;">When a school building is closed due to a COVID-19 outbreak, but is serving its students remotely, the school must ensure that each student with an exceptionality also has equal access to the same opportunities, including, to the extent possible under these unprecedented circumstances, a free appropriate public education. School districts must provide a FAPE consistent with the need to protect the health and safety of students with exceptionalities and those individuals providing education, specialized instruction, and related services to these students. In this unique and ever-changing environment, these exceptional circumstances may affect how all educational and related services and supports are provided. Each team needs to consider the prompts below. The services and supports should be clearly articulated, understood, and agreed upon.</p>
-                            <br />
-                            <ol>
-                                <li>Services <p><textarea name="remoteDistrictServices" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Services.ToString() : string.Empty)</textarea></p></li>
-                                <li>Accommodations <p><textarea name="remoteDistrictAccommodations" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Accommodations.ToString() : string.Empty)</textarea></p></li>
-                                <li>Goals <p><textarea name="remoteDistrictGoals" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</textarea></p></li>
-                                <li>Other Considerations <p><textarea name="remoteDistrictOther" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</textarea></p></li>
-                            </ol>
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Contingency');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" style="font-size: 30px;"><i class="fas fa-head-side-mask" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Student Contingency</h4>
+</div>
+<div class="modal-body">
+    @using (Html.BeginForm("EditContingency", "ModuleSection", FormMethod.Post, new { }))
+    {
+        <input type="hidden" name="studentId" value="@(Model.StudentId)" />
+        <input type="hidden" name="iepId" value="@(Model.IEPId)" />
+        <input type="hidden" name="isCompleted" value="@(Model.Plan.Completed == null ? "false" : Model.Plan.Completed.ToString().ToLower())" />
+        <div class="container-fluid">
+            <div col-md-12>
+                <p>This IEP has been written for in-school, in-person services. However, due to the COVID-19 Pandemic, IEP teams will need to consider what supports and services will need to be in place if there is an interruption in students being able to attend the full-time brick and mortar school or if a parent/guardian chooses for their child to participate in remote learning. IEP teams will need to determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning whether by a school closure or parent choice. The services and supports specified in this section of the IEP are specifically related to a contingency or remote learning plan. </p>
+                <p>Contingency Plan in place as per the following:</p>
+                <ul style="list-style:none; padding-left: 0; padding-top: 15px;">
+                    <li>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="@(Model.Plan.NoContingencyPlan.ToString())" name="noRemote" @(Model.Plan.NoContingencyPlan ? "checked='checked'" : string.Empty)>
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                No contingency plan is necessary at this time
+                            </label>
                         </div>
+                    </li>
+                    <li>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="@(Model.Plan.RemoteLearning_DistrictResponse.ToString())" name="remoteDistrict" data-target="#collapseRemoteDistrict" @(Model.Plan.RemoteLearning_DistrictResponse ? "checked='checked'" : string.Empty)>
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Remote learning due to district response due to pandemic.
+                            </label>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" value="@(Model.Plan.RemoteLearning_ParentRequest.ToString())" name="remoteParent" data-target="#collapseRemoteParent" @(Model.Plan.RemoteLearning_ParentRequest ? "checked='checked'" : string.Empty)>
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                Remote learning due to parent request due to pandemic.
+                            </label>
+                        </div>
+                    </li>
+                </ul>
+                <br />
+                <div class="collapse" @(Model.Plan.RemoteLearning_DistrictResponse ? "style=display:block;" : string.Empty) id="collapseRemoteDistrict">
+                    <div class="well">
+                        <h5><b>Nature of Proposed Temporary Plan:</b></h5>
+                        <br />
+                        <p style="color:#6067ce;">When a school building is closed due to a COVID-19 outbreak, but is serving its students remotely, the school must ensure that each student with an exceptionality also has equal access to the same opportunities, including, to the extent possible under these unprecedented circumstances, a free appropriate public education. School districts must provide a FAPE consistent with the need to protect the health and safety of students with exceptionalities and those individuals providing education, specialized instruction, and related services to these students. In this unique and ever-changing environment, these exceptional circumstances may affect how all educational and related services and supports are provided. Each team needs to consider the prompts below. The services and supports should be clearly articulated, understood, and agreed upon.</p>
+                        <br />
+                        <ol>
+                            <li>Services <p><textarea name="remoteDistrictServices" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Services.ToString() : string.Empty)</textarea></p></li>
+                            <li>Accommodations <p><textarea name="remoteDistrictAccommodations" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Accommodations.ToString() : string.Empty)</textarea></p></li>
+                            <li>Goals <p><textarea name="remoteDistrictGoals" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</textarea></p></li>
+                            <li>Other Considerations <p><textarea name="remoteDistrictOther" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</textarea></p></li>
+                        </ol>
                     </div>
-                    <div class="collapse" @(Model.Plan.RemoteLearning_ParentRequest ? "style=display:block;" : string.Empty) id="collapseRemoteParent">
-                        <div class="well">
-                            <p style="color:#6067ce;">Due to the COVID-19 pandemic and local district option, the parents have chosen for their child to receive their education towards the general curriculum as well as to receive special education and related services remotely. The IEP team will determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning while making progress in the general curriculum and advancing appropriately towards their annual IEP goals.</p>
-                            <br />
-                            <ol>
-                                <li>Services <p><textarea name="remoteParentServices" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Services.ToString() : string.Empty)</textarea></p></li>
-                                <li>Accommodations <p><textarea name="remoteParentAccomodations" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Accommodations.ToString() : string.Empty)</textarea></p></li>
-                                <li>Goals <p><textarea name="remoteParentGoals" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</textarea></p></li>
-                                <li>Other Considerations <p><textarea name="remoteParentOther" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</textarea></p></li>
-                            </ol>
-                        </div>
+                </div>
+                <div class="collapse" @(Model.Plan.RemoteLearning_ParentRequest ? "style=display:block;" : string.Empty) id="collapseRemoteParent">
+                    <div class="well">
+                        <p style="color:#6067ce;">Due to the COVID-19 pandemic and local district option, the parents have chosen for their child to receive their education towards the general curriculum as well as to receive special education and related services remotely. The IEP team will determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning while making progress in the general curriculum and advancing appropriately towards their annual IEP goals.</p>
+                        <br />
+                        <ol>
+                            <li>Services <p><textarea name="remoteParentServices" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Services.ToString() : string.Empty)</textarea></p></li>
+                            <li>Accommodations <p><textarea name="remoteParentAccomodations" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Accommodations.ToString() : string.Empty)</textarea></p></li>
+                            <li>Goals <p><textarea name="remoteParentGoals" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</textarea></p></li>
+                            <li>Other Considerations <p><textarea name="remoteParentOther" class="form-control standard-font-size" rows="3" maxlength="2000">@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</textarea></p></li>
+                        </ol>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row noPrint">
-                <div class="col-md-12" style="text-align:center;">
-                    <div class="form-group">
-                        <button type="submit" class="formbtn btn btn-primary btn-lg" id="saveContingency"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                        <button type="button" class="formbtn btn btn-success btn-lg" id="saveContingencyCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
-                    </div>
+        <div class="row noPrint">
+            <div class="col-md-12" style="text-align:center;">
+                <div class="form-group">
+                    <button type="submit" class="formbtn btn btn-primary btn-lg" id="saveContingency"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveContingencyCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
-        }
-    </div>
+        </div>
+    }
 
     <div class="completed-loader @(Model.Plan.Completed == true ? "completed-loader-visible" : "completed-loader-hidden")">
         <div class="text-center completed-checkbox">

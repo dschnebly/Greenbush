@@ -18,16 +18,16 @@
 
         <div class="funkyradio">
             <div class="funkyradio-success">
-                <input type="checkbox" id="ModuleIntelligenceNoConcerns" name="ModuleIntelligenceNoConcerns" @(Model.Concerns ?  string.Empty : "checked") />
+                <input type="checkbox" id="ModuleIntelligenceNoConcerns" name="ModuleIntelligenceNoConcerns" @(Model.Concerns ? string.Empty : "checked") />
                 <label for="ModuleIntelligenceNoConcerns" class="standard-font-size">No Concerns</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-                <label for="ModuleIntelligenceProgressTowardGenEd" class="standard-font-size" >Progressing with General Education Support</label>
+                <label for="ModuleIntelligenceProgressTowardGenEd" class="standard-font-size">Progressing with General Education Support</label>
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) />
-                <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size" >Area of Need which impacts performance in General Education</label>
+                <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size">Area of Need which impacts performance in General Education</label>
             </div>
         </div>
         <fieldset class="form-group">
@@ -46,7 +46,13 @@
         <fieldset class="form-group">
             <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
             <div class="form-check">
-                <textarea class="form-control standard-font-size" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3" >@(Model.AreaOfNeedDescription)</textarea>
+                <textarea class="form-control standard-font-size" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
+            </div>
+        </fieldset>
+        <fieldset class="form-group">
+            <div class="form-check">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <textarea class="form-control standard-font-size" id="IntelligenceNotes" name="IntelligenceNotes" type="text" rows="3">@(Model.Notes)</textarea>
             </div>
         </fieldset>
         <div class="row">

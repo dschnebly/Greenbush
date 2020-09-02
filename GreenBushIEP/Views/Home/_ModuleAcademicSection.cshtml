@@ -85,6 +85,12 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <div class="form-check">
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                                <textarea class="form-control standard-font-size" id="AcademicNotes" name="AcademicNotes" type="text" rows="3">@(Model.Academic.Notes)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
                             <div class="form-check">
                                 <div class="checkbox academicNeedsCheckbox">
@@ -142,6 +148,12 @@
                             <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
                             <div class="form-check">
                                 <textarea class="form-control standard-font-size" name="ModuleReadingAreaOfNeedDescription" id="ModuleReadingAreaOfNeedDescription" rows="3">@(Model.Reading.AreaOfNeedDescription)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
+                            <div class="form-check">
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                                <textarea class="form-control standard-font-size" id="ReadingNotes" name="ReadingNotes" type="text" rows="3">@(Model.Reading.Notes)</textarea>
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
@@ -206,6 +218,12 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <div class="form-check">
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                                <textarea class="form-control standard-font-size" id="MathNotes" name="MathNotes" type="text" rows="3">@(Model.Math.Notes)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
                             <div class="form-check">
                                 <div class="checkbox mathNeedsCheckbox">
@@ -266,6 +284,12 @@
                             </div>
                         </fieldset>
                         <fieldset class="form-group">
+                            <div class="form-check">
+                                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                                <textarea class="form-control standard-font-size" id="WrittenNotes" name="WrittenNotes" type="text" rows="3">@(Model.Written.Notes)</textarea>
+                            </div>
+                        </fieldset>
+                        <fieldset class="form-group">
                             <label class="standard-font-size" style="padding: 25px 0 15px;">This need will be met by:</label>
                             <div class="form-check">
                                 <div class="checkbox writtenNeedsCheckbox">
@@ -319,7 +343,6 @@
 <br />
 
 <script>
-    debugger;
     //**************************/
     //  Academic Attached Events
     /***************************/

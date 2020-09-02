@@ -44,6 +44,7 @@ namespace GreenBushIEP.Controllers
                         HealthIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         HealthIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         HealthIEP.AreaOfNeedDescription = collection["AreaOfNeedDescription"].ToString();
+                        HealthIEP.Notes = collection["HealthNotes"].ToString();
                         HealthIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
                         HealthIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         HealthIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
@@ -92,6 +93,7 @@ namespace GreenBushIEP.Controllers
                         MotorIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         MotorIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         MotorIEP.AreaOfNeedDescription = collection["ModuleMotorAreaOfNeedDescription"].ToString();
+                        MotorIEP.Notes = collection["MotorNotes"].ToString();
                         MotorIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
                         MotorIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         MotorIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
@@ -140,6 +142,7 @@ namespace GreenBushIEP.Controllers
                         CommunicationIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         CommunicationIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         CommunicationIEP.AreaOfNeedDescription = collection["ModuleCommunicationAreaOfNeedDescription"].ToString();
+                        CommunicationIEP.Notes = collection["CommunitcationNotes"].ToString();
                         CommunicationIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
                         CommunicationIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         CommunicationIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
@@ -191,6 +194,7 @@ namespace GreenBushIEP.Controllers
                         SocialIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         SocialIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         SocialIEP.AreaOfNeedDescription = collection["ModuleSocialAreaOfNeedDescription"].ToString();
+                        SocialIEP.Notes = collection["SocialNotes"].ToString();
                         SocialIEP.NeedMetByGoal = collection["MetByGoal"] == "on" ? true : false;
                         SocialIEP.NeedMetByAccommodation = collection["MetByAccommodation"] == "on" ? true : false;
                         SocialIEP.NeedMetByOther = collection["MetByOther"] == "on" ? true : false;
@@ -235,6 +239,7 @@ namespace GreenBushIEP.Controllers
                         IntellgienceIEP.ProgressTowardGenEd = collection["ModuleIntelligenceProgressTowardGenEd"] == "on" ? true : false;
                         IntellgienceIEP.AreaOfNeed = collection["ModuleIntelligenceAreaOfNeed"] == "on" ? true : false;
                         IntellgienceIEP.AreaOfNeedDescription = collection["ModuleIntelligenceAreaOfNeedDescription"].ToString();
+                        IntellgienceIEP.Notes = collection["IntelligenceNotes"].ToString();
                         IntellgienceIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         IntellgienceIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         IntellgienceIEP.Completed = Convert.ToBoolean(collection["Completed"]);
@@ -288,6 +293,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Academic.PLAAFP_Strengths = collection["ModuleAcademic_PLAAFP_Strengths"];
                         viewModel.Academic.PLAAFP_Concerns = collection["ModuleAcademic_PLAAFP_Concerns"];
                         viewModel.Academic.AreaOfNeedDescription = collection["ModuleAcademicAreaOfNeedDescription"].ToString();
+                        viewModel.Academic.Notes = collection["AcademicNotes"].ToString();
                         viewModel.Academic.NeedMetByGoal = collection["ModuleAcademicMetByGoal"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByAccommodation = collection["ModuleAcademicMetByAccommodation"] == "on" ? true : false;
                         viewModel.Academic.NeedMetByOther = collection["ModuleAcademicMetByOther"] == "on" ? true : false;
@@ -301,6 +307,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Reading.PLAAFP_Strengths = collection["ModuleReading_PLAAFP_Strengths"];
                         viewModel.Reading.PLAAFP_Concerns = collection["ModuleReading_PLAAFP_Concerns"];
                         viewModel.Reading.AreaOfNeedDescription = collection["ModuleReadingAreaOfNeedDescription"].ToString();
+                        viewModel.Reading.Notes = collection["ReadingNotes"].ToString();
                         viewModel.Reading.NeedMetByGoal = collection["ModuleReadingMetByGoal"] == "on" ? true : false;
                         viewModel.Reading.NeedMetByAccommodation = collection["ModuleReadingMetByAccommodation"] == "on" ? true : false;
                         viewModel.Reading.NeedMetByOther = collection["ModuleReadingMetByOther"] == "on" ? true : false;
@@ -313,6 +320,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Math.PLAAFP_Strengths = collection["ModuleMath_PLAAFP_Strengths"];
                         viewModel.Math.PLAAFP_Concerns = collection["ModuleMath_PLAAFP_Concerns"];
                         viewModel.Math.AreaOfNeedDescription = collection["ModuleMathAreaOfNeedDescription"].ToString();
+                        viewModel.Math.Notes = collection["MathNotes"].ToString();
                         viewModel.Math.NeedMetByGoal = collection["ModuleMathMetByGoal"] == "on" ? true : false;
                         viewModel.Math.NeedMetByAccommodation = collection["ModuleMathMetByAccommodation"] == "on" ? true : false;
                         viewModel.Math.NeedMetByOther = collection["ModuleMathMetByOther"] == "on" ? true : false;
@@ -325,6 +333,7 @@ namespace GreenBushIEP.Controllers
                         viewModel.Written.PLAAFP_Strengths = collection["ModuleWritten_PLAAFP_Strengths"];
                         viewModel.Written.PLAAFP_Concerns = collection["ModuleWritten_PLAAFP_Concerns"];
                         viewModel.Written.AreaOfNeedDescription = collection["ModuleWrittenAreaOfNeedDescription"].ToString();
+                        viewModel.Written.Notes = collection["WrittenNotes"].ToString();
                         viewModel.Written.NeedMetByGoal = collection["ModuleWrittenMetByGoal"] == "on" ? true : false;
                         viewModel.Written.NeedMetByAccommodation = collection["ModuleWrittenMetByAccommodation"] == "on" ? true : false;
                         viewModel.Written.NeedMetByOther = collection["ModuleWrittenMetByOther"] == "on" ? true : false;
