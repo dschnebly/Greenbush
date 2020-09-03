@@ -9,19 +9,19 @@
 	@Styles.Render("~/Content/transition.css")
 	@Styles.Render("~/Content/chosen.css")
 	@Styles.Render("~/Content/jquery-ui.min.css")
-	@Styles.Render("~/Content/createReferral.css")
+	@Styles.Render("~/Content/createReferral.css?v1.1")
 }
 
 <div class="container">
 	<div class="row">
 		<div class="col-md-10">
 			<ul class="breadcrumb" style="margin-top: 18px;">
-				<li>@Html.ActionLink((string)("Referrals").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+				<li>@Html.ActionLink("Referrals", "Referrals", "Manage", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
 				<li class="active" style="font-size: 20px;">@ViewBag.Title</li>
 			</ul>
 		</div>
 		<div class="col-md-2 pull-right">
-			@Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+			@Html.ActionLink(" ", "Referrals", "Manage", null, new { id = "backtoportal", title = "Cancel action and go back to my current referrals", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
 		</div>
 	</div>
 	<div class="row">
@@ -62,14 +62,33 @@
 					</ul>
 				</div>
 				<div class="tab-content">
-					<div id="step1" class="tab-pane active" role="tabpanel">
-						 
+					<div id="step1" class="tab-pane active" role="tabpanel">						
+
 						@using (Html.BeginForm("CreateReferral", "Manage", null, FormMethod.Post, new { id = "createNewReferral", @class = "newstudent" }))
 						{
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 							<input type="hidden" id="studentId" name="studentId" value=@(Model.student.UserID) />
 							
 							<div class="step11">
+
+                                <div class="row">
+                                    <div class="col-md-4">
+										<label class="control-label required" for="referralType">Referral Type</label>
+										<select id="referralType" name="referralType" class="form-control" placeholder="Select Referral Type">                                            
+                                            <option value="Referral" @(Model.request.ReferralType == "Referral" ? "selected" : "") >Referral</option>
+                                            <option value="Incoming" @(Model.request.ReferralType == "Incoming" ? "selected" : "")>Incoming</option>
+                                        </select>
+									</div>
+                                    <div class="col-md-2 incomingRefferal" style="display:@(Model.request.ReferralType == "Incoming" ? "block" : "none")">
+                                        <label class="control-label" for="enrollmentDate">District Enrollment Date</label>
+                                        <input id="enrollmentDate" name="enrollmentDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.request.EnrollmentDate.HasValue ? Model.request.EnrollmentDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="col-md-5 checkbox">
+                                        <label style="padding-left: 0;"><input type="checkbox" id="nokidsId" @(Model.referralId > 0 &&  Model.info.KIDSID == 0 ? "checked" : "")><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>KIDS ID not available</label>
+                                    </div>
+                                </div>
 								<div class="row">
 									<div class="col-md-3">
 										<label class="control-label" for="kidsid">KIDS ID</label>
@@ -99,7 +118,9 @@
 										</div>
 									</div>
 								</div>
-								<div class="row">
+								
+                                
+                                <div class="row">
 									<div class="col-md-4">
 										<label class="control-label required" for="firstname">First Name</label>
 										@Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
@@ -119,25 +140,25 @@
 								<div class="row voffset3">
 									<div class="col-sm-4">
 										<div class="form-group">
-											<label for="studentStreetAddress1">Student's Street Address</label>
+											<label class="control-label" for="studentStreetAddress1">Student's Street Address</label>
 											<input name="studentStreetAddress1" id="studentStreetAddress1" class="form-control norequired" placeholder="Street Address" type="text"  value="@(Model.student.Address1)"/>
 										</div>
 									</div>
 									<div class="col-sm-3">
 										<div class="form-group">
-											<label for="studentStreetAddress2">Apt/Ste/Rm</label>
+											<label class="control-label" for="studentStreetAddress2">Apt/Ste/Rm</label>
 											<input name="studentStreetAddress2" id="studentStreetAddress2" class="form-control norequired" placeholder="Apartment/Suite/Room" type="text" value="@(Model.student.Address2)" />
 										</div>
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label for="studentCity">City</label>
+											<label class="control-label" for="studentCity">City</label>
 											<input name="studentCity" id="studentCity" class="form-control norequired" placeholder="Contact City" type="text" value="@(Model.student.City)" />
 										</div>
 									</div>
 									<div class="col-sm-1">
 										<div class="form-group">
-											<label for="studentState">State</label>
+											<label class="control-label" for="studentState">State</label>
 											  <select name="studentState" id="studentState" class="form-control norequired" data-validate="true">
                                                     <option value="AL" selected=@(Model.student.State == "AL")>AL</option>
                                                     <option value="AK" selected=@(Model.student.State == "AK")>AK</option>
@@ -195,14 +216,56 @@
 									</div>
 									<div class="col-sm-2">
 										<div class="form-group">
-											<label for="studentZipCode">Zip Code</label>
+											<label class="control-label" for="studentZipCode">Zip Code</label>
 											<input name="studentZipCode" id="studentZipCode" class="form-control norequired" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" value="@(Model.student.Zip)"/>
 										</div>
 									</div>
 								</div>
-								<div class="row voffset3">
-							  <div class="col-md-2">
-                                            <label for="studentCounty">County of Residence</label>
+								
+                                <div class="row incomingRefferal" style="display:@(Model.request.ReferralType == "Incoming" ? "block" : "none")">
+                                    @*<div class="col-md-2">
+                                        <label class="control-label" for="enrollmentDate">District Enrollment Date</label>
+                                        <input id="enrollmentDate" name="enrollmentDate" type="text" style="height:49px; z-index: 99999" class="form-control studentDOB norequired" placeholder="MM/dd/YYYY  e.g. 08/25/1977" value="@(Model.request.EnrollmentDate.HasValue ? Model.request.EnrollmentDate.Value.ToString("MM/dd/yyyy") : "")" />
+                                    </div>*@
+                                    <div class="col-md-5">
+                                        <label class="control-label" for="primaryDisability">Primary Disability</label>
+                                        <select class="form-control" name="primaryDisability" id="primaryDisability">
+                                            @if (Model.primaryDisabilities != null)
+                                            {
+                                                foreach (var primary in Model.primaryDisabilities)
+                                                {
+                                                    if(string.IsNullOrEmpty(Model.info.Primary_DisabilityCode))
+                                                    {
+                                                        Model.info.Primary_DisabilityCode = "ND";
+                                                    }
+
+                                                    var selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected" : "";
+                                                    <option value="@primary.DisabilityCode" @(selected)>@primary.DisabilityDescription</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="control-label" for="secondaryDisability">Secondary Disability</label>
+                                        <select class="form-control" name="secondaryDisability" id="secondaryDisability">
+                                            @if (Model.secondaryDisabilities != null)
+                                            {
+                                                foreach (var secondary in Model.secondaryDisabilities)
+                                                {
+                                                    if(string.IsNullOrEmpty(Model.info.Secondary_DisabilityCode))
+                                                    {
+                                                        Model.info.Secondary_DisabilityCode = "ND";
+                                                    }
+                                                    var selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected" : "";
+                                                    <option value="@secondary.DisabilityCode" @(selected)>@secondary.DisabilityDescription</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row voffset3">
+							        <div class="col-md-2">
+                                            <label  class="control-label" for="studentCounty">County of Residence</label>
                                             <select name="studentCounty" id="studentCounty" class="form-control">
                                                 <option value="AL" selected=@(Model.info.County == "AL")>Allen</option>
                                                 <option value="AN" selected=@(Model.info.County == "AN")>Anderson</option>
@@ -319,7 +382,7 @@
                                             </select>
                                         </div>
 									<div class="col-md-4">
-										<label for="studentGrade">Student Grade</label>
+										<label class="control-label" for="studentGrade">Student Grade</label>
 										<select name="studentGrade" id="studentGrade" class="form-control">
                                                 @foreach (tblGrade grade in Model.grades)
                                                 {
@@ -328,7 +391,7 @@
                                         </select>
 									</div>
 									<div class="col-md-4">
-										<label for="studentRace">Student Race</label>
+										<label class="control-label" for="studentRace">Student Race</label>
 										<select name="studentRace" id="studentRace" class="form-control">
                                                 @foreach(tblRace race in Model.races)
                                                 {
@@ -339,7 +402,7 @@
 								</div>
 								<div class="row voffset2">                                    
 									 <div class="col-md-2">
-                                            <label for="studentEthnic">Hispanic Ethnicity</label>
+                                            <label class="control-label" for="studentEthnic">Hispanic Ethnicity</label>
                                             <select name="studentEthnic" id="studentEthnic" class="form-control">
                                                 <option value="">Select</option>
                                                 <option value="Y" selected=@(Model.info.Ethicity == "Y")>Hispanic/Latino</option>
@@ -347,7 +410,7 @@
                                             </select>
                                         </div>
 									<div class="col-md-4">
-										<label for="studentLanguage">Student Language</label>
+										<label class="control-label" for="studentLanguage">Student Language</label>
 										  <select name="studentLanguage" id="studentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.StudentLanguage == "EN")>EN - English</option>
                                                 <option value="ES" selected=@(Model.info.StudentLanguage == "ES")>ES - Spanish</option>
@@ -378,7 +441,7 @@
                                             </select>                                            
 									</div>
 									<div class="col-md-4">
-										<label for="parentLanguage">Parents Language</label>
+										<label class="control-label" for="parentLanguage">Parents Language</label>
 										   <select name="parentLanguage" id="parentLanguage" class="form-control">
                                                 <option value="EN" selected=@(Model.info.ParentLanguage == "EN")>EN - English</option>
                                                 <option value="ES" selected=@(Model.info.ParentLanguage == "ES")>ES - Spanish</option>
@@ -425,19 +488,25 @@
 								<input type="hidden" id="studentId" name="studentId" value=0 />
 								
 								<div class="step11">
-
+                                    <div class="row">
+                                     <div class="col-md-12">
+                                         <h3 class="control-label studentNameLabel"></h3>
+                                         <hr/>
+                                     </div>
+                                </div>
 									<div class="row voffset3">
 										<div class="col-md-2">
 											<label class="control-label" for="assignChildCount">Assign Child Count</label>
 											 <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a district...">
-                                            @if (Model.allDistricts != null)
-                                            {
-                                                foreach (var district in Model.allDistricts)
+                                                <option value="" selected disabled>Choose a district</option>
+                                                @if (Model.allDistricts != null)
                                                 {
-                                                    string selected = Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
-                                                    <option value="@district.USD" @selected>@district.DistrictName</option>
+                                                    foreach (var district in Model.allDistricts)
+                                                    {
+                                                        string selected = Model.referralId > 0 && Model.info.AssignedUSD == district.USD ? "selected=selected" : "";
+                                                        <option value="@district.USD" @selected>@district.DistrictName</option>
+                                                    }
                                                 }
-                                            }
                                         </select>
 										</div>										
 										<div class="col-md-3">
@@ -495,17 +564,25 @@
 						</div>
 					</div>
 					<div id="step3" class="tab-pane" role="tabpanel">
-						<h4 style="font-size:1.5em; margin-bottom: 1.5em;">Parent/Guardian</h4>
+						
 						@using (Html.BeginForm("CreateReferralContacts", "Manage", null, FormMethod.Post, new { id = "createReferralContacts", @class = "newstudent" }))
 						{
 							@Html.ValidationSummary(true, "", new { @class = "text-danger" })
 							<input type="hidden" id="studentId" name="studentId" value=0 />
 
 							if (Model.contacts != null)
-							{
-								<div class="step33" id="student-contacts">
-									<!-- student contact area -->
-								</div>
+							{								
+                                 <div class="row">
+                                     <div class="col-md-12">
+                                         <h3 class="control-label studentNameLabel"></h3><hr/>
+                                     </div>
+                                </div>                                
+                                <div class="row">
+                                     <div class="col-md-12">
+                                           <h4 style="font-size:1.5em; margin-bottom: 1.5em;">Parent/Guardian Information</h4>
+                                     </div>
+                                </div>
+                                
 								 <div class="step33" id="student-contacts">
                                     @foreach (var contact in Model.contacts)
                                     {
@@ -636,7 +713,7 @@
                                                 </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
-                                                        <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
+                                                        <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
 														<label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
                                                     </div>
                                                 </div>
@@ -815,7 +892,7 @@
         </div>
         <div class="col-sm-2 nopadding">
             <div class="form-group">
-                <input name="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line" style="width: 15%; position: relative; top: 20px; height: 49px;" />				
+                <input name="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" />				
                 <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
             </div>
         </div>
@@ -828,11 +905,11 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createreferral.js?v1.3"></var>
+<var data-reload="true" data-src="/Scripts/createreferral.js?v1.4"></var>
 
 @section scripts {
 	@Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
 	@Scripts.Render("~/Scripts/fasw.transitions.js")
 	@Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-	@Scripts.Render("~/Scripts/createreferral.js?v1.3")
+	@Scripts.Render("~/Scripts/createreferral.js?v1.4")
 }

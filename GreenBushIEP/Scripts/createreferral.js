@@ -1,7 +1,38 @@
 ﻿$(document).ready(function () {
 
     init();
-	initContacts();
+    initContacts();
+   
+    if ($("#nokidsId").prop("checked") == true) {
+        $("#kidsid").attr("disabled", "disabled");
+        $("#kidsid").val("0000000000");
+    }
+
+    $("#nokidsId").on('click', function () {
+        if ($("#kidsid").attr("disabled") !== undefined) {
+            $("#kidsid").removeAttr("disabled");
+            $("#kidsid").val("");
+        } else {
+            $("#kidsid").attr("disabled", "disabled");
+            $("#kidsid").val("0000000000");
+        }
+    });
+
+    $("#referralType").on('change', function (e) {
+
+        var valueSelected = this.value;
+        if (valueSelected == "Incoming") {
+            //show enrollment date and disabilities
+            $(".incomingRefferal").show();
+        }
+        else {
+            //clear fields
+            $("#enrollmentDate").val("");
+            $("#primaryDisability").val("");
+            $("#secondaryDisability").val("");
+            $(".incomingRefferal").hide();
+        }
+    });
 
 	$("#assignChildCount").on('change', function (e) {
 		var optionSelected = $("option:selected", this);
@@ -43,9 +74,6 @@
 		});
 	});
 
-
-
-
     $(".add-contact").on("click", function () {
         // clone and unhide the contact template.
         var newContact = $("#contact-template").clone().removeAttr("id").removeAttr("style").addClass("student-contact").appendTo("#student-contacts");
@@ -58,6 +86,13 @@
 
         return false;
     });
+
+    //var referralId = $("#studentId").val();
+    //var assignChildCount = $("#assignChildCount").val();
+
+    //if (referralId > 0 && assignChildCount != null && assignChildCount != undefined && assignChildCount != "") {
+    //    $("#assignChildCount").trigger("change");
+    //}
 });
 
 function init() {
@@ -141,6 +176,21 @@ function tabValidates() {
             input.removeClass('contact-tooltip');
         }
     });
+
+    //copy student name
+    var firstName = $("#firstname").val();
+    var middleName = $("#middlename").val();
+    var lastname = $("#lastname").val();
+    var studentName = "";
+
+    if (middleName === "") {
+        studentName = firstName + " " + lastname;
+    }
+    else {
+        studentName = firstName + " " + middleName + " " + lastname;
+    }
+
+    $(".studentNameLabel").html(studentName);
 
     return validates;
 }
@@ -228,29 +278,72 @@ $("#next3").on("click", function () {
 	}
 });
 
+//function checkPrimarySelected() {
+
+//    //check if primary selected
+//    var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
+//    var primaryChecked = $('input.primaryContactCheckbox:checkbox:checked').length;
+//    if (numberOfContacts > 0 && primaryChecked == 0) {
+//        return false;
+//    }
+
+//    return true;
+//}
+
+//function createStudentContacts() {
+//    $.ajax({
+//        url: '/Manage/CreateReferralContacts',
+//        type: 'POST',
+//        data: $("#createReferralContacts").serialize(),
+//        success: function (data) {
+//            if (data.Result === "success") {
+
+//                var $active = $('.wizard .nav-tabs li.active');
+//                $active.next().removeClass('disabled');
+//                $($active).next().find('a[data-toggle="tab"]').click();
+
+//                $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+//                $("form:eq(2)").find("input[name='studentId']").val(data.Message);
+//                $("form:eq(3)").find("input[name='studentId']").val(data.Message);
+//                $("form:eq(4)").find("input[name='studentId']").val(data.Message);
+
+//                $("#pSummary").html(data.Summary);
+
+//            } else {
+
+//                alert(data.Message);
+//            }
+//        },
+//        error: function (data) {
+//            alert("There was an error when attempt to connect to the server.");
+//        }
+//    });
+//}
+
+
 $("#next4").on("click", function () {
 
-	var theForm = document.getElementById("createReferralContacts");
+    var theForm = document.getElementById("createReferralContacts");
 
     if (tabValidates()) {
         $.ajax({
             url: '/Manage/CreateReferralContacts',
             type: 'POST',
-			data: $("#createReferralContacts").serialize(),
+            data: $("#createReferralContacts").serialize(),
             success: function (data) {
                 if (data.Result === "success") {
 
                     var $active = $('.wizard .nav-tabs li.active');
                     $active.next().removeClass('disabled');
-					$($active).next().find('a[data-toggle="tab"]').click();
+                    $($active).next().find('a[data-toggle="tab"]').click();
 
-					$("form:eq(1)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(2)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(3)").find("input[name='studentId']").val(data.Message);
-					$("form:eq(4)").find("input[name='studentId']").val(data.Message);
+                    $("form:eq(1)").find("input[name='studentId']").val(data.Message);
+                    $("form:eq(2)").find("input[name='studentId']").val(data.Message);
+                    $("form:eq(3)").find("input[name='studentId']").val(data.Message);
+                    $("form:eq(4)").find("input[name='studentId']").val(data.Message);
 
-					$("#pSummary").html(data.Summary);
-					
+                    $("#pSummary").html(data.Summary);
+
                 } else {
 
                     alert(data.Message);

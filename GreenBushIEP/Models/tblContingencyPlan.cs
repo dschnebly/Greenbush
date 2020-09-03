@@ -25,5 +25,9 @@ namespace GreenBushIEP.Models
         public string Goals { get; set; }
         public string OtherConsiderations { get; set; }
         public Nullable<bool> Completed { get; set; }
+        public Nullable<System.DateTime> Create_Date { get; set; }
+        public Nullable<System.DateTime> Update_Date { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
+        public Nullable<int> ModifiedBy { get; set; }
     }
 }

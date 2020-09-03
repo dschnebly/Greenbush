@@ -3,6 +3,10 @@
     init();
     initContacts();
 
+	if ($("#nokidsId").prop("checked") == true) {		
+		$("#kidsid").attr("disabled", "disabled");
+		$("#kidsid").val("0000000000");
+	}
 
 	$("#nokidsId").on('click', function () {
 		if ($("#kidsid").attr("disabled") !== undefined) {
@@ -193,7 +197,22 @@ function tabValidates() {
         else {
             input.removeClass('contact-tooltip');
         }
-    });
+	});
+
+	//copy student name
+	var firstName = $("#firstname").val();
+	var middleName = $("#middlename").val();
+	var lastname = $("#lastname").val();
+	var studentName = "";
+
+	if (middleName === "") {
+		studentName = firstName + " " + lastname;
+	}
+	else {
+		studentName = firstName + " " + middleName + " " + lastname;
+	}
+
+	$(".studentNameLabel").html(studentName);
 
     return validates;
 }
@@ -210,6 +229,89 @@ function initContacts() {
 
 }
 
+function checkPrimarySelected() {
+
+	//check if primary selected
+	var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
+	var primaryChecked = $('input.primaryContactCheckbox:checkbox:checked').length;
+	if (numberOfContacts > 0 && primaryChecked == 0) {
+		return false;
+	}
+
+	return true;
+}
+
+function createStudentContacts() {
+	
+	$.ajax({
+		url: '/Manage/EditReferralContacts',
+		type: 'POST',
+		data: $("#editStudentContacts").serialize(),
+		success: function (data) {
+			if (data.Result === "success") {
+
+				var $active = $('.wizard .nav-tabs li.active');
+				$active.next().removeClass('disabled');
+
+
+				$($active).next().find('a[data-toggle="tab"]').click();
+
+				$('*[name*=studentId]').each(function () {
+					$(this).val(data.Message);
+				});
+
+
+				// clear out the ul list
+				$("ul#teacherList").empty();
+
+				// our array to user for appending
+				var items = [];
+
+				if (!$.isEmptyObject(data.teacherList)) {
+
+					$.each(data.teacherList, function (key, value) {
+						var userImage = '/Content/Images/newUser.png';
+						items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+					});
+
+					$("ul#teacherList").append.apply($("ul#teacherList"), items);
+					$(".listrap").listrap().getSelection();
+				}
+
+
+			} else {
+
+				$('#alertMessage').html(data.Message);
+				$('#alertMessage').show();
+			}
+		},
+		error: function (data) {
+			alert("There was an error when attempt to connect to the server.");
+		}
+	});
+}
+
+
+$("#next7").on("click", function () {
+	if (tabValidates()) {
+		
+		var primary = checkPrimarySelected();
+		if (!primary) {
+			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
+
+			if (answer) {
+				createStudentContacts();
+			}
+		}
+		else {
+			createStudentContacts();
+		}
+	}
+	else {
+		$('#alertMessage').html("Please verify that all required fields are filled out.");
+		$('#alertMessage').show();
+	}
+});
 
 $("#next5").on("click", function () {
 
@@ -285,66 +387,8 @@ $("#next6").on("click", function () {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
 		$('#alertMessage').show();
 	}
-});
 
-$("#next7").on("click", function () {
-
-	var theForm = document.getElementById("editStudentContacts");
-
-	if (tabValidates()) {
-
-		$.ajax({
-			url: '/Manage/EditReferralContacts',
-			type: 'POST',
-			data: $("#editStudentContacts").serialize(),
-			success: function (data) {
-				if (data.Result === "success") {
-
-					var $active = $('.wizard .nav-tabs li.active');
-					$active.next().removeClass('disabled');
-
-
-					$($active).next().find('a[data-toggle="tab"]').click();
-
-					$('*[name*=studentId]').each(function () {
-						$(this).val(data.Message);
-					});
-
-
-					// clear out the ul list
-					$("ul#teacherList").empty();
-
-					// our array to user for appending
-					var items = [];
-
-					if (!$.isEmptyObject(data.teacherList)) {
-
-						$.each(data.teacherList, function (key, value) {
-							var userImage = '/Content/Images/newUser.png';
-							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
-						});
-
-						$("ul#teacherList").append.apply($("ul#teacherList"), items);
-						$(".listrap").listrap().getSelection();
-					}
-
-
-				} else {
-
-					$('#alertMessage').html(data.Message);
-					$('#alertMessage').show();
-				}
-			},
-			error: function (data) {
-				alert("There was an error when attempt to connect to the server.");
-			}
-		});
-
-	}
-	else {
-		$('#alertMessage').html("Please verify that all required fields are filled out.");
-		$('#alertMessage').show();
-	}
+	
 });
 
 $("#next8").on("click", function () {
