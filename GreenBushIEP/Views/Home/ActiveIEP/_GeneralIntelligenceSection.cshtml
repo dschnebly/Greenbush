@@ -2,56 +2,56 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule();"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule();"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-education" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;General Intelligence</h4>
 </div>
 <div class="modal-body">
-
-   
-
-        <div class="funkyradio">
-            <div class="funkyradio-primary">
-                <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) disabled/>
-                <label for="ModuleIntelligenceProgressTowardGenEd" class="standard-font-size" >Progressing with General Education Support</label>
-            </div>
-            <div class="funkyradio-primary">
-                <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty)  disabled/>
-                <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size" >Area of Need which impacts performance in General Education</label>
-            </div>
+    <div class="funkyradio">
+        <div class="funkyradio-primary">
+            <input type="checkbox" name="ModuleIntelligenceProgressTowardGenEd" id="ModuleIntelligenceProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) disabled />
+            <label for="ModuleIntelligenceProgressTowardGenEd" class="standard-font-size">Progressing with General Education Support</label>
         </div>
+        <div class="funkyradio-primary">
+            <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) disabled />
+            <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size">Area of Need which impacts performance in General Education</label>
+        </div>
+    </div>
+    <fieldset class="form-group">
+        <div>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+        </div>
+        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+        <div class="form-check">
+            <p>@(Model.PLAAFP_Strengths)</p>
+        </div>
+        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+        <div class="form-check">
+            <p>@(Model.PLAAFP_Concerns)</p>
+        </div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+        <div class="form-check">
+            <p>@(Model.AreaOfNeedDescription)</p>
+        </div>
+    </fieldset>
+    @if (Model.Notes != String.Empty && Model.Notes != null)
+    {
         <fieldset class="form-group">
-            <div>
-                <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-            </div>
-            <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
             <div class="form-check">
-                <p>@(Model.PLAAFP_Strengths)</p>
-            </div>
-            <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-            <div class="form-check">
-                <p>@(Model.PLAAFP_Concerns)</p>
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <textarea class="form-control standard-font-size" id="MotorNotes" name="MotorNotes" type="text" rows="3">@(Model.Notes)</textarea>
             </div>
         </fieldset>
-        <fieldset class="form-group">
-            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-            <div class="form-check">
-                <p>@(Model.AreaOfNeedDescription)</p>
-            </div>
-        </fieldset>
-
-        <div class="row">
-            <div class="col-md-12" style="text-align:center;">
-                <div class="form-group">                    
-                    <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-                </div>
+    }
+    <div class="row">
+        <div class="col-md-12" style="text-align:center;">
+            <div class="form-group">
+                <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
             </div>
         </div>
-
-   
-
+    </div>
 </div>
 <br />
 <br />
-
-
