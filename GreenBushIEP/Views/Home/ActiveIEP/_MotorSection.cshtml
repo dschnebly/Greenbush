@@ -2,80 +2,89 @@
 @model GreenBushIEP.Models.tblIEPMotor
 
 <div class="modal-header">
-	<button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-	<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Motor');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
-	<button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
-	<h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-cogs" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Motor</h4>
+    <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Motor');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
+    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-cogs" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Motor</h4>
 </div>
 <div class="modal-body">
 
 
 
-	<div class="funkyradio">
-		<div class="funkyradio-success">
-			<input type="checkbox" id="ModuleMotorNoConcerns" name="ModuleMotorNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) disabled />
-			<label for="ModuleMotorNoConcerns" class="standard-font-size">No Concerns</label>
-		</div>
-		<div class="funkyradio-primary">
-			<input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
-			<label for="ModuleMotorProgressTowardGenEd" class="standard-font-size">Progressing with General Education Supports</label>
-		</div>
-		<div class="funkyradio-primary">
-			<input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.Needs ? "checked" : String.Empty) disabled />
-			<label for="ModuleMotorNeeds" class="standard-font-size">Area of Need which impacts performance in General Education</label>
-		</div>
-	</div>
-	<fieldset class="form-group">
-		<label class="standard-font-size" style="padding: 25px 0 15px;">Team will consider participation in:</label>
-		<div class="form-check">
-			<label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
-			<label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports needed in Physical Education</label><br />
-			<label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<div>
-			<label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
-		</div>
-		<label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
-		<div class="form-check">
-			<p>@(Model.PLAAFP_Strengths)</p>
-		</div>
-		<label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
-		<div class="form-check">
-			<p>@(Model.PLAAFP_Concerns)</p>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
-		<div class="form-check">
-			<p>@(Model.AreaOfNeedDescription)</p>
-		</div>
-	</fieldset>
-	<fieldset class="form-group">
-		<label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
-		<div class="form-check">
-			<div class="checkbox">
-				<label class="standard-font-size"><input disabled type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-				<label class="standard-font-size"><input disabled type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-				<label class="standard-font-size"><input disabled type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
-			</div>
-		</div>
-		<div class="form-check" id="MeetByOtherTextArea">
-			<div style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
-				<span>Other Description:</span>
-				<p>@(Model.NeedMetByOtherDescription)</p>
-			</div>
-		</div>
-	</fieldset>
+    <div class="funkyradio">
+        <div class="funkyradio-success">
+            <input type="checkbox" id="ModuleMotorNoConcerns" name="ModuleMotorNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) disabled />
+            <label for="ModuleMotorNoConcerns" class="standard-font-size">No Concerns</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="checkbox" id="ModuleMotorProgressTowardGenEd" name="ModuleMotorProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) />
+            <label for="ModuleMotorProgressTowardGenEd" class="standard-font-size">Progressing with General Education Supports</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="checkbox" name="ModuleMotorNeeds" id="ModuleMotorNeeds" @(Model.Needs ? "checked" : String.Empty) disabled />
+            <label for="ModuleMotorNeeds" class="standard-font-size">Area of Need which impacts performance in General Education</label>
+        </div>
+    </div>
+    <fieldset class="form-group">
+        <label class="standard-font-size" style="padding: 25px 0 15px;">Team will consider participation in:</label>
+        <div class="form-check">
+            <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="1" style="position: relative; right: 5px;" @(Model.Participation == 1 || Model.Participation == -1 ? "checked" : String.Empty)>No Special Education supports needed in Physical Education</label><br />
+            <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="2" style="position: relative; right: 5px;" @(Model.Participation == 2 ? "checked" : String.Empty)>Modified or Adaptive Supports needed in Physical Education</label><br />
+            <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="ModuleMotorParticipation" value="3" style="position: relative; right: 5px;" @(Model.Participation == 3 ? "checked" : String.Empty)>Student has met Physical Education Requirements</label><br />
+        </div>
+    </fieldset>
+    <fieldset class="form-group">
+        <div>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label>
+        </div>
+        <label style="font-size: 18px; font-weight:400; padding: 0 0 1px;">Strengths</label>
+        <div class="form-check">
+            <p>@(Model.PLAAFP_Strengths)</p>
+        </div>
+        <label style="font-size: 18px; font-weight:400; padding: 10px 0 1px;">Concerns (including Baseline) </label>
+        <div class="form-check">
+            <p>@(Model.PLAAFP_Concerns)</p>
+        </div>
+    </fieldset>
+    <fieldset class="form-group">
+        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+        <div class="form-check">
+            <p>@(Model.AreaOfNeedDescription)</p>
+        </div>
+    </fieldset>
+    @if (Model.Notes != String.Empty && Model.Notes != null)
+    {
+        <fieldset class="form-group">
+            <div class="form-check">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <textarea class="form-control standard-font-size" id="MotorNotes" name="MotorNotes" type="text" rows="3">@(Model.Notes)</textarea>
+            </div>
+        </fieldset>
+    }
+    <fieldset class="form-group">
+        <label class="standard-font-size" style="padding: 25px 0 15px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+        <div class="form-check">
+            <div class="checkbox">
+                <label class="standard-font-size"><input disabled type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                <label class="standard-font-size"><input disabled type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label class="standard-font-size"><input disabled type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+            </div>
+        </div>
+        <div class="form-check" id="MeetByOtherTextArea">
+            <div style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                <span>Other Description:</span>
+                <p>@(Model.NeedMetByOtherDescription)</p>
+            </div>
+        </div>
+    </fieldset>
 
-	<div class="row">
-		<div class="col-md-12" style="text-align:center;">
-			<div class="form-group">
-				<button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="row">
+        <div class="col-md-12" style="text-align:center;">
+            <div class="form-group">
+                <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
 
 
 

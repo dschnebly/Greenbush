@@ -115,11 +115,9 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row voffset2">
                     <div class="col-md-12">
                         <label class="underline">Strategies</label>
-
                     </div>
                 </div>
                 <div class="row voffset1">
@@ -146,7 +144,6 @@
                         <div id="divStrategyOther" class="voffset2" style="display:none">
                             <label class="standard-font-size">Other Description</label>
                             <p>@Model.StrategiesOther</p>
-
                         </div>
                     </div>
                 </div>               
@@ -203,48 +200,40 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-md-12">
                         <label class="underline">Crisis Management Plan</label>
                     </div>
                 </div>
-				
                 <fieldset class="form-group">
                     <label style="padding: 0 0 15px;">Escalation (describe what this looks like for student)</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Escalation)</p>
                     </div>
                 </fieldset>
-
-
                 <fieldset class="form-group">
                     <label style=" padding: 0 0 15px;">Crisis (describe what this looks like for student)</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Description)</p>
                     </div>
                 </fieldset>
-
                 <fieldset class="form-group">
                     <label style=" padding: 0 0 15px;">Implementation Steps/De-escalation Strategies</label>
                     <div class="form-check">
                         <p>@(Model.Crisis_Implementation)</p>
                     </div>
                 </fieldset>
-
                 <fieldset class="form-group">
                     <label style=" padding: 0 0 15px;">Other</label>
                     <div class="form-check">
                         <p >@(Model.Crisis_Other)</p>
                     </div>
                 </fieldset>
-
                 <div class="row voffset3">
                     <div class="col-md-12">
                         <h3>Action Plan</h3>
                     </div>
                 </div>
-
                 <fieldset class="form-group">
                     <label style=" padding: 0 0 15px;">Follow school/district behavior policies/practice. </label>
                     <div class="form-check">
@@ -252,7 +241,6 @@
                         <p>@(string.IsNullOrEmpty(Model.ReviewedBy) ? "Plan is to be reviewed annually or sooner as determined by the IEP team." : Model.ReviewedBy)</p>
                     </div>
                 </fieldset>
-
                 <div class="col-md-12" style="text-align:center; margin-top: 15px;">
                     <div class="form-group">
                       

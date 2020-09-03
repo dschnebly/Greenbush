@@ -3,92 +3,97 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-<button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Health');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Health');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title" id="myModalLabel" style="font-size: 30px;"><i class="fa fa-heartbeat" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Health</h4>
 </div>
 <div class="modal-body standard-font-size">
-     
-				  <div class="funkyradio">
-					<div class="funkyradio-success">
-						<input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) disabled/>
-						<label for="HealthNoConcerns" class="standard-font-size">No Concerns</label>
-					</div>
-					<div class="funkyradio-primary">
-						<input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty)   disabled/>
-						<label  for="HealthProgressTowardGenEd" class="standard-font-size" style="">Health Concerns progressing with General Education Supports</label>
-					</div>
-					<div class="funkyradio-primary">
-						<input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty)   disabled/>
-						<label for="HealthDiagnosis" class="standard-font-size">Concerns that impact ability to learn or access to general curriculum</label>
-					</div>
-				</div>
 
-                <p style="padding-top: 25px"><label>Hearing Screening Date:</label> @(Model.HearingDate.ToString("MM/dd/yyyy"))</p>
-                <p class="title">
-                    <label>Hearing Screening Result:</label>
+    <div class="funkyradio">
+        <div class="funkyradio-success">
+            <input type="checkbox" id="HealthNoConcerns" name="HealthNoConcerns" @(Model.NoConcerns ? "checked" : String.Empty ) disabled />
+            <label for="HealthNoConcerns" class="standard-font-size">No Concerns</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="checkbox" id="HealthProgressTowardGenEd" name="HealthProgressTowardGenEd" @(Model.ProgressTowardGenEd ? "checked" : String.Empty) disabled />
+            <label for="HealthProgressTowardGenEd" class="standard-font-size" style="">Health Concerns progressing with General Education Supports</label>
+        </div>
+        <div class="funkyradio-primary">
+            <input type="checkbox" id="HealthDiagnosis" name="HealthDiagnosis" @(Model.Diagnosis ? "checked" : String.Empty) disabled />
+            <label for="HealthDiagnosis" class="standard-font-size">Concerns that impact ability to learn or access to general curriculum</label>
+        </div>
+    </div>
+    <p style="padding-top: 25px"><label>Hearing Screening Date:</label> @(Model.HearingDate.ToString("MM/dd/yyyy"))</p>
+    <p class="title">
+        <label>Hearing Screening Result:</label>
 
-                    @(Model.HearingResult == 1 ? "Pass" : "")
-                    @(Model.HearingResult == 0 ? "Fail" : "")
-                    @(Model.HearingResult == -1 ? "Unable to Test" : "")
+        @(Model.HearingResult == 1 ? "Pass" : "")
+        @(Model.HearingResult == 0 ? "Fail" : "")
+        @(Model.HearingResult == -1 ? "Unable to Test" : "")
 
-                </p>
+    </p>
+    <p><label>Vision Screening Date:</label> @(Model.VisionDate.ToString("MM/dd/yyyy"))</p>
+    <p class="title">
+        <label>Vision Screening Result:</label>
 
-				<p><label>Vision Screening Date:</label> @(Model.VisionDate.ToString("MM/dd/yyyy"))</p>
-                <p class="title">
-                    <label>Vision Screening Result:</label>
+        @(Model.VisionResult == 1 ? "Pass" : "")
+        @(Model.VisionResult == 0 ? "Fail" : "")
+        @(Model.VisionResult == -1 ? "Unable to Test" : "")
 
-                    @(Model.VisionResult == 1 ? "Pass" : "")
-                    @(Model.VisionResult == 0 ? "Fail" : "")
-                    @(Model.VisionResult == -1 ? "Unable to Test" : "")
-
-                </p>
-
-                <div>                   
-					<label class="standard-font-size">Does this student require a health care plan?</label>&nbsp;&nbsp; @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "Yes" : "No" )					
-					<div style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
-                    <span class="standard-font-size">Notes:</span><br />
-                    <p>@(Model.AdditionalHealthInfo)</p>
-					</div>
-                </div>
-                <fieldset class="form-group">
-                    <div>
-                        <div class="form-group-label"><label  style="padding: 25px 0 15px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
-                        <span style=" padding: 0 0 1px;font-weight:100"> Strengths:</span>
-                        <p style="margin-top:5px;">@(Model.PLAAFP_Strengths)</p>
-                        <span style="padding: 10px 0 1px;font-weight:100"> Concerns (including Baseline):</span>
-                        <p style="margin-top:5px;">@(Model.PLAAFP_Concerns)</p>
-                    </div>
-                </fieldset>
-                <fieldset class="form-group">
-                    <div class="form-group-label">
-                        <label style="padding: 25px 0 15px;"> Area of Need which Impacts Performance</label>
-                    </div>
-                    <p>@(Model.AreaOfNeedDescription)</p>
-                </fieldset>               
-
-				<fieldset class="form-group">
-					<label class="standard-font-size" style="padding: 5px 0 8px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
-					<div class="form-check">
-						<div class="checkbox">
-							<label><input disabled type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
-							<label><input disabled type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
-							<label><input disabled type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
-						</div>
-					</div>
-					<div class="form-check" id="MeetByOtherTextArea">						
-						<div style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">							
-							<span>Other Description:</span>
-							<p>@(Model.NeedMetByOtherDescription)</p>
-						</div>
-					</div>
-				</fieldset>
-                <div class="row">
-                <div class="col-md-12" style="text-align:center;">
-                    <div class="form-group">                        
-                        <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
-                    </div>
-                </div>
+    </p>
+    <div>
+        <label class="standard-font-size">Does this student require a health care plan?</label>&nbsp;&nbsp; @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value ? "Yes" : "No" )
+        <div style="display: @(Model.HealthCarePlan.HasValue && Model.HealthCarePlan.Value == true ? "block;" : "none;")">
+            <span class="standard-font-size">Notes:</span><br />
+            <p>@(Model.AdditionalHealthInfo)</p>
+        </div>
+    </div>
+    <fieldset class="form-group">
+        <div>
+            <div class="form-group-label"><label style="padding: 25px 0 15px;"> Present Levels of Academic Achievement and Functional Performance(PLAAFP)</label></div>
+            <span style=" padding: 0 0 1px;font-weight:100"> Strengths:</span>
+            <p style="margin-top:5px;">@(Model.PLAAFP_Strengths)</p>
+            <span style="padding: 10px 0 1px;font-weight:100"> Concerns (including Baseline):</span>
+            <p style="margin-top:5px;">@(Model.PLAAFP_Concerns)</p>
+        </div>
+    </fieldset>
+    <fieldset class="form-group">
+        <div class="form-group-label">
+            <label style="padding: 25px 0 15px;"> Area of Need which Impacts Performance</label>
+        </div>
+        <p>@(Model.AreaOfNeedDescription)</p>
+    </fieldset>
+    @if (Model.Notes != String.Empty && Model.Notes != null)
+    {
+        <fieldset class="form-group">
+            <div class="form-check">
+                <label class="standard-font-size" style="padding: 25px 0 15px;">Addtional Notes</label>
+                <p>@(Model.Notes)</p>
             </div>
+        </fieldset>
+    }
+    <fieldset class="form-group">
+        <label class="standard-font-size" style="padding: 5px 0 8px; padding-bottom: 0; margin-bottom: 0;">This need will be met by</label>
+        <div class="form-check">
+            <div class="checkbox">
+                <label><input disabled type="checkbox" name="MetByGoal" @(Model.NeedMetByGoal == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Goal</label><br />
+                <label><input disabled type="checkbox" name="MetByAccommodation" @(Model.NeedMetByAccommodation == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Accommodation(s), Modification(s), and/or Supplemental Aid</label><br />
+                <label><input disabled type="checkbox" name="MetByOther" @(Model.NeedMetByOther == true ? "checked" : String.Empty)><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>Other</label><br />
+            </div>
+        </div>
+        <div class="form-check" id="MeetByOtherTextArea">
+            <div style="display: @(Model.NeedMetByOther == true ? "block;" : "none;")">
+                <span>Other Description:</span>
+                <p>@(Model.NeedMetByOtherDescription)</p>
+            </div>
+        </div>
+    </fieldset>
+    <div class="row">
+        <div class="col-md-12" style="text-align:center;">
+            <div class="form-group">
+                <button type="button" class="formbtn btn btn-secondary btn-lg" data-dismiss="modal"><i class="glyphicon glyphicon-remove-circle"></i>&nbsp;Close</button>
+            </div>
+        </div>
+    </div>
 
 </div>
 <br />
