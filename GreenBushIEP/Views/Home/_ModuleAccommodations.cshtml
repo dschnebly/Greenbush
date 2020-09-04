@@ -489,7 +489,7 @@ li.search-field input.default {
                 var studentGoal = $(this).closest('.oneStudentGoal');
 
                 var studentGoalId = studentGoal.find("input[name='AccommodationID']").val();
-                var completedGoal = studentGoal.find(".isAccomComplete").val();
+                var completedGoal = studentGoal.find(".isAccomComplete");                
                 var accomType = studentGoal.find("input[name='AccomType']:checked").val();
                 var startDate = studentGoal.find("input[name='AnticipatedStartDate']").val();
                 var datastring = $(this).closest("form[name='frm']").serialize();

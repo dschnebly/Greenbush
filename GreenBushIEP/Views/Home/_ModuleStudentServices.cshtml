@@ -1348,7 +1348,10 @@
             }
         });
 
-        if (allCompleted) {
+        if (allCompleted) {            
+
+            $(window).trigger("saving.bs.modal");
+
             $("#ServiceWidget .hero-widget").addClass("module-completed");
 
             setTimeout(function () {
@@ -1461,13 +1464,9 @@
                 success: function (data) {
                     if (data.Result == "success") {
 
-                        //_showAlert(data.Message, true);
-
                         studentService.find("input[name='StudentSerivceId']").val(data.key);
                         studentService.find(".collapse.in").attr("data-val", data.key);
                         studentService.find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
-
-                        $(window).trigger("saving.bs.modal");
 
                         if (lastIndex) {
                             callback();
