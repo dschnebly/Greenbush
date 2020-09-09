@@ -1273,6 +1273,7 @@
     <Content Include="Views\Home\_InactiveUsers.cshtml" />
     <Content Include="Views\Form\ChildOutcomesSummary.cshtml" />
     <Content Include="Views\Home\_ModuleStudentContingency.cshtml" />
+    <Content Include="Views\Home\ActiveIEP\_StudentContingency.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

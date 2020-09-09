@@ -2255,12 +2255,28 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult StudentContingency(int studentId, int IEPid)
         {
+            bool isReadOnly = false;
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             ContingencyPlanModel model = new ContingencyPlanModel();
             model.StudentId = studentId;
             model.IEPId = IEPid;
             model.Plan = db.tblContingencyPlans.Where(p => p.IEPid == IEPid).FirstOrDefault() ?? new tblContingencyPlan() { IEPid = IEPid, NoContingencyPlan = true, RemoteLearning_DistrictResponse = false, RemoteLearning_ParentRequest = false, Completed = false };
 
-            return PartialView("_ModuleStudentContingency", model);
+            tblIEP studentIEP = db.tblIEPs.Where(i => i.IEPid == IEPid).FirstOrDefault();
+            if (studentIEP != null)
+            {
+                isReadOnly = (studentIEP.IepStatus == IEPStatus.ACTIVE) || (studentIEP.IepStatus == IEPStatus.ARCHIVE) || (teacher != null && teacher.RoleID == nurse);
+            }
+
+            if (isReadOnly)
+            {
+                return PartialView("ActiveIEP/_StudentContingency", model);
+            }
+            else
+            {
+                return PartialView("_ModuleStudentContingency", model);
+            }
         }
 
         [Authorize]
