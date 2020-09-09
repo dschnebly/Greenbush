@@ -3953,30 +3953,30 @@ namespace GreenbushIep.Controllers
                     {
                         //look up date of orginal iep -- these are amendments?
                         tblIEP originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
-                        if (originalIEP != null && originalIEP.begin_date.HasValue)
+                        if (originalIEP != null && originalIEP.MeetingDate.HasValue)
                         {
-                            serviceIEPDate = originalIEP.begin_date.Value;						
+                            serviceIEPDate = originalIEP.MeetingDate.Value;						
 							
 						}					
 
 					}
 					else
                     {
-                        if (serviceIEP.begin_date.HasValue)
+                        if (serviceIEP.MeetingDate.HasValue)
                         {
-                            serviceIEPDate = serviceIEP.begin_date.Value;
+                            serviceIEPDate = serviceIEP.MeetingDate.Value;
                         }
 
 
 						//need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
 						//to be the last valid day before the begin date of the new iep
-						if (studentIEP.current.begin_date <= service.EndDate)
+						if (studentIEP.current.MeetingDate <= service.EndDate)
 						{
 							//we have a problem, we need need to end 1 day prior to the new annual beginning date, if it is a valid date
 							int endDayCount = 1;
 							while (endDayCount < 15)
 							{
-								var newEndDate = studentIEP.current.begin_date.Value.AddDays(-endDayCount);
+								var newEndDate = studentIEP.current.MeetingDate.Value.AddDays(-endDayCount);
 								var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == service.SchoolYear && c.calendarDate == newEndDate);
 								if (isValidEndDate)
 								{
@@ -4008,14 +4008,14 @@ namespace GreenbushIep.Controllers
                     {
                         //look up date of orginal iep
                         tblIEP originalIEP2 = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
-                        if (originalIEP2 != null && originalIEP2.begin_date.HasValue)
+                        if (originalIEP2 != null && originalIEP2.MeetingDate.HasValue)
                         {
-                            serviceIEPDate = originalIEP2.begin_date.Value;
+                            serviceIEPDate = originalIEP2.MeetingDate.Value;
                         }
                     }
                     else
                     {
-                        serviceIEPDate = studentIEP.current.begin_date.Value;
+                        serviceIEPDate = studentIEP.current.MeetingDate.Value;
                     }
 
                     if (!serviceIEPDate.HasValue)
