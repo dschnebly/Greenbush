@@ -3469,11 +3469,12 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                
                 db.uspCopyIEP(Iepid, user.UserID, false);
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
-                tblIEP annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT).FirstOrDefault();
+                tblIEP annual = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == false && i.IepStatus.ToUpper() == IEPStatus.DRAFT && i.IsActive).FirstOrDefault();
                 int AnnualId = annual.IEPid;
 
                 if (studentDetails != null)

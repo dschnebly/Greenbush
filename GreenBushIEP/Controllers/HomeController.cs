@@ -4731,6 +4731,7 @@ namespace GreenbushIep.Controllers
                     theIEP.studentDetails.printServices = true;
                     theIEP.studentDetails.printNotice = true;
                     theIEP.studentDetails.printProgressReport = false;
+                    theIEP.studentDetails.printContingencyPlan = true;
                     theIEP.studentDetails.isArchive = true;
                     theIEP.isServerRender = true;
                 }
