@@ -1,5 +1,11 @@
 ﻿@model GreenBushIEP.Models.ContingencyPlanModel
 
+<style>
+    pre {
+        background-color: #fff;
+        border: 0;
+    }
+</style>
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
@@ -49,10 +55,10 @@
                     <p style="color:#6067ce;">When a school building is closed due to a COVID-19 outbreak, but is serving its students remotely, the school must ensure that each student with an exceptionality also has equal access to the same opportunities, including, to the extent possible under these unprecedented circumstances, a free appropriate public education. School districts must provide a FAPE consistent with the need to protect the health and safety of students with exceptionalities and those individuals providing education, specialized instruction, and related services to these students. In this unique and ever-changing environment, these exceptional circumstances may affect how all educational and related services and supports are provided. Each team needs to consider the prompts below. The services and supports should be clearly articulated, understood, and agreed upon.</p>
                     <br />
                     <ol>
-                        <li>Services <p>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Services.ToString() : string.Empty)</p></li>
-                        <li>Accommodations <p>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Accommodations.ToString() : string.Empty)</p></li>
-                        <li>Goals <p>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</p></li>
-                        <li>Other Considerations <p>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</p></li>
+                        <li>Services<pre>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Services.ToString() : string.Empty)</pre></li>
+                        <li>Accommodations <pre>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Accommodations.ToString() : string.Empty)</pre></li>
+                        <li>Goals <pre>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</pre></li>
+                        <li>Other Considerations <pre>@(Model.Plan.RemoteLearning_DistrictResponse ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</pre></li>
                     </ol>
                 </div>
             </div>
@@ -61,10 +67,10 @@
                     <p style="color:#6067ce;">Due to the COVID-19 pandemic and local district option, the parents have chosen for their child to receive their education towards the general curriculum as well as to receive special education and related services remotely. The IEP team will determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning while making progress in the general curriculum and advancing appropriately towards their annual IEP goals.</p>
                     <br />
                     <ol>
-                        <li>Services <p>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Services.ToString() : string.Empty)</p></li>
-                        <li>Accommodations <p>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Accommodations.ToString() : string.Empty)</p></li>
-                        <li>Goals <p>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</p></li>
-                        <li>Other Considerations <p>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</p></li>
+                        <li>Services <pre>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Services.ToString() : string.Empty)</pre></li>
+                        <li>Accommodations <pre>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Accommodations.ToString() : string.Empty)</pre></li>
+                        <li>Goals <pre>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.Goals.ToString() : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan.")</pre></li>
+                        <li>Other Considerations <pre>@(Model.Plan.RemoteLearning_ParentRequest ? Model.Plan.OtherConsiderations.ToString() : string.Empty)</pre></li>
                     </ol>
                 </div>
             </div>

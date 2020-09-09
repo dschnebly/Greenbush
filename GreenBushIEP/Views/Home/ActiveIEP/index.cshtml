@@ -221,7 +221,7 @@
                     </div>
                 </li>
                 <li class="ui-state-default filter planning iep" id="ContingencyWidget">
-                    <div class="hero-widget well module-completed"?>
+                    <div class="hero-widget well @(Model.studentIEP.isContingencyCompleted ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="fas fa-head-side-mask"></i>
                         </div>
