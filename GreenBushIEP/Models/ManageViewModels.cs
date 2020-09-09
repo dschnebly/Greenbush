@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
+using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -334,6 +335,7 @@ namespace GreenBushIEP.Models
             primaryDisabilities = new List<vw_PrimaryDisabilities>();
             secondaryDisabilities = new List<vw_SecondaryDisabilities>();
             statusCodes = new List<tblStatusCode>();
+            request = new tblReferralRequest();
         }
 
         public int referralId { get; set; }
@@ -354,6 +356,7 @@ namespace GreenBushIEP.Models
         public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
         public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
         public List<tblStatusCode> statusCodes { get; set; }
+        public tblReferralRequest request { get; set; }
     }
 
     public class StudentProcedureViewModel

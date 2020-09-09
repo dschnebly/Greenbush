@@ -420,7 +420,7 @@ namespace GreenBushIEP.Controllers
             if (student != null)
             {
                 model.student = student;
-
+                model.request = db.tblReferralRequests.Where(u => u.ReferralID == id).FirstOrDefault();
                 if (!string.IsNullOrEmpty(model.student.AttendingUSD))
                 {
                     string[] attendingUSDs = model.student.AttendingUSD.Split(',');
@@ -1150,10 +1150,12 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult CreateReferral(int? id)
         {
+            var submitterObj = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             ReferralDetailsViewModel model = new ReferralDetailsViewModel
             {
-                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name),
-                allDistricts = db.tblDistricts.Where(d => d.Active == 1).ToList()
+                submitter = submitterObj,
+                allDistricts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == submitterObj.UserID select district).Distinct().ToList()
             };
             model.student.DateOfBirth = DateTime.Now.AddYears(-5);
             model.placementCode = db.tblPlacementCodes.ToList();
@@ -1191,6 +1193,19 @@ namespace GreenBushIEP.Controllers
 
             if (existingReferral != null)
             {
+                ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
+                                                     where b.USD == existingReferral.AssignedUSD
+                                                     select new BuildingsViewModel
+                                                     {
+                                                         BuildingName = b.BuildingName,
+                                                         BuildingID = b.BuildingID,
+                                                         BuildingUSD = b.USD
+                                                     }).OrderBy(b => b.BuildingName).ToList();
+
+
+                //List<vw_BuildingList> buildings = db.vw_BuildingList.Where(b => b.USD == districtId).ToList();
+
+                model.referralId = referralID;
                 model.student.FirstName = existingReferral.FirstName;
                 model.student.LastName = existingReferral.LastName;
                 model.student.MiddleInitial = existingReferral.MiddleInitial;
@@ -1202,6 +1217,7 @@ namespace GreenBushIEP.Controllers
                 model.student.UserID = existingReferral.ReferralID;
                 model.student.ReferralNotes = existingReferral.ReferralNotes;
                 model.student.DateOfBirth = existingReferral.DateOfBirth.HasValue ? existingReferral.DateOfBirth.Value : DateTime.Today.AddYears(-5);
+                model.request = db.tblReferralRequests.Where(o => o.ReferralID == referralID).FirstOrDefault();
 
                 model.info = new tblStudentInfo()
                 {
@@ -1217,9 +1233,11 @@ namespace GreenBushIEP.Controllers
                     AssignedUSD = existingReferral.AssignedUSD,
                     BuildingID = existingReferral.ResponsibleBuildingID,
                     NeighborhoodBuildingID = existingReferral.NeighborhoodBuildingID,
-                    InitialEvalConsentSigned = existingReferral.InitialEvalConsentSigned
+                    InitialEvalConsentSigned = existingReferral.InitialEvalConsentSigned,
+                    Primary_DisabilityCode = existingReferral.Primary_DisabilityCode,
+                    Secondary_DisabilityCode = existingReferral.Secondary_DisabilityCode,
 
-                };
+            };
 
                 List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(r => r.ReferralID == referralID).ToList();
                 if (relationships != null)
@@ -1323,6 +1341,8 @@ namespace GreenBushIEP.Controllers
                             Ethicity = collection["studentEthnic"].ToString(),
                             StudentLanguage = collection["studentLanguage"].ToString(),
                             ParentLanguage = collection["parentLanguage"].ToString(),
+                            Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "",
+                            Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "",
                             CreatedBy = submitter.UserID,
                             Create_Date = DateTime.Now,
                             Update_Date = DateTime.Now
@@ -1343,9 +1363,16 @@ namespace GreenBushIEP.Controllers
                                 UserID_Requster = submitter.UserID,
                                 UserID_District = submitterDistrict != null ? submitterDistrict.USD : "",
                                 ReferralID = studentInfo.ReferralID,
+                                ReferralType = collection["referralType"].ToString(),                                
                                 Create_Date = DateTime.Now,
                                 Update_Date = DateTime.Now
                             };
+
+                            if (!string.IsNullOrEmpty(collection["enrollmentDate"]))
+                            {
+                                request.EnrollmentDate = Convert.ToDateTime(collection["enrollmentDate"]);
+                            }
+
                             db.tblReferralRequests.Add(request);
                             db.SaveChanges();
 
@@ -1383,6 +1410,8 @@ namespace GreenBushIEP.Controllers
                             existingReferral.Ethicity = collection["studentEthnic"].ToString();
                             existingReferral.StudentLanguage = collection["studentLanguage"].ToString();
                             existingReferral.ParentLanguage = collection["parentLanguage"].ToString();
+                            existingReferral.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+                            existingReferral.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
                             existingReferral.CreatedBy = submitter.UserID;
                             existingReferral.Create_Date = DateTime.Now;
                             existingReferral.Update_Date = DateTime.Now;
@@ -1391,6 +1420,25 @@ namespace GreenBushIEP.Controllers
                         if (!string.IsNullOrEmpty(collection["dob"]))
                         {
                             existingReferral.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+                        }
+                        else
+                        {
+                            existingReferral.DateOfBirth = null;
+                        }
+
+                        tblReferralRequest existingRequest = db.tblReferralRequests.Where(o => o.ReferralID == studentId).FirstOrDefault();
+                        if (existingRequest != null)
+                        {
+                            existingRequest.ReferralType = collection["referralType"].ToString();
+                            if (!string.IsNullOrEmpty(collection["enrollmentDate"]))
+                            {
+                                existingRequest.EnrollmentDate = Convert.ToDateTime(collection["enrollmentDate"]);
+                            }
+                            else
+                            {
+                                existingRequest.EnrollmentDate = null;
+                            }
+
                         }
 
                         db.SaveChanges();
@@ -1403,9 +1451,6 @@ namespace GreenBushIEP.Controllers
 
                         });
                     }
-
-
-
                 }
                 catch (DbEntityValidationException ex)
                 {
@@ -1439,11 +1484,18 @@ namespace GreenBushIEP.Controllers
                 {
 
                     int studentId = Convert.ToInt32(collection["studentId"]);
+                    string assignedUsd = collection["assignChildCount"];
+
+                    if(string.IsNullOrEmpty(assignedUsd))
+                    {
+                        return Json(new { Result = "error", Message = "Please select an Assign Child Count" });
+                    }
 
                     tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == studentId).FirstOrDefault();
+
                     if (student != null)
                     {
-                        student.AssignedUSD = collection["assignChildCount"].ToString();
+                        student.AssignedUSD = assignedUsd.ToString();
                         student.ResponsibleBuildingID = collection["AttendanceBuildingId"];
                         student.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                         student.ReferralNotes = collection["ReferralNotes"];
@@ -1489,6 +1541,7 @@ namespace GreenBushIEP.Controllers
 
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
                     tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == referralId).FirstOrDefault();
+                    tblReferralRequest request = db.tblReferralRequests.Where(r => r.ReferralID == referralId).FirstOrDefault();
 
                     //delete old
                     List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID).ToList();
@@ -1550,57 +1603,10 @@ namespace GreenBushIEP.Controllers
                         db.tblReferralRelationships.Add(contact);
                     }
 
-                    db.SaveChanges();
-
-                    //int j = 0;
-                    //               int loopCounter = 1;
-                    //               while (++j < collection.Count - 1)
-                    //               {
-                    //                   tblReferralRelationship contact = new tblReferralRelationship()
-                    //                   {
-                    //                       RealtionshipID = 0,
-                    //                       ReferralID = studentId,
-                    //                       FirstName = collection[j].ToString(),
-                    //                       LastName = collection[++j].ToString(),
-                    //                       Realtionship = collection[++j].ToString(),
-                    //                       Address1 = collection[++j].ToString(),
-                    //                       Address2 = collection[++j].ToString(),
-                    //                       City = collection[++j].ToString(),
-                    //                       State = collection[++j].ToString(),
-                    //                       Zip = collection[++j].ToString(),
-                    //                       Phone = collection[++j].ToString(),
-                    //                       Email = collection[++j].ToString(),
-                    //                   };
-
-                    //                   /////////////////////////////
-                    //                   // This whole if block is due to the fact that checkbox false values are NOT passed to our collection
-                    //                   // and the checkbox is the last value in the collection fields.
-                    //                   /////////////////////////////
-                    //                   if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
-                    //                   {
-                    //                       if (collection.GetKey(j) == string.Format("contacts[{0}].PrimaryContact", loopCounter))
-                    //                       {
-                    //                           contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
-                    //                       }
-                    //                       else { j--; }
-                    //                   }
-
-                    //                   try
-                    //                   {
-                    //                       //add new
-                    //                       db.tblReferralRelationships.Add(contact);
-                    //                       db.SaveChanges();
-                    //                   }
-                    //                   catch (Exception e)
-                    //                   {
-                    //                       return Json(new { Result = "error", Message = "There was an error while trying to add the referral's contacts. \n\n" + e.InnerException.ToString() });
-                    //                   }
-
-                    //                   loopCounter++;
-                    //               }
+                    db.SaveChanges();                  
 
                     //create summary
-                    string summaryText = CreateSummary(student);
+                    string summaryText = CreateSummary(student, request);
 
                     return Json(new { Result = "success", Message = student.ReferralID, Summary = summaryText });
                 }
@@ -1624,7 +1630,7 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "There was an error while trying to create the referral's contacts. Please try again or contact your administrator." });
         }
 
-        private string CreateSummary(tblReferralInfo student)
+        private string CreateSummary(tblReferralInfo student, tblReferralRequest referralRequest)
         {
             //create summary
             string neighborhoodBuilding = "";
@@ -1648,10 +1654,27 @@ namespace GreenBushIEP.Controllers
                 grade = nb.description;
             }
 
+            string county = "";
+            if (student.County != null)
+            {
+                tblCounty cty = db.tblCounties.Where(o => o.CountyCode == student.County).FirstOrDefault();
+                county = cty.CountyName;
+            }
+
+            
+
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<h3>Student Information</h3>");
+           
+            sb.AppendFormat("<b>Referral Type:</b> {0}", referralRequest.ReferralType);
             sb.Append("<br/>");
-            sb.AppendFormat("<b>KIDSID:</b> {0} ", student.KIDSID.HasValue && student.KIDSID.Value != 0 ? student.KIDSID.ToString() : "");
+            if (referralRequest.ReferralType == "Incoming")
+            {
+                sb.AppendFormat("<b>District Enrollment Date:</b> {0}", referralRequest.EnrollmentDate.HasValue ? referralRequest.EnrollmentDate.Value.ToShortDateString() : "");
+                sb.Append("<br/>");
+            }
+             
+            sb.AppendFormat("<b>KIDSID:</b> {0} ", student.KIDSID.HasValue && student.KIDSID.Value != 0 ? student.KIDSID.ToString() : student.KIDSID.Value == 0 ? "0000000000" : "");
             sb.Append("<br/>");
             sb.AppendFormat("<b>Student Name:</b> {0} {1} {2}", student.FirstName, student.MiddleInitial, student.LastName);
             sb.Append("<br/>");
@@ -1661,7 +1684,17 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", student.Address1, student.Address2, student.City, student.State, student.Zip);
             sb.Append("<br/>");
-            sb.AppendFormat("<b>County of Residence:</b> {0}", student.County);
+
+            if(referralRequest.ReferralType == "Incoming")
+            {
+                sb.AppendFormat("<b>Primary Disability:</b> {0}", GetDisability(student.Primary_DisabilityCode));
+                sb.Append("<br/>");
+                sb.AppendFormat("<b>Secondary Disability:</b> {0}", GetDisability(student.Secondary_DisabilityCode));
+                sb.Append("<br/>");
+            }
+
+
+            sb.AppendFormat("<b>County of Residence:</b> ({0}) {1}", student.County, county);
             sb.Append("<br/>");
             sb.AppendFormat("<b>Grade:</b> {0}", grade);
             sb.Append("<br/>");
@@ -1669,9 +1702,9 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.AppendFormat("<b>Hispanic Ethnicity:</b> {0}", student.Ethicity);
             sb.Append("<br/>");
-            sb.AppendFormat("<b>Student Language:</b> {0}", student.StudentLanguage);
+            sb.AppendFormat("<b>Student Language:</b> {0}", GetLanguage(student.StudentLanguage));
             sb.Append("<br/>");
-            sb.AppendFormat("<b>Parents Language:</b> {0}", student.ParentLanguage);
+            sb.AppendFormat("<b>Parents Language:</b> {0}", GetLanguage(student.ParentLanguage));
             sb.Append("<br/>");
             sb.AppendFormat("<b>Assign Child Count:</b> {0}", student.AssignedUSD);
             sb.Append("<br/>");
@@ -1684,7 +1717,7 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.Append("<br/>");
             sb.AppendFormat("<h3>Parent/Guardian Information</h3>");
-            sb.Append("<br/>");
+           
             foreach (tblReferralRelationship pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
             {
                 sb.AppendFormat("<b>Relationship:</b><span style='text-transform: capitalize;'> {0}</span>", pc.Realtionship);
@@ -1716,6 +1749,7 @@ namespace GreenBushIEP.Controllers
 
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
                     tblReferralInfo student = db.tblReferralInfoes.Where(u => u.ReferralID == studentId).FirstOrDefault();
+                    tblReferralRequest existingReferalReq = db.tblReferralRequests.Where(r => r.ReferralID == studentId).FirstOrDefault();
                     List<tblUser> list = new List<tblUser>();
 
                     string misRole = "2"; //level 4
@@ -1741,16 +1775,16 @@ namespace GreenBushIEP.Controllers
                             }
                         }
 
-
                         //create summary
-                        string summaryText = CreateSummary(student);
+                        string summaryText = CreateSummary(student, existingReferalReq);
+                        string subject = string.Format("Referral Request {0}", existingReferalReq.ReferralType == "Incoming" ? "(Incoming)" : "");
                         StringBuilder sb = new StringBuilder();
                         sb.Append("The following new Referral Request has been created. Please log into the IEP Backpack to review the details.<br/><br/>");
                         sb.AppendFormat("<b>Submitted by:</b> {0}, {1}<br/><br/>", submitter.FirstName, submitter.LastName);
                         sb.Append(summaryText);
                         sb.Append("<br/><br/>Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance.<br/>URL: https://greenbushbackpack.org ");
                         mailMessage.IsBodyHtml = true;
-                        mailMessage.Subject = "Referral Request";
+                        mailMessage.Subject = subject;
                         mailMessage.Body = sb.ToString();
 
                         smtpClient.Send(mailMessage);
@@ -1764,7 +1798,7 @@ namespace GreenBushIEP.Controllers
                                                                 select org).Distinct().FirstOrDefault();
 
 
-                    tblReferralRequest existingReferalReq = db.tblReferralRequests.Where(o => o.ReferralID == student.ReferralID).FirstOrDefault();
+                    //tblReferralRequest existingReferalReq = db.tblReferralRequests.Where(o => o.ReferralID == student.ReferralID).FirstOrDefault();
 
                     if (existingReferalReq == null)
                     {
@@ -4293,6 +4327,81 @@ namespace GreenBushIEP.Controllers
 			return providerObj;
 		}
 
-		#endregion
-	}
+        private string GetDisability(string value)
+        {
+            string fullName = "";
+            tblDisability disablity = db.tblDisabilities.Where(o => o.DisabilityCode == value).FirstOrDefault();
+            if (disablity != null)
+            {
+                fullName = string.Format("({0}) {1}", disablity.DisabilityCode, disablity.DisabilityDescription);
+            }
+
+            return fullName;
+        }
+
+        private string GetLanguage(string value)
+        {
+            string fullName = "";
+            switch (value)
+            {
+
+                case "EN":
+                    fullName = "EN - English";
+                    break;
+
+                case "ES": fullName = "ES - Spanish"; break;
+
+                case "DE": fullName = "DE - German"; break;
+
+                case "FR": fullName = "FR - French"; break;
+
+                case "RU": fullName = "RU - Russian"; break;
+
+                case "A": fullName = "A - Augmentative Communication"; break;
+
+                case "AR": fullName = "AR - Arabic"; break;
+
+                case "DIN": fullName = "DIN - Dinka(Sudanese)"; break;
+
+                case "HMN": fullName = "HMN - Hmong"; break;
+
+                case "IRA": fullName = "IRA - Farsi(Iranian)"; break;
+
+                case "KHMR": fullName = "KHMR - Khmen / Cambodian"; break;
+
+                case "KO": fullName = "KO - Korean"; break;
+
+                case "LO": fullName = "LO - Lao"; break;
+
+                case "M": fullName = "M - Mode of Communication"; break;
+
+                case "NAT-AM": fullName = "NAT - A, -Navtive America(Kickapoo, Pottawatomie, etc.)"; break;
+
+                case "N": fullName = "N - Non - Verbal and Non-Sign"; break;
+
+                case "O": fullName = "O - Other"; break;
+
+                case "PH": fullName = "PH - Phllippine - Tagalog"; break;
+
+                case "SO": fullName = "SO - Somali"; break;
+
+                case "TH": fullName = "TH - Thai"; break;
+
+                case "VI": fullName = "VI - Vietnamese"; break;
+
+                case "YU": fullName = "YU - Yugoslavian, Croatian, Bosnian, Serb"; break;
+
+                case "ZH-ZH-CMN": fullName = "ZH - ZH - CMN - Mandarin"; break;
+
+                case "ZH-YUE": fullName = "ZH - YUE - Cantonese"; break;
+
+                case "ZH-WUU": fullName = "ZH - WUU - Wu"; break;
+            }
+
+            return fullName;
+
+        }
+
+        #endregion
+    }
 }

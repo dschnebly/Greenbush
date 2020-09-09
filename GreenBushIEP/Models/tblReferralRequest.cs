@@ -22,6 +22,8 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public Nullable<System.DateTime> Submit_Date { get; set; }
+        public string ReferralType { get; set; }
+        public Nullable<System.DateTime> EnrollmentDate { get; set; }
     
         public virtual tblReferralInfo tblReferralInfo { get; set; }
     }

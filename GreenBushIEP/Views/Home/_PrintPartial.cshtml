@@ -3494,12 +3494,11 @@
 		@if (Model.studentServices != null && Model.studentServices.Count() > 0)
 		{
 			var serviceCount = 1;
-			<table class="table table-bordered" border="1">
+			<table class="table table-bordered servciesTable" border="1" >
 				<tr>
 					
 					<td><b>Fiscal Year</b></td>
-					<td><b>Service<br />Setting</b></td>					
-					@*<td><b>LEA</b></td>*@
+					<td><b>Service<br />Setting</b></td>									
 					<td><b>Setting</b></td>					
 					<td><b>Attend<br />Blg</b></td>
 					<td><b>Instruction<br />Provided<br />For</b></td>
@@ -3527,10 +3526,7 @@
 								<text>@service.ServiceCode</text>
 							}
 
-						</td>
-						@*<td>
-							@Model.studentDetails.student.PlacementCode
-						</td>*@
+						</td>						
 						<td>
 							@service.LocationCode							
 						</td>
@@ -3544,7 +3540,7 @@
 							}
 
 						</td>
-						<td>
+						<td style="width: 50px;overflow-wrap: break-word;">
 							@service.ProvidedFor
 						</td>
 						<td>

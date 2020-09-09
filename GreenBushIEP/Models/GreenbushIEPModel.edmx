@@ -339,6 +339,10 @@
           <Property Name="Goals" Type="nvarchar(max)" />
           <Property Name="OtherConsiderations" Type="nvarchar(max)" />
           <Property Name="Completed" Type="bit" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="tblCounties">
           <Key>
@@ -1765,6 +1769,8 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="Submit_Date" Type="datetime" />
+          <Property Name="ReferralType" Type="nvarchar" MaxLength="20" />
+          <Property Name="EnrollmentDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblRolePermissions">
           <Key>
@@ -3827,6 +3833,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Goals" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OtherConsiderations" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Completed" Type="Boolean" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="ModifiedBy" Type="Int32" />
         </EntityType>
         <EntityType Name="tblCounty">
           <Key>
@@ -5271,6 +5281,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Submit_Date" Type="DateTime" Precision="3" />
           <NavigationProperty Name="tblReferralInfo" Relationship="IndividualizedEducationProgramModel.FK_tblReferralRequests_to_tblReferralInfo" FromRole="tblReferralRequest" ToRole="tblReferralInfo" />
+          <Property Name="ReferralType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="EnrollmentDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblRolePermission">
           <Key>
@@ -6672,6 +6684,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblContingencyPlans">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblContingencyPlan">
               <MappingFragment StoreEntitySet="tblContingencyPlan">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="Completed" ColumnName="Completed" />
                 <ScalarProperty Name="OtherConsiderations" ColumnName="OtherConsiderations" />
                 <ScalarProperty Name="Goals" ColumnName="Goals" />
@@ -8156,6 +8172,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblReferralRequests">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblReferralRequest">
               <MappingFragment StoreEntitySet="tblReferralRequests">
+                <ScalarProperty Name="EnrollmentDate" ColumnName="EnrollmentDate" />
+                <ScalarProperty Name="ReferralType" ColumnName="ReferralType" />
                 <ScalarProperty Name="Submit_Date" ColumnName="Submit_Date" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
