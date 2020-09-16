@@ -25,6 +25,12 @@
 		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
 	}
 
+	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+	if (formModel.FormDate.HasValue)
+	{
+		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+	}
+
 	int numContacts = 0;
 
 }
@@ -54,7 +60,7 @@
 				<td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
 					<p>
 						<b><span style='font-size: 11.0pt'>To:</span></b>
-						<textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span>
+						<textarea maxlength="200" style="height:30px;" class="form-control">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span>
 
 					</p>
 					<p style='tab-stops:.3in lined 261.0pt'>
@@ -67,8 +73,7 @@
 
 					<p style='tab-stops:lined 261.0pt'>
 						<b><span style='font-size: 11.0pt'>Date:</span></b>
-						<span style="text-decoration:underline;font-size:11.0pt"><textarea cols="30" style="height:30px;">@(currentDate.PadRight(48, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value isDate">@((currentDate.Length) > 48 ? currentDate : String.Format(currentDate).PadRight(48 - String.Format(currentDate).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-						<span style='font-size:11.0pt'><o:p></o:p></span>
+							<u><textarea maxlength="10" style="height:30px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none;" class="input-value isDate">@(beginDate)</span></u>
 					</p>
 					<p style='tab-stops:.3in lined 261.0pt'>
 						<span style='font-size:11.0pt'>
@@ -86,7 +91,7 @@
 					</p>
 					<p style='tab-stops:lined 261.0pt'>
 						<b><span style='font-size: 11.0pt'>On behalf of:</span></b>
-						<span style="text-decoration:underline;font-size:11.0pt"><textarea onfocus="clearContents(this);" data-val="51" cols="30" style="height:30px;">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+						<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" onfocus="clearContents(this);" data-val="51" cols="30" style="height:30px;font-size:11.0pt">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 					</p>
 					<p style='tab-stops:66.6pt lined 261.0pt'>
 						<span style='font-size:10.0pt'>
@@ -101,19 +106,15 @@
 						<b style='mso-bidi-font-weight:normal'>
 							<span style='font-size:11.0pt'>Address:</span>
 						</b>
-						<span style="text-decoration:underline;font-size:11.0pt"><textarea onfocus="clearContents(this);" data-val="67" cols="30" style="height:30px;">@((studentAddress.Length) > 67 || string.IsNullOrEmpty(studentAddress) ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentAddress.Length) > 67 ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+						<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" onfocus="clearContents(this);" data-val="67" cols="30" style="height:30px;font-size:11.0pt">@((studentAddress.Length) > 67 || string.IsNullOrEmpty(studentAddress) ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentAddress.Length) > 67 ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 					</p>
 					<p><span style='font-size:11.0pt'></span></p>
-					<span style="text-decoration:underline;font-size:11.0pt"><textarea cols="30" onfocus="clearContents(this);" data-val="83" style="height:30px;">@((studentCityStZip.Length) > 83 || string.IsNullOrEmpty(studentCityStZip) ? studentCityStZip : String.Format(studentCityStZip).PadRight(83 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 83 ? studentCityStZip : String.Format(studentCityStZip).PadRight(83 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+					<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" cols="30" onfocus="clearContents(this);" data-val="85" style="height:30px;font-size:11.0pt">@((studentCityStZip.Length) > 85 || string.IsNullOrEmpty(studentCityStZip) ? studentCityStZip : String.Format(studentCityStZip).PadRight(85 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 85 ? studentCityStZip : String.Format(studentCityStZip).PadRight(85 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 				</td>
 			</tr>
 		</table>
 		<p style='margin-top:.25in'>
-			<b>
-				<span style='font-size:	11.0pt'>
-					Proposed meeting date, time and place: <textarea cols="75" rows="5" class="form-control" maxlength="2000">@(formModel.ProposedMeetingInfo)</textarea><span id="ProposedMeetingInfo" style="display:none" class="input-value">@(formModel.ProposedMeetingInfo)</span>
-				</span>
-			</b>
+			<span style='font-size:	11.0pt;font-weight:bold'>Proposed meeting date, time and place: </span> <textarea cols="75" rows="5" class="form-control" maxlength="2000">@(formModel.ProposedMeetingInfo)</textarea><span id="ProposedMeetingInfo" style="display:none;font-size:11.0pt;font-weight:normal" class="input-value">@(formModel.ProposedMeetingInfo)</span>							
 		</p>
 		<p style="margin-top:.25in">
 			<b>
@@ -183,7 +184,9 @@
 		<table Table border=0 cellspacing=0 cellpadding=0 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:     0in .05in 0in .05in'>
 			<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
 				<td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
-					<p style='margin-left:.25in;  text-indent:-.25in;'>
+					<p style='        margin-left: .25in;
+        text-indent: -.25in;
+'>
 						<input type="checkbox" @(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "checked" : "") /><img id="DevelopIEP" class='imgCheck' src="@(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>
 						<br /><br /><span style="padding-top:10px;font-size:10pt">
 							The team will make its decisions based upon the results of the evaluation procedures which
@@ -248,16 +251,16 @@
 				<td>
 					<p>5. Other(s) who have knowledge or special expertise regarding your child (at the discretion of parent or school):</p>
 					<p>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise1)</textarea> <span id="SpecialExpertise1" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise1)</span></span>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise2)</textarea> <span id="SpecialExpertise2" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise2)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise1)</textarea> <span id="SpecialExpertise1" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise1)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise2)</textarea> <span id="SpecialExpertise2" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise2)</span></span>
 					</p>
 					<p>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise3)</textarea> <span id="SpecialExpertise3" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise3)</span></span>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise4)</textarea> <span id="SpecialExpertise4" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise4)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise3)</textarea> <span id="SpecialExpertise3" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise3)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise4)</textarea> <span id="SpecialExpertise4" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise4)</span></span>
 					</p>
 					<p>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise5)</textarea> <span id="SpecialExpertise5" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise5)</span></span>
-						<span><textarea style="width:100px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise6)</textarea> <span id="SpecialExpertise6" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise6)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise5)</textarea> <span id="SpecialExpertise5" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise5)</span></span>
+						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise6)</textarea> <span id="SpecialExpertise6" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise6)</span></span>
 					</p>
 				</td>
 			</tr>

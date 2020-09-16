@@ -5333,8 +5333,9 @@ namespace GreenbushIep.Controllers
 				formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
 				formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
 				formNotice.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+                formNotice.FormDate = GetInputValueDate("FormDate", spans);
 
-				if (formNotice.FormNoticeOfMeetingId == 0)
+                if (formNotice.FormNoticeOfMeetingId == 0)
 				{
 					formNotice.CreatedBy = currentUser.UserID;
 					formNotice.Create_Date = DateTime.Now;
