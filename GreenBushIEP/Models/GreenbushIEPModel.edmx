@@ -2491,6 +2491,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentIds" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="up_ReportESY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -2508,6 +2509,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentIds" Type="varchar(max)" Mode="In" />
         </Function>
         <Function Name="up_ReportProceduralDates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -2918,6 +2920,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="StudentIds" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportExcessCost" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportExcessCost_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -2927,6 +2930,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="StudentIds" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportProceduralDates" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDates_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -3215,6 +3219,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="DateTime" Name="begin_date" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="end_Date" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="DraftDays" Nullable="true" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="up_ReportExcessCost_Result">
           <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
@@ -3231,6 +3236,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="ProviderName" Nullable="true" />
           <Property Type="DateTime" Name="begin_date" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="end_Date" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Int32" Name="NumberOfDays" Nullable="true" />
         </ComplexType>
         <ComplexType Name="up_ReportProceduralDates_Result">
           <Property Type="DateTime" Name="AnnualDate" Nullable="true" Precision="23" />
@@ -5993,6 +6000,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="begin_date" ColumnName="begin_date" />
                 <ScalarProperty Name="end_Date" ColumnName="end_Date" />
                 <ScalarProperty Name="DraftDays" ColumnName="DraftDays" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -6017,6 +6025,8 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
                 <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
                 <ScalarProperty Name="begin_date" ColumnName="begin_date" />
                 <ScalarProperty Name="end_Date" ColumnName="end_Date" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="NumberOfDays" ColumnName="NumberOfDays" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

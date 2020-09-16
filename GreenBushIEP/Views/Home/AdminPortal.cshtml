@@ -270,10 +270,12 @@
 </div>
 <!-- end modal -->
 
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })
+
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.2")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.3")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

@@ -1,6 +1,44 @@
 ﻿$(function () {
 	function init() {
-		$(".chosen-select").chosen({ width: "100%" });
+        $(".chosen-select").chosen({ width: "100%" });
+
+        if ($("#dashboardNotification").length > 0) {
+            $("#dashboardNotification").modal();
+        }
+
+        $("#iepsDueListBtn").on("click", function () {
+            $("#iepsDueList").fadeToggle("fast", "linear");
+
+            if ($(this).find("span.glyphicon").hasClass("glyphicon-plus")) {
+                $(this).find("span.glyphicon").removeClass("glyphicon-plus");
+                $(this).find("span.glyphicon").addClass("glyphicon-minus");
+            }
+            else {
+                $(this).find("span.glyphicon").removeClass("glyphicon-minus")
+                $(this).find("span.glyphicon").addClass("glyphicon-plus")
+            }
+        });
+
+        $("#iepsDraftListBtn").on("click", function () {
+            $("#iepsDraftList").fadeToggle("fast", "linear");
+
+            if ($(this).find("span.glyphicon").hasClass("glyphicon-plus")) {
+                $(this).find("span.glyphicon").removeClass("glyphicon-plus");
+                $(this).find("span.glyphicon").addClass("glyphicon-minus");
+            }
+            else {
+                $(this).find("span.glyphicon").removeClass("glyphicon-minus")
+                $(this).find("span.glyphicon").addClass("glyphicon-plus")
+            }
+        });
+
+
+        $(".dashboardIEP").on("click", function () {
+            //open iep like this to prevent true false button switches from not working right in firefox
+            var stid = $(this).attr("data-id");
+            window.location.href = '/Home/StudentProcedures?stid=' + stid;
+            return false;
+        });
 
 		// filter to only active students
 		var filterCollection = $('.list-group-root').find('.list-group-item');

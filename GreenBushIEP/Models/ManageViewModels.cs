@@ -92,6 +92,8 @@ namespace GreenBushIEP.Models
         public List<tblDistrict> districts { get; set; }
         public List<tblBuilding> buildings { get; set; }
         public List<StudentIEPViewModel> members { get; set; }
+        public List<NotificationViewModel> draftIeps { get; set; }
+        public List<NotificationViewModel> dueIeps { get; set; }
 
         public PortalViewModel()
         {
@@ -99,7 +101,17 @@ namespace GreenBushIEP.Models
             districts = new List<tblDistrict>();
             buildings = new List<tblBuilding>();
             members = new List<StudentIEPViewModel>();
+            draftIeps = new List<NotificationViewModel>();
+            dueIeps = new List<NotificationViewModel>();
         }
+    }
+
+    public class NotificationViewModel
+    {
+        public int StudentId { get; set; }
+        public string StudentLastName { get; set; }
+        public string StudentFirstName { get; set; }
+        public int Days { get; set; }
     }
 
     public class StudentIEPViewModel
@@ -240,11 +252,14 @@ namespace GreenBushIEP.Models
         public ICollection<Student> Students { get; set; }
         public List<tblDistrict> districts { get; set; }
         public List<tblBuilding> buildings { get; set; }
-
+        public List<NotificationViewModel> draftIeps { get; set; }
+        public List<NotificationViewModel> dueIeps { get; set; }
         public StudentViewModel()
         {
             districts = new List<tblDistrict>();
             buildings = new List<tblBuilding>();
+            draftIeps = new List<NotificationViewModel>();
+            dueIeps = new List<NotificationViewModel>();
         }
     }
 
