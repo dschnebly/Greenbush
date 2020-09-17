@@ -19,5 +19,6 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> begin_date { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
         public Nullable<int> DraftDays { get; set; }
+        public int UserID { get; set; }
     }
 }
