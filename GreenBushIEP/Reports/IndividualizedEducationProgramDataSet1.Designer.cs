@@ -5286,6 +5286,10 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnDateOfBirth;
             
+            private global::System.Data.DataColumn columnisGifted;
+            
+            private global::System.Data.DataColumn columnPrimary_DisabilityCode;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public up_ReportProceduralDatesTrackingDataTable() {
@@ -5465,6 +5469,22 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn isGiftedColumn {
+                get {
+                    return this.columnisGifted;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn Primary_DisabilityCodeColumn {
+                get {
+                    return this.columnPrimary_DisabilityCode;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -5516,7 +5536,9 @@ namespace GreenBushIEP.Reports {
                         string StudentMiddleName, 
                         System.DateTime ReEvalConsentSigned, 
                         string KIDSID, 
-                        string DateOfBirth) {
+                        string DateOfBirth, 
+                        string isGifted, 
+                        string Primary_DisabilityCode) {
                 up_ReportProceduralDatesTrackingRow rowup_ReportProceduralDatesTrackingRow = ((up_ReportProceduralDatesTrackingRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         InitialEvalDetermination,
@@ -5536,7 +5558,9 @@ namespace GreenBushIEP.Reports {
                         StudentMiddleName,
                         ReEvalConsentSigned,
                         KIDSID,
-                        DateOfBirth};
+                        DateOfBirth,
+                        isGifted,
+                        Primary_DisabilityCode};
                 rowup_ReportProceduralDatesTrackingRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportProceduralDatesTrackingRow);
                 return rowup_ReportProceduralDatesTrackingRow;
@@ -5577,6 +5601,8 @@ namespace GreenBushIEP.Reports {
                 this.columnReEvalConsentSigned = base.Columns["ReEvalConsentSigned"];
                 this.columnKIDSID = base.Columns["KIDSID"];
                 this.columnDateOfBirth = base.Columns["DateOfBirth"];
+                this.columnisGifted = base.Columns["isGifted"];
+                this.columnPrimary_DisabilityCode = base.Columns["Primary_DisabilityCode"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5618,6 +5644,10 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnKIDSID);
                 this.columnDateOfBirth = new global::System.Data.DataColumn("DateOfBirth", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDateOfBirth);
+                this.columnisGifted = new global::System.Data.DataColumn("isGifted", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnisGifted);
+                this.columnPrimary_DisabilityCode = new global::System.Data.DataColumn("Primary_DisabilityCode", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPrimary_DisabilityCode);
                 this.columnDaysSinceSigned.ReadOnly = true;
                 this.columnAnnualDate.ReadOnly = true;
                 this.columnStudentFirstName.MaxLength = 255;
@@ -11839,6 +11869,40 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string isGifted {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportProceduralDatesTracking.isGiftedColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'isGifted\' in table \'up_ReportProceduralDatesTracking\' is DB" +
+                                "Null.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportProceduralDatesTracking.isGiftedColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Primary_DisabilityCode {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportProceduralDatesTracking.Primary_DisabilityCodeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Primary_DisabilityCode\' in table \'up_ReportProceduralDatesT" +
+                                "racking\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportProceduralDatesTracking.Primary_DisabilityCodeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsInitialEvalDeterminationNull() {
                 return this.IsNull(this.tableup_ReportProceduralDatesTracking.InitialEvalDeterminationColumn);
             }
@@ -12003,6 +12067,30 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetDateOfBirthNull() {
                 this[this.tableup_ReportProceduralDatesTracking.DateOfBirthColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsisGiftedNull() {
+                return this.IsNull(this.tableup_ReportProceduralDatesTracking.isGiftedColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetisGiftedNull() {
+                this[this.tableup_ReportProceduralDatesTracking.isGiftedColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsPrimary_DisabilityCodeNull() {
+                return this.IsNull(this.tableup_ReportProceduralDatesTracking.Primary_DisabilityCodeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetPrimary_DisabilityCodeNull() {
+                this[this.tableup_ReportProceduralDatesTracking.Primary_DisabilityCodeColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -16736,7 +16824,9 @@ namespace GreenBushIEP.Reports.IndividualizedEducationProgramDataSetTableAdapter
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitConnection() {
             this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::GreenBushIEP.Properties.Settings.Default.IndividualizedEducationProgramConnectionString;
+            this._connection.ConnectionString = "Data Source=10.46.0.35;Initial Catalog=IndividualizedEducationProgram;User ID=IEP" +
+                "Admin;Password=X1X#1HXmx$kBaZTSFlxI;MultipleActiveResultSets=True;Application Na" +
+                "me=EntityFramework";
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

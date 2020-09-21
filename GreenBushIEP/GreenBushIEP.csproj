@@ -714,6 +714,9 @@
     <Compile Include="Reports\IEPDue\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\IndividualizedEducationProgramDataSet1.cs">
+      <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Reports\IndividualizedEducationProgramDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
