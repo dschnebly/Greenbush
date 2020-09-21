@@ -117,8 +117,8 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="filterActive" id="filterActive">
-                            <option value="0" selected>All</option>
-                            <option value="1">Active IEP</option>
+                            <option value="0">All</option>
+                            <option value="1" selected>Active IEP</option>
                             <option value="2">Inactive IEP</option>
                         </select>
                     </div>
@@ -270,10 +270,12 @@
 </div>
 <!-- end modal -->
 
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })
+
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.2")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.3")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

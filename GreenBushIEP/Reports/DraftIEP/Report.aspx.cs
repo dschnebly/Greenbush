@@ -93,7 +93,7 @@ namespace GreenBushIEP.Reports.DraftIEP
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportDraftIEPS(districtFilter, teacherIds, buildingID);
+				var list = ctx.up_ReportDraftIEPS(districtFilter, teacherIds, buildingID, null);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName, cs.ProviderName, cs.DraftDays);

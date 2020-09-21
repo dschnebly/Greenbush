@@ -13,7 +13,7 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/misportal.js?v1.1")
+    @Scripts.Render("~/Scripts/misportal.js?v1.2")
 }
 
 <div class="container">
@@ -131,8 +131,8 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="filterActive" id="filterActive">
-                            <option value="0" selected>All</option>
-                            <option value="1">Active IEP</option>
+                            <option value="0">All</option>
+                            <option value="1" selected>Active IEP</option>
                             <option value="2">Inactive IEP</option>
                         </select>
                     </div>
@@ -298,7 +298,7 @@
 </div>
 <!-- end modal -->
 <!-- Modal -->
-<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog">
+<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" sstyle="overflow-y: scroll;">
     <div class="modal-dialog">
         <div class="modal-content">
             @Html.Hidden("id", Model.user.UserID.ToString())
@@ -351,3 +351,5 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- end modal -->
+
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })

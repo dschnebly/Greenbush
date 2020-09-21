@@ -45,7 +45,7 @@ namespace GreenbushIep.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Portal()
+        public ActionResult Portal(int? logon)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -54,16 +54,16 @@ namespace GreenbushIep.Controllers
                     return RedirectToAction("OwnerPortal");
                 }
                 else if (User.IsInRole(mis))
-                {
-                    return RedirectToAction("MISPortal");
+                {                  
+                    return RedirectToAction("MISPortal", new { logon = logon });
                 }
                 else if (User.IsInRole(admin))
-                {
-                    return RedirectToAction("AdminPortal");
+                {                  
+                    return RedirectToAction("AdminPortal", new { logon = logon });
                 }
                 else if (User.IsInRole(teacher))
-                {
-                    return RedirectToAction("TeacherPortal");
+                {                  
+                    return RedirectToAction("TeacherPortal", new { logon = logon });
                 }
                 else if (User.IsInRole(nurse))
                 {
@@ -103,19 +103,26 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = mis)]
-        public ActionResult MISPortal()
+        public ActionResult MISPortal(int? logon)
         {
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (MIS != null)
             {
+                
                 PortalViewModel model = new PortalViewModel
                 {
                     user = MIS,
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList(),
-
                     members = db.uspUserAssignedList(MIS.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
+
+                if (logon.HasValue && logon.Value == 1)
+                {
+                    model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+
+                    model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -128,12 +135,13 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = admin)]
-        public ActionResult AdminPortal(int? userId)
+        public ActionResult AdminPortal(int? userId, int? logon)
         {
 
             tblUser ADMIN = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (ADMIN != null)
             {
+                
                 PortalViewModel model = new PortalViewModel
                 {
                     user = ADMIN,
@@ -142,6 +150,13 @@ namespace GreenbushIep.Controllers
 
                     members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
+
+                if (logon.HasValue && logon.Value == 1)
+                {
+                    model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+
+                    model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
@@ -154,7 +169,7 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize(Roles = teacher)]
-        public ActionResult TeacherPortal(int? userId, bool hasSeenAgreement = false)
+        public ActionResult TeacherPortal(int? userId, int? logon, bool hasSeenAgreement = false)
         {
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
@@ -223,6 +238,12 @@ namespace GreenbushIep.Controllers
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList()
                 };
 
+                if (logon.HasValue && logon.Value == 1)
+                {
+                    model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+
+                    model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                }
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);
@@ -4705,6 +4726,30 @@ namespace GreenbushIep.Controllers
             Response.End();
         }
 
+        private List<NotificationViewModel> GetDraftIeps( string studentIds)
+        {
+            return db.up_ReportDraftIEPS(null, null, null, studentIds).Where(o => o.DraftDays > 0).Select(u => new NotificationViewModel()
+            {
+                StudentId = u.UserID,
+                StudentFirstName = u.StudentFirstName,
+                StudentLastName = u.StudentLastName,
+                Days = u.DraftDays.HasValue? u.DraftDays.Value : 0
+            }).OrderByDescending(o => o.Days).ToList();
+
+        }
+
+        private List<NotificationViewModel> GetIepsDue(string studentIds)
+        {
+            return db.up_ReportIEPSDue(null, null, null, studentIds).Select(u => new NotificationViewModel()
+            {
+                StudentId = u.UserID,
+                StudentFirstName = u.StudentFirstName,
+                StudentLastName = u.StudentLastName,
+                Days = u.NumberOfDays.HasValue ? u.NumberOfDays.Value : 0
+            }).OrderBy(o => o.Days).ToList();
+
+        }
+
         private bool ArchiveIEPPrint(int studentId, IEP theIEP, bool includeProgressReport)
         {
             bool success = false;
@@ -5288,8 +5333,9 @@ namespace GreenbushIep.Controllers
 				formNotice.AvailableToAttend_desc = GetInputValue("AvailableToAttend_desc", spans);
 				formNotice.WaiveRightToNotice = GetCheckboxSingleInputValue("WaiveRightToNotice", checkboxes);
 				formNotice.DelieveredDate = GetInputValueDate("DelieveredDate", spans);
+                formNotice.FormDate = GetInputValueDate("FormDate", spans);
 
-				if (formNotice.FormNoticeOfMeetingId == 0)
+                if (formNotice.FormNoticeOfMeetingId == 0)
 				{
 					formNotice.CreatedBy = currentUser.UserID;
 					formNotice.Create_Date = DateTime.Now;

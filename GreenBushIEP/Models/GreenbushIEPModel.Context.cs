@@ -161,7 +161,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBuildings_Result>("up_ReportBuildings", buildingIDParameter);
         }
     
-        public virtual ObjectResult<up_ReportDraftIEPS_Result> up_ReportDraftIEPS(string districtId, string teacherId, string buildingId)
+        public virtual ObjectResult<up_ReportDraftIEPS_Result> up_ReportDraftIEPS(string districtId, string teacherId, string buildingId, string studentIds)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -175,7 +175,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("BuildingId", buildingId) :
                 new ObjectParameter("BuildingId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportDraftIEPS_Result>("up_ReportDraftIEPS", districtIdParameter, teacherIdParameter, buildingIdParameter);
+            var studentIdsParameter = studentIds != null ?
+                new ObjectParameter("StudentIds", studentIds) :
+                new ObjectParameter("StudentIds", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportDraftIEPS_Result>("up_ReportDraftIEPS", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter);
         }
     
         public virtual ObjectResult<up_ReportExcessCost_Result> up_ReportExcessCost(string districtId, string buildingId)
@@ -191,7 +195,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", districtIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportIEPSDue_Result> up_ReportIEPSDue(string districtId, string teacherId, string buildingId)
+        public virtual ObjectResult<up_ReportIEPSDue_Result> up_ReportIEPSDue(string districtId, string teacherId, string buildingId, string studentIds)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -205,7 +209,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("BuildingId", buildingId) :
                 new ObjectParameter("BuildingId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter);
+            var studentIdsParameter = studentIds != null ?
+                new ObjectParameter("StudentIds", studentIds) :
+                new ObjectParameter("StudentIds", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter);
         }
     
         public virtual ObjectResult<up_ReportProceduralDates_Result> up_ReportProceduralDates(string districtId, string teacherId, string buildingId)

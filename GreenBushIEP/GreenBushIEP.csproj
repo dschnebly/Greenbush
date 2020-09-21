@@ -20,14 +20,10 @@
     <AssemblyName>GreenBushIEP</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
-    <IISExpressAnonymousAuthentication>
-    </IISExpressAnonymousAuthentication>
-    <IISExpressWindowsAuthentication>
-    </IISExpressWindowsAuthentication>
-    <IISExpressUseClassicPipelineMode>
-    </IISExpressUseClassicPipelineMode>
+    <IISExpressSSLPort>51387</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
@@ -768,6 +764,15 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Reports\KIDSID\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\KIDSID\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\ProceduralDatesTracking\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -952,6 +957,9 @@
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
+    <Content Include="Reports\KIDSID\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\ProceduralDatesTracking\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1277,6 +1285,7 @@
     <Content Include="Views\Form\ChildOutcomesSummary.cshtml" />
     <Content Include="Views\Home\_ModuleStudentContingency.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_StudentContingency.cshtml" />
+    <Content Include="Views\Home\_DashboardPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1326,6 +1335,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
+    <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>

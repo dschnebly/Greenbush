@@ -510,7 +510,9 @@
     <!-- end modal -->
 </div>
 
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })
+
 @section scripts {
-    @Scripts.Render("~/Scripts/portal.js?v1.1")
+    @Scripts.Render("~/Scripts/portal.js?v1.2")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
 }
