@@ -34,13 +34,11 @@
 	<p class=MsoBodyText>
 		<span>
 			Date of Rating: <u><textarea maxlength="10" style="width:125px;height:30px">@(ratingDate)</textarea><span id="RatingDate" style="display:none;" class="input-value isDate">@(ratingDate)</span></u>
-		</span>
-		@*<span style="float:right">First/Last</span>*@	
+		</span>		
 	</p>
 	<p>
 		<span>Date of Services: </span><u><textarea maxlength="10" style="width:125px;height:30px">@(serviceDate)</textarea><span id="ServiceDate" style="display:none;" class="input-value isDate">@(serviceDate)</span></u>
-	</p>
-	
+	</p>	
 	<p class=MsoBodyText  style="font-size:12pt;margin-top:8px;font-weight:bold">Child Information:</p>
 	<p class=MsoBodyText>
 		<span>
@@ -286,7 +284,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -300,7 +298,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>
@@ -445,7 +443,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -459,7 +457,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>
@@ -615,7 +613,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -629,7 +627,7 @@
 		<tr>
 			<td style="background-color:#ffcc99">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/> No
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>

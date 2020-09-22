@@ -1,0 +1,132 @@
+﻿@{
+    var formModel = ViewData["formTransReferral"] != null ? ViewData["formTransReferral"] as GreenBushIEP.Models.tblFormTransitionReferral : new GreenBushIEP.Models.tblFormTransitionReferral();
+    string schoolBuilding =Model.building;
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string buildingAddress = string.Format("{0} {1}", Model.buildingAddress, Model.buildingCityStZip);
+    string buildingPhone = Model.buildingPhone;
+
+    if (formModel.FormTransitionReferralID == 0)
+    {
+        formModel.Student_DOB = dobStr;
+        formModel.Student_Name = studentFormattedName;
+        formModel.From_School = schoolBuilding;
+        formModel.From_Address = buildingAddress;
+        formModel.From_Phone = buildingPhone;
+    }
+}
+<div class="module-page savdDraftAllowed">
+	
+<p style='text-align:left'><span class=MsoNormal style="font-weight: bold;">Kansas Department for Children and Families<br/> Rehabilitation Services</span></p>
+<p style='text-align:center'><span class=MsoNormal style="font-weight: bold;">Transition Notification<br/>Referral for Vocational Rehabilitation Services</span></p>
+ <table style="margin-top:10px;width:560px" cellpadding="2" cellspacing="1">
+     <tr>
+        <td style="width:60px;"><span class=MsoNormal>From:</span></td>
+        <td style="width:200px;"><span class=MsoNormal>School</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.From_School)</textarea><span id="From_School" style="display:none;" class="input-value MsoNormal">@(formModel.From_School)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Address</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.From_Address)</textarea><span id="From_Address" style="display:none;" class="input-value MsoNormal">@(formModel.From_Address)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Phone</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.From_Phone)</textarea><span id="From_Phone" style="display:none;" class="input-value MsoNormal">@(formModel.From_Phone)</span></td>
+     </tr>
+      <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Responsible Local <br/>Education Authority Staff</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.From_ResposibleLEAStaff)</textarea><span id="From_ResposibleLEAStaff" style="display:none;" class="input-value MsoNormal">@(formModel.From_ResposibleLEAStaff)</span></td>
+     </tr>
+ </table>
+ <table style="margin-top:10px;width:560px" cellpadding="2" cellspacing="1">
+     <tr>
+        <td style="width:60px;"><span class=MsoNormal>To:</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Local Rehabilitation Office</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.To_LocalRegabilitationOffice)</textarea><span id="To_LocalRegabilitationOffice" style="display:none;" class="input-value MsoNormal">@(formModel.To_LocalRegabilitationOffice)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Address</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.To_Address)</textarea><span id="To_Address" style="display:none;" class="input-value MsoNormal">@(formModel.To_Address)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Phone</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.To_Phone)</textarea><span id="To_Phone" style="display:none;" class="input-value MsoNormal">@(formModel.To_Phone)</span></td>
+     </tr>
+      <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>ATTN: (Counselor Name)</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.To_ATTN)</textarea><span id="To_ATTN" style="display:none;" class="input-value MsoNormal">@(formModel.To_ATTN)</span></td>
+     </tr>
+ </table>
+<table style="margin-top:10px;width:560px" cellpadding="2" cellspacing="1">
+     <tr>
+        <td style="width:60px;"><span class=MsoNormal>Student:</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Name</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_Name)</textarea><span id="Student_Name" style="display:none;" class="input-value MsoNormal">@(formModel.Student_Name)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Address</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_Address)</textarea><span id="Student_Address" style="display:none;" class="input-value MsoNormal">@(formModel.Student_Address)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Phone</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_Phone)</textarea><span id="Student_Phone" style="display:none;" class="input-value MsoNormal">@(formModel.Student_Phone)</span></td>
+     </tr>
+      <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Social Security Number</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal"></textarea><span style="display:none;" class="input-value MsoNormal"></span></td>
+     </tr>
+    <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Birth Date</span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_DOB)</textarea><span id="Student_DOB" style="display:none;" class="input-value MsoNormal">@(formModel.Student_DOB)</span></td>
+     </tr>
+     <tr>
+        <td style="width:50px;"><span class=MsoNormal>&nbsp;</span></td>
+        <td style="width:200px;"><span class=MsoNormal>Expected Date to complete<br/>or exit school  </span></td>
+        <td style="width:300px;text-decoration:underline"><textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_ExitDate)</textarea><span id="Student_ExitDate" style="display:none;" class="input-value MsoNormal">@(formModel.Student_ExitDate)</span></td>
+     </tr>
+ </table>
+<p style='text-align:left;margin-top:10px;' class=MsoNormal><span class=MsoNormal> Notification Accompanied by: </span></p>
+    <p>
+        <ul>
+            <li class=MsoNormal>Signed release of information </li>
+            <li class=MsoNormal>Current IEP</li>
+            <li class=MsoNormal>Current Three year evaluation</li>
+            <li class=MsoNormal>Signed release of information </li>
+            <li class=MsoNormal>Psychological testing information as recent as age 16 if available. </li>
+        </ul>
+    </p>
+ <p class=MsoNormal style='text-align:center; margin-top:10px;'><span class=MsoNormal style="font-weight: bold;">CONSENT FOR REFERRAL/RELEASE OF INFORMATION</span></p> 
+  <p class=MsoNormal>
+  Below is the signature authorization for <textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal">@(formModel.Student_Name)</textarea><span id="Student_Name" style="display:none;" class="input-value MsoNormal">@(formModel.Student_Name)</span> to be referred for Vocational
+Rehabilitation Services. I hereby consent to the release of the information to be sent to Rehabilitation Services for
+vocational rehabilitation planning.</p>  
+<p class="MsoNormal" style="margin-top: 20px;">
+    Signature of Student ______________________________________ Date _________________
+</p>
+<p class="MsoNormal" style="margin-top: 25px;">    
+* Signature of Parent/Legal Guardian (if appropriate) __________________________ Date ________________
+</p>
+<p class="MsoNormal"  style="margin-top: 10px;">    
+ * If signed by parent/legal guardian, please provide address and phone number if different than the student’s
+</p>
+<p class=MsoNormal>
+  Adress: <textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal"></textarea><span id="" style="display:none;" class="input-value MsoNormal"></span>
+</p>  
+<p class=MsoNormal>
+  Phone: <textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal"></textarea><span id="" style="display:none;" class="input-value MsoNormal"></span>
+</p>  
+<p class=MsoNormal>
+  Reasonable accommodations needed: <textarea maxlength="200" style="width:300px;height:30px" class="MsoNormal"></textarea><span id="" style="display:none;" class="input-value MsoNormal"></span>
+</p>  
+
+</div>

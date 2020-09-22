@@ -1131,6 +1131,31 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="tblFormTransitionReferrals">
+          <Key>
+            <PropertyRef Name="FormTransitionReferralID" />
+          </Key>
+          <Property Name="FormTransitionReferralID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentId" Type="int" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
+          <Property Name="From_School" Type="nvarchar" MaxLength="200" />
+          <Property Name="From_Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="From_Phone" Type="nvarchar" MaxLength="200" />
+          <Property Name="From_ResposibleLEAStaff" Type="nvarchar" MaxLength="200" />
+          <Property Name="To_LocalRegabilitationOffice" Type="nvarchar" MaxLength="200" />
+          <Property Name="To_Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="To_Phone" Type="nvarchar" MaxLength="200" />
+          <Property Name="To_ATTN" Type="nvarchar" MaxLength="200" />
+          <Property Name="Student_Name" Type="nvarchar" MaxLength="200" />
+          <Property Name="Student_Address" Type="nvarchar" MaxLength="200" />
+          <Property Name="Student_Phone" Type="nvarchar" MaxLength="200" />
+          <Property Name="Student_DOB" Type="nvarchar" MaxLength="200" />
+          <Property Name="Student_ExitDate" Type="nvarchar" MaxLength="200" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="Create_Date" Type="datetime" Nullable="false" />
+          <Property Name="Update_Date" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblFormTransportationRequest">
           <Key>
             <PropertyRef Name="FormTransportationRequestId" />
@@ -2653,6 +2678,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySet Name="tblFormRevokeConsentPart" EntityType="Self.tblFormRevokeConsentPart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormSummaryPerformance" EntityType="Self.tblFormSummaryPerformance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormTeamEval" EntityType="Self.tblFormTeamEval" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormTransitionReferrals" EntityType="Self.tblFormTransitionReferrals" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormTransportationRequest" EntityType="Self.tblFormTransportationRequest" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarkMethods" EntityType="Self.tblGoalBenchmarkMethods" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGoalBenchmarks" EntityType="Self.tblGoalBenchmarks" Schema="dbo" store:Type="Tables" />
@@ -3199,6 +3225,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="ProviderId" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblFormTransitionReferrals" EntityType="IndividualizedEducationProgramModel.tblFormTransitionReferral" />
         </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -5965,6 +5992,31 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ServiceBuildingID" Nullable="false" MaxLength="50" />
         </ComplexType>
+        <EntityType Name="tblFormTransitionReferral">
+          <Key>
+            <PropertyRef Name="FormTransitionReferralID" />
+          </Key>
+          <Property Name="FormTransitionReferralID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentId" Type="Int32" Nullable="false" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
+          <Property Name="From_School" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="From_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="From_Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="From_ResposibleLEAStaff" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="To_LocalRegabilitationOffice" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="To_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="To_Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="To_ATTN" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Student_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Student_Address" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Student_Phone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Student_DOB" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Student_ExitDate" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" />
+          <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8703,6 +8755,32 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblFormTransitionReferrals">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormTransitionReferral">
+              <MappingFragment StoreEntitySet="tblFormTransitionReferrals">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="Student_ExitDate" ColumnName="Student_ExitDate" />
+                <ScalarProperty Name="Student_DOB" ColumnName="Student_DOB" />
+                <ScalarProperty Name="Student_Phone" ColumnName="Student_Phone" />
+                <ScalarProperty Name="Student_Address" ColumnName="Student_Address" />
+                <ScalarProperty Name="Student_Name" ColumnName="Student_Name" />
+                <ScalarProperty Name="To_ATTN" ColumnName="To_ATTN" />
+                <ScalarProperty Name="To_Phone" ColumnName="To_Phone" />
+                <ScalarProperty Name="To_Address" ColumnName="To_Address" />
+                <ScalarProperty Name="To_LocalRegabilitationOffice" ColumnName="To_LocalRegabilitationOffice" />
+                <ScalarProperty Name="From_ResposibleLEAStaff" ColumnName="From_ResposibleLEAStaff" />
+                <ScalarProperty Name="From_Phone" ColumnName="From_Phone" />
+                <ScalarProperty Name="From_Address" ColumnName="From_Address" />
+                <ScalarProperty Name="From_School" ColumnName="From_School" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentId" ColumnName="StudentId" />
+                <ScalarProperty Name="FormTransitionReferralID" ColumnName="FormTransitionReferralID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

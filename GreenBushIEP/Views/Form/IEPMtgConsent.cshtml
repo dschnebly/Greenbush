@@ -18,20 +18,15 @@
             TO IEP MEETING
         </p>
         <p>
-            I, the parent (or adult student) identified below, have been informed that
+            I, the parent (or adult student) identified below, have been informed that       
+            <span style="text-decoration:underline;"><textarea cols="50" rows="1" maxlength="200">@(formModel.ParticipatingAgency)</textarea><span id="ParticipatingAgency" style="display:none" class="input-value">@(formModel.ParticipatingAgency)</span></span> (Participating Agency):					   
         </p>
         <p>
-            <span style="text-decoration:underline;"><textarea cols="50" rows="1" maxlength="200">@(formModel.ParticipatingAgency)</textarea><span id="ParticipatingAgency" style="display:none" class="input-value">@(formModel.ParticipatingAgency)</span></span>:					   
-        </p>
-        <p>
-            (Participating Agency)
-        </p>
-        <p>
-            <span><input type="checkbox" name="ProvideTransitionServiceCbx" @(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "checked" : "")/><img id="ProvideTransitionService" class='imgCheck' src="@(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? @imageChecked : @imageNotChecked)"/></span> may be providing or paying for certain transition services for my child;
+            <span><input type="checkbox" name="ProvideTransitionServiceCbx" @(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "checked" : "")/><img id="ProvideTransitionService" class='imgCheck' src="@(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? @imageChecked : @imageNotChecked)"/></span>&nbsp;may be providing or paying for certain transition services for my child;
         </p>
         <p align="center">- OR -</p>
         <p>
-			<span><input type="checkbox" name="FurtherInformedCbx" @(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "checked" : "")/><img id="FurtherInformed" class='imgCheck' src="@(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? @imageChecked : @imageNotChecked)"/></span> may be providing or paying for certain transition services for my child (or me) and  </p>
+			<span><input type="checkbox" name="FurtherInformedCbx" @(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "checked" : "")/><img id="FurtherInformed" class='imgCheck' src="@(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? @imageChecked : @imageNotChecked)"/></span>&nbsp;may be providing or paying for certain transition services for my child (or me) and  </p>
         <p>I have been further informed that:</p>
         <ul>
             <li>
@@ -61,7 +56,7 @@
             development of postsecondary goals, transition assessments and/or
             transition services.
         </p>
-        <p>
+        <p style="margin-top:35px">
             __________________________________________ Date: ______________________
         </p>
         <p>(Parent/Adult Student signature)</p>
