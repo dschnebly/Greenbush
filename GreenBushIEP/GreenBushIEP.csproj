@@ -1336,7 +1336,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
