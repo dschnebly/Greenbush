@@ -892,7 +892,7 @@
           <Property Name="DelieveredDate" Type="datetime" />
           <Property Name="SchoolContact" Type="nvarchar" MaxLength="200" />
           <Property Name="SchoolContactAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="GivenConsent" Type="bit" />
           <Property Name="RefuseConsent" Type="bit" />
           <Property Name="ModifiedBy" Type="int" />
@@ -4427,7 +4427,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="DelieveredDate" Type="DateTime" Precision="3" />
           <Property Name="SchoolContact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SchoolContactAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="GivenConsent" Type="Boolean" />
           <Property Name="RefuseConsent" Type="Boolean" />
           <Property Name="ModifiedBy" Type="Int32" />
