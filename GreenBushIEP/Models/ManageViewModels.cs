@@ -512,10 +512,11 @@ namespace GreenBushIEP.Models
         public tblFormRevokeConsentPart formRevPart { get; set; }
         public tblFormTransportationRequest formTransRequest { get; set; }
         public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
-
 		public tblFormChildOutcome childOutcome { get; set; }
+        public tblFormTransitionReferral formTransReferral { get; set; }
 
-		public IEPFormFileViewModel()
+
+        public IEPFormFileViewModel()
         {
             studentId = 0;
             fileName = string.Empty;

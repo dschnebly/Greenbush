@@ -8,13 +8,7 @@
 	string evalDate = Model.lastReEvalDate != null ? Model.lastReEvalDate : "";
 	string todaysDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
 	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	//if (formModel.FormPriorWritten_EvalId > 0)
-	//{
-	//	districtContactName = formModel.SchoolContact;
-	//	districtContactPhone = formModel.SchoolContactPhone;
-	//	contactFormattedName = formModel.ParentName;
-	//}
-
+	
 	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
 	if (formModel.FormDate.HasValue)
 	{
@@ -95,7 +89,7 @@
 			</tr>
 			<tr>
 				<td style='border-bottom:solid 1px black;font-size:10.0pt;font-family:"Calibri",sans-serif'>
-					<textarea data-val="50" style="width:200px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;" class="input-value">@(districtContactName)</span></td>
+					<textarea data-val="50" style="width:300px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;" class="input-value">@(districtContactName)</span></td>
 				<td></td>
 			</tr>
 			<tr>

@@ -129,6 +129,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_ServiceExport" Width="1.5" PointX="36.75" PointY="5.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="36.75" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="19.75" PointY="0.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormTransitionReferral" Width="1.5" PointX="36.375" PointY="19.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

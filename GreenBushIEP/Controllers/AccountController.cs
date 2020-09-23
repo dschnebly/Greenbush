@@ -83,7 +83,7 @@ namespace GreenbushIep.Controllers
                             {
                                 FormsAuthentication.SetAuthCookie(email, false);
 
-                                string ReturnUrl = "/Home/Portal";
+                                string ReturnUrl = "/Home/Portal?logon=1";
 
                                 return Json(new { portal = ReturnUrl, success = true });
                             }

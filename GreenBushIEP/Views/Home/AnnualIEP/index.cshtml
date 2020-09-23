@@ -271,7 +271,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @(Model.hasAccommodations && !Model.studentIEP.isAccommodationsCompleted  ? "needsAttention" : string.Empty)" id="AccommodationWidget">
+                <li class="ui-state-default filter planning otherIep @(Model.hasAccommodations && !Model.studentIEP.isAccommodationsCompleted  ? "needsAttention" : string.Empty)" id="AccommodationWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
 
                         <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.hasAccommodations && !Model.studentIEP.isAccommodationsCompleted ? string.Empty : "hidden")" aria-hidden="true"></i>
@@ -315,7 +315,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning @((Model.studentAge > 13 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
+                <li class="ui-state-default filter planning otherIep @((Model.studentAge > 13 && !Model.isGiftedOnly || (Model.isDoc && Model.studentAge <= 21 && !Model.isGiftedOnly)) ?  String.Empty : "hidden" )" id="TransitionWidget">
                     <div class="hero-widget well @(Model.studentIEP.isTransitionCompleted || !Model.studentIEP.isTransitionNeeded(Model.studentAge, Model.isDoc) ? "module-completed" : string.Empty )">
                         <div class="icon">
                             <i class="glyphicon glyphicon-random" aria-hidden="true"></i>

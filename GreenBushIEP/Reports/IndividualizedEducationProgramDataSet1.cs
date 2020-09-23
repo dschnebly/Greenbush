@@ -2,7 +2,7 @@
 {
 
 
-    public partial class IndividualizedEducationProgramDataSet
+    partial class IndividualizedEducationProgramDataSet
     {
     }
 }
