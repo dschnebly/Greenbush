@@ -655,6 +655,137 @@
         <div class="modal-dialog" style="margin: 0 auto;" id="module-form-section"></div>
     </div>
     <!-- End fullscreen IEP Module Section-->
+    <!-- Modal reverting the draft? Why? -->
+    <div id="reasonsRevertDraft" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="reasonsRevertDraftLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="reasonsRevertDraftLabel">Reason to revert this IEP</h4>
+                </div>
+                <div class="modal-body">
+                    <p><textarea placeholder="Enter the reasons why you are reverting this student's IEP"></textarea></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal reverting -->
+    <!-- Modal Check your work -->
+    <div id="betterCheckYourWork" class="modal" tabindex="-1" role="dialog" aria-labelledby="betterCheckYourWork">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="betterCheckYourWorkLabel">Best Check Yo-Self</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="carousel-questions" class="carousel slide" data-ride="carousel" data-interval="false" style="height: 10em;">
+                        <!-- Wrapper for slides -->
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is the child's student identification correct?</h5> : <span style="font-size:14pt; border: 1px;">2549875221</span>
+                                </div>
+                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
+                            </div>
+                            <div class="item">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is the current grade correct?</h5> : <select style="font-size: 12pt;">
+    <option value="-4" selected="selected">Preschooler age 3</option>
+    <option value="-3">Preschooler age 4</option>
+    <option value="-2">Preschooler age 5</option>
+    <option value="-1">Preschooler age 6</option>
+    <option value="0">Kindergarten</option>
+    <option value="1">1st Grade</option>
+    <option value="2">2nd Grade</option>
+    <option value="3">3rd Grade</option>
+    <option value="4">4th Grade</option>
+    <option value="5">5th Grade</option>
+    <option value="6">6th Grade</option>
+    <option value="7">7th Grade</option>
+    <option value="8">8th Grade</option>
+    <option value="9">9th Grade</option>
+    <option value="10">10th Grade</option>
+    <option value="11">11th Grade</option>
+    <option value="12">12th Grade</option>
+    <option value="13">Other Option</option>
+</select>
+                                </div>
+                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span>Previous Question</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
+                            </div>
+                            <div class="item">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is the current status code correct?</h5> : <select style="font-size:12pt;">
+    <optgroup label="Active">
+        <option value="B" selected="selected">B - Children age 3 who transition from Part C services to Part B by their 3rd birthday</option>
+        <option value="C">C - Continuing Student</option>
+        <option value="E">E - Entering from another District or Agency</option>
+        <option value="I">I - Reinitiation of Services</option>
+        <option value="N">N - New Referral</option>
+        <option value="R">R - Returning to a Special Education Program:</option>
+    </optgroup>
+    <optgroup label="Inactive">
+        <option value="0">0 - Does Not Qualify</option>
+        <option value="1">1 - Parent Declined</option>
+        <option value="A">A - Action initiated Withdrawn from Special Education</option>
+        <option value="D">D - Dropped Out of School</option>
+        <option value="G">G - Graduation with Diploma</option>
+        <option value="H">H - Has earned or is enrolled in a GED program.</option>
+        <option value="L">L - Left State</option>
+        <option value="M">M - Maximum Age</option>
+        <option value="O">O - Objectives completed</option>
+        <option value="S">S - Gifted only students who have ceased receiving services due to out of school suspension or expulsion</option>
+        <option value="T">T - Moved, known to be continuing</option>
+        <option value="W">W - Written revocation of services</option>
+        <option value="X">X - Deceased</option>
+    </optgroup>
+</select>
+                                </div>
+                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;"
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span>Previous Question</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
+                            </div>
+                            <div class="item">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is primary parent checkbox checked?</h5> : YES
+                                </div>
+                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span>Previous Question</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes &amp; Continue</button>
+                            </div>
+                            <div class="item">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Are the IEP and Meeting dates correct?</h5> : <span style="font-size:14pt; border: 1px;">12-25-2021</span>
+                                </div>
+                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
+                                    <span class="glyphicon glyphicon-chevron-left"></span>
+                                    <span>Previous Question</span>
+                                    <span class="sr-only">Previous</span>
+                                </a>
+                                <button type="button" id="completeActiveIEPChecklist" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End check your work -->
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
         <strong class="success hidden"><i class="glyphicon glyphicon-ok"></i> successfully saved the data!</strong>

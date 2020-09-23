@@ -229,34 +229,46 @@
 
         var answer = confirm("Are you sure you want to make this IEP Active?");
         if (answer) {
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
 
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
+            $("#betterCheckYourWork").modal('show');
 
-            $.ajax({
-                type: 'GET',
-                url: '/Home/UpdateIEPStatusToActive',
-                data: {
-                    Stid: stId,
-                    IEPid: iepId
-                },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.Result === 'success') {
-                        location.reload(true);
-                    }
-                },
-                error: function (data) {
-                    alert(data.Message);
-                },
-                complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
-                }
-            });
+
+
+            // $('.ajax-loader').css("visibility", "visible");
+            // $(".ajax-loader img").css("visibility", "visible");
+
+            //var stId = $("#stid").val();
+            //var iepId = $("#studentIEPId").val();
+
+            //$.ajax({
+            //    type: 'GET',
+            //    url: '/Home/UpdateIEPStatusToActive',
+            //    data: {
+            //        Stid: stId,
+            //        IEPid: iepId
+            //    },
+            //    dataType: 'json',
+            //    success: function (data) {
+            //        if (data.Result === 'success') {
+            //            location.reload(true);
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert(data.Message);
+            //    },
+            //    complete: function () {
+            //        $('.ajax-loader').css("visibility", "hidden");
+            //        $(".ajax-loader img").css("visibility", "hidden");
+            //    }
+            //});
         }
+    });
+
+    $("#completeActiveIEPChecklist").on("click", function () {
+        $("#betterCheckYourWork").modal('hide');
+
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
     });
 
     // Attach Event

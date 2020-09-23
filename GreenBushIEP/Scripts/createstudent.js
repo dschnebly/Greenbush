@@ -415,7 +415,7 @@ function createStudentContacts() {
 
 						$.each(data.teacherList, function (key, value) {
 							var userImage = '/Content/Images/newUser.png';
-							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+							items.push("<li><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive' style='height:60px;width:60px;' /></div><div class='teacher-search-additional-information'><strong>" + value.Name + "</strong></div></li>");
 						});
 
 						$("ul#teacherList").append.apply($("ul#teacherList"), items);
@@ -471,7 +471,7 @@ function editStudentContacts() {
 								}
 							}
 
-							items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-addtional-information'><strong>" + value.Name + "</strong></div></li>");
+							items.push("<li class='" + isActive + "'><div class='listrap-toggle pull-left'><span class='ourTeacher' data-id='" + value.UserID + "'></span><img src='" + userImage + "' class='img-circle pull-left img-responsive " + isActiveImage + "' style='height:60px;width:60px;' /></div><div class='teacher-search-additional-information'><strong>" + value.Name + "</strong></div></li>");
 						});
 
 						$("ul#teacherList").append.apply($("ul#teacherList"), items);
