@@ -55,69 +55,77 @@
             if ($(this).val() == 2) {
                 $('table tr.notActiveForm').removeClass("hidden");
                 $('table tr.ActiveForm').addClass("hidden");
+                evtAttachUnhideAchivedForm();
             } else {
                 $('table tr.notActiveForm').addClass("hidden");
                 $('table tr.ActiveForm').removeClass("hidden");
+                evtAttachHideArchivedForm();
             }
         });
 
-        $(".hideArchivedForm").on("click", function () {
-            var answer = confirm("Are you sure you want to hide this?");
-            if (answer) {
+        function evtAttachHideArchivedForm() {
+            $(".hideArchivedForm").bind("click", function () {
+                var answer = confirm("Are you sure you want to hide this?");
+                if (answer) {
 
-                var button = $(this);
-                var tablerow = $(this).closest('tr')
-                var formArchiveID = tablerow.data('id');
-                $.ajax({
-                    type: 'GET',
-                    url: '/Home/MakeFormInactive',
-                    data: { formId: formArchiveID },
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        if (data.result != "error") {
-                            tablerow.removeClass("ActiveForm").addClass("notActiveForm hidden");
-                            button.removeClass("glyphicon-eye-open hideArchivedForm").addClass("glyphicon-eye-close unhideArchivedForm");
-                            _showAlert(data.message, true);
-                        } else {
-                            _showAlert(data.message, false);
+                    var button = $(this);
+                    var tablerow = $(this).closest('tr')
+                    var formArchiveID = tablerow.data('id');
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Home/MakeFormInactive',
+                        data: { formId: formArchiveID },
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            if (data.result != "error") {
+                                tablerow.removeClass("ActiveForm").addClass("notActiveForm hidden");
+                                button.unbind('click');
+                                button.removeClass("glyphicon-eye-open hideArchivedForm").addClass("glyphicon-eye-close unhideArchivedForm");
+                                _showAlert(data.message, true);
+                            } else {
+                                _showAlert(data.message, false);
+                            }
+                        },
+                        error: function (data) {
+                            _showAlert("Unable to connect or other related problem.", false);
                         }
-                    },
-                    error: function (data) {
-                        _showAlert("Unable to connect or other related problem.", false);
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
 
-        $(".unhideArchivedForm").on("click", function () {
-            var answer = confirm("Are you sure you want to unhide this?");
-            if (answer) {
+        function evtAttachUnhideAchivedForm() {
+            $(".unhideArchivedForm").bind("click", function () {
+                var answer = confirm("Are you sure you want to unhide this?");
+                if (answer) {
 
-                var button = $(this);
-                var tablerow = $(this).closest('tr')
-                var formArchiveID = tablerow.data('id');
-                $.ajax({
-                    type: 'GET',
-                    url: '/Home/MakeFormActive',
-                    data: { formId: formArchiveID },
-                    dataType: "json",
-                    async: false,
-                    success: function (data) {
-                        if (data.result != "error") {
-                            tablerow.removeClass("notActiveForm").addClass("ActiveForm hidden");
-                            button.removeClass("glyphicon-eye-close unhideArchivedForm").addClass("glyphicon-eye-open hideArchivedForm");
-                            _showAlert(data.message, true);
-                        } else {
-                            _showAlert(data.message, false);
+                    var button = $(this);
+                    var tablerow = $(this).closest('tr')
+                    var formArchiveID = tablerow.data('id');
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Home/MakeFormActive',
+                        data: { formId: formArchiveID },
+                        dataType: "json",
+                        async: false,
+                        success: function (data) {
+                            if (data.result != "error") {
+                                tablerow.removeClass("notActiveForm").addClass("ActiveForm hidden");
+                                button.unbind('click');
+                                button.removeClass("glyphicon-eye-close unhideArchivedForm").addClass("glyphicon-eye-open hideArchivedForm");
+                                _showAlert(data.message, true);
+                            } else {
+                                _showAlert(data.message, false);
+                            }
+                        },
+                        error: function (data) {
+                            _showAlert("Unable to connect or other related problem.", false);
                         }
-                    },
-                    error: function (data) {
-                        _showAlert("Unable to connect or other related problem.", false);
-                    }
-                });
-            }
-        });
+                    });
+                }
+            });
+        }
 
         $(".closeForms").on("click", function (e) {
             window.location.href = '/Home/TeacherPortal';
@@ -218,6 +226,9 @@
             }
 
         });//end document ready
+
+        evtAttachHideArchivedForm();
+        evtUnattachHideArchivedForm();
     }
     init();
 
