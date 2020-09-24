@@ -24,11 +24,9 @@
                 <h3 class="modal-title custom_align">Dashboard Notifications</h3>
             </div>
             <div class="modal-body">
-                
                 @if (dueIeps != null && dueIeps.Count > 0)
                 {
-                    <input type="hidden" id="iepsDueCount" value="@(dueIeps.Count)"/>
-                   
+
                     <a href="#" id="iepsDueListBtn" title="Show/Hide" role="button" class="btn btn-info btn-action">
                         <span class="glyphicon glyphicon-plus"> </span><span class="standard-font-size"> Initial Evaluations Due (@(dueIeps.Count))</span>
                     </a>
@@ -48,7 +46,6 @@
 
                 @if (draftIeps != null && draftIeps.Count > 0)
                 {
-                    <input type="hidden" id="draftIepsCount" value="@(draftIeps.Count)"/>
                     <br />
                     <a href="#" id="iepsDraftListBtn" title="Show/Hide" role="button" class="btn btn-info btn-action">
                         <span class="glyphicon glyphicon-plus"> </span><span class="standard-font-size"> Draft IEPs (@(draftIeps.Count))</span>
