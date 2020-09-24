@@ -3,7 +3,23 @@
     function init() {
 
         if ($("#dashboardNotification").length > 0) {
-            $("#dashboardNotification").modal();
+           //$("#dashboardNotification").modal();
+            var message = "You have ";
+            if ($("#draftIepsCount").length > 0) {
+
+                message += $("#draftIepsCount").val() + " Drafts Due";
+            }
+
+            if ($("#draftIepsCount").length > 0) {
+
+                message += $("#iepsDueCount").val() + " IEPs Due";
+            }
+            
+
+
+            $("#alertMessage .moreinfo").html(message);
+            $("#alertMessage").fadeTo(2000, 500);
+
         }
        
         $("#iepsDueListBtn").on("click", function () {
