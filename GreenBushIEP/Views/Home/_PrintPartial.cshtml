@@ -1764,7 +1764,7 @@
 }
 
 
-@if (@Model.studentDetails.printBehavior)
+@if (@Model.studentDetails.printBehavior && Model.hasBehavior)
 {
 	<div id="divBehavior">	
 		<h3 class="text-center">BEHAVIOR PLAN</h3>
