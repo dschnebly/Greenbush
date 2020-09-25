@@ -7,13 +7,13 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/misportal.css")
+    @Styles.Render("~/Content/misportal.css?v1.1")
     @Styles.Render("~/Content/chosen.css")
 }
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/misportal.js?v1.2")
+    @Scripts.Render("~/Scripts/misportal.js?v1.3")
 }
 
 <div class="container">
@@ -21,15 +21,20 @@
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" alt="My Avatar">
-        </a>
+        </a>       
     </div>
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" role="button" data-ftrans="slide">@ViewBag.DisplayName</a> <small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"> - my current list of users</small>
     </h3>
+    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
+    {
+        <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>    
+    }
     <hr>
     <div class="row">
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
+               
                 <div class="user-toggle-item">
                     <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
                 </div>
@@ -45,6 +50,9 @@
                 <div class="user-toggle-item">
                     <a id="referrals" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Referrals"><i class="fa fa-address-book" title="View Referrals" data-toggle="tooltip"></i></a>
                 </div>
+                 
+
+
             </div>
         </div>
     </div>
@@ -352,4 +360,5 @@
 </div>
 <!-- end modal -->
 
- @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
+

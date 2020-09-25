@@ -94,6 +94,7 @@ namespace GreenBushIEP.Models
         public List<StudentIEPViewModel> members { get; set; }
         public List<NotificationViewModel> draftIeps { get; set; }
         public List<NotificationViewModel> dueIeps { get; set; }
+        public bool showDashboardNotification { get; set; }
 
         public PortalViewModel()
         {
@@ -103,6 +104,7 @@ namespace GreenBushIEP.Models
             members = new List<StudentIEPViewModel>();
             draftIeps = new List<NotificationViewModel>();
             dueIeps = new List<NotificationViewModel>();
+            showDashboardNotification = false;
         }
     }
 
@@ -254,12 +256,14 @@ namespace GreenBushIEP.Models
         public List<tblBuilding> buildings { get; set; }
         public List<NotificationViewModel> draftIeps { get; set; }
         public List<NotificationViewModel> dueIeps { get; set; }
+        public bool showDashboardNotification { get; set; }
         public StudentViewModel()
         {
             districts = new List<tblDistrict>();
             buildings = new List<tblBuilding>();
             draftIeps = new List<NotificationViewModel>();
             dueIeps = new List<NotificationViewModel>();
+            showDashboardNotification = false;
         }
     }
 

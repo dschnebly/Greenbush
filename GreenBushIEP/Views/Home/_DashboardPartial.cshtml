@@ -1,13 +1,19 @@
-﻿@{
+﻿
+@{
     List<GreenBushIEP.Models.NotificationViewModel> draftIeps = null;
     List<GreenBushIEP.Models.NotificationViewModel> dueIeps = null;
+    bool showDashboardNotification = false;
 
+    if (ViewData["showDashboardNotification"] != null)
+    {
+        showDashboardNotification = (bool)ViewData["showDashboardNotification"];
+    }
     if (ViewData["draftIEPS"] != null)
     {
         draftIeps = ViewData["draftIEPS"] as List<GreenBushIEP.Models.NotificationViewModel>;
     }
 
-     if (ViewData["dueIEPS"] != null)
+    if (ViewData["dueIEPS"] != null)
     {
         dueIeps = ViewData["dueIEPS"] as List<GreenBushIEP.Models.NotificationViewModel>;
     }
@@ -16,51 +22,67 @@
 @if((draftIeps != null && draftIeps.Count > 0) || (dueIeps != null && dueIeps.Count > 0))
 {
 <div class="modal fadeInUp" id="dashboardNotification" tabindex="-1" role="dialog">
+    <input id="showBannerNotification" type="hidden" value="@(showDashboardNotification ? 1 : 0)" />
     <div class="modal-dialog">
-        <div class="modal-content">
-           
+        <div class="modal-content">           
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h3 class="modal-title custom_align">Dashboard Notifications</h3>
+                <h3 class="modal-title custom_align">Notifications</h3>
             </div>
             <div class="modal-body">
                 @if (dueIeps != null && dueIeps.Count > 0)
                 {
-
-                    <a href="#" id="iepsDueListBtn" title="Show/Hide" role="button" class="btn btn-info btn-action">
-                        <span class="glyphicon glyphicon-plus"> </span><span class="standard-font-size"> Initial Evaluations Due (@(dueIeps.Count))</span>
-                    </a>
-                    <div id="iepsDueList" style="display:none">
-                        <ul>
-                            @foreach (var dueIep in dueIeps)
-                            {
-                                <li>
-                                    <a href="#" data-id="@(dueIep.StudentId)" title="Launch the IEP for this student" data-ftrans="slide" class="dashboardIEP">
-                                        @dueIep.StudentLastName, @dueIep.StudentFirstName (@dueIep.Days)
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                    <input id="dueIepsCount" type="hidden" value="@(dueIeps.Count)"/>                   
+                    <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0" id="iepsDueListBtn">
+                                                <span class="studentGoalLabel" style="margin-left:5px;">Initial Evaluations Due (@(dueIeps.Count))</span>                                                
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    
+                        <div id="iepsDueList" class="panel panel-collapse collapse">                    
+                            <div class="list-group list-group-root well">
+                                @foreach (var dueIep in dueIeps)
+                                {
+                                    <div class="list-group-item">
+                                        <span title="IEP due in @dueIep.Days day(s)">@dueIep.StudentLastName, @dueIep.StudentFirstName (@dueIep.Days)</span>  
+                                        <a href="#" data-id="@(dueIep.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
+                                                <span class="glyphicon glyphicon-log-out"></span>
+                                         </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 }
 
                 @if (draftIeps != null && draftIeps.Count > 0)
                 {
-                    <br />
-                    <a href="#" id="iepsDraftListBtn" title="Show/Hide" role="button" class="btn btn-info btn-action">
-                        <span class="glyphicon glyphicon-plus"> </span><span class="standard-font-size"> Draft IEPs (@(draftIeps.Count))</span>
-                    </a>
-                    <div id="iepsDraftList" style="display:none">
-                        <ul>
-                            @foreach (var draftIep in draftIeps)
-                            {
-                                <li>
-                                    <a href="#" data-id="@(draftIep.StudentId)" title="Launch the IEP for this student" data-ftrans="slide" class="dashboardIEP">
-                                        @draftIep.StudentLastName, @draftIep.StudentFirstName (@draftIep.Days)
-                                    </a>
-                                </li>
-                            }
-                        </ul>
+                    <input id="draftIepsCount" type="hidden" value="@(draftIeps.Count)"/>                   
+                    <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0" id="iepsDraftListBtn">
+                                                <span class="studentGoalLabel" style="margin-left:5px;">Draft IEPs (@(draftIeps.Count))</span>                                                
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    
+                        <div id="iepsDraftList" class="panel panel-collapse collapse">                    
+                            <div class="list-group list-group-root well">
+                                @foreach (var draftIep in draftIeps)
+                                {
+                                    <div class="list-group-item">
+                                        <span title="@(draftIep.Days) day(s) in Draft status">@draftIep.StudentLastName, @draftIep.StudentFirstName (@draftIep.Days)</span>  
+                                        <a href="#" data-id="@(draftIep.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
+                                                <span class="glyphicon glyphicon-log-out"></span>
+                                         </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
                     </div>
                 }
             </div>

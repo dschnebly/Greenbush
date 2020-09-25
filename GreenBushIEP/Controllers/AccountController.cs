@@ -76,7 +76,7 @@ namespace GreenbushIep.Controllers
                         byte[] hashBytes = user.Password;
                         PasswordHash hash = new PasswordHash(saltBytes, hashBytes);
 
-						if (hash.Verify(password))
+						if (hash.Verify(password))                                                
 						{
                             //User found in the database
                             if (user != null)

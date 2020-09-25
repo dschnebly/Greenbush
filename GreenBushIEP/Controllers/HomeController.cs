@@ -117,12 +117,10 @@ namespace GreenbushIep.Controllers
                     members = db.uspUserAssignedList(MIS.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
-                if (logon.HasValue && logon.Value == 1)
-                {
-                    model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-
-                    model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                }
+                //dashboard notify
+                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
@@ -151,13 +149,11 @@ namespace GreenbushIep.Controllers
                     members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
-                if (logon.HasValue && logon.Value == 1)
-                {
-                    model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-
-                    model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                }
-
+                //dashboard notify
+                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.showDashboardNotification = logon.HasValue && logon.Value == 1;
+                
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(ADMIN);
 
@@ -238,12 +234,10 @@ namespace GreenbushIep.Controllers
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList()
                 };
 
-                if (logon.HasValue && logon.Value == 1)
-                {
-                    model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
-
-                    model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
-                }
+                //dashboard notify
+                model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(teacher);

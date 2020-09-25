@@ -102,6 +102,9 @@
             font-size: 16px;
         }
 
+    .notification {
+        color: #a94442;
+    }
     /*//////////////////////////////////////
     ///  User Toggle Buttons Starts Here
     //////////////////////////////////////*/
@@ -336,6 +339,10 @@
     <h3>
         <a href="/Manage/Edit/@(Model.Teacher.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of students</small>
     </h3>
+     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
+    {
+        <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>    
+    }
     <hr>
     <div class="row">
         <div class="col-md-12">
@@ -348,6 +355,10 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
     </div>
 	<div class="row">
 		<div class="col-xs-12 col-md-2 pull-left">
@@ -425,10 +436,7 @@
         </div>
        
     </div>
-    <div class="alert alert-info" role="alert" id="alertMessage" style="display: none;">
-        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
-    </div>
+  
 
     @{
         if (Model.Students.Count > 0)
@@ -510,9 +518,9 @@
     <!-- end modal -->
 </div>
 
- @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps } })
+@Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
 
 @section scripts {
-    @Scripts.Render("~/Scripts/portal.js?v1.2")
+    @Scripts.Render("~/Scripts/portal.js?v1.3")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
 }

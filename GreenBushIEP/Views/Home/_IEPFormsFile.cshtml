@@ -131,6 +131,11 @@
             }, 100);
         }
 
+		/* Event */
+		/* When the user clicks the close button on the alert  */
+		$("#alertMessage").on("click", function (e) {
+			$(e.currentTarget).hide();
+		});
 
         //setup up hidden checkbox images for printing to pdf
         $('input:checkbox').change(function () {
@@ -146,18 +151,31 @@
 			// access the clipboard using the api
 			var pastedData = e.originalEvent.clipboardData.getData('text');
 
-			var nextParagraph = $(this).next(".input-value");
-			var currentVal = pastedData; //$(this).val();
-			var padVal = $(this).attr('data-val');
-			if (padVal != undefined && padVal != "") {
-				var currLength = currentVal.length;
-				var spacesToAdd = parseInt(padVal) - currLength;
-				for (var i = 0; i < spacesToAdd; i++){
-					currentVal = currentVal + '\u00A0';
-				}
+			var maxLength = $(this).attr("maxLength");
 
+			if (maxLength > 0 && pastedData.length > maxLength) {
+				e.preventDefault();
+				clearContents(this);
+				_showAlert("The text exceeds the " + maxLength + " character limit for this field.", false);				
+				return;
 			}
-			nextParagraph.text(currentVal.replace(/\n/g, "new-line-val"));
+			else {
+
+				var nextParagraph = $(this).next(".input-value");
+				var currentVal = pastedData; //$(this).val();
+				var padVal = $(this).attr('data-val');
+			
+
+				if (padVal != undefined && padVal != "") {
+					var currLength = currentVal.length;
+					var spacesToAdd = parseInt(padVal) - currLength;
+					for (var i = 0; i < spacesToAdd; i++) {
+						currentVal = currentVal + '\u00A0';
+					}
+
+				}
+				nextParagraph.text(currentVal.replace(/\n/g, "new-line-val"));
+			}
 
 		});
 				
@@ -182,22 +200,38 @@
 		
     });
 
-	function _showAlert(message, positive) {
-		
-        if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-			if (positive)
-			{
-				$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
-			}
-			else {
-				$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
-			}
 
-            $("#alertMessage .moreinfo").html(message);
-            $("#alertMessage").fadeTo(3000, 1000).slideUp(2000, function () {
-                $("#alertMessage").slideUp(5000);
-            });
+	function scrollToMessage() {
+		var container = $('div.transition-page'); 
+        var scrollTo = $('#alertMessage'); 
+  
+        // Calculating new position of scrollbar 
+        var position = scrollTo.offset().top  
+                - container.offset().top  
+                + container.scrollTop(); 
+  
+        // Setting the value of scrollbar 
+        container.scrollTop(position); 
+    }
+
+	function _showAlert(message, positive) {
+		if (positive) {
+			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+				if (positive) {
+					$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
+				}
+				else {
+					$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+				}
+
+				$("#alertMessage .moreinfo").html(message);
+				$("#alertMessage").show();
+			}
+		}
+		else {
+			alert(message);
         }
+		
 	}
 
 	function getUrlParameter(sParam) {

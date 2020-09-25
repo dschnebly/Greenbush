@@ -3,34 +3,37 @@
 
 		$(".chosen-select").chosen({ width: "100%", });
 
-		if ($("#dashboardNotification").length > 0) {
-			$("#dashboardNotification").modal();
+		if ($("#dashboardNotification").length > 0 && ($("#showBannerNotification").val() == "1")) {  
+			var message = "";
+
+			if ($("#dueIepsCount").length > 0) {
+				message = "(" + $("#dueIepsCount").val() + ") Initial Evaluations Due"
+			}
+
+			if ($("#draftIepsCount").length > 0) {
+				if (message != "") {
+					message += " and ";
+				}
+				message += "(" + $("#draftIepsCount").val() + ") Draft IEPs"
+			}
+
+			if (message != "") {
+				message = "<a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
+				_showAlert(message, false);
+			}
 		}
+
+		$("#notificationBtn").on("click", function () {
+			_showNotifications();
+			return false;
+		});
 
 		$("#iepsDueListBtn").on("click", function () {
 			$("#iepsDueList").fadeToggle("fast", "linear");
-
-			if ($(this).find("span.glyphicon").hasClass("glyphicon-plus")) {
-				$(this).find("span.glyphicon").removeClass("glyphicon-plus");
-				$(this).find("span.glyphicon").addClass("glyphicon-minus");
-			}
-			else {
-				$(this).find("span.glyphicon").removeClass("glyphicon-minus")
-				$(this).find("span.glyphicon").addClass("glyphicon-plus")
-			}
 		});
 
 		$("#iepsDraftListBtn").on("click", function () {
 			$("#iepsDraftList").fadeToggle("fast", "linear");
-
-			if ($(this).find("span.glyphicon").hasClass("glyphicon-plus")) {
-				$(this).find("span.glyphicon").removeClass("glyphicon-plus");
-				$(this).find("span.glyphicon").addClass("glyphicon-minus");
-			}
-			else {
-				$(this).find("span.glyphicon").removeClass("glyphicon-minus")
-				$(this).find("span.glyphicon").addClass("glyphicon-plus")
-			}
 		});
 
 		$(".dashboardIEP").on("click", function () {
@@ -38,6 +41,12 @@
 			var stid = $(this).attr("data-id");
 			window.location.href = '/Home/StudentProcedures?stid=' + stid;
 			return false;
+		});
+
+		/* Event */
+		/* When the user clicks the close button on the alert  */
+		$("#alertMessage").on("click", function (e) {
+			$(e.currentTarget).hide();
 		});
 
 		// filter to only active students		
@@ -369,6 +378,32 @@
     };
     new ft(params);
 });
+
+
+function _showNotifications() {
+	$("#dashboardNotification").modal();
+
+}
+
+function _showAlert(message, positive) {
+
+	var successFade = 9000;
+	if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+		if (positive) {
+			$("#alertMessage").removeClass('alert-danger').addClass('alert-success'); successFade = 3000;
+		}
+		else {
+			$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+		}
+		
+		if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+			$("#alertMessage .moreinfo").html(message);
+			$("#alertMessage").fadeTo(successFade, 500);
+		}
+	}
+}
+
+
 
 jQuery.fn.extend({
     listrap: function () {

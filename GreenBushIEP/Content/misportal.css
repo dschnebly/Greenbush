@@ -176,6 +176,10 @@ h4.panel-title {
 ///  User Toggle Buttons Starts Here
 //////////////////////////////////////*/
 
+.notification {
+    color: #a94442;
+}
+
 .btn-circle {
     width: 30px;
     height: 30px;
