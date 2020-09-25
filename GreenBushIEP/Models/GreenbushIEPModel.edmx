@@ -735,7 +735,7 @@
           <Property Name="OnBehalf" Type="nvarchar" MaxLength="200" />
           <Property Name="Address" Type="nvarchar" MaxLength="500" />
           <Property Name="CityStateZip" Type="nvarchar" MaxLength="100" />
-          <Property Name="ProposedMeetingInfo" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ProposedMeetingInfo" Type="nvarchar(max)" />
           <Property Name="MeetingToReviewEvaluation" Type="bit" />
           <Property Name="DevelopIEP" Type="bit" />
           <Property Name="DiscussIEPChanges" Type="bit" />
@@ -4270,7 +4270,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="OnBehalf" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="CityStateZip" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ProposedMeetingInfo" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ProposedMeetingInfo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MeetingToReviewEvaluation" Type="Boolean" />
           <Property Name="DevelopIEP" Type="Boolean" />
           <Property Name="DiscussIEPChanges" Type="Boolean" />
