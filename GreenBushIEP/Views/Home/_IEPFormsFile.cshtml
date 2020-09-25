@@ -150,12 +150,11 @@
 		$("textarea").bind("paste", function(e){
 			// access the clipboard using the api
 			var pastedData = e.originalEvent.clipboardData.getData('text');
-
+			clearContents(this);
 			var maxLength = $(this).attr("maxLength");
 
 			if (maxLength > 0 && pastedData.length > maxLength) {
-				e.preventDefault();
-				clearContents(this);
+				e.preventDefault();				
 				_showAlert("The text exceeds the " + maxLength + " character limit for this field.", false);				
 				return;
 			}
