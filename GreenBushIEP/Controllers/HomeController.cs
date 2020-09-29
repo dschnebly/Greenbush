@@ -581,8 +581,34 @@ namespace GreenbushIep.Controllers
 
                 if (!calendar.NoService)
                 {
+                    
+                    db.tblArchiveCalendars.Add(new tblArchiveCalendar()
+                    {
+                        USD = calendar.USD,
+                        BuildingID = calendar.BuildingID,
+                        Year = calendar.Year,
+                        Month = calendar.Month,
+                        Day = calendar.Day,
+                        NoService = calendar.NoService,
+                        canHaveClass = calendar.canHaveClass,
+                        calendarDate = calendar.calendarDate,
+                        SchoolYear = calendar.SchoolYear,
+                        Create_Date = calendar.Create_Date,
+                        Update_Date = calendar.Update_Date,
+                        CreatedBy = calendar.CreatedBy,
+                        ModifiedBy = calendar.ModifiedBy
+                    });                   
+
+
                     calendar.canHaveClass = hasSchool;
-                    db.SaveChanges();
+                    calendar.ModifiedBy = MIS.UserID;
+                    calendar.Update_Date = DateTime.Now;
+
+                    string updateValues = string.Format("Calendar Update for USD: {0} BuildingID: {1} Date: {2}", usd, bId, calendar.calendarDate.HasValue? calendar.calendarDate.Value.ToShortDateString() : "");
+
+                    db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar ", ColumnName="canHaveClass", UserID = MIS.UserID, Update_Date = DateTime.Now, Value = updateValues });
+
+                    db.SaveChanges();                    
 
                     return Json(new { Result = "success", HasClass = hasSchool, Message = "successfully saved to the dababase." }, JsonRequestBehavior.AllowGet);
                 }
@@ -799,8 +825,8 @@ namespace GreenbushIep.Controllers
                     }
                 }
 
-                string info = string.Format("CopyOverToCalendars District: {0} Building: {1} to Districts: {2} Building {3}", district, building, string.Join(",", selectedDistricts) , string.Join(",", selectedBuildings));
-                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar, tblCalendarReporting", UserID = null, Update_Date = DateTime.Now, Value = info });
+                string info = string.Format("CopyOverToCalendars District: {0} Building: {1} copied to Districts: {2} Building {3} for Year: {4}", district, building, string.Join(",", selectedDistricts) , string.Join(",", selectedBuildings), year);
+                db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar, tblCalendarReporting", UserID = MIS.UserID, Update_Date = DateTime.Now, Value = info });
                 db.SaveChanges();
 
                 return Json(new { Result = "success", Message = "Calendars Copied" }, JsonRequestBehavior.AllowGet);
