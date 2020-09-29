@@ -606,7 +606,7 @@ namespace GreenbushIep.Controllers
 
                     string updateValues = string.Format("Calendar Update for USD: {0} BuildingID: {1} Date: {2}", usd, bId, calendar.calendarDate.HasValue? calendar.calendarDate.Value.ToShortDateString() : "");
 
-                    db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar ", ColumnName="canHaveClass", UserID = MIS.UserID, Update_Date = DateTime.Now, Value = updateValues });
+                    db.tblAuditLogs.Add(new tblAuditLog() { IEPid = null, ModifiedBy = MIS.UserID, Create_Date = DateTime.Now, TableName = "tblCalendar ", ColumnName="canHaveClass", UserID = null, Update_Date = DateTime.Now, Value = updateValues });
 
                     db.SaveChanges();                    
 
@@ -626,23 +626,25 @@ namespace GreenbushIep.Controllers
             {
                 if (SQLConn.State != ConnectionState.Open) { SQLConn.Open(); }
 
-                string saveStuff = "INSERT INTO [tblCalendar] ([USD], [BuildingID], [Year], [Month], [Day], [NoService], [canHaveClass]) SELECT @USD, @BuildingID, [Year], [Month], [Day], [NoService], [canHaveClass] FROM [dbo].[tblCalendarTemplate]";
+                string saveStuff = "INSERT INTO [tblCalendar] ([USD], [BuildingID], [Year], [Month], [Day], [NoService], [canHaveClass], [CreatedBy] ) SELECT @USD, @BuildingID, [Year], [Month], [Day], [NoService], [canHaveClass], @UserId FROM [dbo].[tblCalendarTemplate]";
                 using (SqlCommand querySaveStuff = new SqlCommand(saveStuff))
                 {
                     querySaveStuff.Connection = SQLConn;
                     querySaveStuff.Parameters.Clear();
                     querySaveStuff.Parameters.AddWithValue("@USD", usd);
                     querySaveStuff.Parameters.AddWithValue("@BuildingID", bId);
+                    querySaveStuff.Parameters.AddWithValue("@UserId", MIS.UserID);
                     querySaveStuff.ExecuteNonQuery();
                 }
              
-                string saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([USD], [BuildingID], [SchoolYear]) SELECT DISTINCT @USD, @BuildingID, SchoolYear FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
+                string saveMoreStuff = "INSERT INTO [tblCalendarReporting] ([USD], [BuildingID], [SchoolYear], [CreatedBy]) SELECT DISTINCT @USD, @BuildingID, SchoolYear, @UserId FROM [dbo].[tblCalendarTemplate] ORDER BY SchoolYear";
                 using (SqlCommand querySaveMoreStuff = new SqlCommand(saveMoreStuff))
                 {
                     querySaveMoreStuff.Connection = SQLConn;
                     querySaveMoreStuff.Parameters.Clear();
                     querySaveMoreStuff.Parameters.AddWithValue("@USD", usd);
                     querySaveMoreStuff.Parameters.AddWithValue("@BuildingID", bId);
+                    querySaveMoreStuff.Parameters.AddWithValue("@UserId", MIS.UserID);
                     querySaveMoreStuff.ExecuteNonQuery();
                 }
 
