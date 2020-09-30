@@ -736,7 +736,7 @@
                             </div>
                             <div class="item">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Are the IEP and Meeting dates correct?</h5> : <span style="font-size:13pt;">@(Model.studentIEP.iepStartTime.Value.ToString("MM/dd/yyyy"))</span> &ndash; <span style="font-size:13pt;">@(Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy"))</span>
+                                    <h5 style="display: inline-block;">Are the IEP and Meeting dates correct?</h5> : <span style="font-size:13pt;">@(Model.studentIEP.iepStartTime.Value.ToString("MM/dd/yyyy"))</span> &ndash; <span style="font-size:13pt;">@(Model.studentIEP.current.MeetingDate != null ? Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))</span>
                                 </div>
                             </div>
                             <div class="item" id="1">

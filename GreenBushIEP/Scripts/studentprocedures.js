@@ -299,17 +299,30 @@
             return false;
         } // the link is disabled.
 
-        $("#betterCheckYourWork").modal('hide');
+        var iepType = $(this).data("iep");
 
+        $("#betterCheckYourWork").modal('hide');
         $('.ajax-loader').css("visibility", "visible");
         $(".ajax-loader img").css("visibility", "visible");
 
         var stId = $("#stid").val();
         var iepId = $("#studentIEPId").val();
+        var theUrl;
+        switch (iepType) {
+            case "admendment":
+                theUrl = "/Home/UpdateIEPAmendmentToActive";
+                break;
+            case "annual":
+                theUrl = "/Home/UpdateIEPAnnualToActive";
+                break;
+            default:
+                theUrl = "/Home/UpdateIEPStatusToActive";
+                break;
+        }
 
         $.ajax({
             type: 'GET',
-            url: '/Home/UpdateIEPStatusToActive',
+            url: theUrl,
             data: {
                 Stid: stId,
                 IEPid: iepId
@@ -322,19 +335,11 @@
             },
             error: function (data) {
                 alert(data.Message);
-            },
-            complete: function () {
+
                 $('.ajax-loader').css("visibility", "hidden");
                 $(".ajax-loader img").css("visibility", "hidden");
             }
         });
-    });
-
-    $("#completeActiveIEPChecklist").on("click", function () {
-        $("#betterCheckYourWork").modal('hide');
-
-        $('.ajax-loader').css("visibility", "visible");
-        $(".ajax-loader img").css("visibility", "visible");
     });
 
     // Attach Event
@@ -475,37 +480,71 @@
 
         var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
         if (answer) {
-            $('.ajax-loader').css("visibility", "visible").removeClass("hidden");
-            $(".ajax-loader img").css("visibility", "visible");
 
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
+            $("#betterCheckYourWork").modal('show');
 
-            $.ajax({
-                type: 'GET',
-                url: '/Home/UpdateIEPAmendmentToActive',
-                data: {
-                    Stid: stId,
-                    IepId: iepId
-                },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.Result === 'success') {
-                        location.reload(true);
-                    } else {
-                        alert(data.Message);
-                        location.reload(true);
-                    }
-                },
-                error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-                },
-                complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
+            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                var id = ev.relatedTarget.id;
+                console.log(id);
+                switch (id) {
+                    case "0":
+                        $("#betterCheckYourWorkPrevious").addClass("hidden");
+                        break;
+                    case "1":
+                        $("#betterCheckYourWorkContinue").addClass("hidden");
+                        $("#betterCheckYourWorkComplete").removeClass("hidden");
+                        break;
+                    case "savegrade":
+                        var Grade = $("#studentCarouselGrade").val();
+                        var StId = $("#stid").val();
+                        var IEPid = $("#studentIEPId").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentIEPGrade',
+                            async: true,
+                            data: {
+                                grade: Grade,
+                                stid: StId,
+                                iepId: IEPid
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("grade done");
+                            },
+                            error: function (data) {
+                                console.log("grade error");
+                            }
+                        });
+                        break;
+                    case "savecode":
+                        var Code = $("#studentCarouselCode").val();
+                        var StId = $("#stid").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentCode',
+                            async: true,
+                            data: {
+                                code: Code,
+                                stid: StId
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("code done");
+                            },
+                            error: function (data) {
+                                console.log("code error");
+                            }
+                        });
+                        break;
+                    default:
+                        $("#betterCheckYourWorkContinue").removeClass("hidden");
+                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                        $("#betterCheckYourWorkComplete").addClass("hidden");
                 }
             });
-        }
+        };
     });
 
     $("#makeIEPAnnualActive").on("click", function () {
@@ -515,37 +554,71 @@
 
         var answer = confirm("Are you sure you want to set this ANNUAL to active?");
         if (answer) {
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
 
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
+            $("#betterCheckYourWork").modal('show');
 
-            $.ajax({
-                type: 'GET',
-                url: '/Home/UpdateIEPAnnualToActive',
-                data: {
-                    Stid: stId,
-                    IepId: iepId
-                },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.Result === 'success') {
-                        location.reload(true);
-                    } else {
-                        alert(data.Message);
-                        location.reload(true);
-                    }
-                },
-                error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-                },
-                complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
+            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                var id = ev.relatedTarget.id;
+                console.log(id);
+                switch (id) {
+                    case "0":
+                        $("#betterCheckYourWorkPrevious").addClass("hidden");
+                        break;
+                    case "1":
+                        $("#betterCheckYourWorkContinue").addClass("hidden");
+                        $("#betterCheckYourWorkComplete").removeClass("hidden");
+                        break;
+                    case "savegrade":
+                        var Grade = $("#studentCarouselGrade").val();
+                        var StId = $("#stid").val();
+                        var IEPid = $("#studentIEPId").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentIEPGrade',
+                            async: true,
+                            data: {
+                                grade: Grade,
+                                stid: StId,
+                                iepId: IEPid
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("grade done");
+                            },
+                            error: function (data) {
+                                console.log("grade error");
+                            }
+                        });
+                        break;
+                    case "savecode":
+                        var Code = $("#studentCarouselCode").val();
+                        var StId = $("#stid").val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentCode',
+                            async: true,
+                            data: {
+                                code: Code,
+                                stid: StId
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("code done");
+                            },
+                            error: function (data) {
+                                console.log("code error");
+                            }
+                        });
+                        break;
+                    default:
+                        $("#betterCheckYourWorkContinue").removeClass("hidden");
+                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                        $("#betterCheckYourWorkComplete").addClass("hidden");
                 }
             });
-        }
+        };
     });
 
     // Attach Event
