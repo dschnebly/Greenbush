@@ -221,47 +221,113 @@
     });
 
     // Attach Event
-    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
+    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button start the questions..
     $("#makeIEPActive").on("click", function () {
-        if ($("#makeIEPActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled.
-
         var answer = confirm("Are you sure you want to make this IEP Active?");
         if (answer) {
 
             $("#betterCheckYourWork").modal('show');
 
+            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                var id = ev.relatedTarget.id;
+                console.log(id);
+                switch (id) {
+                    case "0":
+                        $("#betterCheckYourWorkPrevious").addClass("hidden");
+                        break;
+                    case "1":
+                        $("#betterCheckYourWorkContinue").addClass("hidden");
+                        $("#betterCheckYourWorkComplete").removeClass("hidden");
+                        break;
+                    case "savegrade":
+                        var Grade = $("#studentCarouselGrade").val();
+                        var StId = $("#stid").val();
+                        var IEPid = $("#studentIEPId").val();
 
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentIEPGrade',
+                            async: true,
+                            data: {
+                                grade: Grade,
+                                stid: StId,
+                                iepId: IEPid
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("grade done");
+                            },
+                            error: function (data) {
+                                console.log("grade error");
+                            }
+                        });
+                        break;
+                    case "savecode":
+                        var Code = $("#studentCarouselCode").val();
+                        var StId = $("#stid").val();
 
-            // $('.ajax-loader').css("visibility", "visible");
-            // $(".ajax-loader img").css("visibility", "visible");
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/UpdateStudentCode',
+                            async: true,
+                            data: {
+                                code: Code,
+                                stid: StId
+                            },
+                            dataType: 'json',
+                            success: function (data) {
+                                console.log("code done");
+                            },
+                            error: function (data) {
+                                console.log("code error");
+                            }
+                        });
+                        break;
+                    default:
+                        $("#betterCheckYourWorkContinue").removeClass("hidden");
+                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                        $("#betterCheckYourWorkComplete").addClass("hidden");
+                }
+            });
+        };
+    });
 
-            //var stId = $("#stid").val();
-            //var iepId = $("#studentIEPId").val();
+    // Attach Event
+    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button and have answered all the "Check Yo Self" questions..
+    $("#betterCheckYourWorkComplete").on("click", function () {
+        if ($("#makeIEPActive").hasClass("disabled")) {
+            return false;
+        } // the link is disabled.
 
-            //$.ajax({
-            //    type: 'GET',
-            //    url: '/Home/UpdateIEPStatusToActive',
-            //    data: {
-            //        Stid: stId,
-            //        IEPid: iepId
-            //    },
-            //    dataType: 'json',
-            //    success: function (data) {
-            //        if (data.Result === 'success') {
-            //            location.reload(true);
-            //        }
-            //    },
-            //    error: function (data) {
-            //        alert(data.Message);
-            //    },
-            //    complete: function () {
-            //        $('.ajax-loader').css("visibility", "hidden");
-            //        $(".ajax-loader img").css("visibility", "hidden");
-            //    }
-            //});
-        }
+        $("#betterCheckYourWork").modal('hide');
+
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
+
+        var stId = $("#stid").val();
+        var iepId = $("#studentIEPId").val();
+
+        $.ajax({
+            type: 'GET',
+            url: '/Home/UpdateIEPStatusToActive',
+            data: {
+                Stid: stId,
+                IEPid: iepId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result === 'success') {
+                    location.reload(true);
+                }
+            },
+            error: function (data) {
+                alert(data.Message);
+            },
+            complete: function () {
+                $('.ajax-loader').css("visibility", "hidden");
+                $(".ajax-loader img").css("visibility", "hidden");
+            }
+        });
     });
 
     $("#completeActiveIEPChecklist").on("click", function () {

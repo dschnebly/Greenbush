@@ -392,6 +392,9 @@ namespace GreenBushIEP.Models
             needsBehaviorPlan = false;
             isCreator = false;
             isGiftedOnly = false;
+            PRIMARYPARENT = false;
+            STUDENTGRADE = -4;
+            STUDENTCODE = "B";
         }
 
         public bool isDoc { get; set; }
@@ -405,6 +408,10 @@ namespace GreenBushIEP.Models
         public bool needsBehaviorPlan { get; set; }
         public bool isCreator { get; set; }
         public bool isGiftedOnly { get; set; }
+        public string KIDSID { get; set; }
+        public bool PRIMARYPARENT { get; set; }
+        public int STUDENTGRADE { get; set; }
+        public string STUDENTCODE { get; set; }
 
         public string GetIEPStatus(tblIEP thisIEP)
         {
@@ -495,8 +502,8 @@ namespace GreenBushIEP.Models
         public string fileName { get; set; }
         public string fileDesc { get; set; }
         public string fileDate { get; set; }
-		public IEP ActiveIEP { get; set; }
-		public StudentLegalView fileModel { get; set; }
+        public IEP ActiveIEP { get; set; }
+        public StudentLegalView fileModel { get; set; }
         public tblFormTeamEval teamEval { get; set; }
         public tblFormSummaryPerformance summaryPerformance { get; set; }
         public tblFormConferenceSummary conferenceSummary { get; set; }
@@ -516,7 +523,7 @@ namespace GreenBushIEP.Models
         public tblFormRevokeConsentPart formRevPart { get; set; }
         public tblFormTransportationRequest formTransRequest { get; set; }
         public tblFormContinuousLearningPlan continuousLearningPlan { get; set; }
-		public tblFormChildOutcome childOutcome { get; set; }
+        public tblFormChildOutcome childOutcome { get; set; }
         public tblFormTransitionReferral formTransReferral { get; set; }
 
 
@@ -584,8 +591,8 @@ namespace GreenBushIEP.Models
         [Required(ErrorMessage = "Please select a Type: Accommodation or Modification.")]
         public int AccomType { get; set; }
 
-		public string Title { get; set; }
-		public int AccommodationID { get; set; }
+        public string Title { get; set; }
+        public int AccommodationID { get; set; }
         public int IEPid { get; set; }
         public string LocationCode { get; set; } //not currently used
         public string Description { get; set; }
@@ -793,23 +800,23 @@ namespace GreenBushIEP.Models
             isArchive = false;
             history = new List<IEPHistoryViewModel>();
             accommodationList = new List<AccomodationPrintViewModel>();
-			serviceAttendanceBuildings = new List<vw_BuildingList>();
-			contingencyPlan = null;
-			printContingencyPlan = false;
-	}
+            serviceAttendanceBuildings = new List<vw_BuildingList>();
+            contingencyPlan = null;
+            printContingencyPlan = false;
+        }
 
-		public tblUser teacher { get; set; }
+        public tblUser teacher { get; set; }
         public tblStudentInfo student { get; set; }
         public List<tblStudentRelationship> contacts { get; set; }
         public List<tblArchiveEvaluationDate> reevalDates { get; set; }
         public List<int> printProgressGoals { get; set; }
         public List<IEPHistoryViewModel> history { get; set; }
         public List<AccomodationPrintViewModel> accommodationList { get; set; }
-		public List<vw_BuildingList> serviceAttendanceBuildings { get; set; }
-		public string ethnicity { get; set; }
+        public List<vw_BuildingList> serviceAttendanceBuildings { get; set; }
+        public string ethnicity { get; set; }
         public string gender { get; set; }
-		public string grade { get; set; }
-		public string parentLang { get; set; }
+        public string grade { get; set; }
+        public string parentLang { get; set; }
         public string studentLang { get; set; }
         public string studentCounty { get; set; }
         public string primaryDisability { get; set; }
@@ -818,17 +825,17 @@ namespace GreenBushIEP.Models
         public tblBuilding neighborhoodBuilding { get; set; }
         public tblBuilding teacherBuilding { get; set; }
         public int studentAgeAtIEP { get; set; }
-		public tblContingencyPlan contingencyPlan { get; set; }
-		public string inititationDate { get; set; }
-		public string annualInititationDate { get; set; }		
-		public string inititationDateNext { get; set; }
+        public tblContingencyPlan contingencyPlan { get; set; }
+        public string inititationDate { get; set; }
+        public string annualInititationDate { get; set; }
+        public string inititationDateNext { get; set; }
         public int studentAgeAtAnnualMeeting { get; set; }
         public string assignChildCount { get; set; }
         public string placementCodeDesc { get; set; }
         public string edStatusCodeDesc { get; set; }
-		public string schoolYear { get; set; }
-		public string teacherName { get; set; }
-		public bool isDOC { get; set; }
+        public string schoolYear { get; set; }
+        public string teacherName { get; set; }
+        public bool isDOC { get; set; }
         public bool isArchive { get; set; }
         public bool printStudentInfo { get; set; }
         public bool printIEPDetails { get; set; }
@@ -847,8 +854,8 @@ namespace GreenBushIEP.Models
         public bool printNotice { get; set; }
         public bool printProgressReport { get; set; }
 
-		public bool printContingencyPlan { get; set; }
-	}
+        public bool printContingencyPlan { get; set; }
+    }
 
     public class StudentServiceObject
     {
@@ -875,13 +882,13 @@ namespace GreenBushIEP.Models
         public string Name { get; set; }
     }
 
-	public class DistrictViewModel
-	{
-		public string USD { get; set; }
-		public string Name { get; set; }
-	}
+    public class DistrictViewModel
+    {
+        public string USD { get; set; }
+        public string Name { get; set; }
+    }
 
-	public class UserView
+    public class UserView
     {
         public int UserID;
         public string FirstName;

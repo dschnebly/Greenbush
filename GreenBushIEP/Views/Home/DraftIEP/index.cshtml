@@ -679,108 +679,105 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="betterCheckYourWorkLabel">Best Check Yo-Self</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="glyphicon glyphicon-remove-circle"></i></button>
+                    <h4 class="modal-title" id="betterCheckYourWorkLabel">Are the following settings correct?</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="carousel-questions" class="carousel slide" data-ride="carousel" data-interval="false" style="height: 10em;">
+                    <div id="carousel-questions" class="carousel slide" data-ride="carousel" data-interval="false">
                         <!-- Wrapper for slides -->
                         <div class="carousel-inner" role="listbox">
-                            <div class="item active">
+                            <div class="item active" id="0">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is the child's student identification correct?</h5> : <span style="font-size:14pt; border: 1px;">2549875221</span>
+                                    <h5 style="display: inline-block;">Is the child's student identification correct?</h5> : <span style="font-size: 14pt; display: inline-block; color: red;">@(Model.KIDSID)</span>
                                 </div>
-                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
                             </div>
                             <div class="item">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is the current grade correct?</h5> : <select style="font-size: 12pt;">
-    <option value="-4" selected="selected">Preschooler age 3</option>
-    <option value="-3">Preschooler age 4</option>
-    <option value="-2">Preschooler age 5</option>
-    <option value="-1">Preschooler age 6</option>
-    <option value="0">Kindergarten</option>
-    <option value="1">1st Grade</option>
-    <option value="2">2nd Grade</option>
-    <option value="3">3rd Grade</option>
-    <option value="4">4th Grade</option>
-    <option value="5">5th Grade</option>
-    <option value="6">6th Grade</option>
-    <option value="7">7th Grade</option>
-    <option value="8">8th Grade</option>
-    <option value="9">9th Grade</option>
-    <option value="10">10th Grade</option>
-    <option value="11">11th Grade</option>
-    <option value="12">12th Grade</option>
-    <option value="13">Other Option</option>
-</select>
+                                    <h5 style="display: inline-block;">Is the current grade correct?</h5> :
+                                    <select id="studentCarouselGrade" style="font-size: 13pt; width: 60%;">
+                                        <option value="-4" @(Model.STUDENTGRADE == -4 ? "selected='selected'" : string.Empty)>Preschooler age 3</option>
+                                        <option value="-3" @(Model.STUDENTGRADE == -3 ? "selected='selected'" : string.Empty)>Preschooler age 4</option>
+                                        <option value="-2" @(Model.STUDENTGRADE == -2 ? "selected='selected'" : string.Empty)>Preschooler age 5</option>
+                                        <option value="-1" @(Model.STUDENTGRADE == -1 ? "selected='selected'" : string.Empty)>Preschooler age 6</option>
+                                        <option value="0" @(Model.STUDENTGRADE == 0 ? "selected='selected'" : string.Empty)>Kindergarten</option>
+                                        <option value="1" @(Model.STUDENTGRADE == 1 ? "selected='selected'" : string.Empty)>1st Grade</option>
+                                        <option value="2" @(Model.STUDENTGRADE == 2 ? "selected='selected'" : string.Empty)>2nd Grade</option>
+                                        <option value="3" @(Model.STUDENTGRADE == 3 ? "selected='selected'" : string.Empty)>3rd Grade</option>
+                                        <option value="4" @(Model.STUDENTGRADE == 4 ? "selected='selected'" : string.Empty)>4th Grade</option>
+                                        <option value="5" @(Model.STUDENTGRADE == 5 ? "selected='selected'" : string.Empty)>5th Grade</option>
+                                        <option value="6" @(Model.STUDENTGRADE == 6 ? "selected='selected'" : string.Empty)>6th Grade</option>
+                                        <option value="7" @(Model.STUDENTGRADE == 7 ? "selected='selected'" : string.Empty)>7th Grade</option>
+                                        <option value="8" @(Model.STUDENTGRADE == 8 ? "selected='selected'" : string.Empty)>8th Grade</option>
+                                        <option value="9" @(Model.STUDENTGRADE == 9 ? "selected='selected'" : string.Empty)>9th Grade</option>
+                                        <option value="10" @(Model.STUDENTGRADE == 10 ? "selected='selected'" : string.Empty)>10th Grade</option>
+                                        <option value="11" @(Model.STUDENTGRADE == 11 ? "selected='selected'" : string.Empty)>11th Grade</option>
+                                        <option value="12" @(Model.STUDENTGRADE == 12 ? "selected='selected'" : string.Empty)>12th Grade</option>
+                                        <option value="13" @(Model.STUDENTGRADE == 13 ? "selected='selected'" : string.Empty)>Other Option</option>
+                                    </select>
                                 </div>
-                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span>Previous Question</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
+                            </div>
+                            <div class="item" id="savegrade">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is the current status code correct?</h5> :
+                                    <select id="studentCarouselCode" style="font-size: 13pt; max-width: 55%;">
+                                        <option value="B" @(Model.STUDENTCODE == "B" ? "select='select'" : string.Empty)>B - Children age 3 who transition from Part C services to Part B by their 3rd birthday</option>
+                                        <option value="C" @(Model.STUDENTCODE == "C" ? "select='select'" : string.Empty)>C - Continuing Student</option>
+                                        <option value="E" @(Model.STUDENTCODE == "E" ? "select='select'" : string.Empty)>E - Entering from another District or Agency</option>
+                                        <option value="I" @(Model.STUDENTCODE == "I" ? "select='select'" : string.Empty)>I - Reinitiation of Services</option>
+                                        <option value="N" @(Model.STUDENTCODE == "N" ? "select='select'" : string.Empty)>N - New Referral</option>
+                                        <option value="R" @(Model.STUDENTCODE == "R" ? "select='select'" : string.Empty)>R - Returning to a Special Education Program:</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="item" id="savecode">
+                                <div style="margin-bottom: 15px;">
+                                    <h5 style="display: inline-block;">Is primary parent checkbox checked?</h5> : @(Model.PRIMARYPARENT ? Html.Raw("<span style='color:green;'>TRUE</span>") : Html.Raw("<span style='color:red;'>FALSE</span>"))
+                                </div>
                             </div>
                             <div class="item">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is the current status code correct?</h5> : <select style="font-size:12pt;">
-    <optgroup label="Active">
-        <option value="B" selected="selected">B - Children age 3 who transition from Part C services to Part B by their 3rd birthday</option>
-        <option value="C">C - Continuing Student</option>
-        <option value="E">E - Entering from another District or Agency</option>
-        <option value="I">I - Reinitiation of Services</option>
-        <option value="N">N - New Referral</option>
-        <option value="R">R - Returning to a Special Education Program:</option>
-    </optgroup>
-    <optgroup label="Inactive">
-        <option value="0">0 - Does Not Qualify</option>
-        <option value="1">1 - Parent Declined</option>
-        <option value="A">A - Action initiated Withdrawn from Special Education</option>
-        <option value="D">D - Dropped Out of School</option>
-        <option value="G">G - Graduation with Diploma</option>
-        <option value="H">H - Has earned or is enrolled in a GED program.</option>
-        <option value="L">L - Left State</option>
-        <option value="M">M - Maximum Age</option>
-        <option value="O">O - Objectives completed</option>
-        <option value="S">S - Gifted only students who have ceased receiving services due to out of school suspension or expulsion</option>
-        <option value="T">T - Moved, known to be continuing</option>
-        <option value="W">W - Written revocation of services</option>
-        <option value="X">X - Deceased</option>
-    </optgroup>
-</select>
+                                    <h5 style="display: inline-block;">Are the IEP and Meeting dates correct?</h5> : <span style="font-size:13pt;">@(Model.studentIEP.iepStartTime.Value.ToString("MM/dd/yyyy"))</span> &ndash; <span style="font-size:13pt;">@(Model.studentIEP.current.MeetingDate.Value.ToString("MM/dd/yyyy"))</span>
                                 </div>
-                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;"
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span>Previous Question</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes  &amp; Continue</button>
                             </div>
-                            <div class="item">
+                            <div class="item" id="1">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is primary parent checkbox checked?</h5> : YES
+                                    <h5 style="display: inline-block;">Are the Service Dates and minutes correct?</h5> : <br />
+                                    @if (Model.studentIEP.studentServices.Count > 0)
+                                    {
+                                        <div style="height: 6em !important; overflow-x: hidden; overflow-y: scroll;">
+                                            <table class="table table-sm table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Service Dates</th>
+                                                        <th scope="col">Service Minutes</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var service in Model.studentIEP.studentServices)
+                                                    {
+                                                        <tr>
+                                                            <th scope="row">@(service.StartDate.ToString("MM/dd/yyyy"))&nbsp;&ndash;&nbsp;@(service.EndDate.Value.ToString("MM/dd/yyyy"))</th>
+                                                            <td>@(service.Minutes.ToString())</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    }
                                 </div>
-                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span>Previous Question</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <button type="button" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Yes &amp; Continue</button>
-                            </div>
-                            <div class="item">
-                                <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Are the IEP and Meeting dates correct?</h5> : <span style="font-size:14pt; border: 1px;">12-25-2021</span>
-                                </div>
-                                <a class="btn pull-left" href="#carousel-questions" data-slide="prev" style="position: relative; top: 7px;">
-                                    <span class="glyphicon glyphicon-chevron-left"></span>
-                                    <span>Previous Question</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                                <button type="button" id="completeActiveIEPChecklist" class="btn btn-success btn-lg" href="#carousel-questions" data-slide="next"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn pull-left hidden" id="betterCheckYourWorkPrevious" href="#carousel-questions" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                        <span>Previous Question</span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" aria-label="Close"><i class="glyphicon glyphicon-remove"></i>&nbsp;Cancel</button>
+                    <button type="button" class="btn btn-success" href="#carousel-questions" data-slide="next" id="betterCheckYourWorkContinue"><i class="glyphicon glyphicon-ok"></i>&nbsp;Yes  &amp; Continue</button>
+                    <button type="button" class="btn btn-success hidden" id="betterCheckYourWorkComplete"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                 </div>
             </div>
         </div>
