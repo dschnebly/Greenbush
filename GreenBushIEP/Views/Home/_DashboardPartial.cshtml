@@ -47,7 +47,7 @@
                                 @foreach (var dueIep in dueIeps)
                                 {
                                     <div class="list-group-item">
-                                        <span title="IEP due in @dueIep.Days day(s)">@dueIep.StudentLastName, @dueIep.StudentFirstName (@dueIep.Days)</span>  
+                                        <span title="@dueIep.Days day(s) until due">@dueIep.StudentLastName, @dueIep.StudentFirstName</span>  
                                         <a href="#" data-id="@(dueIep.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
                                                 <span class="glyphicon glyphicon-log-out"></span>
                                          </a>
@@ -75,7 +75,7 @@
                                 @foreach (var draftIep in draftIeps)
                                 {
                                     <div class="list-group-item">
-                                        <span title="@(draftIep.Days) day(s) in Draft status">@draftIep.StudentLastName, @draftIep.StudentFirstName (@draftIep.Days)</span>  
+                                        <span title="@(draftIep.Days) day(s) in Draft">@draftIep.StudentLastName, @draftIep.StudentFirstName </span>  
                                         <a href="#" data-id="@(draftIep.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
                                                 <span class="glyphicon glyphicon-log-out"></span>
                                          </a>
