@@ -833,9 +833,11 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
             return false; // breaks us out of the $.each loop.
         }
     });
-
+    
     allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
     allCompleted ? $("#makeIEPAmendmentActive").removeClass("disabled") : $("#makeIEPAmendmentActive").addClass("disabled");
+    allCompleted ? $("#makeIEPAnnualActive").removeClass("disabled") : $("#makeIEPAnnualActive").addClass("disabled");
+
 });
 
 ///////////
