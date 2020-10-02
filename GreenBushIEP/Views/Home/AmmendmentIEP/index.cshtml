@@ -73,7 +73,11 @@
                             }
                             @if ((ViewBag.UserRoleId != "4") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.current.Amendment)
                             {
-                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled") @Html.Raw(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>
+                                <li class="list-group-item"><a href="#" id="makeIEPAmendmentActive" class="list-group-item @Html.Raw(Model.studentIEP.isAllCompleted ? string.Empty : "disabled") @Html.Raw(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "disabled" : string.Empty)"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Make Active</a></li>                                
+                            }
+                             @if ((ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2") && Model.studentIEP.current.IepStatus.ToUpper() == IEPStatus.DRAFT && Model.studentIEP.current.Amendment)
+                            {
+                                <li class="list-group-item"><a href="#" id="makeIEPInActive" class="list-group-item"><i class="glyphicon glyphicon-log-in"></i>&nbsp;&nbsp;Inactive/Archive</a></li>
                             }
                         </ul>
                     </div>
