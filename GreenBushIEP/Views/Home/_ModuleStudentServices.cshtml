@@ -330,7 +330,6 @@
                 <div class="row oneStudentService">
                     <div class="col-md-12">
                         <div class="panel-group" id="accordion[@service.ServiceID]">
-
                             <form action="/Home/saveStudentService" method="post">
                                 <input type="hidden" name="StudentId" value="@(Model.studentId)" />
                                 <input type="hidden" name="StudentSerivceId" value="@(service.ServiceID)" />
@@ -339,7 +338,7 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)">
+                                            <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)" class="@(needsIN == "in" ? "" : "collapsed")">
                                                 <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
                                                 <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
                                                 <span class="pull-right">
@@ -558,10 +557,8 @@
 <br />
 <br />
 
-<script>
-
-    /* Binding */
-    /* tooltips */
+<script>    
+    
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -729,10 +726,17 @@
             var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
             var endDateYear = $("#iepMeetingDateYear").val();
             var fiscalYearElement = $(this).find("select[name='fiscalYear']");
+            
 
             //don't adjust for existing services, only new services
             if (studentServiceId == 0) {
                 fiscalYearElement.val(endDateYear);
+            }
+            else {                               
+
+                var panelOpen = $("#collapse" + studentServiceId).hasClass("in");
+                if (panelOpen)
+                    getDisabledCalendarDays(panel);
             }
 
             fiscalYearElement.on("change", function (e) {
@@ -748,7 +752,6 @@
                     e.target.setCustomValidity('You must enter a calendar date');
                     e.target.title = 'You must enter a calendar date';
                     e.target.parentNode.classList.add('has-error');
-
                     return;
                 }
 
@@ -757,6 +760,7 @@
                 var calendaryDay = selectedDate.split('/');
                 var fiscalYear = $(this).closest(".row").find("select[name='fiscalYear']").val();
                 var buildingId = $(this).closest(".row").find("select[name='attendanceBuilding']").val();
+
                 _validateDate(fiscalYear, selectedDate, e, buildingId);
             });
 
@@ -946,6 +950,12 @@
             });
 
             $(this).find(".panel-title a").on("click", function () {
+
+                var panelOpen = $(this).hasClass("collapsed");
+                if (panelOpen)
+                    getDisabledCalendarDays(panel);
+
+
                 /* Closes all the other panel groups except the one you clicked on */
                 $(".collapse").each(function () {
                     $(this).collapse('hide');
@@ -1485,5 +1495,28 @@
                 }
             });
         }
+    }
+
+    function getDisabledCalendarDays(serviceContainer) {
+        var holidays = null;  // set our holidays calendar.
+        var userid = $("#sid").val();
+        var buildingid = serviceContainer.closest(".row").find("select[name='attendanceBuilding']").val();
+        
+        //check if the building has a calendar
+        $.ajax({
+            type: 'GET',
+            url: '/Home/BuildingHasCalendars',
+            data: { UserId: userid, BuildingID: buildingid },
+            dataType: 'json',
+            success: function (data) {
+                if (data.success) {
+                    holidays = data.buildingCalendar;
+                    disabledDays = data.holidays.Data;                    
+                }                               
+            },
+            error: function (data) {
+                alert("Error connecting to the database. Please try again or contact your administrator.");
+            }
+        });
     }
 </script>
