@@ -1,5 +1,6 @@
 ﻿using GreenBushIEP.Helper;
 using GreenBushIEP.Models;
+using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -1767,11 +1768,14 @@ namespace GreenBushIEP.Controllers
                         MailMessage mailMessage = new MailMessage();
                         mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
 
+                        bool hasValidEmail = false;
+
                         foreach (tblUser misUser in list)
                         {
-                            if (!string.IsNullOrEmpty(misUser.Email))
+                            if (!string.IsNullOrEmpty(misUser.Email) && IsValidEmail(misUser.Email))
                             {
                                 mailMessage.To.Add(misUser.Email);
+                                hasValidEmail = true;
                             }
                         }
 
@@ -1787,7 +1791,8 @@ namespace GreenBushIEP.Controllers
                         mailMessage.Subject = subject;
                         mailMessage.Body = sb.ToString();
 
-                        smtpClient.Send(mailMessage);
+                        if(hasValidEmail)
+                            smtpClient.Send(mailMessage);
 
                     }
 
@@ -1825,6 +1830,7 @@ namespace GreenBushIEP.Controllers
 
                     return Json(new { Result = "success", Message = student.ReferralID });
                 }
+
                 catch (DbEntityValidationException ex)
                 {
                     // Retrieve the error messages as a list of strings.
@@ -1839,6 +1845,10 @@ namespace GreenBushIEP.Controllers
                     string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
 
                     Console.Write(exceptionMessage);
+                }
+                catch(Exception ex)
+                {
+                    return Json(new { Result = "error", Message = "There was an error while trying to send the referral email. Please try again or contact your administrator. "  + ex.ToString()});
                 }
             }
 
@@ -4401,6 +4411,19 @@ namespace GreenBushIEP.Controllers
 
             return fullName;
 
+        }
+
+        bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return addr.Address == email;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         #endregion
