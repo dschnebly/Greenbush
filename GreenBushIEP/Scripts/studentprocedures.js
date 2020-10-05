@@ -230,7 +230,8 @@
 
             $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
                 var id = ev.relatedTarget.id;
-                console.log(id);
+                var StId = $("#stid").val();
+                var IEPid = $("#iepId").val();
                 switch (id) {
                     case "0":
                         $("#betterCheckYourWorkPrevious").addClass("hidden");
@@ -241,8 +242,6 @@
                         break;
                     case "savegrade":
                         var Grade = $("#studentCarouselGrade").val();
-                        var StId = $("#stid").val();
-                        var IEPid = $("#studentIEPId").val();
 
                         $.ajax({
                             type: 'POST',
@@ -264,7 +263,12 @@
                         break;
                     case "savecode":
                         var Code = $("#studentCarouselCode").val();
-                        var StId = $("#stid").val();
+                        var data = {
+                            code: Code,
+                            stid: StId,
+                            iepId: IEPid
+                        };
+                        console.log(data);
 
                         $.ajax({
                             type: 'POST',
@@ -272,7 +276,8 @@
                             async: true,
                             data: {
                                 code: Code,
-                                stid: StId
+                                stid: StId,
+                                iepId: IEPid
                             },
                             dataType: 'json',
                             success: function (data) {
@@ -485,7 +490,6 @@
 
             $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
                 var id = ev.relatedTarget.id;
-                console.log(id);
                 switch (id) {
                     case "0":
                         $("#betterCheckYourWorkPrevious").addClass("hidden");
@@ -520,6 +524,7 @@
                     case "savecode":
                         var Code = $("#studentCarouselCode").val();
                         var StId = $("#stid").val();
+                        var IEPid = $("#studentIEPId").val();
 
                         $.ajax({
                             type: 'POST',
@@ -527,7 +532,8 @@
                             async: true,
                             data: {
                                 code: Code,
-                                stid: StId
+                                stid: StId,
+                                iepId: IEPid
                             },
                             dataType: 'json',
                             success: function (data) {

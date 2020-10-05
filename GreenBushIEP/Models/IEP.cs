@@ -25,6 +25,8 @@ namespace GreenBushIEP.Models
         public bool hasAccommodations { get; set; }
         public bool hasBehavior { get; set; }
         public bool hasPlan { get; set; }
+        public int studentGrade { get; set; }
+        public string studentCode { get; set; }
 
         public bool anyStudentIEPActive { get; set; }
         public bool anyStudentIEPAmendment { get; set; }
@@ -88,6 +90,8 @@ namespace GreenBushIEP.Models
             hasBehavior = false;
             hasPlan = false;
             isServerRender = false;
+            studentGrade = -4;
+            studentCode = "N";
 
             listOfStudentsIEPs = new List<tblIEP>();
             current = new tblIEP();
@@ -169,6 +173,8 @@ namespace GreenBushIEP.Models
                 studentServices = db.tblServices.Where(s => s.IEPid == current.IEPid).ToList();
                 accommodations = db.tblAccommodations.Where(a => a.IEPid == current.IEPid).ToList();
                 List<tblTransition> transitions = db.tblTransitions.Where(a => a.IEPid == current.IEPid).ToList();
+                studentGrade = current.Grade != null ? current.Grade.Value : -4;
+                studentCode = current.StatusCode;
 
                 // all our database information should be loaded by now. Just query our student lists.
                 isHealthCompleted = studentHealth != null ? studentHealth.Completed : false;

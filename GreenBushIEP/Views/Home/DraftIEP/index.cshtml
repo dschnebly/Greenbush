@@ -688,7 +688,7 @@
                         <div class="carousel-inner" role="listbox">
                             <div class="item active" id="0">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is the child's student identification correct?</h5> : <span style="font-size: 14pt; display: inline-block; color: red;">@(Model.KIDSID)</span>
+                                    <h5 style="display: inline-block;">Is the child's student identification correct?</h5> : <span style="font-size: 14pt; display: inline-block; color: red;">@(Model.KIDSID == "0" ? "No KIDS ID" : Model.KIDSID)</span>
                                 </div>
                             </div>
                             <div class="item">
@@ -731,7 +731,7 @@
                             </div>
                             <div class="item" id="savecode">
                                 <div style="margin-bottom: 15px;">
-                                    <h5 style="display: inline-block;">Is primary parent checkbox checked?</h5> : @(Model.PRIMARYPARENT ? Html.Raw("<span style='color:green;'>TRUE</span>") : Html.Raw("<span style='color:red;'>FALSE</span>"))
+                                    <h5 style="display: inline-block;">Is primary parent checkbox checked?</h5> : @(Model.PRIMARYPARENT ? Html.Raw("<span style='color:green;'>YES</span>") : Html.Raw("<span style='color:red;'>NO</span>"))
                                 </div>
                             </div>
                             <div class="item">

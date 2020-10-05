@@ -1222,11 +1222,6 @@ namespace GreenbushIep.Controllers
                 model.birthDate = info.DateOfBirth;
                 model.isDoc = district.DOC;
                 model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
-                model.KIDSID = info.KIDSID.ToString();
-                model.PRIMARYPARENT = relationship != null;
-                model.STUDENTGRADE = info.Grade ?? -4;
-                model.STUDENTCODE = info.StatusCode;
-                model.STUDENTSERVICES = db.tblServices.Where(s => s.IEPid == iepID).OrderBy(s => s.StartDate).ThenBy(s => s.ServiceCode).ToList();
 
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID);
                 if (theIEP.current != null)
@@ -1246,6 +1241,11 @@ namespace GreenbushIep.Controllers
                     model.needsBehaviorPlan = false;
                 }
 
+                model.KIDSID = info.KIDSID.ToString();
+                model.PRIMARYPARENT = relationship != null;
+                model.STUDENTGRADE = theIEP.studentGrade;
+                model.STUDENTCODE = theIEP.studentCode;
+                model.STUDENTSERVICES = db.tblServices.Where(s => s.IEPid == iepID).OrderBy(s => s.StartDate).ThenBy(s => s.ServiceCode).ToList();
                 model.studentAge = theIEP.GetCalculatedAge(info.DateOfBirth, model.isDoc);
 
                 // need to check if transition plan is required and completed
@@ -1577,14 +1577,14 @@ namespace GreenbushIep.Controllers
 
         [HttpPost]
         [Authorize]
-        public ActionResult UpdateStudentCode(string code, int stid = 0)
+        public ActionResult UpdateStudentCode(string code, int stid = 0, int iepId = 0)
         {
-            if(code != null && stid != 0)
+            if(code != null && stid != 0 && iepId != 0)
             {
-                tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == stid).FirstOrDefault();
-                if(info != null)
+                tblIEP iep = db.tblIEPs.Where(i => i.IEPid == iepId && i.UserID == stid).FirstOrDefault();
+                if (iep != null)
                 {
-                    info.StatusCode = code;
+                    iep.StatusCode = code;
                     db.SaveChanges();
 
                     return Json(new { Result = "success", Message = "Student's Code Updated" }, JsonRequestBehavior.AllowGet);
