@@ -395,6 +395,7 @@ namespace GreenBushIEP.Models
             PRIMARYPARENT = false;
             STUDENTGRADE = -4;
             STUDENTCODE = "B";
+            STUDENTSERVICES = null;
         }
 
         public bool isDoc { get; set; }
@@ -412,6 +413,8 @@ namespace GreenBushIEP.Models
         public bool PRIMARYPARENT { get; set; }
         public int STUDENTGRADE { get; set; }
         public string STUDENTCODE { get; set; }
+
+        public List<tblService> STUDENTSERVICES { get; set; }
 
         public string GetIEPStatus(tblIEP thisIEP)
         {

@@ -1226,6 +1226,7 @@ namespace GreenbushIep.Controllers
                 model.PRIMARYPARENT = relationship != null;
                 model.STUDENTGRADE = info.Grade ?? -4;
                 model.STUDENTCODE = info.StatusCode;
+                model.STUDENTSERVICES = db.tblServices.Where(s => s.IEPid == iepID).OrderBy(s => s.StartDate).ThenBy(s => s.ServiceCode).ToList();
 
                 IEP theIEP = (iepID != null) ? new IEP(student.UserID, iepID) : new IEP(student.UserID);
                 if (theIEP.current != null)
