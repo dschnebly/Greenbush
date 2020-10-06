@@ -383,9 +383,9 @@ function tabValidates() {
 function checkPrimarySelected() {
 
 	//check if primary selected
-	var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
+	//var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
 	var primaryChecked = $('input.primaryContactCheckbox:checkbox:checked').length;
-	if (numberOfContacts > 0 && primaryChecked == 0) {
+    if (primaryChecked == 0) {
 		return false;
 	}
 
@@ -564,24 +564,32 @@ $("#next3").on("click", function () {
 
     }
 });
+
+$("#btnPrimaryContactContinue").on("click", function () {
+    $('#primaryContactErrorModal').modal('toggle');
+
+    var studentId = $("#id").val();
+    if (studentId > 0) {
+        editStudentContacts();
+    }
+    else {
+        createStudentContacts();
+    }    
+});
+
 $("#next4").on("click", function () {
 	if (tabValidates()) {
 		//var theForm = document.getElementById("editStudentContacts");
 		var primary = checkPrimarySelected();
 		if (!primary) {
-			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
-
-			if (answer) {
-				createStudentContacts();
-			}
+            $('#primaryContactErrorModal').modal();	
 		}
 		else {
 			createStudentContacts();
 		}
-	}
-
-    
+	}    
 });
+
 $("#next5").on("click", function () {
 
     var theForm = document.getElementById("editStudent");
@@ -642,12 +650,15 @@ $("#next7").on("click", function () {
 
 	if (tabValidates()) {
 		var primary = checkPrimarySelected();
-		if (!primary) {
-			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
+        if (!primary) {
 
-			if (answer) {
-				editStudentContacts();
-			}
+            $('#primaryContactErrorModal').modal();
+
+			//var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
+
+			//if (answer) {
+			//	editStudentContacts();
+			//}
 		}
 		else {
 			editStudentContacts();
