@@ -667,11 +667,11 @@ tbody > tr {
 }
 
 .text-success {
-    color: rgb(25, 204, 25);
+    color: #3E8162;
 }
 
 .text-danger {
-    color: red;
+    color: #C9302C;
 }
 
 /*==================================================

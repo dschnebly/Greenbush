@@ -908,6 +908,7 @@ namespace GreenBushIEP.Models
     public class ExportErrorView
     {
         public string UserID { get; set; }
+        public string KidsID { get; set; }
         public string Description { get; set; }
 
     }
