@@ -1491,7 +1491,9 @@ namespace GreenbushIep.Controllers
                 }
                 db.SaveChanges();
 
-                return Json(new { Result = "success", Message = "IEP is archived." }, JsonRequestBehavior.AllowGet);
+                tblIEP activeIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IepStatus.ToUpper() == IEPStatus.ACTIVE).FirstOrDefault();
+
+                return Json(new { Result = "success", Message = "IEP is archived.", ActiveIEP = activeIEP != null ? activeIEP.IEPid : 0 }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { Result = "error", Message = "Unknown Error. Unable make the IEP Inactive." }, JsonRequestBehavior.AllowGet);
         }
