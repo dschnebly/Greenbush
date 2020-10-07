@@ -12,33 +12,25 @@
 }
 
 <div class="module-page savdDraftAllowed">
-	<div class=WordSection1>
+	
 		<div class=MsoNormal style='margin-top:0in;margin-right:-56.65pt;margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt'>
 			Student Name:  @(String.Format(studentFormattedName).PadRight(68 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))  <br />
-			IEP Meeting Date:  <textarea cols="20" rows="1" maxlength="10" data-val="57">@(IEPMeetingDate)</textarea><span id="IEPMeetingDate" style="display:none" class="input-value isDate" data-val="59">@(IEPMeetingDate)</span>
+			IEP Meeting Date:  <textarea cols="20" rows="1" maxlength="10" >@(IEPMeetingDate)</textarea><span id="IEPMeetingDate" style="display:none" class="input-value isDate" data-val="59">@(IEPMeetingDate)</span>
 		</div>
 
-		<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:8.1pt;margin-left:22.55pt'>
-			<span style='font-size:7.0pt;line-height:107%;font-family:"Times New Roman",serif'></span>
-		</p>
-
-		<p class=MsoNormal align=center style='margin-top:0in;margin-right:0in;margin-bottom:.25pt;margin-left:54.65pt;text-align:center'>
+		<p class=MsoNormal style='margin-top:15px;margin-right:0in;margin-bottom:.25pt;text-align:center'>
 			<b>
-				<span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'>
+				<span style='font-size:16.0pt;font-family:"Cambria",serif'>
 					IEP Team
 					Considerations
 				</span>
 			</b>
 		</p>
 
-		<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-			<span style='font-size:4.0pt;line-height:107%;font-family:"Cambria",serif'></span><span style='font-size:10.0pt;line-height:107%;font-family:"Cambria",serif'>
+		<p class=MsoNormal>
+			<span style='font-size:10.0pt;font-family:"Cambria",serif'>
 				(The child’s IEP must reflect these considerations.)
-			</span><span style='font-size:16.0pt;line-height:107%;font-family:"Cambria",serif'></span>
-		</p>
-
-		<p class=MsoNormal style='margin-top:0in;margin-right:-55.1pt;margin-bottom:5.75pt;margin-left:0in'>
-			<img width=680 height=1 id="Group 2520"	 src="IEP_Team_Considerations_files/image003.gif">
+			</span>
 		</p>
 
 		<table class=TableGrid border=1 cellspacing=0 cellpadding=5 width=0 style='width:509.6pt;border: solid black 1pt'>
@@ -112,7 +104,7 @@
 			</tr>
 		</table>
 		<p class="section-break"></p>
-		<table border="1" cellpadding="5" class="dont-break" style="width:100%;margin-bottom:50px">
+		<table border="1" cellpadding="5" cellspacing="5" class="dont-break" style="margin-bottom:50px;">
 			<tr>
 				<td valign=top>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.55pt;margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
@@ -141,9 +133,9 @@
 					</p>
 				</td>
 			</tr>
-			<tr style='height:74.15pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						Have the needs of the child which
 						were identified in the most recent evaluation of the child, including
 						observed needs and the child’s performance on general State and district-wide
@@ -159,13 +151,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:72.65pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						Does the child’s behavior impede his
 						or her learning or that of others?<span style='font-size:10.0pt;line-height:  107%'></span>
 					</p>
@@ -179,13 +171,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.BehaviorImpede_Desc)</textarea><span id="BehaviorImpede_Desc" style="display:none" class="input-value">@(formModel.BehaviorImpede_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.BehaviorImpede_Desc)</textarea><span id="BehaviorImpede_Desc" style="display:none" class="input-value">@(formModel.BehaviorImpede_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:100.45pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt;line-height:99%'>
+					<p class=MsoNormal >
 						If the child is blind
 						or visually impaired, does evaluation of the child’s reading and writing
 						skills, needs, and appropriate reading and writing media (including an
@@ -203,13 +195,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.InstructionInBraille_Desc)</textarea><span id="InstructionInBraille_Desc" style="display:none" class="input-value">@(formModel.InstructionInBraille_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.InstructionInBraille_Desc)</textarea><span id="InstructionInBraille_Desc" style="display:none" class="input-value">@(formModel.InstructionInBraille_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:72.5pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						Does the child have limited English
 						proficiency?
 					</p>
@@ -223,13 +215,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.LimitedEnglish_Desc)</textarea><span id="LimitedEnglish_Desc" style="display:none" class="input-value">@(formModel.LimitedEnglish_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.LimitedEnglish_Desc)</textarea><span id="LimitedEnglish_Desc" style="display:none" class="input-value">@(formModel.LimitedEnglish_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:72.5pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						Does the child have any special
 						communication needs?
 					</p>
@@ -243,13 +235,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.CommunicationNeeds_Desc)</textarea><span id="CommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.CommunicationNeeds_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.CommunicationNeeds_Desc)</textarea><span id="CommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.CommunicationNeeds_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:100.6pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						If the child is deaf or hard of
 						hearing, does the child have any special communication needs relating to
 						opportunities for direct communications with peers and professional personnel
@@ -267,13 +259,13 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.HearingCommunicationNeeds_Desc)</textarea><span id="HearingCommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.HearingCommunicationNeeds_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.HearingCommunicationNeeds_Desc)</textarea><span id="HearingCommunicationNeeds_Desc" style="display:none" class="input-value">@(formModel.HearingCommunicationNeeds_Desc)</span>
 					</div>
 				</td>
 			</tr>
-			<tr style='height:73.1pt'>
+			<tr>
 				<td>
-					<p class=MsoNormal style='margin-top:0in;margin-right:0in;margin-bottom:0in;  margin-left:.1pt;margin-bottom:.0001pt'>
+					<p class=MsoNormal>
 						Does the child require any assistive
 						technology devices or services in order to be involved, and to progress in
 						the general curriculum or to be educated in a less restrictive environment?
@@ -289,11 +281,9 @@
 				</td>
 				<td>
 					<div class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-						<textarea cols="50" rows="5"  maxlength="2000">@(formModel.AssistiveTech_Desc)</textarea><span id="AssistiveTech_Desc" style="display:none" class="input-value">@(formModel.AssistiveTech_Desc)</span>
+						<textarea cols="50" rows="10"  maxlength="2000">@(formModel.AssistiveTech_Desc)</textarea><span id="AssistiveTech_Desc" style="display:none" class="input-value">@(formModel.AssistiveTech_Desc)</span>
 					</div>
 				</td>
 			</tr>
-		</table>
-		
-	</div>
+		</table>		
 </div>

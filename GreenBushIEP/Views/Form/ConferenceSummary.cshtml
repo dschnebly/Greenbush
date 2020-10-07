@@ -1,92 +1,94 @@
-﻿
-@{
-	var formModel = ViewData["conferenceSummary"] != null ? ViewData["conferenceSummary"] as GreenBushIEP.Models.tblFormConferenceSummary : new GreenBushIEP.Models.tblFormConferenceSummary();
+﻿@{
+    var formModel = ViewData["conferenceSummary"] != null ? ViewData["conferenceSummary"] as GreenBushIEP.Models.tblFormConferenceSummary : new GreenBushIEP.Models.tblFormConferenceSummary();
 
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
-	string placement = Model.studentInfo != null ? Model.studentInfo.PlacementCode : "";
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-
-	string contactFormattedName = "";
-	string contactAddress = "";
-	string contactPhone = "";
-	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
-	{
-		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-		if (primary != null)
-		{
-			contactFormattedName = primary.FirstName + " " + primary.LastName;
-			contactAddress = primary.Address1 + " " + primary.Address2 + " " + primary.City + ", " + primary.State + " " + primary.Zip;
-			contactPhone = primary.Phone;
-		}
-	}
-
-	if (!string.IsNullOrEmpty(formModel.PlacementCode))
-	{
-		placement = formModel.PlacementCode;
-	}
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
+    string placement = Model.studentInfo != null ? Model.studentInfo.PlacementCode : "";    
+    int numContacts = 0;
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");    
+    List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+    
+    if (!string.IsNullOrEmpty(formModel.PlacementCode))
+    {
+        placement = formModel.PlacementCode;
+    }
 
 }
 <div class="module-page savdDraftAllowed">
-	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in;margin-bottom:35px' class="voffset2">
-		<p class=MsoNormal align=center style='text-align:center'>
-			<span style='font-size: 16pt;'><b>CONFERENCE SUMMARY</b></span>
-		</p>
-	</div>
-	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">Student's Name: </span> <u>@(studentFormattedName.Length > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>
-		<span style="font-weight:bold">DOB:</span> <u>@(dobStr.Length > 25 ? dobStr :String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</u>
-	</p>
-	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">Parent's Name:</span>
-		<u>@(contactFormattedName.Length > 58 ? contactFormattedName :String.Format(contactFormattedName).PadRight(58 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Phone:</span>
-		<u>@(contactPhone.Length > 22 ? contactPhone :String.Format(contactPhone).PadRight(22 - String.Format(contactPhone).Length, ' ').Replace(" ", "\u00A0"))</u>
-	</p>
+    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+    {
+        numContacts++;
 
-	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">Address:</span>
-		<u>@(contactAddress.Length > 114 ? contactAddress : String.Format(contactAddress).PadRight(114 - String.Format(contactAddress).Length, ' ').Replace(" ", "\u00A0"))</u>
-	</p>
-	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">School District:</span>
-		<u>@(usdName.Length > 25 ? usdName :String.Format(usdName).PadRight(25 - String.Format(usdName).Length, ' ').Replace(" ", "\u00A0"))</u> 
-		<span style="font-weight:bold">Current Placement:</span>
-		<u><textarea cols="25" rows="1" maxlength="50">@placement</textarea><span id="PlacementCode" style="display:none" class="input-value">@placement</span></u>
-	</p>
-	<p class="voffset3" style="font-weight:normal">
-		<span style="font-weight:bold">Teacher:</span>
-		<u>@(teacherFormattedName.Length > 40 ? teacherFormattedName : String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
-		<u><textarea cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
-	</p>
-	<p class="voffset3" style="font-weight:normal">
-		<b><span>Requested by</span></b>
-		<u><textarea cols="40" rows="1"  maxlength="200">@(formModel.RequestedBy)</textarea><span id="txtRequestedBy" style="display:none" class="input-value">@(formModel.RequestedBy)</span></u>
-	</p>		
-	<p><span><b>Reason(s) for Conference:</b></span><br/>
-		<textarea class="form-control" cols="100" rows="4"  maxlength="5000">@(formModel.ReasonForConfrence)</textarea><span id="txtReasonForConfrence" style='display:none' class="input-value">@(formModel.ReasonForConfrence)</span></p>
-	<p><span><b>Conclusions:</b></span><br/>
-	<textarea class="form-control" cols="100" rows="4" maxlength="5000">@(formModel.Conclusions)</textarea><span id="txtConclusions" style='display:none' class="input-value">@(formModel.Conclusions)</span></p>
-	<p style="padding-top:15px"><span><b>Signatures of Participants in Conference:</b></span></p>
-	<table border=0 cellspacing=10 cellpadding=10 style='width:350px;' class="table table-borderless">
-		<tr><th>Name</th><th>Date</th></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-		<tr><td>___________________________________</td><td>__________________</td></tr>
-	</table>
+        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+        string contactAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+        string contactPhone = primaryContact.Phone;
+
+        if (numContacts > 1)
+        {
+            <text><div class="section-break"></div></text>
+        }
+
+        <div class="voffset2">
+            <p class=MsoNormal align=center style='text-align:center;margin-bottom:15px'>
+                <span style='font-size: 16pt;'><b>CONFERENCE SUMMARY</b></span>
+            </p>
+        </div>
+        <p class="voffset3" style="font-weight:normal">
+            <span style="font-weight:bold">Student's Name: </span> <u>@(studentFormattedName.Length > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u>
+            <span style="font-weight:bold">DOB:</span> <u>@(dobStr.Length > 25 ? dobStr : String.Format(dobStr).PadRight(25 - String.Format(dobStr).Length, ' ').Replace(" ", "\u00A0"))</u>
+        </p>
+        <p class="voffset3" style="font-weight:normal">
+            <span style="font-weight:bold">Parent's Name:</span>
+            <u>@(contactFormattedName.Length > 58 ? contactFormattedName : String.Format(contactFormattedName).PadRight(58 - String.Format(contactFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Phone:</span>
+            <u>@(contactPhone.Length > 22 ? contactPhone : String.Format(contactPhone).PadRight(22 - String.Format(contactPhone).Length, ' ').Replace(" ", "\u00A0"))</u>
+        </p>
+
+        <p class="voffset3" style="font-weight:normal">
+            <span style="font-weight:bold">Address:</span>
+            <u>@(contactAddress.Length > 114 ? contactAddress : String.Format(contactAddress).PadRight(114 - String.Format(contactAddress).Length, ' ').Replace(" ", "\u00A0"))</u>
+        </p>
+        <p class="voffset3" style="font-weight:normal">
+            <span style="font-weight:bold">School District:</span>
+            <u>@(usdName.Length > 25 ? usdName : String.Format(usdName).PadRight(25 - String.Format(usdName).Length, ' ').Replace(" ", "\u00A0"))</u>
+            <span style="font-weight:bold">Current Placement:</span>
+            <u><textarea cols="25" rows="1" maxlength="50">@placement</textarea><span id="PlacementCode" style="display:none" class="input-value">@placement</span></u>
+        </p>
+        <p class="voffset3" style="font-weight:normal">
+            <span style="font-weight:bold">Teacher:</span>
+            <u>@(teacherFormattedName.Length > 40 ? teacherFormattedName : String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
+            <u><textarea cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
+        </p>
+        <p class="voffset3" style="font-weight:normal">
+            <b><span>Requested by</span></b>
+            <u><textarea cols="40" rows="1" maxlength="200">@(formModel.RequestedBy)</textarea><span id="txtRequestedBy" style="display:none" class="input-value">@(formModel.RequestedBy)</span></u>
+        </p>
+        <p>
+            <span><b>Reason(s) for Conference:</b></span><br />
+            <textarea class="form-control" cols="100" rows="4" maxlength="5000">@(formModel.ReasonForConfrence)</textarea><span id="txtReasonForConfrence" style='display:none' class="input-value">@(formModel.ReasonForConfrence)</span>
+        </p>
+        <p>
+            <span><b>Conclusions:</b></span><br />
+            <textarea class="form-control" cols="100" rows="4" maxlength="5000">@(formModel.Conclusions)</textarea><span id="txtConclusions" style='display:none' class="input-value">@(formModel.Conclusions)</span>
+        </p>
+        <p style="padding-top:15px"><span><b>Signatures of Participants in Conference:</b></span></p>
+        <table border=0 cellspacing=10 cellpadding=10 style='width:350px;' class="table table-borderless">
+            <tr><th>Name</th><th>Date</th></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+            <tr><td>___________________________________</td><td>__________________</td></tr>
+        </table>
+    }
 </div> <!--end module-->

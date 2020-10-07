@@ -37,7 +37,7 @@
 	</p>
 
 	<p style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
-		I consent for <u><textarea cols="50" rows="1" style="height:30px"  class="form-control" maxlength="200">@(formModel.School)</textarea><span id="School" style="display:none" class="input-value">@(formModel.School)</span></u> 
+		I consent for <textarea cols="50" rows="1" style="height:30px"  class="form-control" maxlength="200">@(formModel.School)</textarea><span id="School" style="display:none;font-size:11.0pt;text-decoration:underline" class="input-value">@(formModel.School)</span> 
 		(School) to release records or information about my child's participation in services to participating physicians, other health care providers, the Kansas Department of Health and Environment (KDHE), any KDHE billing agents, and any school billing agent, as necessary, to process claims for reimbursement by KDHE for covered health-related services, evaluations for these services and transportation, on the day the student receives any health-related service which are outlined inert the child's Individualized Education Program (IEP), including duration and frequency IEPs services.
 
 	</p>
@@ -80,38 +80,28 @@
 		</tr>
 	</table>
 
-	<table border=0 cellspacing=2 cellpadding=0 style="width:60%;margin-top:20px">
+	<table border=0 cellspacing=2 cellpadding=2 style="width:60%;margin-top:20px">
 		<tr>
-			<td><span><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
-			<td><u><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value isDate">@dobStr</span></u></td>
-			<td><u><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none" class="input-value isDate">@(beginDate)</span></u></td>
+			<td><span class="IepNormal"><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
+			<td><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;text-decoration:underline;" class="input-value isDate IepNormal">@dobStr</span></td>
+			<td><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(beginDate)</span></td>
 		</tr>
 		<tr>
-			<td>Child's Name</td>
-			<td>Date of Birth</td>
-			<td>Begin Date</td>
+			<td><span class="IepNormal">Child's Name</span></td>
+			<td><span class="IepNormal">Date of Birth</span></td>
+			<td><span class="IepNormal">Begin Date</span></td>
 		</tr>
 	</table>
-
-	@*<div style="padding-top:10px">
-		<span><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span><span>&nbsp;</span>
-		<u><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;" class="input-value">@dobStr</span><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-		<u><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none" class="input-value">@(beginDate)</span></u>
-	</div>
-	<div style="margin:0;padding:0">
-		<span>@(String.Format("Child's Name").PadRight(37, ' ').Replace(" ", "\u00A0"))</span>
-		<span>@(String.Format("Date of Birth").PadRight(5, ' ').Replace(" ", "\u00A0"))</span>
-		<span>Begin Date</span>
-	</div>*@
+	
 	<div style="margin:0;padding-top:65px">
 		<table cellpadding="1">
 			<tr>
-				<td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
-				<td><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
+				<td><span class="IepNormal"><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
+				<td><span class="IepNormal"><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
 			</tr>
 			<tr>
-				<td>Parent/Guardian Signature</td>
-				<td>Date</td>
+				<td><span class="IepNormal">Parent/Guardian Signature</span></td>
+				<td><span class="IepNormal">Date</span></td>
 			</tr>
 		</table>
 	</div>

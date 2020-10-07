@@ -479,6 +479,7 @@ namespace GreenBushIEP.Models
         public string districtName { get; set; }
         public string lastReEvalDate { get; set; }
         public string studentLanguage { get; set; }
+        public string studentGradeText { get; set; }
     }
 
     public class IEPFormViewModel
