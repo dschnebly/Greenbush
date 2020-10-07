@@ -1127,13 +1127,34 @@
     </div>
 </div>
 
+<!----modal starts here--->
+<div id="primaryContactErrorModal" class="modal" role='dialog'>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><i class="glyphicon glyphicon-remove-circle"></i></button>
+                <h4 class="modal-title">Primary Contact Missing</h4>
+            </div>
+            <div class="modal-body">
+                <p>You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?</p>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>                
+				<button type="button" class="btn btn-info" id="btnPrimaryContactContinue" >Continue</button>
+            </div>
+			
+        </div>
+      </div>
+  </div>
+<!--Modal ends here--->
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/editreferral.js?v1.8"></var>
+<var data-reload="true" data-src="/Scripts/editreferral.js?v1.9"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/editreferral.js?v1.8")
+    @Scripts.Render("~/Scripts/editreferral.js?v1.9")
 
 }

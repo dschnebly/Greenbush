@@ -459,7 +459,13 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        location.href = "/Home/Portal";
+
+                        if (data.ActiveIEP != 0) {
+                            window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.ActiveIEP;
+                        }
+                        else {
+                            location.href = "/Home/Portal";
+                        }
                     } else {
                         alert(data.Message);
                         location.reload(true);

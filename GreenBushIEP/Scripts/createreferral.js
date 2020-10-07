@@ -86,13 +86,7 @@
 
         return false;
     });
-
-    //var referralId = $("#studentId").val();
-    //var assignChildCount = $("#assignChildCount").val();
-
-    //if (referralId > 0 && assignChildCount != null && assignChildCount != undefined && assignChildCount != "") {
-    //    $("#assignChildCount").trigger("change");
-    //}
+   
 });
 
 function init() {
@@ -357,7 +351,7 @@ $("#next4").on("click", function () {
     }
 });
 
-$("#submitForm").on("click", function (e) {
+$(".submitForm").on("click", function (e) {
 
 	e.preventDefault();
 	$(this).attr("disabled", true);

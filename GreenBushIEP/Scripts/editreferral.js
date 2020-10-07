@@ -231,10 +231,9 @@ function initContacts() {
 
 function checkPrimarySelected() {
 
-	//check if primary selected
-	var numberOfContacts = $("#student-contacts").find('input.primaryContactCheckbox:checkbox').length;
+	//check if primary selected	
 	var primaryChecked = $('input.primaryContactCheckbox:checkbox:checked').length;
-	if (numberOfContacts > 0 && primaryChecked == 0) {
+	if (primaryChecked == 0) {
 		return false;
 	}
 
@@ -291,17 +290,17 @@ function createStudentContacts() {
 	});
 }
 
+$("#btnPrimaryContactContinue").on("click", function () {
+	$('#primaryContactErrorModal').modal('toggle');
+	createStudentContacts();
+});
 
 $("#next7").on("click", function () {
 	if (tabValidates()) {
 		
 		var primary = checkPrimarySelected();
 		if (!primary) {
-			var answer = confirm("You do not have a primary contact specified.  Without specifying a primary contact no information will appear on the IEP. Do you wish to continue?");
-
-			if (answer) {
-				createStudentContacts();
-			}
+			$('#primaryContactErrorModal').modal();			
 		}
 		else {
 			createStudentContacts();
@@ -310,7 +309,7 @@ $("#next7").on("click", function () {
 	else {
 		$('#alertMessage').html("Please verify that all required fields are filled out.");
 		$('#alertMessage').show();
-	}
+	}	
 });
 
 $("#next5").on("click", function () {

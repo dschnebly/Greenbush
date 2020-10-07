@@ -1,48 +1,11 @@
-﻿
-
-@{
+﻿@{
 	ViewBag.Title = "Reports";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section stylesheets {
 	@Styles.Render("~/Content/transition.css")
-	@Styles.Render("~/Content/jquery-ui.min.css")
-
-	<style>
-
-		hr {
-			border-top: 1px solid #ddd;
-		}
-
-		.transition-page {
-			position: relative;
-		}
-
-
-
-		.btn-group-primary .dropdown-menu {
-			background-color: #214680 !important;
-		}
-
-			.btn-group-primary .dropdown-menu li > a {
-				color: #fff;
-				font-size: 12px;
-			}
-
-				.btn-group-primary .dropdown-menu li > a:hover,
-				.btn-group-primary .dropdown-menu li > a:focus {
-					background-color: #214680 !important;
-					color: #ffffff;
-					text-decoration: underline;
-				}
-
-
-		.alert-danger-iep {
-			padding: 3px 4px;
-			color: #b94a48;
-		}
-	</style>
+	@Styles.Render("~/Content/jquery-ui.min.css")	
 }
 
 @using (Html.BeginForm("DownloadSpedPro", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
@@ -104,8 +67,10 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 voffset2">
+						<div class="ajax-loader" style="display:none">
+				          <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="Loading student list" />
+						</div>
 						<div class="col-md-6" id="divStudents">
-
 						</div>
 					</div>
 				</div>
@@ -122,35 +87,35 @@
 					@if (ViewBag.errors != null)
 					{
 						<ul class="errorList">
-
 							@foreach (var error in ViewBag.errors)
-							{
-								<li class="alert-danger-iep">@error.UserID @error.Description</li>
-							}
-
+                            {
+                                if (string.IsNullOrEmpty(error.UserID))
+                                {
+									<li class="text-danger">@error.Description</li>
+                                }
+                                else
+                                {
+									<li class="text-danger"><a class="text-danger" target="_blank" href="/Manage/EditStudent/@error.UserID">@error.KidsID @error.Description</a></li>
+                                }
+                            }
 						</ul>
 					}
 
 					@if (ViewBag.message != null)
 					{
-						<span style="color:green">@ViewBag.message</span>
+						<span id="messageText" class="text-success">@ViewBag.message</span>
 					}
-
 				</div>
 			</div>
 		</div>
-
 	</div>
+	
 }
-
-
 @section scripts {
-
 	<script>
 		$(document).ready(function () {
 		
 			_getDistricts();
-
 			
 			$('#districtDD').change(function (e) {
 				_districtChange($(this));
@@ -158,7 +123,12 @@
 			});
 
 			$("#exportButton").click(function () {
+				//$(".ajax-loader").show().fadeOut(3000, "linear", function () {
+				//		$('.ajax-loader').hide();						
+				//});
+
 				$("ul.errorList").empty();
+				
 				$(".form-inline").submit();
 			});
 
@@ -249,20 +219,27 @@
 
 			var districtId = $('#districtDD').val();
 			var buildingId = $('#buildingDD').val();
+			$("#messageText").html("");
+			$("ul.errorList").empty();
+			$("#divStudents").html("").removeClass("text-danger");
 
 			if (isChecked) {
+
+				$('.ajax-loader').show();
+                
 				$.ajax({
 					type: 'POST',
 					url: '/Home/GetSpedProStudentList',
 					data: { fiscalYear: fiscalYear, buildingId: buildingId, districtId: districtId },
 					dataType: "json",
 					success: function (data) {
+						$(".ajax-loader").hide();
 						if (data.result && data.students != undefined) {
 							$("#divStudents").html("");
 							var students = data.students;
 
 							if (students.length == 0) {
-								$("#divStudents").html("No IEPs found to reset.");
+								$("#divStudents").html("No IEPs found to reset.").addClass("text-danger");
 								return false;
 							}
 
@@ -277,16 +254,18 @@
 							}
 						}
 					},
+					done: function (data) {						
+						$(".ajax-loader").hide();
+					},
 					error: function (data) {
-						console.log("Error getting baseline goal text.");
+						$(".ajax-loader").hide();
+						alert("There was an error processing the request.");
 					}
 				});
 			}
 			else {
 				$("#divStudents").html("");
 			}
-
 		}
 	</script>
-
 }

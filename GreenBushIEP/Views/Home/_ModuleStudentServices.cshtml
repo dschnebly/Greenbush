@@ -316,7 +316,8 @@
             @foreach (var service in Model.studentServices)
             {
                 var needsIN = (Model.studentServices.IndexOf(service) == Model.studentServices.Count - 1) ? "in" : "";
-
+                bool canEditDelete = Model.isOriginalIEPService ?  service.StartDate.Date >= Model.MeetingDate.Date  : true;
+                
                 string serviceTitle = "Student Service";
                 if (!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
                 {
@@ -340,10 +341,13 @@
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)" class="@(needsIN == "in" ? "" : "collapsed")">
                                                 <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
-                                                <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
-                                                <span class="pull-right">
-                                                    <i class="glyphicon glyphicon-trash deleteService"></i>
-                                                </span>
+                                                <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>                                               
+                                                @if (canEditDelete)
+                                                {
+                                                    <span class="pull-right">
+                                                        <i class="glyphicon glyphicon-trash deleteService"></i>
+                                                    </span>
+                                                }
                                             </a>
                                         </h4>
                                     </div>
@@ -353,7 +357,7 @@
                                                 <div class="col-md-4">
                                                     <label for="attendanceBuilding">Attendance Building</label>
                                                     <div class="form-group">
-                                                        <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;">
+                                                        <select class="form-control" name="attendanceBuilding" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
                                                             @if (Model.attendanceBuildings.Count > 0)
                                                             {
                                                                 foreach (var building in Model.attendanceBuildings)
@@ -367,7 +371,7 @@
                                                 <div class="col-md-2">
                                                     <label for="fiscalYear">Fiscal Year</label>
                                                     <div class="form-group">
-                                                        <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;">
+                                                        <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled") >
                                                             <option value="2018" @(service.SchoolYear == 2018 ? "selected" : "")>2017 - 2018</option>
                                                             <option value="2019" @(service.SchoolYear == 2019 ? "selected" : "")>2018 - 2019</option>
                                                             <option value="2020" @(service.SchoolYear == 2020 ? "selected" : "")>2019 - 2020</option>
@@ -382,7 +386,7 @@
                                                     <label for="Frequency">Initiation Date</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" @(Model.isOriginalIEPService && service.Create_Date.ToString("MM/dd/yy H:mm:ss") == Model.CreateDate.ToString("MM/dd/yy H:mm:ss") && service.StartDate < Model.IEPStartDate ? "readonly" : string.Empty) aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField"  @(canEditDelete ? string.Empty : "readonly") aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -398,7 +402,7 @@
                                                     <label for="Frequency">Frequency</label>
                                                     <div class="input-group">
                                                         <div class="form-group">
-                                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;">
+                                                            <select class="form-control" name="Frequency" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
                                                                 <option value="1" @(service.Frequency == 1 ? "selected" : "")>Every week (1)</option>
                                                                 <option value="2" @(service.Frequency == 2 ? "selected" : "")>Every 2 weeks (2)</option>
                                                                 <option value="3" @(service.Frequency == 3 ? "selected" : "")>Every 3 weeks (3)</option>
@@ -417,11 +421,11 @@
                                                     <label for="Days">Days per Week</label>
                                                     <div class="input-group number-spinner">
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-minus" ></span></button>
                                                         </span>
-                                                        <input type="number" name="serviceDaysPerWeek" class="form-control text-center" value="@(service.DaysPerWeek)" min="1" max="5">
+                                                        <input type="number" name="serviceDaysPerWeek" class="form-control text-center" value="@(service.DaysPerWeek)" min="1" max="5" @(canEditDelete ? string.Empty : "readonly")>
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-plus" ></span></button>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -429,18 +433,18 @@
                                                     <label for="Duration">Minutes per Day </label>
                                                     <div class="input-group minute-spinner">
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"  @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-minus"></span></button>
                                                         </span>
-                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60">
+                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60"  @(canEditDelete ? string.Empty : "readonly")>
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"  @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-plus"></span></button>
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="ServiceType">Service Type</label>
                                                     <div class="form-group">
-                                                        <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;">
+                                                        <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
                                                             @if (Model.serviceTypes.Count > 0)
                                                             {
                                                                 foreach (var serviceType in Model.serviceTypes)
@@ -456,7 +460,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                         <div class="form-group">
-                                                            <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;">
+                                                            <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
 
                                                                 @if (Model.serviceLocations.Count > 0)
                                                                 {
@@ -475,13 +479,13 @@
                                                 <div class="col-md-3">
                                                     <label for="serviceInstruction">Instruction Provided For:</label>
                                                     <div class="form-group">
-                                                        <input type="text" name="serviceProvidedFor" value="@(service.ProvidedFor)" style="min-height: 48px !important;width: 100%;padding: 5px;" />
+                                                        <input type="text" name="serviceProvidedFor" value="@(service.ProvidedFor)" style="min-height: 48px !important;width: 100%;padding: 5px;"  @(canEditDelete ? string.Empty : "readonly")/>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="serviceProvider">Provider</label>
                                                     <div class="form-group">
-                                                        <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;">
+                                                        <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
                                                             <option value="-1">-- No providers currently available --</option>
                                                             @if (Model.serviceProviders.Count > 0)
                                                             {
@@ -490,14 +494,14 @@
                                                                     <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                                 }
                                                             }
-                                                        </select>
+                                                        </select>                                                        
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Attach a Goal</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                        <select id="studentGoalsSelect" name="studentGoalsSelect" class="form-control chosen-select" data-placeholder="Choose a goal..." multiple="multiple" data-validate="true">
+                                                        <select id="studentGoalsSelect" name="studentGoalsSelect" class="form-control chosen-select" data-placeholder="Choose a goal..." multiple="multiple" data-validate="true"  @(canEditDelete ? string.Empty : "readonly")>
                                                             @if (Model.studentGoals.Count > 0)
                                                             {
                                                                 foreach (var goal in Model.studentGoals)
@@ -557,8 +561,7 @@
 <br />
 <br />
 
-<script>    
-    
+<script>        
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -875,6 +878,9 @@
                 var studentService = $(this).closest('.oneStudentService');
                 studentService.find("form").find("input[name='completed']").val();
 
+                //remove disabled from dropdowns to allow value to be sent to server
+                studentService.find("select:disabled").removeAttr("disabled").addClass("addDisable");
+
                 var form = studentService.find('form').serialize();
                 var iepId = $("#studentIEPId").val();
 
@@ -901,9 +907,12 @@
                     data: form,
                     dataType: 'json',
                     success: function (data) {
+                        //set the controls to disable again
+                        studentService.find("select.addDisable").removeAttr("addDisable").attr("disabled", true);
+
                         if (data.Result == "success") {
 
-                            _showAlert(data.Message, true);
+                            _showAlert(data.Message, true);                           
 
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
@@ -933,12 +942,18 @@
             $(this).find(".saveCompletedService").on('click', function (e) {
 
                 $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
+
+                     //remove disabled from dropdowns to allow value to be sent to server
+                    $(element).find("select:disabled").removeAttr("disabled").addClass("addDisable");
+
+
                     var studentServiceStartDate = $(element).find("input[name='serviceStartDate']");
                     var studentServiceEndDate = $(element).find("input[name='serviceEndDate']");
                     var studentServiceFiscalYear = $(element).find("select[name='fiscalYear'] option:selected");
 
                     var iepId = $("#studentIEPId").val();
                     var isLastIndex = index == ($(".oneStudentService").not("#defaultStudentService")).length - 1; // only fire the callback when it's our last index.
+
 
                     var success = checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
 
@@ -1472,6 +1487,7 @@
                 data: form,
                 dataType: 'json',
                 success: function (data) {
+                   
                     if (data.Result == "success") {
 
                         studentService.find("input[name='StudentSerivceId']").val(data.key);
@@ -1490,6 +1506,7 @@
                     }
                 },
                 error: function (data) {
+                    studentService.find("select.addDisable").removeAttr("addDisable").attr("disabled", true);
                     studentService.find("input[name=completed]").val(false);
                     _showAlert("There was an error while trying to save the data.", false);
                 }

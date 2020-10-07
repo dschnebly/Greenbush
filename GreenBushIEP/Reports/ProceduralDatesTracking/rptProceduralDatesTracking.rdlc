@@ -576,6 +576,7 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
+                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -855,7 +856,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!DaysSinceSigned.Value</Value>
+                                  <Value>=IIF(Fields!DaysSinceSigned.Value = -1, "Not able to determine", Fields!DaysSinceSigned.Value)</Value>
                                   <Style>
                                     <FontSize>9pt</FontSize>
                                   </Style>
@@ -944,7 +945,7 @@
             <Top>0.13417in</Top>
             <Left>0.01042in</Left>
             <Height>0.77208in</Height>
-            <Width>8.155in</Width>
+            <Width>8.15501in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
