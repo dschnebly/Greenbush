@@ -334,7 +334,7 @@ namespace GreenBushIEP.Controllers
                     model.firstName = referral.FirstName;
                     model.kidsId = referral.KIDSID.HasValue && referral.KIDSID > 0 ? referral.KIDSID.ToString() : "";
                     model.notes = referral.ReferralNotes;
-                   
+
                     referralList.Add(model);
                 }
 
@@ -537,7 +537,7 @@ namespace GreenBushIEP.Controllers
                     tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
                     // check that the kidsIS doesn't already exsist in the system.
-                    long kidsID = collection["kidsid"] == null ? 000000000 :  Convert.ToInt64(collection["kidsid"]);
+                    long kidsID = collection["kidsid"] == null ? 000000000 : Convert.ToInt64(collection["kidsid"]);
                     int referralId = Convert.ToInt32(collection["referralId"]);
 
                     //if (kidsID == 0)
@@ -1238,7 +1238,7 @@ namespace GreenBushIEP.Controllers
                     Primary_DisabilityCode = existingReferral.Primary_DisabilityCode,
                     Secondary_DisabilityCode = existingReferral.Secondary_DisabilityCode,
 
-            };
+                };
 
                 List<tblReferralRelationship> relationships = db.tblReferralRelationships.Where(r => r.ReferralID == referralID).ToList();
                 if (relationships != null)
@@ -1364,7 +1364,7 @@ namespace GreenBushIEP.Controllers
                                 UserID_Requster = submitter.UserID,
                                 UserID_District = submitterDistrict != null ? submitterDistrict.USD : "",
                                 ReferralID = studentInfo.ReferralID,
-                                ReferralType = collection["referralType"].ToString(),                                
+                                ReferralType = collection["referralType"].ToString(),
                                 Create_Date = DateTime.Now,
                                 Update_Date = DateTime.Now
                             };
@@ -1487,7 +1487,7 @@ namespace GreenBushIEP.Controllers
                     int studentId = Convert.ToInt32(collection["studentId"]);
                     string assignedUsd = collection["assignChildCount"];
 
-                    if(string.IsNullOrEmpty(assignedUsd))
+                    if (string.IsNullOrEmpty(assignedUsd))
                     {
                         return Json(new { Result = "error", Message = "Please select an Assign Child Count" });
                     }
@@ -1604,7 +1604,7 @@ namespace GreenBushIEP.Controllers
                         db.tblReferralRelationships.Add(contact);
                     }
 
-                    db.SaveChanges();                  
+                    db.SaveChanges();
 
                     //create summary
                     string summaryText = CreateSummary(student, request);
@@ -1662,11 +1662,11 @@ namespace GreenBushIEP.Controllers
                 county = cty.CountyName;
             }
 
-            
+
 
             StringBuilder sb = new StringBuilder();
             sb.AppendFormat("<h3>Student Information</h3>");
-           
+
             sb.AppendFormat("<b>Referral Type:</b> {0}", referralRequest.ReferralType);
             sb.Append("<br/>");
             if (referralRequest.ReferralType == "Incoming")
@@ -1674,7 +1674,7 @@ namespace GreenBushIEP.Controllers
                 sb.AppendFormat("<b>District Enrollment Date:</b> {0}", referralRequest.EnrollmentDate.HasValue ? referralRequest.EnrollmentDate.Value.ToShortDateString() : "");
                 sb.Append("<br/>");
             }
-             
+
             sb.AppendFormat("<b>KIDSID:</b> {0} ", student.KIDSID.HasValue && student.KIDSID.Value != 0 ? student.KIDSID.ToString() : student.KIDSID.Value == 0 ? "0000000000" : "");
             sb.Append("<br/>");
             sb.AppendFormat("<b>Student Name:</b> {0} {1} {2}", student.FirstName, student.MiddleInitial, student.LastName);
@@ -1686,7 +1686,7 @@ namespace GreenBushIEP.Controllers
             sb.AppendFormat("<b>Address:</b> {0} {1} {2}, {3} {4}", student.Address1, student.Address2, student.City, student.State, student.Zip);
             sb.Append("<br/>");
 
-            if(referralRequest.ReferralType == "Incoming")
+            if (referralRequest.ReferralType == "Incoming")
             {
                 sb.AppendFormat("<b>Primary Disability:</b> {0}", GetDisability(student.Primary_DisabilityCode));
                 sb.Append("<br/>");
@@ -1718,7 +1718,7 @@ namespace GreenBushIEP.Controllers
             sb.Append("<br/>");
             sb.Append("<br/>");
             sb.AppendFormat("<h3>Parent/Guardian Information</h3>");
-           
+
             foreach (tblReferralRelationship pc in db.tblReferralRelationships.Where(o => o.ReferralID == student.ReferralID))
             {
                 sb.AppendFormat("<b>Relationship:</b><span style='text-transform: capitalize;'> {0}</span>", pc.Realtionship);
@@ -1791,7 +1791,7 @@ namespace GreenBushIEP.Controllers
                         mailMessage.Subject = subject;
                         mailMessage.Body = sb.ToString();
 
-                        if(hasValidEmail)
+                        if (hasValidEmail)
                             smtpClient.Send(mailMessage);
 
                     }
@@ -1846,9 +1846,9 @@ namespace GreenBushIEP.Controllers
 
                     Console.Write(exceptionMessage);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    return Json(new { Result = "error", Message = "There was an error while trying to send the referral email. Please try again or contact your administrator. "  + ex.ToString()});
+                    return Json(new { Result = "error", Message = "There was an error while trying to send the referral email. Please try again or contact your administrator. " + ex.ToString() });
                 }
             }
 
@@ -2073,7 +2073,7 @@ namespace GreenBushIEP.Controllers
                         info.StudentLanguage = collection["studentLanguage"].ToString();
                         info.ParentLanguage = collection["parentLanguage"].ToString();
                         info.ClaimingCode = collection["claimingCode"] == "on" ? true : false;
-                        info.FullDayKG = collection["fullDayKindergarten"] == "on" ? true : false;
+                        info.FullDayKG = collection["fullDayKindergarten"] == "on";
                         info.StatusCode = collection["statusCode"].ToString();
 
                         if (!string.IsNullOrEmpty(collection["initialIEPDate"]))
@@ -2385,7 +2385,7 @@ namespace GreenBushIEP.Controllers
                 var attendingDistricts = model.student.USD.Split(',').ToList();
                 model.selectedDistrict = db.tblDistricts.Where(o => attendingDistricts.Contains(o.USD)).ToList();
             }
-            
+
 
 
             string districtList = string.Join(", ", model.districts.Select(o => o.USD).Distinct());
@@ -3479,7 +3479,7 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                
+
                 db.uspCopyIEP(Iepid, user.UserID, false);
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
@@ -3976,30 +3976,30 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-				tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-				var providerList = new List<ProviderViewModel>();
+                var providerList = new List<ProviderViewModel>();
 
-				//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
-				//{
-				//	var providerId = 0;
+                //if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+                //{
+                //	var providerId = 0;
 
-				//	if (user.TeacherID != null)
-				//	{
-				//		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
-				//		providerList.Add(teacherProvider);
+                //	if (user.TeacherID != null)
+                //	{
+                //		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
+                //		providerList.Add(teacherProvider);
 
-				//	}
-				//	else
-				//	{
-				//		providerList.Add(new ProviderViewModel { Name = string.Format("{0}, {1}", user.LastName, user.FirstName), ProviderID = providerId });
-				//	}
+                //	}
+                //	else
+                //	{
+                //		providerList.Add(new ProviderViewModel { Name = string.Format("{0}, {1}", user.LastName, user.FirstName), ProviderID = providerId });
+                //	}
 
-				//}
-				
-				if (!string.IsNullOrEmpty(districtId))
+                //}
+
+                if (!string.IsNullOrEmpty(districtId))
                 {
-                    
+
 
                     providerList.Add(new ProviderViewModel { Name = "All", ProviderID = -1 });
 
@@ -4224,23 +4224,23 @@ namespace GreenBushIEP.Controllers
         {
             try
             {
-				tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-				//if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
-				//{
-				//	selectedProvider = "0";
+                //if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
+                //{
+                //	selectedProvider = "0";
 
-				//	if (user.TeacherID != null)
-				//	{
-				//		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
-				//		selectedProvider = teacherProvider.ProviderID.ToString();
+                //	if (user.TeacherID != null)
+                //	{
+                //		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
+                //		selectedProvider = teacherProvider.ProviderID.ToString();
 
-				//	}					
-				//}
+                //	}					
+                //}
 
-				if (!string.IsNullOrEmpty(selectedDistrict))
+                if (!string.IsNullOrEmpty(selectedDistrict))
                 {
-                    
+
                     List<string> myRoles = new List<string>() { "5" }; //students
 
                     if (selectedBuilding == "-1")
@@ -4322,21 +4322,21 @@ namespace GreenBushIEP.Controllers
             }
         }
 
-		private ProviderViewModel GetProviderByProviderCode(string providerCode)
-		{
-			var providerObj = new ProviderViewModel();
-			var provider = (from p in db.tblProviders
-							select p).FirstOrDefault();
+        private ProviderViewModel GetProviderByProviderCode(string providerCode)
+        {
+            var providerObj = new ProviderViewModel();
+            var provider = (from p in db.tblProviders
+                            select p).FirstOrDefault();
 
-			if (provider != null)
-			{
-				providerObj.Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName);
-				providerObj.ProviderID = provider.ProviderID;
-				providerObj.ProviderCode = provider.ProviderCode;
-			}
+            if (provider != null)
+            {
+                providerObj.Name = string.Format("{0}, {1}", provider.LastName, provider.FirstName);
+                providerObj.ProviderID = provider.ProviderID;
+                providerObj.ProviderCode = provider.ProviderCode;
+            }
 
-			return providerObj;
-		}
+            return providerObj;
+        }
 
         private string GetDisability(string value)
         {
