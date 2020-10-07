@@ -1334,7 +1334,7 @@
                                     </div>
                                 </div>
                                 <ul class="list-inline pull-right saveandcontinue">
-                                    <li>@Html.ActionLink("Cancel", "Portal", "Home", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                                    <li><button type="button" class="btn btn-default prev-step">Previous</button></li>                                    
                                     <li><button type="button" class="btn btn-info next-step" id="next3">Save and continue</button></li>
                                 </ul>
                             }
@@ -1602,11 +1602,11 @@
   </div>
 <!--Modal ends here--->
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/createstudent.js?v1.8"></var>
+<var data-reload="true" data-src="/Scripts/createstudent.js?v1.9"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
-    @Scripts.Render("~/Scripts/createstudent.js?v1.8")
+    @Scripts.Render("~/Scripts/createstudent.js?v1.9")
 }
