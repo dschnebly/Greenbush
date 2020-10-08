@@ -5359,7 +5359,10 @@ namespace GreenbushIep.Controllers
 
                 formNotice.StudentId = sid;
 
-                //formNotice.ParentName = GetInputValue("ParentName", spans);
+                formNotice.Parentname = GetInputValue("ParentName", spans);
+                formNotice.Address = GetInputValue("Address", spans);
+                formNotice.CityStateZip = GetInputValue("CityStateZip", spans);
+
                 formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
                 formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
                 formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);

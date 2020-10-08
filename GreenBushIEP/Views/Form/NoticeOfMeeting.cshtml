@@ -10,7 +10,7 @@
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
     if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
     {
-        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.Parentname, Address1 = formModel.Address, City = formModel.CityStateZip });
     }
 
     if (formModel.FormNoticeOfMeetingId == 0)
@@ -85,21 +85,21 @@
                             <span class="IepNormal">Address:</span>
                         </b>
                         <span class="IepNormal">
-                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentAddress)</textarea><span style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentAddress)</span>
+                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentAddress)</textarea><span id="Address" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentAddress)</span>
                         </span>
                     </p>
                     <p>
                         <span class="IepNormal">
-                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentCityStZip)</textarea><span style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentCityStZip)</span>
+                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentCityStZip)</textarea><span id="CityStateZip" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentCityStZip)</span>
                         </span>
                     </p>
                 </td>
             </tr>
         </table>
-        <p style='margin-top:.25in'>
+        <p style='margin-top:.15in'>
             <span class="IepNormal" style='font-weight:bold'>Proposed meeting date, time and place: </span> <textarea cols="75" rows="5" maxlength="2000">@(formModel.ProposedMeetingInfo)</textarea><span id="ProposedMeetingInfo" style="display:none;font-weight:normal" class="input-value IepNormal">@(formModel.ProposedMeetingInfo)</span>
         </p>
-        <p style="margin-top:.25in; font-size:11pt;">
+        <p style="margin-top:.15in; font-size:11pt;">
             <b>
                 <u>
                     MEETING TO REVIEW THE EVALUATION AND DETERMINE ELIGIBILITY
@@ -107,7 +107,7 @@
             </b>
         </p>
 
-        <table border=0 cellspacing=0 cellpadding=0 width=672 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:						 0in .05in 0in .05in'>
+        <table border=0 cellspacing=0 cellpadding=0 width=672 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;'>
             <tr style='height:99.9pt'>
                 <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in; height:99.9pt'>
                     <p>

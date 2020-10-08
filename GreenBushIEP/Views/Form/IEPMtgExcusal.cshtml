@@ -7,23 +7,17 @@
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
     var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
     int numContacts = 0;
-    var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-    string contactFormattedName = "";
+    var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);    
     string iepDate = "";
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 
-    if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
+   if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
     {
-        var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-        if (primary != null)
-        {
-            contactFormattedName = primary.FirstName + " " + primary.LastName;
-        }
-    }
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
+    } 
 
     if (formModel.FormIEPMeetingExcusalId == 0)
-    {
-        formModel.ParentName = contactFormattedName;
+    {        
         formModel.SchoolRepresentative = districtContactName;
     }
 
@@ -43,7 +37,7 @@
     {
         numContacts++;
 
-        contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
 
         if (numContacts > 1)
         {
@@ -58,7 +52,7 @@
         <table cellpadding="2" cellspacing="4" >
             <tr>
                 <td><span class="IepNormal">Date:</span></td>
-                <td><u><textarea cols="20" rows="1" maxlength="10" style="height:30px">@(currentDate)</textarea><span id="FormDate" style="display:none" class="input-value isDate IepNormal">@(currentDate)</span></u></td>
+                <td><textarea cols="20" rows="1" maxlength="10" style="height:30px;width:80%">@(currentDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(currentDate)</span></td>
                 <td><span class="IepNormal">Student: <u>@studentFormattedName</u></span></td>
                 <td></td>
             </tr>
@@ -68,7 +62,7 @@
             </tr>
             <tr>
                 <td  style="width:60px"><span class="IepNormal">IEP Date:</span></td>
-                <td><u><textarea cols="20" rows="1" maxlength="10" style="height:30px">@(iepDate)</textarea><span id="IEPDate" style="display:none" class="input-value isDate IepNormal">@(iepDate)</span></u></td>
+                <td><textarea cols="20" rows="1" maxlength="10" style="height:30px;width:80%">@(iepDate)</textarea><span id="IEPDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(iepDate)</span></td>
                 <td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" style="height:30px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none" class="input-value IepNormal">@(contactFormattedName)</span></u></td>
             </tr>
             <tr>

@@ -9,7 +9,11 @@
     int numContacts = 0;
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");    
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-    
+    if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    {
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
+    }
+
     if (!string.IsNullOrEmpty(formModel.PlacementCode))
     {
         placement = formModel.PlacementCode;
@@ -23,7 +27,7 @@
 
         string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
         string contactAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
-        string contactPhone = primaryContact.Phone;
+        string contactPhone = primaryContact.Phone == null ? "" : primaryContact.Phone;
 
         if (numContacts > 1)
         {

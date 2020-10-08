@@ -32,12 +32,14 @@
 	string contactFormattedName = "";
 	string homeAddress = "";
 	string contactPhone = "";
+	int primaryId = 0;
 	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
 	{
 		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
 		if (primary != null)
 		{
+			primaryId = primary.RealtionshipID;
 			contactFormattedName = primary.FirstName + " " + primary.LastName;
 			homeAddress = primary.Address1 + " " + primary.Address2 + " " + primary.City + ", " + primary.State + " " + primary.Zip;
 			contactPhone = primary.Phone;
@@ -46,9 +48,9 @@
 
 	string contactFormattedName2 = "";
 	string contactPhone2 = "";
-	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 0) > 0))
+	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 1))
 	{
-		var secondary = contacts.FirstOrDefault(o => o.PrimaryContact == 0);
+		var secondary = contacts.FirstOrDefault(o => o.PrimaryContact == 1 && o.RealtionshipID !=primaryId);
 		if (secondary != null)
 		{
 			contactFormattedName2 = secondary.FirstName + " " + secondary.LastName;

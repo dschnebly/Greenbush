@@ -1,44 +1,40 @@
 ﻿@{
-	var formModel = ViewData["formRevAll"] != null ? ViewData["formRevAll"] as GreenBushIEP.Models.tblFormRevokeConsentAll : new GreenBushIEP.Models.tblFormRevokeConsentAll();
+    var formModel = ViewData["formRevAll"] != null ? ViewData["formRevAll"] as GreenBushIEP.Models.tblFormRevokeConsentAll : new GreenBushIEP.Models.tblFormRevokeConsentAll();
     string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	
-	string contactFormattedName = "";	
-	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
-	{
-		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-		if (primary != null)
-		{
-			contactFormattedName = primary.FirstName + " " + primary.LastName;	
-		}
-	}
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
 
-	if (formModel.FormRevokeConsentAllId > 0)
-	{
-		districtContactName = formModel.AuthorityName;		
-	}
+    //int numContacts = 0;
+
+    //List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+    //if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    //{
+    //    contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
+    //}
+
+    if (formModel.FormRevokeConsentAllId > 0)
+    {
+        districtContactName = formModel.AuthorityName;
+    }
 
 
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
 
-	var revokeConsentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.RevokeConsentDate.HasValue)
-	{
-		revokeConsentDate = String.Format("{0:MM/dd/yyyy}", formModel.RevokeConsentDate.Value);
-	}
+    var revokeConsentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.RevokeConsentDate.HasValue)
+    {
+        revokeConsentDate = String.Format("{0:MM/dd/yyyy}", formModel.RevokeConsentDate.Value);
+    }
 
 }
+<div class="module-page savdDraftAllowed">   
 
-<div class="module-page savdDraftAllowed">
-    <div class=WordSection1>
         <p class=MsoNormal align=center style='margin-bottom:2.0pt;text-align:center;line-height:normal'>
             <b>
                 <u>
@@ -57,12 +53,14 @@
             </b>
         </p>
         <p class=MsoNormal align=right style='margin-bottom:6.0pt;text-align:right;line-height:normal;'>
-            DATE: <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span>
+            DATE: <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea>
+            <span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:150%'>
             NAME OF STUDENT:
             <u><b>@(String.Format(studentFormattedName).PadRight(100 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u>
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'>
             SCHOOL DISTRICT:
             <u><b>@(String.Format("{0}", schoolDistrict).PadRight(100 - schoolDistrict.Length, ' ').Replace(" ", "\u00A0"))</b></u>
@@ -71,32 +69,27 @@
             <span style='font-size:7.0pt;line-height:115%'>&nbsp;</span>
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            I, <textarea data-val="50" style="width:200px;height:30px;" maxlength="2000" placeholder="Name">@(districtContactName)</textarea><span id="AuthorityName" style="display:none;text-decoration:underline" class="input-value">@(districtContactName)</span>,
+            I, <textarea data-val="50" style="width:200px;height:30px;" maxlength="2000" placeholder="Name">@(districtContactName)</textarea><span id="AuthorityName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(districtContactName)</span>,
             having authority under the laws of the state of Kansas to make educational decisions:
         </p>
-        @*<p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:6.0pt'><span style='font-size:8.0pt'>        (Name)</span></p>*@
-
+        
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><img id="OnBehalfOfStudent" class='imgCheck' src="@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on behalf of the above named student  
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
             <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><img id="OnMyOwnBehalf" class='imgCheck' src="@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on my own behalf (adult student),
-        </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span style='font-size:4.0pt;line-height:115%'>&nbsp;</span>
-        </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <span class=GramE>hereby</span> revoke consent for <b><u>all special education and related services</u></b> for the above
+        </p>       
+        <p class=MsoNormal style='margin-top:10px;'>
+            hereby revoke consent for <b><u>all special education and related services</u></b> for the above
             named student.
-        </p>
-        <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'><o:p>&nbsp;</o:p></p>
-        <p class=MsoNormal style='padding:0'>
+        </p>        
+        <p class=MsoNormal style='padding-top:10px'>
             This revocation of consent is effective:
-            <textarea maxlength="10" style="width:100px;height:30px">@(revokeConsentDate)</textarea><span id="RevokeConsentDate" style="display:none;text-decoration:underline" class="input-value isDate">@(revokeConsentDate)</span>
+            <textarea maxlength="10" style="width:100px;height:30px">@(revokeConsentDate)</textarea><span id="RevokeConsentDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(revokeConsentDate)</span>
         </p>
-        <p class=MsoNormal style='padding:0;margin-left:2.15in'>
+        <p class=MsoNormal style='padding:0;margin-left:2.5in'>
             <sup>
-                <span style='font-size:8.0pt;line-height:115%'>(Date)<o:p></o:p></span>
+                <span style='font-size:10.0pt;line-height:115%'>(Date)<o:p></o:p></span>
             </sup>
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
@@ -113,19 +106,19 @@
             above.<span style=''>  </span>I also understand that revocation
             is not retroactive and does not negate an action that occurs after consent is
             given and before consent is revoked.
-        </p>       
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that the school district may not use mediation or a due process hearing to
             challenge my revocation of consent.<span style=''>  </span>
-        </p>      
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I also
             understand that I have the right to revoke consent and by revoking consent for
             all special education and related services the school district will no longer
             be legally required to convene an IEP meeting, to develop an IEP or to provide
             the above named student with special education and related services.<span style=''></span>
-        </p>        
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I further
             understand that by revoking consent for all special education and related
@@ -133,13 +126,13 @@
             and the student named above will no longer have the procedural protections
             (including protections regarding disciplinary actions) specified in federal and
             state special education laws and regulations.
-        </p>      
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that the school district is not required to amend the educational records of
             the above named student to remove any references to the student’s receipt of
             special education and related services because of the revocation of consent.
-        </p>      
+        </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;margin-top:8px'>
             I understand
             that for the above named student to be reenrolled in special education, an
@@ -152,10 +145,8 @@
                 <td width="150">_______________________________________________________</td>
             </tr>
             <tr>
-                <td width="150">(Signature)</td>                
+                <td width="150">(Signature)</td>
             </tr>
         </table>
+      
     </div>
-
-
-</div>

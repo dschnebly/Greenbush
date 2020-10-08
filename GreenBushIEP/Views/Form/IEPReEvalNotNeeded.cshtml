@@ -1,192 +1,207 @@
 ﻿@{
-	var formModel = ViewData["formPWNEval"] != null ? ViewData["formPWNEval"] as GreenBushIEP.Models.tblFormPriorWritten_Eval : new GreenBushIEP.Models.tblFormPriorWritten_Eval();
+    var formModel = ViewData["formPWNEval"] != null ? ViewData["formPWNEval"] as GreenBushIEP.Models.tblFormPriorWritten_Eval : new GreenBushIEP.Models.tblFormPriorWritten_Eval();
 
-	string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string contactFormattedName = Model.contacts != null && Model.contacts.Count > 0 ? Model.contacts[0].FirstName + " " + Model.contacts[0].LastName : "";
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string evalDate = Model.lastReEvalDate != null ? Model.lastReEvalDate : "";
-	string todaysDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string evalDate = Model.lastReEvalDate != null ? Model.lastReEvalDate : "";
+    string todaysDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+
+    int numContacts = 0;
+
+    List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+    if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    {
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
+    }
+
+
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
 }
 
-<div>
-	<div class="module-page">
 
-		<p class=MsoNormal align=center style='text-align:center'>
-			<span style='font-size:14.0pt;font-family:"Cambria",serif'>RE-EVALUATION NOT NEEDED</span>
-		</p>
+<div class="module-page">
+    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+    {
+        numContacts++;
 
-		<p class=MsoNormal align=center style='text-align:center'>
-			<span style='font-size:14.0pt;font-family:"Cambria",serif'>AGREEMENT FORM</span>
-		</p>
+        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
 
-		<p class=MsoNormal align=center style='text-align:center;margin-bottom:15px;'>
-			<span style='font-family:"Calibri",sans-serif'>USD # <u>@((schoolDistrict.Length) > 25 ? schoolDistrict : String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</u></span>
-		</p>
-		<table boder="0" cellpadding="3" cellspacing="5" width="600">
-			<tr>
-				<td style="text-decoration:underline">
-					<span style='font-family:"Calibri",sans-serif;'>
-						@((studentFormattedName.Length) > 45 ? studentFormattedName : String.Format(studentFormattedName).PadRight(45 - String.Format(studentFormattedName).Length, '_').Replace(" ", "\u00A0"))
-					</span>
-				</td>
-				<td style="text-decoration:underline;font-family:'Calibri',sans-serif;">
-					<textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate">@(beginDate)</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Student Name</span>
-				</td>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Date</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-decoration:underline">
-					<span style='font-family:"Calibri",sans-serif'>
-						@((contactFormattedName.Length) > 45 ? contactFormattedName : String.Format(contactFormattedName).PadRight(45 - String.Format(contactFormattedName).Length, '_').Replace(" ", "\u00A0"))
-					</span>
+        if (numContacts > 1)
+        {
+            <text><div class="section-break"></div></text>
+        }
+        <p class=MsoNormal align=center style='text-align:center'>
+            <span style='font-size:14.0pt;font-family:"Cambria",serif'>RE-EVALUATION NOT NEEDED AGREEMENT FORM</span>
+        </p>
 
-				</td>
-				<td style="text-decoration:underline">
-					<span style='font-family:"Calibri",sans-serif'>
-						@if (string.IsNullOrEmpty(evalDate))
-						{
-							@(String.Format("").PadRight(45 - String.Format(todaysDate).Length, '_').Replace(" ", "\u00A0"))
-						}
-						else
-						{
-							@((evalDate.Length) > 45 ? evalDate : String.Format(evalDate).PadRight(45 - String.Format(evalDate).Length, '_').Replace(" ", "\u00A0"))
-						}
-					</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Parent(s)/decision maker name</span><br />
-				</td>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Date of last evaluation/re-evaluation</span><br />
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td style='border-bottom:solid 1px black;font-size:10.0pt;font-family:"Calibri",sans-serif'>
-					<textarea data-val="50" style="width:300px;height:30px;">@(districtContactName)</textarea><span id="SchoolContact" style="display:none;" class="input-value">@(districtContactName)</span></td>
-				<td></td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>School representative name</span>
-				</td>
-			</tr>
-		</table>
-		<p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-		<p class=MsoNormal>
-			<span style='font-family:"Calibri",sans-serif'>
-				Special
-				education laws require a re-evaluation of a child with an exceptionality at
-				least once every three years, unless the school and the parent(s), or other
-				legally authorized education decision maker, of the student agree that a
-				re-evaluation is unnecessary. 
-			</span>
-		</p>
-		<p class=MsoNormal style="margin-top:8px">
-			<span style='font-family:"Calibri",sans-serif'>
-				The above
-				named parent(s)/decision maker and school representative agree that a
-				re-evaluation for the above named student is not necessary at this time, and
-				therefore no re-evaluation will be conducted. Both parties understand that a
-				re-evaluation may be requested by either party at any time in the future.
-			</span>
-		</p>
-		<p class=MsoNormal><span style='font-family:"Calibri",sans-serif'>&nbsp;</span></p>
-		<table boder="0" cellpadding="3" cellspacing="5" width="500">
-			<tr>
-				<td>
-					____________________________________________________________       
-				</td>
-				<td>
-					________________________________
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Signature of parent/Legal Decision Maker/Student if age 18 or more</span>
-				</td>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Date</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					____________________________________________________________       
-				</td>
-				<td>
-					________________________________
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Signature of second parent/legal decision maker</span><br />
-				</td>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Date</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td colspan="2">
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					____________________________________________________________       
-				</td>
-				<td>
-					________________________________
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Signature of school representative</span>
-				</td>
-				<td>
-					<span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>Date</span>
-				</td>
-			</tr>
-		</table>	
-	</div>
+        <p class=MsoNormal align=center style='text-align:center;margin-bottom:15px;'>
+            <span class=MsoNormal >USD # @((schoolDistrict.Length) > 25 ? schoolDistrict : String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</span>
+        </p>
+        <table boder="0" cellpadding="3" cellspacing="5" width="600">
+            <tr>
+                <td style="text-decoration:underline">
+                    <span class=MsoNormal >
+                        @((studentFormattedName.Length) > 45 ? studentFormattedName : String.Format(studentFormattedName).PadRight(45 - String.Format(studentFormattedName).Length, '_').Replace(" ", "\u00A0"))
+                    </span>
+                </td>
+                <td style="text-decoration:underline;" class=MsoNormal>
+                    <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class=MsoNormal >Student Name</span>
+                </td>
+                <td>
+                    <span class=MsoNormal >Date</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class=MsoNormal >&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-decoration:underline">
+                    <span class=MsoNormal>
+                        @((contactFormattedName.Length) > 45 ? contactFormattedName : String.Format(contactFormattedName).PadRight(45 - String.Format(contactFormattedName).Length, '_').Replace(" ", "\u00A0"))
+                    </span>
+
+                </td>
+                <td style="text-decoration:underline">
+                    <span class=MsoNormal >
+                        @if (string.IsNullOrEmpty(evalDate))
+                        {
+                            @(String.Format("").PadRight(45 - String.Format(todaysDate).Length, '_').Replace(" ", "\u00A0"))
+                        }
+                        else
+                        {
+                            @((evalDate.Length) > 45 ? evalDate : String.Format(evalDate).PadRight(45 - String.Format(evalDate).Length, '_').Replace(" ", "\u00A0"))
+                        }
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class=MsoNormal >Parent(s)/decision maker name</span><br />
+                </td>
+                <td>
+                    <span class=MsoNormal >Date of last evaluation/re-evaluation</span><br />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class=MsoNormal >&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td style='border-bottom:solid 1px black;'><span class=MsoNormal>
+                    <textarea data-val="50" style="width:300px;height:30px;">@(districtContactName)</textarea>
+                    <span id="SchoolContact" style="display:none;" class="input-value MsoNormal">@(districtContactName)</span>
+                  </span>
+                </td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class=MsoNormal >School representative name</span>
+                </td>
+            </tr>
+        </table>        
+        <p class=MsoNormal>
+            <span class=MsoNormal >
+                Special
+                education laws require a re-evaluation of a child with an exceptionality at
+                least once every three years, unless the school and the parent(s), or other
+                legally authorized education decision maker, of the student agree that a
+                re-evaluation is unnecessary. 
+            </span>
+        </p>
+        <p class=MsoNormal style="margin-top:8px">
+            <span class=MsoNormal >
+                The above
+                named parent(s)/decision maker and school representative agree that a
+                re-evaluation for the above named student is not necessary at this time, and
+                therefore no re-evaluation will be conducted. Both parties understand that a
+                re-evaluation may be requested by either party at any time in the future.
+            </span>
+        </p>        
+        <table boder="0" cellpadding="3" cellspacing="5" width="500" style="margin-top:50px">
+            <tr>
+                <td>
+                    ____________________________________________________________       
+                </td>
+                <td>
+                    ________________________________
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class=MsoNormal >Signature of parent/Legal Decision Maker/Student if age 18 or more</span>
+                </td>
+                <td>
+                    <span class=MsoNormal >Date</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span style='font-size:10.0pt;font-family:"Calibri",sans-serif'>&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ____________________________________________________________       
+                </td>
+                <td>
+                    ________________________________
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class=MsoNormal >Signature of second parent/legal decision maker</span><br />
+                </td>
+                <td>
+                    <span class=MsoNormal >Date</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class=MsoNormal >&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <span class=MsoNormal >&nbsp;</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    ____________________________________________________________       
+                </td>
+                <td>
+                    ________________________________
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span class=MsoNormal >Signature of school representative</span>
+                </td>
+                <td>
+                    <span class=MsoNormal >Date</span>
+                </td>
+            </tr>
+        </table>
+    }
 </div>
+
