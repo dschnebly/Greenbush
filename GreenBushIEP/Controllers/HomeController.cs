@@ -2705,8 +2705,7 @@ namespace GreenbushIep.Controllers
             };
 
             if (fileViewModel.studentInfo != null)
-            {
-                string studentGrade = "";
+            {                
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
                 fileViewModel.building = building != null ? building.BuildingName : "";
                 fileViewModel.buildingAddress = building != null ? building.Address_Mailing : "";
@@ -2725,34 +2724,7 @@ namespace GreenbushIep.Controllers
                 }
 
                 fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
-
-                if (fileViewModel.studentInfo.Grade != null)
-                {
-                    studentGrade = fileViewModel.studentInfo.Grade.ToString();
-                    if (fileViewModel.studentInfo.Grade <= 0)
-                    {
-                        switch ((int)fileViewModel.studentInfo.Grade)
-                        {
-                            case -4:
-                                studentGrade = "P3";
-                                break;
-                            case -3:
-                                studentGrade = "P4";
-                                break;
-                            case -2:
-                                studentGrade = "P5";
-                                break;
-                            case -1:
-                                studentGrade = "P6";
-                                break;
-                            case 0:
-                                studentGrade = "KG";
-                                break;
-                        }
-                    }
-                }
-
-                fileViewModel.studentGradeText = studentGrade;
+                fileViewModel.studentGradeText = GetGradeFullDescription(fileViewModel.studentInfo.Grade);
             }
 
             tblArchiveEvaluationDate lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
@@ -3211,7 +3183,7 @@ namespace GreenbushIep.Controllers
                     studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-                    studentDetails.grade = GetGrade(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
+                    studentDetails.grade = GetGradeFullDescription(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
                     studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
                     studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
                     studentDetails.contingencyPlan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
@@ -4763,6 +4735,22 @@ namespace GreenbushIep.Controllers
                     case 0: { studentGrade = "K"; break; }
                     default: { studentGrade = value.Value.ToString(); break; }
                 }
+            }
+
+            return studentGrade;
+
+        }
+
+        private string GetGradeFullDescription(int? value)
+        {
+            
+            string studentGrade = "";
+
+            if (value.HasValue)
+            {
+                var grade = db.tblGrades.Where(o => o.gradeID == value.Value).FirstOrDefault();
+                if (grade != null)
+                    return grade.description;
             }
 
             return studentGrade;

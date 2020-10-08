@@ -76,26 +76,27 @@
     </p>
     <table border=0 cellspacing=8 cellpadding=2 style="margin-top:25px;width:60%">
         <tr>
-            <td><u>
-				<textarea data-val="60" onfocus="clearContents(this);" class="form-control">
-					@( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName : formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")) : String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</textarea>
-				<span id="PhysicianName" style="display:none;" class="input-value">
-				    @( (formModel.PhysicianName != null && formModel.PhysicianName.Length > 60) ? formModel.PhysicianName :  formModel.PhysicianName == null ? (String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0")):  String.Format(formModel.PhysicianName).PadRight(60 - String.Format(formModel.PhysicianName).Length, ' ').Replace(" ", "\u00A0"))</span></u>
-            <td><u><textarea maxlength="10" style="width:100px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none" class="input-value isDate">@(beginDate)</span></u></td>
+            <td>
+				<textarea class="form-control">
+					@(formModel.PhysicianName)</textarea>
+                <span id="PhysicianName" style="display:none;text-decoration:underline;font-size:11.0pt; font-family:' Calibri',sans-serif" class="input-value">
+                    @(formModel.PhysicianName)
+                </span>
+            <td><textarea maxlength="10" style="width:100px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline;font-size:11.0pt; font-family:' Calibri',sans-serif" class="input-value isDate">@(beginDate)</span></td>
         </tr>
         <tr>
-            <td>Health Care Provider – Printed Name</td>
-            <td>Date</td>
+            <td><span style="font-size: 11.0pt; font-family: ' Calibri',sans-serif">Health Care Provider – Printed Name</span></td>
+            <td><span style="font-size:11.0pt; font-family:' Calibri',sans-serif">Date</span></td>
         </tr>
     </table>
     <table border=0 cellspacing=8 cellpadding=2  style="margin-top:40px">
         <tr>
             <td><u>@(String.Format("").PadRight(75 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
-            <td><u>@(String.Format("").PadRight(50 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
+            <td><u>@(String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u></td>
         </tr>
         <tr>
-            <td>Physician Signature</td>
-            <td>Credentials and NPI Number</td>
+            <td><span style="font-size: 11.0pt; font-family: ' Calibri',sans-serif">Physician Signature</span></td>
+            <td><span style="font-size: 11.0pt; font-family: ' Calibri',sans-serif">Credentials and NPI Number</span></td>
         </tr>
     </table>
 </div>
