@@ -2705,7 +2705,7 @@ namespace GreenbushIep.Controllers
             };
 
             if (fileViewModel.studentInfo != null)
-            {
+            {                
                 tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == fileViewModel.studentInfo.BuildingID).FirstOrDefault();
                 fileViewModel.building = building != null ? building.BuildingName : "";
                 fileViewModel.buildingAddress = building != null ? building.Address_Mailing : "";
@@ -2724,6 +2724,7 @@ namespace GreenbushIep.Controllers
                 }
 
                 fileViewModel.studentLanguage = GetLanguage(fileViewModel.studentInfo.StudentLanguage);
+                fileViewModel.studentGradeText = GetGradeFullDescription(fileViewModel.studentInfo.Grade);
             }
 
             tblArchiveEvaluationDate lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
@@ -3182,7 +3183,7 @@ namespace GreenbushIep.Controllers
                     studentDetails.placementCodeDesc = info != null ? db.tblPlacementCodes.Where(c => c.PlacementCode == info.PlacementCode).FirstOrDefault().PlacementDescription : "";
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
-                    studentDetails.grade = GetGrade(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
+                    studentDetails.grade = GetGradeFullDescription(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
                     studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
                     studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
                     studentDetails.contingencyPlan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
@@ -4298,7 +4299,7 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:8pt;} table.servciesTable{font-size:8pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;}</style>";
+                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:8pt;} table.servciesTable{font-size:8pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;}  </style>";
                 string result = "";
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
@@ -4734,6 +4735,22 @@ namespace GreenbushIep.Controllers
                     case 0: { studentGrade = "K"; break; }
                     default: { studentGrade = value.Value.ToString(); break; }
                 }
+            }
+
+            return studentGrade;
+
+        }
+
+        private string GetGradeFullDescription(int? value)
+        {
+            
+            string studentGrade = "";
+
+            if (value.HasValue)
+            {
+                var grade = db.tblGrades.Where(o => o.gradeID == value.Value).FirstOrDefault();
+                if (grade != null)
+                    return grade.description;
             }
 
             return studentGrade;
@@ -5342,7 +5359,10 @@ namespace GreenbushIep.Controllers
 
                 formNotice.StudentId = sid;
 
-                //formNotice.ParentName = GetInputValue("ParentName", spans);
+                formNotice.Parentname = GetInputValue("ParentName", spans);
+                formNotice.Address = GetInputValue("Address", spans);
+                formNotice.CityStateZip = GetInputValue("CityStateZip", spans);
+
                 formNotice.ProposedMeetingInfo = GetInputValue("ProposedMeetingInfo", spans);
                 formNotice.MeetingToReviewEvaluation = GetCheckboxSingleInputValue("MeetingToReviewEvaluation", checkboxes);
                 formNotice.DevelopIEP = GetCheckboxSingleInputValue("DevelopIEP", checkboxes);

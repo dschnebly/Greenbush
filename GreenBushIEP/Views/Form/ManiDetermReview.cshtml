@@ -1,8 +1,7 @@
 ﻿@{
 	var formModel = ViewData["formMani"] != null ? ViewData["formMani"] as GreenBushIEP.Models.tblFormManifestationDeterminiation : new GreenBushIEP.Models.tblFormManifestationDeterminiation();
-
-    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string studentGrade = Model.studentInfo != null && Model.studentInfo.Grade > 0 ? Model.studentInfo.Grade.ToString() : " ";
+    string studentGrade = Model.studentGradeText;
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";    
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
 	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
 	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);

@@ -1,403 +1,373 @@
 ﻿@{
-	var formModel = ViewData["formNotice"] != null ? ViewData["formNotice"] as GreenBushIEP.Models.tblFormNoticeOfMeeting : new GreenBushIEP.Models.tblFormNoticeOfMeeting();
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-	if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
-	{
-		contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1 });
-	}
+    var formModel = ViewData["formNotice"] != null ? ViewData["formNotice"] as GreenBushIEP.Models.tblFormNoticeOfMeeting : new GreenBushIEP.Models.tblFormNoticeOfMeeting();
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+    string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+    if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    {
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.Parentname, Address1 = formModel.Address, City = formModel.CityStateZip });
+    }
 
-	if (formModel.FormNoticeOfMeetingId == 0)
-	{
-		formModel.SchoolContactName = districtContactName;
-		formModel.SchoolContactPhone = districtContactPhone;
-	}
+    if (formModel.FormNoticeOfMeetingId == 0)
+    {
+        formModel.SchoolContactName = districtContactName;
+        formModel.SchoolContactPhone = districtContactPhone;
+    }
 
-	var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.DelieveredDate.HasValue)
-	{
-		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
-	}
+    var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.DelieveredDate.HasValue)
+    {
+        deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
+    }
 
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
 
-	int numContacts = 0;
+    int numContacts = 0;
 
 }
 <div class="module-page savdDraftAllowed">
-@foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
-{
-	numContacts++;
-	
+    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+    {
+        numContacts++;
 
-	string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
-	string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
-	string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+        string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+        string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
 
-	if (numContacts > 1)
-	{
-		<text><div class="section-break"></div></text>
-		formModel.DeliveriedTo = contactFormattedName;
-	}
+        if (numContacts > 1)
+        {
+            <text><div class="section-break"></div></text>
+            formModel.DeliveriedTo = contactFormattedName;
+        }
 
-		<div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in'>
-			<p align=center style='text-align:center'>
-				<span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
-			</p>
-		</div>
-		<table Table border=0 cellspacing=0 cellpadding=0 width=667 style='width:6.95in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
-			<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-				<td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
-					<p>
-						<b><span style='font-size: 11.0pt'>To:</span></b>
-						<textarea maxlength="200" style="height:30px;" class="form-control">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value">@(contactFormattedName)</span>
+        <div style='border:solid 2pt;padding:1.0pt'>
+            <p style='text-align:center'>
+                <span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
+            </p>
+        </div>
+        <table border=0 cellspacing=5 cellpadding=5 style='border-collapse:collapse;margin-top:10px;width:600px'>
+            <tr>
+                <td style="width:300px">
+                    <p>
+                        <b><span class="IepNormal">To:</span></b>
+                        <textarea maxlength="200" style="height:30px;" class="form-control1">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(contactFormattedName)</span>
+                        <br /><span class="IepNormal">(Parent/Legal Educational Decision Maker)</span>
+                    </p>
+                </td>
+                <td style="width:300px">
+                    <p>
+                        <b><span class="IepNormal" >Date:</span></b>
+                        <textarea maxlength="10" style="height:30px;" class="form-control1">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline;" class="input-value isDate IepNormal">@(beginDate)</span>
+                        <br />
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p>
+                        <b><span class="IepNormal">On behalf of:</span></b>
+                        <span class="IepNormal"><textarea class="form-control1" cols="30" style="height:30px;">@(studentFormattedName)</textarea><span style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentFormattedName)</span></span>
+                        <br /><span class="IepNormal">(Student’s name)</span>
+                    </p>
+                </td>
+                <td>
+                    <p>
+                        <b>
+                            <span class="IepNormal">Address:</span>
+                        </b>
+                        <span class="IepNormal">
+                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentAddress)</textarea><span id="Address" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentAddress)</span>
+                        </span>
+                    </p>
+                    <p>
+                        <span class="IepNormal">
+                            <textarea cols="30" style="height:30px;font-size:11.0pt">@(studentCityStZip)</textarea><span id="CityStateZip" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(studentCityStZip)</span>
+                        </span>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p style='margin-top:.15in'>
+            <span class="IepNormal" style='font-weight:bold'>Proposed meeting date, time and place: </span> <textarea cols="75" rows="5" maxlength="2000">@(formModel.ProposedMeetingInfo)</textarea><span id="ProposedMeetingInfo" style="display:none;font-weight:normal" class="input-value IepNormal">@(formModel.ProposedMeetingInfo)</span>
+        </p>
+        <p style="margin-top:.15in; font-size:11pt;">
+            <b>
+                <u>
+                    MEETING TO REVIEW THE EVALUATION AND DETERMINE ELIGIBILITY
+                </u>
+            </b>
+        </p>
 
-					</p>
-					<p style='tab-stops:.3in lined 261.0pt'>
-						<span style='font-size:10.0pt'>
-							<span style='mso-tab-count:1'> </span>(Parent/Legal Educational Decision Maker)<o:p></o:p>
-						</span>
-					</p>
-				</td>
-				<td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
+        <table border=0 cellspacing=0 cellpadding=0 width=672 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;'>
+            <tr style='height:99.9pt'>
+                <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in; height:99.9pt'>
+                    <p>
+                        <input type="checkbox" @(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? "checked" : "") /><img id="MeetingToReviewEvaluation" class='imgCheck' src="@(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
+                    </p>
+                </td>
+                <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in; height:99.9pt;'>
+                    <p>
+                        <span class="IepNormal">
+                            The results of the evaluation or reevaluation of your
+                            child are now available. By law, we
+                            must meet with you to review the evaluation results for your child, including
+                            any evaluations or information you wish to provide, current classroom-based
+                            assessments and observations, and teacher or other staff observations, to
+                            determine, with your input:
+                        </span>
+                    </p>
+                    <p>
+                        <b>
+                            <span>
+                                1) your child’s academic achievement, functional performance, and educational needs;
+                            </span>
+                        </b>
+                    </p>
+                    <p>
+                        <b>
+                            <span>
+                                2) whether your child has or continues to have an exceptionality; and
+                            </span>
+                        </b>
+                    </p>
+                    <p>
+                        <b>
+                            <span>
+                                3) whether your child needs special education and related services.
+                            </span>
+                        </b>
+                    </p>
+                </td>
+            </tr>
+        </table>
+        <p style="margin-top:8px;font-size:11pt;">
+            <b>
+                <u>
+                    MEETING TO DEVELOP THE INDIVIDUALIZED EDUCATION PROGRAM (IEP)
+                </u>
+            </b>
+        </p>
+        <p>
+            <span class="IepNormal">
+                As the parent of an exceptional child, you are entitled
+                to a 10-day prior written notice of any meeting to discuss the needs of your
+                child and develop an individualized education program (IEP).<span style='mso-spacerun:yes'></span>You may consent to hold the meeting with less
+                than 10-days written notice.
+            </span>
+        </p>
+        <table border=0 cellspacing=0 cellpadding=0 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:     0in .05in 0in .05in'>
+            <tr>
+                <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
+                    <p style='margin-left: .25in; text-indent: -.25in;'>
+                        <input type="checkbox" @(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "checked" : "") /><img id="DevelopIEP" class='imgCheck' src="@(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>
+                        <br /><br /><span style="padding-top:10px;font-size:10pt">
+                            The team will make its decisions based upon the results of the evaluation procedures which
+                            we previously told you we would administer in the Notice of Proposed
+                            Evaluation and Request for Consent, which you signed. The team will also consider the strengths of your child and any recommendations you have for enhancing the education of your child.
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr style='mso-yfti-irow:1'>
+                <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
+                    <p>
+                        <input type="checkbox" @(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? "checked" : "") /><img id="DiscussIEPChanges" class='imgCheck' src="@(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                            Discuss  possible changes in your child's individualized education program (IEP).
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr style='height:4.55pt'>
+                <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
+                    <p>
+                        <input type="checkbox" @(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? "checked" : "") /><img id="AnnualIEPReview" class='imgCheck' src="@(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                            Conduct an annual review of your child's individualized education program (IEP).
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr >
+                <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
+                    <p style='margin-left:.25in;  text-indent:-.25in;'>
+                        <input type="checkbox" @(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "checked" : "") /><img id="TransitionAssesment" class='imgCheck' src="@(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt'>
+                            If your child will be at least 14 years old
+                            during the anticipated duration of this IEP,
+                            the IEP team will develop postsecondary
+                            goals based on transition assessments and
+                            transition services to promote movement from
+                            school to post school activities. Postsecondary
+                            goals and transition services can be considered at a younger age if
+                            determined appropriate by the IEP Team.
+                            Your child is invited by the school to attend the meeting.
+                        </span>
+                    </p>
+                </td>
+            </tr>
+            <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:28.35pt'>
+                <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
+                    <p><input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "") /><img id="Other" class='imgCheck' src="@(formModel.Other.HasValue && formModel.Other.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>Other<o:p></o:p></span></p>
+                </td>
+            </tr>
+        </table>
+        <p>
+            <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                As required by federal and state law, in addition to you, we will have the following people at our IEP meeting (see list below). As permitted by federal and state law, the general education teacher, special education teacher or special education provider may also be designated as the school representative.  As permitted by federal and state law; the person who can interpret evaluation results can also be the general education teacher, special education teacher or provider, school representative, or other person who has knowledge or special expertise regarding your child.
+            </span>
+        </p>
+        <table style='margin-top:5px;'>
+            <tr><td><p class="IepNormal">1. A general education teacher of your child</p></td></tr>
+            <tr><td><p class="IepNormal">2. A special education teacher of your child or special education provider of your child</p></td></tr>
+            <tr><td><p class="IepNormal">3. A school representative></td></tr>
+            <tr><td><p class="IepNormal">4. A person who can interpret instructional implications of evaluation results</p></td></tr>
+            <tr>
+                <td>
+                    <p class="IepNormal">5. Other(s) who have knowledge or special expertise regarding your child (at the discretion of parent or school):</p>
+                    <p>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise1)</textarea> <span id="SpecialExpertise1" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise1)</span></span>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise2)</textarea> <span id="SpecialExpertise2" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise2)</span></span>
+                    </p>
+                    <p>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise3)</textarea> <span id="SpecialExpertise3" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise3)</span></span>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise4)</textarea> <span id="SpecialExpertise4" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise4)</span></span>
+                    </p>
+                    <p>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise5)</textarea> <span id="SpecialExpertise5" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise5)</span></span>
+                        <span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise6)</textarea> <span id="SpecialExpertise6" style="display:none;text-decoration:underline;font-size:10pt" class="input-value">@(formModel.SpecialExpertise6)</span></span>
+                    </p>
+                </td>
+            </tr>
+            <tr><td><p class="IepNormal">6. If this is an initial IEP, a representative of the Part C system (Early Intervention Program for Infants and Toddlers with Disabilities) if your child is transitioning from Part C to Part B, and you have requested participation of a Part C representative.</p></td></tr>
+            <tr><td><p class="IepNormal">7. Student <textarea style="width:100px;height:20px">@(studentFormattedName)</textarea><span style="display:none;text-decoration:underline;margin-left:2px;font-size:10pt" class="input-value IepNormal">@(studentFormattedName)</span> <span class="IepNormal">&nbsp;As required by federal and state regulations, the district invites your son/daughter to attend the IEP meeting when postsecondary goals and transition services will be considered.  Postsecondary goals and transition services can be considered at any age, but must be included in the first IEP to be in effect when your child reaches age 14.</span></p></td></tr>
+        </table>
+        <div style="margin-top:8px;">
+            <p class="IepNormal">
+                If necessary, and with your consent, staff from other agencies that may be able to provide appropriate transition services/linkages will
+                be invited to our meeting. The agencies they represent are shown below:
+            </p>
+            <p>
+                <span class="IepNormal">
+                    <textarea maxlength="200" placeholder="(Agencies)">@(formModel.AgencyStaff)</textarea> <span id="AgencyStaff" style="display:none;text-decoration:underline;" class="input-value IepNormal">@(formModel.AgencyStaff)</span>
+                </span>
+            </p>
+        </div>
+        <p style="margin-top:8px">
+            <span class="IepNormal">
+                It is very important that the parents, or you as the student, if age 18 or over, attend this meeting. Parents may invite their minor child to this
+                meeting. Students age 18 or over may invite their parents. Also, you have a right to bring one or more persons with you who are knowledgeable about the needs of the
+                student. If this meeting is to review an evaluation and determine eligibility, a copy of the evaluation report will be
+                given to you a reasonable time after the determination is made. If this meeting is to develop an IEP, you have the right to access educational records of your child before we have our meeting. If the above date, time or	place is not agreeable to you, or if you would like to schedule an appointment
+                to review the evaluation results, please contact
+            </span>
+        </p>
+        <p>
+            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(School Contact)">@(formModel.SchoolContactName)</textarea> <span id="SchoolContactName" style="display:none;text-decoration:underline;font-size:10pt" class="input-valu IepNormal">@(formModel.SchoolContactName)</span> <span  class="IepNormal"> at</span>
+            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Phone)">@(formModel.SchoolContactPhone)</textarea> <span id="SchoolContactPhone" style="display:none;text-decoration:underline;font-size:10pt" class="input-value IepNormal">@(formModel.SchoolContactPhone)</span> <span class="IepNormal" > immediately.</span>
+            <br /><span class="IepNormal">(School Contact/Phone)<span>                                                                             </span></span>
+        </p>
+   <p class=IepNormal align=center style='text-align:center;margin-top:15px'>
+		<b>
+			<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+		</b>
+	</p>
 
-					<p style='tab-stops:lined 261.0pt'>
-						<b><span style='font-size: 11.0pt'>Date:</span></b>
-							<u><textarea maxlength="10" style="height:30px;" class="form-control">@(beginDate)</textarea><span id="FormDate" style="display:none;" class="input-value isDate">@(beginDate)</span></u>
-					</p>
-					<p style='tab-stops:.3in lined 261.0pt'>
-						<span style='font-size:11.0pt'>
-							<span style='mso-tab-count:1'> </span>&nbsp;<o:p></o:p>
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='mso-yfti-irow:1;mso-yfti-lastrow:yes'>
-				<td width=345 valign=top style='width:259.0pt;padding:0in 5.4pt 0in 5.4pt'>
-					<p style='tab-stops:lined 261.0pt'>
-						<b>
-							<span style='font-size:  11.0pt'><o:p>&nbsp;</o:p></span>
-						</b>
-					</p>
-					<p style='tab-stops:lined 261.0pt'>
-						<b><span style='font-size: 11.0pt'>On behalf of:</span></b>
-						<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" onfocus="clearContents(this);" data-val="51" cols="30" style="height:30px;font-size:11.0pt">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentFormattedName.Length) > 51 ? studentFormattedName : String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-					</p>
-					<p style='tab-stops:66.6pt lined 261.0pt'>
-						<span style='font-size:10.0pt'>
-							<span style='mso-tab-count:1'>      </span>(Student’s name)<o:p></o:p>
-						</span>
-					</p>
-					<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-				</td>
-				<td width=322 valign=top style='width:241.4pt;padding:0in 5.4pt 0in 5.4pt'>
-					<h2><span style='text-decoration:none;text-line-through:none'><o:p>&nbsp;</o:p></span></h2>
-					<p>
-						<b style='mso-bidi-font-weight:normal'>
-							<span style='font-size:11.0pt'>Address:</span>
-						</b>
-						<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" onfocus="clearContents(this);" data-val="67" cols="30" style="height:30px;font-size:11.0pt">@((studentAddress.Length) > 67 || string.IsNullOrEmpty(studentAddress) ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentAddress.Length) > 67 ? studentAddress : String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-					</p>
-					<p><span style='font-size:11.0pt'></span></p>
-					<span style="text-decoration:underline;font-size:11.0pt"><textarea class="form-control" cols="30" onfocus="clearContents(this);" data-val="85" style="height:30px;font-size:11.0pt">@((studentCityStZip.Length) > 85 || string.IsNullOrEmpty(studentCityStZip) ? studentCityStZip : String.Format(studentCityStZip).PadRight(85 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 85 ? studentCityStZip : String.Format(studentCityStZip).PadRight(85 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
-				</td>
-			</tr>
-		</table>
-		<p style='margin-top:.25in'>
-			<span style='font-size:	11.0pt;font-weight:bold'>Proposed meeting date, time and place: </span> <textarea cols="75" rows="5" class="form-control" maxlength="2000">@(formModel.ProposedMeetingInfo)</textarea><span id="ProposedMeetingInfo" style="display:none;font-size:11.0pt;font-weight:normal" class="input-value">@(formModel.ProposedMeetingInfo)</span>							
-		</p>
-		<p style="margin-top:.25in">
-			<b>
-				<u>
-					MEETING TO REVIEW THE EVALUATION AND DETERMINE ELIGIBILITY
-				</u>
-			</b>
-		</p>
-
-		<table Table border=0 cellspacing=0 cellpadding=0 width=672 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:						 0in .05in 0in .05in'>
-			<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes;mso-yfti-lastrow:yes; height:99.9pt'>
-				<td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in; height:99.9pt'>
-					<p>
-						<input type="checkbox" @(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? "checked" : "") /><img id="MeetingToReviewEvaluation" class='imgCheck' src="@(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
-					</p>
-				</td>
-				<td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in; height:99.9pt;'>
-					<p>
-						<span style="font-size:10pt">
-							The results of the evaluation or reevaluation of your
-							child are now available. By law, we
-							must meet with you to review the evaluation results for your child, including
-							any evaluations or information you wish to provide, current classroom-based
-							assessments and observations, and teacher or other staff observations, to
-							determine, with your input:
-						</span>
-					</p>
-					<p>
-						<b>
-							<span>
-								1) your child’s academic achievement, functional performance, and educational needs;
-							</span>
-						</b>
-					</p>
-					<p>
-						<b>
-							<span>
-								<span style='mso-tab-count:1'></span>2) whether your child has or continues to have an exceptionality; and
-							</span>
-						</b>
-					</p>
-					<p>
-						<b>
-							<span>
-								<span style='mso-tab-count:1'></span>3) whether your child needs special education and related services.
-							</span>
-						</b>
-					</p>
-				</td>
-			</tr>
-		</table>
-		<p style="margin-top:8px">
-			<b style='mso-bidi-font-weight:normal'>
-				<u>
-					MEETING TO DEVELOP THE INDIVIDUALIZED EDUCATION PROGRAM (IEP)
-				</u>
-			</b>
-		</p>
-		<p>
-			<span style="font-size:10pt">
-				As the parent of an exceptional child, you are entitled
-				to a 10-day prior written notice of any meeting to discuss the needs of your
-				child and develop an individualized education program (IEP).<span style='mso-spacerun:yes'></span>You may consent to hold the meeting with less
-				than 10-days written notice.
-			</span>
-		</p>
-		<table Table border=0 cellspacing=0 cellpadding=0 style='width:7.0in;margin-left:-5.4pt;border-collapse:collapse;mso-padding-alt:     0in .05in 0in .05in'>
-			<tr style='mso-yfti-irow:0;mso-yfti-firstrow:yes'>
-				<td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
-					<p style='        margin-left: .25in;
-        text-indent: -.25in;
-'>
-						<input type="checkbox" @(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "checked" : "") /><img id="DevelopIEP" class='imgCheck' src="@(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>
-						<br /><br /><span style="padding-top:10px;font-size:10pt">
-							The team will make its decisions based upon the results of the evaluation procedures which
-							we previously told you we would administer in the Notice of Proposed
-							Evaluation and Request for Consent, which you signed. The team will also consider the strengths of your child and any recommendations you have for enhancing the education of your child.
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='mso-yfti-irow:1'>
-				<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
-					<p>
-						<input type="checkbox" @(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? "checked" : "") /><img id="DiscussIEPChanges" class='imgCheck' src="@(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-							Discuss  possible changes in your child's individualized education program (IEP).
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='mso-yfti-irow:2;height:4.55pt'>
-				<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
-					<p>
-						<input type="checkbox" @(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? "checked" : "") /><img id="AnnualIEPReview" class='imgCheck' src="@(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-							Conduct an annual review of your child's individualized education program (IEP).
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='mso-yfti-irow:3'>
-				<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
-					<p style='margin-left:.25in;  text-indent:-.25in;'>
-						<input type="checkbox" @(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "checked" : "") /><img id="TransitionAssesment" class='imgCheck' src="@(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt'>
-							If your child will be at least 14 years old
-							during the anticipated duration of this IEP,
-							the IEP team will develop postsecondary
-							goals based on transition assessments and
-							transition services to promote movement from
-							school to post school activities. Postsecondary
-							goals and transition services can be considered at a younger age if
-							determined appropriate by the IEP Team.
-							Your child is invited by the school to attend the meeting.
-						</span>
-					</p>
-				</td>
-			</tr>
-			<tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:28.35pt'>
-				<td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
-					<p><input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "") /><img id="Other" class='imgCheck' src="@(formModel.Other.HasValue && formModel.Other.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>Other<o:p></o:p></span></p>
-				</td>
-			</tr>
-		</table>
-		<p>
-			<span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
-				As required by federal and state law, in addition to you, we will have the following people at our IEP meeting (see list below). As permitted by federal and state law, the general education teacher, special education teacher or special education provider may also be designated as the school representative.  As permitted by federal and state law; the person who can interpret evaluation results can also be the general education teacher, special education teacher or provider, school representative, or other person who has knowledge or special expertise regarding your child.
-			</span>
-		</p>
-		<table style='font-size:10.0pt;margin-top:5px;'>
-			<tr><td><p>1. A general education teacher of your child</p></td></tr>
-			<tr><td><p>2. A special education teacher of your child or special education provider of your child</p></td></tr>
-			<tr><td><p>3. A school representative</p></td></tr>
-			<tr><td><p>4. A person who can interpret instructional implications of evaluation results</p></td></tr>
+	<p class="IepNormal" style="text-align:left;">
+		You may contact any of the following resources to help you
+		understand the federal and state laws for educating children with
+		exceptionalities and parental rights (procedural safeguards) granted by those
+		laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+		Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+		Networking  785-233-8732.
+	</p>
+		
+	<table border="1" cellpadding="10" style="align-content:center; margin-top:15px">
 			<tr>
 				<td>
-					<p>5. Other(s) who have knowledge or special expertise regarding your child (at the discretion of parent or school):</p>
-					<p>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise1)</textarea> <span id="SpecialExpertise1" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise1)</span></span>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise2)</textarea> <span id="SpecialExpertise2" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise2)</span></span>
-					</p>
-					<p>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise3)</textarea> <span id="SpecialExpertise3" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise3)</span></span>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise4)</textarea> <span id="SpecialExpertise4" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise4)</span></span>
-					</p>
-					<p>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise5)</textarea> <span id="SpecialExpertise5" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise5)</span></span>
-						<span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(position)">@(formModel.SpecialExpertise6)</textarea> <span id="SpecialExpertise6" style="display:none;text-decoration:underline" class="input-value">@(formModel.SpecialExpertise6)</span></span>
-					</p>
-				</td>
-			</tr>
-			<tr><td><p>6. If this is an initial IEP, a representative of the Part C system (Early Intervention Program for Infants and Toddlers with Disabilities) if your child is transitioning from Part C to Part B, and you have requested participation of a Part C representative.</p></td></tr>
-			<tr><td><p>7. Student <textarea style="width:100px;height:20px">@(studentFormattedName)</textarea><span style="display:none;text-decoration:underline;margin-left:2px" class="input-value">@(studentFormattedName)</span> <span>&nbsp;As required by federal and state regulations, the district invites your son/daughter to attend the IEP meeting when postsecondary goals and transition services will be considered.  Postsecondary goals and transition services can be considered at any age, but must be included in the first IEP to be in effect when your child reaches age 14.</span></p></td></tr>
-		</table>
-		<div style="margin-top:8px;">
-			<p style='font-size:10.0pt;'>
-				If necessary, and with your consent, staff from other agencies that may be able to provide
-				appropriate transition services/linkages will
-				be invited to our meeting.The agencies
-				they represent are shown below:
-			</p>
-			<p style=''>
-				<span style='font-size:10.0pt'>
-					<textarea class="form-control" maxlength="200" placeholder="(Agencies)">@(formModel.AgencyStaff)</textarea> <span id="AgencyStaff" style="display:none;text-decoration:underline" class="input-value">@(formModel.AgencyStaff)</span>
-				</span>
-			</p>
-		</div>
-		<p style="margin-top:8px">
-			<span style='font-size:10.0pt;'>
-				It is very important that the parents, or you as the student, if age 18 or over, attend this meeting. Parents may invite their minor child to this
-				meeting. Students age 18 or over may invite their parents. Also, you have a right to bring one or more persons with you who are knowledgeable about the needs of the
-				student. If this meeting is to review an evaluation and determine eligibility, a copy of the evaluation report will be
-				given to you a reasonable time after the determination is made. If this meeting is to develop an IEP, you have the right to access educational records of your child before we have our meeting. If the above date, time or	place is not agreeable to you, or if you would like to schedule an appointment
-				to review the evaluation results, please contact
-			</span>
-		</p>
-		<p style="font-size:10.0pt">
-			<u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(School Contact)">@(formModel.SchoolContactName)</textarea> <span id="SchoolContactName" style="display:none;text-decoration:underline" class="input-value">@(formModel.SchoolContactName)</span></u> <span> at</span>
-			<u><textarea style="width:200px;height:35px" maxlength="200" placeholder="(Phone)">@(formModel.SchoolContactPhone)</textarea> <span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value">@(formModel.SchoolContactPhone)</span></u> <span> immediately.</span>
-
-		</p>
-		<p style='tab-stops:261.0pt'>
-			<span style='font-size:10.0pt;'>(School Contact/Phone)<span style='mso-tab-count:1'>                                                                             </span></span>
-		</p>
-		<table border="1" cellpadding="10" style="align-content:center; margin-top:25px">
-			<tr>
-				<td>
-					<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-left:0in;margin-right:8.0pt;text-align:center'>
-						<span style="font-size:11pt;font-weight:600">
-							PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS
-						</span>
-						<p class=MsoNormal style='text-align:left;margin-left:9.0pt;line-height:12.0pt;border:none;padding:0in;padding-top:10px'>
-							<span style='color:black'>
+					<div style="padding:5px;">
+						<p class=IepNormal style='text-align:center;'>
+							<b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS</b>
+						</p>
+						<p class=IepNormal>							
 								Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
 								require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. The school is required to give you a copy of the rights of a parent at least one time each school year. To receive an additional copy of your rights and the procedural safeguards available to you, and if you have any questions
-								regarding your rights, you may contact the special education director of the school or special education cooperative.
-							</span>
+								regarding your rights, you may contact the special education director of the school or special education cooperative.							
 						</p>
 					</div>
 				</td>
 			</tr>
-		</table>
-		<p align=center style='margin-top:8px;text-align:center'>
-			<b><span style='font-size:11.0pt'>ADDITIONAL INFORMATION</span></b>
-		</p>
-		<p>
-			<span style='font-size:10.0pt'>
-				You may contact any of the
-				following resources to help you understand the federal and state laws for
-				educating children with exceptionalities and parental rights (procedural
-				safeguards) granted by those laws: Kansas State Dept. of Education
-				800-203-9462; Disability Rights Center of Kansas (DRC) (877) 776-1541; Families
-				Together, Inc. 800-264-6343; and Keys for Networking 785-233-8732.
-			</span>
-		</p>		
-		<table border="1" cellpadding="10" style="margin-top:15px">
-			<tr>
-				<td>
-					<p align=center style='text-align:center;border:none;
-						mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<b style='mso-bidi-font-weight:normal'><span style='font-size:11.0pt'>DELIVERY</span></b>
-					</p>
-					<p>
-						I,<textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedByWho)</span>,
-					</p>
+	</table>
+	<table border="1" cellpadding="10" style="margin-top:15px">
+	<tr>
+		<td>
+			<p align=center style='text-align:center;border:none;padding:0in;'>
+				<b><span class="IepNormal">DELIVERY</span></b>
+			</p>
+			<p class="IepNormal">I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedByWho)</span>,					
+			</p>
 
-					<p style='text-indent:40.5pt;tab-stops:130.5pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  hand delivered,
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
-							</span>
-						</span>
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span><span style='mso-spacerun:yes'></span>
-							</span>
-						</span>
-						<span style='mso-bookmark:OLE_LINK2'>
-							<span style='mso-bookmark:OLE_LINK1'>
-								<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value">@(formModel.DelieveredByOtherDesc)</span>
-							</span>
-						</span>
-					</p>
-					<p style='margin-top:8px;'>
-						this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value isDate">@(deliverDate)</span>.
-					</p>
-				</td>
-			</tr>
-		</table>
+			<p style='text-indent:20.5pt;border:none;padding:0in;'>
+				<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">hand delivered,</span>
+				
+				<span>
+					<span>
+						<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">mailed,</span>
+					</span>
+				</span>
+				<span>
+					<span>
+						<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DelieveredByOtherDesc)</span>
+					</span>
+				</span>
+			</p>
+			<p class="IepNormal" style='margin-top:8px;'>
+				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedTo)</span>&nbsp;on <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(deliverDate)</span>.				
+			</p>
+		</td>
+		</tr>
+	</table>    
 
-		<table border="1" cellpadding="10" style="margin-bottom:20px;margin-top:8px">
-			<tr>
-				<td>
-					<p align=center style='text-align:center;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;'>
-						<b>
-							<span style='font-size:11.0pt'>ACKNOWLEDGMENT</span>
-						</b>
-					</p>
-					<p style='border:none;mso-border-alt:solid windowtext .5pt;	padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? "checked" : "") /><img id="PlanToAttend" class='imgCheck' src="@(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I plan to attend the meeting as scheduled
-					</p>
-					<p style='margin-left:27.0pt;text-indent:-27.0pt;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? "checked" : "") /><img id="RescheduleMeeting" class='imgCheck' src="@(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I am unable to attend the meeting as scheduled and would like to schedule the meeting at another date, time or place.
-					</p>
-					<p style='margin-left:27.0pt;text-indent:-27.0pt;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? "checked" : "") /><img id="AvaliableToAttend_flag" class='imgCheck' src="@(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I am available to attend a meeting on the following dates and times:
-					</p>
-					<p style='border:none;mso-border-alt:solid windowtext .5pt;	padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'><textarea style="width:200px;height:35px" maxlength="200">@(formModel.AvailableToAttend_desc)</textarea> <span id="AvailableToAttend_desc" style="display:none;text-decoration:underline" class="input-value">@(formModel.AvailableToAttend_desc)</span></p>
-					<p style='margin-left:.25in;text-indent:-.25in;border:none;	mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? "checked" : "") /><img id="WaiveRightToNotice" class='imgCheck' src="@(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my child.
-					</p><br /><br /><br />
-					<p style='text-indent:.4in;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<span style='font-size:	10.0pt;mso-bidi-font-size:12.0pt'>__________________________________________________ Date _________________________</span>
-					</p>
-					<p style='text-indent:.4in;tab-stops:1.25in;border:none;mso-border-alt:solid windowtext .5pt;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt'>
-						<span style='font-size:	10.0pt;'>
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Parent/Legal Education Decision Maker)
-						</span>
-						<span style='font-size:7.0pt;mso-bidi-font-size:12.0pt'><o:p></o:p></span>
-					</p>
-				</td>
-			</tr>
-		</table>
-	
-}
+        <table border="1" cellpadding="10" style="margin-bottom:20px;margin-top:8px">
+            <tr>
+                <td>
+                    <p style='text-align:center;border:none;padding:0in;mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;'>
+                        <b>
+                            <span style='font-size:11.0pt' class="IepNormal">ACKNOWLEDGMENT</span>
+                        </b>
+                    </p>
+                    <p class="IepNormal" style='border:none;padding: 0in;'>
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? "checked" : "") /><img id="PlanToAttend" class='imgCheck' src="@(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I plan to attend the meeting as scheduled
+                    </p>
+                    <p class="IepNormal" style='margin-left: 27.0pt; text-indent: -27.0pt; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? "checked" : "") /><img id="RescheduleMeeting" class='imgCheck' src="@(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I am unable to attend the meeting as scheduled and would like to schedule the meeting at another date, time or place.
+                    </p>
+                    <p class="IepNormal" style='margin-left: 27.0pt; text-indent: -27.0pt; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? "checked" : "") /><img id="AvaliableToAttend_flag" class='imgCheck' src="@(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I am available to attend a meeting on the following dates and times:
+                    </p>
+                    <p class="IepNormal" style='border: none; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'><textarea style="width:200px;height:35px" maxlength="200">@(formModel.AvailableToAttend_desc)</textarea> <span id="AvailableToAttend_desc" style="display:none;text-decoration:underline" class="input-value">@(formModel.AvailableToAttend_desc)</span></p>
+                    <p class="IepNormal" style='margin-left: .25in; text-indent: -.25in; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? "checked" : "") /><img id="WaiveRightToNotice" class='imgCheck' src="@(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my child.
+                    </p><br /><br /><br />
+                    <p class="IepNormal" style='text-indent: .4in; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <span style='font-size:	10.0pt;'>__________________________________________________ Date _________________________</span>
+                    </p>
+                    <p class="IepNormal" style='text-indent: .4in;  border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
+                        <span style='font-size:	10.0pt;'>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Parent/Legal Education Decision Maker)
+                        </span>
+                        
+                    </p>
+                </td>
+            </tr>
+        </table>
+
+    }
 
 </div>

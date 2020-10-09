@@ -3228,16 +3228,6 @@
 			<td>@(studentFullName)</td>
 			<td><label>Grade:</label></td>
 			<td>@(Model.studentDetails.grade)</td>
-			<td><label>Teacher:</label></td>
-			<td>@(Model.studentDetails.teacherName)</td>
-			<td></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td><label>Attendance School:</label></td>
-			<td>@(Model.studentDetails.building != null ? Model.studentDetails.building.BuildingName : "")</td>
-			<td><label>Birthdate:</label></td>
-			<td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>			
 			<td><label>Annual Meeting:</label></td>
 			<td>@Model.studentDetails.annualInititationDate</td>		
 			<td></td>
@@ -3246,8 +3236,8 @@
 		<tr>
 			<td><label>Neighborhood School:</label></td>
 			<td>@(Model.studentDetails.neighborhoodBuilding != null ? Model.studentDetails.neighborhoodBuilding.BuildingName : "")</td>			
-			<td></td>
-			<td></td>
+			<td><label>Birthdate:</label></td>
+			<td>@Model.studentDetails.student.DateOfBirth.ToShortDateString()</td>			
 			<td><label>Amendment Date:</label></td>
 			<td>
 				@if (iepType == "AMENDMENT")
@@ -3255,6 +3245,16 @@
 				 <text>@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</text>
 				}
 			</td>			
+			<td></td>
+			<td></td>
+		</tr>
+		<tr>
+			<td></td>
+			<td></td>			
+			<td></td>
+			<td></td>
+			<td><label>School Year:</label></td>
+			<td>@Model.studentDetails.schoolYear</td>		
 		<td></td>
 			<td></td>
 		</tr>
@@ -3263,8 +3263,8 @@
 			<td></td>
 			<td></td>
 			<td></td>
-			<td><label>School Year:</label></td>
-			<td>@Model.studentDetails.schoolYear</td>		
+			<td></td>
+			<td></td>		
 		</tr>
 	</table>
 	<hr />

@@ -1,58 +1,62 @@
 ﻿@{
-	var formModel = ViewData["formPWN"] != null ? ViewData["formPWN"] as GreenBushIEP.Models.tblFormPriorWritten_Ident : new GreenBushIEP.Models.tblFormPriorWritten_Ident();
+    var formModel = ViewData["formPWN"] != null ? ViewData["formPWN"] as GreenBushIEP.Models.tblFormPriorWritten_Ident : new GreenBushIEP.Models.tblFormPriorWritten_Ident();
 
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-	string districtContactAddr = Model.districtContact != null ? string.Format("{0} {1} {2}, {3} {4}", Model.districtContact.Address1, Model.districtContact.Address2, Model.districtContact.City, Model.districtContact.State, Model.districtContact.Zip) : "";
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	string contactFormattedName = "";
-	string studentAddress = "";
-	string studentCityStZip = "";
-	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
-	{
-		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-		if (primary != null)
-		{
-			contactFormattedName = primary.FirstName + " " + primary.LastName;
-			studentAddress = primary.Address1 + " " + primary.Address2;
-			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
-		}
-	}
-	var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.DelieveredDate.HasValue)
-	{
-		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
-	}
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+    string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
+    string districtContactAddr = Model.districtContact != null ? string.Format("{0} {1} {2}, {3} {4}", Model.districtContact.Address1, Model.districtContact.Address2, Model.districtContact.City, Model.districtContact.State, Model.districtContact.Zip) : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+	int numContacts = 0;
+   
+    List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+    if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    {
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
+    }
 
-	if (formModel.FormPriorWritten_IdentId > 0)
-	{
-		districtContactAddr = formModel.SchoolContactAddress;
-		districtContactName = formModel.SchoolContact;
-		districtContactPhone = formModel.SchoolContactPhone;
-		contactFormattedName = formModel.ParentName;
-	}
+    var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.DelieveredDate.HasValue)
+    {
+        deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
+    }
 
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
-	
-	var meetingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.MeetingDate.HasValue)
-	{
-		meetingDate = String.Format("{0:MM/dd/yyyy}", formModel.MeetingDate.Value);
-	}
-	
+    if (formModel.FormPriorWritten_IdentId > 0)
+    {
+        districtContactAddr = formModel.SchoolContactAddress;
+        districtContactName = formModel.SchoolContact;
+        districtContactPhone = formModel.SchoolContactPhone;
+        //contactFormattedName = formModel.ParentName;
+    }
+
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
+
+    var meetingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.MeetingDate.HasValue)
+    {
+        meetingDate = String.Format("{0:MM/dd/yyyy}", formModel.MeetingDate.Value);
+    }
 }
 
 <div class="module-page savdDraftAllowed">
-	<div class=WordSection1>
-		<p class=MsoNormal align=center style='text-align:center;border:solid windowtext 0pt;margin-bottom:8px'>
+	 @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+     {
+         numContacts++;
+
+         string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+         string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+         string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+
+         if (numContacts > 1)
+         {
+            <text><div class="section-break"></div></text>
+         }
+		<p class=MsoNormal  style='text-align:center;border:solid windowtext 0pt;margin-bottom:8px'>
 			<span style='font-size:12.0pt;'>
 				<b>
 					PRIOR WRITTEN NOTICE for<br />
@@ -61,49 +65,41 @@
 				</b>
 			</span>
 		</p>
-		<table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=672
-			   style='width:7.0in;margin-left:-.05in;border-collapse:collapse'>
-			<tr>
-				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-					<p class=MsoNormal>
-						<span class=MsoNormal style='font-weight:bold'>
-							<span class=MsoNormal>To: </span><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
-						</span>						
-						<br/><span class=MsoNormal>						
-							<span>       </span>(Parent/Legal Educational Decision Maker)						
-					</span>
-					</p>
-					
-				</td>
-				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-					<p class=MsoNormal>
-						<span class=MsoNormal><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span></span>						
-					</p>					
-				</td>
-			</tr>
-			<tr>
-				<td width=336 valign=top style='width:3.5in;padding:.2in 5.4pt 0in 5.4pt'>					
-					<br/>
-					<p class=MsoNormal>
-						<b>
-							<span class=MsoNormal>On behalf of:</span>
-						</b><span class=MsoNormal><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span>
-						<br/><span class=MsoNormal>						
-							<span>                                   </span>(Student’s name)						
-					</span>
-					</p>									
-				</td>
-				<td width=336 valign=top style='width:3.5in;padding:.2in 5.4pt 0in 5.4pt'>					
-					<br/>
-					<p class=MsoNormal>
-						<b>
-							<span style='font-size:11.0pt'>Address:</span>
-						</b><span style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span>
-					</p>
-					<p class=MsoNormal><span style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(80 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u><o:p></o:p></span></p>
-				</td>
-			</tr>
-		</table>
+		<table class=MsoNormalTable border=0 cellspacing=5 cellpadding=5 width=672 style='width:7.0in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
+            <tr>
+                <td width=336 valign=top style='width:3.5in;'>
+                    <p class=MsoNormal>
+                        <span style='font-size:  11.0pt'>
+                            <b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
+                        </span>
+                        <br /><span class="MsoNormal">(Parent/Legal Educational Decision Maker)</span>
+                    </p>
+                </td>
+                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal>
+                        <span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span></span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width=336 valign=top style='width:3.5in;padding-top:15px;'>
+                    <p class=MsoNormal>
+                        <b>
+                            <span style='font-size:  11.0pt'>On behalf of: </span>
+                        </b><span style='font-size:11.0pt;'><u>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+                        <br /><span class="MsoNormal">(Student’s name)</span>
+                    </p>
+                </td>
+                <td width=336 valign=top style='width:3.5in;padding-top:15px;'>
+                    <p class=MsoNormal>
+                        <b>
+                            <span style='font-size:11.0pt'>Address:</span>
+                        </b><span class=MsoNormal style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+                    </p>
+                    <p class=MsoNormal><span class="MsoNormal" style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
+                </td>
+            </tr>
+        </table>
 		<p class=MsoNormal style='margin-right:8.0pt;margin-top:8px;'>			
 				On <textarea maxlength="10" style="width:100px;height:30px">@(meetingDate)</textarea><span id="MeetingDate" style="display:none" class="input-value isDate MsoNormal">@(meetingDate)</span>,
 					we met to review the evaluation/assessment data on your child, including any
@@ -172,7 +168,7 @@
 			<b>
 				<span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? "checked" : "")/><img id="ChildMeetsCriteria" class='imgCheck' src="@(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span>
 			</b>Your child meets the criteria as a child with an exceptionality</p>
-		<p class=MsoNormal align=center style='text-align:center'><b >and</b></p>
+		<p class=MsoNormal  style='text-align:center'><b >and</b></p>
 		<p class=MsoNormal style='margin-left:.75in'>
 			<b>
 				<span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? "checked" : "")/><img id="SPEDNecessary" class='imgCheck' src="@(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span>
@@ -187,7 +183,7 @@
 			<b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? "checked" : "")/><img id="ChildDoesNotMeetCriteria" class='imgCheck' src="@(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span>
 			</b><b><span style='font-size:11.0pt;color:black'></span></b>Your child does not meet the criteria as a child with an exceptionality.</p>
 
-		<p class=MsoNormal align=center style='text-align:center'>
+		<p class=MsoNormal  style='text-align:center'>
 			<b>or</b>
 		</p>
 
@@ -340,7 +336,7 @@
 		<div style='padding-left:45px;text-indent:.15in;margin-top:10px'>
 			<textarea class="form-control" rows="15" maxlength="5000">@(formModel.OtherFactors)</textarea> <span id="OtherFactors" style="display:none;" class="input-value MsoNormal">@(formModel.OtherFactors)</span>
 		</div>
-	<p class=MsoNormal align=center style='text-align:center;margin-top:15px'>
+	<p class=MsoNormal  style='text-align:center;margin-top:15px'>
 		<b>
 			<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
 		</b>
@@ -355,7 +351,7 @@
 		Networking  785-233-8732.
 	</p>
 		
-	<table border="1" cellpadding="10" style="align-content:center; margin-top:25px">
+	<table border="1" cellpadding="10" style="align-content:center; margin-top:15px">
 			<tr>
 				<td>
 					<div style="padding:5px;">
@@ -444,7 +440,7 @@
 			<tr>
 				<td>
 					<div style='padding:1.0pt 4.0pt 1.0pt 4.0pt;margin-right:-1.0pt;margin-bottom:10px'>						
-						<p class=MsoNormal align=center style='text-align:center;margin-top:15px'>
+						<p class=MsoNormal  style='text-align:center;margin-top:15px'>
 							<b>
 								<i><span class=MsoNormal>CONSENT</span></i>
 							</b>
@@ -507,6 +503,5 @@
 				</td>
 			</tr>
 		</table>
-
-	</div>
+	}
 </div>

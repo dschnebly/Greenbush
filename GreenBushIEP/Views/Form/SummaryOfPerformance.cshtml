@@ -108,44 +108,44 @@
 	<p class="MsoNormal" style='margin-bottom:8px'>
 		Name:
 		<span style="text-decoration:underline;">
-			<textarea class="form-control1" cols="30" style="height:30px;" maxlength="20">@(studentFormattedName)</textarea><span id="student_Name" style='display:none;text-align:left' class="input-value">@(studentFormattedName)</span>									
+			<textarea class="form-control1" cols="30" style="height:30px;" maxlength="20">@(studentFormattedName)</textarea><span id="student_Name" style='display:none;text-align:left' class="input-value MsoNormal">@(studentFormattedName)</span>									
 		</span>
 		&nbsp;Date of Birth: 
 		<span style="text-decoration:underline;">
-			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(dobStr)</textarea><span id="DateOfBirth" style='display:none;text-align:left' class="input-value isDate">@(dobStr)</span>
+			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(dobStr)</textarea><span id="DateOfBirth" style='display:none;text-align:left' class="input-value isDate MsoNormal">@(dobStr)</span>
 		</span> 
 	</p>
 
 	<p class="MsoNormal"  style='margin-bottom:8px'>
-		Address: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="70" style="height:30px;">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
+		Address: <span style="text-decoration:underline;"><textarea onfocus="clearContents(this);" cols="70" style="height:30px;">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</textarea><span style="display:none;text-decoration:underline" class="input-value MsoNormal">@((studentCityStZip.Length) > 103 ? studentCityStZip : String.Format(studentCityStZip).PadRight(103 - String.Format(studentCityStZip).Length, ' ').Replace(" ", "\u00A0"))</span></span>
 	</p>
 
 	<p class=MsoNormal  style='margin-bottom:8px'>
 		Telephone Number:
 		<span style="text-decoration:underline;">
-			<textarea class="form-control1" cols="20" style="height:30px;" maxlength="20">@(parentPhone)</textarea><span id="student_phone" style='display:none;text-align:left' class="input-value">@(parentPhone)</span>									
+			<textarea class="form-control1" cols="20" style="height:30px;" maxlength="20">@(parentPhone)</textarea><span id="student_phone" style='display:none;text-align:left' class="input-value MsoNormal">@(parentPhone)</span>									
 		</span>
 		&nbsp;Year of Graduation/Exit: 
 		<span style="text-decoration:underline;">
-			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(graduation)</textarea><span id="GraduationExitYear" style='display:none;text-align:left' class="input-value">@(graduation)</span>									
+			<textarea class="form-control1" cols="10" style="height:30px;" maxlength="20">@(graduation)</textarea><span id="GraduationExitYear" style='display:none;text-align:left' class="input-value MsoNormal">@(graduation)</span>									
 		</span>
 	</p>
 
 	<p class=MsoNormal  style='margin-bottom:8px'>
 		Current School: <span style="text-decoration:underline;">
 		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="500">@(studentSchool)</textarea>
-		<span id="CurrentSchool" style='display:none;text-align:left' class="input-value">@(studentSchool)</span>											
+		<span id="CurrentSchool" style='display:none;text-align:left' class="input-value MsoNormal">@(studentSchool)</span>											
 		</span>
 		&nbsp;City:<span style="text-decoration:underline;">
 		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="100">@(studentCity)</textarea>
-		<span id="CurrentCity" style='display:none;text-align:left' class="input-value">@(studentCity)</span>											
+		<span id="CurrentCity" style='display:none;text-align:left' class="input-value MsoNormal">@(studentCity)</span>											
 		</span>
 	</p>
 
 	<p class=MsoNormal  style='margin-bottom:8px'>
 		Primary Language or mode of communication:<span style="text-decoration:underline;">
 		<textarea class="form-control1" cols="25" style="height:30px;" maxlength="500">@(studentLanguage)</textarea>
-		<span id="PrimaryLanguage" style='display:none;text-align:left' class="input-value">@(studentLanguage)</span>													
+		<span id="PrimaryLanguage" style='display:none;text-align:left' class="input-value MsoNormal">@(studentLanguage)</span>													
 		</span>
 	</p>
 	<p class=MsoNormal style='margin-bottom:8px'>
@@ -154,25 +154,25 @@
 	<p class=MsoNormal  style='margin-bottom:8px'>
 		Name:<span style="text-decoration:underline;">
 		<textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(districtContactName)</textarea>
-		<span id="ContactName" style='display:none;text-align:left' class="input-value">@(districtContactName)</span>															
+		<span id="ContactName" style='display:none;text-align:left' class="input-value MsoNormal">@(districtContactName)</span>															
 		</span>
 		&nbsp;Title: <span style="text-decoration:underline;">
 		<textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(formModel.ContactTitle)</textarea>
-		<span id="ContactTitle" style='display:none;text-align:left' class="input-value">@(formModel.ContactTitle)</span>																
+		<span id="ContactTitle" style='display:none;text-align:left' class="input-value MsoNormal">@(formModel.ContactTitle)</span>																
 		</span>
 	</p>
 
 	<p class=MsoNormal  style='margin-bottom:8px'>
 		School: <span style="text-decoration:underline;"><textarea class="form-control1" cols="40" style="height:30px;" maxlength="200">@(districtName)</textarea>
-		<span id="ContactSchool" style='display:none;text-align:left' class="input-value">@(districtName)</span></span>
+		<span id="ContactSchool" style='display:none;text-align:left' class="input-value MsoNormal">@(districtName)</span></span>
 		&nbsp;E-mail: <span style="text-decoration:underline;"><textarea class="form-control1" cols="20" style="height:30px;" maxlength="200">@(formModel.ContactEmail)</textarea>
-		<span id="ContactEmail" style='display:none;text-align:left' class="input-value">@(formModel.ContactEmail)</span></span> 
+		<span id="ContactEmail" style='display:none;text-align:left' class="input-value MsoNormal">@(formModel.ContactEmail)</span></span> 
 		
 	</p>
 
 	<p class=MsoNormal>		
 		Telephone Number: <span style="text-decoration:underline;"><textarea class="form-control1" cols="20" style="height:30px;" maxlength="20">@(districtContactPhone)</textarea>
-		<span id="ContactPhone" style='display:none;text-align:left' class="input-value">@(districtContactPhone)</span></span>
+		<span id="ContactPhone" style='display:none;text-align:left' class="input-value MsoNormal">@(districtContactPhone)</span></span>
 	</p>
 
 	<p class=MsoNormal style="margin-top:15px;margin-bottom:15px"><b>My Goals for one year after high school:</b> </p>
@@ -184,7 +184,7 @@
 			<td width=546 valign=top style='width:409.25pt;padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
 					Goal:
-					<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Learning)</textarea><span id="Goal_Learning" style='display:none' class="input-value">@(formModel.Goal_Learning)</span>					
+					<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Learning)</textarea><span id="Goal_Learning" style='display:none' class="input-value MsoNormal">@(formModel.Goal_Learning)</span>					
 				</p>
 			</td>
 		</tr>
@@ -194,7 +194,7 @@
 			</td>
 			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal'>
-					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_LearningRecommendation)</textarea><span id="Goal_LearningRecommendation" style='display:none' class="input-value">@(formModel.Goal_LearningRecommendation)</span></span>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_LearningRecommendation)</textarea><span id="Goal_LearningRecommendation" style='display:none' class="input-value MsoNormal">@(formModel.Goal_LearningRecommendation)</span></span>
 				</p>
 			</td>
 		</tr>
@@ -205,7 +205,7 @@
 			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
 					Goal:
-					<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Working)</textarea><span id="Goal_Working" style='display:none' class="input-value">@(formModel.Goal_Working)</span>
+					<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Working)</textarea><span id="Goal_Working" style='display:none' class="input-value MsoNormal">@(formModel.Goal_Working)</span>
 				</p>				
 			</td>
 		</tr>
@@ -215,7 +215,7 @@
 			</td>
 			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
-					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_WorkingRecommendation)</textarea><span id="Goal_WorkingRecommendation" style='display:none' class="input-value">@(formModel.Goal_WorkingRecommendation)</span></span>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_WorkingRecommendation)</textarea><span id="Goal_WorkingRecommendation" style='display:none' class="input-value MsoNormal">@(formModel.Goal_WorkingRecommendation)</span></span>
 				</p>
 			</td>
 		</tr>
@@ -225,7 +225,7 @@
 			</td>
 			<td width=546 valign=top style='width:409.25pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Living)</textarea><span id="Goal_Living" style='display:none' class="input-value">@(formModel.Goal_Living)</span>
+					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_Living)</textarea><span id="Goal_Living" style='display:none' class="input-value MsoNormal">@(formModel.Goal_Living)</span>
 					
 				</p>				
 			</td>
@@ -236,7 +236,7 @@
 			</td>
 			<td width=546 valign=top style='width:409.25pt;  padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
-					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_LivingRecommendation)</textarea><span id="Goal_LivingRecommendation" style='display:none' class="input-value">@(formModel.Goal_LivingRecommendation)</span></span>
+					Recommendations to assist me in meeting my goal: <span style="text-decoration:underline;"><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Goal_LivingRecommendation)</textarea><span id="Goal_LivingRecommendation" style='display:none' class="input-value MsoNormal">@(formModel.Goal_LivingRecommendation)</span></span>
 				</p>
 			</td>
 		</tr>
@@ -282,11 +282,11 @@
 			</td>
 			<td width=228 valign=top style='width:171.0pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_ReadingPerformance)</textarea><span id="AC_ReadingPerformance" style='display:none' class="input-value">@(formModel.AC_ReadingPerformance)</span>					
+					Goal: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_ReadingPerformance)</textarea><span id="AC_ReadingPerformance" style='display:none' class="input-value MsoNormal">@(formModel.AC_ReadingPerformance)</span>					
 				</p>				
 			</td>
 			<td width=234 valign=top style='width:175.25pt;  padding:0in 5.4pt 0in 5.4pt'>
-				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_ReadingAccommodations)</textarea><span id="AC_ReadingAccommodations" style='display:none' class="input-value">@(formModel.AC_ReadingAccommodations)</span>
+				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_ReadingAccommodations)</textarea><span id="AC_ReadingAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.AC_ReadingAccommodations)</span>
 			</td>
 		</tr>
 		<tr>
@@ -299,12 +299,12 @@
 			</td>
 			<td width=228 valign=top style='width:171.0pt; padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_MathPerformance)</textarea><span id="AC_MathPerformance" style='display:none' class="input-value">@(formModel.AC_MathPerformance)</span>
+					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_MathPerformance)</textarea><span id="AC_MathPerformance" style='display:none' class="input-value MsoNormal">@(formModel.AC_MathPerformance)</span>
 					
 				</p>
 			</td>
 			<td width=234 valign=top style='width:175.25pt; padding:0in 5.4pt 0in 5.4pt'>
-				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_MathAccommodations)</textarea><span id="AC_MathAccommodations" style='display:none' class="input-value">@(formModel.AC_MathAccommodations)</span>
+				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_MathAccommodations)</textarea><span id="AC_MathAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.AC_MathAccommodations)</span>
 			</td>
 		</tr>
 		<tr>
@@ -315,11 +315,11 @@
 			</td>
 			<td width=228 valign=top style='width:171.0pt;padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LanguagePerformance)</textarea><span id="AC_LanguagePerformance" style='display:none' class="input-value">@(formModel.AC_LanguagePerformance)</span>									
+					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LanguagePerformance)</textarea><span id="AC_LanguagePerformance" style='display:none' class="input-value MsoNormal">@(formModel.AC_LanguagePerformance)</span>									
 				</p>
 			</td>
 			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'><p class=MsoNormal style='margin-bottom:.25in;line-height:normal'>
-				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LanguageAccommodations)</textarea><span id="AC_LanguageAccommodations" style='display:none' class="input-value">@(formModel.AC_LanguageAccommodations)</span>
+				<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LanguageAccommodations)</textarea><span id="AC_LanguageAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.AC_LanguageAccommodations)</span>
 				</p>
 			</td>
 		</tr>
@@ -336,11 +336,11 @@
 			</td>
 			<td width=228 valign=top style='width:171.0pt;  padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LearningPerformance)</textarea><span id="AC_LearningPerformance" style='display:none' class="input-value">@(formModel.AC_LearningPerformance)</span>									
+					Goal:<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LearningPerformance)</textarea><span id="AC_LearningPerformance" style='display:none' class="input-value MsoNormal">@(formModel.AC_LearningPerformance)</span>									
 				</p>
 			</td>
 			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
-				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LearningAccommodations)</textarea><span id="AC_LearningAccommodations" style='display:none' class="input-value">@(formModel.AC_LearningAccommodations)</span>									</p>
+				<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_LearningAccommodations)</textarea><span id="AC_LearningAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.AC_LearningAccommodations)</span>									</p>
 			</td>
 		</tr>
 		<tr>
@@ -351,10 +351,10 @@
 			</td>
 			<td width=228 valign=top style='width:171.0pt;padding:0in 5.4pt 0in 5.4pt'>
 				<p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-					Goal: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_OtherPerformance)</textarea><span id="AC_OtherPerformance" style='display:none' class="input-value">@(formModel.AC_OtherPerformance)</span>														
+					Goal: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_OtherPerformance)</textarea><span id="AC_OtherPerformance" style='display:none' class="input-value MsoNormal">@(formModel.AC_OtherPerformance)</span>														
 				</p>
 			<td width=234 valign=top style='width:175.25pt;padding:0in 5.4pt 0in 5.4pt'>
-					<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_OtherAccommodations)</textarea><span id="AC_OtherAccommodations" style='display:none' class="input-value">@(formModel.AC_OtherAccommodations)</span></p>			</td>
+					<p class=MsoNormal style='margin-bottom:.25in;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.AC_OtherAccommodations)</textarea><span id="AC_OtherAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.AC_OtherAccommodations)</span></p>			</td>
 		</tr>
 	</table>
 
@@ -387,12 +387,12 @@
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:24.0pt;line-height:normal;'>
-		<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_SocialPerformance)</textarea><span id="Functional_SocialPerformance" style='display:none' class="input-value">@(formModel.Functional_SocialPerformance)</span>					
+		<textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_SocialPerformance)</textarea><span id="Functional_SocialPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_SocialPerformance)</span>					
   </p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_SocialAccommodations)</textarea><span id="Functional_SocialAccommodations" style='display:none' class="input-value">@(formModel.Functional_SocialAccommodations)</span>					
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_SocialAccommodations)</textarea><span id="Functional_SocialAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_SocialAccommodations)</span>					
 </p>
   </td>
  </tr>
@@ -402,12 +402,12 @@
   normal'><span style='font-size:10.0pt'>Independent Living Skills (Self-care, leisure skills, personal safety, transportation, banking, budgeting)</span></p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_LivingPerformance)</textarea><span id="Functional_LivingPerformance" style='display:none' class="input-value">@(formModel.Functional_LivingPerformance)</span>					
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_LivingPerformance)</textarea><span id="Functional_LivingPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_LivingPerformance)</span>					
 </p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_LivingAccommodations)</textarea><span id="Functional_LivingAccommodations" style='display:none' class="input-value">@(formModel.Functional_LivingAccommodations)</span></p>
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_LivingAccommodations)</textarea><span id="Functional_LivingAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_LivingAccommodations)</span></p>
   </td>
  </tr>
  <tr>
@@ -417,10 +417,10 @@
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_MobiilityPerformance)</textarea><span id="Functional_MobiilityPerformance" style='display:none' class="input-value">@(formModel.Functional_MobiilityPerformance)</span></p>
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_MobiilityPerformance)</textarea><span id="Functional_MobiilityPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_MobiilityPerformance)</span></p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_MobiilityAccommodations)</textarea><span id="Functional_MobiilityAccommodations" style='display:none' class="input-value">@(formModel.Functional_MobiilityAccommodations)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_MobiilityAccommodations)</textarea><span id="Functional_MobiilityAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_MobiilityAccommodations)</span></p>
   </td>
  </tr>
  <tr>
@@ -431,12 +431,12 @@
   <td width=208 valign=top style='width:155.85pt;  
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdvocacyPerformance)</textarea><span id="Functional_AdvocacyPerformance" style='display:none' class="input-value">@(formModel.Functional_AdvocacyPerformance)</span></p>
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdvocacyPerformance)</textarea><span id="Functional_AdvocacyPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_AdvocacyPerformance)</span></p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdvocacyAccommodations)</textarea><span id="Functional_AdvocacyAccommodations" style='display:none' class="input-value">@(formModel.Functional_AdvocacyAccommodations)</span></p>
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdvocacyAccommodations)</textarea><span id="Functional_AdvocacyAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_AdvocacyAccommodations)</span></p>
   </td>
  </tr>
  <tr>
@@ -446,10 +446,10 @@
   </td>
   <td width=208 valign=top style='width:155.85pt;  
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_EmploymentPerformance)</textarea><span id="Functional_EmploymentPerformance" style='display:none' class="input-value">@(formModel.Functional_EmploymentPerformance)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_EmploymentPerformance)</textarea><span id="Functional_EmploymentPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_EmploymentPerformance)</span></p>
   </td>
   <td width=208 valign=top style='width:155.85pt; padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_EmploymentAccommodations)</textarea><span id="Functional_EmploymentAccommodations" style='display:none' class="input-value">@(formModel.Functional_EmploymentAccommodations)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_EmploymentAccommodations)</textarea><span id="Functional_EmploymentAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_EmploymentAccommodations)</span></p>
   </td>
  </tr>
  <tr>
@@ -461,18 +461,18 @@
   
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdditionsPerformance)</textarea><span id="Functional_AdditionsPerformance" style='display:none' class="input-value">@(formModel.Functional_AdditionsPerformance)</span></p>
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdditionsPerformance)</textarea><span id="Functional_AdditionsPerformance" style='display:none' class="input-value MsoNormal">@(formModel.Functional_AdditionsPerformance)</span></p>
   </td>
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdditionsAccommodations)</textarea><span id="Functional_AdditionsAccommodations" style='display:none' class="input-value">@(formModel.Functional_AdditionsAccommodations)</span></p>
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Functional_AdditionsAccommodations)</textarea><span id="Functional_AdditionsAccommodations" style='display:none' class="input-value MsoNormal">@(formModel.Functional_AdditionsAccommodations)</span></p>
   </td>
  </tr>
 </table>
 
 
-<p class=MsoNormal style="margin-top:15px;margin-bottom:15px">Date this Summary was completed: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</textarea><span id="DateCompleted" style='display:none' class="input-value">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</span></p>
+<p class=MsoNormal style="margin-top:15px;margin-bottom:15px">Date this Summary was completed: <textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</textarea><span id="DateCompleted" style='display:none' class="input-value MsoNormal">@(formModel.DateCompleted != null ? formModel.DateCompleted.Value.ToShortDateString() : "")</span></p>
 
 <p class=MsoNormal style="margin-top:15px;margin-bottom:15px"><b>Team participants providing input into the Summary of Performance </b></p>
 <table class=MsoTableGrid border=1 cellspacing=2 cellpadding=5 style='text-align:left;width:100%'>
@@ -487,12 +487,12 @@
  <tr>
   <td>
   <p><textarea class="form-control" maxlength="200">@(studentFormattedName)</textarea>
-	  <span id="Team_StudentName" style="display:none;" class="input-value">@(studentFormattedName)</span>
+	  <span id="Team_StudentName" style="display:none;" class="input-value MsoNormal">@(studentFormattedName)</span>
 	  <br/><span>(Student)</span></p>
   </td>
   <td >
   <p><textarea class="form-control" maxlength="200">@(parents)</textarea>
-	  <span id="Team_ParentName" style="display:none;" class="input-value">@(parents)</span>
+	  <span id="Team_ParentName" style="display:none;" class="input-value MsoNormal">@(parents)</span>
 	  <br/><span>(Parent(s))</span></p>  
   </td>
  </tr>
@@ -500,25 +500,25 @@
   <td>
 	<p>
 	  <textarea class="form-control" maxlength="200">@(teacherFormattedName)</textarea>
-	  <span id="Team_TeacherName1" style="display:none;" class="input-value">@(teacherFormattedName)</span>
+	  <span id="Team_TeacherName1" style="display:none;" class="input-value MsoNormal">@(teacherFormattedName)</span>
 	  <br/><span>(Teacher)</span>
 	</p>
   </td>
 <td>
 	<p>
 	  <textarea class="form-control" maxlength="200">@(formModel.Team_TeacherName2)</textarea>
-	  <span id="Team_TeacherName2" style="display:none;" class="input-value">@(formModel.Team_TeacherName2)</span>
+	  <span id="Team_TeacherName2" style="display:none;" class="input-value MsoNormal">@(formModel.Team_TeacherName2)</span>
 	  <br/><span>(Teacher)</span></p>  
   </td>
  </tr>
  <tr>
   <td>
 	 <p><textarea class="form-control" maxlength="200">@(formModel.Team_OtherProvider1)</textarea>
-	  <span id="Team_OtherProvider1" style="display:none;" class="input-value">@(formModel.Team_OtherProvider1)</span><br/><span>(Other Service Provider)</span></p>    
+	  <span id="Team_OtherProvider1" style="display:none;" class="input-value MsoNormal">@(formModel.Team_OtherProvider1)</span><br/><span>(Other Service Provider)</span></p>    
   </td>
   <td>
   <p><textarea class="form-control" maxlength="200">@(formModel.Team_OtherProvider2)</textarea>
-	  <span id="Team_OtherProvider2" style="display:none;" class="input-value">@(formModel.Team_OtherProvider2)</span><br/><span>(Other Service Provider)</span></p>    
+	  <span id="Team_OtherProvider2" style="display:none;" class="input-value MsoNormal">@(formModel.Team_OtherProvider2)</span><br/><span>(Other Service Provider)</span></p>    
   </td>
  </tr>
 </table>
@@ -554,11 +554,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Psychological/Cognitive</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_PsychologicalAssementName)</textarea><span id="Documentation_PsychologicalAssementName" style='display:none' class="input-value">@(formModel.Documentation_PsychologicalAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_PsychologicalAssementName)</textarea><span id="Documentation_PsychologicalAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_PsychologicalAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_PsychologicalDate != null ? formModel.Documentation_PsychologicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_PsychologicalDate" style='display:none' class="input-value">@(formModel.Documentation_PsychologicalDate != null ? formModel.Documentation_PsychologicalDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_PsychologicalDate != null ? formModel.Documentation_PsychologicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_PsychologicalDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_PsychologicalDate != null ? formModel.Documentation_PsychologicalDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -566,11 +566,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Neuropsychological</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_NeuropsychologicalAssementName)</textarea><span id="Documentation_NeuropsychologicalAssementName" style='display:none' class="input-value">@(formModel.Documentation_NeuropsychologicalAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_NeuropsychologicalAssementName)</textarea><span id="Documentation_NeuropsychologicalAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_NeuropsychologicalAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_NeuropsychologicalDate != null ? formModel.Documentation_NeuropsychologicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_NeuropsychologicalDate" style='display:none' class="input-value">@(formModel.Documentation_NeuropsychologicalDate != null ? formModel.Documentation_NeuropsychologicalDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_NeuropsychologicalDate != null ? formModel.Documentation_NeuropsychologicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_NeuropsychologicalDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_NeuropsychologicalDate != null ? formModel.Documentation_NeuropsychologicalDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -579,10 +579,10 @@
   </td>
   <td width=208 valign=top style='width:155.85pt; 
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MedicalAssementName)</textarea><span id="Documentation_MedicalAssementName" style='display:none' class="input-value">@(formModel.Documentation_MedicalAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MedicalAssementName)</textarea><span id="Documentation_MedicalAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_MedicalAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt; padding:0in 5.4pt 0in 5.4pt'>
-  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MedicalDate != null ? formModel.Documentation_MedicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_MedicalDate" style='display:none' class="input-value">@(formModel.Documentation_MedicalDate != null ? formModel.Documentation_MedicalDate.Value.ToShortDateString() : "")</span></p>  
+  <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height: normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MedicalDate != null ? formModel.Documentation_MedicalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_MedicalDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_MedicalDate != null ? formModel.Documentation_MedicalDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -591,12 +591,12 @@
   </td>
   <td width=208 valign=top style='width:155.85pt; 
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityAssementName)</textarea><span id="Documentation_CommunityAssementName" style='display:none' class="input-value">@(formModel.Documentation_CommunityAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityAssementName)</textarea><span id="Documentation_CommunityAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CommunityAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt; 
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunicationDate != null ? formModel.Documentation_CommunicationDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CommunicationDate" style='display:none' class="input-value">@(formModel.Documentation_CommunicationDate != null ? formModel.Documentation_CommunicationDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunicationDate != null ? formModel.Documentation_CommunicationDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CommunicationDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CommunicationDate != null ? formModel.Documentation_CommunicationDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -605,12 +605,12 @@
   Behavior</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AdaptiveBehaviorAssementName)</textarea><span id="Documentation_AdaptiveBehaviorAssementName" style='display:none' class="input-value">@(formModel.Documentation_AdaptiveBehaviorAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AdaptiveBehaviorAssementName)</textarea><span id="Documentation_AdaptiveBehaviorAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_AdaptiveBehaviorAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt; 
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AdaptiveBehaviorDate != null ? formModel.Documentation_AdaptiveBehaviorDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_AdaptiveBehaviorDate" style='display:none' class="input-value">@(formModel.Documentation_AdaptiveBehaviorDate != null ? formModel.Documentation_AdaptiveBehaviorDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AdaptiveBehaviorDate != null ? formModel.Documentation_AdaptiveBehaviorDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_AdaptiveBehaviorDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_AdaptiveBehaviorDate != null ? formModel.Documentation_AdaptiveBehaviorDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -618,11 +618,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Social/Interpersonal</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_InterpersonalAssementName)</textarea><span id="Documentation_InterpersonalAssementName" style='display:none' class="input-value">@(formModel.Documentation_InterpersonalAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_InterpersonalAssementName)</textarea><span id="Documentation_InterpersonalAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_InterpersonalAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_InterpersonalDate != null ? formModel.Documentation_InterpersonalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_InterpersonalDate" style='display:none' class="input-value">@(formModel.Documentation_InterpersonalDate != null ? formModel.Documentation_InterpersonalDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_InterpersonalDate != null ? formModel.Documentation_InterpersonalDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_InterpersonalDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_InterpersonalDate != null ? formModel.Documentation_InterpersonalDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -632,11 +632,11 @@
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SpeechAssementName)</textarea><span id="Documentation_SpeechAssementName" style='display:none' class="input-value">@(formModel.Documentation_SpeechAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SpeechAssementName)</textarea><span id="Documentation_SpeechAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_SpeechAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SpeechDate != null ? formModel.Documentation_SpeechDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_SpeechDate" style='display:none' class="input-value">@(formModel.Documentation_SpeechDate != null ? formModel.Documentation_SpeechDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SpeechDate != null ? formModel.Documentation_SpeechDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_SpeechDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_SpeechDate != null ? formModel.Documentation_SpeechDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -645,11 +645,11 @@
   System of Supports (MTSS/RTI)</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MTSSAssementName)</textarea><span id="Documentation_MTSSAssementName" style='display:none' class="input-value">@(formModel.Documentation_MTSSAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MTSSAssementName)</textarea><span id="Documentation_MTSSAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_MTSSAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MTSSDate != null ? formModel.Documentation_MTSSDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_MTSSDate" style='display:none' class="input-value">@(formModel.Documentation_MTSSDate != null ? formModel.Documentation_MTSSDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_MTSSDate != null ? formModel.Documentation_MTSSDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_MTSSDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_MTSSDate != null ? formModel.Documentation_MTSSDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -657,11 +657,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Career/Vocational/Transition</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CareerAssementName)</textarea><span id="Documentation_CareerAssementName" style='display:none' class="input-value">@(formModel.Documentation_CareerAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CareerAssementName)</textarea><span id="Documentation_CareerAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CareerAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CareerDate != null ? formModel.Documentation_CareerDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CareerDate" style='display:none' class="input-value">@(formModel.Documentation_CareerDate != null ? formModel.Documentation_CareerDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CareerDate != null ? formModel.Documentation_CareerDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CareerDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CareerDate != null ? formModel.Documentation_CareerDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -669,11 +669,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Community-based assessments</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityAssementName)</textarea><span id="Documentation_CommunityAssementName" style='display:none' class="input-value">@(formModel.Documentation_CommunityAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityAssementName)</textarea><span id="Documentation_CommunityAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CommunityAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityDate != null ? formModel.Documentation_CommunityDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CommunityDate" style='display:none' class="input-value">@(formModel.Documentation_CommunityDate != null ? formModel.Documentation_CommunityDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_CommunityDate != null ? formModel.Documentation_CommunityDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_CommunityDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_CommunityDate != null ? formModel.Documentation_CommunityDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -681,11 +681,11 @@
   <p class=MsoNormal style='margin-bottom:6.0pt;line-height:normal'>Self-determination assessments</p>
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SelfDeterminationAssementName)</textarea><span id="Documentation_SelfDeterminationAssementName" style='display:none' class="input-value">@(formModel.Documentation_SelfDeterminationAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SelfDeterminationAssementName)</textarea><span id="Documentation_SelfDeterminationAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_SelfDeterminationAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;  padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SelfDeterminationDate != null ? formModel.Documentation_SelfDeterminationDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_SelfDeterminationDate" style='display:none' class="input-value">@(formModel.Documentation_SelfDeterminationDate != null ? formModel.Documentation_SelfDeterminationDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_SelfDeterminationDate != null ? formModel.Documentation_SelfDeterminationDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_SelfDeterminationDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_SelfDeterminationDate != null ? formModel.Documentation_SelfDeterminationDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -696,13 +696,13 @@
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AssistiveTechAssementName)</textarea><span id="Documentation_AssistiveTechAssementName" style='display:none' class="input-value">@(formModel.Documentation_AssistiveTechAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AssistiveTechAssementName)</textarea><span id="Documentation_AssistiveTechAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_AssistiveTechAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AssistiveTechDate != null ? formModel.Documentation_AssistiveTechDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_AssistiveTechDate" style='display:none' class="input-value">@(formModel.Documentation_AssistiveTechDate != null ? formModel.Documentation_AssistiveTechDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_AssistiveTechDate != null ? formModel.Documentation_AssistiveTechDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_AssistiveTechDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_AssistiveTechDate != null ? formModel.Documentation_AssistiveTechDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -713,13 +713,13 @@
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_ClassroomAssementName)</textarea><span id="Documentation_ClassroomAssementName" style='display:none' class="input-value">@(formModel.Documentation_ClassroomAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_ClassroomAssementName)</textarea><span id="Documentation_ClassroomAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_ClassroomAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_ClassroomDate != null ? formModel.Documentation_ClassroomDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_ClassroomDate" style='display:none' class="input-value">@(formModel.Documentation_ClassroomDate != null ? formModel.Documentation_ClassroomDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_ClassroomDate != null ? formModel.Documentation_ClassroomDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_ClassroomDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_ClassroomDate != null ? formModel.Documentation_ClassroomDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
  <tr>
@@ -730,17 +730,17 @@
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
-  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_OtherAssementName)</textarea><span id="Documentation_OtherAssementName" style='display:none' class="input-value">@(formModel.Documentation_OtherAssementName)</span></p>  
+  <p><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_OtherAssementName)</textarea><span id="Documentation_OtherAssementName" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_OtherAssementName)</span></p>  
   </td>
   <td width=208 valign=top style='width:155.85pt;
   
   padding:0in 5.4pt 0in 5.4pt'>
   <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt;line-height:
-  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_OtherDate != null ? formModel.Documentation_OtherDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_OtherDate" style='display:none' class="input-value">@(formModel.Documentation_OtherDate != null ? formModel.Documentation_OtherDate.Value.ToShortDateString() : "")</span></p>  
+  normal'><textarea class="form-control" cols="100" rows="4" maxlength="2000">@(formModel.Documentation_OtherDate != null ? formModel.Documentation_OtherDate.Value.ToShortDateString() : "")</textarea><span id="Documentation_OtherDate" style='display:none' class="input-value MsoNormal">@(formModel.Documentation_OtherDate != null ? formModel.Documentation_OtherDate.Value.ToShortDateString() : "")</span></p>  
   </td>
  </tr>
 </table>
 <p class=MsoNormal style='margin-top:.5in;margin-bottom:.0001pt;'><b>Additional information about my strengths, interests, preferences, or needs to support a successful transition to postsecondary services (e.g.:  work experiences, on-the-job experiences, school experiences such as extra-curricular activities, community experiences, etc). </b></p>
-<p class=MsoNormal><textarea class="form-control" cols="100" rows="4" maxlength="4000">@(formModel.AdditionalInformation)</textarea><span id="AdditionalInformation" style='display:none' class="input-value">@(formModel.AdditionalInformation)</span></p> 
+<p class=MsoNormal><textarea class="form-control" cols="100" rows="4" maxlength="4000">@(formModel.AdditionalInformation)</textarea><span id="AdditionalInformation" style='display:none' class="input-value MsoNormal">@(formModel.AdditionalInformation)</span></p> 
 <br/>
 </div>

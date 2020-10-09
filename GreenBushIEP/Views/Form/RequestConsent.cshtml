@@ -1,49 +1,54 @@
 ﻿@{
-	var formModel = ViewData["formPWNEval"] != null ? ViewData["formPWNEval"] as GreenBushIEP.Models.tblFormPriorWritten_Eval : new GreenBushIEP.Models.tblFormPriorWritten_Eval();
+    var formModel = ViewData["formPWNEval"] != null ? ViewData["formPWNEval"] as GreenBushIEP.Models.tblFormPriorWritten_Eval : new GreenBushIEP.Models.tblFormPriorWritten_Eval();
 
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
-	string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
-	string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	string contactFormattedName = "";
-	string studentAddress = "";
-	string studentCityStZip = "";
-	List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
-	if (contacts != null || contacts.Count > 0 && (contacts.Count(o => o.PrimaryContact == 1) > 0))
-	{
-		var primary = contacts.FirstOrDefault(o => o.PrimaryContact == 1);
-		if (primary != null)
-		{
-			contactFormattedName = primary.FirstName + " " + primary.LastName;
-			studentAddress = primary.Address1 + " " + primary.Address2;
-			studentCityStZip = primary.City + ", " + primary.State + " " + primary.Zip;
-		}
-	}
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
+    string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");    
+    int numContacts = 0;
 
-	if (formModel.FormPriorWritten_EvalId > 0)
-	{
-		districtContactName = formModel.SchoolContact;
-		districtContactPhone = formModel.SchoolContactPhone;
-		contactFormattedName = formModel.ParentName;
-	}
+    List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
+	if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    {
+        contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
+    } 
 
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
+    if (formModel.FormPriorWritten_EvalId > 0)
+    {
+        districtContactName = formModel.SchoolContact;
+        districtContactPhone = formModel.SchoolContactPhone;
+    }
 
-	var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.DelieveredDate.HasValue)
-	{
-		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
-	}
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
+
+    var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.DelieveredDate.HasValue)
+    {
+        deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
+    }
 
 }
 
 <div class="module-page savdDraftAllowed">
+	 @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+     {
+         numContacts++;
+
+         string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+         string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+         string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+
+
+         if (numContacts > 1)
+         {
+            <text><div class="section-break"></div></text>
+         }
 		<div style='border:solid 2pt;padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in'>
 			<p class=MsoNormal align=center style='text-align:center'>
 				<span style='font-size: 12pt; font-weight: bold;'>PRIOR WRITTEN NOTICE FOR EVALUATION OR REEVALUATION<br/>AND REQUEST FOR CONSENT</span>
@@ -53,8 +58,8 @@
 			<tr>
 				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
 					<p class=MsoNormal>
-						<span class=MsoNormal style='font-weight:bold'>
-							<span class=MsoNormal>To: </span><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
+						<span class=MsoNormal>
+							<span class=MsoNormal><b>To:</b> </span><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
 						</span>						
 						<br/><span class=MsoNormal>						
 							<span>       </span>(Parent/Legal Educational Decision Maker)						
@@ -74,7 +79,7 @@
 					<p class=MsoNormal>
 						<b>
 							<span class=MsoNormal>On behalf of:</span>
-						</b><span class=MsoNormal><u><b>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</b></u></span>
+						</b><span class=MsoNormal><u>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
 						<br/><span class=MsoNormal>						
 							<span>                                   </span>(Student’s name)						
 					</span>
@@ -271,7 +276,7 @@
 			at <textarea data-val="40" style="width:150px;height:30px;">@(districtContactPhone)</textarea><span id="SchoolContactPhone" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(districtContactPhone)</span>
 			<br/><span class="MsoNormal">(School Contact/Phone)</span>
 		</p>
-		
+
 
 		<div style="align-content:center;">
 			<table class=MsoNormalTable border=1 cellspacing=0 cellpadding=5  style='width:100%;border-collapse:collapse'>
@@ -439,7 +444,7 @@
 		</div>
 		<p class="MsoNormal" style="text-align:left;margin-top:40px"><b>B.  EXPLANATION OF WHY THE ACTION IS PROPOSED OR REFUSED:</b></p>
 		<textarea class="form-control" maxlength="2000">@(formModel.ExplaninationWhy)</textarea> <span id="ExplaninationWhy" style="display:none;" class="input-value MsoNormal">@(formModel.ExplaninationWhy)</span>
-		
+
 		<p class="MsoNormal page-break" style="text-align:left;margin-top:25px"><b>C.  OPTIONS CONSIDERED AND WHY THE OPTIONS WERE REJECTED:</b></p>		
 		<textarea class="form-control" maxlength="2000">@(formModel.OptionsConsidered)</textarea> <span id="OptionsConsidered" style="display:none;" class="input-value MsoNormal">@(formModel.OptionsConsidered)</span>				
 		<p class="MsoNormal" style="text-align:left;;margin-top:25px">
@@ -621,5 +626,5 @@
 			</tr>
 		</table>
 
-
+     }
 </div>
