@@ -3904,13 +3904,7 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
             //8 grade level req
-            tblGrade grade = db.tblGrades.Where(o => o.gradeID == studentIEP.current.Grade).FirstOrDefault();
-
-            if (grade == null)
-            {
-                //try current grade from profile
-                grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
-            }
+            tblGrade grade = db.tblGrades.Where(o => o.gradeID == studentIEP.studentDetails.student.Grade).FirstOrDefault();
 
             string gradeCode = grade != null && grade.SpedCode != null ? grade.SpedCode : "";
 
