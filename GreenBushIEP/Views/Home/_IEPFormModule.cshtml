@@ -16,7 +16,7 @@
     }
     else
     {
-        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+        <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
     }
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;Forms</h4>
     <h5 class="formStudentName">@(Model.StudentName)</h5>
@@ -146,9 +146,9 @@
     </div>
 
     <!-- loading the file even though it's an ajax call -->
-    <var data-reload="true" data-src="/Scripts/studentForms.js?v1.3"></var>
+    <var data-reload="true" data-src="/Scripts/studentForms.js?v1.4"></var>
     <var data-reload="true" data-src="/Scripts/jquery.fileupload.js"></var>
     @section scripts {
-        @Scripts.Render("~/Scripts/studentForms.js?v1.3")
+        @Scripts.Render("~/Scripts/studentForms.js?v1.4")
     }
 </div>

@@ -2669,7 +2669,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult IEPFormFile(int id, string fileName)
+        public ActionResult IEPFormFile(int id, string fileName, bool? home = false)
         {
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
@@ -2823,6 +2823,7 @@ namespace GreenbushIep.Controllers
             }
 
             viewModel.fileModel = fileViewModel;
+            ViewBag.ReturnToHome = home;
             return View("_IEPFormsFile", viewModel);
         }
 

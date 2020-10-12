@@ -42,8 +42,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 pull-right">
-                @Html.ActionLink(" ", null, null, null, new { href = string.Format("/Home/IEPFormModule?studentId={0}", Model.studentId), id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
+            <div class="col-md-2 pull-right">			 
+                @Html.ActionLink(" ", null, null, null, new { href = string.Format("/Home/IEPFormModule?studentId={0}{1}", Model.studentId, ViewBag.ReturnToHome ? "&home=true" : ""), id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-remove btn btn-info pull-right", style = "margin-top:20px;margin-bottom:10px;margin-right: -75px;font-size:20px;font-weight:bold;" })
             </div>
         </div>
         <div class="row">

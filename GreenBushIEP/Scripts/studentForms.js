@@ -2,12 +2,16 @@
     function init() {
         $(".name a, .printForm").not(".bound").addClass("bound").on("click", function (e) {
             var id = $("#stid").val();
+            var goHomeParam = getUrlParameter("home");
 
             if (id) {
-                //$('.ajax-loader').css("visibility", "visible");
+                var goHome = "";
 
+                if (goHomeParam == "true") {
+                    goHome = "&home=true"
+                }
                 var pageName = this.id;
-                window.location.href = '/Home/IEPFormFile?id=' + id + '&fileName=' + pageName;
+                window.location.href = '/Home/IEPFormFile?id=' + id + '&fileName=' + pageName + goHome;
             }
             else {
                 $("#alertMessage .moreinfo").html('Server Error');
