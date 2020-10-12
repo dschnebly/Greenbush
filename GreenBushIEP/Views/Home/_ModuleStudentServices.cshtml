@@ -561,7 +561,8 @@
 <br />
 <br />
 
-<script>        
+<script>
+
     $('[data-toggle="tooltip"]').tooltip({
         trigger: 'manual'
     });
@@ -729,13 +730,13 @@
             var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
             var endDateYear = $("#iepMeetingDateYear").val();
             var fiscalYearElement = $(this).find("select[name='fiscalYear']");
-            
+
 
             //don't adjust for existing services, only new services
             if (studentServiceId == 0) {
                 fiscalYearElement.val(endDateYear);
             }
-            else {                               
+            else {
 
                 var panelOpen = $("#collapse" + studentServiceId).hasClass("in");
                 if (panelOpen)
@@ -912,7 +913,7 @@
 
                         if (data.Result == "success") {
 
-                            _showAlert(data.Message, true);                           
+                            _showAlert(data.Message, true);
 
                             studentService.find("input[name='StudentSerivceId']").val(data.key);
                             studentService.find(".collapse.in").attr("data-val", data.key);
@@ -1362,21 +1363,38 @@
     }
 
     function asyncCallBack() {
-        // check if all of the services are completed
+        // fixes the service dates in our "betterCheckYoself" popup.
+        let serviceList = [];
 
+        // check if all of the services are completed
         var allCompleted = true;
         $.each($(".oneStudentService").not("#defaultStudentService"), function () {
             if ($(this).find("input[name='completed']").val() !== "true") {
                 allCompleted = false;
             } else {
                 $(this).find("a i.isServiceCompleted").removeClass("thisServiceNotCompleted");
+                serviceList.push({
+                    serviceStartDate: $(this).find("input[name='serviceStartDate']").val(),
+                    serviceEndDate: $(this).find("input[name='serviceStartDate']").val(),
+                    serviceMinutesPerDay: $(this).find("input[name='serviceMinutesPerDay']").val()
+                })
             }
         });
 
-        if (allCompleted) {            
+
+        console.log(serviceList);
+
+        if (allCompleted)
+        {
+            // fixes the service dates in our "betterCheckYoself" popup.
+            $("#currentServices").empty();
+            let i = serviceList.length - 1;
+            while (i >= 0) {
+                $("#currentServices").append("<tr><th scope='row'>" + serviceList[i].serviceStartDate + "&nbsp;&ndash;&nbsp;" + serviceList[i].serviceEndDate + "</th><td>" + serviceList[i].serviceMinutesPerDay + "</td></tr>");
+                i--;
+            }
 
             $(window).trigger("saving.bs.modal");
-
             $("#ServiceWidget .hero-widget").addClass("module-completed");
 
             setTimeout(function () {
@@ -1487,7 +1505,7 @@
                 data: form,
                 dataType: 'json',
                 success: function (data) {
-                   
+
                     if (data.Result == "success") {
 
                         studentService.find("input[name='StudentSerivceId']").val(data.key);
@@ -1518,7 +1536,7 @@
         var holidays = null;  // set our holidays calendar.
         var userid = $("#sid").val();
         var buildingid = serviceContainer.closest(".row").find("select[name='attendanceBuilding']").val();
-        
+
         //check if the building has a calendar
         $.ajax({
             type: 'GET',
@@ -1528,12 +1546,13 @@
             success: function (data) {
                 if (data.success) {
                     holidays = data.buildingCalendar;
-                    disabledDays = data.holidays.Data;                    
-                }                               
+                    disabledDays = data.holidays.Data;
+                }
             },
             error: function (data) {
                 alert("Error connecting to the database. Please try again or contact your administrator.");
             }
         });
     }
+
 </script>
