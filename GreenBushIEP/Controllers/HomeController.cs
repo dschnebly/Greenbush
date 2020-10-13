@@ -1441,15 +1441,7 @@ namespace GreenbushIep.Controllers
             {
                 if (iepDraft.IepStatus != IEPStatus.ACTIVE)
                 {
-                    //iep status code history and student grade just in case the teacher changed it
-                    tblStudentInfo studentRec = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
-
-                    if (studentRec != null)
-                    {
-                        iepDraft.StatusCode = studentRec.StatusCode;
-                        iepDraft.Grade = studentRec.Grade;
-                    }
-
+                    
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
 
