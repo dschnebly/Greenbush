@@ -1294,6 +1294,7 @@
     <Content Include="Views\Home\ActiveIEP\_StudentContingency.cshtml" />
     <Content Include="Views\Home\_DashboardPartial.cshtml" />
     <Content Include="Views\Form\TransitionReferral.cshtml" />
+    <Content Include="Views\Form\TenDayWaiver.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

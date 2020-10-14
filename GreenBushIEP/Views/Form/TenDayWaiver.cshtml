@@ -1,0 +1,22 @@
+﻿@{
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";    
+}
+<div class="module-page">
+	<div>
+		<table class="text-center" style="margin:auto">
+			<tr>
+				<td>
+					<h1 style="font-weight:bold;font-size:16pt">@(Model.districtName)</h1>
+					
+					
+				</td>
+			</tr>
+		</table>
+	</div>
+	<p style="margin-top:50px">I waive my right to a ten (10) day waiting period for scheduling an Individual Education Plan (IEP) meeting for <b>@(studentFormattedName)</b>.</p>
+	<p style="margin-top:50px">SIGNED _________________________________________ DATE ______________________________</p>
+	
+	
+</div>
+<br/><br/>
