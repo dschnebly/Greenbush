@@ -3799,7 +3799,7 @@ namespace GreenbushIep.Controllers
                                                       select iep).Distinct().ToList();
 
                             //if an iep has been amended, exclude those ieps
-                            List<int> excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.OriginalIEPid.Value).ToList();
+                            List<int> excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.AmendingIEPid.Value).ToList();
 
                             List<tblService> otherServices = (from iep in db.tblIEPs
                                                               join student in db.tblUsers
