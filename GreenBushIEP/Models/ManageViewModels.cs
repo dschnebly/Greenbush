@@ -721,6 +721,7 @@ namespace GreenBushIEP.Models
         public string providedfor { get; set; }
         public string IEPStatus { get; set; }
         public bool isOriginalIEPService { get; set; }
+        public int? primaryProviderId { get; set; }
 
         public StudentServiceViewModel()
         {
@@ -737,6 +738,7 @@ namespace GreenBushIEP.Models
             CreateDate = new DateTime();
             providedfor = "";
             IEPStatus = "Draft";
+            primaryProviderId = null;
         }
     }
 

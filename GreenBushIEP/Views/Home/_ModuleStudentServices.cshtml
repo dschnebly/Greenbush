@@ -113,6 +113,18 @@
                     <button id="newService" class="btn btn-default noPrint">New Student Service&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <button id="duplicateService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <button id="duplicateAllService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
+                    <div class="btn-group" role="group">
+                        <select class="form-control chosen-select" id="primaryServiceProvider" style="height: 35px;">
+                            <option value="-1">-- Select Primary Provider --</option>
+                            @if (Model.serviceProviders.Count > 0)
+                            {
+                                foreach (var serviceProvider in Model.serviceProviders)
+                                {
+                                    <option value="@serviceProvider.ProviderID" @(Model.primaryProviderId == serviceProvider.ProviderID ? "selected" : string.Empty)>@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                }
+                            }
+                        </select>
+                    </div>
                     <a class="pull-right" role="button" style="font-size: 10pt; position: relative; top: 0.80rem;" id="collapseCards"><span style="padding-left: 8px;">Show All<i class="fas fa-angle-double-down" style="font-size: 11pt; position: relative; top: 2px; margin-left: 8px;" title="Show All"></i></span></a>
                 </div>
             </div>
@@ -316,8 +328,8 @@
             @foreach (var service in Model.studentServices)
             {
                 var needsIN = (Model.studentServices.IndexOf(service) == Model.studentServices.Count - 1) ? "in" : "";
-                bool canEditDelete = Model.isOriginalIEPService ?  service.StartDate.Date >= Model.MeetingDate.Date  : true;
-                
+                bool canEditDelete = Model.isOriginalIEPService ? service.StartDate.Date >= Model.MeetingDate.Date : true;
+
                 string serviceTitle = "Student Service";
                 if (!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
                 {
@@ -341,7 +353,7 @@
                                         <h4 class="panel-title">
                                             <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)" class="@(needsIN == "in" ? "" : "collapsed")">
                                                 <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
-                                                <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>                                               
+                                                <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
                                                 @if (canEditDelete)
                                                 {
                                                     <span class="pull-right">
@@ -371,7 +383,7 @@
                                                 <div class="col-md-2">
                                                     <label for="fiscalYear">Fiscal Year</label>
                                                     <div class="form-group">
-                                                        <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled") >
+                                                        <select class="form-control" name="fiscalYear" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
                                                             <option value="2018" @(service.SchoolYear == 2018 ? "selected" : "")>2017 - 2018</option>
                                                             <option value="2019" @(service.SchoolYear == 2019 ? "selected" : "")>2018 - 2019</option>
                                                             <option value="2020" @(service.SchoolYear == 2020 ? "selected" : "")>2019 - 2020</option>
@@ -386,7 +398,7 @@
                                                     <label for="Frequency">Initiation Date</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField"  @(canEditDelete ? string.Empty : "readonly") aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                        <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" @(canEditDelete ? string.Empty : "readonly") aria-describedby="basic-addon1" value="@(service.StartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
@@ -421,11 +433,11 @@
                                                     <label for="Days">Days per Week</label>
                                                     <div class="input-group number-spinner">
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-minus" ></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-minus"></span></button>
                                                         </span>
                                                         <input type="number" name="serviceDaysPerWeek" class="form-control text-center" value="@(service.DaysPerWeek)" min="1" max="5" @(canEditDelete ? string.Empty : "readonly")>
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-plus" ></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;" @(canEditDelete ? string.Empty : "disabled")><span class="glyphicon glyphicon-plus"></span></button>
                                                         </span>
                                                     </div>
                                                 </div>
@@ -433,18 +445,18 @@
                                                     <label for="Duration">Minutes per Day </label>
                                                     <div class="input-group minute-spinner">
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"  @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-minus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;" @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-minus"></span></button>
                                                         </span>
-                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60"  @(canEditDelete ? string.Empty : "readonly")>
+                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60" @(canEditDelete ? string.Empty : "readonly")>
                                                         <span class="input-group-btn">
-                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"  @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-plus"></span></button>
+                                                            <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;" @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-plus"></span></button>
                                                         </span>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="ServiceType">Service Type</label>
                                                     <div class="form-group">
-                                                        <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
+                                                        <select class="form-control" name="ServiceType" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
                                                             @if (Model.serviceTypes.Count > 0)
                                                             {
                                                                 foreach (var serviceType in Model.serviceTypes)
@@ -460,7 +472,7 @@
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
                                                         <div class="form-group">
-                                                            <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
+                                                            <select class="form-control " name="Location" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
 
                                                                 @if (Model.serviceLocations.Count > 0)
                                                                 {
@@ -479,13 +491,13 @@
                                                 <div class="col-md-3">
                                                     <label for="serviceInstruction">Instruction Provided For:</label>
                                                     <div class="form-group">
-                                                        <input type="text" name="serviceProvidedFor" value="@(service.ProvidedFor)" style="min-height: 48px !important;width: 100%;padding: 5px;"  @(canEditDelete ? string.Empty : "readonly")/>
+                                                        <input type="text" name="serviceProvidedFor" value="@(service.ProvidedFor)" style="min-height: 48px !important;width: 100%;padding: 5px;" @(canEditDelete ? string.Empty : "readonly") />
                                                     </div>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="serviceProvider">Provider</label>
                                                     <div class="form-group">
-                                                        <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;"  @(canEditDelete ? string.Empty : "disabled")>
+                                                        <select class="form-control chosen-select" name="serviceProvider" style="border-color: #ccc; display: inline-block;" @(canEditDelete ? string.Empty : "disabled")>
                                                             <option value="-1">-- No providers currently available --</option>
                                                             @if (Model.serviceProviders.Count > 0)
                                                             {
@@ -494,14 +506,14 @@
                                                                     <option value="@serviceProvider.ProviderID" @(service.ProviderID == serviceProvider.ProviderID ? "selected" : "")>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                                                 }
                                                             }
-                                                        </select>                                                        
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Attach a Goal</label>
                                                     <div class="input-group">
                                                         <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-                                                        <select id="studentGoalsSelect" name="studentGoalsSelect" class="form-control chosen-select" data-placeholder="Choose a goal..." multiple="multiple" data-validate="true"  @(canEditDelete ? string.Empty : "readonly")>
+                                                        <select id="studentGoalsSelect" name="studentGoalsSelect" class="form-control chosen-select" data-placeholder="Choose a goal..." multiple="multiple" data-validate="true" @(canEditDelete ? string.Empty : "readonly")>
                                                             @if (Model.studentGoals.Count > 0)
                                                             {
                                                                 foreach (var goal in Model.studentGoals)
@@ -717,6 +729,31 @@
         }
 
         $(".duplication-loader").css('visibility', 'hidden');
+    });
+
+    /* Event */
+    // set the primary service provider for this iep.
+    $("#primaryServiceProvider").on('change', function (e) {
+        var IEPId = $("#studentIEPId").val();
+        var student = $("#sid").val();
+        var primaryProviderId = $(this).val();
+
+        if (primaryProviderId > 0) {
+            $.ajax({
+                type: 'GET',
+                url: '/Home/UpdatePrimaryServiceProvider',
+                data: { stdIEPId: IEPId, studentId: student, ProviderId: primaryProviderId },
+                dataType: "json",
+                success: function (data) {
+                    if (data.result != "success") {
+                        console.log("There was an error updating your primary service provider.")
+                    }
+                },
+                error: function (data) {
+                    console.log("Unable to complete this task.");
+                }
+            });
+        }
     });
 
     // global varaible to save all our disabledDates when the select an attending building.
@@ -944,7 +981,7 @@
 
                 $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
 
-                     //remove disabled from dropdowns to allow value to be sent to server
+                    //remove disabled from dropdowns to allow value to be sent to server
                     $(element).find("select:disabled").removeAttr("disabled").addClass("addDisable");
 
 
@@ -1062,22 +1099,22 @@
             //have to remove the hasdatepicker before we can appy new datepicker to clone
             $(this).find('.dtField:not([readonly])').each(function () {
                 $(this).removeAttr('id').removeClass('hasDatepicker').removeData('datepicker').unbind()
-				.datepicker({
-				    dateFormat: "mm/dd/yy",
-				    changeYear: true,
-				    changeMonth: true,
-				    yearRange: "-1:+5",
-				    showButtonPanel: false,
-				    beforeShowDay: function (date) {
-				        var day = date.getDay();
-				        var string = jQuery.datepicker.formatDate('d-m-yy', date);
-				        var isDisabled = ($.inArray(string, disabledDays) != -1);
-				        return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
-				    },
-				    beforeShow: function () {
-				        setTimeout(function () { $('.ui-datepicker').css('z-index', 99999999999999); }, 0);
-				    }
-				});
+                    .datepicker({
+                        dateFormat: "mm/dd/yy",
+                        changeYear: true,
+                        changeMonth: true,
+                        yearRange: "-1:+5",
+                        showButtonPanel: false,
+                        beforeShowDay: function (date) {
+                            var day = date.getDay();
+                            var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                            var isDisabled = ($.inArray(string, disabledDays) != -1);
+                            return [day != 0 && day != 6 && !isDisabled]; //day != 0/6 disables all Sundays and Saturdays
+                        },
+                        beforeShow: function () {
+                            setTimeout(function () { $('.ui-datepicker').css('z-index', 99999999999999); }, 0);
+                        }
+                    });
             });
         });
     }
@@ -1384,8 +1421,7 @@
 
         console.log(serviceList);
 
-        if (allCompleted)
-        {
+        if (allCompleted) {
             // fixes the service dates in our "betterCheckYoself" popup.
             $("#currentServices").empty();
             let i = serviceList.length - 1;
@@ -1438,8 +1474,7 @@
                 $(this).collapse('show');
             });
         }
-        else
-        {
+        else {
             $(this).children("span").contents().first()[0].textContent = text.replace("Hide All", "Show All");
             $(this).find("i").addClass("fa-angle-double-down").removeClass("fa-angle-double-up");
             $.each($("div.collapse:not(:last)"), function (index) {

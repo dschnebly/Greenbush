@@ -42,5 +42,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> OriginalIEPid { get; set; }
         public string StatusCode { get; set; }
         public Nullable<int> Grade { get; set; }
+        public Nullable<int> PrimaryProviderID { get; set; }
     }
 }
