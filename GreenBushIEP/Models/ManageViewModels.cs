@@ -4,6 +4,7 @@ using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Web.WebSockets;
 
 namespace GreenBushIEP.Models
 {
@@ -96,6 +97,8 @@ namespace GreenBushIEP.Models
         public List<NotificationViewModel> dueIeps { get; set; }
         public bool showDashboardNotification { get; set; }
 
+        public List<string> activeEducationalStatuses { get; set; }
+
         public PortalViewModel()
         {
             user = new tblUser();
@@ -105,6 +108,8 @@ namespace GreenBushIEP.Models
             draftIeps = new List<NotificationViewModel>();
             dueIeps = new List<NotificationViewModel>();
             showDashboardNotification = false;
+            activeEducationalStatuses = new List<string>();
+            
         }
     }
 

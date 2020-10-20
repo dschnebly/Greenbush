@@ -60,7 +60,10 @@
                             {
                                 if (user.RoleID == "5")
                                 {
+                                   if (Model.activeEducationalStatuses.Contains(user.StatusCode))
+                                   {
                                     <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
+                                   }
                                 }
                                 else
                                 {
