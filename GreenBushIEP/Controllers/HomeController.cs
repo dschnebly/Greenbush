@@ -4777,7 +4777,7 @@ namespace GreenbushIep.Controllers
                 StudentFirstName = u.StudentFirstName,
                 StudentLastName = u.StudentLastName,
                 Days = u.DraftDays.HasValue ? u.DraftDays.Value : 0
-            }).OrderByDescending(o => o.Days).ToList();
+            }).ToList();
 
         }
 
@@ -4789,7 +4789,7 @@ namespace GreenbushIep.Controllers
                 StudentFirstName = u.StudentFirstName,
                 StudentLastName = u.StudentLastName,
                 Days = u.NumberOfDays.HasValue ? u.NumberOfDays.Value : 0
-            }).OrderBy(o => o.Days).ToList();
+            }).ToList();
 
         }
 
