@@ -1908,6 +1908,7 @@ namespace GreenbushIep.Controllers
                     model.CreateDate = iep.Create_Date;
                     model.isOriginalIEPService = iep.IepStatus.ToUpper() == IEPStatus.DRAFT && iep.Amendment;
                     model.IEPStatus = iep.IepStatus.ToUpper();
+                    model.primaryProviderId = iep.PrimaryProviderID;
                     ViewBag.ServiceStartDate = iep.begin_date;
 
                     int? modifiedby = (services.Count > 0) ? services.FirstOrDefault().ModifiedBy : null;
@@ -2549,6 +2550,21 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { result = "error", message = "Unable to change the IEP status from plan to draft." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult UpdatePrimaryServiceProvider(int stdIEPId, int studentId, int ProviderId)
+        {
+            tblIEP studentIEP = db.tblIEPs.Where(i => i.IEPid == stdIEPId && i.UserID == studentId).FirstOrDefault();
+            if(studentIEP != null)
+            {
+                studentIEP.PrimaryProviderID = ProviderId;
+                db.SaveChanges();
+
+                return Json(new { result = "success", message = "successfully updated the primary service provider." }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { result = "error", message = "Unable to update the primary service provider." }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

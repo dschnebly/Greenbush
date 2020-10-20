@@ -1522,6 +1522,7 @@
           <Property Name="OriginalIEPid" Type="int" />
           <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="Grade" Type="int" />
+          <Property Name="PrimaryProviderID" Type="int" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -5033,6 +5034,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="OriginalIEPid" Type="Int32" />
           <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Grade" Type="Int32" />
+          <Property Name="PrimaryProviderID" Type="Int32" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -7929,6 +7931,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="PrimaryProviderID" ColumnName="PrimaryProviderID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
                 <ScalarProperty Name="OriginalIEPid" ColumnName="OriginalIEPid" />

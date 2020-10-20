@@ -27,6 +27,7 @@ namespace GreenBushIEP.Models
         public bool hasPlan { get; set; }
         public int studentGrade { get; set; }
         public string studentCode { get; set; }
+        public int? primaryProvider { get; set; }
 
         public bool anyStudentIEPActive { get; set; }
         public bool anyStudentIEPAmendment { get; set; }
@@ -92,6 +93,7 @@ namespace GreenBushIEP.Models
             isServerRender = false;
             studentGrade = -4;
             studentCode = "N";
+            primaryProvider = null;
 
             listOfStudentsIEPs = new List<tblIEP>();
             current = new tblIEP();

@@ -114,13 +114,13 @@
                     <button id="duplicateService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate Student Service For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <button id="duplicateAllService" class="btn btn-default noPrint @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )" @(Model.studentServices.Count <= 0 ? "disabled" : string.Empty )>Duplicate All Student Services For Next Year&nbsp;&nbsp;<i class="glyphicon glyphicon-plus"></i></button>
                     <div class="btn-group" role="group">
-                        <select class="form-control chosen-select" name="primaryServiceProvider" style="height: 35px;">
+                        <select class="form-control chosen-select" id="primaryServiceProvider" style="height: 35px;">
                             <option value="-1">-- Select Primary Provider --</option>
                             @if (Model.serviceProviders.Count > 0)
                             {
                                 foreach (var serviceProvider in Model.serviceProviders)
                                 {
-                                    <option value="@serviceProvider.ProviderID">@serviceProvider.FirstName @serviceProvider.LastName</option>
+                                    <option value="@serviceProvider.ProviderID" @(Model.primaryProviderId == serviceProvider.ProviderID ? "selected" : string.Empty)>@serviceProvider.FirstName @serviceProvider.LastName</option>
                                 }
                             }
                         </select>
@@ -729,6 +729,31 @@
         }
 
         $(".duplication-loader").css('visibility', 'hidden');
+    });
+
+    /* Event */
+    // set the primary service provider for this iep.
+    $("#primaryServiceProvider").on('change', function (e) {
+        var IEPId = $("#studentIEPId").val();
+        var student = $("#sid").val();
+        var primaryProviderId = $(this).val();
+
+        if (primaryProviderId > 0) {
+            $.ajax({
+                type: 'GET',
+                url: '/Home/UpdatePrimaryServiceProvider',
+                data: { stdIEPId: IEPId, studentId: student, ProviderId: primaryProviderId },
+                dataType: "json",
+                success: function (data) {
+                    if (data.result != "success") {
+                        console.log("There was an error updating your primary service provider.")
+                    }
+                },
+                error: function (data) {
+                    console.log("Unable to complete this task.");
+                }
+            });
+        }
     });
 
     // global varaible to save all our disabledDates when the select an attending building.
