@@ -3850,7 +3850,7 @@ namespace GreenbushIep.Controllers
 
                         }
 
-                        List<ExportErrorView> errors = CreateSpedProExport(theIEP, fiscalYear, sb);
+                        List<ExportErrorView> errors = SpedProExport(theIEP, fiscalYear, sb);
 
                         if (errors.Count > 0)
                         {
@@ -3888,7 +3888,7 @@ namespace GreenbushIep.Controllers
             return View("~/Reports/SpedPro/Index.cshtml");
         }
 
-        private List<ExportErrorView> CreateSpedProExport(IEP studentIEP, int schoolYear, StringBuilder sb)
+        private List<ExportErrorView> SpedProExport(IEP studentIEP, int schoolYear, StringBuilder sb)
         {
             List<ExportErrorView> errors = new List<ExportErrorView>();
 
@@ -4035,36 +4035,16 @@ namespace GreenbushIep.Controllers
                         if (originalIEP != null && originalIEP.MeetingDate.HasValue)
                         {
                             serviceIEPDate = originalIEP.MeetingDate.Value;
-
-                        }
-
+                        }                       
                     }
                     else
                     {
                         if (serviceIEP.MeetingDate.HasValue)
                         {
                             serviceIEPDate = serviceIEP.MeetingDate.Value;
-                        }
-
-                        //need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
-                        //to be the last valid day before the begin date of the new iep
-                        if (studentIEP.current.MeetingDate <= service.EndDate)
-                        {
-                            //we have a problem, we need need to end 1 day prior to the new annual beginning date, if it is a valid date
-                            int endDayCount = 1;
-                            while (endDayCount < 15)
-                            {
-                                var newEndDate = studentIEP.current.MeetingDate.Value.AddDays(-endDayCount);
-                                var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == service.SchoolYear && c.calendarDate == newEndDate);
-                                if (isValidEndDate)
-                                {
-                                    serviceEndDateOverride = newEndDate.ToShortDateString();
-                                    break;
-                                }
-                                endDayCount++;
-                            }
-                        }
+                        }                      
                     }
+                                        
 
                     if (!serviceIEPDate.HasValue)
                     {
@@ -4078,6 +4058,15 @@ namespace GreenbushIep.Controllers
                     else
                     {
                         sb.AppendFormat("\t{0}", serviceIEPDate.Value.ToShortDateString());
+                    }
+
+                    //END DATE CHECK
+                    //need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
+                    //to be the last valid day before the begin date of the new iep
+                    if (studentIEP.current.MeetingDate <= service.EndDate)
+                    {
+                        //need to end 1 day prior to the new annual beginning date or next available valid date
+                        serviceEndDateOverride = SpedProEndDateCheck(studentIEP.current.MeetingDate, service);
                     }
 
                 }
@@ -4167,6 +4156,7 @@ namespace GreenbushIep.Controllers
                             isOverwritten = true;
                         }
                     }
+
                     if (!isOverwritten)
                     {
                         if (!string.IsNullOrEmpty(serviceEndDateOverride))
@@ -4806,6 +4796,31 @@ namespace GreenbushIep.Controllers
                 StudentLastName = u.StudentLastName,
                 Days = u.NumberOfDays.HasValue ? u.NumberOfDays.Value : 0
             }).ToList();
+
+        }
+
+        private string SpedProEndDateCheck(DateTime? meetingDate, tblService service)
+        {
+            string serviceEndDateOverride = "";
+
+            if (meetingDate != null)
+            {
+                //we have a problem, we need need to end 1 day prior to the new annual beginning date, if it is a valid date
+                int endDayCount = 1;
+                while (endDayCount < 15)
+                {
+                    var newEndDate = meetingDate.Value.AddDays(-endDayCount);
+                    var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == service.SchoolYear && c.calendarDate == newEndDate);
+                    if (isValidEndDate)
+                    {
+                        serviceEndDateOverride = newEndDate.ToShortDateString();
+                        break;
+                    }
+                    endDayCount++;
+                }
+            }
+
+            return serviceEndDateOverride;
 
         }
 
