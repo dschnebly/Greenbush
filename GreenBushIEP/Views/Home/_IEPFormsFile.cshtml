@@ -150,20 +150,19 @@
 		$("textarea").bind("paste", function(e){
 			// access the clipboard using the api
 			var pastedData = e.originalEvent.clipboardData.getData('text');
-			clearContents(this);
+			var existingData = this.value;
+			//clearContents(this);
 			var maxLength = $(this).attr("maxLength");
 
-			if (maxLength > 0 && pastedData.length > maxLength) {
+			if (maxLength > 0 && (pastedData.length + existingData.length) > maxLength) {
 				e.preventDefault();				
 				_showAlert("The text exceeds the " + maxLength + " character limit for this field.", false);				
 				return;
 			}
 			else {
-
-				var nextParagraph = $(this).next(".input-value");
-				var currentVal = pastedData; //$(this).val();
-				var padVal = $(this).attr('data-val');
-			
+				var nextParagraph = $(this).next(".input-value");				
+				var currentVal = pastedData; 
+				var padVal = $(this).attr('data-val');			
 
 				if (padVal != undefined && padVal != "") {
 					var currLength = currentVal.length;
@@ -171,11 +170,10 @@
 					for (var i = 0; i < spacesToAdd; i++) {
 						currentVal = currentVal + '\u00A0';
 					}
-
 				}
+
 				nextParagraph.text(currentVal.replace(/\n/g, "new-line-val"));
 			}
-
 		});
 				
 		$("textarea").keyup(function () {
@@ -195,10 +193,8 @@
 
 		$("textarea").each(function(){
 			this.value = this.value.replace(/new-line-val/g,"\n");
-		});			
-		
+		});
     });
-
 
 	function scrollToMessage() {
 		var container = $('div.transition-page'); 
