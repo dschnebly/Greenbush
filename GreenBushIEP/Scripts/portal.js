@@ -7,7 +7,7 @@
 			var message = "";
 
 			if ($("#dueIepsCount").length > 0) {
-				message = "(" + $("#dueIepsCount").val() + ") Initial Evaluations Due"
+				message = "(" + $("#dueIepsCount").val() + ") IEPs Coming Due"
 			}
 
 			if ($("#draftIepsCount").length > 0) {

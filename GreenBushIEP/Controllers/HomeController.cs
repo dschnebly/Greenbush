@@ -4014,6 +4014,7 @@ namespace GreenbushIep.Controllers
             foreach (tblService service in studentIEP.studentServices.Distinct())
             {
                 string serviceEndDateOverride = "";
+                int primaryProviderId = 0;
 
                 if (count == 25)
                 {
@@ -4030,13 +4031,15 @@ namespace GreenbushIep.Controllers
                     //need to look up date from the iep this service is from
                     tblIEP serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
 
+                    primaryProviderId = serviceIEP.PrimaryProviderID.HasValue ? serviceIEP.PrimaryProviderID.Value : 0;
+
                     if (serviceIEP.OriginalIEPid != null)
                     {
                         //look up date of orginal iep -- these are amendments?
                         tblIEP originalIEP = db.tblIEPs.Where(o => o.IEPid == serviceIEP.OriginalIEPid).FirstOrDefault();
                         if (originalIEP != null && originalIEP.MeetingDate.HasValue)
                         {
-                            serviceIEPDate = originalIEP.MeetingDate.Value;
+                            serviceIEPDate = originalIEP.MeetingDate.Value;                            
                         }                       
                     }
                     else
@@ -4044,9 +4047,8 @@ namespace GreenbushIep.Controllers
                         if (serviceIEP.MeetingDate.HasValue)
                         {
                             serviceIEPDate = serviceIEP.MeetingDate.Value;
-                        }                      
-                    }
-                                        
+                        }                        
+                    }                                        
 
                     if (!serviceIEPDate.HasValue)
                     {
@@ -4074,18 +4076,20 @@ namespace GreenbushIep.Controllers
                 }
                 else
                 {
+                    primaryProviderId = studentIEP.current.PrimaryProviderID.HasValue ? studentIEP.current.PrimaryProviderID.Value : 0;
+
                     if (studentIEP.current.OriginalIEPid != null)
                     {
                         //look up date of orginal iep
                         tblIEP originalIEP2 = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
                         if (originalIEP2 != null && originalIEP2.MeetingDate.HasValue)
                         {
-                            serviceIEPDate = originalIEP2.MeetingDate.Value;
+                            serviceIEPDate = originalIEP2.MeetingDate.Value;                            
                         }
                     }
                     else
                     {
-                        serviceIEPDate = studentIEP.current.MeetingDate.Value;
+                        serviceIEPDate = studentIEP.current.MeetingDate.Value;                        
                     }
 
                     if (!serviceIEPDate.HasValue)
@@ -4135,7 +4139,7 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", service.tblProvider != null ? service.tblProvider.ProviderCode.Length > 10 ? service.tblProvider.ProviderCode.Substring(0, 10) : service.tblProvider.ProviderCode : "");
 
                 //12 Primary Provider Indicator
-                sb.AppendFormat("\t{0}", "");
+                sb.AppendFormat("\t{0}", service.ProviderID.HasValue && primaryProviderId == service.ProviderID.Value ? "1" : "");
 
                 //13 Service Start Date
                 sb.AppendFormat("\t{0}", service.StartDate.ToShortDateString());
