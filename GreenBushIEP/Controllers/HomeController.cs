@@ -600,7 +600,7 @@ namespace GreenbushIep.Controllers
                         Create_Date = calendar.Create_Date,
                         Update_Date = calendar.Update_Date,
                         CreatedBy = calendar.CreatedBy,
-                        ModifiedBy = calendar.ModifiedBy
+                        ModifiedBy = MIS.UserID
                     });                   
 
 
@@ -762,7 +762,7 @@ namespace GreenbushIep.Controllers
                                                 Create_Date = ac.Create_Date,
                                                 Update_Date = ac.Update_Date,
                                                 CreatedBy = ac.CreatedBy,
-                                                ModifiedBy = ac.ModifiedBy
+                                                ModifiedBy = MIS.UserID
                                             });
                                         }
                                     }
