@@ -1479,10 +1479,7 @@ namespace GreenbushIep.Controllers
             if (studentIEP != null)
             {
                 studentIEP.IsActive = false;
-                if (studentIEP.AmendingIEPid != null)
-                {
-                    studentIEP.IepStatus = IEPStatus.ARCHIVE;
-                }
+                
                 db.SaveChanges();
 
                 tblIEP activeIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IepStatus.ToUpper() == IEPStatus.ACTIVE).FirstOrDefault();
