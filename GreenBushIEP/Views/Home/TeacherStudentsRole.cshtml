@@ -5,191 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    .breadcrumb {
-        margin-top: 20px;
-        padding: 3px 0;
-        margin-bottom: 0;
-        list-style: none;
-        background-color: transparent;
-    }
-
-    .teacherStudentRole-btn-action {
-        margin: 4px 4px 4px 0px;
-        position: relative;
-    }
-
-    .body-content {
-        margin-bottom: 4em;
-    }
-
-    /*//////////////////////////////////////
-    ///  User Toggle Buttons Starts Here
-    //////////////////////////////////////*/
-
-    .btn-circle {
-        width: 30px;
-        height: 30px;
-        text-align: center;
-        padding: 6px 0;
-        font-size: 12px;
-        line-height: 1.428571429;
-        border-radius: 15px;
-    }
-
-        .btn-circle:focus {
-            outline: none;
-        }
-
-        .btn-circle.btn-lg {
-            width: 50px;
-            height: 50px;
-            padding: 10px 16px;
-            font-size: 18px;
-            line-height: 1.33;
-            border-radius: 25px;
-            margin-bottom: 10px;
-        }
-
-        .btn-circle.btn-xl {
-            width: 70px;
-            height: 70px;
-            padding: 10px 16px;
-            font-size: 24px;
-            line-height: 1.33;
-            border-radius: 35px;
-            margin-bottom: 10px;
-        }
-
-    #add-student-user i {
-        padding: 0;
-    }
-
-    #user-toggle {
-        margin-right: 20px;
-    }
-
-        #user-toggle .user-toggle-item {
-            display: inline-block;
-        }
-
-        #user-toggle button:first-child {
-            margin-left: 15px;
-        }
-
-        #user-toggle .user-toggle-item button:hover {
-            -webkit-animation: pulse 1s ease 0s;
-            -o-animation: pulse 1s ease 0s;
-            -moz-animation: pulse 1s ease 0s;
-            animation: pulse 1s ease 0s;
-        }
-
-        #user-toggle .user-toggle-item ul {
-            display: inline-block;
-            list-style-type: none;
-            overflow: hidden;
-            padding: 0;
-            margin: 0;
-            position: relative;
-            top: 10px;
-            padding-right: 12px;
-        }
-
-            #user-toggle .user-toggle-item ul li {
-                display: inline-block;
-                float: left;
-                padding-left: 15px;
-            }
-
-            #user-toggle .user-toggle-item ul.show-buttons {
-                display: inline-block;
-                /*-webkit-animation: fadein 1s; /* Safari, Chrome and Opera > 12.1
-                -moz-animation: fadein 1s; /* Firefox < 16
-                -ms-animation: fadein 1s; /* Internet Explorer
-                -o-animation: fadein 1s; /* Opera < 12.1
-                animation: fadein 1s;*/
-            }
-
-            #user-toggle .user-toggle-item ul.hide-buttons {
-                display: none;
-            }
-
-    #addExistingStudents {
-        margin-left: 15px;
-    }
-
-        #addExistingStudents:hover {
-            -webkit-animation: pulse 1s ease 0s;
-            -o-animation: pulse 1s ease 0s;
-            -moz-animation: pulse 1s ease 0s;
-            animation: pulse 1s ease 0s;
-        }
-
-        #addExistingStudents i {
-            vertical-align: -webkit-baseline-middle;
-            padding-left: 0;
-        }
-
-	.vertical-align {
-		display: flex;
-		align-items: center;
-	}
-    @@-webkit-keyframes pulse {
-        0% {
-            -webkit-transform: scale(1);
-        }
-
-        50% {
-            -webkit-transform: scale(1.2);
-        }
-
-        100% {
-            -webkit-transform: scale(1);
-        }
-    }
-
-    @@-o-keyframes pulse {
-        0% {
-            -o-transform: scale(1);
-        }
-
-        50% {
-            -o-transform: scale(1.2);
-        }
-
-        100% {
-            -o-transform: scale(1);
-        }
-    }
-
-    @@-moz-keyframes pulse {
-        0% {
-            -moz-transform: scale(1);
-        }
-
-        50% {
-            -moz-transform: scale(1.2);
-        }
-
-        100% {
-            -moz-transform: scale(1);
-        }
-    }
-
-    @@keyframes pulse {
-        0% {
-            transform: scale(1);
-        }
-
-        50% {
-            transform: scale(1.2);
-        }
-
-        100% {
-            transform: scale(1);
-        }
-    }
-</style>
+@section stylesheets {   
+    @Styles.Render("~/Content/teacherstudentsrole.css")   
+}
 
 @if (Model.Teacher != null)
 {
@@ -217,7 +35,7 @@
             <div class="col-md-12">
                 <div class="table-responsive">
                     <table id="mytable" class="table table-bordred table-striped my-table-root">
-                        @if (Model.Students.Count() > 0)
+                        @if (Model.Students.Count > 0)
                         {
                             <thead>
                                 <tr>
@@ -242,6 +60,12 @@
                                             <button type="button" class="btn btn-info teacherStudentRole-btn-action pull-right" data-id="@(student.UserID)" data-toggle="modal" data-target="#confirmStudentRemoval" >
                                                 <span class="fa fa-user-times" aria-hidden="true"></span>
                                             </button>
+                                           @if (ViewBag.UserRoleId != null && ViewBag.UserRoleId == "2")
+                                           {
+                                             <button type="button" class="btn btn-info teacherStudentRole-btn-action pull-right launchIEP" data-id="@(student.UserID)" data-toggle="modal" title="Launch IEP" >
+                                                <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                                            </button>
+                                           }
                                         </td>
                                     </tr>
                                 }
@@ -336,5 +160,5 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/teacherstudentsrole.js")
+    @Scripts.Render("~/Scripts/teacherstudentsrole.js?v1.1")
 }

@@ -5,6 +5,14 @@
 });
 
 function init() {
+
+	$(".launchIEP").on("click", function () {
+		var stid = $(this).attr("data-id");
+		var teacherId = $('#addExistingStudentModal').data('id');
+		window.location.href = '/Home/StudentProcedures?stid=' + stid + "&rtnId=" + teacherId;
+		return false;
+	});
+
     // attach event
     // fires when user-x is pressed.
     $('#confirmStudentRemoval').on('show.bs.modal', function (e) {

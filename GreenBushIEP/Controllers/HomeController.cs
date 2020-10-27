@@ -1154,6 +1154,8 @@ namespace GreenbushIep.Controllers
         {
             StudentViewModel model = new StudentViewModel();
             tblUser user = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
+            ViewBag.UserRoleId = currentUser.RoleID;
 
             if (user != null)
             {
@@ -1205,7 +1207,7 @@ namespace GreenbushIep.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult StudentProcedures(int stid, int? iepID = null)
+        public ActionResult StudentProcedures(int stid, int? iepID = null, int? rtnId = null)
         {
             StudentProcedureViewModel model = new StudentProcedureViewModel();
 
@@ -1217,6 +1219,7 @@ namespace GreenbushIep.Controllers
             tblStudentRelationship relationship = db.tblStudentRelationships.Where(r => r.UserID == stid && r.PrimaryContact == 1).FirstOrDefault();
 
             ViewBag.UserRoleId = currentUser.RoleID;
+            ViewBag.ReturnBtn = rtnId.HasValue ? string.Format("/Home/TeacherStudentsRole/{0}", rtnId.Value) : ""; //re-route back button
 
             if (student != null)
             {
