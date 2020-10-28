@@ -25,9 +25,6 @@ namespace GreenBushIEP.Reports.ESY
 				GreenBushIEP.Report.ReportMaster.DistrictList(this.districtDD);
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);				
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
-				
-
-
 			}
 			else
 			{
