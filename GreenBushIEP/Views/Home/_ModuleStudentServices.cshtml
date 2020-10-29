@@ -767,7 +767,7 @@
             var studentServiceId = $(this).find("input[name=StudentSerivceId]").val();
             var endDateYear = $("#iepMeetingDateYear").val();
             var fiscalYearElement = $(this).find("select[name='fiscalYear']");
-
+            var serviceDaysPerWeekElement = $(this).find("input[name=serviceDaysPerWeek]");
 
             //don't adjust for existing services, only new services
             if (studentServiceId == 0) {
@@ -779,6 +779,13 @@
                 if (panelOpen)
                     getDisabledCalendarDays(panel);
             }
+
+            serviceDaysPerWeekElement.on("input", function (e) {
+                var value = $(this).val();
+                if (value > 5) {
+                    $(this).val(1);
+                }
+            });
 
             fiscalYearElement.on("change", function (e) {
                 var year = $(this).val();
