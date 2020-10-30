@@ -4813,10 +4813,10 @@ namespace GreenbushIep.Controllers
             {
                 //we have a problem, we need need to end 1 day prior to the new annual beginning date, if it is a valid date
                 int endDayCount = 1;
-                while (endDayCount < 15)
+                while (endDayCount < 150)
                 {
                     var newEndDate = meetingDate.Value.AddDays(-endDayCount);
-                    var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == service.SchoolYear && c.calendarDate == newEndDate);
+                    var isValidEndDate = db.tblCalendars.Any(c => c.BuildingID == service.BuildingID && (c.canHaveClass == true && c.NoService == false) && c.calendarDate == newEndDate);
                     if (isValidEndDate)
                     {
                         serviceEndDateOverride = newEndDate.ToShortDateString();
