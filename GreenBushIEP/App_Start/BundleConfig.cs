@@ -29,7 +29,7 @@ namespace GreenBushIEP
                       "~/Scripts/bootstrap-mutliselect.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/fontawesome-all.min.css",
+                      "~/Content/fontawesome-all.css",
                       "~/Content/bootstrap.css",
                       "~/Content/site.css",
                       "~/Content/chosen.css"));

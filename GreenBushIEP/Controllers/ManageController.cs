@@ -3509,11 +3509,10 @@ namespace GreenBushIEP.Controllers
             try
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                db.uspCopyIEP(IepId, user.UserID, amend);
+                uspCopyIEP_Result results = db.uspCopyIEP(IepId, user.UserID, amend).ToList().First();
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
-
-                tblIEP amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId).FirstOrDefault();
+                tblIEP amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId && i.IEPid == results.ToIEP).FirstOrDefault();
 
                 int AmendmentId = amendment.IEPid;
 
@@ -3522,7 +3521,6 @@ namespace GreenBushIEP.Controllers
                     amendment.StatusCode = studentDetails.StatusCode;
                     db.SaveChanges();
                 }
-
 
                 return Json(new { Result = "success", Message = AmendmentId }, JsonRequestBehavior.AllowGet);
             }
