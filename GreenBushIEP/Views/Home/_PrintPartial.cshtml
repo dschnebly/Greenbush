@@ -3612,7 +3612,15 @@
 
 						</td>						
 						<td>
-							@service.LocationCode							
+							@if (Model.locations.Count > 0)
+                            {
+                                var locationName = Model.locations.Where(o => o.LocationCode == service.LocationCode).FirstOrDefault();
+								<text>(@service.LocationCode) @(locationName != null ? locationName.Name : "")</text>
+                            }
+                            else
+                            {
+								<text>@service.LocationCode</text>							
+                            }
 						</td>
 						<td>
 							@{
