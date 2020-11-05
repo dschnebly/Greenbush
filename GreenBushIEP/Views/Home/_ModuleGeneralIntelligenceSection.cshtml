@@ -52,7 +52,8 @@
         <fieldset class="form-group">
             <div class="form-check">
                 <label class="standard-font-size" style="padding: 25px 0 15px;">Additional Notes</label>
-                <textarea class="form-control standard-font-size" id="IntelligenceNotes" name="IntelligenceNotes" type="text" rows="3">@(Model.Notes)</textarea>
+                <textarea class="form-control standard-font-size characterCount" id="IntelligenceNotes" name="IntelligenceNotes" type="text" rows="3" maxlength="2000">@(Model.Notes)</textarea>
+                <div class="charNum"></div>
             </div>
         </fieldset>
         <div class="row">
@@ -86,7 +87,7 @@
 <br />
 <br />
 
-<script>
+<script>    
     // Attach Event
     // if radio button is selected than show text box.
     $("input:radio[name=ModuleIntelligenceMeetNeedBy]").on('click', function (event) {
@@ -185,5 +186,41 @@
 	            console.log("Unable to mark Health Module as complete.");
 	        }
 	    });
-	});
+    });
+
+     $(".characterCount").on("keyup paste", function (e) {
+        var maxLength = this.maxLength;
+        var text = this.value;
+
+        if (e.type == "paste") {
+            text = this.value + e.originalEvent.clipboardData.getData('text'); //just in case they are pasting in addition to typing            
+         }
+
+         if (maxLength <= 0)
+            maxLength = 2000;
+
+        _countChar(this, text, maxLength);
+    });    
+
+     function _countChar(element, text, maxLength) {
+        var newLineCount = text.split('\n').length - 1;
+        var returnCount = text.split('\r').length - 1;
+        var charNumElement = $(element).next("div.charNum");
+
+        var len = text.length + newLineCount + returnCount;
+
+        if (len > maxLength) {
+            charNumElement.text("The text exceeds the " + maxLength + " character limit for this field and was truncated.");
+
+            element.value = text.substring(0, maxLength - newLineCount - returnCount);
+        }
+        else {
+
+            if (len >= maxLength) {
+                element.value = text.substring(0, maxLength);
+            } else {
+                charNumElement.text(maxLength - len + " characters remaining");
+            }
+        }
+    }
 </script>

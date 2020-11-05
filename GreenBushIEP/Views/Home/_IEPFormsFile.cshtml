@@ -151,10 +151,14 @@
 			// access the clipboard using the api
 			var pastedData = e.originalEvent.clipboardData.getData('text');
 			var existingData = this.value;
-			//clearContents(this);
+			var text = existingData + pastedData;
+
+			var newLineCount = text.split('\n').length;
+			var returnCount = text.split('\r').length;
+
 			var maxLength = $(this).attr("maxLength");
 
-			if (maxLength > 0 && (pastedData.length + existingData.length) > maxLength) {
+			if (maxLength > 0 && (text.length + newLineCount + returnCount) > maxLength) {
 				e.preventDefault();				
 				_showAlert("The text exceeds the " + maxLength + " character limit for this field.", false);				
 				return;
