@@ -1,11 +1,16 @@
-﻿
-@{
-	var formModel = ViewData["teamEval"] != null ? ViewData["teamEval"] as GreenBushIEP.Models.tblFormTeamEval : new GreenBushIEP.Models.tblFormTeamEval();
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-	string dateStr = DateTime.Today.ToShortDateString();
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+﻿@{
+    var formModel = ViewData["teamEval"] != null ? ViewData["teamEval"] as GreenBushIEP.Models.tblFormTeamEval : new GreenBushIEP.Models.tblFormTeamEval();
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
+    string dateStr = DateTime.Today.ToShortDateString();
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+
+    var formDate = DateTime.Today.ToShortDateString();
+    if (formModel.FormTeamEvalId > 0)
+    {
+        formDate = formModel.FormDate.HasValue ? formModel.FormDate.Value.ToShortDateString() : "";
+    }
 }
 <div class="module-page savdDraftAllowed">
 	<div style='padding:1.0pt 4pt 1pt 4pt; margin-left:1in;margin-right:.75in' class="voffset2">
@@ -17,7 +22,7 @@
 		<span style='font-size:12pt;line-height:120%;font-family:"Times New Roman",serif'>
 			<b>Student	Name:</b> <u>@(studentFormattedName)</u><br>
 			<b>DOB:</b> <u>@(dobStr)</u><br>
-			<b>Date:</b> <u><textarea style="width:100px;height:25px">@(dateStr)</textarea><span style="display:none" class="input-value timesfont">@(dateStr)</span></u>
+			<b>Date:</b> <textarea maxlength="10" style="height:30px;" class="form-control1">@(formDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline;" class="input-value isDate timesfont">@(formDate)</span>						
 		</span>
 	</p>
 	<p class="voffset3" style='margin-left:.25in;mso-add-space:auto;text-indent:-.25in;mso-list:l7 level1 lfo1;'>
@@ -279,11 +284,12 @@
 			List sources:<br/><textarea class="form-control" cols="100" rows="10">@(formModel.ListSources)</textarea><span id="txtListSources" style='display:none' class="input-value timesfont">@(formModel.ListSources)</span>
 		</span>
 	</p>	
-	<p class="section-break">
+	<p class="section-break"></p>
+	<p>
 		<span style='font-size:12.0pt;line-height:120%;font-family:"Times New Roman",serif'>
 			<b>Student Name:</b> <u>@(studentFormattedName)</u><br>
-			<b>DOB:</b><u>@(dobStr)</u><br>
-			<b>Date:</b><u><textarea style="width:100px;height:25px">@(dateStr)</textarea><span style="display:none" class="input-value">@(dateStr)</span></u>
+			<b>DOB:</b> <u>@(dobStr)</u><br>
+			<b>Date:</b> <textarea maxlength="10" style="height:30px;" class="form-control1">@(formDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline;" class="input-value isDate timesfont">@(formDate)</span>						
 		</span>
 	</p>
 	<table border=0 cellspacing=5 cellpadding=15 style='width:6.0in;border-collapse:collapse;' class="voffset3">

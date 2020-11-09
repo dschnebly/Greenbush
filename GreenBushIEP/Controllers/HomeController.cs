@@ -4986,7 +4986,7 @@ namespace GreenbushIep.Controllers
                 teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
                 teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
                 teamEval.ListSources = GetInputValue("txtListSources", spans);
-
+                teamEval.FormDate = GetInputValueDate("FormDate", spans); 
 
                 teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
                 teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);

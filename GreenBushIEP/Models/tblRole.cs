@@ -23,6 +23,7 @@ namespace GreenBushIEP.Models
         public int RoleID { get; set; }
         public string RoleName { get; set; }
         public string LevelName { get; set; }
+        public string BookID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblRolePermission> tblRolePermissions { get; set; }

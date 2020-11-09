@@ -750,7 +750,7 @@
           <Property Name="SpecialExpertise6" Type="nvarchar" MaxLength="200" />
           <Property Name="AgencyStaff" Type="nvarchar" MaxLength="200" />
           <Property Name="SchoolContactName" Type="nvarchar" MaxLength="200" />
-          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="DeliveriedByWho" Type="nvarchar" MaxLength="200" />
           <Property Name="DeliveriedTo" Type="nvarchar" MaxLength="200" />
           <Property Name="DelieveredByHand" Type="bit" />
@@ -811,7 +811,7 @@
           <Property Name="Refuse_InitialEval" Type="bit" />
           <Property Name="Refuse_Reeval" Type="bit" />
           <Property Name="SchoolContact" Type="nvarchar" MaxLength="200" />
-          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="20" />
+          <Property Name="SchoolContactPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="NewData_HealthMotor" Type="bit" />
           <Property Name="ExistingData_HealthMotor" Type="bit" />
           <Property Name="NewData_Vision" Type="bit" />
@@ -1130,6 +1130,7 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormTransitionReferrals">
           <Key>
@@ -1673,6 +1674,7 @@
           <Property Name="PermissionID" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
           <Property Name="Active" Type="bit" />
+          <Property Name="BookID" Type="char" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPlacementCodes">
           <Key>
@@ -1813,6 +1815,7 @@
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
           <Property Name="LevelName" Type="nvarchar" MaxLength="10" />
+          <Property Name="BookID" Type="char" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="tblServiceFrequency">
           <Key>
@@ -4286,7 +4289,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="SpecialExpertise6" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="AgencyStaff" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="SchoolContactName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DeliveriedByWho" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DeliveriedTo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DelieveredByHand" Type="Boolean" />
@@ -4347,7 +4350,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Refuse_InitialEval" Type="Boolean" />
           <Property Name="Refuse_Reeval" Type="Boolean" />
           <Property Name="SchoolContact" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SchoolContactPhone" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SchoolContactPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NewData_HealthMotor" Type="Boolean" />
           <Property Name="ExistingData_HealthMotor" Type="Boolean" />
           <Property Name="NewData_Vision" Type="Boolean" />
@@ -4666,6 +4669,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormTransportationRequest">
           <Key>
@@ -5188,6 +5192,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="tblRolePermissions" Relationship="IndividualizedEducationProgramModel.FK_tblRolePermissions_tblPermissions" FromRole="tblPermission" ToRole="tblRolePermission" />
           <NavigationProperty Name="tblUserPermissions" Relationship="IndividualizedEducationProgramModel.FK_tblUserPermissions_tblPermissions" FromRole="tblPermission" ToRole="tblUserPermission" />
+          <Property Name="BookID" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblPlacementCode">
           <Key>
@@ -5338,6 +5343,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LevelName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tblRolePermissions" Relationship="IndividualizedEducationProgramModel.FK_tblRolePermissions_tblRoles" FromRole="tblRole" ToRole="tblRolePermission" />
+          <Property Name="BookID" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblServiceFrequency">
           <Key>
@@ -7545,6 +7551,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormTeamEvals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormTeamEval">
               <MappingFragment StoreEntitySet="tblFormTeamEval">
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -8113,6 +8120,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblPermissions">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblPermission">
               <MappingFragment StoreEntitySet="tblPermissions">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
@@ -8262,6 +8270,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblRoles">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblRole">
               <MappingFragment StoreEntitySet="tblRoles">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
                 <ScalarProperty Name="LevelName" ColumnName="LevelName" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
