@@ -7,23 +7,42 @@
 	@Styles.Render("~/Content/transition.css")
 	@Styles.Render("~/Content/jquery-ui.min.css")	
 }
+<style>
+    .ajax-loader {
+        /*display: none;*/
+        background-color: #ffffff;
+        background-color: rgba(255,255,255,0.7);
+        position: fixed;
+        z-index: 100;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+    }
 
-@using (Html.BeginForm("DownloadSpedPro", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
+        .ajax-loader img {
+            position: fixed;
+            top: 45%;
+            left: 40%;
+        }
+</style>
+@using (Html.BeginForm("SpedProDownload", "Home", FormMethod.Post, htmlAttributes: new { @class = "form-inline" }))
 {
 	<div class="transition-page">
 		<div class="col-md-2 pull-right">
 			<a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Reports" id="backtoportal" role="button" style="margin-top: 25px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to reports list"> </a>
 		</div>
 		<h2>SPED Pro Export</h2>
-		<div class="container" style="overflow:hidden; margin: 0 auto 75px;">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-12" style="margin-bottom: 12px;">
 					<div class="col-md-2">
 						<label for="districtDD">District</label>
 					</div>
 					<div class="col-md-6">
-						<select id="districtDD" name="districtDD" class="chosen-select form-control" data-placeholder="Select District">
-							<option value="">Select</option>
+						<select id="districtDD" name="districtDD" class="form-control" data-placeholder="Select District">
+							<option value="">Select District</option>
 						</select>
 					</div>
 				</div>
@@ -34,8 +53,8 @@
 						<label for="building">Building</label>
 					</div>
 					<div class="col-md-4">
-						<select id="buildingDD" name="buildingDD" class="chosen-select form-control" onchange="_getStudents();" data-placeholder="Select Building" style="width:100%">
-							<option value="">Select</option>
+						<select id="buildingDD" name="buildingDD" class="form-control" onchange="_getStudents();" data-placeholder="Select Building" style="width:100%">
+							<option value="">Select Building</option>
 						</select>
 					</div>
 				</div>
@@ -47,6 +66,7 @@
 					</div>
 					<div class="col-md-6">
 						<select class="form-control" id="fiscalYear" name="fiscalYear" onchange="_getStudents();" style="border-color: #ccc; display: inline-block;" required>
+							<option value="0">Select Fiscal Year</option>
 							<option value="2018">2017 - 2018</option>
 							<option value="2019">2018 - 2019</option>
 							<option value="2020">2019 - 2020</option>
@@ -56,29 +76,35 @@
 					</div>
 				</div>
 			</div>
+			<div class="row voffset2">
+					<div class="col-md-12">
+						<div class="col-md-2">	
+							<label for="fiscalYear">Students</label>					
+						</div>
+						<div class="col-md-6">
+							<select id="studentDD" name="studentDD" class="chosen-select" data-placeholder="Select Student(s)" style="width:100%" multiple>
+							<option value="">Select Student</option>
+							</select>
+						</div>
+					</div>
+				</div>
 			@if (ViewBag.canReset != null && ViewBag.canReset)
 			{
+				
 				<div class="row">
 					<div class="col-md-12 voffset2">
+						<div class="col-md-2">						
+						</div>
 						<div class="col-md-6">
 							<input type="checkbox" id="cbReset" name="cbReset" runat="server" onclick="_getStudents();" /> Reset Previously Submitted IEPs
 						</div>
 					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12 voffset2">
-						<div class="ajax-loader" style="display:none">
-				          <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="Loading student list" />
-						</div>
-						<div class="col-md-6" id="divStudents">
-						</div>
-					</div>
-				</div>
+				</div>			
 			}
 			<div class="row">
 				<div class="col-md-12">
 					<div class="col-md-2 voffset2">
-						<button type="button" id="exportButton" class="btn btn-default btn-lg "><i class="fa fa-file-export"></i> Submit</button>
+						<button type="button" id="exportButton" class="btn btn-default ">Submit</button>
 					</div>
 				</div>
 			</div>
@@ -100,21 +126,27 @@
                             }
 						</ul>
 					}
-
-					@if (ViewBag.message != null)
-					{
-						<span id="messageText" class="text-success">@ViewBag.message</span>
-					}
+					
+					<span id="messageText" class="text-success">@(ViewBag.message != null ? ViewBag.message : "")</span>
+					
 				</div>
 			</div>
 		</div>
 	</div>
-	
+	 <div class="ajax-loader" style="display: none;">
+            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+        </div>
 }
 @section scripts {
 	<script>
+		var selectedBuildingId = @(ViewBag.BuildingId == null ? 0 : ViewBag.BuildingId);
+		var selectedDistrictId = @(ViewBag.DistictId == null ? 0 : ViewBag.DistictId);
+		var selectedFiscalYear = @(ViewBag.FiscalYear  == null ? 0 : ViewBag.FiscalYear);
+
 		$(document).ready(function () {
 		
+			$('.chosen-select').chosen({ width: "100%",  disable_search_threshold: 10 });
+
 			_getDistricts();
 			
 			$('#districtDD').change(function (e) {
@@ -122,14 +154,26 @@
 				return false;
 			});
 
-			$("#exportButton").click(function () {
-				//$(".ajax-loader").show().fadeOut(3000, "linear", function () {
-				//		$('.ajax-loader').hide();						
-				//});
-
+			$("#exportButton").click(function () {				
 				$("ul.errorList").empty();
-				
-				$(".form-inline").submit();
+				$("#messageText").html("");
+				var isReset = $('#cbReset').is(':checked');
+
+				if (isReset) {									
+					if ($('#studentDD').val() == "") {
+						var result = confirm("Are you sure you want to reset all the IEPs? Click OK to continue. Otherwise click Cancel and select a student.");
+						if (result) {
+							$(".form-inline").submit();
+						}
+					}
+					else {
+						$(".form-inline").submit();
+                    }
+				}
+				else {				
+
+					$(".form-inline").submit();
+				}
 			});
 
 			$(this).find('.dtField').each(function () {
@@ -159,16 +203,28 @@
 						buildingElement.find('option').remove().end();
 
 						var buildingHtml = buildingElement.html();
-						//buildingHtml += "<option value='-1'>All</option>";
-
+						
 						//district only
 						$.each(buildings, function (key, value) {
-							buildingHtml += "<option value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+
+							var selected = "";
+							if (selectedBuildingId > 0 && selectedBuildingId ==  value.BuildingID) {
+								selected = "selected";
+								selectedBuildingId = 0;
+							}
+
+							buildingHtml += "<option " + selected + " value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
 						});
 
 						buildingElement.html(buildingHtml);			
 
+						if (selectedFiscalYear > 0) {
+							$('#fiscalYear').val(selectedFiscalYear);
+							selectedFiscalYear = 0;
+                        }
+
 						_getStudents();
+						
 					}
 				},
 				error: function (data) {
@@ -202,8 +258,13 @@
 						});
 
 						districtElement.html(dHtml);
-						
-					}
+
+						if (selectedDistrictId > 0) {
+							districtElement.val(selectedDistrictId);							
+							_districtChange(districtElement);
+							selectedDistrictId = 0;														
+						}				
+					}											
 				},
 				error: function (data) {
 					alert("There was an error retrieving the district information.");
@@ -214,47 +275,44 @@
 				 
 
 		function _getStudents() {
-			var isChecked = $('#cbReset').is(':checked');
+			var isReset = $('#cbReset').is(':checked');
 			var fiscalYear = $('#fiscalYear').val();
 
 			var districtId = $('#districtDD').val();
 			var buildingId = $('#buildingDD').val();
-			$("#messageText").html("");
+			//$("#messageText").removeClass("text-danger");
 			$("ul.errorList").empty();
-			$("#divStudents").html("").removeClass("text-danger");
-
-			if (isChecked) {
-
+			
+			if (fiscalYear > 0) {
 				$('.ajax-loader').show();
-                
+
 				$.ajax({
 					type: 'POST',
-					url: '/Home/GetSpedProStudentList',
-					data: { fiscalYear: fiscalYear, buildingId: buildingId, districtId: districtId },
+					url: '/Home/SpedProStudentList',
+					data: { fiscalYear: fiscalYear, buildingId: buildingId, districtId: districtId, isReset: isReset },
 					dataType: "json",
 					success: function (data) {
 						$(".ajax-loader").hide();
 						if (data.result && data.students != undefined) {
-							$("#divStudents").html("");
+							var studentElement = $("#studentDD");
+							studentElement.find('option').remove().end();
+							var studentHtml = studentElement.html();
 							var students = data.students;
 
-							if (students.length == 0) {
-								$("#divStudents").html("No IEPs found to reset.").addClass("text-danger");
-								return false;
-							}
+							if (students.length > 0) {
 
-							if (students != null && students != undefined) {
-								var i;
-
-								for (i = 0; i < students.length; i++) {
+								for (var i = 0; i < students.length; i++) {
 									var student = students[i];
-
-									$("#divStudents").append('<input class="form-control" type="checkbox" name="studentReset" value="' + student.UserID + '" />&nbsp;' + student.LastName + ", " + student.FirstName + "<br/>");
+									studentHtml += "<option value='" + student.UserID + "'>" + student.LastName + ", " + student.FirstName + "</option>";									
 								}
+
+								studentElement.html(studentHtml);
 							}
+
+							studentElement.trigger("chosen:updated");
 						}
 					},
-					done: function (data) {						
+					done: function (data) {
 						$(".ajax-loader").hide();
 					},
 					error: function (data) {
@@ -262,9 +320,6 @@
 						alert("There was an error processing the request.");
 					}
 				});
-			}
-			else {
-				$("#divStudents").html("");
 			}
 		}
 	</script>

@@ -3589,7 +3589,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetSpedProStudentList(int fiscalYear, string buildingId, string districtId)
+        public ActionResult SpedProStudentList(int fiscalYear, string buildingId, string districtId, bool isReset)
         {
             string iepStatus = IEPStatus.ACTIVE;
             List<tblUser> studentsList = new List<tblUser>();
@@ -3613,25 +3613,55 @@ namespace GreenbushIep.Controllers
                     myBuildings.Add(buildingId);
                 }
 
-                var query = (from iep in db.tblIEPs
-                             join student in db.tblUsers
-                                 on iep.UserID equals student.UserID
-                             join services in db.tblServices
-                                 on iep.IEPid equals services.IEPid
-                             join building in db.tblBuildingMappings
-                                 on student.UserID equals building.UserID
-                             where
-                             iep.IepStatus == iepStatus
-                             && (student.Archive == null || student.Archive == false)
-                             && services.SchoolYear == fiscalYear
-                             && (iep.FiledOn != null)
-                             && services.ServiceCode != "NS"
-                             && myBuildings.Contains(building.BuildingID)
-                             select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
-
-                if (query.Count() > 0)
+                if (isReset)
                 {
-                    studentsList.AddRange(query.Select(o => o.student));
+                    var query = (from iep in db.tblIEPs
+                                 join student in db.tblUsers
+                                     on iep.UserID equals student.UserID
+                                 join services in db.tblServices
+                                     on iep.IEPid equals services.IEPid
+                                 join building in db.tblBuildingMappings
+                                     on student.UserID equals building.UserID
+                                 where
+                                 iep.IepStatus == iepStatus
+                                 && (student.Archive == null || student.Archive == false)
+                                 && services.SchoolYear == fiscalYear
+                                 && (iep.FiledOn != null)
+                                 && services.ServiceCode != "NS"
+                                 && myBuildings.Contains(building.BuildingID)
+                                 select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
+
+                    if (query.Count() > 0)
+                    {
+                        studentsList.AddRange(query.Select(o => o.student));
+                    }
+                }
+                else
+                {
+                    //not filed yet
+                    var query = (from iep in db.tblIEPs
+                                 join student in db.tblUsers
+                                     on iep.UserID equals student.UserID
+                                 join services in db.tblServices
+                                     on iep.IEPid equals services.IEPid
+                                 join building in db.tblBuildingMappings
+                                     on student.UserID equals building.UserID
+                                 join studentInfo in db.tblStudentInfoes
+                                    on student.UserID equals studentInfo.UserID
+                                 where
+                                 iep.IepStatus == iepStatus
+                                 && (studentInfo.ExitDate == null || services.StartDate < studentInfo.ExitDate)
+                                 && (student.Archive == null || student.Archive == false)
+                                 && services.SchoolYear == fiscalYear
+                                 && (services.FiledOn == null || iep.FiledOn == null)
+                                 && services.ServiceCode != "NS"
+                                 && myBuildings.Contains(building.BuildingID)
+                                 select new { iep, student }).Distinct().ToList();
+
+                    if (query.Count() > 0)
+                    {
+                        studentsList.AddRange(query.Select(o => o.student));
+                    }
                 }
             }
 
@@ -3639,18 +3669,20 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult DownloadSpedPro(FormCollection collection)
+        public ActionResult SpedProDownload(FormCollection collection)
         {
             bool isReset = !string.IsNullOrEmpty(collection["cbReset"]);
             string fiscalYearStr = collection["fiscalYear"];
             int.TryParse(fiscalYearStr, out int fiscalYear);
 
             string districtId = collection["districtDD"];
-            string buildingId = collection["buildingDD"];
+            string buildingId = collection["buildingDD"];            
+            string studentList = collection["studentDD"];
 
-            string studentResetList = collection["studentReset"];
-
+            var studentIds = string.IsNullOrEmpty(studentList) ? Enumerable.Empty<int>() : Array.ConvertAll(studentList.Split(','), int.Parse).ToList();
+            
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             if (MIS != null)
             {
                 bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis));
@@ -3672,12 +3704,11 @@ namespace GreenbushIep.Controllers
                 string iepStatus = IEPStatus.ACTIVE;
                 List<ExportErrorView> exportErrors = new List<ExportErrorView>();
 
-                if (isReset && !string.IsNullOrEmpty(studentResetList))
-                {
 
+                if (isReset)
+                {
                     try
-                    {
-                        List<int> userIds = Array.ConvertAll(studentResetList.Split(','), int.Parse).ToList();
+                    { 
 
                         IQueryable<tblIEP> resetQuery = (from iep in db.tblIEPs
                                                          join student in db.tblUsers
@@ -3693,7 +3724,7 @@ namespace GreenbushIep.Controllers
                                                          && (iep.FiledOn != null)
                                                          && services.ServiceCode != "NS"
                                                          && myBuildings.Contains(building.BuildingID)
-                                                         && userIds.Contains(student.UserID)
+                                                          && (!studentIds.Any() || studentIds.Contains(student.UserID))
                                                          select iep).Distinct();
 
                         foreach (tblIEP item in resetQuery)
@@ -3716,10 +3747,13 @@ namespace GreenbushIep.Controllers
                         ViewBag.errors = exportErrors;
                     }
 
+                    ViewBag.BuildingId = buildingId;
+                    ViewBag.DistictId = districtId;
+                    ViewBag.FiscalYear = fiscalYear;
+
                     return View("~/Reports/SpedPro/Index.cshtml");
 
-                }
-
+                }                                
 
                 var query = (from iep in db.tblIEPs
                              join student in db.tblUsers
@@ -3738,6 +3772,7 @@ namespace GreenbushIep.Controllers
                              && (services.FiledOn == null || iep.FiledOn == null)
                              && services.ServiceCode != "NS"
                              && myBuildings.Contains(building.BuildingID)
+                             && (!studentIds.Any() || studentIds.Contains(student.UserID))                             
                              select new { iep, student }).Distinct().ToList();
 
                 if (query.Count() > 0)
@@ -3875,6 +3910,10 @@ namespace GreenbushIep.Controllers
                     else
                     {
                         ViewBag.errors = exportErrors;
+
+                        ViewBag.BuildingId = buildingId;
+                        ViewBag.DistictId = districtId;
+                        ViewBag.FiscalYear = fiscalYear;
                     }
                 }
                 else
@@ -3885,7 +3924,11 @@ namespace GreenbushIep.Controllers
                         Description = "No data found to export."
                     });
 
+
                     ViewBag.errors = exportErrors;
+                    ViewBag.BuildingId = buildingId;
+                    ViewBag.DistictId = districtId;
+                    ViewBag.FiscalYear = fiscalYear;
                 }
             }
 
