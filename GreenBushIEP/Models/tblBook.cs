@@ -12,24 +12,24 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblPermission
+    public partial class tblBook
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblPermission()
+        public tblBook()
         {
-            this.tblRolePermissions = new HashSet<tblRolePermission>();
-            this.tblUserPermissions = new HashSet<tblUserPermission>();
+            this.tblPermissions = new HashSet<tblPermission>();
+            this.tblRoles = new HashSet<tblRole>();
+            this.tblUserRoles = new HashSet<tblUserRole>();
         }
     
-        public string PermissionID { get; set; }
-        public string Description { get; set; }
-        public Nullable<bool> Active { get; set; }
         public string BookID { get; set; }
+        public string Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblRolePermission> tblRolePermissions { get; set; }
+        public virtual ICollection<tblPermission> tblPermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
-        public virtual tblBook tblBook { get; set; }
+        public virtual ICollection<tblRole> tblRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
     }
 }

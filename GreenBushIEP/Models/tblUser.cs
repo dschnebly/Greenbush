@@ -18,6 +18,7 @@ namespace GreenBushIEP.Models
         public tblUser()
         {
             this.tblUserPermissions = new HashSet<tblUserPermission>();
+            this.tblUserRoles = new HashSet<tblUserRole>();
         }
     
         public int UserID { get; set; }
@@ -46,5 +47,7 @@ namespace GreenBushIEP.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
     }
 }

@@ -17,11 +17,11 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="~/Content/greenbush_logo.png" width="45" height="45" class="pull-left" style="margin: auto 0; margin-right: 12px; margin-left: 2px; height: 40px; width: 40px; margin-top: 5px;" alt="Greenbush Logo" />
-                @Html.ActionLink("Greenbush", "Portal", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Greenbush", "Portal", "Account", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Portal", "Home")</li>
+                    <li>@Html.ActionLink("Home", "WhichBackpack", "Account")</li>
                     <li><a href="http://help.greenbushbackpack.org/support/home" target="_blank">Help</a></li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @{

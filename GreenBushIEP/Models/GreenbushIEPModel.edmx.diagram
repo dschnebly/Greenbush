@@ -130,6 +130,13 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_StudentExport" Width="1.5" PointX="36.75" PointY="12.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="19.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblFormTransitionReferral" Width="1.5" PointX="36.375" PointY="19.75" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblBook" Width="1.5" PointX="0.75" PointY="11.25" />
+        <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tblUserRole" Width="1.5" PointX="5.25" PointY="0.75" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblPermissions_BookID" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblRoles_BookID" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblUserRoles_BookID" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblUserRoles_RoleID" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblUserRoles_UserID" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

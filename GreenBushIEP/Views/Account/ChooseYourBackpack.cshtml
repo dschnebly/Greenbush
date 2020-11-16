@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Which backpack do you want to work with?";
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}
+
+<style>
+    .check {
+        opacity: 0.5;
+        color: #996;
+    }
+
+    .backpacklabels {
+        display: block;
+        font-size: 3em;
+        padding: 5px;
+    }
+</style>
+
+<div class="transition-page">
+    <div class="container transition-container">
+        <h2 class="text-center">@ViewBag.Title</h2>
+
+        <div class="row">
+            <form method="get">
+                <div class="form-group">
+                    <div class="col-md-4 col-md-push-2"><label class="btn btn-lg"><img src="~/Content/Images/ILPBackpack.png" alt="IEP Program" class="img-thumbnail img-check" style="width: 15em;"><input type="checkbox" name="chk1" id="IEP" value="1" class="hidden" autocomplete="off"><span class="backpacklabels">IEP</span></label></div>
+                    <div class="col-md-4 col-md-push-2"><label class="btn btn-lg"><img src="~/Content/Images/IEPBackpack.jpg" alt="ILP Program" class="img-thumbnail img-check" style="width: 15em;"><input type="checkbox" name="chk2" id="ILP" value="2" class="hidden" autocomplete="off"><span class="backpacklabels">ILP</span></label></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            // your page initialization code here
+            // the DOM will be available here
+            const IEPButton = document.getElementById("ILP").onclick = function () { this.classList.toggle('check'); window.location.href = "/ILP/Index"; }
+            const ILPButton = document.getElementById("IEP").onclick = function () { this.classList.toggle('check'); window.location.href = "/Home/Portal?logon=1"; }
+        })();
+    </script>
+</div>
