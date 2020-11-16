@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "ILP Portal";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")    
+    @Styles.Render("~/Content/misportal.css?v1.1")
+    @Styles.Render("~/Content/chosen.css")
+
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}
+
+<div class="container">
+    <h2>@ViewBag.Title</h2>
+    <div class="user-head">
+        @*<a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+                <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" alt="My Avatar">
+            </a>*@
+    </div>
+    <h3>
+        <a href="#" role="button" data-ftrans="slide">@ViewBag.DisplayName</a> <small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"> - my current list of users</small>
+    </h3>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <div id="user-toggle" class="pull-right">
+                <div class="user-toggle-item" style="display: inline-block;">
+                    <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
+                </div>
+                <div class="user-toggle-item" style="display: inline-block;">
+                    <a id="mySettings" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/MySettings"><i class="fa fa-cogs" title="Adjust My Settings" data-toggle="tooltip"></i></a>
+                </div>
+                <div class="user-toggle-item" style="display: inline-block;">
+                    <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert alert-info hidden" role="alert" id="alertMessage">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
+    </div>
+    <div class="panel panel-primary filterable">
+        <div class="panel-heading" style="padding: 8px 15px; background-color: #337ab7 !important; border-color: #337ab7 !important;">
+            <h3 class="panel-title">Users </h3>
+            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option></select>
+        </div>
+        <div class="ajax-loader" style="display: none;">
+            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+        </div>
+    </div>
+</div>

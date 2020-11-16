@@ -44,7 +44,6 @@ namespace GreenbushIep.Controllers
             return View();
         }
 
-        [AllowAnonymous]
         public ActionResult Portal(int? logon)
         {
             if (User.Identity.IsAuthenticated)
@@ -90,8 +89,7 @@ namespace GreenbushIep.Controllers
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
                     members = db.uspUserAssignedList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    //members = db.uspUserList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
-                };
+               };
 
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(OWNER);

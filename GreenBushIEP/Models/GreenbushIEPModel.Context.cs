@@ -138,6 +138,8 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
         public virtual DbSet<tblFormTransitionReferral> tblFormTransitionReferrals { get; set; }
+        public virtual DbSet<tblBook> tblBooks { get; set; }
+        public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -572,6 +574,36 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderId", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportESY_Result>("up_ReportESY", districtIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportKIDSID_Result> up_ReportKIDSID(string districtId, string buildingId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportKIDSID_Result>("up_ReportKIDSID", districtIdParameter, buildingIdParameter, teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<string> uspGetUserBooks(Nullable<int> userID, string email)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("uspGetUserBooks", userIDParameter, emailParameter);
         }
     }
 }

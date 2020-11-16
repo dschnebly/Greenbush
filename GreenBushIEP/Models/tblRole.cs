@@ -18,13 +18,18 @@ namespace GreenBushIEP.Models
         public tblRole()
         {
             this.tblRolePermissions = new HashSet<tblRolePermission>();
+            this.tblUserRoles = new HashSet<tblUserRole>();
         }
     
         public int RoleID { get; set; }
         public string RoleName { get; set; }
         public string LevelName { get; set; }
+        public string BookID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblRolePermission> tblRolePermissions { get; set; }
+        public virtual tblBook tblBook { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
     }
 }
