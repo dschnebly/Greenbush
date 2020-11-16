@@ -2143,7 +2143,9 @@ namespace GreenbushIep.Controllers
                 else // exsisting service
                 {
                     service = db.tblServices.Where(s => s.ServiceID == StudentSerivceId).FirstOrDefault();
+                    
                     service.BuildingID = collection["attendanceBuilding"].ToString();
+                    service.USD = db.vw_BuildingsForAttendance.Where(b => b.BuildingID == service.BuildingID && b.userID == studentId).FirstOrDefault().USD;
                     service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
                     service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
                     service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
@@ -3585,7 +3587,7 @@ namespace GreenbushIep.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetSpedProStudentList(int fiscalYear, string buildingId, string districtId)
+        public ActionResult SpedProStudentList(int fiscalYear, string buildingId, string districtId, bool isReset)
         {
             string iepStatus = IEPStatus.ACTIVE;
             List<tblUser> studentsList = new List<tblUser>();
@@ -3609,25 +3611,55 @@ namespace GreenbushIep.Controllers
                     myBuildings.Add(buildingId);
                 }
 
-                var query = (from iep in db.tblIEPs
-                             join student in db.tblUsers
-                                 on iep.UserID equals student.UserID
-                             join services in db.tblServices
-                                 on iep.IEPid equals services.IEPid
-                             join building in db.tblBuildingMappings
-                                 on student.UserID equals building.UserID
-                             where
-                             iep.IepStatus == iepStatus
-                             && (student.Archive == null || student.Archive == false)
-                             && services.SchoolYear == fiscalYear
-                             && (iep.FiledOn != null)
-                             && services.ServiceCode != "NS"
-                             && myBuildings.Contains(building.BuildingID)
-                             select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
-
-                if (query.Count() > 0)
+                if (isReset)
                 {
-                    studentsList.AddRange(query.Select(o => o.student));
+                    var query = (from iep in db.tblIEPs
+                                 join student in db.tblUsers
+                                     on iep.UserID equals student.UserID
+                                 join services in db.tblServices
+                                     on iep.IEPid equals services.IEPid
+                                 join building in db.tblBuildingMappings
+                                     on student.UserID equals building.UserID
+                                 where
+                                 iep.IepStatus == iepStatus
+                                 && (student.Archive == null || student.Archive == false)
+                                 && services.SchoolYear == fiscalYear
+                                 && (iep.FiledOn != null)
+                                 && services.ServiceCode != "NS"
+                                 && myBuildings.Contains(building.BuildingID)
+                                 select new { iep, student }).Distinct().OrderBy(o => o.student.LastName).ThenBy(o => o.student.FirstName).ToList();
+
+                    if (query.Count() > 0)
+                    {
+                        studentsList.AddRange(query.Select(o => o.student));
+                    }
+                }
+                else
+                {
+                    //not filed yet
+                    var query = (from iep in db.tblIEPs
+                                 join student in db.tblUsers
+                                     on iep.UserID equals student.UserID
+                                 join services in db.tblServices
+                                     on iep.IEPid equals services.IEPid
+                                 join building in db.tblBuildingMappings
+                                     on student.UserID equals building.UserID
+                                 join studentInfo in db.tblStudentInfoes
+                                    on student.UserID equals studentInfo.UserID
+                                 where
+                                 iep.IepStatus == iepStatus
+                                 && (studentInfo.ExitDate == null || services.StartDate < studentInfo.ExitDate)
+                                 && (student.Archive == null || student.Archive == false)
+                                 && services.SchoolYear == fiscalYear
+                                 && (services.FiledOn == null || iep.FiledOn == null)
+                                 && services.ServiceCode != "NS"
+                                 && myBuildings.Contains(building.BuildingID)
+                                 select new { iep, student }).Distinct().ToList();
+
+                    if (query.Count() > 0)
+                    {
+                        studentsList.AddRange(query.Select(o => o.student));
+                    }
                 }
             }
 
@@ -3635,18 +3667,20 @@ namespace GreenbushIep.Controllers
         }
 
         [Authorize]
-        public ActionResult DownloadSpedPro(FormCollection collection)
+        public ActionResult SpedProDownload(FormCollection collection)
         {
             bool isReset = !string.IsNullOrEmpty(collection["cbReset"]);
             string fiscalYearStr = collection["fiscalYear"];
             int.TryParse(fiscalYearStr, out int fiscalYear);
 
             string districtId = collection["districtDD"];
-            string buildingId = collection["buildingDD"];
+            string buildingId = collection["buildingDD"];            
+            string studentList = collection["studentDD"];
 
-            string studentResetList = collection["studentReset"];
-
+            var studentIds = string.IsNullOrEmpty(studentList) ? Enumerable.Empty<int>() : Array.ConvertAll(studentList.Split(','), int.Parse).ToList();
+            
             tblUser MIS = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             if (MIS != null)
             {
                 bool canReset = (MIS != null && (MIS.RoleID == owner || MIS.RoleID == mis));
@@ -3668,12 +3702,11 @@ namespace GreenbushIep.Controllers
                 string iepStatus = IEPStatus.ACTIVE;
                 List<ExportErrorView> exportErrors = new List<ExportErrorView>();
 
-                if (isReset && !string.IsNullOrEmpty(studentResetList))
-                {
 
+                if (isReset)
+                {
                     try
-                    {
-                        List<int> userIds = Array.ConvertAll(studentResetList.Split(','), int.Parse).ToList();
+                    { 
 
                         IQueryable<tblIEP> resetQuery = (from iep in db.tblIEPs
                                                          join student in db.tblUsers
@@ -3689,7 +3722,7 @@ namespace GreenbushIep.Controllers
                                                          && (iep.FiledOn != null)
                                                          && services.ServiceCode != "NS"
                                                          && myBuildings.Contains(building.BuildingID)
-                                                         && userIds.Contains(student.UserID)
+                                                          && (!studentIds.Any() || studentIds.Contains(student.UserID))
                                                          select iep).Distinct();
 
                         foreach (tblIEP item in resetQuery)
@@ -3712,10 +3745,13 @@ namespace GreenbushIep.Controllers
                         ViewBag.errors = exportErrors;
                     }
 
+                    ViewBag.BuildingId = buildingId;
+                    ViewBag.DistictId = districtId;
+                    ViewBag.FiscalYear = fiscalYear;
+
                     return View("~/Reports/SpedPro/Index.cshtml");
 
-                }
-
+                }                                
 
                 var query = (from iep in db.tblIEPs
                              join student in db.tblUsers
@@ -3734,6 +3770,7 @@ namespace GreenbushIep.Controllers
                              && (services.FiledOn == null || iep.FiledOn == null)
                              && services.ServiceCode != "NS"
                              && myBuildings.Contains(building.BuildingID)
+                             && (!studentIds.Any() || studentIds.Contains(student.UserID))                             
                              select new { iep, student }).Distinct().ToList();
 
                 if (query.Count() > 0)
@@ -3871,6 +3908,10 @@ namespace GreenbushIep.Controllers
                     else
                     {
                         ViewBag.errors = exportErrors;
+
+                        ViewBag.BuildingId = buildingId;
+                        ViewBag.DistictId = districtId;
+                        ViewBag.FiscalYear = fiscalYear;
                     }
                 }
                 else
@@ -3881,7 +3922,11 @@ namespace GreenbushIep.Controllers
                         Description = "No data found to export."
                     });
 
+
                     ViewBag.errors = exportErrors;
+                    ViewBag.BuildingId = buildingId;
+                    ViewBag.DistictId = districtId;
+                    ViewBag.FiscalYear = fiscalYear;
                 }
             }
 
@@ -4297,7 +4342,7 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:8pt;} table.servciesTable{font-size:8pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;}  </style>";
+                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:8pt;} table.servciesTable{width:98%;font-size:8pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;}  </style>";
                 string result = "";
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
@@ -4982,7 +5027,7 @@ namespace GreenbushIep.Controllers
                 teamEval.SpecificNeeds = GetInputValue("txtSpecificNeeds", spans);
                 teamEval.ConvergentData = GetInputValue("txtConvergentData", spans);
                 teamEval.ListSources = GetInputValue("txtListSources", spans);
-
+                teamEval.FormDate = GetInputValueDate("FormDate", spans); 
 
                 teamEval.Regulation_flag = GetCheckboxInputValue("Regulation_flag_Yes", "Regulation_flag_No", checkboxes);
                 teamEval.SustainedResources_flag = GetCheckboxInputValue("SustainedResources_flag_Yes", "SustainedResources_flag_No", checkboxes);

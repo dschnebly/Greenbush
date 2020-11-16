@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
-using Org.BouncyCastle.Asn1.Ocsp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

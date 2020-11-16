@@ -1906,27 +1906,44 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);                    
 
                     // check that the kidsIS doesn't already exsist in the system.
                     long kidsID = Convert.ToInt64(collection["kidsid"]);
+                    var studentId = Convert.ToInt64(collection["studentId"]);
+
                     tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
-                    if (exsistingStudent != null)
+                    if (exsistingStudent != null && studentId == 0)
                     {
                         return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
                     }
 
-                    // Create New User 
-                    tblUser student = new tblUser()
+                    //check if we already created this student
+                    
+                    tblUser student = new tblUser();
+                    
+                    if (studentId != 0)
                     {
-                        RoleID = "5",
-                        FirstName = collection["firstname"],
-                        MiddleName = collection["middlename"],
-                        LastName = collection["lastname"],
-                        Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
-                        Create_Date = DateTime.Now,
-                        Update_Date = DateTime.Now,
-                    };
+                        student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+                        student.FirstName = collection["firstname"];
+                        student.MiddleName = collection["middlename"];
+                        student.LastName = collection["lastname"];
+                        student.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();                        
+                    }
+                    else
+                    {
+                        // Create New User 
+                        student = new tblUser()
+                        {
+                            RoleID = "5",
+                            FirstName = collection["firstname"],
+                            MiddleName = collection["middlename"],
+                            LastName = collection["lastname"],
+                            Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
+                            Create_Date = DateTime.Now,
+                            Update_Date = DateTime.Now,
+                        };
+                    }
 
                     // try catch. If the email is the same as another student show error gracefully.
                     try
@@ -1941,7 +1958,10 @@ namespace GreenBushIEP.Controllers
                         }
                         else
                         {
-                            db.tblUsers.Add(student);
+                            if (studentId == 0)
+                            {
+                                db.tblUsers.Add(student);
+                            }
                             db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = student.UserID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName });
                             db.SaveChanges();
                         }
@@ -1951,28 +1971,35 @@ namespace GreenBushIEP.Controllers
                         return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
                     }
 
-                    // Create New StudentInfo
-                    // tblStudentInfo
-                    tblStudentInfo studentInfo = new tblStudentInfo()
+                    tblStudentInfo studentInfo = new tblStudentInfo();
+                    if (studentId != 0)
                     {
-                        UserID = student.UserID,
-                        KIDSID = kidsID,
-                        DateOfBirth = Convert.ToDateTime(collection["dob"]),
-                        Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "",
-                        Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "",
-                        AssignedUSD = collection["assignChildCount"].ToString(),
-                        USD = collection["misDistrict"],
-                        BuildingID = collection["AttendanceBuildingId"],
-                        NeighborhoodBuildingID = collection["NeighborhoodBuildingID"],
-                        Status = "PENDING",
-                        Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F",
-                        CreatedBy = submitter.UserID,
-                        Create_Date = DateTime.Now,
-                        Update_Date = DateTime.Now,
-                        PlacementCode = collection["studentPlacement"],
-                        ClaimingCode = true, // set to default true unless they change it on the second page.
-                        isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false
-                    };
+                        // remove all the buildingId. Blow it all away.
+                        db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == studentId));
+                        db.SaveChanges();
+
+                        //updating existing
+                        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();                                              
+                    }
+
+                    studentInfo.UserID = student.UserID;
+                    studentInfo.KIDSID = kidsID;
+                    studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+                    studentInfo.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+                    studentInfo.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
+                    studentInfo.AssignedUSD = collection["assignChildCount"].ToString();
+                    studentInfo.USD = collection["misDistrict"];
+                    studentInfo.BuildingID = collection["AttendanceBuildingId"];
+                    studentInfo.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
+                    studentInfo.Status = "PENDING";
+                    studentInfo.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                    studentInfo.CreatedBy = submitter.UserID;
+                    studentInfo.Create_Date = DateTime.Now;
+                    studentInfo.Update_Date = DateTime.Now;
+                    studentInfo.PlacementCode = collection["studentPlacement"];
+                    studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
+                    studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
+                                      
 
                     // map the buildings in the building mapping table
                     try
@@ -1987,7 +2014,10 @@ namespace GreenBushIEP.Controllers
 
                     try
                     {
-                        db.tblStudentInfoes.Add(studentInfo);
+                        if (studentId == 0)
+                        {
+                            db.tblStudentInfoes.Add(studentInfo);
+                        }
                         db.SaveChanges();
                     }
                     catch (Exception e)
@@ -2002,7 +2032,15 @@ namespace GreenBushIEP.Controllers
 
                     if (!string.IsNullOrEmpty(districtValues))
                     {
-                        string[] districtArray = districtValues.Split(','); ;
+                        string[] districtArray = districtValues.Split(','); 
+
+                        if (studentId != 0)
+                        {
+                            //updating existing
+                            List<tblOrganizationMapping> fullList = db.tblOrganizationMappings.Where(o => o.UserID == studentId).ToList();                            
+                            db.tblOrganizationMappings.RemoveRange(fullList);
+                            db.SaveChanges();
+                        }
 
                         foreach (string usd in districtArray)
                         {

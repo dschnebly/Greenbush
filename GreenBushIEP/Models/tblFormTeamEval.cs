@@ -48,5 +48,6 @@ namespace GreenBushIEP.Models
         public int CreatedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public Nullable<System.DateTime> FormDate { get; set; }
     }
 }

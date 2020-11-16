@@ -17,8 +17,8 @@ table.printTable td {
 	text-align: left;
 }
 
-.accTable {
-	font-size: 12px !important;
+.accTable, .servciesTable {
+	font-size: 11px !important;
 	max-width: 600px;
 }
 
