@@ -48,15 +48,7 @@
 		$("#alertMessage").on("click", function (e) {
 			$(e.currentTarget).hide();
 		});
-
-		// filter to only active students		
-		var filterCollection = $('#studentTable > tbody > tr');
-
-		$.each(filterCollection, function (index, value) {
-			if ($(value).attr("data-isActive") == 2) {
-				$(value).addClass('hidden');
-			}
-		});
+				
 
 		// attach Event
         // fires when a user clicks on the new system user button
@@ -127,20 +119,26 @@
 		// fires when the MIS chooses active/inactive
 		$('#filterActive').change(function () {
 
+			var statusActive = this.value;
 			var selectedDistrict = $("#userDistricts option:selected").val() + "";
 			var selectedBuilding = $("#userBuildings option:selected").val() + "";
-			var selectedActive = this.value;
 
 			$(".ajax-loader").show();
 
 			$.ajax({
-				type: 'POST',
-				url: '/Manage/FilterStudentList',
-				dataType: 'json',
-				data: { DistrictId: selectedDistrict, BuildingId: selectedBuilding, activeType: selectedActive },
+				type: "POST",
+				url: "/Manage/FilterUserList",
+				dataType: "json",
+				data: {
+					DistrictId: selectedDistrict,
+					BuildingId: selectedBuilding,
+					RoleId: 5,
+					statusActive: statusActive
+				},
 				async: false,
 				success: function (data) {
 					if (data.Result === "success") {
+
 						var results = data.Message;
 
 						// blow away the building list 
@@ -171,13 +169,13 @@
 								});
 							});
 						}
-					}
-					else {
-						alert('doh');
+
+					} else {
+						alert("doh");
 					}
 				},
 				error: function (data) {
-					alert('Not connected to the network!');
+					alert("Not connected to the network!");
 
 					console.log(data);
 				},
@@ -186,7 +184,8 @@
 					//A function to be called when the request finishes 
 					// (after success and error callbacks are executed). 
 				}
-			});
+			});	
+		
 		});
 
 		// attach event

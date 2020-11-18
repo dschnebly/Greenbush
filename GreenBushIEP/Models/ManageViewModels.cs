@@ -261,6 +261,7 @@ namespace GreenBushIEP.Models
         public List<NotificationViewModel> draftIeps { get; set; }
         public List<NotificationViewModel> dueIeps { get; set; }
         public bool showDashboardNotification { get; set; }
+        public List<string> activeEducationalStatuses { get; set; }
         public StudentViewModel()
         {
             districts = new List<tblDistrict>();

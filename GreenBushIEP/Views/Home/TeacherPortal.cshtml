@@ -368,9 +368,9 @@
 
                     <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                     <select class="form-control" name="filterActive" id="filterActive">
-                        <option value="0">All</option>
-						<option value="1" selected>Active</option>
-						<option value="2">Inactive</option>                        
+                        <option value="">All</option>
+                        <option value="1" selected>Active</option>
+                        <option value="0">Inactive</option>                       
                     </select>
                 </div>
             </div>
@@ -456,7 +456,7 @@
                 <tbody>
                     @foreach (var student in Model.Students)
                     {
-                        <tr data-id="@(student.UserID)" data-isActive="@(student.RoleID == "5" ? student.hasIEP ? 1: 2 : 0)">
+                        <tr data-id="@(student.UserID)" class="@(Model.activeEducationalStatuses.Contains(student.Status) ? "": "hidden")">
                             <td>@student.KidsID</td>
                             <td>@student.FirstName</td>
                             <td>@student.MiddleName</td>
@@ -521,6 +521,6 @@
 @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
 
 @section scripts {
-    @Scripts.Render("~/Scripts/portal.js?v1.4")
+    @Scripts.Render("~/Scripts/portal.js?v1.5")
     @Scripts.Render("~/Scripts/fasw.transitions.js")
 }
