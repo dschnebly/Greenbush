@@ -131,6 +131,7 @@
             <input type="hidden" value="@Model.MeetingDate.ToString("MM/dd/yyyy")" id="iepMeetingDate" />
             <input type="hidden" value="@Model.MeetingDate.ToString("yyyy")" id="iepMeetingDateYear" />
             <input type="hidden" id="sid" value="@Model.studentId" />
+            <a name="alertAnchor"></a>
             <div class="alert alert-danger noPrint" id="alertMessage" role="alert">
                 <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <strong class="moreinfo">Oh snap!</strong>
@@ -1239,6 +1240,7 @@
             }
             else {
                 $("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+                jump("alertAnchor");
             }
 
             if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
@@ -1248,6 +1250,12 @@
                 });
             }
         }
+    }
+
+    function jump(h) {
+        var url = location.href;                 //Save down the URL without hash.
+        location.href = "#" + h;                 //Go to the target element.
+        history.replaceState(null, null, url);   //Don't like hashes. Changing it back.
     }
 
     function _checkCalendarReporting(fiscalYear, minutesElement, daysPerWeekElement) {
