@@ -752,6 +752,15 @@
       <DependentUpon>Report.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\NoIEP\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\NoIEP\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\ProceduralDatesTracking\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -936,6 +945,9 @@
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
     <Content Include="Reports\IEPDue\Report.aspx" />
     <Content Include="Reports\KIDSID\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Reports\NoIEP\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ProceduralDatesTracking\Report.aspx">
@@ -1304,6 +1316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\NoIEP\rptNoIEP.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ProceduralDatesTracking\rptProceduralDatesTracking.rdlc">

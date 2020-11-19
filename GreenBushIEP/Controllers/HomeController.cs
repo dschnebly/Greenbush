@@ -211,7 +211,8 @@ namespace GreenbushIep.Controllers
                                               ImageURL = user.ImageURL,
                                               KidsID = i.KIDSID,
                                               DateOfBirth = i.DateOfBirth,
-                                              CreatedBy = i.CreatedBy
+                                              CreatedBy = i.CreatedBy,
+                                              Status = i.StatusCode
                                           }).Distinct().ToList();
 
                 //get IEP Date
@@ -231,7 +232,8 @@ namespace GreenbushIep.Controllers
                     Teacher = teacher,
                     Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
-                    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList()
+                    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList(),
+                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
                 //dashboard notify
@@ -278,9 +280,10 @@ namespace GreenbushIep.Controllers
                                              select i).Distinct().ToList();
 
                 List<Student> students = (from user in users
-                                          join i in info
+                                          join i in info                                          
                                           on user.UserID equals i.UserID
                                           where !(user.Archive ?? false)
+                                         
                                           select new Student()
                                           {
                                               UserID = user.UserID,
@@ -296,7 +299,8 @@ namespace GreenbushIep.Controllers
                                               ImageURL = user.ImageURL,
                                               KidsID = i.KIDSID,
                                               DateOfBirth = i.DateOfBirth,
-                                              CreatedBy = i.CreatedBy
+                                              CreatedBy = i.CreatedBy,
+                                              Status = i.StatusCode
                                           }).Distinct().ToList();
 
                 //get IEP Date
@@ -315,7 +319,8 @@ namespace GreenbushIep.Controllers
                     Teacher = nurse,
                     Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList(),
-                    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList()
+                    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList(),
+                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
                 return View(model);

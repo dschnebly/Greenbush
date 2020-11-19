@@ -1,18 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.KIDSID.Report" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Reports/ReportMaster.Master" AutoEventWireup="true" CodeBehind="Report.aspx.cs" Inherits="GreenBushIEP.Reports.NoIEP.Report" %>
 <%@ MasterType virtualPath="~/Reports/ReportMaster.Master"%> 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-	<% 
-		string toggleElement = "style ='margin-bottom: 11px;'";
-
-		if (this.Master.GetUserLevel == "4" || this.Master.GetUserLevel == "6" )
-		{
-			toggleElement = "style='display:none'";
-		}
-	%>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">	
 	<div class="row"  style="margin-bottom: 15px;">
-		<h2>KIDSID Unavailable Report</h2>
+		<h2>No IEP Report</h2>
 	</div>
 	<div class="row"  style="margin-bottom: 15px;">
 		<div class="col-md-12" style="margin-bottom: 12px;">
