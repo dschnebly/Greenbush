@@ -22,5 +22,8 @@ namespace GreenBushIEP.Models
         public System.DateTime Update_Date { get; set; }
         public int CreatedBy { get; set; }
         public int ModifiedBy { get; set; }
+        public string USD { get; set; }
+        public string BuildingID { get; set; }
+        public string StatusCode { get; set; }
     }
 }

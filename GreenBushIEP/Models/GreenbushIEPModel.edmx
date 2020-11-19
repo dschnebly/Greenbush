@@ -92,6 +92,9 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusCode" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -1137,6 +1140,7 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormTransitionReferrals">
           <Key>
@@ -3374,7 +3378,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblUserRole" EntitySet="tblUserRoles" />
           </AssociationSet>
           <FunctionImport Name="uspGetUserBooks" ReturnType="Collection(String)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
         </EntityContainer>
@@ -3770,6 +3774,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -4816,6 +4823,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormTransportationRequest">
           <Key>
@@ -6756,6 +6764,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblArchiveIEPExits">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveIEPExit">
               <MappingFragment StoreEntitySet="tblArchiveIEPExit">
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -7812,6 +7823,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormTeamEvals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormTeamEval">
               <MappingFragment StoreEntitySet="tblFormTeamEval">
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
