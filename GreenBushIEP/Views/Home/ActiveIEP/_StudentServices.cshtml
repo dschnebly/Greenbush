@@ -120,8 +120,14 @@
 									var building = Model.attendanceBuildings.FirstOrDefault(o => o.BuildingID == service.BuildingID);
 									if (building != null)
 									{
-										<text>@building.BuildingName</text>
-									}
+									    <text>@(building.BuildingName)</text>
+                                    }
+                                    else if(Model.previousAttendanceBuildings.Count > 0)
+                                    {                                     
+                                       var previousBuilding = Model.previousAttendanceBuildings.FirstOrDefault(o => o.BuildingID == service.BuildingID);
+
+                                       	<text>@(previousBuilding != null ? string.Format("USD {0} - {1}",previousBuilding.USD, previousBuilding.BuildingName): "")</text>
+                                    }                                    
 								}
                             </td>
                             <td>

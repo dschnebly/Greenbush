@@ -1901,12 +1901,16 @@ namespace GreenbushIep.Controllers
 
                 if (services != null)
                 {
+                    var studentUSDList = studentInfo.USD.Split(',').ToList();
+                    var previousBuildings = services.Where(o => !studentUSDList.Contains(o.USD)).Select(o => o.BuildingID).ToList();
+
                     model.studentId = studentId;
                     model.studentServices = services;
                     model.serviceTypes = db.tblServiceTypes.ToList();
                     model.serviceProviders = providers;
                     model.serviceLocations = db.tblLocations.ToList();
                     model.attendanceBuildings = db.vw_BuildingsForAttendance.Where(b => b.userID == student.UserID).Distinct().ToList();
+                    model.previousAttendanceBuildings = db.tblBuildings.Where(o => previousBuildings.Contains(o.BuildingID)).Distinct().ToList();
                     model.studentGoals = db.tblGoals.Where(g => g.IEPid == iep.IEPid && g.hasSerivce == true).ToList();
                     model.IEPStartDate = original.begin_date ?? DateTime.Now;
                     model.MeetingDate = iep.MeetingDate ?? DateTime.Now;
@@ -1915,7 +1919,7 @@ namespace GreenbushIep.Controllers
                     model.IEPStatus = iep.IepStatus.ToUpper();
                     model.primaryProviderId = iep.PrimaryProviderID;
                     ViewBag.ServiceStartDate = iep.begin_date;
-
+                    
                     int? modifiedby = (services.Count > 0) ? services.FirstOrDefault().ModifiedBy : null;
                     if (modifiedby != null)
                     {
@@ -1923,6 +1927,8 @@ namespace GreenbushIep.Controllers
                         ViewBag.modifiedByFullName = (modifier != null) ? string.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         ViewBag.modifiedByDate = services.FirstOrDefault().Update_Date;
                     }
+
+
                 }
                 else
                 {
@@ -2148,9 +2154,20 @@ namespace GreenbushIep.Controllers
                 else // exsisting service
                 {
                     service = db.tblServices.Where(s => s.ServiceID == StudentSerivceId).FirstOrDefault();
-                    
                     service.BuildingID = collection["attendanceBuilding"].ToString();
-                    service.USD = db.vw_BuildingsForAttendance.Where(b => b.BuildingID == service.BuildingID && b.userID == studentId).FirstOrDefault().USD;
+
+                    var attendanceBuilding = db.vw_BuildingsForAttendance.Where(b => b.BuildingID == service.BuildingID && b.userID == studentId).FirstOrDefault();
+
+                    if (attendanceBuilding == null)
+                    {
+                        var previousBuilding = db.tblBuildings.Where(o => o.BuildingID == service.BuildingID).FirstOrDefault();
+                        if(previousBuilding != null)
+                        {
+                            attendanceBuilding = new vw_BuildingsForAttendance() { BuildingID = previousBuilding.BuildingID, USD = previousBuilding.USD };
+                        }
+                    }
+                    
+                    service.USD = attendanceBuilding != null ?  attendanceBuilding.USD : "";
                     service.SchoolYear = Convert.ToInt32(collection["fiscalYear"]);
                     service.StartDate = DateTime.TryParse((collection["serviceStartDate"]), out temp) ? temp : DateTime.Now;
                     service.EndDate = DateTime.TryParse((collection["serviceEndDate"]), out temp) ? temp : DateTime.Now;
