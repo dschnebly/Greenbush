@@ -3685,7 +3685,13 @@ namespace GreenbushIep.Controllers
                 }
             }
 
-            return Json(new { result = true, students = studentsList }, JsonRequestBehavior.AllowGet);
+            var students = studentsList.Select(x => new {
+                UserID = x.UserID,
+                LastName = x.LastName,
+                FirstName = x.FirstName,
+            }).ToList();
+
+            return Json(new { result = true, students = students }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize]

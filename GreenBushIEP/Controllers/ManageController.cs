@@ -2633,13 +2633,13 @@ namespace GreenBushIEP.Controllers
 
                         DateTime exitDate;
 
-                        if (DateTime.TryParse(collection["exitDate"], out exitDate))
+                        if (DateTime.TryParseExact(collection["exitDate"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out exitDate))
                         {
                             info.ExitDate = exitDate;
                         }
                         else
                         {
-                            return Json(new { Result = "error", Message = "The Exit date is invalid. Please use the format: MM/DD/YYYY." });
+                            return Json(new { Result = "error", Message = "The Exit Date is invalid. Please use the format: MM/DD/YYYY." });
                         }
                     }
                     else
