@@ -43,7 +43,6 @@ namespace GreenbushIep.Controllers
 
             return View();
         }
-
         public ActionResult Portal(int? logon)
         {
             if (User.Identity.IsAuthenticated)
@@ -1927,8 +1926,6 @@ namespace GreenbushIep.Controllers
                         ViewBag.modifiedByFullName = (modifier != null) ? string.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         ViewBag.modifiedByDate = services.FirstOrDefault().Update_Date;
                     }
-
-
                 }
                 else
                 {
