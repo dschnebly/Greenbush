@@ -378,6 +378,13 @@
                                                                     <option value="@(building.BuildingID)" @(service.BuildingID == building.BuildingID ? "selected" : "" )>@(building.BuildingName)</option>
                                                                 }
                                                             }
+                                                            @if(Model.previousAttendanceBuildings.Count > 0)
+                                                            {
+                                                                foreach (var previousBuilding in Model.previousAttendanceBuildings)
+                                                                {
+                                                                    <option value="@(previousBuilding.BuildingID)" @(service.BuildingID == previousBuilding.BuildingID ? "selected" : "" )>@(string.Format("USD {0} - {1}",previousBuilding.USD, previousBuilding.BuildingName))</option>
+                                                                }
+                                                            }
                                                         </select>
                                                     </div>
                                                 </div>

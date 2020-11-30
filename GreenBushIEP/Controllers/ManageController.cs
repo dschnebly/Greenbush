@@ -2630,7 +2630,17 @@ namespace GreenBushIEP.Controllers
 
                     if (!string.IsNullOrEmpty(collection["exitDate"]))
                     {
-                        info.ExitDate = Convert.ToDateTime(collection["exitDate"]);
+
+                        DateTime exitDate;
+
+                        if (DateTime.TryParseExact(collection["exitDate"], "MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None, out exitDate))
+                        {
+                            info.ExitDate = exitDate;
+                        }
+                        else
+                        {
+                            return Json(new { Result = "error", Message = "The Exit Date is invalid. Please use the format: MM/DD/YYYY." });
+                        }
                     }
                     else
                     {
@@ -2673,6 +2683,14 @@ namespace GreenBushIEP.Controllers
                         info.ReEvalCompleted = null;
                     }
 
+                    //check if exit
+                    tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
+                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive";
+                    if (isExit && !info.ExitDate.HasValue)
+                    {
+                        return Json(new { Result = "error", Message = "Please enter an Exit date." });
+                    }
+
                     db.SaveChanges();
 
                     if (info != null && info.ReEvalCompleted.HasValue)
@@ -2688,51 +2706,45 @@ namespace GreenBushIEP.Controllers
                     //check for exit code and send email if it was just changed to an exist code
                     if (currentStatusCode != info.StatusCode)
                     {
-                        tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
-
-                        if (statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive")
+                        if (isExit)
                         {
                             // keep an audit trail on the students that come and go due to real life circumstances 
-                            tblArchiveIEPExit archive = db.tblArchiveIEPExits.Where(a => a.userID == studentId).FirstOrDefault();
-                            if (archive != null)
+
+                            if (info.ExitDate.HasValue)
                             {
-                                archive = new tblArchiveIEPExit
-                                {
-                                    exitDate = DateTime.Now,
-                                    exitNotes = info.ExitNotes,
-                                    ModifiedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID,
-                                    Update_Date = DateTime.Now
-                                };
-                            }
-                            else
-                            {
-                                archive = new tblArchiveIEPExit
+                                var archive = new tblArchiveIEPExit
                                 {
                                     userID = studentId,
-                                    exitDate = DateTime.Now,
-                                    CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID
+                                    exitDate = info.ExitDate.Value,
+                                    exitNotes = info.ExitNotes,
+                                    BuildingID = info.BuildingID,
+                                    StatusCode = info.StatusCode,
+                                    USD = info.USD,
+                                    CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID,
+                                    Create_Date = DateTime.Now,
+                                    Update_Date = DateTime.Now
                                 };
-                                archive.ModifiedBy = archive.CreatedBy;
-                                archive.exitNotes = info.ExitNotes;
-                                archive.Create_Date = DateTime.Now;
-                                archive.Update_Date = DateTime.Now;
 
                                 db.tblArchiveIEPExits.Add(archive);
-                            }
-                            db.SaveChanges();
+                                db.SaveChanges();
 
-                            SendExitEmail(info.AssignedUSD
-                                , string.Format("{0}, {1}", student.LastName, student.FirstName)
-                                , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
-                                , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
-                                , info.ExitNotes
-                                );
+                                SendExitEmail(info.AssignedUSD
+                                    , string.Format("{0}, {1}", student.LastName, student.FirstName)
+                                    , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
+                                    , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
+                                    , info.ExitNotes
+                                    );
+                            }                            
                         }
                     }
                 }
+                catch(SmtpException stmpError)
+                {
+                    return Json(new { Result = "error", Message = "There was an error sending the MIS Exit notification email.\n\n" + stmpError.Message });
+                }
                 catch (Exception e)
                 {
-                    return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.InnerException.ToString() });
+                    return Json(new { Result = "error", Message = "There was an error while trying to edit the student's options. \n\n" + e.Message });
                 }
 
 
