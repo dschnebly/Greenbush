@@ -92,6 +92,9 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" />
+          <Property Name="BuildingID" Type="nvarchar" MaxLength="50" />
+          <Property Name="StatusCode" Type="char" MaxLength="1" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -1137,6 +1140,7 @@
           <Property Name="CreatedBy" Type="int" Nullable="false" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormTransitionReferrals">
           <Key>
@@ -2169,6 +2173,15 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ILP_Locations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vw_ILP_Locations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="nvarchar" MaxLength="101" Nullable="false" />
+          <Property Name="BuildingName" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <!--Errors Found During Generation:
 warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleAccommodationFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ModuleAccommodationFlags">
           <Key>
@@ -2862,6 +2875,12 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
     [vw_GoalExport].[isValidKIDSID] AS [isValidKIDSID]
     FROM [dbo].[vw_GoalExport] AS [vw_GoalExport]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="vw_ILP_Locations" EntityType="Self.vw_ILP_Locations" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [vw_ILP_Locations].[LocationID] AS [LocationID], 
+    [vw_ILP_Locations].[BuildingName] AS [BuildingName]
+    FROM [dbo].[vw_ILP_Locations] AS [vw_ILP_Locations]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_ModuleAccommodationFlags" EntityType="Self.vw_ModuleAccommodationFlags" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_ModuleAccommodationFlags].[IEPid] AS [IEPid], 
@@ -3374,9 +3393,10 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             <End Role="tblUserRole" EntitySet="tblUserRoles" />
           </AssociationSet>
           <FunctionImport Name="uspGetUserBooks" ReturnType="Collection(String)">
-          <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="Email" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="vw_ILP_Locations" EntityType="IndividualizedEducationProgramModel.vw_ILP_Locations" />
         </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -3770,6 +3790,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblAuditLog">
           <Key>
@@ -4816,6 +4839,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <Property Name="CreatedBy" Type="Int32" Nullable="false" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FormDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormTransportationRequest">
           <Key>
@@ -6286,6 +6310,13 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="vw_ILP_Locations">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="String" Nullable="false" MaxLength="101" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingName" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6756,6 +6787,9 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblArchiveIEPExits">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblArchiveIEPExit">
               <MappingFragment StoreEntitySet="tblArchiveIEPExit">
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="BuildingID" ColumnName="BuildingID" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
@@ -7812,6 +7846,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
           <EntitySetMapping Name="tblFormTeamEvals">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormTeamEval">
               <MappingFragment StoreEntitySet="tblFormTeamEval">
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -9105,6 +9140,14 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="uspGetUserBooks" FunctionName="IndividualizedEducationProgramModel.Store.uspGetUserBooks" />
+          <EntitySetMapping Name="vw_ILP_Locations">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.vw_ILP_Locations">
+              <MappingFragment StoreEntitySet="vw_ILP_Locations">
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

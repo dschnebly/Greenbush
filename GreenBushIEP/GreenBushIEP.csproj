@@ -633,6 +633,9 @@
     <Compile Include="Models\vw_GoalExport.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vw_ILP_Locations.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\vw_ModuleAccommodationFlags.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>

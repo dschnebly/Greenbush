@@ -140,6 +140,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormTransitionReferral> tblFormTransitionReferrals { get; set; }
         public virtual DbSet<tblBook> tblBooks { get; set; }
         public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
+        public virtual DbSet<vw_ILP_Locations> vw_ILP_Locations { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
