@@ -1421,6 +1421,15 @@ namespace GreenbushIep.Controllers
                 studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
 
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                }
+
                 studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
                 studentAnnualIEP.IsActive = true;
 
