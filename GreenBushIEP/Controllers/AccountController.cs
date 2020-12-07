@@ -81,13 +81,13 @@ namespace GreenbushIep.Controllers
                         {
                             FormsAuthentication.SetAuthCookie(email, false);
 
-                            List<string> books = db.uspGetUserBooks(user.UserID, email).ToList();
-                            if (books.Count == 1 && books.Any(s => s.Contains("IEP")))
+                            List<uspGetUserBooks_Result> books = db.uspGetUserBooks(user.UserID, email).ToList();
+                            if (books.Count == 1 && books.Any(b => b.BookID == "IEP"))
                             {
                                 // IEP Portal
                                 return Json(new { portal = "/Home/Portal?logon=1", success = true });
                             }
-                            else if (books.Count == 1 && books.Any(s => s.Contains("ILP")))
+                            else if (books.Count == 1 && books.Any(b => b.BookID == "ILP"))
                             {
                                 // ILP Portal
                                 return Json(new { portal = "/ILP/Index", success = true });
@@ -197,13 +197,13 @@ namespace GreenbushIep.Controllers
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-            List<string> books = db.uspGetUserBooks(user.UserID, user.Email).ToList();
-            if (books.Count == 1 && books.Any(s => s.Contains("IEP")))
+            List<uspGetUserBooks_Result> books = db.uspGetUserBooks(user.UserID, user.Email).ToList();
+            if (books.Count == 1 && books.Any(b => b.BookID == "IEP"))
             {
                 // IEP Portal
                 return RedirectToAction("Portal", "Home");
             }
-            else if (books.Count == 1 && books.Any(s => s.Contains("ILP")))
+            else if (books.Count == 1 && books.Any(b => b.BookID == "ILP"))
             {
                 // ILP Portal
                 return RedirectToAction("Index", "ILP");

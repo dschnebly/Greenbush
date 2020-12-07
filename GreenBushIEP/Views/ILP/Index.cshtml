@@ -1,25 +1,38 @@
-﻿@{
+﻿@model GreenBushIEP.Models.ILPPortalViewModel
+
+@{
     ViewBag.Title = "ILP Portal";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section stylesheets {
-    @Styles.Render("~/Content/transition.css")    
+    @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/misportal.css?v1.1")
     @Styles.Render("~/Content/chosen.css")
-
 }
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
 }
 
+<style>
+    .panel {
+        margin-bottom: 0;
+    }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #5bc0de !important;
+        border-color: #46b8da !important;
+    }
+
+</style>
 <div class="container">
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
-        @*<a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-                <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" alt="My Avatar">
-            </a>*@
+        <a href="/Manage/Edit/@(Model.User.UserID)" class="inbox-avatar" data-ftrans="slide">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.User.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.User.ImageURL)" alt="My Avatar">
+        </a>
     </div>
     <h3>
         <a href="#" role="button" data-ftrans="slide">@ViewBag.DisplayName</a> <small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"> - my current list of users</small>
@@ -49,8 +62,28 @@
             <h3 class="panel-title">Users </h3>
             <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option></select>
         </div>
-        <div class="ajax-loader" style="display: none;">
-            <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-        </div>
+    </div>
+    <div>
+        @if (Model.Students.Count > 0)
+        {
+            <div class="list-group list-group-root well">
+
+                @foreach (var user in Model.Students)
+                {
+                    <div class="list-group-item" data-id="@(user.UserID)">
+                        <i class="fa fa-child" aria-hidden="true"></i>
+                        <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                            <span class="far fa-building" aria-hidden="true"></span>
+                        </button>
+                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                        </button>
+                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                    </div>
+                }
+
+            </div>
+        }
     </div>
 </div>

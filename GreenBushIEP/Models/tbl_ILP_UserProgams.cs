@@ -12,12 +12,10 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblRolePermission
+    public partial class tbl_ILP_UserProgams
     {
-        public int RolePermissionID { get; set; }
-        public int RoleID { get; set; }
-        public string PermissionID { get; set; }
-    
-        public virtual tblPermission tblPermission { get; set; }
+        public int UserID { get; set; }
+        public string ProgramID { get; set; }
+        public string LocationID { get; set; }
     }
 }

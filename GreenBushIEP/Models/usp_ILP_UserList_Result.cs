@@ -10,14 +10,15 @@
 namespace GreenBushIEP.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class tblRolePermission
+    public partial class usp_ILP_UserList_Result
     {
-        public int RolePermissionID { get; set; }
+        public int UserID { get; set; }
+        public string FirstName { get; set; }
+        public string MiddleName { get; set; }
+        public string LastName { get; set; }
         public int RoleID { get; set; }
-        public string PermissionID { get; set; }
-    
-        public virtual tblPermission tblPermission { get; set; }
+        public Nullable<bool> hasIEP { get; set; }
+        public Nullable<bool> isAssgined { get; set; }
     }
 }

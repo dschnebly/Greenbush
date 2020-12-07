@@ -13,6 +13,7 @@ namespace GreenBushIEP.Models
     
     public partial class up_ReportProceduralDatesTracking_Result
     {
+        public int StudentUserId { get; set; }
         public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
         public Nullable<System.DateTime> InitialEvalDetermination { get; set; }
         public Nullable<System.DateTime> InitialEvalConsentSigned { get; set; }
@@ -29,5 +30,10 @@ namespace GreenBushIEP.Models
         public string BuildingName { get; set; }
         public string USD { get; set; }
         public string Teachers { get; set; }
+        public long KIDSID { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
+        public Nullable<System.DateTime> ReEvalCompleted { get; set; }
+        public bool isGifted { get; set; }
+        public string Primary_DisabilityCode { get; set; }
     }
 }
