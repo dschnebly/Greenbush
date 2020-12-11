@@ -620,16 +620,40 @@ function filterList(members) {
         i--;
     }
 
+    var studentDropDown = $("#filterName");
+    studentDropDown.find('option').remove().end();
+    studentDropDown
+        .append($('<option>', {
+            value: "-1"
+        })
+            .text("All Users"));
+
     var j = members.length - 1;
     while (j >= 0) {
+        var roleId = members[j].RoleID;
         console.log(members[j].UserID);
         var matchFound = document.querySelectorAll("div [data-id='" + members[j].UserID + "']");
         console.log(matchFound);
         if (matchFound[0] != null) {
             matchFound[0].classList.remove("hidden");
         }
+
+        if (roleId == 5) {
+            var lastName = members[j].LastName == null ? "" : members[j].LastName;
+            var firstName = members[j].FirstName == null ? "" : members[j].FirstName;
+            var middleName = members[j].MiddleName == null ? "" : members[j].MiddleName;
+            var kidsID = members[j].KidsID == null ? "" : members[j].KidsID;
+
+            var studentName = lastName + ", " + firstName + " " + middleName + " - " + kidsID;
+            studentDropDown
+                .append($('<option>', { value: members[j].UserID })
+                    .text(studentName));
+        }
+
         j--;
     }
+
+    studentDropDown.trigger("chosen:updated");
 }
 
 jQuery.fn.extend({
