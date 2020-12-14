@@ -15,10 +15,9 @@
 
             container = document.querySelector(".list-group-root");
             var filterCollection = container.querySelectorAll(".list-group-item");
-            var i = filterCollection.length - 1;
-            while (i >= 0) {
+            var i = filterCollection.length;
+            while (i--) {
                 filterCollection[i].classList.remove("hidden");
-                i--;
             }
         } else {
             var data = [];
@@ -65,13 +64,6 @@
 
             }
         });
-
-        // show active select if the user is of type learner.
-        if (selectedRole == 10) {
-            $(".activeILPCol").removeClass("hidden");
-        } else {
-            $(".activeILPCol").addClass("hidden");
-        }
     });
 
     $("#userDistricts").on("change", function () {
@@ -152,7 +144,7 @@
         });
     });
 
-    $("#statusActive").on("change", function () {
+    $("#statusArchived").on("change", function () {
 
         var selectedLocation = $("#userDistricts option:selected").val();
         var selectedRole = $("#userRoles option:selected").val();
@@ -214,10 +206,9 @@
         }
 
         var filterCollection = container.querySelectorAll(".list-group-item");
-        var i = filterCollection.length - 1;
-        while (i >= 0) {
+        var i = filterCollection.length;
+        while (i--) {
             filterCollection[i].classList.add("hidden");
-            i--;
         }
     }
 });
