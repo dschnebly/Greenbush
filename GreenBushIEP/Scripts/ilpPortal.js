@@ -1,72 +1,223 @@
-﻿$(".btn-filter").on("click", function () {
-    $(".showFilters").toggleClass("hidden");
-});
+﻿$(function () {
 
-$("#userDistricts").on("change", function () {
+    $(".chosen-select").chosen({
+        width: "95%"
+    });
 
-    var selectedLocation = $("#userDistricts option:selected").val();
-    var selectedRole = $("#userRoles option:selected").val();
-    var selectedProgram = $("#userProgram option:selected").val();
-    var selectedArchive = $("#statusActive option:selected").val();
+    $(".btn-filter").on("click", function () {
+        $(".showFilters").toggleClass("hidden");
+    });
 
-    $.ajax({
-        type: "POST",
-        url: "/ILP/FilterUserList",
-        dataType: "json",
-        data: {
-            LocationId: selectedLocation,
-            RoleId: selectedRole,
-            ProgramId: selectedProgram,
-            Archived: selectedArchive
-        },
-        async: false,
-        success: function (data) {
-            if (data.Result === "success") {
+    $("#filterName").on("change", function () {
+        var userId = $(this).val();
 
-                var results = data.Message;
-                if (results.length > 0) {
-                    filterList(results);
-                } else {
-                    hideAllUsers(null);
-                }
+        if (userId == -1) {
+
+            container = document.querySelector(".list-group-root");
+            var filterCollection = container.querySelectorAll(".list-group-item");
+            var i = filterCollection.length - 1;
+            while (i >= 0) {
+                filterCollection[i].classList.remove("hidden");
+                i--;
             }
-        },
-        error: function (data) {
-            alert("Not connected to the network!");
-            console.log(data);
-        },
-        complete: function (data) {
+        } else {
+            var data = [];
+            data.push({ UserID: userId });
 
+            filterList(data);
         }
     });
-});
 
-function filterList(members) {
-    var container = document.querySelector(".list-group-root");
+    $("#userRoles").on("change", function () {
 
-    hideAllUsers(container);
+        var selectedLocation = $("#userDistricts option:selected").val();
+        var selectedRole = $(this).val();
+        var selectedProgram = $("#userProgram option:selected").val();
+        var selectedArchive = $("#statusActive option:selected").val();
 
-    var j = members.length - 1;
-    while (j >= 0) {
-        var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
-        if (matchFound[0] != null) {
-            matchFound[0].classList.remove("hidden");
+        $.ajax({
+            type: "POST",
+            url: "/ILP/FilterUserList",
+            dataType: "json",
+            data: {
+                LocationId: selectedLocation,
+                RoleId: selectedRole,
+                ProgramId: selectedProgram,
+                Archived: selectedArchive
+            },
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var results = data.Message;
+                    if (results.length > 0) {
+                        filterList(results);
+                    } else {
+                        hideAllUsers(null);
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Not connected to the network!");
+                console.log(data);
+            },
+            complete: function (data) {
+
+            }
+        });
+
+        // show active select if the user is of type learner.
+        if (selectedRole == 10) {
+            $(".activeILPCol").removeClass("hidden");
+        } else {
+            $(".activeILPCol").addClass("hidden");
         }
-        j--;
-    }
-}
+    });
 
-function hideAllUsers(container) {
-    // hide all the users in the list.
+    $("#userDistricts").on("change", function () {
 
-    if (container == null) {
-        container = document.querySelector(".list-group-root");
+        var selectedLocation = $(this).val();
+        var selectedRole = $("#userRoles option:selected").val();
+        var selectedProgram = $("#userProgram option:selected").val();
+        var selectedArchive = $("#statusActive option:selected").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/ILP/FilterUserList",
+            dataType: "json",
+            data: {
+                LocationId: selectedLocation,
+                RoleId: selectedRole,
+                ProgramId: selectedProgram,
+                Archived: selectedArchive
+            },
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var results = data.Message;
+                    if (results.length > 0) {
+                        filterList(results);
+                    } else {
+                        hideAllUsers(null);
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Not connected to the network!");
+                console.log(data);
+            },
+            complete: function (data) {
+
+            }
+        });
+    });
+
+    $("#userProgram").on("change", function () {
+
+        var selectedLocation = $("#userDistricts option:selected").val();
+        var selectedRole = $("#userRoles option:selected").val();
+        var selectedProgram = $(this).val();
+        var selectedArchive = $("#statusActive option:selected").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/ILP/FilterUserList",
+            dataType: "json",
+            data: {
+                LocationId: selectedLocation,
+                RoleId: selectedRole,
+                ProgramId: selectedProgram,
+                Archived: selectedArchive
+            },
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var results = data.Message;
+                    if (results.length > 0) {
+                        filterList(results);
+                    } else {
+                        hideAllUsers(null);
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Not connected to the network!");
+                console.log(data);
+            },
+            complete: function (data) {
+
+            }
+        });
+    });
+
+    $("#statusActive").on("change", function () {
+
+        var selectedLocation = $("#userDistricts option:selected").val();
+        var selectedRole = $("#userRoles option:selected").val();
+        var selectedProgram = $("#userProgram option:selected").val();
+        var selectedArchive = $(this).val();
+
+        $.ajax({
+            type: "POST",
+            url: "/ILP/FilterUserList",
+            dataType: "json",
+            data: {
+                LocationId: selectedLocation,
+                RoleId: selectedRole,
+                ProgramId: selectedProgram,
+                Archived: selectedArchive
+            },
+            async: false,
+            success: function (data) {
+                if (data.Result === "success") {
+
+                    var results = data.Message;
+                    if (results.length > 0) {
+                        filterList(results);
+                    } else {
+                        hideAllUsers(null);
+                    }
+                }
+            },
+            error: function (data) {
+                alert("Not connected to the network!");
+                console.log(data);
+            },
+            complete: function (data) {
+
+            }
+        });
+    });
+
+    function filterList(members) {
+        var container = document.querySelector(".list-group-root");
+
+        hideAllUsers(container);
+
+        var j = members.length - 1;
+        while (j >= 0) {
+            var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
+            if (matchFound[0] != null) {
+                matchFound[0].classList.remove("hidden");
+            }
+            j--;
+        }
     }
 
-    var filterCollection = container.querySelectorAll(".list-group-item");
-    var i = filterCollection.length - 1;
-    while (i >= 0) {
-        filterCollection[i].classList.add("hidden");
-        i--;
+    function hideAllUsers(container) {
+        // hide all the users in the list.
+
+        if (container == null) {
+            container = document.querySelector(".list-group-root");
+        }
+
+        var filterCollection = container.querySelectorAll(".list-group-item");
+        var i = filterCollection.length - 1;
+        while (i >= 0) {
+            filterCollection[i].classList.add("hidden");
+            i--;
+        }
     }
-}
+});

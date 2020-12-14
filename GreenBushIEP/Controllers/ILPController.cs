@@ -33,12 +33,16 @@ namespace GreenBushIEP.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public ActionResult FilterUserList(string LocationId, int? RoleId = null, string ProgramId = null, bool? Archived = false)
+        public ActionResult FilterUserList(string LocationId, int? RoleId = null, string ProgramId = null, int? Archived = 0)
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (user != null)
             {
-                List<usp_ILP_UserList_Result> userList = db.usp_ILP_UserList(user.UserID, LocationId, ProgramId, Archived).ToList();
+                if (LocationId == "-1") { LocationId = null; } // Any Location
+                if (ProgramId == "-1") { ProgramId = null;  } // Any Program
+                bool? isArchived = Archived == -1 ? (bool?)null : Archived == 1;  // Archived
+
+                List<usp_ILP_UserList_Result> userList = db.usp_ILP_UserList(user.UserID, LocationId, ProgramId, isArchived).ToList();
                 if (RoleId != -1)
                 {
                     userList = userList.Where(u => u.RoleID == RoleId).ToList();

@@ -66,11 +66,11 @@
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
             <h3 class="panel-title">Users </h3>
-            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="7">Level 3</option><option value="8">Level 2</option><option value="9">Level 1</option><option value="10">Student</option></select>
+            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="7">Admin</option><option value="8">Instructor</option><option value="9">Viewer</option><option value="10">Learner</option></select>
             <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
-            <div class="col-xs-12 col-md-3 pull-left">
+            <div class="col-xs-12 col-md-4 pull-left">
                 <div class="form-group">
                     <label for="filterName">Name or KIDS ID</label>
                     <div class="input-group">
@@ -109,7 +109,7 @@
             </div>
             <div class="col-xs-12 col-md-3 pull-left">
                 <div class="form-group">
-                    <label for="userBuildings">Project</label>
+                    <label for="userBuildings">Program</label>
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
                         <select class="form-control" name="userProgram" id="userProgram">
@@ -129,13 +129,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xs-12 col-md-1 activeILPCol hidden">
+            <div class="col-xs-12 col-md-2 activeILPCol hidden">
                 <div class="form-group">
                     <label for="filterActive">Educational Status</label>
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="statusActive" id="statusActive">
-                            <option value="">All</option>
+                            <option value="-1">All</option>
                             <option value="1" selected>Active</option>
                             <option value="0">Inactive</option>
                         </select>
@@ -159,7 +159,7 @@
                             <span>@user.FirstName @user.MiddleName  @user.LastName</span>
 
                             <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
-                                <span class="fas fa-arrow-circle-right"></span>
+                                <span class="glyphicon glyphicon-log-out"></span>
                             </button>
                             <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
                                 <span class="glyphicon glyphicon-folder-open"></span>
