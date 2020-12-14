@@ -14,9 +14,17 @@ namespace GreenBushIEP.Models
     
     public partial class tbl_ILP_Programs
     {
-        public int ProgramID { get; set; }
-        public string ProgramName { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tbl_ILP_Programs()
+        {
+            this.tbl_ILP_UserPrograms = new HashSet<tbl_ILP_UserPrograms>();
+        }
+    
         public string ProgramCode { get; set; }
+        public string ProgramName { get; set; }
         public bool Active { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_ILP_UserPrograms> tbl_ILP_UserPrograms { get; set; }
     }
 }

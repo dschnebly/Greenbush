@@ -12,10 +12,13 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tbl_ILP_UserProgams
+    public partial class tblEntityLocation
     {
-        public int UserID { get; set; }
-        public string ProgramID { get; set; }
         public string LocationID { get; set; }
+        public string USD { get; set; }
+        public string BUildingID { get; set; }
+        public string EntityID { get; set; }
+        public string LocationName { get; set; }
+        public bool Active { get; set; }
     }
 }

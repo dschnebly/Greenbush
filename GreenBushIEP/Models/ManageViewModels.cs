@@ -129,11 +129,16 @@ namespace GreenBushIEP.Models
     public class ILPPortalViewModel
     {
         public tblUser User { get; set; }
+        public List<tbl_ILP_UserLocations> Locations { get; set; }
+
+        public List<tbl_ILP_Programs> Programs { get; set; }
         public List<usp_ILP_UserList_Result> Students { get; set; }
 
         public ILPPortalViewModel()
         {
             User = new tblUser();
+            Locations = new List<tbl_ILP_UserLocations>();
+            Programs = new List<tbl_ILP_Programs>();
             Students = new List<usp_ILP_UserList_Result>();
         }
     }

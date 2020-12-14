@@ -16,5 +16,7 @@ namespace GreenBushIEP.Models
     {
         public int UserID { get; set; }
         public string LocationID { get; set; }
+    
+        public virtual tblUser tblUser { get; set; }
     }
 }

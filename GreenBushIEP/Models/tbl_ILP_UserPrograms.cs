@@ -10,15 +10,14 @@
 namespace GreenBushIEP.Models
 {
     using System;
+    using System.Collections.Generic;
     
-    public partial class usp_ILP_UserList_Result
+    public partial class tbl_ILP_UserPrograms
     {
         public int UserID { get; set; }
-        public string FirstName { get; set; }
-        public string MiddleName { get; set; }
-        public string LastName { get; set; }
-        public int RoleID { get; set; }
-        public Nullable<bool> hasILP { get; set; }
-        public Nullable<bool> isAssgined { get; set; }
+        public string ProgramCode { get; set; }
+        public string LocationID { get; set; }
+    
+        public virtual tbl_ILP_Programs tbl_ILP_Programs { get; set; }
     }
 }

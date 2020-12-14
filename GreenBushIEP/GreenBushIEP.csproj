@@ -336,6 +336,9 @@
     <Compile Include="Models\tblDistrict.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblEntityLocation.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblErrorLog.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
@@ -564,7 +567,7 @@
     <Compile Include="Models\tbl_ILP_UserLocations.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tbl_ILP_UserProgams.cs">
+    <Compile Include="Models\tbl_ILP_UserPrograms.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\uf_Split_Result.cs">
@@ -1022,6 +1025,7 @@
     <Content Include="Scripts\fontawesome\solid.min.js" />
     <Content Include="Scripts\fontawesome\v4-shims.js" />
     <Content Include="Scripts\fontawesome\v4-shims.min.js" />
+    <Content Include="Scripts\ilpPortal.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\index.js.flow" />
     <Content Include="Scripts\esm\popper.min.js.map" />

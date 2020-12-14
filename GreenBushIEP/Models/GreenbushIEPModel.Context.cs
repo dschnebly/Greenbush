@@ -29,7 +29,6 @@ namespace GreenBushIEP.Models
     
         public virtual DbSet<tbl_ILP_Programs> tbl_ILP_Programs { get; set; }
         public virtual DbSet<tbl_ILP_UserLocations> tbl_ILP_UserLocations { get; set; }
-        public virtual DbSet<tbl_ILP_UserProgams> tbl_ILP_UserProgams { get; set; }
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
         public virtual DbSet<tblArchiveCalendar> tblArchiveCalendars { get; set; }
@@ -58,6 +57,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblEntityLocation> tblEntityLocations { get; set; }
         public virtual DbSet<tblErrorLog> tblErrorLogs { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
@@ -144,6 +144,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
+        public virtual DbSet<tbl_ILP_UserPrograms> tbl_ILP_UserPrograms { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -486,27 +487,6 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentsByBuilding_Result>("up_ReportStudentsByBuilding", usdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, statusCodeParameter, teacherIdParameter);
         }
     
-        public virtual ObjectResult<usp_ILP_UserList_Result> usp_ILP_UserList(Nullable<int> userID, string locationID, Nullable<int> programID, Nullable<bool> isArchived)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var locationIDParameter = locationID != null ?
-                new ObjectParameter("LocationID", locationID) :
-                new ObjectParameter("LocationID", typeof(string));
-    
-            var programIDParameter = programID.HasValue ?
-                new ObjectParameter("ProgramID", programID) :
-                new ObjectParameter("ProgramID", typeof(int));
-    
-            var isArchivedParameter = isArchived.HasValue ?
-                new ObjectParameter("isArchived", isArchived) :
-                new ObjectParameter("isArchived", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ILP_UserList_Result>("usp_ILP_UserList", userIDParameter, locationIDParameter, programIDParameter, isArchivedParameter);
-        }
-    
         public virtual ObjectResult<uspCopyIEP_Result> uspCopyIEP(Nullable<int> fromIEP, Nullable<int> byUserID, Nullable<bool> ammend)
         {
             var fromIEPParameter = fromIEP.HasValue ?
@@ -642,6 +622,27 @@ namespace GreenBushIEP.Models
         public virtual int uspYearlyAutoAdvance()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspYearlyAutoAdvance");
+        }
+    
+        public virtual ObjectResult<usp_ILP_UserList_Result> usp_ILP_UserList(Nullable<int> userID, string locationID, string programCode, Nullable<bool> isArchived)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var locationIDParameter = locationID != null ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(string));
+    
+            var programCodeParameter = programCode != null ?
+                new ObjectParameter("ProgramCode", programCode) :
+                new ObjectParameter("ProgramCode", typeof(string));
+    
+            var isArchivedParameter = isArchived.HasValue ?
+                new ObjectParameter("isArchived", isArchived) :
+                new ObjectParameter("isArchived", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ILP_UserList_Result>("usp_ILP_UserList", userIDParameter, locationIDParameter, programCodeParameter, isArchivedParameter);
         }
     }
 }

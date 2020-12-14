@@ -13,11 +13,18 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
+    @Scripts.Render("~/Scripts/ilpPortal.js")
 }
 
 <style>
-    .panel {
-        margin-bottom: 0;
+    .panel-primary > .panel-heading {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #337ab7 !important;
+    }
+
+    .btn-filter {
+        outline: -webkit-focus-ring-color auto 1px;
     }
 
     .btn-info {
@@ -25,7 +32,6 @@
         background-color: #5bc0de !important;
         border-color: #46b8da !important;
     }
-
 </style>
 <div class="container">
     <h2>@ViewBag.Title</h2>
@@ -58,32 +64,117 @@
         <span class="moreinfo"><strong>Results!</strong> Some filler text until the action happens.</span>
     </div>
     <div class="panel panel-primary filterable">
-        <div class="panel-heading" style="padding: 8px 15px; background-color: #337ab7 !important; border-color: #337ab7 !important;">
+        <div class="panel-heading">
             <h3 class="panel-title">Users </h3>
-            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option></select>
+            <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="7">Level 3</option><option value="8">Level 2</option><option value="9">Level 1</option><option value="10">Student</option></select>
+            <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
-    </div>
-    <div>
-        @if (Model.Students.Count > 0)
-        {
-            <div class="list-group list-group-root well">
-
-                @foreach (var user in Model.Students)
-                {
-                    <div class="list-group-item" data-id="@(user.UserID)">
-                        <i class="fa fa-child" aria-hidden="true"></i>
-                        <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                            <span class="far fa-building" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                            <span class="glyphicon glyphicon glyphicon-trash"></span>
-                        </button>
-                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+        <div class="row showFilters hidden">
+            <div class="col-xs-12 col-md-3 pull-left">
+                <div class="form-group">
+                    <label for="filterName">Name or KIDS ID</label>
+                    <div class="input-group">
+                        <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
+                        <select class="form-control chosen-select form-control" name="filterName" id="filterName">
+                            <option value="-1">All Users</option>
+                            @foreach (var user in Model.Students)
+                            {
+                                <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.UserID)</option>
+                            }
+                        </select>
                     </div>
-                }
-
+                </div>
             </div>
-        }
+            <div class="col-xs-12 col-md-3 pull-left">
+                <div class="form-group">
+                    <label for="userDistricts">Locations</label>
+                    <div class="input-group">
+                        <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
+                        <select class="form-control" name="userDistricts" id="userDistricts">
+                            <option value="-1">All Locations</option>
+                            @if (Model.Locations.Count > 0)
+                            {
+                                foreach (var location in Model.Locations)
+                                {
+                                    <option value="@(location.LocationID)">@(location.LocationID.ToString())</option>
+                                }
+                            }
+                            else
+                            {
+                                <option>This user is not assigned to any districts.</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-3 pull-left">
+                <div class="form-group">
+                    <label for="userBuildings">Project</label>
+                    <div class="input-group">
+                        <span class="input-group-addon danger"><span class="fa fa-search"></span></span>
+                        <select class="form-control" name="userProgram" id="userProgram">
+                            <option value="-1">Any Program</option>
+                            @if (Model.Programs.Count > 0)
+                            {
+                                foreach (var program in Model.Programs)
+                                {
+                                    <option value="@program.ProgramCode">@program.ProgramName</option>
+                                }
+                            }
+                            else
+                            {
+                                <option>Currently there are not any projects.</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-1 activeILPCol hidden">
+                <div class="form-group">
+                    <label for="filterActive">Educational Status</label>
+                    <div class="input-group">
+                        <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
+                        <select class="form-control" name="statusActive" id="statusActive">
+                            <option value="">All</option>
+                            <option value="1" selected>Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="ajax-loader">
+                <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
+            </div>*@
+        <div>
+            @if (Model.Students.Count > 0)
+            {
+                <div class="list-group list-group-root well">
+
+                    @foreach (var user in Model.Students)
+                    {
+
+                        <div class="list-group-item" data-id="@(user.UserID)">
+                            <i class="fa fa-child" aria-hidden="true"></i>
+                            <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+
+                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
+                                <span class="fas fa-arrow-circle-right"></span>
+                            </button>
+                            <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                            </a>
+                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                <span class="glyphicon glyphicon glyphicon-trash"></span>
+                            </button>
+                            <a href="/Manage/EditStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+
+                        </div>
+                    }
+
+                </div>
+            }
+        </div>
+
     </div>
 </div>
