@@ -140,9 +140,9 @@
 @section scripts {
 	<script>
 		var selectedBuildingId = @(ViewBag.BuildingId == null ? 0 : ViewBag.BuildingId);
-		var selectedDistrictId = @(ViewBag.DistictId == null ? 0 : ViewBag.DistictId);
+		var selectedDistrictId = '@(ViewBag.DistictId == null ? 0 : ViewBag.DistictId)';
 		var selectedFiscalYear = @(ViewBag.FiscalYear  == null ? 0 : ViewBag.FiscalYear);
-
+		
 		$(document).ready(function () {
 		
 			$('.chosen-select').chosen({ width: "100%",  disable_search_threshold: 10 });
@@ -235,7 +235,7 @@
 		}
 
 		function _getDistricts() {
-
+			
 			$.ajax({
 				type: 'GET',
 				url: '/Manage/ReportFilterDistrict',
@@ -259,7 +259,7 @@
 
 						districtElement.html(dHtml);
 
-						if (selectedDistrictId > 0) {
+						if (selectedDistrictId != "0") {
 							districtElement.val(selectedDistrictId);							
 							_districtChange(districtElement);
 							selectedDistrictId = 0;														
@@ -280,7 +280,7 @@
 
 			var districtId = $('#districtDD').val();
 			var buildingId = $('#buildingDD').val();
-			//$("#messageText").removeClass("text-danger");
+			
 			$("ul.errorList").empty();
 			
 			if (fiscalYear > 0) {

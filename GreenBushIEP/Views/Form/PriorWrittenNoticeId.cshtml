@@ -281,13 +281,13 @@
 				less restrictive environment.
 			</span>
 		</p>
-		<p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? "checked" : "")/><img id="LEARefusesToChangeIdentification" class='imgCheck' src="@(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span></b>
+		<p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? "checked" : "")/><img id="OtherChanges" class='imgCheck' src="@(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span></b>
 		<b><span class="MsoNormal">E. Other changes to IEP, not involving services or PLACEMENT (Parental Consent <u>Not</u> Required)</span></b>
 		</p>
 		<p class=MsoNormal style='margin-right:7.9pt;margin-top:8px;margin-left:.25in;text-indent:-.25in'>
 			<b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? "checked" : "")/><img id="LEARefusesToChangeIdentification" class='imgCheck' src="@(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;</span></b>
-			<b>
-				<span class="MsoNormal" style="margin-left:.005in;text-indent:-.007in;">F. The [LEA] refuses to initiate or change the identification, educational placement, or provision of special education and related services as explained below. (Parental Consent <u>Not</u> Required)</span>
+			<b><span class="MsoNormal" style="margin-left:.005in;text-indent:-.007in;">
+				F. The [LEA] refuses to initiate or change the identification, educational placement, or provision of special education and related services as explained below. (Parental Consent <u>Not</u> Required)</span>
 			</b>
 		</p>		
 		<p class=MsoNormal style='margin-right:-1.0pt;text-indent:.25in;margin-top:15px;'>

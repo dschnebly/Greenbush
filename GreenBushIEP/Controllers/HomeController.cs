@@ -4232,7 +4232,9 @@ namespace GreenbushIep.Controllers
                     {
                         var studentExitDate = db.tblCalendars.Where(o => o.calendarDate == studentIEP.studentDetails.student.ExitDate.Value && o.BuildingID == service.BuildingID).FirstOrDefault();
 
-                        if (studentExitDate != null && studentExitDate.SchoolYear == service.SchoolYear)
+                        if (studentExitDate != null 
+                            && studentExitDate.SchoolYear == service.SchoolYear
+                            && service.IEPid == studentIEP.current.IEPid)
                         {
                             //only use exit date if it is in the same school year
                             sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString());
