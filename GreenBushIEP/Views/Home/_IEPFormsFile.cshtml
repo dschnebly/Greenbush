@@ -22,7 +22,7 @@
         </div>
     <div class="container" style="min-height: 1250px; width: 725px;">
         <div class="row" style="margin-top: 25px; margin-left: -200px; position: fixed;">
-            <div class="col-md-11">
+            <div class="col-md-11" style="height:400px">
                 <form action=@Url.Action("DownloadPDF", "Home") id="frmPrint" class="form-print" method="post">                    
                     <input type="button" value="Print" onclick="PrintText();" class="btn btn-info print" /><br/>
 					<input type="button" id="btnSave" value="Save" onclick="SaveText();" class="btn btn-info print" style="margin-top:5px;display:none"/>
@@ -38,7 +38,20 @@
                     <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
 					<input type="hidden" id="fileName" name="fileName" value="@Model.fileName" /> 
 					<input type="hidden" id="isSave" name="isSave" />
-                </form>				
+                </form>		
+				 <form action=@Url.Action("DownloadPDFMulti", "Home") id="frmPrint2" class="form-print" method="post">                    
+                 
+                   	
+					<input type="hidden" id="multiContactPrintText" name="multiContactPrintText"  />	<!--used for more than one primary contact-->				
+                  
+                    <input type="hidden" id="studentName" name="studentName" value="" />
+                    <input type="hidden" id="studentId" name="studentId" value="@Model.studentId" />
+                    <input type="hidden" id="iepID" name="iepID" value="@Model.iepId" />   
+                     
+                    <input type="hidden" id="formName" name="formName" value="@Model.fileDesc" /> 
+					<input type="hidden" id="fileName" name="fileName" value="@Model.fileName" /> 
+					
+                </form>	
             </div>
         </div>
         <div class="row">
@@ -136,6 +149,23 @@
 		$("#alertMessage").on("click", function (e) {
 			$(e.currentTarget).hide();
 		});
+
+		$('.printMulti').click(function () {
+			
+			var form1 = document.getElementById("frmPrint2");		
+			var moduleElements =$(this).next('.module-page');
+		
+			if (moduleElements.length == 1 ) {
+			
+				//allow printing of multiple contacts
+				var markup = moduleElements[0].innerHTML;			
+				$("#multiContactPrintText").val(markup);
+			
+				form1.submit();
+
+			}
+        });
+		
 
         //setup up hidden checkbox images for printing to pdf
         $('input:checkbox').change(function () {
@@ -251,6 +281,7 @@
     function PrintText() {
 		var form1 = document.getElementById("frmPrint");		
 		var moduleElements = document.getElementsByClassName("module-page");
+		
 
 		if (moduleElements.length == 1) {
 			var markup = moduleElements[0].innerHTML;
@@ -264,6 +295,7 @@
 			//allow printing of multiple contacts
 			var markup = moduleElements[0].innerHTML;
 			var markup2 = moduleElements[1].innerHTML;
+
 			var markup3 = "";
 			if (moduleElements.length > 2) {
 				markup3 = moduleElements[2].innerHTML;
@@ -276,7 +308,7 @@
 			$("#isSave").val(0);
 			form1.submit();
 		}
-    }
+	}	
 
     function ArchiveText() {
 		var form1 = document.getElementById("frmPrint");
@@ -304,7 +336,9 @@
 			$("#printText2").val(markup2);
 			$("#isArchive").val(1);
 			$("#isSave").val(0);
-			form1.submit();
+			form1.submit();	
+
+
 		}        
 	}
 

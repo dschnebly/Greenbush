@@ -4330,6 +4330,36 @@ namespace GreenbushIep.Controllers
 
         }
 
+        [Authorize]
+        [ValidateInput(false)]
+        public ActionResult DownloadPDFMulti(FormCollection collection)
+        {
+
+         
+            string HTMLContent2 = collection["multiContactPrintText"];
+           
+            string studentName = collection["studentName"];
+            string studentId = collection["studentId"];
+          
+            string iepIDStr = collection["iepID"];
+          
+            string formName = collection["formName"];            
+            string fileName = collection["fileName"];
+
+           
+                byte[] mergedFile = CreateIEPPdf("", "", HTMLContent2, "", studentName, studentId, "0", iepIDStr, "0", formName);
+                if (mergedFile != null)
+                {
+                    string downloadFileName = string.Format("{0}.pdf", formName);
+                    OutputResponse(mergedFile, downloadFileName, "application/pdf");
+
+                }
+            
+
+            return null;
+
+        }
+
         private byte[] CreateIEPPdf(string StudentHTMLContent, string HTMLContent, string HTMLContent2, string HTMLContent3, string studentName, string studentId,
         string isArchive, string iepIDStr, string isIEP, string formName)
         {
@@ -4436,12 +4466,27 @@ namespace GreenbushIep.Controllers
                     }
 
                 }
+                else if(secondaryPageFile != null || thirdPageFile != null )
+                {
+                    //extra primary contacts
+                    if (secondaryPageFile != null)
+                    {
+                        pdfByteContent.Add(secondaryPageFile);
+                    }
+
+                    if (thirdPageFile != null)
+                    {
+                        pdfByteContent.Add(thirdPageFile);
+                    }
+                }
                 else
                 {
                     formName = "Student Information";//this is just the student info page print
                 }
 
                 byte[] mergedFile = concatAndAddContent(pdfByteContent);
+
+
 
                 if (isArchive == "1")
                 {
