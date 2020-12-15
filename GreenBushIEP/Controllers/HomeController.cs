@@ -3095,6 +3095,11 @@ namespace GreenbushIep.Controllers
 
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
+            if(mis == null)
+            {
+                mis = teacher;
+            }
+
             IEP theIEP = new IEP(student.UserID, iepId)
             {
                 locations = db.tblLocations.ToList(),
