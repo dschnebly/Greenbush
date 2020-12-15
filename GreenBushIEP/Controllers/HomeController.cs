@@ -43,7 +43,6 @@ namespace GreenbushIep.Controllers
 
             return View();
         }
-
         public ActionResult Portal(int? logon)
         {
             if (User.Identity.IsAuthenticated)
@@ -1422,6 +1421,15 @@ namespace GreenbushIep.Controllers
                 studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
 
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error. " + e.InnerException.Message.ToString() }, JsonRequestBehavior.AllowGet);
+                }
+
                 studentAnnualIEP.IepStatus = IEPStatus.ACTIVE;
                 studentAnnualIEP.IsActive = true;
 
@@ -1927,8 +1935,6 @@ namespace GreenbushIep.Controllers
                         ViewBag.modifiedByFullName = (modifier != null) ? string.Format("{0} {1}", modifier.FirstName, modifier.LastName) : null;
                         ViewBag.modifiedByDate = services.FirstOrDefault().Update_Date;
                     }
-
-
                 }
                 else
                 {

@@ -112,14 +112,6 @@ namespace GreenBushIEP.Models
         }
     }
 
-    public class NotificationViewModel
-    {
-        public int StudentId { get; set; }
-        public string StudentLastName { get; set; }
-        public string StudentFirstName { get; set; }
-        public int Days { get; set; }
-    }
-
     public class StudentIEPViewModel
     {
         public int UserID;
@@ -132,6 +124,31 @@ namespace GreenBushIEP.Models
         public bool isAssigned;
         public string StatusCode;
         public int StatusActive;
+    }
+
+    public class ILPPortalViewModel
+    {
+        public tblUser User { get; set; }
+        public List<tbl_ILP_UserLocations> Locations { get; set; }
+
+        public List<tbl_ILP_Programs> Programs { get; set; }
+        public List<usp_ILP_UserList_Result> Students { get; set; }
+
+        public ILPPortalViewModel()
+        {
+            User = new tblUser();
+            Locations = new List<tbl_ILP_UserLocations>();
+            Programs = new List<tbl_ILP_Programs>();
+            Students = new List<usp_ILP_UserList_Result>();
+        }
+    }
+
+    public class NotificationViewModel
+    {
+        public int StudentId { get; set; }
+        public string StudentLastName { get; set; }
+        public string StudentFirstName { get; set; }
+        public int Days { get; set; }
     }
 
     public class UserOrganizationViewModel

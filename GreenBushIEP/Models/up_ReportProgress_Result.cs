@@ -21,7 +21,7 @@ namespace GreenBushIEP.Models
         public string ProviderName { get; set; }
         public Nullable<System.DateTime> begin_date { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
-        public Nullable<int> Grade { get; set; }
+        public string Grade { get; set; }
         public string GoalModule { get; set; }
         public int goalID { get; set; }
         public string GoalDescription { get; set; }
@@ -43,10 +43,10 @@ namespace GreenBushIEP.Models
         public string ProgressNotes2 { get; set; }
         public string ProgressNotes3 { get; set; }
         public string ProgressNotes4 { get; set; }
-        public System.DateTime ProgressDateQ1 { get; set; }
-        public System.DateTime ProgressDateQ2 { get; set; }
-        public System.DateTime ProgressDateQ3 { get; set; }
-        public System.DateTime ProgressDateQ4 { get; set; }
+        public Nullable<System.DateTime> ProgressDateQ1 { get; set; }
+        public Nullable<System.DateTime> ProgressDateQ2 { get; set; }
+        public Nullable<System.DateTime> ProgressDateQ3 { get; set; }
+        public Nullable<System.DateTime> ProgressDateQ4 { get; set; }
         public string Progress_Quarter1 { get; set; }
         public string Progress_Quarter2 { get; set; }
         public string Progress_Quarter3 { get; set; }
@@ -57,5 +57,17 @@ namespace GreenBushIEP.Models
         public string BenchmarkProgress_Quarter4 { get; set; }
         public string USD { get; set; }
         public string BuildingName { get; set; }
+        public Nullable<System.DateTime> MeetingDate { get; set; }
+        public bool Amendment { get; set; }
+        public Nullable<int> AmendingIEPid { get; set; }
+        public string NeighborhoodBuilding { get; set; }
+        public System.DateTime DateOfBirth { get; set; }
+        public string BuildingAddress { get; set; }
+        public string BuildingCityStateZip { get; set; }
+        public string BuildingPhone { get; set; }
+        public string TeacherName { get; set; }
+        public Nullable<System.DateTime> AmendmentDate { get; set; }
+        public Nullable<System.DateTime> AnnualDate { get; set; }
+        public string SchoolYear { get; set; }
     }
 }

@@ -31,5 +31,8 @@ namespace GreenBushIEP.Models
         public string BuildingName { get; set; }
         public string USD { get; set; }
         public string FrequencyDesc { get; set; }
+        public bool isGifted { get; set; }
+        public int SchoolYear { get; set; }
+        public int ServiceID { get; set; }
     }
 }

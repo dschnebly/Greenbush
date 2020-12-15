@@ -27,6 +27,8 @@ namespace GreenBushIEP.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<tbl_ILP_Programs> tbl_ILP_Programs { get; set; }
+        public virtual DbSet<tbl_ILP_UserLocations> tbl_ILP_UserLocations { get; set; }
         public virtual DbSet<tblAccommodationModule> tblAccommodationModules { get; set; }
         public virtual DbSet<tblAccommodation> tblAccommodations { get; set; }
         public virtual DbSet<tblArchiveCalendar> tblArchiveCalendars { get; set; }
@@ -42,6 +44,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblBehaviorStrategyType> tblBehaviorStrategyTypes { get; set; }
         public virtual DbSet<tblBehaviorTrigger> tblBehaviorTriggers { get; set; }
         public virtual DbSet<tblBehaviorTriggerType> tblBehaviorTriggerTypes { get; set; }
+        public virtual DbSet<tblBook> tblBooks { get; set; }
         public virtual DbSet<tblBuildingMapping> tblBuildingMappings { get; set; }
         public virtual DbSet<tblBuilding> tblBuildings { get; set; }
         public virtual DbSet<tblBuildingType> tblBuildingTypes { get; set; }
@@ -54,6 +57,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblCounty> tblCounties { get; set; }
         public virtual DbSet<tblDisability> tblDisabilities { get; set; }
         public virtual DbSet<tblDistrict> tblDistricts { get; set; }
+        public virtual DbSet<tblEntityLocation> tblEntityLocations { get; set; }
         public virtual DbSet<tblErrorLog> tblErrorLogs { get; set; }
         public virtual DbSet<tblEvaluationProcedure> tblEvaluationProcedures { get; set; }
         public virtual DbSet<tblFormArchive> tblFormArchives { get; set; }
@@ -80,6 +84,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblFormRevokeConsentPart> tblFormRevokeConsentParts { get; set; }
         public virtual DbSet<tblFormSummaryPerformance> tblFormSummaryPerformances { get; set; }
         public virtual DbSet<tblFormTeamEval> tblFormTeamEvals { get; set; }
+        public virtual DbSet<tblFormTransitionReferral> tblFormTransitionReferrals { get; set; }
         public virtual DbSet<tblFormTransportationRequest> tblFormTransportationRequests { get; set; }
         public virtual DbSet<tblGoalBenchmarkMethod> tblGoalBenchmarkMethods { get; set; }
         public virtual DbSet<tblGoalBenchmark> tblGoalBenchmarks { get; set; }
@@ -124,11 +129,13 @@ namespace GreenBushIEP.Models
         public virtual DbSet<tblTransition> tblTransitions { get; set; }
         public virtual DbSet<tblTransitionService> tblTransitionServices { get; set; }
         public virtual DbSet<tblUserPermission> tblUserPermissions { get; set; }
+        public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
         public virtual DbSet<tblUser> tblUsers { get; set; }
         public virtual DbSet<tblVersionLog> tblVersionLogs { get; set; }
         public virtual DbSet<vw_BuildingList> vw_BuildingList { get; set; }
         public virtual DbSet<vw_BuildingsForAttendance> vw_BuildingsForAttendance { get; set; }
         public virtual DbSet<vw_GoalExport> vw_GoalExport { get; set; }
+        public virtual DbSet<vw_ILP_Locations> vw_ILP_Locations { get; set; }
         public virtual DbSet<vw_ModuleAccommodationFlags> vw_ModuleAccommodationFlags { get; set; }
         public virtual DbSet<vw_ModuleGoalFlags> vw_ModuleGoalFlags { get; set; }
         public virtual DbSet<vw_ModuleOtherFlags> vw_ModuleOtherFlags { get; set; }
@@ -137,10 +144,7 @@ namespace GreenBushIEP.Models
         public virtual DbSet<vw_ServiceExport> vw_ServiceExport { get; set; }
         public virtual DbSet<vw_StudentExport> vw_StudentExport { get; set; }
         public virtual DbSet<vw_UserList> vw_UserList { get; set; }
-        public virtual DbSet<tblFormTransitionReferral> tblFormTransitionReferrals { get; set; }
-        public virtual DbSet<tblBook> tblBooks { get; set; }
-        public virtual DbSet<tblUserRole> tblUserRoles { get; set; }
-        public virtual DbSet<vw_ILP_Locations> vw_ILP_Locations { get; set; }
+        public virtual DbSet<tbl_ILP_UserPrograms> tbl_ILP_UserPrograms { get; set; }
     
         [DbFunction("IndividualizedEducationProgramEntities", "uf_Split")]
         public virtual IQueryable<uf_Split_Result> uf_Split(string mYSTR, string dELIMITER)
@@ -154,6 +158,23 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("DELIMITER", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter);
         }
     
         public virtual ObjectResult<up_ReportBuildings_Result> up_ReportBuildings(Nullable<int> buildingID)
@@ -184,6 +205,35 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("StudentIds", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportDraftIEPS_Result>("up_ReportDraftIEPS", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportESY_Result> up_ReportESY(string districtId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string teacherId, string providerId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var reportStartDateParameter = reportStartDate.HasValue ?
+                new ObjectParameter("ReportStartDate", reportStartDate) :
+                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
+    
+            var reportEndDateParameter = reportEndDate.HasValue ?
+                new ObjectParameter("ReportEndDate", reportEndDate) :
+                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportESY_Result>("up_ReportESY", districtIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter);
         }
     
         public virtual ObjectResult<up_ReportExcessCost_Result> up_ReportExcessCost(string districtId, string buildingId)
@@ -218,6 +268,36 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("StudentIds", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportKIDSID_Result> up_ReportKIDSID(string districtId, string buildingId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportKIDSID_Result>("up_ReportKIDSID", districtIdParameter, buildingIdParameter, teacherIdParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportNoIEP_Result> up_ReportNoIEP(string districtId, string buildingId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportNoIEP_Result>("up_ReportNoIEP", districtIdParameter, buildingIdParameter);
         }
     
         public virtual ObjectResult<up_ReportProceduralDates_Result> up_ReportProceduralDates(string districtId, string teacherId, string buildingId)
@@ -357,6 +437,27 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportServices_Result>("up_ReportServices", districtIdParameter, serviceIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter, giftedParameter);
         }
     
+        public virtual ObjectResult<up_ReportStudentInfo_Result> up_ReportStudentInfo(string districtId, string buildingId, string providerId, string teacherId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentInfo_Result>("up_ReportStudentInfo", districtIdParameter, buildingIdParameter, providerIdParameter, teacherIdParameter);
+        }
+    
         public virtual ObjectResult<up_ReportStudentsByBuilding_Result> up_ReportStudentsByBuilding(string usd, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string statusCode, string teacherId)
         {
             var usdParameter = usd != null ?
@@ -403,42 +504,17 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspCopyIEP_Result>("uspCopyIEP", fromIEPParameter, byUserIDParameter, ammendParameter);
         }
     
-        public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined, Nullable<bool> isArchived)
+        public virtual ObjectResult<uspGetUserBooks_Result> uspGetUserBooks(Nullable<int> userID, string email)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            var uSDParameter = uSD != null ?
-                new ObjectParameter("USD", uSD) :
-                new ObjectParameter("USD", typeof(string));
+            var emailParameter = email != null ?
+                new ObjectParameter("Email", email) :
+                new ObjectParameter("Email", typeof(string));
     
-            var buildingIDParameter = buildingID != null ?
-                new ObjectParameter("BuildingID", buildingID) :
-                new ObjectParameter("BuildingID", typeof(string));
-    
-            var isAssginedParameter = isAssgined.HasValue ?
-                new ObjectParameter("isAssgined", isAssgined) :
-                new ObjectParameter("isAssgined", typeof(bool));
-    
-            var isArchivedParameter = isArchived.HasValue ?
-                new ObjectParameter("isArchived", isArchived) :
-                new ObjectParameter("isArchived", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter, isArchivedParameter);
-        }
-    
-        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var isAssginedParameter = isAssgined.HasValue ?
-                new ObjectParameter("isAssgined", isAssgined) :
-                new ObjectParameter("isAssgined", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspGetUserBooks_Result>("uspGetUserBooks", userIDParameter, emailParameter);
         }
     
         public virtual ObjectResult<uspServiceProviders_Result> uspServiceProviders(string uSD)
@@ -457,48 +533,6 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("ProviderID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspServiceProviderStudents_Result>("uspServiceProviderStudents", providerIDParameter);
-        }
-    
-        public virtual ObjectResult<uspUserListByProvider_Result> uspUserListByProvider(Nullable<int> userID, string uSD, string buildingID, Nullable<int> providerID)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var uSDParameter = uSD != null ?
-                new ObjectParameter("USD", uSD) :
-                new ObjectParameter("USD", typeof(string));
-    
-            var buildingIDParameter = buildingID != null ?
-                new ObjectParameter("BuildingID", buildingID) :
-                new ObjectParameter("BuildingID", typeof(string));
-    
-            var providerIDParameter = providerID.HasValue ?
-                new ObjectParameter("ProviderID", providerID) :
-                new ObjectParameter("ProviderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByProvider_Result>("uspUserListByProvider", userIDParameter, uSDParameter, buildingIDParameter, providerIDParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportStudentInfo_Result> up_ReportStudentInfo(string districtId, string buildingId, string providerId, string teacherId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            var providerIdParameter = providerId != null ?
-                new ObjectParameter("ProviderId", providerId) :
-                new ObjectParameter("ProviderId", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportStudentInfo_Result>("up_ReportStudentInfo", districtIdParameter, buildingIdParameter, providerIdParameter, teacherIdParameter);
         }
     
         public virtual ObjectResult<uspUserAssignedList_Result> uspUserAssignedList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> noBuilding, Nullable<bool> isArchived)
@@ -526,85 +560,89 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserAssignedList_Result>("uspUserAssignedList", userIDParameter, uSDParameter, buildingIDParameter, noBuildingParameter, isArchivedParameter);
         }
     
-        public virtual int uspYearlyAutoAdvance()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspYearlyAutoAdvance");
-        }
-    
-        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportESY_Result> up_ReportESY(string districtId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate, string teacherId, string providerId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            var reportStartDateParameter = reportStartDate.HasValue ?
-                new ObjectParameter("ReportStartDate", reportStartDate) :
-                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
-    
-            var reportEndDateParameter = reportEndDate.HasValue ?
-                new ObjectParameter("ReportEndDate", reportEndDate) :
-                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            var providerIdParameter = providerId != null ?
-                new ObjectParameter("ProviderId", providerId) :
-                new ObjectParameter("ProviderId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportESY_Result>("up_ReportESY", districtIdParameter, buildingIdParameter, reportStartDateParameter, reportEndDateParameter, teacherIdParameter, providerIdParameter);
-        }
-    
-        public virtual ObjectResult<up_ReportKIDSID_Result> up_ReportKIDSID(string districtId, string buildingId, string teacherId)
-        {
-            var districtIdParameter = districtId != null ?
-                new ObjectParameter("DistrictId", districtId) :
-                new ObjectParameter("DistrictId", typeof(string));
-    
-            var buildingIdParameter = buildingId != null ?
-                new ObjectParameter("BuildingId", buildingId) :
-                new ObjectParameter("BuildingId", typeof(string));
-    
-            var teacherIdParameter = teacherId != null ?
-                new ObjectParameter("TeacherId", teacherId) :
-                new ObjectParameter("TeacherId", typeof(string));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportKIDSID_Result>("up_ReportKIDSID", districtIdParameter, buildingIdParameter, teacherIdParameter);
-        }
-    
-        public virtual ObjectResult<string> uspGetUserBooks(Nullable<int> userID, string email)
+        public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined, Nullable<bool> isArchived)
         {
             var userIDParameter = userID.HasValue ?
                 new ObjectParameter("UserID", userID) :
                 new ObjectParameter("UserID", typeof(int));
     
-            var emailParameter = email != null ?
-                new ObjectParameter("Email", email) :
-                new ObjectParameter("Email", typeof(string));
+            var uSDParameter = uSD != null ?
+                new ObjectParameter("USD", uSD) :
+                new ObjectParameter("USD", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("uspGetUserBooks", userIDParameter, emailParameter);
+            var buildingIDParameter = buildingID != null ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(string));
+    
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            var isArchivedParameter = isArchived.HasValue ?
+                new ObjectParameter("isArchived", isArchived) :
+                new ObjectParameter("isArchived", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserList_Result>("uspUserList", userIDParameter, uSDParameter, buildingIDParameter, isAssginedParameter, isArchivedParameter);
+        }
+    
+        public virtual ObjectResult<uspUserListByProvider_Result> uspUserListByProvider(Nullable<int> userID, string uSD, string buildingID, Nullable<int> providerID)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var uSDParameter = uSD != null ?
+                new ObjectParameter("USD", uSD) :
+                new ObjectParameter("USD", typeof(string));
+    
+            var buildingIDParameter = buildingID != null ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(string));
+    
+            var providerIDParameter = providerID.HasValue ?
+                new ObjectParameter("ProviderID", providerID) :
+                new ObjectParameter("ProviderID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByProvider_Result>("uspUserListByProvider", userIDParameter, uSDParameter, buildingIDParameter, providerIDParameter);
+        }
+    
+        public virtual ObjectResult<uspUserListByUserID_Result> uspUserListByUserID(Nullable<int> userID, Nullable<bool> isAssgined)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var isAssginedParameter = isAssgined.HasValue ?
+                new ObjectParameter("isAssgined", isAssgined) :
+                new ObjectParameter("isAssgined", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserListByUserID_Result>("uspUserListByUserID", userIDParameter, isAssginedParameter);
+        }
+    
+        public virtual int uspYearlyAutoAdvance()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("uspYearlyAutoAdvance");
+        }
+    
+        public virtual ObjectResult<usp_ILP_UserList_Result> usp_ILP_UserList(Nullable<int> userID, string locationID, string programCode, Nullable<bool> isArchived)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var locationIDParameter = locationID != null ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(string));
+    
+            var programCodeParameter = programCode != null ?
+                new ObjectParameter("ProgramCode", programCode) :
+                new ObjectParameter("ProgramCode", typeof(string));
+    
+            var isArchivedParameter = isArchived.HasValue ?
+                new ObjectParameter("isArchived", isArchived) :
+                new ObjectParameter("isArchived", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ILP_UserList_Result>("usp_ILP_UserList", userIDParameter, locationIDParameter, programCodeParameter, isArchivedParameter);
         }
     }
 }

@@ -15,6 +15,6 @@ namespace GreenBushIEP.Models
     public partial class vw_ILP_Locations
     {
         public string LocationID { get; set; }
-        public string BuildingName { get; set; }
+        public string LocationName { get; set; }
     }
 }

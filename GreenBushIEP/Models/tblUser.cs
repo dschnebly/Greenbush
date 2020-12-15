@@ -17,6 +17,7 @@ namespace GreenBushIEP.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblUser()
         {
+            this.tbl_ILP_UserLocations = new HashSet<tbl_ILP_UserLocations>();
             this.tblUserPermissions = new HashSet<tblUserPermission>();
             this.tblUserRoles = new HashSet<tblUserRole>();
         }
@@ -45,6 +46,8 @@ namespace GreenBushIEP.Models
         public Nullable<int> ModifiedBy { get; set; }
         public bool isTest { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_ILP_UserLocations> tbl_ILP_UserLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

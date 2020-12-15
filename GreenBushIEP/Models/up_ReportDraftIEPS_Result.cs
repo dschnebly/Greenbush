@@ -13,12 +13,14 @@ namespace GreenBushIEP.Models
     
     public partial class up_ReportDraftIEPS_Result
     {
+        public int UserID { get; set; }
         public string StudentLastName { get; set; }
         public string StudentFirstName { get; set; }
         public string ProviderName { get; set; }
         public Nullable<System.DateTime> begin_date { get; set; }
         public Nullable<System.DateTime> end_Date { get; set; }
         public Nullable<int> DraftDays { get; set; }
-        public int UserID { get; set; }
+        public string BuildingName { get; set; }
+        public string USD { get; set; }
     }
 }

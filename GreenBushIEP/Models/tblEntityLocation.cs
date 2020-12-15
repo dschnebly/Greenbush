@@ -12,12 +12,13 @@ namespace GreenBushIEP.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblRolePermission
+    public partial class tblEntityLocation
     {
-        public int RolePermissionID { get; set; }
-        public int RoleID { get; set; }
-        public string PermissionID { get; set; }
-    
-        public virtual tblPermission tblPermission { get; set; }
+        public string LocationID { get; set; }
+        public string USD { get; set; }
+        public string BUildingID { get; set; }
+        public string EntityID { get; set; }
+        public string LocationName { get; set; }
+        public bool Active { get; set; }
     }
 }

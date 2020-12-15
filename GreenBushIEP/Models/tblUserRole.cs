@@ -19,7 +19,6 @@ namespace GreenBushIEP.Models
         public int RoleID { get; set; }
         public string BookID { get; set; }
     
-        public virtual tblBook tblBook { get; set; }
         public virtual tblRole tblRole { get; set; }
         public virtual tblUser tblUser { get; set; }
     }

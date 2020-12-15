@@ -26,10 +26,10 @@ namespace GreenBushIEP.Models
         public Nullable<bool> Active { get; set; }
         public string BookID { get; set; }
     
+        public virtual tblBook tblBook { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblRolePermission> tblRolePermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
-        public virtual tblBook tblBook { get; set; }
     }
 }
