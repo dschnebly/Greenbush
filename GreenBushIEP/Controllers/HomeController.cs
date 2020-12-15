@@ -4326,9 +4326,8 @@ namespace GreenbushIep.Controllers
                 byte[] mergedFile = CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
                 if (mergedFile != null)
                 {
-                    string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
+                    string downloadFileName = string.IsNullOrEmpty(formName) ? string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf" : string.Format("{0}.pdf", formName);
                     OutputResponse(mergedFile, downloadFileName, "application/pdf");
-
                 }
             }
 
@@ -4356,7 +4355,7 @@ namespace GreenbushIep.Controllers
                 byte[] mergedFile = CreateIEPPdf("", "", HTMLContent2, "", studentName, studentId, "0", iepIDStr, "0", formName);
                 if (mergedFile != null)
                 {
-                    string downloadFileName = string.Format("{0}.pdf", formName);
+                    string downloadFileName = string.IsNullOrEmpty(formName) ? "IEP_Form.pdf" : string.Format("{0}.pdf", formName);
                     OutputResponse(mergedFile, downloadFileName, "application/pdf");
 
                 }

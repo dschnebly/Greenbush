@@ -11,7 +11,7 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-	@Styles.Render("~/Content/iepFormLayout.css")
+	@Styles.Render("~/Content/iepFormLayout.css?1.1")
 }
 
 
@@ -152,8 +152,8 @@
 
 		$('.printMulti').click(function () {
 			
-			var form1 = document.getElementById("frmPrint2");		
-			var moduleElements =$(this).next('.module-page');
+			var form1 = document.getElementById("frmPrint2");
+			var moduleElements = $(this).parent().next('.module-page');
 		
 			if (moduleElements.length == 1 ) {
 			

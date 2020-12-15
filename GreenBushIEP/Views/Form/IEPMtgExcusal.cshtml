@@ -7,17 +7,17 @@
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
     var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
     int numContacts = 0;
-    var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);    
+    var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
     string iepDate = "";
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
 
-   if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
+    if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
     {
         contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
-    } 
+    }
 
     if (formModel.FormIEPMeetingExcusalId == 0)
-    {        
+    {
         formModel.SchoolRepresentative = districtContactName;
     }
 
@@ -30,26 +30,36 @@
     {
         iepDate = String.Format("{0:MM/dd/yyyy}", formModel.IEPDate.Value);
     }
+
+    var primaryContacts = contacts.Where(o => o.PrimaryContact == 1).ToList();
 }
 
-<div class="module-page savdDraftAllowed">
-    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+
+@foreach (var primaryContact in primaryContacts)
+{
+
+
+    numContacts++;
+
+    string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+
+    if (primaryContacts.Count > 1)
     {
-        numContacts++;
+      
+        <div class="section-break multiContacts">
+            <a href="#" class="printMulti btn btn-sm btn-info">Print @(contactFormattedName)</a>
+            <hr class="sectionBreak"/>
+         </div>       
+    }
 
-        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
-
-        if (numContacts > 1)
-        {
-            <text><div class="section-break"></div></text>
-        }
+    <div class="module-page savdDraftAllowed">
 
         <p style='text-align:center;margin-bottom:10px'>
             <span style='font-size:11.0pt;font-family:"Cambria",serif;'>
                 EXCUSAL FROM ATTENDANCE AT IEP MEETINGS of <br />REQUIRED IEP TEAM MEMBERS
             </span>
         </p>
-        <table cellpadding="2" cellspacing="4" >
+        <table cellpadding="2" cellspacing="4">
             <tr>
                 <td><span class="IepNormal">Date:</span></td>
                 <td><textarea cols="20" rows="1" maxlength="10" style="height:30px;width:80%">@(currentDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(currentDate)</span></td>
@@ -61,7 +71,7 @@
                 <td colspan="2">&nbsp;</td>
             </tr>
             <tr>
-                <td  style="width:60px"><span class="IepNormal">IEP Date:</span></td>
+                <td style="width:60px"><span class="IepNormal">IEP Date:</span></td>
                 <td><textarea cols="20" rows="1" maxlength="10" style="height:30px;width:80%">@(iepDate)</textarea><span id="IEPDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(iepDate)</span></td>
                 <td colspan="2"><u><textarea cols="20" rows="1" maxlength="200" style="height:30px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none" class="input-value IepNormal">@(contactFormattedName)</span></u></td>
             </tr>
@@ -85,8 +95,8 @@
         <p class=IepNormal style='text-align: center;'>
             <b><u><span style='font-size: 11.0pt; font-family: "Calibri",sans-serif'>UNDERSTANDINGS</span></u></b>
         </p>
-        <p >
-            <span class=IepNormal  style="font-size:9pt">
+        <p>
+            <span class=IepNormal style="font-size:9pt">
                 I have been informed and understand that the
                 IEP team must include at least the following: (a) parent of the child; (b) one
                 regular education teacher of the child (if the child is, or may be,
@@ -100,7 +110,7 @@
             </span>
         </p>
         <p>
-            <span class=IepNormal style="font-size:9pt" >
+            <span class=IepNormal style="font-size:9pt">
                 I have also been informed and understand that:
                 (a) all of the <u>required</u> members of an IEP team (listed above) must
                 attend each IEP meeting unless both the parent and the school representative
@@ -193,15 +203,15 @@
                     </p>
                 </td>
             </tr>
-            <tr >
+            <tr>
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p style='text-align:center;'>
-                        
-                        <span class=IepNormal >
+
+                        <span class=IepNormal>
                             I<span></span>
                         </span>
                         <input type="checkbox" name="Services_Not_ModOrDisc_AgreeCBX" @(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)" />
-                        <span class=IepNormal >
+                        <span class=IepNormal>
                             agree<span>  </span>
                         </span>
                         <input type="checkbox" name="Services_Not_ModOrDisc_DisagreeCBX" @(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)" />
@@ -213,16 +223,16 @@
                 </td>
                 <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;  mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p style='text-align:center'>
-                       
-                        <span class=IepNormal >
+
+                        <span class=IepNormal>
                             I<span></span>
                         </span>
                         <input type="checkbox" name="Services_MayBe_ModOrDisc_AgreeCBX" @(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)" />
-                        <span class=IepNormal >
+                        <span class=IepNormal>
                             consent<span></span>
                         </span>
                         <input type="checkbox" name="Services_MayBe_ModOrDisc_DisagreeCBX" @(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)" />
-                        <span class=IepNormal >
+                        <span class=IepNormal>
                             do not
                             consent <br>
                             to the above marked statement:
@@ -230,7 +240,7 @@
                     </p>
                 </td>
             </tr>
-        </table>        
+        </table>
         <table class=MsoNormalTable border=0 cellspacing=0 cellpadding=0 width=0 style='width:6.0in;margin-left:.9pt;border-collapse:collapse;margin-top:25px'>
             <tr>
                 <td width=325 valign=top style='width:243.9pt;border:none;border:solid windowtext 0pt;padding:0in 5.4pt 0in 5.4pt'>
@@ -238,7 +248,7 @@
                 </td>
                 <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p style='text-align:right'>
-                        <span class=IepNormal >Date:</span>
+                        <span class=IepNormal>Date:</span>
                     </p>
                 </td>
                 <td width=197 valign=top style='width:2.05in;border:none solid 0pt;padding:0in 5.4pt 0in 5.4pt'>
@@ -291,7 +301,7 @@
                 </td>
                 <td width=68 valign=top style='width:51.3pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p style='text-align:right'>
-                        <span class=IepNormal >Date:</span>
+                        <span class=IepNormal>Date:</span>
                     </p>
                 </td>
             </tr>
@@ -311,5 +321,5 @@
                 </td>
             </tr>
         </table>
-    }
-</div>
+    </div>
+}
