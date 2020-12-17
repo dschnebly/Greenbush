@@ -889,6 +889,7 @@
     <Content Include="Content\Images\IEPBackpackHeaderImage.png" />
     <Content Include="Content\Images\IEPBackpack.jpg" />
     <Content Include="Content\Images\ILPBackpack.png" />
+    <Content Include="Content\Images\ILPUser.png" />
     <Content Include="Content\Images\legal_image.jpg" />
     <Content Include="Content\Images\loading-icon.gif" />
     <Content Include="Content\Images\loading.gif" />
@@ -1296,6 +1297,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\ILP\Index.cshtml" />
     <Content Include="Views\Account\ChooseYourBackpack.cshtml" />
+    <Content Include="Views\ILP\CreateUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
