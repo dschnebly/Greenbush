@@ -1,0 +1,179 @@
+﻿
+
+@{
+    ViewBag.Title = "Create a New User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/chosen.css")
+    @Styles.Render("~/Content/createUser.css")
+}
+
+<style>
+    .panel-primary > .panel-heading {
+        color: #fff !important;
+        background-color: #337ab7 !important;
+        border-color: #337ab7 !important;
+    }
+
+    .btn-filter {
+        outline: -webkit-focus-ring-color auto 1px;
+    }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #5bc0de !important;
+        border-color: #46b8da !important;
+    }
+</style>
+
+@using (Html.BeginForm("Create", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-2 pull-right">
+            <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/ILP/Index" id="backtoportal" role="button" style="margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" title="Cancel action and go back to my current users list"> </a>
+        </div>
+        <hr>
+
+        <input data-val="true" data-val-number="The field UserID must be a number." data-val-required="The UserID field is required." id="user_UserID" name="user.UserID" type="hidden" value="0">
+        <ul class="breadcrumb">
+            <li><a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Level 4 Portal</a></li>
+            <li class="active" style="font-size: 20px;">Create a New User</li>
+        </ul>
+        <div class="col-md-10">
+            <div class="input-group">
+                <img alt="" title="" class="img-circle pull-left glyphicon glyphicon-user" height="100" width="100" id="avatarImage">
+                <div class="input-group">
+                    <span class="btn btn-default btn-file" style="top: 30px; left: 15px;">
+                        Browse <input type="file" name="adminpersona" id="adminpersona" accept="image/gif, image/jpeg, image/png">
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
+        <strong class="moreinfo">Oh snap!</strong>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-id-card-o" title="User Role" aria-hidden="true"></i>
+                </span>
+                <select class="form-control" id="role" name="role" required="required">
+                    <option value="10">Admin</option>
+                    <option value="9">Instructor</option>
+                    <option value="8">Viewer</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-key" aria-hidden="true"></i>
+                </span>
+                <input name="teacherId" class="form-control text-box single-line" id="teacherId" maxlength="20" placeholder="User ID if applicable" title="The User ID" type="text" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="user.TeacherID" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-user" title="First Name"></i>
+                </span>
+                <input name="firstname" class="form-control text-box single-line" id="firstname" placeholder="Legal First Name" required="required" type="text" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="user.FirstName" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-user" title="Last Name"></i>
+                </span>
+                <input name="lastname" class="form-control text-box single-line" id="lastname" placeholder="Legal Last Name" required="required" type="text" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="user.LastName" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-envelope" title="User Email"></i>
+                </span>
+                <input name="email" class="form-control text-box single-line" id="email" pattern="([A-Za-z0-9][._]?)+[A-Za-z0-9][A-Za-z0-9]+(\\.?[A-Za-z0-9]){2}\\.(com?|net|org|us|edu)+(\\.[A-Za-z0-9]{2,4})?" placeholder="User email" required="required" title="Must be a valid email address." type="email" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="user.Email" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+    </div>
+    <!-- program filter -->
+    <div class="form-group" id="listOfDistricts">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-home" title="User District" aria-hidden="true"></i>
+                </span>
+                <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a location..." id="misDistrict" multiple="multiple" style="min-height: 49px; display: none;">
+                    @*<option value="101">USD 101 Erie-Galesburg</option>
+                    <option value="105">USD 105 Rawlins County</option>
+                    <option value="234">USD 234 Fort Scott</option>
+                    <option value="282">USD 282 West Elk</option>
+                    <option value="283">USD 283 Elk Valley</option>
+                    <option value="286">USD 286 Chautauqua Co Community</option>
+                    <option value="436">USD 436 Caney Valley</option>
+                    <option value="445">USD 445 Coffeyville</option>
+                    <option value="446">USD 446 Independence</option>
+                    <option value="447">USD 447 Cherryvale</option>
+                    <option value="461">USD 461 Neodesha</option>
+                    <option value="484">USD 484 Fredonia</option>
+                    <option value="503">USD 503 Parsons</option>
+                    <option value="607">Tri County Special Education Cooperative</option>
+                    <option value="S0521">Kansas Dept of Corrections</option>
+                    <option value="X0332">Tyro Christian School</option>
+                    <option value="Z0009-6854">Independence Bible  College Dist Montgomery C</option>
+                    <option value="Z0026-6862">Zion Lutheran Elem</option>
+                    <option value="Z0031-6860">St Andrew Catholic Elem</option>
+                    <option value="Z0031-8600">St Patrick Catholic Elem</option>*@
+                </select><div class="chosen-container chosen-container-multi" style="width: 95%;" title="" id="misDistrict_chosen"><ul class="chosen-choices"><li class="search-field"><input type="text" value="Choose a location..." class="default" autocomplete="off" style="width: 132.662px;"></li></ul><div class="chosen-drop"><ul class="chosen-results"></ul></div></div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" id="userWorksAtTheseBuildings">
+        <div class="col-md-12">
+            <div class="input-group">
+                <span class="input-group-addon">
+                    <i class="fa fa-building" title="User Building" aria-hidden="true"></i>
+                </span>
+                <select id="AttendanceBuildingId" name="AttendanceBuildingId" type="text" class="form-control multiselect multiselect-icon" multiple="multiple" role="multiselect">
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="form-group" style="padding: 0 20px 20px;">
+        <button type="submit" class="btn btn-info btn-lg" disabled="disabled" data_ftrans="slide reverse" style="width: 100%;">
+            <span class="glyphicon glyphicon-ok-sign"></span> <span id="ActionButtonText">Save</span>
+        </button>
+    </div>
+    <br>
+    <div class="ajax-loader fadeIntoYou" style="visibility: hidden; width: 100%;">
+        <img src="/Content/Images/processing.gif" class="img-responsive" alt="loading content">
+    </div>
+}
+
+@section scripts {
+
+    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+}

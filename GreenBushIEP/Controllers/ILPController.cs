@@ -54,5 +54,10 @@ namespace GreenBushIEP.Controllers
             // Unknow user or view.
             return Json(new { Result = "error", Message = "The user doesn't have permission to access a resource, or sufficient privilege to perform a task initiated by the user." }, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult CreateUser()
+        {
+            return View();
+        }
     }
 }
