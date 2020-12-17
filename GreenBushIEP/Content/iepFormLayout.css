@@ -1,4 +1,13 @@
-﻿
+﻿.multiContacts {
+	margin-top: 10px;	
+	/*margin-left:-75px;*/
+}
+
+hr.sectionBreak {
+	border-top: 1px solid #D8D8D8;
+	margin-top: 3px !important;
+	margin-bottom: 8px !important;
+}
 
 .circles {
 	display: flex;

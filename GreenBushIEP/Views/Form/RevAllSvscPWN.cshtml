@@ -1,55 +1,63 @@
 ﻿@{
-	var formModel = ViewData["formPWNRevAll"] != null ? ViewData["formPWNRevAll"] as GreenBushIEP.Models.tblFormPriorWritten_ReokeAll : new GreenBushIEP.Models.tblFormPriorWritten_ReokeAll();
+    var formModel = ViewData["formPWNRevAll"] != null ? ViewData["formPWNRevAll"] as GreenBushIEP.Models.tblFormPriorWritten_ReokeAll : new GreenBushIEP.Models.tblFormPriorWritten_ReokeAll();
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	int numContacts = 0;
-   
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    int numContacts = 0;
+
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
     if (contacts == null || contacts.Count == 0 || (contacts.Count(o => o.PrimaryContact == 1) == 0))
     {
         contacts.Add(new GreenBushIEP.Models.tblStudentRelationship() { PrimaryContact = 1, FirstName = formModel.ParentName });
     }
 
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.FormDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
-	}
+    var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.FormDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
+    }
 
-	var meetingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.MeetingDate.HasValue)
-	{
-		meetingDate = String.Format("{0:MM/dd/yyyy}", formModel.MeetingDate.Value);
-	}
+    var meetingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.MeetingDate.HasValue)
+    {
+        meetingDate = String.Format("{0:MM/dd/yyyy}", formModel.MeetingDate.Value);
+    }
 
-	var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.DelieveredDate.HasValue)
-	{
-		deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
-	}
+    var deliverDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.DelieveredDate.HasValue)
+    {
+        deliverDate = String.Format("{0:MM/dd/yyyy}", formModel.DelieveredDate.Value);
+    }
 
-	var endDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.EndDate.HasValue)
-	{
-		endDate = String.Format("{0:MM/dd/yyyy}", formModel.EndDate.Value);
-	}
+    var endDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.EndDate.HasValue)
+    {
+        endDate = String.Format("{0:MM/dd/yyyy}", formModel.EndDate.Value);
+    }
+
+    var primaryContacts = contacts.Where(o => o.PrimaryContact == 1).ToList();
 }
 
-<div class="module-page savdDraftAllowed">
-     @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
-     {
-         numContacts++;
 
-         string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
-         string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
-         string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+@foreach (var primaryContact in primaryContacts)
+{
+    numContacts++;
 
-         if (numContacts > 1)
-         {
-            <text><div class="section-break"></div></text>
-         }
-        <p class=MsoNormal style='text-align:center;border:solid windowtext 1pt'>
+    string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+    string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+    string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+
+    if (primaryContacts.Count > 1)
+    {
+      
+        <div class="section-break multiContacts">
+            <a href="#" class="printMulti btn btn-sm btn-info">Print @(contactFormattedName)</a>
+            <hr class="sectionBreak"/>
+         </div>       
+    }
+
+    <div class="module-page savdDraftAllowed">
+        <p class=MsoNormal style='text-align:center;border:solid windowtext 1pt;margin-top:5px;'>
             <span style='font-size:12.0pt;'>
                 <b>
                     PRIOR WRITTEN NOTICE for<br />
@@ -60,50 +68,52 @@
             </span>
         </p>
         <table class=MsoNormalTable border=0 cellspacing=5 cellpadding=5 width=672 style='width:7.0in;margin-left:-.05in;border-collapse:collapse;margin-top:10px'>
-			<tr>
-				<td width=336 valign=top style='width:3.5in;'>
-					<p class=MsoNormal  >
-						<span style='font-size:  11.0pt'>
-							<b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
-						</span>
-						<br/><span class="MsoNormal">(Parent/Legal Educational Decision Maker)</span>
-					</p>					
-				</td>
-				<td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
-					<p class=MsoNormal  >
-						<span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span></span>                       
-					</p>					
-				</td>
-			</tr>
-			<tr>
-				<td width=336 valign=top style='width:3.5in;padding-top:15px;'>					                    
-					<p class=MsoNormal>
-						<b>
-							<span style='font-size:  11.0pt'>On behalf of: </span>
-						</b><span style='font-size:11.0pt;'><u>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
-                        <br/><span class="MsoNormal">(Student’s name)</span>
-					</p>										
-				</td>
-				<td width=336 valign=top style='width:3.5in;padding-top:15px;'>					
-					<p class=MsoNormal>
-						<b>
-							<span style='font-size:11.0pt'>Address:</span>
-						</b><span class=MsoNormal style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
-					</p>
-					<p class=MsoNormal><span class="MsoNormal" style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
-				</td>
-			</tr>
-		</table>
+            <tr>
+                <td width=336 valign=top style='width:3.5in;'>
+                    <p class=MsoNormal>
+                        <span style='font-size:  11.0pt'>
+                            <b>To: </b><textarea maxlength="200" style="height:30px;width:150px">@(contactFormattedName)</textarea><span id="ParentName" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(contactFormattedName)</span>
+                        </span>
+                        <br /><span class="MsoNormal">(Parent/Legal Educational Decision Maker)</span>
+                    </p>
+                </td>
+                <td width=336 valign=top style='width:3.5in;padding:0in 5.4pt 0in 5.4pt'>
+                    <p class=MsoNormal>
+                        <span style='font-size:  11.0pt'><b>Date:</b> <textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline" class="input-value isDate MsoNormal">@(beginDate)</span></span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width=336 valign=top style='width:3.5in;padding-top:15px;'>
+                    <p class=MsoNormal>
+                        <b>
+                            <span style='font-size:  11.0pt'>On behalf of: </span>
+                        </b><span style='font-size:11.0pt;'><u>@(String.Format(studentFormattedName).PadRight(51 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+                        <br /><span class="MsoNormal">(Student’s name)</span>
+                    </p>
+                </td>
+                <td width=336 valign=top style='width:3.5in;padding-top:15px;'>
+                    <p class=MsoNormal>
+                        <b>
+                            <span style='font-size:11.0pt'>Address:</span>
+                        </b><span class=MsoNormal style='font-size:11.0pt'><u>@(String.Format(studentAddress).PadRight(67 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span>
+                    </p>
+                    <p class=MsoNormal><span class="MsoNormal" style='font-size:11.0pt'><u>@(String.Format(studentCityStZip).PadRight(72 - String.Format(studentAddress).Length, ' ').Replace(" ", "\u00A0"))</u></span></p>
+                </td>
+            </tr>
+        </table>
 
         <p class=MsoNormal style='margin-top:8px;'>
-            <span class=MsoNormal >
+            <span class=MsoNormal>
                 On <textarea maxlength="10" style="width:100px;height:30px">@(meetingDate)</textarea><span id="MeetingDate" style="display:none" class="input-value isDate MsoNormal">@(meetingDate)</span>,
-                <span class="MsoNormal">you revoked consent, in writing, for all special education services, related
-                services and supplementary aids and services for the student named above.</span>
+                <span class="MsoNormal">
+                    you revoked consent, in writing, for all special education services, related
+                    services and supplementary aids and services for the student named above.
+                </span>
             </span>
         </p>
         <p class="voffset2">
-            <span class=MsoNormal >
+            <span class=MsoNormal>
                 Under this circumstance, special education regulations
                 require the school district to terminate all special education services,
                 related services and supplementary aids and services, and to give the parent
@@ -116,7 +126,7 @@
 
         <p class=MsoNormal style='margin-top:8px;'>
             <b>
-                <span class=MsoNormal >
+                <span class=MsoNormal>
                     1) A DESCRIPTION OF THE ACTION PROPOSED:
                 </span>
             </b>
@@ -124,8 +134,10 @@
         <p class=MsoNormal style='margin-top:5px;margin-left:.25in'>
             <b>
                 <span class=MsoNormal>
-                    On <textarea maxlength="10" style="width:100px;height:30px">@(endDate)</textarea><span id="EndDate" style="display:none" class="input-value isDate MsoNormal">@(endDate)</span><span class=MsoNormal>, all special education services, related
-                    services and supplementary aids and services specified in the IEP of the student named above will cease.</span>
+                    On <textarea maxlength="10" style="width:100px;height:30px">@(endDate)</textarea><span id="EndDate" style="display:none" class="input-value isDate MsoNormal">@(endDate)</span><span class=MsoNormal>
+                        , all special education services, related
+                        services and supplementary aids and services specified in the IEP of the student named above will cease.
+                    </span>
                 </span>
             </b>
         </p>
@@ -176,7 +188,8 @@
             <b>
                 <span class=MsoNormal>
                     (<i>
-                        <u>including each evaluation procedure, assessment, record or report used as a basis for the proposed or refused action
+                        <u>
+                            including each evaluation procedure, assessment, record or report used as a basis for the proposed or refused action
                         </u>
                     </i>):
                 </span>
@@ -192,10 +205,10 @@
                 </span>
             </b>
         </p>
-        <p class=MsoNormal  style='margin-top:5px'>
+        <p class=MsoNormal style='margin-top:5px'>
             <b>
                 <span class=MsoNormal>
-                    5) OTHER FACTORS RELEVANT TO THE PROPOSAL (e.g. LRE, harmful effects): 
+                    5) OTHER FACTORS RELEVANT TO THE PROPOSAL (e.g. LRE, harmful effects):
                 </span>
             </b>
         </p>
@@ -209,54 +222,55 @@
                     by special education regulations.
                 </span>
             </b>
-        </p>       
-       <p class=MsoNormal style='text-align:center;margin-top:15px'>
-		<b>
-			<span class=MsoNormal style='font-size:11pt'>ADDITIONAL INFORMATION</span>
-		</b>
-	</p>
+        </p>
+        <p class=MsoNormal style='text-align:center;margin-top:15px'>
+            <b>
+                <span class=MsoNormal style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+            </b>
+        </p>
 
-	<p class="MsoNormal" style="text-align:left;">
-		You may contact any of the following resources to help you
-		understand the federal and state laws for educating children with
-		exceptionalities and parental rights (procedural safeguards) granted by those
-		laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
-		Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
-		Networking  785-233-8732.
-	</p>
+        <p class="MsoNormal" style="text-align:left;">
+            You may contact any of the following resources to help you
+            understand the federal and state laws for educating children with
+            exceptionalities and parental rights (procedural safeguards) granted by those
+            laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+            Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+            Networking  785-233-8732.
+        </p>
 
-	<table border="1" cellpadding="10" style="margin-top:15px">
-	<tr>
-		<td>
-			<p class=MsoNormal  style='text-align:center;border:none;'>
-				<b><span class=MsoNormal  style='font-size:11.0pt'>DELIVERY</span></b>
-			</p>
-			<p class=MsoNormal >I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DeliveriedByWho)</span>,					
-			</p>
-			<p class=MsoNormal style='text-indent:40.5pt;'>
-				<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;hand delivered,
-				<span>
-					<span>
-						<span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
-					</span>
-				</span>
-				<span >
-					<span class=MsoNormal>
-						<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span>
-					</span>
-				</span>
-				<span >
-					<span class=MsoNormal>
-						<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
-					</span>
-				</span>
-			</p>
-			<p class=MsoNormal style='margin-top:8px;'>
-				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(deliverDate)</span>.				
-			</p>
-		</td>
-		</tr>
-	</table>    
-	<br/>
-     }
-</div>
+        <table border="1" cellpadding="10" style="margin-top:15px">
+            <tr>
+                <td>
+                    <p class=MsoNormal style='text-align:center;border:none;'>
+                        <b><span class=MsoNormal style='font-size:11.0pt'>DELIVERY</span></b>
+                    </p>
+                    <p class=MsoNormal>
+                        I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DeliveriedByWho)</span>,
+                    </p>
+                    <p class=MsoNormal style='text-indent:40.5pt;'>
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;hand delivered,
+                        <span>
+                            <span>
+                                <span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
+                            </span>
+                        </span>
+                        <span>
+                            <span class=MsoNormal>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span>
+                            </span>
+                        </span>
+                        <span>
+                            <span class=MsoNormal>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
+                            </span>
+                        </span>
+                    </p>
+                    <p class=MsoNormal style='margin-top:8px;'>
+                        this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DeliveriedTo)</span>&nbsp;on<textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(deliverDate)</span>.
+                    </p>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <br/><br/>
+}

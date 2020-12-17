@@ -33,23 +33,31 @@
 
     int numContacts = 0;
 
+    var primaryContacts = contacts.Where(o => o.PrimaryContact == 1).ToList();
 }
-<div class="module-page savdDraftAllowed">
-    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+
+@foreach (var primaryContact in primaryContacts)
+{
+    numContacts++;
+
+    string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+    string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+    string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+
+    if (primaryContacts.Count > 1)
     {
-        numContacts++;
+      
+        <div class="section-break multiContacts">
+            <a href="#" class="printMulti btn btn-sm btn-info">Print @(contactFormattedName)</a>
+            <hr class="sectionBreak"/>
+         </div>       
 
-        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
-        string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
-        string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+         formModel.DeliveriedTo = contactFormattedName;
+    }
 
-        if (numContacts > 1)
-        {
-            <text><div class="section-break"></div></text>
-            formModel.DeliveriedTo = contactFormattedName;
-        }
+    <div class="module-page savdDraftAllowed">
 
-        <div style='border:solid 2pt;padding:1.0pt'>
+        <div style='border:solid 2pt;padding:1.0pt;margin-top:8px;'>
             <p style='text-align:center'>
                 <span style='font-size: 12pt; font-weight: bold;'>NOTICE OF MEETING</span>
             </p>
@@ -65,7 +73,7 @@
                 </td>
                 <td style="width:300px">
                     <p>
-                        <b><span class="IepNormal" >Date:</span></b>
+                        <b><span class="IepNormal">Date:</span></b>
                         <textarea maxlength="10" style="height:30px;" class="form-control1">@(beginDate)</textarea><span id="FormDate" style="display:none;text-decoration:underline;" class="input-value isDate IepNormal">@(beginDate)</span>
                         <br />
                     </p>
@@ -195,7 +203,7 @@
                     </p>
                 </td>
             </tr>
-            <tr >
+            <tr>
                 <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
                     <p style='margin-left:.25in;  text-indent:-.25in;'>
                         <input type="checkbox" @(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "checked" : "") /><img id="TransitionAssesment" class='imgCheck' src="@(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt'>
@@ -269,70 +277,71 @@
             </span>
         </p>
         <p>
-            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(School Contact)">@(formModel.SchoolContactName)</textarea> <span id="SchoolContactName" style="display:none;text-decoration:underline;font-size:10pt" class="input-value IepNormal">@(formModel.SchoolContactName)</span> <span  class="IepNormal"> at</span>
-            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Phone)">@(formModel.SchoolContactPhone)</textarea> <span id="SchoolContactPhone" style="display:none;text-decoration:underline;font-size:10pt" class="input-value IepNormal">@(formModel.SchoolContactPhone)</span> <span class="IepNormal" > immediately.</span>
+            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(School Contact)">@(formModel.SchoolContactName)</textarea> <span id="SchoolContactName" style="display:none;text-decoration:underline;font-size:10pt" class="input-value IepNormal">@(formModel.SchoolContactName)</span> <span class="IepNormal"> at</span>
+            <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Phone)">@(formModel.SchoolContactPhone)</textarea> <span id="SchoolContactPhone" style="display:none;text-decoration:underline;font-size:10pt" class="input-value IepNormal">@(formModel.SchoolContactPhone)</span> <span class="IepNormal"> immediately.</span>
             <br /><span class="IepNormal">(School Contact/Phone)<span>                                                                             </span></span>
         </p>
-   <p class=IepNormal align=center style='text-align:center;margin-top:15px'>
-		<b>
-			<span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
-		</b>
-	</p>
+        <p class=IepNormal align=center style='text-align:center;margin-top:15px'>
+            <b>
+                <span style='font-size:11pt'>ADDITIONAL INFORMATION</span>
+            </b>
+        </p>
 
-	<p class="IepNormal" style="text-align:left;">
-		You may contact any of the following resources to help you
-		understand the federal and state laws for educating children with
-		exceptionalities and parental rights (procedural safeguards) granted by those
-		laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
-		Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
-		Networking  785-233-8732.
-	</p>
-		
-	<table border="1" cellpadding="10" style="align-content:center; margin-top:15px">
-			<tr>
-				<td>
-					<div style="padding:5px;">
-						<p class=IepNormal style='text-align:center;'>
-							<b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS</b>
-						</p>
-						<p class=IepNormal>							
-								Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
-								require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. The school is required to give you a copy of the rights of a parent at least one time each school year. To receive an additional copy of your rights and the procedural safeguards available to you, and if you have any questions
-								regarding your rights, you may contact the special education director of the school or special education cooperative.							
-						</p>
-					</div>
-				</td>
-			</tr>
-	</table>
-	<table border="1" cellpadding="10" style="margin-top:15px">
-	<tr>
-		<td>
-			<p align=center style='text-align:center;border:none;padding:0in;'>
-				<b><span class="IepNormal">DELIVERY</span></b>
-			</p>
-			<p class="IepNormal">I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedByWho)</span>,					
-			</p>
+        <p class="IepNormal" style="text-align:left;">
+            You may contact any of the following resources to help you
+            understand the federal and state laws for educating children with
+            exceptionalities and parental rights (procedural safeguards) granted by those
+            laws: Kansas State Dept. of Education 800-203-9462; Disability Rights Center of
+            Kansas (DRC) (877) 776-1541; Families Together, Inc. 800-264-6343; and Keys for
+            Networking  785-233-8732.
+        </p>
 
-			<p style='text-indent:20.5pt;border:none;padding:0in;'>
-				<input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">hand delivered,</span>
-				
-				<span>
-					<span>
-						<input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">mailed,</span>
-					</span>
-				</span>
-				<span>
-					<span>
-						<input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DelieveredByOtherDesc)</span>
-					</span>
-				</span>
-			</p>
-			<p class="IepNormal" style='margin-top:8px;'>
-				this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedTo)</span>&nbsp;on <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(deliverDate)</span>.				
-			</p>
-		</td>
-		</tr>
-	</table>    
+        <table border="1" cellpadding="10" style="align-content:center; margin-top:15px">
+            <tr>
+                <td>
+                    <div style="padding:5px;">
+                        <p class=IepNormal style='text-align:center;'>
+                            <b>PROCEDURAL SAFEGUARDS TO PROTECT PARENT’S RIGHTS</b>
+                        </p>
+                        <p class=IepNormal>
+                            Both state and federal laws concerning the education of children with exceptionalities include many parental rights. Receiving notices of action the school wants to take in regard to your child and being a part of your child’s educational planning team are examples of the rights these laws give you. These laws also
+                            require that the school follow certain procedures to make sure you know your rights and have an opportunity to exercise those rights. The school is required to give you a copy of the rights of a parent at least one time each school year. To receive an additional copy of your rights and the procedural safeguards available to you, and if you have any questions
+                            regarding your rights, you may contact the special education director of the school or special education cooperative.
+                        </p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table border="1" cellpadding="10" style="margin-top:15px">
+            <tr>
+                <td>
+                    <p align=center style='text-align:center;border:none;padding:0in;'>
+                        <b><span class="IepNormal">DELIVERY</span></b>
+                    </p>
+                    <p class="IepNormal">
+                        I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedByWho)</span>,
+                    </p>
+
+                    <p style='text-indent:20.5pt;border:none;padding:0in;'>
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">hand delivered,</span>
+
+                        <span>
+                            <span>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">mailed,</span>
+                            </span>
+                        </span>
+                        <span>
+                            <span>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DelieveredByOtherDesc)</span>
+                            </span>
+                        </span>
+                    </p>
+                    <p class="IepNormal" style='margin-top:8px;'>
+                        this notice	to <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Name)">@(formModel.DeliveriedTo)</textarea><span id="DeliveriedTo" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DeliveriedTo)</span>&nbsp;on <textarea style="width:200px;height:35px" maxlength="200" placeholder="(Date)">@(deliverDate)</textarea> <span id="DelieveredDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(deliverDate)</span>.
+                    </p>
+                </td>
+            </tr>
+        </table>
 
         <table border="1" cellpadding="10" style="margin-bottom:20px;margin-top:8px">
             <tr>
@@ -362,12 +371,12 @@
                         <span style='font-size:	10.0pt;'>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Parent/Legal Education Decision Maker)
                         </span>
-                        
+
                     </p>
                 </td>
             </tr>
         </table>
+    </div>
+}
 
-    }
 
-</div>

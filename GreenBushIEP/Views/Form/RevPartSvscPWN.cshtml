@@ -35,20 +35,27 @@
     {
         actionTakenEndDate = String.Format("{0:MM/dd/yyyy}", formModel.ActionTakenEndDate.Value);
     }
+
+    var primaryContacts = contacts.Where(o => o.PrimaryContact == 1).ToList();
 }
-<div class="module-page savdDraftAllowed">
-    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+
+@foreach (var primaryContact in primaryContacts)
+{
+    numContacts++;
+
+    string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+    string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
+    string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
+
+    if (primaryContacts.Count > 1)
     {
-        numContacts++;
 
-        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
-        string studentAddress = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.Address1) ? "" : primaryContact.Address1, string.IsNullOrEmpty(primaryContact.Address2) ? "" : primaryContact.Address2).Trim();
-        string studentCityStZip = string.Format("{0}{1} {2}", string.IsNullOrEmpty(primaryContact.City) ? "" : primaryContact.City, string.IsNullOrEmpty(primaryContact.State) ? "" : ", " + primaryContact.State, string.IsNullOrEmpty(primaryContact.Zip) ? "" : primaryContact.Zip).Trim();
-
-        if (numContacts > 1)
-        {
-            <text><div class="section-break"></div></text>
-        }
+        <div class="section-break multiContacts">
+            <a href="#" class="printMulti btn btn-sm btn-info">Print @(contactFormattedName)</a>
+            <hr class="sectionBreak" />
+        </div>
+    }
+    <div class="module-page savdDraftAllowed">
         <p class=MsoNormal style='text-align:center;border:solid windowtext 0pt;padding-bottom:25px'>
             <span style='font-size:12.0pt;'>
                 <b>
@@ -99,7 +106,8 @@
         <p class=MsoNormal style='margin-top:8px'>
             <span class=MsoNormal>
                 On <textarea maxlength="10" style="width:100px;height:30px">@(submitDate)</textarea><span id="SubmitDate" style="display:none" class="input-value isDate MsoNormal">@(submitDate)</span>
-                <span class=MsoNormal>, you submitted a revocation of consent, in writing, for the following special education services, related services, supplementary aids and services and placements for the student named above:
+                <span class=MsoNormal>
+                    , you submitted a revocation of consent, in writing, for the following special education services, related services, supplementary aids and services and placements for the student named above:
                 </span>
             </span>
         </p>
@@ -123,7 +131,8 @@
         <p class=MsoNormal style='margin-top:.1in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;'>
             <b>
                 On <textarea maxlength="10" style="width:100px;height:30px">@(actionTakenEndDate)</textarea><span id="ActionTakenEndDate" style="display:none" class="input-value isDate MsoNormal">@(actionTakenEndDate)</span>
-                <span>, the following
+                <span>
+                    , the following
                     special education services, related services, supplementary aids and services
                     and/or placements will cease:
                 </span> <textarea class="form-control" maxlength="2000">@(formModel.ActionTakenDescription)</textarea> <span id="ActionTakenDescription" style="display:none;" class="input-value MsoNormal">@(formModel.ActionTakenDescription)</span>
@@ -131,14 +140,14 @@
         </p>
         <p class=MsoNormal style='margin-top:.1in;margin-right:-1.0pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;'>
             <b>
-                <span  class=MsoNormal>
+                <span class=MsoNormal>
                     All other services and placements will continue as
                     specified in the student's IEP.
                 </span>
             </b>
         </p>
         <p class=MsoNormal style='margin-top:.1in;margin-right:-1.0pt;margin-bottom:0in;margin-left:22.5pt;margin-bottom:.0001pt;line-height:12.0pt'>
-            <span  class=MsoNormal>
+            <span class=MsoNormal>
                 This action will be taken because the education decision
                 maker for this student has revoked consent for: (a) a particular service or
                 services: and/or (b) a particular placement or placements, and the student’s
@@ -153,7 +162,7 @@
             </span>
             <b>
                 <span>
-                    <span  class=MsoNormal>
+                    <span class=MsoNormal>
                         DESCRIPTION	AND EXPLANATION OF THE ACTION REFUSED:
                     </span>
                 </span>
@@ -195,7 +204,7 @@
             <b>
                 <span class=MsoNormal>
                     3)&nbsp;DESCRIPTION OF THE DATA USED AS BASIS FOR THE
-                    PROPOSED ACTION 
+                    PROPOSED ACTION
                 </span>
             </b>
         </p>
@@ -209,7 +218,7 @@
             <b>
                 <span class=MsoNormal>
                     4)&nbsp;OTHER FACTORS RELEVANT TO THE PROPOSAL (e.g.
-                    LRE, harmful effects): 
+                    LRE, harmful effects):
                 </span>
             </b>
         </p>
@@ -280,6 +289,7 @@
                 </td>
             </tr>
         </table>
-        <br />
-    }
-</div>
+    </div>
+    <br /><br/>
+}
+

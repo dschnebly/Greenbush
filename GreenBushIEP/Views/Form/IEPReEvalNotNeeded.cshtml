@@ -22,31 +22,40 @@
     {
         beginDate = String.Format("{0:MM/dd/yyyy}", formModel.FormDate.Value);
     }
+
+    var primaryContacts = contacts.Where(o => o.PrimaryContact == 1).ToList();
 }
 
 
-<div class="module-page">
-    @foreach (var primaryContact in contacts.Where(o => o.PrimaryContact == 1))
+
+@foreach (var primaryContact in primaryContacts)
+{
+    numContacts++;
+
+    string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+ 
+    if (primaryContacts.Count > 1)
     {
-        numContacts++;
+      
+        <div class="section-break multiContacts">
+            <a href="#" class="printMulti btn btn-sm btn-info">Print @(contactFormattedName)</a>
+            <hr class="sectionBreak"/>
+         </div>       
+    }
 
-        string contactFormattedName = string.Format("{0} {1}", string.IsNullOrEmpty(primaryContact.FirstName) ? "" : primaryContact.FirstName, string.IsNullOrEmpty(primaryContact.LastName) ? "" : primaryContact.LastName).Trim();
+    <div class="module-page">
 
-        if (numContacts > 1)
-        {
-            <text><div class="section-break"></div></text>
-        }
         <p class=MsoNormal align=center style='text-align:center'>
             <span style='font-size:14.0pt;font-family:"Cambria",serif'>RE-EVALUATION NOT NEEDED AGREEMENT FORM</span>
         </p>
 
         <p class=MsoNormal align=center style='text-align:center;margin-bottom:15px;'>
-            <span class=MsoNormal >USD # @((schoolDistrict.Length) > 25 ? schoolDistrict : String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</span>
+            <span class=MsoNormal>USD # @((schoolDistrict.Length) > 25 ? schoolDistrict : String.Format(schoolDistrict).PadRight(25 - String.Format(schoolDistrict).Length, ' ').Replace(" ", "\u00A0"))</span>
         </p>
         <table boder="0" cellpadding="3" cellspacing="5" width="600">
             <tr>
                 <td style="text-decoration:underline">
-                    <span class=MsoNormal >
+                    <span class=MsoNormal>
                         @((studentFormattedName.Length) > 45 ? studentFormattedName : String.Format(studentFormattedName).PadRight(45 - String.Format(studentFormattedName).Length, '_').Replace(" ", "\u00A0"))
                     </span>
                 </td>
@@ -56,15 +65,15 @@
             </tr>
             <tr>
                 <td>
-                    <span class=MsoNormal >Student Name</span>
+                    <span class=MsoNormal>Student Name</span>
                 </td>
                 <td>
-                    <span class=MsoNormal >Date</span>
+                    <span class=MsoNormal>Date</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <span class=MsoNormal >&nbsp;</span>
+                    <span class=MsoNormal>&nbsp;</span>
                 </td>
             </tr>
             <tr>
@@ -75,7 +84,7 @@
 
                 </td>
                 <td style="text-decoration:underline">
-                    <span class=MsoNormal >
+                    <span class=MsoNormal>
                         @if (string.IsNullOrEmpty(evalDate))
                         {
                             @(String.Format("").PadRight(45 - String.Format(todaysDate).Length, '_').Replace(" ", "\u00A0"))
@@ -89,33 +98,34 @@
             </tr>
             <tr>
                 <td>
-                    <span class=MsoNormal >Parent(s)/decision maker name</span><br />
+                    <span class=MsoNormal>Parent(s)/decision maker name</span><br />
                 </td>
                 <td>
-                    <span class=MsoNormal >Date of last evaluation/re-evaluation</span><br />
+                    <span class=MsoNormal>Date of last evaluation/re-evaluation</span><br />
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <span class=MsoNormal >&nbsp;</span>
+                    <span class=MsoNormal>&nbsp;</span>
                 </td>
             </tr>
             <tr>
-                <td style='border-bottom:solid 1px black;'><span class=MsoNormal>
-                    <textarea data-val="50" style="width:300px;height:30px;">@(districtContactName)</textarea>
-                    <span id="SchoolContact" style="display:none;" class="input-value MsoNormal">@(districtContactName)</span>
-                  </span>
+                <td style='border-bottom:solid 1px black;'>
+                    <span class=MsoNormal>
+                        <textarea data-val="50" style="width:300px;height:30px;">@(districtContactName)</textarea>
+                        <span id="SchoolContact" style="display:none;" class="input-value MsoNormal">@(districtContactName)</span>
+                    </span>
                 </td>
                 <td></td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <span class=MsoNormal >School representative name</span>
+                    <span class=MsoNormal>School representative name</span>
                 </td>
             </tr>
-        </table>        
+        </table>
         <p class=MsoNormal>
-            <span class=MsoNormal >
+            <span class=MsoNormal>
                 Special
                 education laws require a re-evaluation of a child with an exceptionality at
                 least once every three years, unless the school and the parent(s), or other
@@ -124,14 +134,14 @@
             </span>
         </p>
         <p class=MsoNormal style="margin-top:8px">
-            <span class=MsoNormal >
+            <span class=MsoNormal>
                 The above
                 named parent(s)/decision maker and school representative agree that a
                 re-evaluation for the above named student is not necessary at this time, and
                 therefore no re-evaluation will be conducted. Both parties understand that a
                 re-evaluation may be requested by either party at any time in the future.
             </span>
-        </p>        
+        </p>
         <table boder="0" cellpadding="3" cellspacing="5" width="500" style="margin-top:50px">
             <tr>
                 <td>
@@ -143,10 +153,10 @@
             </tr>
             <tr>
                 <td>
-                    <span class=MsoNormal >Signature of parent/Legal Decision Maker/Student if age 18 or more</span>
+                    <span class=MsoNormal>Signature of parent/Legal Decision Maker/Student if age 18 or more</span>
                 </td>
                 <td>
-                    <span class=MsoNormal >Date</span>
+                    <span class=MsoNormal>Date</span>
                 </td>
             </tr>
             <tr>
@@ -169,20 +179,20 @@
             </tr>
             <tr>
                 <td>
-                    <span class=MsoNormal >Signature of second parent/legal decision maker</span><br />
+                    <span class=MsoNormal>Signature of second parent/legal decision maker</span><br />
                 </td>
                 <td>
-                    <span class=MsoNormal >Date</span>
+                    <span class=MsoNormal>Date</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <span class=MsoNormal >&nbsp;</span>
+                    <span class=MsoNormal>&nbsp;</span>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
-                    <span class=MsoNormal >&nbsp;</span>
+                    <span class=MsoNormal>&nbsp;</span>
                 </td>
             </tr>
             <tr>
@@ -195,13 +205,14 @@
             </tr>
             <tr>
                 <td>
-                    <span class=MsoNormal >Signature of school representative</span>
+                    <span class=MsoNormal>Signature of school representative</span>
                 </td>
                 <td>
-                    <span class=MsoNormal >Date</span>
+                    <span class=MsoNormal>Date</span>
                 </td>
             </tr>
         </table>
-    }
-</div>
+    </div>
+}
+
 

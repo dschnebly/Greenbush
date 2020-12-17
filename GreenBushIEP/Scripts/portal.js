@@ -144,6 +144,14 @@
 						// blow away the building list 
 						$('#userBuildings').empty();
 
+						var studentDropDown = $("#filterName");
+						studentDropDown.find('option').remove().end();
+						studentDropDown
+							.append($('<option>', {
+								value: "-1"
+							})
+								.text("All Users"));
+
 						// hide all the users in the list.
 						var filterCollection = $('#studentTable > tbody > tr');
 
@@ -161,14 +169,28 @@
 
 						if (results.members.length > 0) {
 							$.each(filterCollection, function (filterIndex, filterValue) {
-								$.each(results.members, function (index, value) {
+								$.each(results.members, function (index, value) {								
+
 									if ($(filterValue).data('id') === value.UserID) {
 										$(filterValue).removeClass('hidden');
 										return false;
 									}
 								});
 							});
+
+							$.each(results.members, function (index, value) {
+								var roleId = value.RoleID;
+								if (roleId == 5) {									
+									var studentName = _getStudentName(value);
+									studentDropDown
+										.append($('<option>', { value: value.UserID })
+											.text(studentName));
+								}
+							});
+							
 						}
+
+						studentDropDown.trigger("chosen:updated");
 
 					} else {
 						alert("doh");
@@ -272,6 +294,14 @@
 				success: function (data) {
 					if (data.Result === "success") {
 
+						var studentDropDown = $("#filterName");
+						studentDropDown.find('option').remove().end();
+						studentDropDown
+							.append($('<option>', {
+								value: "-1"
+							})
+								.text("All Users"));
+
 						// hide all the users in the list.
 						var filterCollection = $('#studentTable > tbody > tr');
 
@@ -286,11 +316,23 @@
 
 							var j = results.members.length - 1;
 							while (j >= 0) {
+								var roleId = results.members[j].RoleID;
+								if (roleId == 5) {
+									var studentName = _getStudentName(results.members[j]);
+									studentDropDown
+										.append($('<option>', { value: results.members[j].UserID })
+											.text(studentName));
+								}
+
+
 								var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
 								$(filterCollection[foundIndex]).removeClass('hidden');
 								j--;
 							}
+							
 						}
+
+						studentDropDown.trigger("chosen:updated");
 					}
 					else {
 						alert('doh');
@@ -326,9 +368,18 @@
 				success: function (data) {
 					if (data.Result === "success") {
 
+						var studentDropDown = $("#filterName");
+						studentDropDown.find('option').remove().end();
+						studentDropDown
+							.append($('<option>', {
+								value: "-1"
+							})
+								.text("All Users"));
+
+
 						// hide all the users in the list.
 						var filterCollection = $('#studentTable > tbody > tr');
-
+												
 						var i = filterCollection.length;
 						while (i >= 0) {
 							$(filterCollection[i]).addClass('hidden');
@@ -340,11 +391,24 @@
 
 							var j = results.members.length - 1;
 							while (j >= 0) {
+
+								var roleId = results.members[j].RoleID;
+								if (roleId == 5) {									
+									var studentName = _getStudentName(results.members[j]);
+
+									studentDropDown
+										.append($('<option>', { value: results.members[j].UserID })
+											.text(studentName));
+								}
+
 								var foundIndex = Object.keys(filterCollection).map(function (x) { return $(filterCollection[x]).data('id'); }).indexOf(results.members[j].UserID);
 								$(filterCollection[foundIndex]).removeClass('hidden');
 								j--;
 							}
+							
 						}
+
+						studentDropDown.trigger("chosen:updated");
 					}
 					else {
 						alert('doh');
@@ -375,7 +439,14 @@
         "but": false,		//Flag to enable transitions on button, false by default
         "cBa": function () { init(); } //callback function
     };
-    new ft(params);
+	new ft(params);
+
+	function _getStudentName(value) {
+		var lastName = value.LastName == null ? "" : value.LastName;
+		var firstName = value.FirstName == null ? "" : value.FirstName;
+		var middleName = value.MiddleName == null ? "" : value.MiddleName;
+		return lastName + ", " + firstName + " " + middleName;;
+	}
 });
 
 

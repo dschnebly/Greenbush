@@ -3095,6 +3095,11 @@ namespace GreenbushIep.Controllers
 
             tblUser mis = FindSupervisor.GetUSersMIS(teacher);
 
+            if(mis == null)
+            {
+                mis = teacher;
+            }
+
             IEP theIEP = new IEP(student.UserID, iepId)
             {
                 locations = db.tblLocations.ToList(),
@@ -4326,11 +4331,40 @@ namespace GreenbushIep.Controllers
                 byte[] mergedFile = CreateIEPPdf(StudentHTMLContent, HTMLContent, HTMLContent2, HTMLContent3, studentName, studentId, isArchive, iepIDStr, isIEP, formName);
                 if (mergedFile != null)
                 {
-                    string downloadFileName = string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf";
+                    string downloadFileName = string.IsNullOrEmpty(formName) ? string.IsNullOrEmpty(HTMLContent) ? "StudentInformation.pdf" : "IEP.pdf" : string.Format("{0}.pdf", formName);
+                    OutputResponse(mergedFile, downloadFileName, "application/pdf");
+                }
+            }
+
+            return null;
+
+        }
+
+        [Authorize]
+        [ValidateInput(false)]
+        public ActionResult DownloadPDFMulti(FormCollection collection)
+        {
+
+         
+            string HTMLContent2 = collection["multiContactPrintText"];
+           
+            string studentName = collection["studentName"];
+            string studentId = collection["studentId"];
+          
+            string iepIDStr = collection["iepID"];
+          
+            string formName = collection["formName"];            
+            string fileName = collection["fileName"];
+
+           
+                byte[] mergedFile = CreateIEPPdf("", "", HTMLContent2, "", studentName, studentId, "0", iepIDStr, "0", formName);
+                if (mergedFile != null)
+                {
+                    string downloadFileName = string.IsNullOrEmpty(formName) ? "IEP_Form.pdf" : string.Format("{0}.pdf", formName);
                     OutputResponse(mergedFile, downloadFileName, "application/pdf");
 
                 }
-            }
+            
 
             return null;
 
@@ -4442,12 +4476,27 @@ namespace GreenbushIep.Controllers
                     }
 
                 }
+                else if(secondaryPageFile != null || thirdPageFile != null )
+                {
+                    //extra primary contacts
+                    if (secondaryPageFile != null)
+                    {
+                        pdfByteContent.Add(secondaryPageFile);
+                    }
+
+                    if (thirdPageFile != null)
+                    {
+                        pdfByteContent.Add(thirdPageFile);
+                    }
+                }
                 else
                 {
                     formName = "Student Information";//this is just the student info page print
                 }
 
                 byte[] mergedFile = concatAndAddContent(pdfByteContent);
+
+
 
                 if (isArchive == "1")
                 {
