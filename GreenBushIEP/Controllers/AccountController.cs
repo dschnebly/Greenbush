@@ -82,12 +82,12 @@ namespace GreenbushIep.Controllers
                             FormsAuthentication.SetAuthCookie(email, false);
 
                             List<uspGetUserBooks_Result> books = db.uspGetUserBooks(user.UserID, email).ToList();
-                            if (books.Count == 1 && books.Any(b => b.BookID == "IEP"))
+                            if (books.Count == 1 && books.Any(b => b.BookID == "_IEP_"))
                             {
                                 // IEP Portal
                                 return Json(new { portal = "/Home/Portal?logon=1", success = true });
                             }
-                            else if (books.Count == 1 && books.Any(b => b.BookID == "ILP"))
+                            else if (books.Count == 1 && books.Any(b => b.BookID == "_ILP_"))
                             {
                                 // ILP Portal
                                 return Json(new { portal = "/ILP/Index", success = true });
@@ -198,12 +198,12 @@ namespace GreenbushIep.Controllers
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
             List<uspGetUserBooks_Result> books = db.uspGetUserBooks(user.UserID, user.Email).ToList();
-            if (books.Count == 1 && books.Any(b => b.BookID == "IEP"))
+            if (books.Count == 1 && books.Any(b => b.BookID == "_IEP_"))
             {
                 // IEP Portal
                 return RedirectToAction("Portal", "Home");
             }
-            else if (books.Count == 1 && books.Any(b => b.BookID == "ILP"))
+            else if (books.Count == 1 && books.Any(b => b.BookID == "_ILP_"))
             {
                 // ILP Portal
                 return RedirectToAction("Index", "ILP");
