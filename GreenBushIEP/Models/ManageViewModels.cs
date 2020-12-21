@@ -143,6 +143,20 @@ namespace GreenBushIEP.Models
         }
     }
 
+    public class ILPUser
+    {
+        public tblUser user { get; set; }
+        public List<tblLocation> locations { get; set; }
+        public List<tblBuilding> buildings { get; set; }
+
+        public ILPUser()
+        {
+            user = new tblUser();
+            locations = new List<tblLocation>();
+            buildings = new List<tblBuilding>();
+        }
+    }
+
     public class NotificationViewModel
     {
         public int StudentId { get; set; }
@@ -250,7 +264,6 @@ namespace GreenBushIEP.Models
         public string Zip { get; set; }
         public string IEPDate { get; set; }
         public bool hasIEP { get; set; }
-
         public string FormattedName
         {
             get
@@ -265,8 +278,6 @@ namespace GreenBushIEP.Models
                 }
             }
         }
-
-
     }
 
     public class StudentViewModel
@@ -798,7 +809,6 @@ namespace GreenBushIEP.Models
         }
     }
 
-
     public class StudentDetailsPrintViewModel
     {
         public StudentDetailsPrintViewModel()
@@ -937,7 +947,6 @@ namespace GreenBushIEP.Models
         public string UserID { get; set; }
         public string KidsID { get; set; }
         public string Description { get; set; }
-
     }
 
     public class ReferralViewModel

@@ -57,7 +57,17 @@ namespace GreenBushIEP.Controllers
 
         public ActionResult CreateUser()
         {
-            return View();
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            if (user != null)
+            {
+                ILPUser model = new ILPUser();
+                model.locations = db.tblLocations.ToList();
+                model.buildings = db.tblBuildings.ToList();
+
+                return View(model);
+            }
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

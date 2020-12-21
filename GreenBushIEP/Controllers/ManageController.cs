@@ -147,6 +147,14 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                 }
 
+                tblUserRole roles = new tblUserRole() { 
+                    UserID = user.UserID, 
+                    RoleID = Convert.ToInt32(user.RoleID), 
+                    BookID = "_IEP_" 
+                };
+                db.tblUserRoles.Add(roles);
+                db.SaveChanges();
+
                 // removes any buildings not in the current list of usd's.
                 List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD) && b.BuildingID != "0").ToList();
 
@@ -2017,6 +2025,14 @@ namespace GreenBushIEP.Controllers
                         if (studentId == 0)
                         {
                             db.tblStudentInfoes.Add(studentInfo);
+
+                            tblUserRole roles = new tblUserRole()
+                            {
+                                UserID = student.UserID,
+                                RoleID = Convert.ToInt32(student.RoleID),
+                                BookID = "_IEP_"
+                            };
+                            db.tblUserRoles.Add(roles);
                         }
                         db.SaveChanges();
                     }
