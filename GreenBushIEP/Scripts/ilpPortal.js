@@ -188,13 +188,12 @@
 
         hideAllUsers(container);
 
-        var j = members.length - 1;
-        while (j >= 0) {
+        var j = members.length;
+        while (j--) {
             var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
             if (matchFound[0] != null) {
                 matchFound[0].classList.remove("hidden");
             }
-            j--;
         }
     }
 

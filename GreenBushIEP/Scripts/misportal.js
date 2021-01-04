@@ -673,54 +673,54 @@
 
 
 function filterList(members) {
-	var container = document.querySelector(".list-group-root");
-    hideAllUsers(container);  
+ 
     var studentDropDown = $("#filterName");
     studentDropDown.find('option').remove().end();  
-    studentDropDown
-        .append($('<option>', {
-            value: "-1"})
-            .text("All Users"));
+    studentDropDown.append($('<option>', { value: "-1" }).text("All Users"));
 
-    var j = members.length - 1;
-    while (j >= 0) {
-        var roleId = members[j].RoleID;
+    console.time();
+   
+    var container = document.querySelector(".list-group-root");
+    hideAllUsers(container);
+
+    var j = members.length;
+    while (j--) {
         var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
         if (matchFound[0] != null) {
+
+            if (members[j].RoleID == 5) {
+                var lastName = members[j].LastName == null ? "" : members[j].LastName;
+                var firstName = members[j].FirstName == null ? "" : members[j].FirstName;
+                var middleName = members[j].MiddleName == null ? "" : members[j].MiddleName;
+                var kidsID = members[j].KidsID == null ? "" : members[j].KidsID;
+
+                var studentName = lastName + ", " + firstName + " " + middleName + " - " + kidsID;
+                studentDropDown
+                    .append($('<option>', { value: members[j].UserID })
+                        .text(studentName));
+            }
+
             matchFound[0].classList.remove("hidden");
         }
-
-        if (roleId == 5) {
-            var lastName = members[j].LastName == null ? "" : members[j].LastName;
-            var firstName = members[j].FirstName == null ? "" : members[j].FirstName;
-            var middleName = members[j].MiddleName == null ? "" : members[j].MiddleName;
-            var kidsID = members[j].KidsID == null ? "" : members[j].KidsID;
-
-            var studentName = lastName + ", " + firstName + " " + middleName + " - " + kidsID;
-            studentDropDown
-                .append($('<option>', { value: members[j].UserID })
-                    .text(studentName));
-        }
-
-        j--;
     }
 
+    console.timeEnd();
+
     studentDropDown.trigger("chosen:updated");
-   
 }
 
 function hideAllUsers(container) {
-	// hide all the users in the list.
+	// hides all the users in the list.
 
+    // if null was sent then query the root
 	if (container == null) {
 		container = document.querySelector(".list-group-root");
 	}
 
 	var filterCollection = container.querySelectorAll(".list-group-item");
-	var i = filterCollection.length - 1;
-	while (i >= 0) {
+	var i = filterCollection.length;
+	while (i--) {
 		filterCollection[i].classList.add("hidden");
-		i--;
 	}
 }
 
