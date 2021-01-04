@@ -140,7 +140,7 @@
 @section scripts {
 	<script>
 		var selectedBuildingId = @(ViewBag.BuildingId == null ? 0 : ViewBag.BuildingId);
-		var selectedDistrictId = '@(ViewBag.DistictId == null ? 0 : ViewBag.DistictId)';
+		var selectedDistrictId = "@(ViewBag.DistictId == null ? 0 : ViewBag.DistictId)";
 		var selectedFiscalYear = @(ViewBag.FiscalYear  == null ? 0 : ViewBag.FiscalYear);
 		
 		$(document).ready(function () {
@@ -250,9 +250,10 @@
 
 						var dHtml = districtElement.html();
 
-						if (data.Districts.length > 1)
+						if (data.Districts.length > 1) {
 							dHtml += "<option value='-1'>All</option>";
-
+						}
+						
 						$.each(districts, function (key, value) {
 							dHtml += "<option value='" + value.USD + "'>" + value.Name + "</option>";
 						});
@@ -262,8 +263,11 @@
 						if (selectedDistrictId != "0") {
 							districtElement.val(selectedDistrictId);							
 							_districtChange(districtElement);
-							selectedDistrictId = 0;														
-						}				
+							selectedDistrictId = "0";														
+						}else if (data.Districts.length == 1) {														
+							_districtChange(districtElement);
+							selectedDistrictId = "0";														
+						}
 					}											
 				},
 				error: function (data) {
