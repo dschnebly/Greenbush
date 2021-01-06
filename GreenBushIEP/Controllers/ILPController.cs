@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Http.ModelBinding;
 using System.Web.Mvc;
 
 namespace GreenBushIEP.Controllers
@@ -55,19 +56,21 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "The user doesn't have permission to access a resource, or sufficient privilege to perform a task initiated by the user." }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
         public ActionResult CreateUser()
         {
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (user != null)
             {
                 ILPUser model = new ILPUser();
-                model.locations = db.tblLocations.ToList();
-                model.buildings = db.tblBuildings.ToList();
+                model.Locations = db.vw_ILP_Locations.ToList();
+                model.Buildings = db.tblBuildings.ToList();
 
                 return View(model);
             }
 
             return RedirectToAction("Index", "Home");
         }
+
     }
 }

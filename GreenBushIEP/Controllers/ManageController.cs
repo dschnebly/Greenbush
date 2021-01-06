@@ -147,10 +147,11 @@ namespace GreenBushIEP.Controllers
                     db.SaveChanges();
                 }
 
-                tblUserRole roles = new tblUserRole() { 
-                    UserID = user.UserID, 
-                    RoleID = Convert.ToInt32(user.RoleID), 
-                    BookID = "_IEP_" 
+                tblUserRole roles = new tblUserRole()
+                {
+                    UserID = user.UserID,
+                    RoleID = Convert.ToInt32(user.RoleID),
+                    BookID = "_IEP_"
                 };
                 db.tblUserRoles.Add(roles);
                 db.SaveChanges();
@@ -187,6 +188,105 @@ namespace GreenBushIEP.Controllers
             }
         }
 
+        // POST: Manage/Create
+        [HttpPost]
+        public ActionResult CreateILPUser(HttpPostedFileBase adminpersona, FormCollection collection)
+        {
+            try
+            {
+                tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+                string emailPassword = RandomPassword.Generate(10);
+                PasswordHash hash = new PasswordHash(emailPassword);
+
+                // CREATE new user
+                tblUser user = new tblUser
+                {
+                    TeacherID = (!string.IsNullOrEmpty(collection["teacherid"]) ? collection["teacherid"] : null),
+                    RoleID = collection["role"],
+                    FirstName = collection["firstname"],
+                    LastName = collection["lastname"],
+                    Email = collection["email"],
+                    Create_Date = DateTime.Now,
+                    Update_Date = DateTime.Now,
+                    Password = hash.Hash,
+                    Salt = hash.Salt
+                };
+
+                // UPLOAD the image
+                if (adminpersona != null && adminpersona.ContentLength > 0)
+                {
+                    string fileName = Path.GetFileName(adminpersona.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), fileName);
+                    user.ImageURL = fileName;
+                    adminpersona.SaveAs(path);
+                }
+
+                if (db.tblUsers.Any(o => o.Email == user.Email))
+                {
+                    return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                }
+
+                // Add to Database
+                db.tblUsers.Add(user);
+                db.SaveChanges();
+
+                List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
+                List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
+                List<string> districts = new List<string>();
+                List<string> buildings = new List<string>();
+
+                if (collection["misDistrict"] != null)
+                {
+                    districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                }
+
+                // save the user to all the districts that were selected.
+                foreach (string usd in collection["misDistrict"].ToString().Split(','))
+                {
+                    tblOrganizationMapping org = new tblOrganizationMapping
+                    {
+                        AdminID = submitter.UserID,
+                        UserID = user.UserID,
+                        USD = usd,
+                        Create_Date = DateTime.Now
+                    };
+
+                    db.tblOrganizationMappings.Add(org);
+                    db.SaveChanges();
+
+                    tblBuildingMapping district = new tblBuildingMapping
+                    {
+                        BuildingID = "0",
+                        USD = usd,
+                        UserID = user.UserID,
+                        Create_Date = DateTime.Now
+                    };
+
+                    db.tblBuildingMappings.Add(district);
+                    db.SaveChanges();
+                }
+
+                tblUserRole roles = new tblUserRole()
+                {
+                    UserID = user.UserID,
+                    RoleID = Convert.ToInt32(user.RoleID),
+                    BookID = "_ILP_"
+                };
+
+                db.tblUserRoles.Add(roles);
+                db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = user.UserID, Value = "Created User " + user.FirstName + " " + user.LastName });
+                db.SaveChanges();
+
+                // Email the new password to the user.
+                EmailPassword.Send(user, emailPassword);
+
+                return Json(new { Result = "success", Message = "Successfully created a new user." });
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = e.Message + " Contact an adminstrator for additional help" });
+            }
+        }
 
         [HttpPost]
         public ActionResult FilterReferrals(int searchType)
@@ -1914,7 +2014,7 @@ namespace GreenBushIEP.Controllers
             {
                 try
                 {
-                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);                    
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
                     // check that the kidsIS doesn't already exsist in the system.
                     long kidsID = Convert.ToInt64(collection["kidsid"]);
@@ -1927,16 +2027,16 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //check if we already created this student
-                    
+
                     tblUser student = new tblUser();
-                    
+
                     if (studentId != 0)
                     {
                         student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
                         student.FirstName = collection["firstname"];
                         student.MiddleName = collection["middlename"];
                         student.LastName = collection["lastname"];
-                        student.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();                        
+                        student.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
                     }
                     else
                     {
@@ -1987,7 +2087,7 @@ namespace GreenBushIEP.Controllers
                         db.SaveChanges();
 
                         //updating existing
-                        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();                                              
+                        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
                     }
 
                     studentInfo.UserID = student.UserID;
@@ -2007,7 +2107,7 @@ namespace GreenBushIEP.Controllers
                     studentInfo.PlacementCode = collection["studentPlacement"];
                     studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
                     studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
-                                      
+
 
                     // map the buildings in the building mapping table
                     try
@@ -2048,12 +2148,12 @@ namespace GreenBushIEP.Controllers
 
                     if (!string.IsNullOrEmpty(districtValues))
                     {
-                        string[] districtArray = districtValues.Split(','); 
+                        string[] districtArray = districtValues.Split(',');
 
                         if (studentId != 0)
                         {
                             //updating existing
-                            List<tblOrganizationMapping> fullList = db.tblOrganizationMappings.Where(o => o.UserID == studentId).ToList();                            
+                            List<tblOrganizationMapping> fullList = db.tblOrganizationMappings.Where(o => o.UserID == studentId).ToList();
                             db.tblOrganizationMappings.RemoveRange(fullList);
                             db.SaveChanges();
                         }
@@ -2750,11 +2850,11 @@ namespace GreenBushIEP.Controllers
                                     , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
                                     , info.ExitNotes
                                     );
-                            }                            
+                            }
                         }
                     }
                 }
-                catch(SmtpException stmpError)
+                catch (SmtpException stmpError)
                 {
                     return Json(new { Result = "error", Message = "There was an error sending the MIS Exit notification email.\n\n" + stmpError.Message });
                 }

@@ -674,27 +674,27 @@
 
 function filterList(members) {
  
-    var studentDropDown = $("#filterName");
+    let studentDropDown = $("#filterName");
     studentDropDown.find('option').remove().end();  
     studentDropDown.append($('<option>', { value: "-1" }).text("All Users"));
 
     console.time();
    
-    var container = document.querySelector(".list-group-root");
+    let container = document.querySelector(".list-group-root");
     hideAllUsers(container);
 
-    var j = members.length;
+    let j = members.length;
     while (j--) {
         var matchFound = container.querySelectorAll("div[data-id='" + members[j].UserID + "']");
         if (matchFound[0] != null) {
 
             if (members[j].RoleID == 5) {
-                var lastName = members[j].LastName == null ? "" : members[j].LastName;
-                var firstName = members[j].FirstName == null ? "" : members[j].FirstName;
-                var middleName = members[j].MiddleName == null ? "" : members[j].MiddleName;
-                var kidsID = members[j].KidsID == null ? "" : members[j].KidsID;
+                const lastName = members[j].LastName == null ? "" : members[j].LastName;
+                const firstName = members[j].FirstName == null ? "" : members[j].FirstName;
+                const middleName = members[j].MiddleName == null ? "" : members[j].MiddleName;
+                const kidsID = members[j].KidsID == null ? "" : members[j].KidsID;
 
-                var studentName = lastName + ", " + firstName + " " + middleName + " - " + kidsID;
+                const studentName = lastName + ", " + firstName + " " + middleName + " - " + kidsID;
                 studentDropDown
                     .append($('<option>', { value: members[j].UserID })
                         .text(studentName));
@@ -717,8 +717,8 @@ function hideAllUsers(container) {
 		container = document.querySelector(".list-group-root");
 	}
 
-	var filterCollection = container.querySelectorAll(".list-group-item");
-	var i = filterCollection.length;
+    const filterCollection = container.querySelectorAll(".list-group-item");
+	let i = filterCollection.length;
 	while (i--) {
 		filterCollection[i].classList.add("hidden");
 	}
