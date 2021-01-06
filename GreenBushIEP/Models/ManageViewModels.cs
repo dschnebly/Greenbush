@@ -145,15 +145,15 @@ namespace GreenBushIEP.Models
 
     public class ILPUser
     {
-        public tblUser user { get; set; }
-        public List<tblLocation> locations { get; set; }
-        public List<tblBuilding> buildings { get; set; }
+        public tblUser User { get; set; }
+        public List<vw_ILP_Locations> Locations { get; set; }
+        public List<tblBuilding> Buildings { get; set; }
 
         public ILPUser()
         {
-            user = new tblUser();
-            locations = new List<tblLocation>();
-            buildings = new List<tblBuilding>();
+            User = new tblUser();
+            Locations = new List<vw_ILP_Locations>();
+            Buildings = new List<tblBuilding>();
         }
     }
 
