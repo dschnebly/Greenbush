@@ -112,7 +112,7 @@
                     <form enctype="multipart/form-data" method="post">
                         <label class="file-upload btn btn-default">
                             <i class="fa fa-upload"></i> Upload a File
-                            <input type="file" name="myFile" class="studentFile" accept="application/pdf" />
+                            <input type="file" name="myFile" class="studentFile" id="studentUploadFile" accept="application/pdf" />
                         </label>
                     </form>
                 </div>
@@ -149,6 +149,6 @@
     <var data-reload="true" data-src="/Scripts/studentForms.js?v1.4"></var>
     <var data-reload="true" data-src="/Scripts/jquery.fileupload.js"></var>
     @section scripts {
-        @Scripts.Render("~/Scripts/studentForms.js?v1.4")
+        @Scripts.Render("~/Scripts/studentForms.js?v1.5")
     }
 </div>
