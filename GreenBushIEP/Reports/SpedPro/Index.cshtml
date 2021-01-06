@@ -140,11 +140,12 @@
 @section scripts {
 	<script>
 		var selectedBuildingId = @(ViewBag.BuildingId == null ? 0 : ViewBag.BuildingId);
-		var selectedDistrictId = '@(ViewBag.DistictId == null ? 0 : ViewBag.DistictId)';
+		var selectedDistrictId = "@(ViewBag.DistictId == null ? 0 : ViewBag.DistictId)";
 		var selectedFiscalYear = @(ViewBag.FiscalYear  == null ? 0 : ViewBag.FiscalYear);
 		
 		$(document).ready(function () {
-		
+			$(".ajax-loader").hide();
+
 			$('.chosen-select').chosen({ width: "100%",  disable_search_threshold: 10 });
 
 			_getDistricts();
@@ -154,24 +155,25 @@
 				return false;
 			});
 
-			$("#exportButton").click(function () {				
+			$("#exportButton").click(function () {	
+				
 				$("ul.errorList").empty();
 				$("#messageText").html("");
+				$(".ajax-loader").hide();
 				var isReset = $('#cbReset').is(':checked');
 
 				if (isReset) {									
 					if ($('#studentDD').val() == "") {
 						var result = confirm("Are you sure you want to reset all the IEPs? Click OK to continue. Otherwise click Cancel and select a student.");
-						if (result) {
+						if (result) {							
 							$(".form-inline").submit();
-						}
+						}						
 					}
-					else {
+					else {						
 						$(".form-inline").submit();
                     }
 				}
-				else {				
-
+				else {									
 					$(".form-inline").submit();
 				}
 			});
@@ -189,6 +191,7 @@
 		function _districtChange(dropdown) {
 			var districtId = dropdown.val();
 			var args = { districtId: districtId };
+			$(".ajax-loader").show();
 
 			$.ajax({
 				type: 'GET',
@@ -197,6 +200,7 @@
 				dataType: "json",
 				async: false,
 				success: function (data) {
+					
 					if (data.Result === "success") {
 						var buildings = data.DistrictBuildings;
 						var buildingElement = $("#buildingDD");
@@ -227,7 +231,14 @@
 						
 					}
 				},
+				done: function (data) {
+					$(".ajax-loader").hide();
+				},
+				complete: function (data) {
+					$(".ajax-loader").hide();
+				},
 				error: function (data) {
+					$(".ajax-loader").hide();
 					alert("There was an error retrieving the building information.");
 					console.log(data);
 				}
@@ -235,13 +246,16 @@
 		}
 
 		function _getDistricts() {
-			
+
+			$(".ajax-loader").show();
+
 			$.ajax({
 				type: 'GET',
 				url: '/Manage/ReportFilterDistrict',
 				dataType: "json",
 				async: false,
-				success: function (data) {
+				success: function (data) {					
+
 					if (data.Result === "success") {
 
 						var districts = data.Districts;
@@ -250,9 +264,10 @@
 
 						var dHtml = districtElement.html();
 
-						if (data.Districts.length > 1)
+						if (data.Districts.length > 1) {
 							dHtml += "<option value='-1'>All</option>";
-
+						}
+						
 						$.each(districts, function (key, value) {
 							dHtml += "<option value='" + value.USD + "'>" + value.Name + "</option>";
 						});
@@ -262,11 +277,21 @@
 						if (selectedDistrictId != "0") {
 							districtElement.val(selectedDistrictId);							
 							_districtChange(districtElement);
-							selectedDistrictId = 0;														
-						}				
+							selectedDistrictId = "0";														
+						}else if (data.Districts.length == 1) {														
+							_districtChange(districtElement);
+							selectedDistrictId = "0";														
+						}
 					}											
 				},
+				done: function (data) {
+					$(".ajax-loader").hide();
+				},
+				complete: function (data) {
+					$(".ajax-loader").hide();
+				},
 				error: function (data) {
+					$(".ajax-loader").hide();
 					alert("There was an error retrieving the district information.");
 					console.log(data);
 				}
@@ -280,8 +305,6 @@
 
 			var districtId = $('#districtDD').val();
 			var buildingId = $('#buildingDD').val();
-			
-			$("ul.errorList").empty();
 			
 			if (fiscalYear > 0) {
 				$('.ajax-loader').show();
@@ -313,6 +336,9 @@
 						}
 					},
 					done: function (data) {
+						$(".ajax-loader").hide();
+					},
+					complete: function (data) {
 						$(".ajax-loader").hide();
 					},
 					error: function (data) {
