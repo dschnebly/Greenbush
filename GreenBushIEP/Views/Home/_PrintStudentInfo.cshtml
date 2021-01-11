@@ -253,7 +253,7 @@
 					<td><b>Freq</b></td>
 				</tr>
 
-				@foreach (var service in Model.studentServices)
+				@foreach (var service in Model.studentServices.OrderBy(o => o.StartDate))
 				{
 					<tr>
 						<td>

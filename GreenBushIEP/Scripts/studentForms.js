@@ -1,5 +1,7 @@
 ﻿$(function () {
     function init() {
+        $('#studentUploadFile').on('change', _checkFileSize);
+
         $(".name a, .printForm").not(".bound").addClass("bound").on("click", function (e) {
             var id = $("#stid").val();
             var goHomeParam = getUrlParameter("home");
@@ -232,9 +234,36 @@
         });//end document ready
 
         evtAttachHideArchivedForm();
-        evtUnattachHideArchivedForm();
+        //evtUnattachHideArchivedForm();
     }
     init();
+   
+    function _checkFileSize() {
+
+        //check whether browser fully supports all File API
+        if (window.File && window.FileReader && window.FileList && window.Blob) {
+
+            //get the file size and file type from file input field
+            var total = 0;
+            var oneByte = 1048576; 
+            var limit = oneByte  * 32;
+            
+            var fileElement = $('#studentUploadFile');
+
+            if (fileElement[0].files[0] != null) {
+                total = fileElement[0].files[0].size;                    
+            }
+
+            if (total > limit) //do something if file size more than 2 mb 
+            {                
+                var fileSizeMB = Math.round(total / oneByte);
+                _showAlert("The file size (" + fileSizeMB +" MB) exceeds the 32 MB limit. Please reduce the file size and try again.", false);                
+               
+                return false;
+
+            }
+        }
+    }
 
     function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),

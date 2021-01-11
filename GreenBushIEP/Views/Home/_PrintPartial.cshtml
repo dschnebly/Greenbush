@@ -1273,22 +1273,7 @@
 {
 	<div id="divAcademic">
 	<div>
-	<h3 class="text-center">ACADEMIC PEFORMANCE</h3>
-	
-		@if(!string.IsNullOrEmpty(Model.studentAcademic.Notes))
-		{
-			<label>Additional Notes</label>			
-			<p>
-				@if (Model.isServerRender)
-					{
-						@(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "break-line-val"))
-					}
-					else
-					{
-						@(Html.Raw(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "<br/>")))
-					}
-				</p>
-		}
+	<h3 class="text-center">ACADEMIC PEFORMANCE</h3>		
 
 		<h3 class="text-center">READING</h3>
 			@if (!Model.studentReading.NoConcerns)
@@ -1670,130 +1655,133 @@
 			}
 		
 	</div><hr />
-	<div>
-		<h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
-		@if (!Model.studentAcademic.NoConcerns)
-		{
-			if (Model.studentAcademic.ProgressTowardGenEd)
-			{
-				<p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; however,  progress is being made with general education supports.</p>
-			}
-			else if (Model.studentAcademic.AreaOfNeed)
-			{
-				<p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance that impact the ability to learn or access the general curriculum.</p>
-			}
+          <div>
+              <h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
+              @if (!Model.studentAcademic.NoConcerns)
+              {
+                  if (Model.studentAcademic.ProgressTowardGenEd)
+                  {
+                      <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance; however,  progress is being made with general education supports.</p>
+                  }
+                  else if (Model.studentAcademic.AreaOfNeed)
+                  {
+                      <p>The Team has concerns about @Model.studentFirstName in the area of Academic Performance that impact the ability to learn or access the general curriculum.</p>
+                  }
 
-			<fieldset class="form-group">
-				<div>
-					<div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
-					<span style="margin-top:5px;font-weight:600"> Strengths:</span>
-					<p style="margin-top:5px;">
-						@if (Model.isServerRender)
-						{
-							@(Model.studentAcademic.PLAAFP_Strengths == null ? "" : Model.studentAcademic.PLAAFP_Strengths.Replace(System.Environment.NewLine, "break-line-val"))
-						}
-						else
-						{
-							@(Html.Raw(Model.studentAcademic.PLAAFP_Strengths == null ? "" : Model.studentAcademic.PLAAFP_Strengths.Replace(System.Environment.NewLine, "<br/>")))
-						}
-					</p>
-					<span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
-					<p style="margin-top:5px;">
-						@if (Model.isServerRender)
-						{
-							@(Model.studentAcademic.PLAAFP_Concerns == null ? "" : Model.studentAcademic.PLAAFP_Concerns.Replace(System.Environment.NewLine, "break-line-val"))
-						}
-						else
-						{
-							@(Html.Raw(Model.studentAcademic.PLAAFP_Concerns == null ? "" : Model.studentAcademic.PLAAFP_Concerns.Replace(System.Environment.NewLine, "<br/>")))
-						}
-					</p>
-				</div>
-			</fieldset>
-			<fieldset class="form-group">
-				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
-				</div>
-				<p>
-					@if (Model.isServerRender)
-					{
-						@(Model.studentAcademic.AreaOfNeedDescription == null ? "" : Model.studentAcademic.AreaOfNeedDescription.Replace(System.Environment.NewLine, "break-line-val"))
-					}
-					else
-					{
-						@(Html.Raw(Model.studentAcademic.AreaOfNeedDescription == null ? "" : Model.studentAcademic.AreaOfNeedDescription.Replace(System.Environment.NewLine, "<br/>")))
-					}
-				</p>
-			</fieldset>
-			<fieldset class="form-group">
-				@{
-					var textNeedMetBy = "";
-					if (Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
-					{
-						textNeedMetBy = "by goal(s)";
-					}
-					if (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value)
-					{
-						textNeedMetBy = "with accommodations or modifications";
-					}
-					if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
-					{
-						textNeedMetBy = "by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
-					}
+                  <fieldset class="form-group">
+                      <div>
+                          <div class="form-group-label"><label style="padding: 5px 0 8px;"> Present Levels of Academic Achievement and Functional Performance (PLAAFP)</label></div>
+                          <span style="margin-top:5px;font-weight:600"> Strengths:</span>
+                          <p style="margin-top:5px;">
+                              @if (Model.isServerRender)
+                              {
+                                  @(Model.studentAcademic.PLAAFP_Strengths == null ? "" : Model.studentAcademic.PLAAFP_Strengths.Replace(System.Environment.NewLine, "break-line-val"))
+                              }
+                              else
+                              {
+                                  @(Html.Raw(Model.studentAcademic.PLAAFP_Strengths == null ? "" : Model.studentAcademic.PLAAFP_Strengths.Replace(System.Environment.NewLine, "<br/>")))
+                              }
+                          </p>
+                          <span style="margin-top:5px;font-weight:600"> Concerns (including Baseline):</span>
+                          <p style="margin-top:5px;">
+                              @if (Model.isServerRender)
+                              {
+                                  @(Model.studentAcademic.PLAAFP_Concerns == null ? "" : Model.studentAcademic.PLAAFP_Concerns.Replace(System.Environment.NewLine, "break-line-val"))
+                              }
+                              else
+                              {
+                                  @(Html.Raw(Model.studentAcademic.PLAAFP_Concerns == null ? "" : Model.studentAcademic.PLAAFP_Concerns.Replace(System.Environment.NewLine, "<br/>")))
+                              }
+                          </p>
+                      </div>
+                  </fieldset>
+                  <fieldset class="form-group">
+                      <div class="form-group-label">
+                          <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                      </div>
+                      <p>
+                          @if (Model.isServerRender)
+                          {
+                              @(Model.studentAcademic.AreaOfNeedDescription == null ? "" : Model.studentAcademic.AreaOfNeedDescription.Replace(System.Environment.NewLine, "break-line-val"))
+                          }
+                          else
+                          {
+                              @(Html.Raw(Model.studentAcademic.AreaOfNeedDescription == null ? "" : Model.studentAcademic.AreaOfNeedDescription.Replace(System.Environment.NewLine, "<br/>")))
+                          }
+                      </p>
+                  </fieldset>
+                  <fieldset class="form-group">
+                      @{
+                          var textNeedMetBy = "";
+                          if (Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                          {
+                              textNeedMetBy = "by goal(s)";
+                          }
+                          if (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value)
+                          {
+                              textNeedMetBy = "with accommodations or modifications";
+                          }
+                          if (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+                          {
+                              textNeedMetBy = "by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
+                          }
 
-					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
-						&& (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
-					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications";
-					}
+                          if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                              && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+                          {
+                              textNeedMetBy = "by goal(s) and accommodations or modifications";
+                          }
 
-					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
-						&& (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value))
-					{
-						textNeedMetBy = "by goal(s) and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
-					}
-					if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
-							   && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
-							   && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
-					{
-						textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
-					}
+                          if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                              && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value))
+                          {
+                              textNeedMetBy = "by goal(s) and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
+                          }
+                          if ((Model.studentAcademic.NeedMetByGoal.HasValue && Model.studentAcademic.NeedMetByGoal.Value)
+                                     && (Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+                                     && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+                          {
+                              textNeedMetBy = "by goal(s) and accommodations or modifications and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
+                          }
 
-					if ((Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
-						   && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
-					{
-						textNeedMetBy = " with accommodations or modifications and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
-					}
+                          if ((Model.studentAcademic.NeedMetByOther.HasValue && Model.studentAcademic.NeedMetByOther.Value)
+                                 && (Model.studentAcademic.NeedMetByAccommodation.HasValue && Model.studentAcademic.NeedMetByAccommodation.Value))
+                          {
+                              textNeedMetBy = " with accommodations or modifications and by Other.<br/>Other Description: " + Model.studentAcademic.NeedMetByOtherDescription;
+                          }
 
-				}
-				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
-				}
-			</fieldset>
-			}
-			else
-			{
-				<p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
-			}
+                      }
+                      @if (!string.IsNullOrEmpty(textNeedMetBy))
+                      {
+                          <div class="form-check form-group-label">
+                              <div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
+                          </div>
+                      }
+                  </fieldset>
+              }
+              else
+              {
+                  <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
 
-			@if(!string.IsNullOrEmpty(Model.studentAcademic.Notes))
-			{
-				<label>Additional Notes</label>				
-				<p>
-				@if (Model.isServerRender)
-					{
-						@(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "break-line-val"))
-					}
-					else
-					{
-						@(Html.Raw(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "<br/>")))
-					}
-				</p>
-			}
-	</div>
+
+              }
+
+              @if (!string.IsNullOrEmpty(Model.studentAcademic.Notes))
+              {
+                  <label>Additional Notes</label>
+                  <p>
+                      @if (Model.isServerRender)
+                      {
+                          @(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "break-line-val"))
+                      }
+                      else
+                      {
+                          @(Html.Raw(Model.studentAcademic.Notes.Replace(System.Environment.NewLine, "<br/>")))
+                      }
+                  </p>
+              }
+
+          </div>
 	
 	</div>
 }
@@ -1806,14 +1794,14 @@
 		{
 			<table class="table table-bordered accTable" border="1">
 				<tr>
-					<td><b>Type</b></td>
-					<td><b>Module(s)</b></td>
+					<td style="width:75px"><b>Type</b></td>
+					<td style="width:50px"><b>Module(s)</b></td>
 					<td><b>Description</b></td>
 					<td><b>Frequency</b></td>
 					<td><b>Location</b></td>
 					<td><b>Duration</b></td>
-					<td><b>Anticipated<br />Start<br />Date</b></td>
-					<td><b>Anticipated<br />End<br />Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />Start Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />End Date</b></td>
 				</tr>
 				@foreach (var accom in Model.studentDetails.accommodationList)
 				{					
@@ -3314,7 +3302,7 @@
 			<td><label>Student's Name:</label></td>
 			<td>@(studentFullName)</td>
 			<td><label>Grade:</label></td>
-			<td>@(Model.studentDetails.grade)</td>
+			<td>@(Model.studentDetails.gradeCurrent)</td>
 			<td><label>Annual Meeting:</label></td>
 			<td>@Model.studentDetails.annualInititationDate</td>		
 			<td></td>
@@ -3668,19 +3656,19 @@
 			<table class="table table-bordered servciesTable" border="1" >
 				<tr>
 					
-					<td><b>Fiscal Year</b></td>
-					<td><b>Service<br />Setting</b></td>									
+					<td style="width:30px"><b>FY</b></td>
+					<td style="width:50px"><b>Service<br />Setting</b></td>									
 					<td><b>Setting</b></td>					
 					<td><b>Attend<br />Blg</b></td>
-					<td><b>Instruction<br />Provided<br />For</b></td>
-					<td><b>Mins</b></td>
-					<td><b>Days</b></td>
-					<td><b>Start<br />Date</b></td>
-					<td><b>End<br />Date</b></td>
-					<td><b>Freq</b></td>
+					<td><b>Instr.<br />Provided<br />For</b></td>
+					<td style="width:30px"><b>Mins</b></td>
+					<td style="width:30px"><b>Days</b></td>
+					<td><b>Start Date</b></td>
+					<td><b>End Date</b></td>
+					<td style="width:50px"><b>Freq</b></td>
 				</tr>
 
-				@foreach (var service in Model.studentServices)
+				@foreach (var service in Model.studentServices.OrderBy(o => o.StartDate))
 				{
 					<tr>
 						<td>

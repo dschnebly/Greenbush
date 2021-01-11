@@ -81,7 +81,7 @@
     //// fires off a new password when the reset password button is clicked
     $('#confirmNewPassword button[type=submit]').on('click', function (e) {
         var userId = $("#hidden-userid").val();
-        var newPassword = $("input[type='password']").eq(1).val();
+        var newPassword = $("#newPassword").val();
 
         $.ajax({
             type: 'POST',
