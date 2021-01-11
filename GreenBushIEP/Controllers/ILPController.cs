@@ -25,7 +25,7 @@ namespace GreenBushIEP.Controllers
                     User = user,
                     Locations = db.tbl_ILP_UserLocations.Where(l => l.UserID == user.UserID).ToList(),
                     Programs = db.tbl_ILP_Programs.ToList(),
-                    Students = db.usp_ILP_UserList(user.UserID, null, null, null).ToList()
+                    Students = db.usp_ILP_UserList(user.UserID, null, null, false).ToList()
                 };
 
                 return View(model);
@@ -40,7 +40,7 @@ namespace GreenBushIEP.Controllers
             if (user != null)
             {
                 if (LocationId == "-1") { LocationId = null; } // Any Location
-                if (ProgramId == "-1") { ProgramId = null;  } // Any Program
+                if (ProgramId == "-1") { ProgramId = null; } // Any Program
                 bool? isArchived = Archived == -1 ? (bool?)null : Archived == 1;  // Archived
 
                 List<usp_ILP_UserList_Result> userList = db.usp_ILP_UserList(user.UserID, LocationId, ProgramId, isArchived).ToList();
@@ -62,9 +62,12 @@ namespace GreenBushIEP.Controllers
             tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (user != null)
             {
-                ILPUser model = new ILPUser();
-                model.Locations = db.vw_ILP_Locations.ToList();
-                model.Buildings = db.tblBuildings.ToList();
+                ILPUser model = new ILPUser
+                {
+                    User = user,
+                    Locations = db.vw_ILP_Locations.ToList(),
+                    Buildings = db.tblBuildings.ToList()
+                };
 
                 return View(model);
             }

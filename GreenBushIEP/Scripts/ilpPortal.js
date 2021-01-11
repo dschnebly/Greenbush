@@ -183,6 +183,47 @@
         });
     });
 
+    // attach event
+    // fires when an delete button is pressed on a MIS role.
+    $("#deleteUser").on("show.bs.modal", function (e) {
+        var user = $(e.relatedTarget).data("id");
+        $(e.currentTarget).find("input[name='id']").val(user);
+        $("#confirmDeletion").val("");
+    });
+
+    // attach event
+    // fires when you click yes on the module deleteForm.
+    $("#deleteUser button[type=submit]").on("click", function (e) {
+        if ($("#confirmDeletion").val() === "DELETE") {
+            var userId = $(e.currentTarget).parent().parent().find("input[name='id']").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Manage/DeleteILPUser",
+                data: {
+                    id: userId
+                },
+                dataType: "json",
+                success: function (data) {
+                    debugger;
+                    var currentUser = $("div.list-group-item[data-id='" + userId + "']");
+                    $(currentUser).remove();
+
+                    $("#alertMessage .moreinfo").html(data.Message);
+                    $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                },
+                error: function (data) {
+                    $("#alertMessage .moreinfo").html("Unable to connect to the server or another related problem.");
+                    $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                }
+            });
+        }
+    });
+
     function filterList(members) {
         var container = document.querySelector(".list-group-root");
 
