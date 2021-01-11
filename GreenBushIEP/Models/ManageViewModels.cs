@@ -856,6 +856,7 @@ namespace GreenBushIEP.Models
         public string ethnicity { get; set; }
         public string gender { get; set; }
         public string grade { get; set; }
+        public string gradeCurrent { get; set; }
         public string parentLang { get; set; }
         public string studentLang { get; set; }
         public string studentCounty { get; set; }

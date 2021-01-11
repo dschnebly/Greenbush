@@ -3229,6 +3229,7 @@ namespace GreenbushIep.Controllers
                     studentDetails.edStatusCodeDesc = info != null && db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).Any() ? db.tblStatusCodes.Where(c => c.StatusCode == info.StatusCode).FirstOrDefault().Description : "";
                     studentDetails.reevalDates = db.tblArchiveEvaluationDates.Where(c => c.userID == stid).OrderByDescending(o => o.evalutationDate).ToList();
                     studentDetails.grade = GetGradeFullDescription(theIEP.current.Grade == null ? info.Grade : theIEP.current.Grade);
+                    studentDetails.gradeCurrent = GetGradeFullDescription(info.Grade);
                     studentDetails.annualInititationDate = theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : "";
                     studentDetails.inititationDate = theIEP.current.MeetingDate.HasValue ? theIEP.current.MeetingDate.Value.ToShortDateString() : "";
                     studentDetails.contingencyPlan = db.tblContingencyPlans.Where(p => p.IEPid == iepId).FirstOrDefault();
