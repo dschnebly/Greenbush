@@ -5000,10 +5000,12 @@ namespace GreenbushIep.Controllers
                     OptionFixNestedTags = true
                 };
                 doc.LoadHtml(result);
-
+                
+                string fileName =  string.Format("{0} {1}", theIEP.current.Amendment ? "Amendment IEP" : "Annual IEP", theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString());
+                                
                 HtmlNode studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                 HtmlNode moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                byte[] mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+                byte[] mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("{0}", fileName));
 
                 if (includeProgressReport)
                 {
@@ -5043,7 +5045,7 @@ namespace GreenbushIep.Controllers
                     doc.LoadHtml(result);
 
                     HtmlNode progressModuleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                    byte[] progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+                    byte[] progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
                 }
 
                 success = true;
