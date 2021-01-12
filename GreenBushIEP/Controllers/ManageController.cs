@@ -2461,6 +2461,7 @@ namespace GreenBushIEP.Controllers
             return RedirectToAction("Portal", "Home");
         }
 
+
         // GET: Manage/EditStudent/5
         [HttpGet]
         public ActionResult EditStudent(int id, bool backToStudentIEP = false)
@@ -3266,6 +3267,97 @@ namespace GreenBushIEP.Controllers
                 return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to find the user. Contact your admin." });
             }
             catch
+            {
+                return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to delete the user. Contact your admin." });
+            }
+        }
+
+        // POST: Manage/DeleteILPUser
+        [HttpPost]
+        public ActionResult DeleteILPUser(int id, FormCollection collection)
+        {
+            try
+            {
+                // RULES:
+                // 1) Cannot delete yourself.
+                // 2) Cannot delete if have staff
+                // 3) Cannot delete a teacher if they have IEP data opened.
+                // 4) Cannot delete a student based on these rules have data associated with them. Otherwise - archive
+
+                tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+                if (user != null)
+                {
+                    // Cannot delete yourself foo.
+                    if (User.Identity.Name == user.Email)
+                    {
+                        return Json(new { Result = "warning", Message = "<strong>Warning!</ strong > You cannot delete yourself from the system." });
+                    }
+
+                    // Cannot delete if the user has staff
+                    if (db.tblOrganizationMappings.Any(u => u.AdminID == id))
+                    {
+                        return Json(new { Result = "warning", Message = "<strong>Warning!</strong> You must first remove all of the users under " + user.FirstName.ToString() + " " + user.LastName.ToString() + " before you can delete them." });
+                    }
+
+                    // TODO: Cannot delete the teacher if they have opened/associated IEPs
+
+                    // Cannot delete a student if they have any IEP associated to them
+                    //if (db.tblIEPs.Any(u => u.UserID == id))
+                    //{
+                    //    user.Archive = true; // you can archieve a student, not delete them.
+                    //    db.SaveChanges();
+
+                    //    return Json(new { Result = "warning", Message = "<strong>Warning!</strong> The student was archived." });
+                    //}
+
+                    //delete studentInfo table if the userid is there.
+                    //WE CAN NO LONGER DELETE STUDENT INFO. EVER!!!!!. 11/25/2019
+                    //var info = db.tblStudentInfoes.FirstOrDefault(u => u.UserID == id);
+                    //if (info != null)
+                    //{
+                    //    db.tblStudentInfoes.Remove(info);
+                    //    db.SaveChanges();
+                    //}
+
+                    //delete from tlbOrganizationMapping all userId references.
+                    List<tblOrganizationMapping> mappings = db.tblOrganizationMappings.Where(u => u.UserID == user.UserID).ToList();
+                    if (mappings.Count > 0)
+                    {
+                        db.tblOrganizationMappings.RemoveRange(mappings);
+                        db.SaveChanges();
+                    }
+
+                    //delete from tblBuildingMapping all userId references.
+                    List<tblBuildingMapping> buildings = db.tblBuildingMappings.Where(u => u.UserID == user.UserID).ToList();
+                    if (buildings.Count > 0)
+                    {
+                        db.tblBuildingMappings.RemoveRange(buildings);
+                        db.SaveChanges();
+                    }
+
+                    //delete from tblStudentRelationships all userId references.
+                    //WE CAN NO LONGER DELETE STUDENT RELATIONSHIPS. EVER!!!!!. 11/25/2019
+                    //var relatioships = db.tblStudentRelationships.Where(r => r.UserID == user.UserID).ToList();
+                    //if (relatioships.Count > 0)
+                    //{
+                    //    db.tblStudentRelationships.RemoveRange(relatioships);
+                    //    db.SaveChanges();
+                    //}
+
+                    // archive user
+                    user.Archive = true;
+
+                    tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                    db.tblAuditLogs.Add(new tblAuditLog() { UserID = user.UserID, ModifiedBy = submitter.UserID, Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", Value = "Archived ILP User " + user.FirstName + " " + user.LastName });
+
+                    //db.tblUsers.Remove(user);
+                    db.SaveChanges();
+                    return Json(new { Result = "success", Message = "<strong>Success!</strong> The user was successfully deleted from the system." });
+                }
+
+                return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to find the user. Contact your admin." });
+            }
+            catch(Exception e)
             {
                 return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to delete the user. Contact your admin." });
             }

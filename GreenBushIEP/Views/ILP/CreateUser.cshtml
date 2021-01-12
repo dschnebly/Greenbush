@@ -29,8 +29,8 @@
     }
 
     input.input-validation-error {
-    border: 2px solid #e80c4d;
-}
+        border: 2px solid #e80c4d;
+    }
 </style>
 
 @using (Html.BeginForm("CreateILPUser", "Manage", new { }, FormMethod.Post, new { enctype = "multipart/form-data", id = "UserForm" }))
@@ -39,7 +39,7 @@
     <div class="form-horizontal">
         <div class="form-group">
             <div class="col-md-2 pull-right">
-                @Html.ActionLink(" ", "Portal", "Home", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+                @Html.ActionLink(" ", "Index", "ILP", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
             </div>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -70,10 +70,16 @@
                     <span class="input-group-addon">
                         <i class="fa fa-id-card-o" title="User Role" aria-hidden="true"></i>
                     </span>
-                    <select class="form-control" id="role" name="role" required="required">
-                        <option value="10">Admin</option>
-                        <option value="9">Instructor</option>
-                        <option value="8">Viewer</option>
+                    <select class="form-control" id="role" Name="role" required="required">
+                        @if(Int32.Parse(Model.User.RoleID) < 8)
+                        {
+                            <option value="7">Admin</option>
+                        }
+                        @if (Int32.Parse(Model.User.RoleID) < 9)
+                        {
+                            <option value="8">Instructor</option>
+                        }
+                        <option value="9">Viewer</option>
                     </select>
                 </div>
             </div>
