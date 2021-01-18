@@ -4419,7 +4419,6 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
-
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -4428,7 +4427,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    //result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"textarea", "p");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"new-line-val", "<br/>");                    
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -4436,7 +4435,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent2))
                 {
                     string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-                    //secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"</?textarea>", "");
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"new-line-val", "<br/>");                    
                     secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -4444,7 +4443,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent3))
                 {
                     string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-                    //thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"</?textarea>", "");
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"new-line-val", "<br/>");                    
                     thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -5000,10 +4999,12 @@ namespace GreenbushIep.Controllers
                     OptionFixNestedTags = true
                 };
                 doc.LoadHtml(result);
-
+                
+                string fileName =  string.Format("{0} {1}", theIEP.current.Amendment ? "Amendment IEP" : "Annual IEP", theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString());
+                                
                 HtmlNode studentInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("studentInformationPage")).FirstOrDefault();
                 HtmlNode moduleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                byte[] mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Annual IEP {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+                byte[] mergedFile = CreateIEPPdf(studentInfo.InnerHtml, moduleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("{0}", fileName));
 
                 if (includeProgressReport)
                 {
@@ -5043,7 +5044,7 @@ namespace GreenbushIep.Controllers
                     doc.LoadHtml(result);
 
                     HtmlNode progressModuleInfo = doc.DocumentNode.Descendants("div").Where(d => d.GetAttributeValue("class", "").Contains("module-page")).FirstOrDefault();
-                    byte[] progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.iepStartTime.HasValue ? theIEP.iepStartTime.Value.ToShortDateString() : theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
+                    byte[] progressReport = CreateIEPPdf("", progressModuleInfo.InnerHtml, "", "", "", studentId.ToString(), "1", theIEP.current.IEPid.ToString(), "1", string.Format("Progress Report {0}", theIEP.current.begin_date.HasValue ? theIEP.current.begin_date.Value.ToShortDateString() : DateTime.Now.ToShortDateString()));
                 }
 
                 success = true;
