@@ -3001,6 +3001,8 @@ namespace GreenBushIEP.Controllers
             return RedirectToAction("Portal", "Home");
         }
 
+
+
         // GET: Manage/Edit/5
         [HttpGet]
         public ActionResult Edit(int id)
@@ -3026,6 +3028,26 @@ namespace GreenBushIEP.Controllers
 
             return View("~/Views/Home/EditUser.cshtml", model);
         }
+
+        // GET: Manage/Edit/5
+        [HttpGet]
+        public ActionResult EditILPUser(int id)
+        {
+            tblUser user = db.tblUsers.Where(u => u.UserID == id).SingleOrDefault();
+
+            ILPUserDetailsViewModel model = new ILPUserDetailsViewModel
+            {
+                user = user,
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name),
+                locations = db.vw_ILP_Locations.ToList(),
+                selectedLocations = (from l in db.vw_ILP_Locations join bm in db.tblBuildingMappings on l.LocationID equals bm.USD where user.UserID == bm.UserID && bm.BuildingID == "0" select l).Distinct().ToList()
+            };
+
+           ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+
+            return View("~/Views/ILP/EditILPUser.cshtml", model);
+        }
+
 
         // POST: Manage/Edit
         [HttpPost]
@@ -3056,8 +3078,10 @@ namespace GreenBushIEP.Controllers
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
 
-                    if (submitter.RoleID == "1" || submitter.RoleID == "2")
-                        user.Archive = collection["isArchived"] != null ? true : false;
+                    if (submitter.RoleID == "1" || submitter.RoleID == "7")
+                    {
+                        user.Archive = collection["isArchived"] != null;
+                    }
 
                     if (collection.AllKeys.Contains("password"))
                     {
@@ -3172,6 +3196,139 @@ namespace GreenBushIEP.Controllers
             catch (Exception e)
             {
                 return RedirectToAction("Edit", "Manage", new { id, message = e.Message.ToString() });
+            }
+        }
+
+        // POST: Manage/EditILPUser
+        [HttpPost]
+        public ActionResult EditILPUser(int id, HttpPostedFileBase adminpersona, FormCollection collection)
+        {
+            try
+            {
+                tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+                tblUser user = db.tblUsers.SingleOrDefault(u => u.UserID == id);
+                tblUser misUser = FindSupervisor.GetUSersMIS(user);
+
+                if (misUser == null)
+                {
+                    misUser = FindSupervisor.GetUSersMIS(submitter);
+                }
+
+                if (misUser == null || user.UserID == misUser.UserID)
+                {  // I'm my own grandpapa 
+                    misUser = db.tblUsers.Where(u => u.UserID == 1).FirstOrDefault();
+                }
+
+                // EDIT the user
+                if (user != null)
+                {
+                    if (!string.IsNullOrEmpty(collection["teacherID"])) { user.TeacherID = collection["teacherID"]; }
+                    if (!string.IsNullOrEmpty(collection["role"])) { user.RoleID = collection["role"]; }
+                    user.FirstName = collection["FirstName"];
+                    user.LastName = collection["LastName"];
+                    user.Email = collection["userEmail"];
+
+                    if (submitter.RoleID == "1" || submitter.RoleID == "7")
+                    {
+                        user.Archive = collection["isArchived"] != null;
+                    }
+
+                    //tblUserRole role = db.tblUserRoles.Where(u => u.UserID == id).FirstOrDefault();
+                    //role.tblRole.RoleID = Convert.ToInt32(user.RoleID);
+
+                    db.SaveChanges();
+                }
+
+                //UPDATE tblUserRoles SET RoleID = @NewRoleID WHERE UserID = @UserID and BookID = @BookID
+                tblUserRole userRole = db.tblUserRoles.Where(u => u.UserID == id && u.BookID == "_ILP_").FirstOrDefault();
+                userRole.RoleID = Convert.ToInt32(user.RoleID);
+
+                // EDIT their avatar
+                if (adminpersona != null)
+                {
+                    if (!string.IsNullOrEmpty(user.ImageURL))
+                    {
+                        // Delete exiting file
+                        System.IO.File.Delete(Path.Combine(Server.MapPath("~/Avatar/"), user.ImageURL));
+                    }
+
+                    // Save new file
+                    string filename = Guid.NewGuid() + Path.GetFileName(adminpersona.FileName);
+                    string path = Path.Combine(Server.MapPath("~/Avatar/"), filename);
+
+                    try
+                    {
+                        adminpersona.SaveAs(path);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.Write("Avatar file can't be save. Exception:" + e.InnerException.ToString());
+                    }
+
+                    user.ImageURL = filename;
+                }
+
+                db.SaveChanges();
+
+                List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
+                List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
+                List<string> districts = new List<string>();
+                List<string> buildings = new List<string>();
+
+                if (collection["misDistrict"] != null)
+                {
+                    districts = new List<string>(collection["misDistrict"].ToString().Split(','));
+                }
+
+                if (collection["buildingIds"] != null)
+                {
+                    buildings = new List<string>(collection["buildingIds"].ToString().Split(','));
+                }
+
+                // removes any buildings not in the current list of usd's.
+                List<tblBuilding> userBuildings = db.tblBuildings.Where(b => buildings.Contains(b.BuildingID) && districts.Contains(b.USD) && b.BuildingID != "0").ToList();
+
+                if (districts != null)
+                {
+                    foreach (string district in districts)
+                    {
+                        districtMappings.Add(new tblOrganizationMapping()
+                        {
+                            AdminID = misUser.UserID,
+                            UserID = id,
+                            USD = district,
+                            Create_Date = DateTime.Now,
+                        });
+
+                        buildingMappings.Add(new tblBuildingMapping()
+                        {
+                            BuildingID = "0",
+                            UserID = id,
+                            USD = district,
+                            Create_Date = DateTime.Now,
+                        });
+                    }
+                }
+
+                //remove all the district relationships. Blow it all away.
+                db.tblOrganizationMappings.RemoveRange(db.tblOrganizationMappings.Where(o => o.UserID == id));
+
+                // remove all building relationships. Blow it all away.
+                db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == id));
+
+                db.SaveChanges();
+
+                // add back the connections to the database.
+                db.tblOrganizationMappings.AddRange(districtMappings);
+                db.tblBuildingMappings.AddRange(buildingMappings);
+                db.tblAuditLogs.Add(new tblAuditLog() { UserID = user.UserID, Create_Date = DateTime.Now, Update_Date = DateTime.Now, ModifiedBy = submitter.UserID, TableName = "tblUsers, tblOrginzation, tbleBuildingMapping", Value = "The student " + user.FirstName + " " + user.LastName + " was edit" });
+                db.SaveChanges();
+
+                return RedirectToAction("Index", "ILP");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("EditILPUser", "Manage", new { id, message = e.Message.ToString() });
             }
         }
 
@@ -3357,9 +3514,9 @@ namespace GreenBushIEP.Controllers
 
                 return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to find the user. Contact your admin." });
             }
-            catch(Exception e)
+            catch (Exception e)
             {
-                return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to delete the user. Contact your admin." });
+                return Json(new { Result = "error", Message = "<strong>Error!</strong> An error happened while trying to delete the user. Msg: " + e.Message + ". Contact your admin." });
             }
         }
 
@@ -4573,8 +4730,20 @@ namespace GreenBushIEP.Controllers
                     return "Level 3";
                 case "4":
                     return "Level 2";
-                default:
+                case "5":
                     return "Student";
+                case "6":
+                    return "Nurse";
+                case "7":
+                    return "Admin";
+                case "8":
+                    return "Instructor";
+                case "9":
+                    return "Viewer";
+                case "10":
+                    return "Learner";
+                default:
+                    return "";
             }
         }
 

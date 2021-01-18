@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "CreateViewer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <ul class="breadcrumb" style="margin-top: 18px;">
+                @*<li>@Html.ActionLink((string)(ViewBag.RoleName + " Portal").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                <li class="active" style="font-size: 20px;">@ViewBag.Title</li>*@
+            </ul>
+        </div>
+        <div class="col-md-2 pull-right">
+            @Html.ActionLink(" ", "Index", "ILP", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px;font-size:20px;font-weight:bold;" })
+        </div>
+    </div>
+

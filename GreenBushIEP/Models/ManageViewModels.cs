@@ -324,6 +324,22 @@ namespace GreenBushIEP.Models
         public List<BuildingsViewModel> buildings { get; set; }
     }
 
+    public class ILPUserDetailsViewModel
+    {
+        public ILPUserDetailsViewModel()
+        {
+            user = new tblUser();
+            submitter = new tblUser();
+            locations = new List<vw_ILP_Locations>();
+            selectedLocations = new List<vw_ILP_Locations>();
+        }
+
+        public tblUser user { get; set; }
+        public tblUser submitter { get; set; }
+        public List<vw_ILP_Locations> locations { get; set; }
+        public List<vw_ILP_Locations> selectedLocations { get; set; }
+    }
+
     public class StudentDetailsViewModel
     {
         public StudentDetailsViewModel()

@@ -75,5 +75,11 @@ namespace GreenBushIEP.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public ActionResult CreateLearner()
+        {
+            return View();
+        }
+
     }
 }

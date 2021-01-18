@@ -52,7 +52,7 @@
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
                 <div class="user-toggle-item" style="display: inline-block;">
-                    <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/ILP/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
+                    <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/ILP/CreateLearner"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
                     <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/ILP/CreateUser"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
@@ -170,46 +170,37 @@
                                 case 7: //Admin
                                     <i class="far fa-user" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 case 8: //Instructor
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 case 9: //Viewer
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
                                     <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
+                                    @*<a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
                                         <span class="glyphicon glyphicon-folder-open"></span>
-                                    </a>
+                                    </a>*@
                                     <a href="/Home/MISNotes?stid=@(user.UserID)" title="Edit an existing student" role="button" class="btn btn-info btn-action pull-right" data-ftrans="slide">
                                         <span class="far fa-comment-alt"></span>
                                     </a>
