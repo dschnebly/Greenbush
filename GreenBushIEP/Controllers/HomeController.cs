@@ -1327,6 +1327,64 @@ namespace GreenbushIep.Controllers
             tblIEP studentActiveIEP = db.tblIEPs.Where(i => i.IEPid == studentAmmendIEP.AmendingIEPid).FirstOrDefault();
             if (studentAmmendIEP != null && studentActiveIEP != null)
             {
+
+                //copy over updated progress reports information
+                var activeGoals = db.tblGoals.Where(o => o.IEPid == studentAmmendIEP.AmendingIEPid);
+                    //&& (o.Update_Date >= studentAmmendIEP.Create_Date || o.Create_Date >= studentAmmendIEP.Create_Date));
+
+                var amendGoals = db.tblGoals.Where(o => o.IEPid == IEPid);
+
+                foreach (var activeGoal in activeGoals)
+                {
+                    var amendGoal = amendGoals.Where(o => o.Module == activeGoal.Module && o.Title == activeGoal.Title).FirstOrDefault();
+                    if (amendGoal != null)
+                    {
+                        amendGoal.Progress_Quarter1 = activeGoal.Progress_Quarter1;
+                        amendGoal.Progress_Quarter2 = activeGoal.Progress_Quarter2;
+                        amendGoal.Progress_Quarter3 = activeGoal.Progress_Quarter3;
+                        amendGoal.Progress_Quarter4 = activeGoal.Progress_Quarter4;
+                        amendGoal.ProgressDate_Quarter1 = activeGoal.ProgressDate_Quarter1;
+                        amendGoal.ProgressDate_Quarter2 = activeGoal.ProgressDate_Quarter2;
+                        amendGoal.ProgressDate_Quarter3 = activeGoal.ProgressDate_Quarter3;
+                        amendGoal.ProgressDate_Quarter4 = activeGoal.ProgressDate_Quarter4;
+                        amendGoal.ProgressDescription_Quarter1 = activeGoal.ProgressDescription_Quarter1;
+                        amendGoal.ProgressDescription_Quarter2 = activeGoal.ProgressDescription_Quarter2;
+                        amendGoal.ProgressDescription_Quarter3 = activeGoal.ProgressDescription_Quarter3;
+                        amendGoal.ProgressDescription_Quarter4 = activeGoal.ProgressDescription_Quarter4;
+                    }
+                }
+
+                if (activeGoals != null && activeGoals.Count() > 0) {
+
+                    var activeGoalIds = activeGoals.Select(o => o.goalID).ToList();
+                    var amendeGoalIds = amendGoals.Select(o => o.goalID).ToList();
+                    var activeGoalBenchmarks = db.tblGoalBenchmarks.Where(o => activeGoalIds.Contains(o.goalID)).ToList();
+                    var amendGoalBenchmarks = db.tblGoalBenchmarks.Where(o => amendeGoalIds.Contains(o.goalID)).ToList();
+
+                    foreach (var activeGoalBenchmark in activeGoalBenchmarks)
+                    {
+                        var amendGoalBenchmark = amendGoalBenchmarks.Where(o => o.Method == activeGoalBenchmark.Method 
+                        && o.ObjectiveBenchmark == activeGoalBenchmark.ObjectiveBenchmark).FirstOrDefault();
+
+                        if (amendGoalBenchmark != null)
+                        {
+                            amendGoalBenchmark.Progress_Quarter1 = activeGoalBenchmark.Progress_Quarter1;
+                            amendGoalBenchmark.Progress_Quarter2 = activeGoalBenchmark.Progress_Quarter2;
+                            amendGoalBenchmark.Progress_Quarter3 = activeGoalBenchmark.Progress_Quarter3;
+                            amendGoalBenchmark.Progress_Quarter4 = activeGoalBenchmark.Progress_Quarter4;
+                            amendGoalBenchmark.ProgressDate_Quarter1 = activeGoalBenchmark.ProgressDate_Quarter1;
+                            amendGoalBenchmark.ProgressDate_Quarter2 = activeGoalBenchmark.ProgressDate_Quarter2;
+                            amendGoalBenchmark.ProgressDate_Quarter3 = activeGoalBenchmark.ProgressDate_Quarter3;
+                            amendGoalBenchmark.ProgressDate_Quarter4 = activeGoalBenchmark.ProgressDate_Quarter4;
+                            amendGoalBenchmark.ProgressDescription_Quarter1 = activeGoalBenchmark.ProgressDescription_Quarter1;
+                            amendGoalBenchmark.ProgressDescription_Quarter2 = activeGoalBenchmark.ProgressDescription_Quarter2;
+                            amendGoalBenchmark.ProgressDescription_Quarter3 = activeGoalBenchmark.ProgressDescription_Quarter3;
+                            amendGoalBenchmark.ProgressDescription_Quarter4 = activeGoalBenchmark.ProgressDescription_Quarter4;
+                        }
+                    }
+
+                }
+
                 //archive previously active iep and progress
                 IEP theIEP = GetIEPPrint(stId, studentActiveIEP.IEPid);
 
