@@ -1963,6 +1963,39 @@ namespace GreenBushIEP.Controllers
             return Json(new { Result = "error", Message = "There was an error while trying to send the referral email. Please try again or contact your administrator." });
         }
 
+        [HttpGet]
+        public ActionResult CreateLearner()
+        {
+            StudentDetailsViewModel model = new StudentDetailsViewModel
+            {
+                submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name)
+            };
+            model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
+            model.allDistricts = db.tblDistricts.ToList();
+            model.student.DateOfBirth = DateTime.Now.AddYears(-5);
+            model.placementCode = db.tblPlacementCodes.ToList();
+            model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
+            model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
+            model.statusCode = db.tblStatusCodes.ToList();
+            model.grades = db.tblGrades.ToList();
+            model.races = db.tblRaces.ToList();
+
+            ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
+                                                 where b.USD == "101"
+                                                 select new BuildingsViewModel
+                                                 {
+                                                     BuildingName = b.BuildingName,
+                                                     BuildingID = b.BuildingID,
+                                                     BuildingUSD = b.USD
+                                                 }).OrderBy(b => b.BuildingName).ToList();
+
+            ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+            ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
+
+            return View("~/Views/ILP/CreateLearner.cshtml", model);
+        }
+
+
         // GET: Manage/CreateStudent
         [HttpGet]
         public ActionResult CreateStudent()

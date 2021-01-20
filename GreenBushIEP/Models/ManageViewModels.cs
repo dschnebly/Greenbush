@@ -382,6 +382,44 @@ namespace GreenBushIEP.Models
         public List<tblStatusCode> statusCodes { get; set; }
     }
 
+    public class LearnerDetailsViewModel
+    {
+        public LearnerDetailsViewModel()
+        {
+            submitter = new tblUser();
+            student = new Student();
+            info = new tblStudentInfo();
+            grades = new List<tblGrade>();
+            races = new List<tblRace>();
+            districts = new List<tblDistrict>();
+            allDistricts = new List<tblDistrict>();
+            selectedDistrict = new List<tblDistrict>();
+
+            statusCode = new List<tblStatusCode>();
+            placementCode = new List<tblPlacementCode>();
+
+            primaryDisabilities = new List<vw_PrimaryDisabilities>();
+            secondaryDisabilities = new List<vw_SecondaryDisabilities>();
+            statusCodes = new List<tblStatusCode>();
+        }
+
+
+        public tblUser submitter { get; set; }
+        public Student student { get; set; }
+        public tblStudentInfo info { get; set; }
+        public List<tblGrade> grades { get; set; }
+        public List<tblRace> races { get; set; }
+        public tblRace selectedRace { get; set; }
+        public List<tblDistrict> districts { get; set; }
+        public List<tblDistrict> allDistricts { get; set; }
+        public List<tblDistrict> selectedDistrict { get; set; }
+        public List<tblStatusCode> statusCode { get; set; }
+        public List<tblPlacementCode> placementCode { get; set; }
+        public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
+        public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
+        public List<tblStatusCode> statusCodes { get; set; }
+    }
+
     public class ReferralDetailsViewModel
     {
         public ReferralDetailsViewModel()
