@@ -4103,7 +4103,7 @@ namespace GreenbushIep.Controllers
             sb.AppendFormat("\t{0}", studentIEP.studentSocial != null && studentIEP.studentSocial.BehaviorInterventionPlan ? "1" : "");
 
             //18 Claiming Code req
-            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ClaimingCode ? "1" : "");
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ClaimingCode.HasValue && studentIEP.studentDetails.student.ClaimingCode.Value ? "1" : "");
 
             //19 Placed By KDCF/JJA/LEA/Parent req
             if (string.IsNullOrEmpty(studentIEP.studentDetails.student.PlacementCode))

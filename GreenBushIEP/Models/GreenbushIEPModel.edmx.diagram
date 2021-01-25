@@ -142,6 +142,7 @@
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.vw_UserList" Width="1.5" PointX="23.75" PointY="0.75" />
         <EntityTypeShape EntityType="IndividualizedEducationProgramModel.tbl_ILP_UserPrograms" Width="1.5" PointX="21" PointY="4.5" />
         <AssociationConnector Association="IndividualizedEducationProgramModel.FR_tblILPPrograms" />
+        <AssociationConnector Association="IndividualizedEducationProgramModel.FK_tblILPUserPrograms_tblUsers" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
