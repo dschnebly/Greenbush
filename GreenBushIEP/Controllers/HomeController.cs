@@ -2823,7 +2823,7 @@ namespace GreenbushIep.Controllers
                 fileViewModel.studentGradeText = GetGradeFullDescription(fileViewModel.studentInfo.Grade);
             }
 
-            tblArchiveEvaluationDate lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderByDescending(o => o.evalutationDate).FirstOrDefault();
+            tblArchiveEvaluationDate lastReEval = db.tblArchiveEvaluationDates.Where(c => c.userID == id).OrderBy(o => o.evalutationDate).FirstOrDefault();
             if (lastReEval != null)
             {
                 fileViewModel.lastReEvalDate = lastReEval.evalutationDate.ToShortDateString();

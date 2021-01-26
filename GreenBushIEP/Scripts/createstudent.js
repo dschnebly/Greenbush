@@ -8,9 +8,13 @@
         $(this).parents(".popover").popover('hide');
     });
 
+    $('[data-toggle="popover"]').popover('destroy');//popover defined in misportal is causing notes to show when typing so we are removing that call and replacing it.
+
     $('[data-toggle="popover"]').popover({
         html: true,
-        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-header">Edit Dates <i class="glyphicon glyphicon-remove-circle pull-right popover-close"></i></h3><div class="popover-content"></div></div>'
+        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-header">Edit Dates <i class="glyphicon glyphicon-remove-circle pull-right popover-close"></i></h3><div class="popover-content"></div></div>',
+        sanitize: false,
+        trigger: "manual",
     });
 
     $(".toggle-reEvaluationPopover").click(function () {
