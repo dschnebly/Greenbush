@@ -200,3 +200,77 @@ function init() {
         document.forms[numForms - 1].submit();
     });
 }
+
+$("#submitLearner").on("click", function () {
+
+    var theForm = document.getElementById("createNewStudent");
+
+    if ($("#misDistrict").val() === "" || $("#misDistrict").val() === null) {
+        $("#misDistrict_chosen").addClass('contact-tooltip');
+
+        return alert("Attending Location is required.");
+    } else {
+        $("#misDistrict_chosen").removeClass('contact-tooltip');
+    }
+
+    if (tabValidates()) {
+        $.ajax({
+            url: '/Manage/CreateLearner',
+            type: 'POST',
+            data: $("#createNewStudent").serialize(),
+            success: function (data) {
+                if (data.Result === "success") {
+                    alert("success");
+                } else {
+                    alert(data.Message);
+                }
+            },
+            error: function (data) {
+                alert("There was an error when attempt to connect to the server.");
+            }
+        });
+    }
+});
+
+
+function tabValidates() {
+    var validates = true;
+    //var stepId = $('.wizard .nav-tabs li.active a').attr('href');
+    var $inputs = $("#step1 :input[data-validate='true']");
+
+    $inputs.each(function () {
+        var input = $(this);
+        var is_valid = input.val();
+
+        if (is_valid === "" || is_valid === null) {
+            if (input.is("select")) {
+                $(this).next().addClass('contact-tooltip');
+                input.addClass('contact-tooltip');
+            }
+            else {
+                input.addClass('contact-tooltip');
+            }
+            validates = false;
+        }
+        else {
+            input.removeClass('contact-tooltip');
+        }
+    });
+
+    //copy student name
+    var firstName = $("#firstname").val();
+    var middleName = $("#middlename").val();
+    var lastname = $("#lastname").val();
+    var studentName = "";
+
+    if (middleName === "") {
+        studentName = firstName + " " + lastname;
+    }
+    else {
+        studentName = firstName + " " + middleName + " " + lastname;
+    }
+
+    $(".studentNameLabel").html(studentName);
+
+    return validates;
+}

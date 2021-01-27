@@ -1966,33 +1966,214 @@ namespace GreenBushIEP.Controllers
         [HttpGet]
         public ActionResult CreateLearner()
         {
-            StudentDetailsViewModel model = new StudentDetailsViewModel
+            LearnerDetailsViewModel model = new LearnerDetailsViewModel
             {
                 submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name)
             };
-            model.districts = model.submitter.RoleID == "1" ? db.tblDistricts.Where(d => d.Active == 1).ToList() : (from d in db.tblDistricts join bm in db.tblBuildingMappings on d.USD equals bm.USD where model.submitter.UserID == bm.UserID select d).Distinct().ToList();
-            model.allDistricts = db.tblDistricts.ToList();
+
+            model.locations = (from l in db.vw_ILP_Locations join ul in db.tbl_ILP_UserLocations on l.LocationID equals ul.LocationID where model.submitter.UserID == ul.UserID select l).Distinct().ToList();
+            model.allLocations = db.vw_ILP_Locations.ToList();
             model.student.DateOfBirth = DateTime.Now.AddYears(-5);
-            model.placementCode = db.tblPlacementCodes.ToList();
+            model.programs = db.tbl_ILP_Programs.ToList();
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();
             model.grades = db.tblGrades.ToList();
             model.races = db.tblRaces.ToList();
 
-            ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
-                                                 where b.USD == "101"
-                                                 select new BuildingsViewModel
-                                                 {
-                                                     BuildingName = b.BuildingName,
-                                                     BuildingID = b.BuildingID,
-                                                     BuildingUSD = b.USD
-                                                 }).OrderBy(b => b.BuildingName).ToList();
-
             ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
             ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
 
             return View("~/Views/ILP/CreateLearner.cshtml", model);
+        }
+
+        [HttpPost]
+        public JsonResult CreateLearner(FormCollection collection)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+                    // check that the kidsIS doesn't already exsist in the system.
+                    long kidsID = Convert.ToInt64(collection["kidsid"]);
+                    var studentId = Convert.ToInt64(collection["studentId"]);
+
+                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
+                    if (exsistingStudent != null && studentId == 0)
+                    {
+                        return Json(new { Result = "error", Message = "The student is already in the Greenbush system. Please contact Greenbush." });
+                    }
+
+                    //check if we already created this student
+
+                    tblUser student = new tblUser();
+
+                    if (studentId != 0)
+                    {
+                        student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
+                        student.FirstName = collection["firstname"];
+                        student.MiddleName = collection["middlename"];
+                        student.LastName = collection["lastname"];
+                        student.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
+                    }
+                    else
+                    {
+                        // Create New User 
+                        student = new tblUser()
+                        {
+                            RoleID = "10",
+                            FirstName = collection["firstname"],
+                            MiddleName = collection["middlename"],
+                            LastName = collection["lastname"],
+                            Email = ((!string.IsNullOrEmpty(collection["email"])) ? collection["email"].ToString() : null),
+                            Create_Date = DateTime.Now,
+                            Update_Date = DateTime.Now,
+                        };
+                    }
+
+                    // try catch. If the email is the same as another student show error gracefully.
+                    try
+                    {
+                        if (!string.IsNullOrEmpty(student.Email) && db.tblUsers.Any(o => o.Email == student.Email))
+                        {
+                            return Json(new { Result = "error", Message = "The email address is already in use, please use a different email address." });
+                        }
+                        else if (collection["misDistrict"] == null)
+                        {
+                            return Json(new { Result = "error", Message = "Please choose an attending district." });
+                        }
+                        else
+                        {
+                            if (studentId == 0)
+                            {
+                                db.tblUsers.Add(student);
+                            }
+                            db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = student.UserID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName });
+                            db.SaveChanges();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    tblStudentInfo studentInfo = new tblStudentInfo();
+                    if (studentId != 0)
+                    {
+                        // remove all the buildingId. Blow it all away.
+                        db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == studentId));
+                        db.SaveChanges();
+
+                        //updating existing
+                        studentInfo = db.tblStudentInfoes.Where(u => u.UserID == studentId).FirstOrDefault();
+                    }
+
+                    studentInfo.UserID = student.UserID;
+                    studentInfo.KIDSID = kidsID;
+                    studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+                    studentInfo.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+                    studentInfo.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
+                    studentInfo.AssignedUSD = collection["assignChildCount"].ToString();
+                    studentInfo.USD = collection["misDistrict"];
+                    studentInfo.BuildingID = "0";
+                    studentInfo.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
+                    studentInfo.Status = "PENDING";
+                    studentInfo.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                    studentInfo.CreatedBy = submitter.UserID;
+                    studentInfo.Create_Date = DateTime.Now;
+                    studentInfo.Update_Date = DateTime.Now;
+                    studentInfo.PlacementCode = collection["studentPlacement"];
+                    studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
+                    studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on";
+
+
+                    // map the buildings in the building mapping table
+                    try
+                    {
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = "0", USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID, Create_Date = DateTime.Now });
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    try
+                    {
+                        if (studentId == 0)
+                        {
+                            db.tblStudentInfoes.Add(studentInfo);
+
+                            tblUserRole roles = new tblUserRole()
+                            {
+                                UserID = student.UserID,
+                                RoleID = Convert.ToInt32(student.RoleID),
+                                BookID = "_ILP_"
+                            };
+                            db.tblUserRoles.Add(roles);
+                        }
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    // save to organization chart
+                    // save the user to all the districts that was selected.
+                    // tblOrganizationMapping and tblBuildingMapping
+                    string districtValues = collection["misDistrict"];
+
+                    if (!string.IsNullOrEmpty(districtValues))
+                    {
+                        string[] districtArray = districtValues.Split(',');
+
+                        if (studentId != 0)
+                        {
+                            //updating existing
+                            List<tblOrganizationMapping> fullList = db.tblOrganizationMappings.Where(o => o.UserID == studentId).ToList();
+                            db.tblOrganizationMappings.RemoveRange(fullList);
+                            db.SaveChanges();
+                        }
+
+                        foreach (string usd in districtArray)
+                        {
+                            tblOrganizationMapping org = new tblOrganizationMapping
+                            {
+                                AdminID = submitter.UserID,
+                                UserID = student.UserID,
+                                Create_Date = DateTime.Now,
+                                USD = usd
+                            };
+
+                            db.tblOrganizationMappings.Add(org);
+                            db.SaveChanges();
+                        }
+                    }
+
+                    return Json(new { Result = "success", Message = student.UserID });
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    // Retrieve the error messages as a list of strings.
+                    IEnumerable<string> errorMessages = ex.EntityValidationErrors
+                            .SelectMany(x => x.ValidationErrors)
+                            .Select(x => x.ErrorMessage);
+
+                    // Join the list to a single string.
+                    string fullErrorMessage = string.Join("; ", errorMessages);
+
+                    // Combine the original exception message with the new one.
+                    string exceptionMessage = string.Concat(ex.Message, " The validation errors are: ", fullErrorMessage);
+
+                    Console.Write(exceptionMessage);
+                }
+
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
         }
 
 

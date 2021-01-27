@@ -183,6 +183,13 @@
         });
     });
 
+    $(".startILP").on("click", function () {
+        //open iep like this to prevent true false button switches from not working right in firefox
+        var stid = $(this).attr("data-id");
+        window.location.href = '/ILP/LearnerProcedures?stid=' + stid;
+        return false;
+    });
+
     // attach event
     // fires when an delete button is pressed on a MIS role.
     $("#deleteUser").on("show.bs.modal", function (e) {

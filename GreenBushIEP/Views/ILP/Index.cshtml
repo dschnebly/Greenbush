@@ -161,54 +161,51 @@
                     @foreach (var user in Model.Students)
                     {
 
-                        <div class="list-group-item" data-id="@(user.UserID)">
+                    <div class="list-group-item" data-id="@(user.UserID)">
 
-                            @switch (user.RoleID)
-                            {
-                                case 7: //Admin
-                                    <i class="far fa-user" aria-hidden="true"></i>
+                        @switch (user.RoleID)
+                        {
+                            case 7: //Admin
+                                <i class="far fa-user" aria-hidden="true"></i>
+                                <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                            case 8: //Instructor
+                                <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                case 8: //Instructor
-                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                case 9: //Viewer
-                                    <i class="fa fa-magnet" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                default:
-                                    <i class="fa fa-child" aria-hidden="true"></i>
-                                    <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
-                                        <span class="glyphicon glyphicon-unchecked"></span>
-                                    </button>
-                                    @*<a href="/Home/MISNotes?stid=@(user.UserID)" title="Edit an existing student" role="button" class="btn btn-info btn-action pull-right" data-ftrans="slide">
-                                            <span class="far fa-comment-alt"></span>
-                                        </a>*@
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/EditILPStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                            }
-                        </div>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                            case 9: //Viewer
+                                <i class="fa fa-magnet" aria-hidden="true"></i>
+                                <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditILPUser/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                            default:
+                                <i class="fa fa-child" aria-hidden="true"></i>
+                                <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+                                <a href="#" data-id="@(user.UserID)" title="Launch the ILP for this learner" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startILP">
+                                    <span class="glyphicon glyphicon-log-out"></span>
+                                </a>
+                                <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                    <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                </button>
+                                <a href="/Manage/EditILPStudent/@(user.UserID)" title="Edit an existing student" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                break;
+                        }
+                    </div>
                     }
 
                 </div>

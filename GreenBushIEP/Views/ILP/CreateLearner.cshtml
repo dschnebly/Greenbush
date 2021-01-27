@@ -1,4 +1,4 @@
-﻿@model GreenBushIEP.Models.StudentDetailsViewModel
+﻿@model GreenBushIEP.Models.LearnerDetailsViewModel
 
 @{
     ViewBag.Title = "Create Learner";
@@ -692,7 +692,7 @@
             </div>
         </div>
 
-        @using (Html.BeginForm("CreateStudent", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
+        @using (Html.BeginForm("CreateLearner", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             @Html.Hidden("studentId", 0)
@@ -714,27 +714,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2">
-                        <label for="studentPlacement">Placed By</label>
+                    <div class="col-md-4">
+                        <label for="studentPlacement">Program</label>
                         <select name="studentPlacement" id="studentPlacement" class="form-control">
-                            @if (Model.placementCode != null)
+                            @if (Model.programs != null)
                             {
-                                foreach (var code in Model.placementCode)
+                                foreach (var program in Model.programs)
                                 {
-                                    string selected = @code.PlacementCode == "L" ? "selected=selected" : "";
-                                    <option @selected value="@code.PlacementCode">@code.PlacementDescription</option>
-                                }
-                            }
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="required" for="assignChildCount">Assign Learner Count</label>
-                        <select name="assignChildCount" id="assignChildCount" class="form-control chosen-select" data-placeholder="Choose a location...">
-                            @if (Model.allDistricts != null)
-                            {
-                                foreach (var district in Model.allDistricts)
-                                {
-                                    <option value="@district.USD">@district.DistrictName</option>
+                                    <option value="@program.ProgramCode">@program.ProgramName</option>
                                 }
                             }
                         </select>
@@ -794,16 +781,6 @@
                             }
                         </select>
                     </div>
-                    <div class="col-md-2">
-                        <label for="Is_Gifted">Gifted</label>
-                        <div class="onoffswitch2">
-                            <input type="checkbox" name="Is_Gifted" id="Is_Gifted" class="onoffswitch2-checkbox" />
-                            <label class="onoffswitch2-label" for="Is_Gifted">
-                                <span class="onoffswitch2-inner"></span>
-                                <span class="onoffswitch2-switch"></span>
-                            </label>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -814,12 +791,12 @@
                     <div class="col-md-6">
                         <label class="required" for="misDistrict">Attending Location</label>
                         <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a location..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
-                            @if (Model.districts != null)
+                            @if (Model.locations != null)
                             {
-                                foreach (var district in Model.districts)
+                                foreach (var location in Model.locations)
                                 {
-                                    string selected = Model.selectedDistrict.Contains(district) ? "selected=selected" : "";
-                                    <option value="@district.USD" @selected>@district.DistrictName</option>
+                                    string selected = Model.selectedLocations.Contains(location) ? "selected=selected" : "";
+                                    <option value="@location.LocationID" @selected>@location.LocationName</option>
                                 }
                             }
                         </select>
@@ -828,7 +805,7 @@
             </div>
             <ul class="list-inline pull-right saveandcontinue">
                 <li>@Html.ActionLink("Cancel", "Index", "ILP", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                <li><button type="button" class="btn btn-info next-step" id="next2" style="background-color: #337ab7 !important;">Create New Learner</button></li>
+                <li><button type="button" class="btn btn-info next-step" id="submitLearner" style="background-color: #337ab7 !important;">Create New Learner</button></li>
             </ul>
         }
     </div>

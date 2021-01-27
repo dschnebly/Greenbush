@@ -939,6 +939,7 @@
     <Content Include="Content\solid.min.css" />
     <Content Include="Content\studentprocedures.css" />
     <Content Include="Content\createUser.css" />
+    <Content Include="Content\learnerprocedures.css" />
     <Content Include="Content\svg-with-js.css" />
     <Content Include="Content\svg-with-js.min.css" />
     <Content Include="Content\switchbutton.css" />
@@ -1305,6 +1306,7 @@
     <Content Include="Views\ILP\CreateUser.cshtml" />
     <Content Include="Views\ILP\EditILPUser.cshtml" />
     <Content Include="Views\ILP\CreateLearner.cshtml" />
+    <Content Include="Views\ILP\LearnerProcedures.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
