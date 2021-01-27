@@ -35,7 +35,7 @@ namespace GreenBushIEP.Models
         public System.DateTime Update_Date { get; set; }
         public string Primary_DisabilityCode { get; set; }
         public string Secondary_DisabilityCode { get; set; }
-        public bool ClaimingCode { get; set; }
+        public Nullable<bool> ClaimingCode { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public string PlacementCode { get; set; }
         public string StatusCode { get; set; }

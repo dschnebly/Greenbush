@@ -19,5 +19,6 @@ namespace GreenBushIEP.Models
         public string LocationID { get; set; }
     
         public virtual tbl_ILP_Programs tbl_ILP_Programs { get; set; }
+        public virtual tblUser tblUser { get; set; }
     }
 }

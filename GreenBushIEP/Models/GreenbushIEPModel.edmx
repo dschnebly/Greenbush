@@ -135,6 +135,7 @@
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="SessionID" Type="nvarchar" MaxLength="2000" />
+          <Property Name="BookID" Type="char" MaxLength="5" />
         </EntityType>
         <EntityType Name="tblBehaviorBaselines">
           <Key>
@@ -1949,9 +1950,9 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
           <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
           <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" Nullable="false" />
-          <Property Name="ClaimingCode" Type="bit" Nullable="false" />
+          <Property Name="ClaimingCode" Type="bit" />
           <Property Name="CreatedBy" Type="int" />
-          <Property Name="PlacementCode" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="PlacementCode" Type="char" MaxLength="1" />
           <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="ExitDate" Type="datetime" />
           <Property Name="InitialIEPDate" Type="datetime" />
@@ -2452,6 +2453,30 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' do
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblILPUserPrograms_tblILPPrograms">
+          <End Role="tbl_ILP_Programs" Type="Self.tbl_ILP_Programs" Multiplicity="1" />
+          <End Role="tbl_ILP_UserPrograms" Type="Self.tbl_ILP_UserPrograms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_ILP_Programs">
+              <PropertyRef Name="ProgramCode" />
+            </Principal>
+            <Dependent Role="tbl_ILP_UserPrograms">
+              <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblILPUserPrograms_tblUsers">
+          <End Role="tblUsers" Type="Self.tblUsers" Multiplicity="1" />
+          <End Role="tbl_ILP_UserPrograms" Type="Self.tbl_ILP_UserPrograms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUsers">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tbl_ILP_UserPrograms">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblPermissions_BookID">
           <End Role="tblBooks" Type="Self.tblBooks" Multiplicity="1" />
           <End Role="tblPermissions" Type="Self.tblPermissions" Multiplicity="*" />
@@ -2612,18 +2637,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             </Principal>
             <Dependent Role="tblUserRoles">
               <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FR_tblILPPrograms">
-          <End Role="tbl_ILP_Programs" Type="Self.tbl_ILP_Programs" Multiplicity="1" />
-          <End Role="tbl_ILP_UserPrograms" Type="Self.tbl_ILP_UserPrograms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tbl_ILP_Programs">
-              <PropertyRef Name="ProgramCode" />
-            </Principal>
-            <Dependent Role="tbl_ILP_UserPrograms">
-              <PropertyRef Name="ProgramCode" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3069,6 +3082,14 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tbl_ILP_UserLocations" EntitySet="tbl_ILP_UserLocations" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblILPUserPrograms_tblILPPrograms" Association="Self.FK_tblILPUserPrograms_tblILPPrograms">
+            <End Role="tbl_ILP_Programs" EntitySet="tbl_ILP_Programs" />
+            <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblILPUserPrograms_tblUsers" Association="Self.FK_tblILPUserPrograms_tblUsers">
+            <End Role="tblUsers" EntitySet="tblUsers" />
+            <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblPermissions_BookID" Association="Self.FK_tblPermissions_BookID">
             <End Role="tblBooks" EntitySet="tblBooks" />
             <End Role="tblPermissions" EntitySet="tblPermissions" />
@@ -3120,10 +3141,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <AssociationSet Name="FK_tblUserRoles_UserID" Association="Self.FK_tblUserRoles_UserID">
             <End Role="tblUsers" EntitySet="tblUsers" />
             <End Role="tblUserRoles" EntitySet="tblUserRoles" />
-          </AssociationSet>
-          <AssociationSet Name="FR_tblILPPrograms" Association="Self.FR_tblILPPrograms">
-            <End Role="tbl_ILP_Programs" EntitySet="tbl_ILP_Programs" />
-            <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -3466,6 +3483,10 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySet Name="tbl_ILP_UserPrograms" EntityType="IndividualizedEducationProgramModel.tbl_ILP_UserPrograms" />
           <AssociationSet Name="FR_tblILPPrograms" Association="IndividualizedEducationProgramModel.FR_tblILPPrograms">
             <End Role="tbl_ILP_Programs" EntitySet="tbl_ILP_Programs" />
+            <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblILPUserPrograms_tblUsers" Association="IndividualizedEducationProgramModel.FK_tblILPUserPrograms_tblUsers">
+            <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
           </AssociationSet>
           </EntityContainer>
@@ -4019,6 +4040,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="SessionID" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="BookID" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblBehaviorBaseline">
           <Key>
@@ -5852,9 +5874,9 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Primary_DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
           <Property Name="Secondary_DisabilityCode" Type="String" Nullable="false" MaxLength="2" FixedLength="true" Unicode="false" />
-          <Property Name="ClaimingCode" Type="Boolean" Nullable="false" />
+          <Property Name="ClaimingCode" Type="Boolean" />
           <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="PlacementCode" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="PlacementCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="ExitDate" Type="DateTime" Precision="3" />
           <Property Name="InitialIEPDate" Type="DateTime" Precision="3" />
@@ -6051,6 +6073,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <NavigationProperty Name="tbl_ILP_UserLocations" Relationship="IndividualizedEducationProgramModel.FK_tblILPUserLocations_tblUsers" FromRole="tblUser" ToRole="tbl_ILP_UserLocations" />
           <NavigationProperty Name="tblUserPermissions" Relationship="IndividualizedEducationProgramModel.FK_tblUserPermissions_tblUsers" FromRole="tblUser" ToRole="tblUserPermission" />
           <NavigationProperty Name="tblUserRoles" Relationship="IndividualizedEducationProgramModel.FK_tblUserRoles_UserID" FromRole="tblUser" ToRole="tblUserRole" />
+          <NavigationProperty Name="tbl_ILP_UserPrograms" Relationship="IndividualizedEducationProgramModel.FK_tblILPUserPrograms_tblUsers" FromRole="tblUser" ToRole="tbl_ILP_UserPrograms" />
         </EntityType>
         <EntityType Name="tblVersionLog">
           <Key>
@@ -6485,6 +6508,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="ProgramCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="LocationID" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="tbl_ILP_Programs" Relationship="IndividualizedEducationProgramModel.FR_tblILPPrograms" FromRole="tbl_ILP_UserPrograms" ToRole="tbl_ILP_Programs" />
+          <NavigationProperty Name="tblUser" Relationship="IndividualizedEducationProgramModel.FK_tblILPUserPrograms_tblUsers" FromRole="tbl_ILP_UserPrograms" ToRole="tblUser" />
         </EntityType>
         <Association Name="FR_tblILPPrograms">
           <End Type="IndividualizedEducationProgramModel.tbl_ILP_Programs" Role="tbl_ILP_Programs" Multiplicity="1" />
@@ -6495,6 +6519,18 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             </Principal>
             <Dependent Role="tbl_ILP_UserPrograms">
               <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblILPUserPrograms_tblUsers">
+          <End Type="IndividualizedEducationProgramModel.tblUser" Role="tblUser" Multiplicity="1" />
+          <End Type="IndividualizedEducationProgramModel.tbl_ILP_UserPrograms" Role="tbl_ILP_UserPrograms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblUser">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="tbl_ILP_UserPrograms">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7148,6 +7184,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblAuditLogs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblAuditLog">
               <MappingFragment StoreEntitySet="tblAuditLog">
+                <ScalarProperty Name="BookID" ColumnName="BookID" />
                 <ScalarProperty Name="SessionID" ColumnName="SessionID" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />

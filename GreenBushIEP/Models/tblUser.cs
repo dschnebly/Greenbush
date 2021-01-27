@@ -20,6 +20,7 @@ namespace GreenBushIEP.Models
             this.tbl_ILP_UserLocations = new HashSet<tbl_ILP_UserLocations>();
             this.tblUserPermissions = new HashSet<tblUserPermission>();
             this.tblUserRoles = new HashSet<tblUserRole>();
+            this.tbl_ILP_UserPrograms = new HashSet<tbl_ILP_UserPrograms>();
         }
     
         public int UserID { get; set; }
@@ -52,5 +53,7 @@ namespace GreenBushIEP.Models
         public virtual ICollection<tblUserPermission> tblUserPermissions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblUserRole> tblUserRoles { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_ILP_UserPrograms> tbl_ILP_UserPrograms { get; set; }
     }
 }

@@ -24,5 +24,6 @@ namespace GreenBushIEP.Models
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
         public string SessionID { get; set; }
+        public string BookID { get; set; }
     }
 }
