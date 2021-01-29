@@ -1515,7 +1515,11 @@ namespace GreenbushIep.Controllers
             {
                 if (iepDraft.IepStatus != IEPStatus.ACTIVE)
                 {
-                    
+                    if(iepDraft.IepStatus == IEPStatus.DRAFT && iepDraft.FiledOn != null)
+                    {
+                        iepDraft.FiledOn = null; //reset spedpro status so it will download again
+                    }
+
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
 
