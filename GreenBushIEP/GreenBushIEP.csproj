@@ -1052,6 +1052,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\learnerprocedures.js" />
     <Content Include="Scripts\managereferrals.js" />
     <Content Include="Scripts\createreferral.js" />
     <Content Include="Scripts\editreferral.js" />
@@ -1167,6 +1168,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Views\ILP\HtmlPage1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1307,6 +1309,11 @@
     <Content Include="Views\ILP\EditILPUser.cshtml" />
     <Content Include="Views\ILP\CreateLearner.cshtml" />
     <Content Include="Views\ILP\LearnerProcedures.cshtml" />
+    <Content Include="Views\ILP\_EducationHistoryModule.cshtml" />
+    <Content Include="Views\ILP\_AssessmentModule.cshtml" />
+    <Content Include="Views\ILP\_EducationPlanModule.cshtml" />
+    <Content Include="Views\ILP\_ProgressCreditModule.cshtml" />
+    <Content Include="Views\ILP\_DocumentStorageModule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -716,7 +716,7 @@
                     </div>
                     <div class="col-md-4">
                         <label for="studentPlacement">Program</label>
-                        <select name="studentPlacement" id="studentPlacement" class="form-control">
+                        <select name="studentPlacement" id="studentPlacement" class="form-control chosen-select" multiple="multiple">
                             @if (Model.programs != null)
                             {
                                 foreach (var program in Model.programs)
@@ -755,7 +755,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <label for="primaryDisability">Primary Disability</label>
                         <select class="form-control" name="primaryDisability" id="primaryDisability">
                             @if (Model.primaryDisabilities != null)
@@ -768,7 +768,7 @@
                             }
                         </select>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-6">
                         <label for="secondaryDisability">Secondary Disability</label>
                         <select class="form-control" name="secondaryDisability" id="secondaryDisability">
                             @if (Model.secondaryDisabilities != null)
@@ -790,7 +790,7 @@
                     </div>
                     <div class="col-md-6">
                         <label class="required" for="misDistrict">Attending Location</label>
-                        <select name="misDistrict" class="form-control chosen-select" data-placeholder="Choose a location..." id="misDistrict" multiple="multiple" style="max-height: 49px;" data-validate="true" required>
+                        <select name="misDistrict" class="form-control" data-placeholder="Choose a location..." id="misDistrict" style="max-height: 49px;" data-validate="true" required>
                             @if (Model.locations != null)
                             {
                                 foreach (var location in Model.locations)

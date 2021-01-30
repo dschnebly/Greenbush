@@ -137,5 +137,42 @@ namespace GreenBushIEP.Controllers
 
             return View(model);
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult LoadModuleSection(int studentId, int ilpId, string view)
+        {
+            tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+            tblUser student = db.tblUsers.SingleOrDefault(s => s.UserID == studentId);
+
+            ViewBag.modifiedByFullName = string.Empty;
+            //ViewBag.studentName = student.FirstName + " " + student.LastName;
+            //tblIEP iep = db.tblIEPs.Where(i => i.UserID == studentId && i.IEPid == iepId).FirstOrDefault();
+            //bool isReadOnly = (iep.IepStatus == IEPStatus.ACTIVE) || (iep.IepStatus == IEPStatus.ARCHIVE) || (user != null && user.RoleID == nurse);
+
+            try
+            {
+                tblUser modifier = db.tblUsers.FirstOrDefault();
+                switch (view)
+                {
+                    case "EducationHistoryModule":
+                        return PartialView("_EducationHistoryModule");
+                    case "AssessmentModule":
+                        return PartialView("_AssessmentModule");
+                    case "EducationPlanModule":
+                        return PartialView("_EducationPlanModule");
+                    case "ProgressCreditsModule":
+                        return PartialView("_ProgressCreditModule");
+                    case "DocumentStorageModule":
+                        return PartialView("_DocumentStorageModule");
+                    default:
+                        return Json(new { Result = "error", Message = "Unknown View" }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
+            }
+        }
     }
 }
