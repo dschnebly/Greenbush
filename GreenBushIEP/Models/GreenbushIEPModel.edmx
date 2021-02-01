@@ -2755,6 +2755,13 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="StatusCode" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
         </Function>
+        <Function Name="usp_CRUD_RoleID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="RoleID" Type="int" Mode="In" />
+          <Parameter Name="BookID" Type="char" Mode="In" />
+          <Parameter Name="ModifiedBy" Type="int" Mode="In" />
+          <Parameter Name="DeleteRole" Type="bit" Mode="In" />
+        </Function>
         <Function Name="usp_ILP_UserList" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="UserID" Type="int" Mode="In" />
           <Parameter Name="LocationID" Type="nvarchar" Mode="In" />
@@ -3489,6 +3496,13 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <End Role="tblUser" EntitySet="tblUsers" />
             <End Role="tbl_ILP_UserPrograms" EntitySet="tbl_ILP_UserPrograms" />
           </AssociationSet>
+          <FunctionImport Name="usp_CRUD_RoleID">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="RoleID" Mode="In" Type="Int32" />
+            <Parameter Name="BookID" Mode="In" Type="String" />
+            <Parameter Name="ModifiedBy" Mode="In" Type="Int32" />
+            <Parameter Name="DeleteRole" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -9485,6 +9499,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="usp_CRUD_RoleID" FunctionName="IndividualizedEducationProgramModel.Store.usp_CRUD_RoleID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -644,5 +644,30 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<usp_ILP_UserList_Result>("usp_ILP_UserList", userIDParameter, locationIDParameter, programCodeParameter, isArchivedParameter);
         }
+    
+        public virtual int usp_CRUD_RoleID(Nullable<int> userID, Nullable<int> roleID, string bookID, Nullable<int> modifiedBy, Nullable<bool> deleteRole)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var roleIDParameter = roleID.HasValue ?
+                new ObjectParameter("RoleID", roleID) :
+                new ObjectParameter("RoleID", typeof(int));
+    
+            var bookIDParameter = bookID != null ?
+                new ObjectParameter("BookID", bookID) :
+                new ObjectParameter("BookID", typeof(string));
+    
+            var modifiedByParameter = modifiedBy.HasValue ?
+                new ObjectParameter("ModifiedBy", modifiedBy) :
+                new ObjectParameter("ModifiedBy", typeof(int));
+    
+            var deleteRoleParameter = deleteRole.HasValue ?
+                new ObjectParameter("DeleteRole", deleteRole) :
+                new ObjectParameter("DeleteRole", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_CRUD_RoleID", userIDParameter, roleIDParameter, bookIDParameter, modifiedByParameter, deleteRoleParameter);
+        }
     }
 }

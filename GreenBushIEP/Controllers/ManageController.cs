@@ -2042,7 +2042,7 @@ namespace GreenBushIEP.Controllers
                         }
                         else if (collection["misDistrict"] == null)
                         {
-                            return Json(new { Result = "error", Message = "Please choose an attending district." });
+                            return Json(new { Result = "error", Message = "Please choose an attending location." });
                         }
                         else
                         {
@@ -2075,24 +2075,20 @@ namespace GreenBushIEP.Controllers
                     studentInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
                     studentInfo.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
                     studentInfo.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
-                    studentInfo.AssignedUSD = collection["assignChildCount"].ToString();
                     studentInfo.USD = collection["misDistrict"];
                     studentInfo.BuildingID = "0";
-                    studentInfo.NeighborhoodBuildingID = collection["NeighborhoodBuildingID"];
                     studentInfo.Status = "PENDING";
                     studentInfo.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
                     studentInfo.CreatedBy = submitter.UserID;
                     studentInfo.Create_Date = DateTime.Now;
                     studentInfo.Update_Date = DateTime.Now;
-                    studentInfo.PlacementCode = collection["studentPlacement"];
-                    studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
-                    studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on";
-
+                    studentInfo.PlacementCode = null;
+                    studentInfo.ClaimingCode = null;
 
                     // map the buildings in the building mapping table
                     try
                     {
-                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = "0", USD = studentInfo.AssignedUSD, UserID = studentInfo.UserID, Create_Date = DateTime.Now });
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = "0", USD = studentInfo.USD, UserID = studentInfo.UserID, Create_Date = DateTime.Now });
                         db.SaveChanges();
                     }
                     catch (Exception e)
@@ -2100,6 +2096,7 @@ namespace GreenBushIEP.Controllers
                         return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
                     }
 
+                    // map the user to a "book"
                     try
                     {
                         if (studentId == 0)
@@ -2119,6 +2116,43 @@ namespace GreenBushIEP.Controllers
                     catch (Exception e)
                     {
                         return Json(new { Result = "error", Message = "There was an error while trying to create the user. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    // map the user to userPrograms
+                    try
+                    {
+
+                        string programValues = collection["studentPlacement"];
+
+                        if (!string.IsNullOrEmpty(programValues))
+                        {
+                            string[] programArray = programValues.Split(',');
+
+                            if (studentId != 0)
+                            {
+                                //updating existing
+                                List<tbl_ILP_UserPrograms> fullList = db.tbl_ILP_UserPrograms.Where(o => o.UserID == studentId).ToList();
+                                db.tbl_ILP_UserPrograms.RemoveRange(fullList);
+                                db.SaveChanges();
+                            }
+
+                            foreach (string program in programArray)
+                            {
+                                tbl_ILP_UserPrograms prog = new tbl_ILP_UserPrograms
+                                {
+                                    ProgramCode = program,
+                                    UserID = student.UserID,
+                                    LocationID = null
+                                };
+
+                                db.tbl_ILP_UserPrograms.Add(prog);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while adding the user to the UserPrograms table. \n\n" + e.InnerException.ToString() });
                     }
 
                     // save to organization chart
@@ -2320,7 +2354,7 @@ namespace GreenBushIEP.Controllers
                     studentInfo.Update_Date = DateTime.Now;
                     studentInfo.PlacementCode = collection["studentPlacement"];
                     studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
-                    studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on" ? true : false;
+                    studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on";
 
 
                     // map the buildings in the building mapping table

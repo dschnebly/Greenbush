@@ -220,7 +220,7 @@ $("#submitLearner").on("click", function () {
             data: $("#createNewStudent").serialize(),
             success: function (data) {
                 if (data.Result === "success") {
-                    alert("success");
+                    window.location.href = "/ILP/Index";
                 } else {
                     alert(data.Message);
                 }
