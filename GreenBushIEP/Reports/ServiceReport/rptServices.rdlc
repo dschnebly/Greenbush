@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
+  <InitialPageName>Service Report</InitialPageName>
   <DataSources>
     <DataSource Name="IndividualizedEducationProgramDataSet1">
       <ConnectionProperties>
@@ -167,39 +168,39 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>0.60673in</Width>
+                  <Width>0.6115in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1in</Width>
+                  <Width>1.55508in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.625in</Width>
+                  <Width>1.14215in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.51714in</Width>
+                  <Width>0.70941in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.94399in</Width>
+                  <Width>1.2788in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.91387in</Width>
+                  <Width>1.10686in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.86411in</Width>
+                  <Width>0.86888in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.8097in</Width>
+                  <Width>0.81447in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.42107in</Width>
+                  <Width>0.55084in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.53012in</Width>
+                  <Width>0.93072in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.54944in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -534,7 +535,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.30347in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -872,10 +873,8 @@
             </TablixRowHierarchy>
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>0.10694in</Top>
-            <Left>0.04767in</Left>
-            <Height>0.5in</Height>
-            <Width>7.23173in</Width>
+            <Height>0.85291in</Height>
+            <Width>9.5687in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -883,248 +882,11 @@
             </Style>
           </Tablix>
         </ReportItems>
-        <Height>0.67583in</Height>
+        <Height>0.85291in</Height>
         <Style />
       </Body>
-      <Width>7.30649in</Width>
+      <Width>9.5687in</Width>
       <Page>
-        <PageHeader>
-          <Height>1.75in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="Textbox18">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Service Report</Value>
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <TextDecoration>None</TextDecoration>
-                        <Color>#000000</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>0.09626in</Top>
-              <Left>2.3076in</Left>
-              <Height>0.32292in</Height>
-              <Width>2.3468in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox59">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox59</rd:DefaultName>
-              <Top>0.05584in</Top>
-              <Left>4.86899in</Left>
-              <Height>0.25in</Height>
-              <Width>2.40625in</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox60">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Printed By: " &amp; Parameters!PrintedBy.Value</Value>
-                      <Style>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox60</rd:DefaultName>
-              <Top>0.29959in</Top>
-              <Left>4.86899in</Left>
-              <Height>0.25in</Height>
-              <Width>2.40625in</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox11">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=IIF(Parameters!Building.Value = "-1", "All", First(Fields!BuildingName.Value, "DataSet2"))</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox8</rd:DefaultName>
-              <Top>0.66292in</Top>
-              <Left>2.14399in</Left>
-              <Height>0.25in</Height>
-              <Width>2.63541in</Width>
-              <ZIndex>3</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox12">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Address_Mailing.Value, "DataSet2")</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox10</rd:DefaultName>
-              <Top>0.91917in</Top>
-              <Left>2.14399in</Left>
-              <Height>0.25in</Height>
-              <Width>2.63541in</Width>
-              <ZIndex>4</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox13">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!City.Value, "DataSet2") &amp; IIF(First(Fields!City.Value, "DataSet2") = "", " ",", ") &amp; First(Fields!StateName.Value, "DataSet2") &amp; " " &amp; First(Fields!Zip.Value, "DataSet2")</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox12</rd:DefaultName>
-              <Top>1.18584in</Top>
-              <Left>2.14399in</Left>
-              <Height>0.25in</Height>
-              <Width>2.63541in</Width>
-              <ZIndex>5</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox14">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>=First(Fields!Phone.Value, "DataSet2")</Value>
-                      <Style />
-                    </TextRun>
-                  </TextRuns>
-                  <Style />
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox13</rd:DefaultName>
-              <Top>1.43167in</Top>
-              <Left>2.14399in</Left>
-              <Height>0.25in</Height>
-              <Width>2.63541in</Width>
-              <ZIndex>6</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageHeader>
         <PageFooter>
           <Height>0.69791in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>

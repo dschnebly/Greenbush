@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
+  <InitialPageName>KIDSID Unavailable</InitialPageName>
   <DataSources>
     <DataSource Name="IndividualizedEducationProgramDataSet1">
       <ConnectionProperties>
@@ -798,7 +799,7 @@
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
             <Height>0.5in</Height>
-            <Width>9.23864in</Width>
+            <Width>9.23863in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
