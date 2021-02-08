@@ -232,7 +232,6 @@ $("#submitLearner").on("click", function () {
     }
 });
 
-
 function tabValidates() {
     var validates = true;
     //var stepId = $('.wizard .nav-tabs li.active a').attr('href');

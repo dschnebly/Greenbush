@@ -1981,7 +1981,7 @@ namespace GreenBushIEP.Controllers
             model.grades = db.tblGrades.ToList();
             model.races = db.tblRaces.ToList();
 
-            ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+            ViewBag.RoleName = ConvertToILPRoleName(model.submitter.UserID);
             ViewBag.CanAssignTeacher = model.submitter.RoleID == mis || model.submitter.RoleID == owner ? true : false;
 
             return View("~/Views/ILP/CreateLearner.cshtml", model);
@@ -3291,7 +3291,7 @@ namespace GreenBushIEP.Controllers
                 selectedLocations = (from l in db.vw_ILP_Locations join bm in db.tblBuildingMappings on l.LocationID equals bm.USD where user.UserID == bm.UserID && bm.BuildingID == "0" select l).Distinct().ToList()
             };
 
-           ViewBag.RoleName = ConvertToRoleName(model.submitter.RoleID);
+            ViewBag.RoleName = ConvertToILPRoleName(model.submitter.UserID);
 
             return View("~/Views/ILP/EditILPUser.cshtml", model);
         }
@@ -4982,13 +4982,25 @@ namespace GreenBushIEP.Controllers
                     return "Student";
                 case "6":
                     return "Nurse";
-                case "7":
-                    return "Admin";
-                case "8":
+                default:
+                    return "";
+            }
+        }
+
+        [NonAction]
+        public string ConvertToILPRoleName(int UserId)
+        {
+            int roleId = db.tblUserRoles.Where(u => u.UserID == UserId && u.BookID == "_ILP_").FirstOrDefault().RoleID;
+
+            switch (roleId)
+            {
+                case 7:
+                    return "Administrator";
+                case 8:
                     return "Instructor";
-                case "9":
+                case 9:
                     return "Viewer";
-                case "10":
+                case 10:
                     return "Learner";
                 default:
                     return "";
