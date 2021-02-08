@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2016/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
   <AutoRefresh>0</AutoRefresh>
+  <InitialPageName>Extended School Year</InitialPageName>
   <DataSources>
     <DataSource Name="IndividualizedEducationProgramDataSet">
       <ConnectionProperties>
@@ -84,30 +85,30 @@
             <TablixBody>
               <TablixColumns>
                 <TablixColumn>
-                  <Width>1.17853in</Width>
+                  <Width>1.18534in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.91452in</Width>
+                  <Width>1.92133in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.37451in</Width>
+                  <Width>1.38132in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.51in</Width>
+                  <Width>1.51681in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.4375in</Width>
+                  <Width>1.44431in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.95834in</Width>
+                  <Width>0.96515in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>0.90347in</Width>
+                  <Width>0.91028in</Width>
                 </TablixColumn>
               </TablixColumns>
               <TablixRows>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.30347in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -343,7 +344,7 @@
                   </TablixCells>
                 </TablixRow>
                 <TablixRow>
-                  <Height>0.25in</Height>
+                  <Height>0.30347in</Height>
                   <TablixCells>
                     <TablixCell>
                       <CellContents>
@@ -433,7 +434,6 @@
                             <PaddingBottom>2pt</PaddingBottom>
                           </Style>
                         </Textbox>
-                        <rd:Selected>true</rd:Selected>
                       </CellContents>
                     </TablixCell>
                     <TablixCell>
@@ -591,10 +591,8 @@
             </TablixRowHierarchy>
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
-            <Top>0.10694in</Top>
-            <Left>0.04767in</Left>
-            <Height>0.5in</Height>
-            <Width>9.27687in</Width>
+            <Height>0.60694in</Height>
+            <Width>9.32454in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -607,123 +605,6 @@
       </Body>
       <Width>9.43913in</Width>
       <Page>
-        <PageHeader>
-          <Height>1.5625in</Height>
-          <PrintOnFirstPage>true</PrintOnFirstPage>
-          <PrintOnLastPage>true</PrintOnLastPage>
-          <ReportItems>
-            <Textbox Name="Textbox18">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>Extended School Year Report</Value>
-                      <Style>
-                        <FontStyle>Normal</FontStyle>
-                        <FontSize>14pt</FontSize>
-                        <FontWeight>Bold</FontWeight>
-                        <TextDecoration>None</TextDecoration>
-                        <Color>#000000</Color>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Center</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox18</rd:DefaultName>
-              <Top>0.09626in</Top>
-              <Left>2.66802in</Left>
-              <Height>0.32292in</Height>
-              <Width>3.14888in</Width>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox59">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Printed: " &amp; FORMAT(Globals!ExecutionTime,"d")</Value>
-                      <Style>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox59</rd:DefaultName>
-              <Top>0.05584in</Top>
-              <Left>6.47316in</Left>
-              <Height>0.25in</Height>
-              <Width>1.80208in</Width>
-              <ZIndex>1</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-            <Textbox Name="Textbox60">
-              <CanGrow>true</CanGrow>
-              <KeepTogether>true</KeepTogether>
-              <Paragraphs>
-                <Paragraph>
-                  <TextRuns>
-                    <TextRun>
-                      <Value>="Printed By: " &amp; Parameters!PrintedBy.Value</Value>
-                      <Style>
-                        <FontSize>9pt</FontSize>
-                      </Style>
-                    </TextRun>
-                  </TextRuns>
-                  <Style>
-                    <TextAlign>Right</TextAlign>
-                  </Style>
-                </Paragraph>
-              </Paragraphs>
-              <rd:DefaultName>Textbox60</rd:DefaultName>
-              <Top>0.29959in</Top>
-              <Left>6.47316in</Left>
-              <Height>0.25in</Height>
-              <Width>1.80208in</Width>
-              <ZIndex>2</ZIndex>
-              <Style>
-                <Border>
-                  <Style>None</Style>
-                </Border>
-                <PaddingLeft>2pt</PaddingLeft>
-                <PaddingRight>2pt</PaddingRight>
-                <PaddingTop>2pt</PaddingTop>
-                <PaddingBottom>2pt</PaddingBottom>
-              </Style>
-            </Textbox>
-          </ReportItems>
-          <Style>
-            <Border>
-              <Style>None</Style>
-            </Border>
-          </Style>
-        </PageHeader>
         <PageFooter>
           <Height>0.73958in</Height>
           <PrintOnFirstPage>true</PrintOnFirstPage>

@@ -2277,19 +2277,19 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                   <TablixBody>
                                     <TablixColumns>
                                       <TablixColumn>
-                                        <Width>0.5625in</Width>
+                                        <Width>0.34229in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
                                         <Width>0.65771in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.61583in</Width>
+                                        <Width>0.83603in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
                                         <Width>1in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
-                                        <Width>0.42501in</Width>
+                                        <Width>0.38864in</Width>
                                       </TablixColumn>
                                       <TablixColumn>
                                         <Width>0.83089in</Width>
@@ -2726,7 +2726,6 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                                   <PaddingBottom>2pt</PaddingBottom>
                                                 </Style>
                                               </Textbox>
-                                              <rd:Selected>true</rd:Selected>
                                             </CellContents>
                                           </TablixCell>
                                           <TablixCell>
@@ -3113,7 +3112,7 @@ IIF(Fields!Grade.Value = "-1", "Preschooler age 6", Fields!Grade.Value ))))
                                   <Top>7.29584in</Top>
                                   <Left>0.01752in</Left>
                                   <Height>0.66667in</Height>
-                                  <Width>7.11795in</Width>
+                                  <Width>7.08157in</Width>
                                   <ZIndex>59</ZIndex>
                                   <Style>
                                     <Border>
