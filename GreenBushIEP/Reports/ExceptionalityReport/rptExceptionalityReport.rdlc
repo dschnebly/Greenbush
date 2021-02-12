@@ -410,7 +410,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Exceptionality Type</Value>
+                                  <Value>Service
+Setting</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -1071,7 +1072,7 @@
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
             <Height>0.60694in</Height>
-            <Width>10.85711in</Width>
+            <Width>10.85714in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1082,7 +1083,7 @@
         <Height>0.68625in</Height>
         <Style />
       </Body>
-      <Width>10.85711in</Width>
+      <Width>10.85714in</Width>
       <Page>
         <PageFooter>
           <Height>0.67708in</Height>
