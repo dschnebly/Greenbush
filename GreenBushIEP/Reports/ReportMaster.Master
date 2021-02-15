@@ -70,8 +70,9 @@
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 				
 			</asp:ContentPlaceHolder>
-			
-			<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="1000" Height="900" ShowPrintButton="true" ShowExportControls="true"></rsweb:ReportViewer>
+			<div  style="overflow-x:scroll">
+				<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="1000" Height="900" ShowPrintButton="true" ShowExportControls="true" ></rsweb:ReportViewer>
+				</div>
     	</div>
     </form>
 

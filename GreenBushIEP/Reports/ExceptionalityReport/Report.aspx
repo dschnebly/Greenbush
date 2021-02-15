@@ -44,7 +44,7 @@
 		</div>
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
-				 <label   for="ServiceType">Exceptionality Type</label>
+				 <label   for="ServiceType">Service Setting</label>
 			</div>
 			<div class="col-md-6" >
 				 <select id="ServiceType" runat="server" class="chosen-select">

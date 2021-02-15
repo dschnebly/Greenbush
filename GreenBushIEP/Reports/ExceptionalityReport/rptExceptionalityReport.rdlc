@@ -163,31 +163,28 @@
                   <Width>0.58616in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.95205in</Width>
+                  <Width>0.7467in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.3865in</Width>
-                </TablixColumn>
-                <TablixColumn>
-                  <Width>1.43422in</Width>
+                  <Width>0.824in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.93027in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.75321in</Width>
+                  <Width>1.10884in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>2.02221in</Width>
+                  <Width>1.05346in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.58612in</Width>
+                  <Width>1.06529in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.54484in</Width>
                 </TablixColumn>
                 <TablixColumn>
-                  <Width>1.85374in</Width>
+                  <Width>1.08291in</Width>
                 </TablixColumn>
                 <TablixColumn>
                   <Width>0.8048in</Width>
@@ -281,7 +278,7 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Student Last Name</Value>
+                                  <Value>Student Name</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -291,39 +288,6 @@
                             </Paragraph>
                           </Paragraphs>
                           <rd:DefaultName>Textbox5</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <BackgroundColor>WhiteSmoke</BackgroundColor>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="Textbox8">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>Student First Name</Value>
-                                  <Style>
-                                    <FontWeight>Bold</FontWeight>
-                                  </Style>
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>Textbox8</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -446,7 +410,8 @@
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>Exceptionality Type</Value>
+                                  <Value>Service
+Setting</Value>
                                   <Style>
                                     <FontWeight>Bold</FontWeight>
                                   </Style>
@@ -735,51 +700,21 @@
                     </TablixCell>
                     <TablixCell>
                       <CellContents>
-                        <Textbox Name="StudentLastName">
+                        <Textbox Name="Textbox6">
                           <CanGrow>true</CanGrow>
                           <KeepTogether>true</KeepTogether>
                           <Paragraphs>
                             <Paragraph>
                               <TextRuns>
                                 <TextRun>
-                                  <Value>=Fields!StudentLastName.Value</Value>
+                                  <Value>=Fields!StudentFirstName.Value &amp; " "  &amp; Fields!StudentLastName.Value</Value>
                                   <Style />
                                 </TextRun>
                               </TextRuns>
                               <Style />
                             </Paragraph>
                           </Paragraphs>
-                          <rd:DefaultName>StudentLastName</rd:DefaultName>
-                          <Style>
-                            <Border>
-                              <Color>LightGrey</Color>
-                              <Style>Solid</Style>
-                            </Border>
-                            <PaddingLeft>2pt</PaddingLeft>
-                            <PaddingRight>2pt</PaddingRight>
-                            <PaddingTop>2pt</PaddingTop>
-                            <PaddingBottom>2pt</PaddingBottom>
-                          </Style>
-                        </Textbox>
-                      </CellContents>
-                    </TablixCell>
-                    <TablixCell>
-                      <CellContents>
-                        <Textbox Name="StudentFirstName">
-                          <CanGrow>true</CanGrow>
-                          <KeepTogether>true</KeepTogether>
-                          <Paragraphs>
-                            <Paragraph>
-                              <TextRuns>
-                                <TextRun>
-                                  <Value>=Fields!StudentFirstName.Value</Value>
-                                  <Style />
-                                </TextRun>
-                              </TextRuns>
-                              <Style />
-                            </Paragraph>
-                          </Paragraphs>
-                          <rd:DefaultName>StudentFirstName</rd:DefaultName>
+                          <rd:DefaultName>Textbox6</rd:DefaultName>
                           <Style>
                             <Border>
                               <Color>LightGrey</Color>
@@ -1122,7 +1057,6 @@
                 <TablixMember />
                 <TablixMember />
                 <TablixMember />
-                <TablixMember />
               </TablixMembers>
             </TablixColumnHierarchy>
             <TablixRowHierarchy>
@@ -1138,7 +1072,7 @@
             <NoRowsMessage>No data found.</NoRowsMessage>
             <DataSetName>DataSet1</DataSetName>
             <Height>0.60694in</Height>
-            <Width>16.964in</Width>
+            <Width>10.85714in</Width>
             <Style>
               <Border>
                 <Style>None</Style>
@@ -1149,7 +1083,7 @@
         <Height>0.68625in</Height>
         <Style />
       </Body>
-      <Width>16.964in</Width>
+      <Width>10.85714in</Width>
       <Page>
         <PageFooter>
           <Height>0.67708in</Height>
