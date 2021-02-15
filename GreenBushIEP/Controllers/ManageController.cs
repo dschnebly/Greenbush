@@ -3318,7 +3318,7 @@ namespace GreenBushIEP.Controllers
                 }
 
                 // EDIT the user
-                if (user != null)kip g
+                if (user != null)
                 {
                     if (!string.IsNullOrEmpty(collection["teacherID"])) { user.TeacherID = collection["teacherID"]; }
                     if (!string.IsNullOrEmpty(collection["role"])) { user.RoleID = collection["role"]; }
