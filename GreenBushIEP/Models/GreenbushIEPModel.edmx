@@ -3267,13 +3267,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <FunctionImport Name="uspServiceProviderStudents" ReturnType="Collection(IndividualizedEducationProgramModel.uspServiceProviderStudents_Result)">
           <Parameter Name="ProviderID" Mode="In" Type="Int32" />
           </FunctionImport>
-          <FunctionImport Name="uspUserAssignedList" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserAssignedList_Result)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
-            <Parameter Name="USD" Mode="In" Type="String" />
-            <Parameter Name="BuildingID" Mode="In" Type="String" />
-            <Parameter Name="noBuilding" Mode="In" Type="Boolean" />
-            <Parameter Name="isArchived" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="uspUserList" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserList_Result)">
             <Parameter Name="UserID" Mode="In" Type="Int32" />
             <Parameter Name="USD" Mode="In" Type="String" />
@@ -3502,6 +3495,13 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="BookID" Mode="In" Type="String" />
             <Parameter Name="ModifiedBy" Mode="In" Type="Int32" />
             <Parameter Name="DeleteRole" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="uspUserAssignedList" ReturnType="Collection(IndividualizedEducationProgramModel.uspUserAssignedList_Result)">
+            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="USD" Mode="In" Type="String" />
+            <Parameter Name="BuildingID" Mode="In" Type="String" />
+            <Parameter Name="noBuilding" Mode="In" Type="Boolean" />
+            <Parameter Name="isArchived" Mode="In" Type="Boolean" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="uf_Split_Result">
@@ -3877,18 +3877,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
           <Property Type="Int64" Name="KIDSID" Nullable="false" />
-        </ComplexType>
-        <ComplexType Name="uspUserAssignedList_Result">
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
-          <Property Type="String" Name="RoleID" Nullable="true" MaxLength="50" />
-          <Property Type="Boolean" Name="hasIEP" Nullable="true" />
-          <Property Type="Int64" Name="KIDSID" Nullable="true" />
-          <Property Type="Boolean" Name="noBuilding" Nullable="true" />
-          <Property Type="String" Name="StatusCode" Nullable="true" MaxLength="1" />
-          <Property Type="Int32" Name="StatusActive" Nullable="false" />
         </ComplexType>
         <ComplexType Name="uspUserList_Result">
           <Property Type="Int32" Name="UserID" Nullable="false" />
@@ -6548,6 +6536,24 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="uspUserAssignedList_Result">
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="MiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="RoleID" Nullable="true" MaxLength="50" />
+          <Property Type="Boolean" Name="hasIEP" Nullable="true" />
+          <Property Type="Int64" Name="KIDSID" Nullable="true" />
+          <Property Type="Boolean" Name="noBuilding" Nullable="true" />
+          <Property Type="String" Name="StatusCode" Nullable="true" MaxLength="1" />
+          <Property Type="Int32" Name="StatusActive" Nullable="false" />
+          <Property Type="Int32" Name="Active_IEPid" Nullable="true" />
+          <Property Type="DateTime" Name="ActiveIEP_BeginDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ReEvalConsentSigned" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ReEvalCompleted" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="InitialEvalConsentSigned" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="InitialEvalDetermination" Nullable="true" Precision="23" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7005,22 +7011,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
                 <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="uspUserAssignedList" FunctionName="IndividualizedEducationProgramModel.Store.uspUserAssignedList">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspUserAssignedList_Result">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-                <ScalarProperty Name="hasIEP" ColumnName="hasIEP" />
-                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
-                <ScalarProperty Name="noBuilding" ColumnName="noBuilding" />
-                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
-                <ScalarProperty Name="StatusActive" ColumnName="StatusActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -9500,6 +9490,28 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             </EntityTypeMapping>
           </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="usp_CRUD_RoleID" FunctionName="IndividualizedEducationProgramModel.Store.usp_CRUD_RoleID" />
+          <FunctionImportMapping FunctionImportName="uspUserAssignedList" FunctionName="IndividualizedEducationProgramModel.Store.uspUserAssignedList">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.uspUserAssignedList_Result">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="hasIEP" ColumnName="hasIEP" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="noBuilding" ColumnName="noBuilding" />
+                <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
+                <ScalarProperty Name="StatusActive" ColumnName="StatusActive" />
+                <ScalarProperty Name="Active_IEPid" ColumnName="Active_IEPid" />
+                <ScalarProperty Name="ActiveIEP_BeginDate" ColumnName="ActiveIEP_BeginDate" />
+                <ScalarProperty Name="ReEvalConsentSigned" ColumnName="ReEvalConsentSigned" />
+                <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
+                <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
+                <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

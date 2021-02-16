@@ -124,6 +124,8 @@ namespace GreenBushIEP.Models
         public bool isAssigned;
         public string StatusCode;
         public int StatusActive;
+        public DateTime? iepBeginDate;
+        public DateTime? reevalDate;
     }
 
     public class ILPPortalViewModel
@@ -262,6 +264,8 @@ namespace GreenBushIEP.Models
         public string Address2 { get; set; }
         public string Zip { get; set; }
         public string IEPDate { get; set; }
+
+        public string ReEvalDate { get; set; }
         public bool hasIEP { get; set; }
         public string FormattedName
         {

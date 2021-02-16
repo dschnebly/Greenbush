@@ -23,5 +23,11 @@ namespace GreenBushIEP.Models
         public Nullable<bool> noBuilding { get; set; }
         public string StatusCode { get; set; }
         public int StatusActive { get; set; }
+        public Nullable<int> Active_IEPid { get; set; }
+        public Nullable<System.DateTime> ActiveIEP_BeginDate { get; set; }
+        public Nullable<System.DateTime> ReEvalConsentSigned { get; set; }
+        public Nullable<System.DateTime> ReEvalCompleted { get; set; }
+        public Nullable<System.DateTime> InitialEvalConsentSigned { get; set; }
+        public Nullable<System.DateTime> InitialEvalDetermination { get; set; }
     }
 }

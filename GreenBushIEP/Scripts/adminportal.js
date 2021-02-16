@@ -2,6 +2,17 @@
 	function init() {
         $(".chosen-select").chosen({ width: "100%" });
 
+        $(".studentIEPDetails").each(function (index, element) {
+            var contentElementId = $(element).data().target;
+            var contentHtml = $(contentElementId).html();            
+            $(element).popover({
+                content: contentHtml,
+                html: true,                
+                trigger: 'hover'
+
+            });
+        });
+
         if ($("#dashboardNotification").length > 0 && ($("#showBannerNotification").val() == "1")) {  
             var message = "";
 

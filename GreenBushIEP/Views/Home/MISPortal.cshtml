@@ -13,7 +13,7 @@
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/misportal.js?v1.5")
+    @Scripts.Render("~/Scripts/misportal.js?v1.6")
 }
 
 <div class="container">
@@ -229,6 +229,25 @@
 
                                     if (user.hasIEP)
                                     {
+                                        if (user.iepBeginDate.HasValue || user.reevalDate.HasValue)
+                                        {
+                                            <i class="fa fa-angle-double-right studentIEPDetails text-muted" data-toggle="popover" data-target="#spanDetails@(user.UserID)"></i>
+                                             <span id="spanDetails@(user.UserID)" style="display:none">
+                                                @if (user.iepBeginDate.HasValue)
+                                                {
+                                                     <text><b>IEP Date: </b></text> @user.iepBeginDate.Value.ToShortDateString()
+                                                }
+                                                @if (user.reevalDate.HasValue)
+                                                {
+                                                    if (user.iepBeginDate.HasValue)
+                                                    {
+                                                     <br/>
+                                                    }
+                                                    <text><b>Re-Eval Date: </b></text> @user.reevalDate.Value.ToShortDateString()
+                                                }
+                                              </span>
+                                        }
+
                                         <a href="#" data-id="@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>

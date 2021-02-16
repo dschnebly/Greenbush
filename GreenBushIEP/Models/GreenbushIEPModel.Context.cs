@@ -535,31 +535,6 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspServiceProviderStudents_Result>("uspServiceProviderStudents", providerIDParameter);
         }
     
-        public virtual ObjectResult<uspUserAssignedList_Result> uspUserAssignedList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> noBuilding, Nullable<bool> isArchived)
-        {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
-    
-            var uSDParameter = uSD != null ?
-                new ObjectParameter("USD", uSD) :
-                new ObjectParameter("USD", typeof(string));
-    
-            var buildingIDParameter = buildingID != null ?
-                new ObjectParameter("BuildingID", buildingID) :
-                new ObjectParameter("BuildingID", typeof(string));
-    
-            var noBuildingParameter = noBuilding.HasValue ?
-                new ObjectParameter("noBuilding", noBuilding) :
-                new ObjectParameter("noBuilding", typeof(bool));
-    
-            var isArchivedParameter = isArchived.HasValue ?
-                new ObjectParameter("isArchived", isArchived) :
-                new ObjectParameter("isArchived", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserAssignedList_Result>("uspUserAssignedList", userIDParameter, uSDParameter, buildingIDParameter, noBuildingParameter, isArchivedParameter);
-        }
-    
         public virtual ObjectResult<uspUserList_Result> uspUserList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> isAssgined, Nullable<bool> isArchived)
         {
             var userIDParameter = userID.HasValue ?
@@ -668,6 +643,31 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("DeleteRole", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("usp_CRUD_RoleID", userIDParameter, roleIDParameter, bookIDParameter, modifiedByParameter, deleteRoleParameter);
+        }
+    
+        public virtual ObjectResult<uspUserAssignedList_Result> uspUserAssignedList(Nullable<int> userID, string uSD, string buildingID, Nullable<bool> noBuilding, Nullable<bool> isArchived)
+        {
+            var userIDParameter = userID.HasValue ?
+                new ObjectParameter("UserID", userID) :
+                new ObjectParameter("UserID", typeof(int));
+    
+            var uSDParameter = uSD != null ?
+                new ObjectParameter("USD", uSD) :
+                new ObjectParameter("USD", typeof(string));
+    
+            var buildingIDParameter = buildingID != null ?
+                new ObjectParameter("BuildingID", buildingID) :
+                new ObjectParameter("BuildingID", typeof(string));
+    
+            var noBuildingParameter = noBuilding.HasValue ?
+                new ObjectParameter("noBuilding", noBuilding) :
+                new ObjectParameter("noBuilding", typeof(bool));
+    
+            var isArchivedParameter = isArchived.HasValue ?
+                new ObjectParameter("isArchived", isArchived) :
+                new ObjectParameter("isArchived", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserAssignedList_Result>("uspUserAssignedList", userIDParameter, uSDParameter, buildingIDParameter, noBuildingParameter, isArchivedParameter);
         }
     }
 }

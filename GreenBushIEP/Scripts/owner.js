@@ -1,5 +1,17 @@
 ﻿$(function () {
     function init() {
+
+        $(".studentIEPDetails").each(function (index, element) {
+            var contentElementId = $(element).data().target;
+            var contentHtml = $(contentElementId).html();
+            $(element).popover({
+                content: contentHtml,
+                html: true,
+                trigger: 'hover'
+
+            });
+        });
+
         $(".chosen-select").chosen({ width: "95%", disable_search_threshold: 10 });
 
         // filter to only active students

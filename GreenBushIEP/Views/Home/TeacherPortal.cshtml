@@ -449,6 +449,7 @@
                         <th>Middle Name</th>
                         <th>Last Name</th>
                         <th>IEP Date</th>
+                        <th>Re-Eval Date</th>
                         <th>Birthdate</th>
                         <th>&nbsp;</th>
                     </tr>
@@ -462,6 +463,7 @@
                             <td>@student.MiddleName</td>
                             <td>@student.LastName</td>
                             <td>@(student.IEPDate == null ? "No Active IEP" : DateTime.Parse(student.IEPDate).ToString("MM/dd/yyyy"))</td>
+                            <td>@(string.IsNullOrEmpty(student.ReEvalDate) ? "" : DateTime.Parse(student.ReEvalDate).ToString("MM/dd/yyyy"))</td> 
                             <td>@student.DateOfBirth.ToString("MM/dd/yyyy")</td>
                             <td>
                                 @if (student.hasIEP)

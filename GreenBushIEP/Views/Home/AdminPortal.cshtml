@@ -193,6 +193,24 @@
 
                                     if (user.hasIEP)
                                     {
+                                        if (user.iepBeginDate.HasValue || user.reevalDate.HasValue)
+                                        {
+                                            <i class="fa fa-angle-double-right studentIEPDetails text-muted" data-toggle="popover" data-target="#spanDetails@(user.UserID)"></i>
+                                             <span id="spanDetails@(user.UserID)" style="display:none">
+                                                @if (user.iepBeginDate.HasValue)
+                                                {
+                                                     <text><b>IEP Date: </b></text> @user.iepBeginDate.Value.ToShortDateString()
+                                                }
+                                                @if (user.reevalDate.HasValue)
+                                                {
+                                                    if (user.iepBeginDate.HasValue)
+                                                    {
+                                                     <br/>
+                                                    }
+                                                     <text><b>Re-Eval Date: </b></text> @user.reevalDate.Value.ToShortDateString()
+                                                }
+                                              </span>
+                                        }
                                         <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
@@ -284,6 +302,6 @@
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.9")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.10")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

@@ -86,7 +86,7 @@ namespace GreenbushIep.Controllers
                     user = OWNER,
                     districts = (from district in db.tblDistricts select district).Distinct().ToList(),
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false, iepBeginDate = u.ActiveIEP_BeginDate, reevalDate = u.ReEvalCompleted }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
                };
 
@@ -112,7 +112,7 @@ namespace GreenbushIep.Controllers
                     user = MIS,
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(MIS.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(MIS.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false, iepBeginDate = u.ActiveIEP_BeginDate, reevalDate = u.ReEvalCompleted }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
@@ -145,11 +145,11 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
+                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false, iepBeginDate = u.ActiveIEP_BeginDate, reevalDate = u.ReEvalCompleted }).ToList()
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
@@ -211,7 +211,8 @@ namespace GreenbushIep.Controllers
                                               KidsID = i.KIDSID,
                                               DateOfBirth = i.DateOfBirth,
                                               CreatedBy = i.CreatedBy,
-                                              Status = i.StatusCode
+                                              Status = i.StatusCode,
+                                              ReEvalDate = i.ReEvalCompleted.HasValue ? i.ReEvalCompleted.Value.ToShortDateString() : ""
                                           }).Distinct().ToList();
 
                 //get IEP Date
@@ -222,7 +223,16 @@ namespace GreenbushIep.Controllers
                     student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                     {
-                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                        if (theIEP.current.Amendment && theIEP.current.OriginalIEPid.HasValue)
+                        {
+                            //get the original iep begin date
+                            var originalIEP = db.tblIEPs.Where(o => o.IEPid == theIEP.current.OriginalIEPid.Value).FirstOrDefault();
+                            student.IEPDate = originalIEP != null ? originalIEP.begin_date.Value.ToShortDateString() : theIEP.current.begin_date.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                        }
                     }
                 }
 
@@ -279,8 +289,8 @@ namespace GreenbushIep.Controllers
                                              select i).Distinct().ToList();
 
                 List<Student> students = (from user in users
-                                          join i in info                                          
-                                          on user.UserID equals i.UserID
+                                          join i in info                                            
+                                          on user.UserID equals i.UserID                                          
                                           where !(user.Archive ?? false)
                                          
                                           select new Student()
@@ -299,7 +309,9 @@ namespace GreenbushIep.Controllers
                                               KidsID = i.KIDSID,
                                               DateOfBirth = i.DateOfBirth,
                                               CreatedBy = i.CreatedBy,
-                                              Status = i.StatusCode
+                                              Status = i.StatusCode,
+                                              ReEvalDate = i.ReEvalCompleted.HasValue ? i.ReEvalCompleted.Value.ToShortDateString():""
+
                                           }).Distinct().ToList();
 
                 //get IEP Date
@@ -309,7 +321,16 @@ namespace GreenbushIep.Controllers
                     student.hasIEP = (theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE) && (theIEP.current.IsActive);
                     if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
                     {
-                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                        if (theIEP.current.Amendment && theIEP.current.OriginalIEPid.HasValue)
+                        {
+                            //get the original iep begin date
+                            var originalIEP = db.tblIEPs.Where(o => o.IEPid == theIEP.current.OriginalIEPid.Value).FirstOrDefault();
+                            student.IEPDate = originalIEP != null ? originalIEP.begin_date.Value.ToShortDateString() : theIEP.current.begin_date.Value.ToShortDateString();
+                        }
+                        else
+                        {
+                            student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                        }
                     }
                 }
 
