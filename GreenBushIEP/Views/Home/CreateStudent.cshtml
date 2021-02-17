@@ -1255,8 +1255,8 @@
                                                             </optgroup>
                                                             <optgroup label="Inactive">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
-                                                                {
-                                                                    <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
+                                                                {                                                                    
+                                                                    <option value="@code.StatusCode" @(code.Description.ToUpper() =="PENDING" ? "selected" : "")>@code.StatusCode - @code.Description</option>
                                                                 }
                                                             </optgroup>
                                                         }

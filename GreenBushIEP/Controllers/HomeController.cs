@@ -3840,7 +3840,7 @@ namespace GreenbushIep.Controllers
                                                              on student.UserID equals building.UserID
                                                          where
                                                          iep.IepStatus == iepStatus
-                                                         && (student.Archive == null || student.Archive == false)
+                                                         && (student.Archive == null || student.Archive == false)                                                         
                                                          && services.SchoolYear == fiscalYear
                                                          && (iep.FiledOn != null)
                                                          && services.ServiceCode != "NS"
@@ -4100,8 +4100,20 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", gradeCode);
             }
 
+            if(!string.IsNullOrEmpty(studentIEP.current.StatusCode) &&
+                (studentIEP.current.StatusCode == "2"))
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = studentIEP.studentDetails.student.UserID.ToString(),
+                    KidsID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format(" {0}, {1} ERROR: {2} {3}", studentIEP.studentLastName, studentIEP.studentFirstName, "Invalid Status Code: ", studentIEP.current.StatusCode)
+                });
+            }
+
+
             //9 status code req
-            sb.AppendFormat("\t{0}", string.IsNullOrEmpty(studentIEP.current.StatusCode) ? studentIEP.studentDetails.student.StatusCode : studentIEP.current.StatusCode);
+                sb.AppendFormat("\t{0}", string.IsNullOrEmpty(studentIEP.current.StatusCode) ? studentIEP.studentDetails.student.StatusCode : studentIEP.current.StatusCode);
 
             //10 exit date
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
@@ -4501,7 +4513,7 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
-                    result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
+                    result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");  
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");

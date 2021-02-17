@@ -708,7 +708,12 @@
                                         <option value="I" @(Model.STUDENTCODE == "I" ? "selected='selected'" : string.Empty)>I - Reinitiation of Services</option>
                                         <option value="N" @(Model.STUDENTCODE == "N" ? "selected='selected'" : string.Empty)>N - New Referral</option>
                                         <option value="R" @(Model.STUDENTCODE == "R" ? "selected='selected'" : string.Empty)>R - Returning to a Special Education Program:</option>
+                                        <option value="2" @(Model.STUDENTCODE == "2" ? "selected='selected'" : string.Empty)>2 - Pending (Inactive)</option>
                                     </select>
+                                     @if(Model.STUDENTCODE == "2")
+                                    {
+                                        <p style='color:red;'>ERROR: 2 - Pending (Inactive) is not a valid student code.</p>
+                                    }
                                 </div>
                             </div>
                             <div class="item" id="savecode">

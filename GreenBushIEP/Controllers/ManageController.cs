@@ -3049,7 +3049,10 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //check if exit
-                    tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
+                    tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode 
+                    && info.StatusCode != "1"
+                    && info.StatusCode != "2"
+                    && info.StatusCode != "3").FirstOrDefault();
                     bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive";
                     if (isExit && !info.ExitDate.HasValue)
                     {
