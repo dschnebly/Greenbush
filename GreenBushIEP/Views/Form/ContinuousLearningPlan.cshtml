@@ -364,7 +364,7 @@
 		<b>
 			<span>
 				<input type="checkbox" name="Accommodations_HasNoCurrentCBS" @(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "checked" : "")/><span id="Accommodations_HasNoCurrent" class='imgCheck' >@(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "[X]" : "not-checked")</span> 
-				&nbsp;Student currently has no accommodations/modifications/supplementary aids in their IEP
+				<i>Student currently has no accommodations/modifications/supplementary aids in their IEP</i>
 			</span>
 		</b>
 	</p>
@@ -500,13 +500,11 @@
 		</span>
 	</p>
 	<p>
-		<b>
-			<i>
+		<b>			
 				<span>
 					<input type="checkbox" name="Services_OfferedAndDeclinedCBS" @(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "checked" : "")/><span id="Services_OfferedAndDeclined" class='imgCheck' >@(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span>
-					&nbsp;Services have been offered by the provider and declined by the parent/guardian
-				</span>
-			</i>
+					<i>&nbsp;Services have been offered by the provider and declined by the parent/guardian</i>
+				</span>			
 		</b>
 	</p>
 	<p>
@@ -657,10 +655,8 @@
 			</u>
 		</b>
 	</p>
-	<p>
-		<b>
-			<span><input type="checkbox" name="Provider_WillContactPhoneCBS" @(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "checked" : "")/><span id="Provider_WillContactPhone" class='imgCheck' >@(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "[X]" : "not-checked")</span></span>
-		</b>
+	<p><span><input type="checkbox" name="Provider_WillContactPhoneCBS" @(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "checked" : "")/><span id="Provider_WillContactPhone" class='imgCheck' >@(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "[X]" : "not-checked")</span></span>
+		
 		<span>
 			&nbsp;Provider will contact the parent by phone:
 		</span>
@@ -693,9 +689,9 @@
 			</u>
 		</b>
 	</p>	
-	<p>
-		<span><input type="checkbox" name="Goals_OfferedAndDeclinedCBS" @(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "checked" : "")/><span id="Goals_OfferedAndDeclined" class='imgCheck' >@(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span></span>
+	<p>		
 		<b>
+			<input type="checkbox" name="Goals_OfferedAndDeclinedCBS" @(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "checked" : "")/><span id="Goals_OfferedAndDeclined" class='imgCheck' >@(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span>
 			<i>
 				<span>
 					&nbsp;Opportunity for student to

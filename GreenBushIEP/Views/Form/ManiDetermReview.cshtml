@@ -351,10 +351,9 @@
         <p class=MsoNormal style='line-height:23.0pt;tab-stops:81.0pt 117.0pt 2.0in 148.5pt'>
             <span style='font-family:"Arial",sans-serif'>
                 Attachments:<span style=''>      </span>
-				<input type="checkbox" name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")   /><span id="Attachments_Yes" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>YES<span style=''>     </span>or<span style=''>    </span>
+				<input type="checkbox" name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")   /><span id="Attachments_Yes" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span> YES<span> or  </span>
 				<input type="checkbox"  name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "checked" : "")/><span id="Attachments_No" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "[X]" : "not-checked")</span>  NO
-				@*<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><span id="Attachments" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>  
-				<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><span id="Attachments" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>  NO<o:p></o:p>*@
+				
             </span>
         </p>
     </div>
