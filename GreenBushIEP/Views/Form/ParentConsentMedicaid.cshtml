@@ -33,22 +33,19 @@
 	<p style='text-align:left;margin-top:15px'>
 		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><u>Consent to Release Information</u></span>
 	</p>
-	<p><label>KIDSID:</label> @kidsId</p>
 
 	<p style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
 		I consent for <textarea cols="50" rows="1" style="height:30px"  class="form-control" maxlength="200">@(formModel.School)</textarea><span id="School" style="display:none;font-size:11.0pt;text-decoration:underline" class="input-value">@(formModel.School)</span> 
 		(School) to release records or information about my child's participation in services to participating physicians, other health care providers, the Kansas Department of Health and Environment (KDHE), any KDHE billing agents, and any school billing agent, as necessary, to process claims for reimbursement by KDHE for covered health-related services, evaluations for these services and transportation, on the day the student receives any health-related service which are outlined inert the child's Individualized Education Program (IEP), including duration and frequency IEPs services.
 
 	</p>
-
 	<p style='font-size:11.0pt;text-align:left;margin-top:8px'>
 		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><u>Consent to Access Public Benefits</u></span>
 		<ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;'>
 			<li>I give consent for the school to access the child's or parent's public benefit or insurance to pay for services under 34 C.F.R part 300.</li>
 		</ul>
 	</p>
-
-	<p style='font-size:11.0pt;text-align:left;margin-top:8px'>
+	<p style='font-size:11.0pt;text-align:left;margin-top:8px;'>
 		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><u>Procedural Safeguards</u></span>
 		<ul style='font-size:11.0pt;font-family:"Calibri",sans-serif;margin-bottom:8px'>
 			<li>I understand that the school may be required to provide certain health-related services to a student who has an IEP at no additional cost to the student's parent(s), and that my refusal to sign this form will not affect whether such services are provided at no cost to the student named above.</li>
@@ -59,14 +56,13 @@
 			<li>I also understand that the granting of consent is voluntary and may be withdrawn at any time. If I later revoke consent, that revocation is not retroactive (i.e. it does not negate any action that has occurred after the consent was given and before the consent was revoked).</li>
 			<li>I understand that my child’s required therapy as described in my child’s IEP may be delivered either in-person or via a teletherapy platform.</li>
 		</ul>
-	</p>
-	<table border=0 cellspacing=0 cellpadding=0 width=0 style='padding-top:10px;margin-left:15px;margin-top:10px;border-collapse:collapse;'>
+	</p><br/>	
+	<table border=0 cellspacing=0 cellpadding=0 width=0 style='margin-left:15px;border-collapse:collapse;'>
 		<tr>
 			<td>
 				<p>
 					<input type="checkbox" @(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "checked" : "")/>
-					<span id="GiveConsent" class="imgCheck" >@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "[X]" : "not-checked")</span>
-					@*<span id="GiveConsent" class='imgCheck' >@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "[X]" : "not-checked")</span>*@
+					<span id="GiveConsent" class="imgCheck" >@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "[X]" : "not-checked")</span>					
 					&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px;font-size:11.0pt;'>I give consent for the school to release Education Records or information and to access Public Benefits as described above in order to submit claims to the Kansas Department of Health and Environment (KDHE)</span>
 				</p>
 			</td>
@@ -75,22 +71,23 @@
 			<td>
 				<p style="margin-top:8px">
 					<input type="checkbox" @(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "checked" : "")/>
-					<span id="DoNotGiveConsent" class="imgCheck" >@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "[X]" : "not-checked")</span>
-					@*<span id="DoNotGiveConsent" class='imgCheck' >@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "[X]" : "not-checked")</span>*@
+					<span id="DoNotGiveConsent" class="imgCheck" >@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "[X]" : "not-checked")</span>					
 					&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px;font-size:11.0pt;'>I do not give consent</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
 				</p>
 			</td>
 		</tr>
 	</table>
 
-	<table border=0 cellspacing=2 cellpadding=2 style="width:60%;margin-top:20px">
+	<table border=0 cellspacing=2 cellpadding=2 style="width:70%;margin-top:20px">
 		<tr>
 			<td><span class="IepNormal"><u>@((studentFormattedName.Length) > 50 ? studentFormattedName : String.Format(studentFormattedName).PadRight(50 - String.Format(studentFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u></span></td>
+			<td><span class="IepNormal" style="width:50px;"><u>@kidsId</u></span></td>			
 			<td><textarea maxlength="10" style="width:100px;height:30px">@dobStr</textarea><span style="display:none;text-decoration:underline;" class="input-value isDate IepNormal">@dobStr</span></td>
 			<td><textarea maxlength="10" style="width:100px;height:30px">@(beginDate)</textarea><span id="BeginDate" style="display:none;text-decoration:underline" class="input-value isDate IepNormal">@(beginDate)</span></td>
 		</tr>
 		<tr>
 			<td><span class="IepNormal">Child's Name</span></td>
+			<td><span class="IepNormal">KIDSID</span></td>
 			<td><span class="IepNormal">Date of Birth</span></td>
 			<td><span class="IepNormal">Begin Date</span></td>
 		</tr>
