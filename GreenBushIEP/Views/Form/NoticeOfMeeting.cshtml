@@ -119,7 +119,7 @@
             <tr style='height:99.9pt'>
                 <td width=36 valign=top style='width:27.0pt;padding:0in .05in 0in .05in; height:99.9pt'>
                     <p>
-                        <input type="checkbox" @(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? "checked" : "") /><img id="MeetingToReviewEvaluation" class='imgCheck' src="@(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
+                        <input type="checkbox" @(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? "checked" : "") /><span id="MeetingToReviewEvaluation" class='imgCheck' >@(formModel.MeetingToReviewEvaluation.HasValue && formModel.MeetingToReviewEvaluation.Value ? "[X]" :"not-checked")</span>&nbsp;
                     </p>
                 </td>
                 <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in; height:99.9pt;'>
@@ -176,7 +176,7 @@
             <tr>
                 <td width=636 valign=top style='width:477.0pt;padding:0in .05in 0in .05in'>
                     <p style='margin-left: .25in; text-indent: -.25in;'>
-                        <input type="checkbox" @(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "checked" : "") /><img id="DevelopIEP" class='imgCheck' src="@(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>
+                        <input type="checkbox" @(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "checked" : "") /><span id="DevelopIEP" class='imgCheck' >@(formModel.DevelopIEP.HasValue && formModel.DevelopIEP.Value ? "[X]" :"not-checked")</span>&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt;letter-spacing:-.1pt'>If it is determined that your child is eligible, or continues to be eligible, for special education and related services, the IEP team  will develop an individualized education program (IEP) for your child and determine the appropriate placement.</span>
                         <br /><br /><span style="padding-top:10px;font-size:10pt">
                             The team will make its decisions based upon the results of the evaluation procedures which
                             we previously told you we would administer in the Notice of Proposed
@@ -188,7 +188,7 @@
             <tr style='mso-yfti-irow:1'>
                 <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
                     <p>
-                        <input type="checkbox" @(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? "checked" : "") /><img id="DiscussIEPChanges" class='imgCheck' src="@(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                        <input type="checkbox" @(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? "checked" : "") /><span id="DiscussIEPChanges" class='imgCheck' >@(formModel.DiscussIEPChanges.HasValue && formModel.DiscussIEPChanges.Value ? "[X]" :"not-checked")</span>&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
                             Discuss  possible changes in your child's individualized education program (IEP).
                         </span>
                     </p>
@@ -197,7 +197,7 @@
             <tr style='height:4.55pt'>
                 <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
                     <p>
-                        <input type="checkbox" @(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? "checked" : "") /><img id="AnnualIEPReview" class='imgCheck' src="@(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
+                        <input type="checkbox" @(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? "checked" : "") /><span id="AnnualIEPReview" class='imgCheck' >@(formModel.AnnualIEPReview.HasValue && formModel.AnnualIEPReview.Value ? "[X]" :"not-checked")</span>&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:12.0pt'>
                             Conduct an annual review of your child's individualized education program (IEP).
                         </span>
                     </p>
@@ -206,7 +206,7 @@
             <tr>
                 <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
                     <p style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" @(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "checked" : "") /><img id="TransitionAssesment" class='imgCheck' src="@(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt'>
+                        <input type="checkbox" @(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "checked" : "") /><span id="TransitionAssesment" class='imgCheck' >@(formModel.TransitionAssesment.HasValue && formModel.TransitionAssesment.Value ? "[X]" :"not-checked")</span>&nbsp; <span style='font-size:10.0pt'>
                             If your child will be at least 14 years old
                             during the anticipated duration of this IEP,
                             the IEP team will develop postsecondary
@@ -222,7 +222,7 @@
             </tr>
             <tr style='mso-yfti-irow:4;mso-yfti-lastrow:yes;height:28.35pt'>
                 <td valign=top style='width:100%;padding:.05in .05in 0in .05in'>
-                    <p><input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "") /><img id="Other" class='imgCheck' src="@(formModel.Other.HasValue && formModel.Other.Value ? @imageChecked : @imageNotChecked)" />&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>Other<o:p></o:p></span></p>
+                    <p><input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "") /><span id="Other" class='imgCheck' >@(formModel.Other.HasValue && formModel.Other.Value ? "[X]" :"not-checked")</span>&nbsp; <span style='font-size:10.0pt;mso-bidi-font-size:4.0pt'>Other<o:p></o:p></span></p>
                 </td>
             </tr>
         </table>
@@ -323,16 +323,16 @@
                     </p>
 
                     <p style='text-indent:20.5pt;border:none;padding:0in;'>
-                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">hand delivered,</span>
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><span id="DelieveredByHand" class='imgCheck' >@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "[X]" :"not-checked")</span>&nbsp;<span class="IepNormal">hand delivered,</span>
 
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">mailed,</span>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><span id="DelieveredByMail" class='imgCheck' >@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "[X]" :"not-checked")</span>&nbsp;<span class="IepNormal">mailed,</span>
                             </span>
                         </span>
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="IepNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DelieveredByOtherDesc)</span>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><span id="DelieveredByOther" class='imgCheck' >@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "[X]" :"not-checked")</span>&nbsp;<span class="IepNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value IepNormal">@(formModel.DelieveredByOtherDesc)</span>
                             </span>
                         </span>
                     </p>
@@ -352,17 +352,17 @@
                         </b>
                     </p>
                     <p class="IepNormal" style='border:none;padding: 0in;'>
-                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? "checked" : "") /><img id="PlanToAttend" class='imgCheck' src="@(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I plan to attend the meeting as scheduled
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? "checked" : "") /><span id="PlanToAttend" class='imgCheck' >@(formModel.PlanToAttend.HasValue && formModel.PlanToAttend.Value ? "[X]" :"not-checked")</span>&nbsp;  I plan to attend the meeting as scheduled
                     </p>
                     <p class="IepNormal" style='margin-left: 27.0pt; text-indent: -27.0pt; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
-                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? "checked" : "") /><img id="RescheduleMeeting" class='imgCheck' src="@(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? @imageChecked : @imageNotChecked)" />&nbsp;  I am unable to attend the meeting as scheduled and would like to schedule the meeting at another date, time or place.
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? "checked" : "") /><span id="RescheduleMeeting" class='imgCheck' >@(formModel.RescheduleMeeting.HasValue && formModel.RescheduleMeeting.Value ? "[X]" :"not-checked")</span>&nbsp;  I am unable to attend the meeting as scheduled and would like to schedule the meeting at another date, time or place.
                     </p>
                     <p class="IepNormal" style='margin-left: 27.0pt; text-indent: -27.0pt; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
-                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? "checked" : "") /><img id="AvaliableToAttend_flag" class='imgCheck' src="@(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I am available to attend a meeting on the following dates and times:
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? "checked" : "") /><span id="AvaliableToAttend_flag" class='imgCheck' >@(formModel.AvaliableToAttend_flag.HasValue && formModel.AvaliableToAttend_flag.Value ? "[X]" :"not-checked")</span>&nbsp; I am available to attend a meeting on the following dates and times:
                     </p>
                     <p class="IepNormal" style='border: none; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'><textarea style="width:200px;height:35px" maxlength="200">@(formModel.AvailableToAttend_desc)</textarea> <span id="AvailableToAttend_desc" style="display:none;text-decoration:underline" class="input-value">@(formModel.AvailableToAttend_desc)</span></p>
                     <p class="IepNormal" style='margin-left: .25in; text-indent: -.25in; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
-                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? "checked" : "") /><img id="WaiveRightToNotice" class='imgCheck' src="@(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? @imageChecked : @imageNotChecked)" />&nbsp; I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my child.
+                        <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? "checked" : "") /><span id="WaiveRightToNotice" class='imgCheck' >@(formModel.WaiveRightToNotice.HasValue && formModel.WaiveRightToNotice.Value ? "[X]" :"not-checked")</span>&nbsp; I consent to waive my right to a 10-day prior written notice of the meeting to develop, review or revise the IEP for my child.
                     </p><br /><br /><br />
                     <p class="IepNormal" style='text-indent: .4in; border: none; mso-border-alt: solid windowtext .5pt; padding: 0in; mso-padding-alt: 1.0pt 4.0pt 1.0pt 4.0pt'>
                         <span style='font-size:	10.0pt;'>__________________________________________________ Date _________________________</span>

@@ -44,10 +44,10 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
         </p>
 
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><img id="OnBehalfOfStudent" class='imgCheck' src="@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on behalf of the above named student  
+            <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><span id="OnBehalfOfStudent" class='imgCheck' >@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "[X]" : "not-checked")</span>&nbsp; on behalf of the above named student  
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><img id="OnMyOwnBehalf" class='imgCheck' src="@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on my own behalf (adult student),
+            <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><span id="OnMyOwnBehalf" class='imgCheck' >@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "[X]" : "not-checked")</span>&nbsp; on my own behalf (adult student),
         </p>
       
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
@@ -114,8 +114,8 @@ text-align:center;line-height:normal'><b><u>REVOCATION OF CONSENT</u></b></p>
 		 <p class=MsoNormal style='margin-top:5px; margin-bottom:0in;margin-bottom:.0001pt'>
             As the school representative on this student’s IEP team, I,<textarea data-val="50" style="width:200px;height:30px;" maxlength="2000" placeholder="Name">@(formModel.RepresenativeName)</textarea><span id="RepresenativeName" style="display:none;text-decoration:underline" class="input-value">@(formModel.RepresenativeName)</span>
 			 <span>, certify, on behalf of the IEP team, that this student’s IEP team considered the revocation of consent described above and that the team determined that the student</span>
-			 <i> <input type="checkbox" @(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? "checked" : "") /><img id="StudentMeets" class='imgCheck' src="@(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? @imageChecked : @imageNotChecked)" />&nbsp;does</i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b><span style='font-size:14.0pt;line-height:115%'></span></b> 
-			 <input type="checkbox" @(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? "checked" : "") /><img id="StudentDoesNotMeet" class='imgCheck' src="@(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? @imageChecked : @imageNotChecked)" /><i>&nbsp;does not</i><span>  need the
+			 <i> <input type="checkbox" @(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? "checked" : "") /><span id="StudentMeets" class='imgCheck' >@(formModel.StudentMeets.HasValue && formModel.StudentMeets.Value ? "[X]" : "not-checked")</span>&nbsp;does</i>  <b><span style='font-size:14.0pt;line-height:115%;'>&nbsp;</span></b><b><span style='font-size:14.0pt;line-height:115%'></span></b> 
+			 <input type="checkbox" @(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? "checked" : "") /><span id="StudentDoesNotMeet" class='imgCheck' >@(formModel.StudentDoesNotMeet.HasValue && formModel.StudentDoesNotMeet.Value ? "[X]" : "not-checked")</span><i>&nbsp;does not</i><span>  need the
             special education and related service(s) and/or placement(s) specified above in order to receive a free appropriate public education (FAPE).</span>
         </p>
         <p class=MsoNormal style='margin-top:40px;margin-right:0in;margin-bottom:0in;

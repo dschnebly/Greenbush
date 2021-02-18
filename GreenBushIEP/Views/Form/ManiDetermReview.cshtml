@@ -2,8 +2,7 @@
 	var formModel = ViewData["formMani"] != null ? ViewData["formMani"] as GreenBushIEP.Models.tblFormManifestationDeterminiation : new GreenBushIEP.Models.tblFormManifestationDeterminiation();
     string studentGrade = Model.studentGradeText;
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";    
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    
 	var currentDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
 	if (formModel.FormDate.HasValue)
 	{
@@ -110,9 +109,9 @@
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:58.5pt 81.0pt'>
 			&nbsp;&nbsp;&nbsp;&nbsp;
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? "checked" : "")/><img id="ConductCausedByDisability_Yes" class='imgCheck' src="@(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? @imageChecked : @imageNotChecked)"/>  YES    
+                <input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? "checked" : "")/><span id="ConductCausedByDisability_Yes" class='imgCheck' >@(formModel.ConductCausedByDisability_Yes.HasValue && formModel.ConductCausedByDisability_Yes.Value ? "[X]" : "not-checked")</span>  YES    
 				&nbsp;or<span style=''>     </span>
-				<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? "checked" : "")/><img id="ConductCausedByDisability_No" class='imgCheck' src="@(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
+				<input type="checkbox" name="ConductCausedByDisabilityCBS" @(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? "checked" : "")/><span id="ConductCausedByDisability_No" class='imgCheck' >@(formModel.ConductCausedByDisability_No.HasValue && formModel.ConductCausedByDisability_No.Value ? "[X]" : "not-checked")</span>  NO<o:p></o:p>
             </span>
         </p>
 
@@ -135,8 +134,8 @@
         <p class=MsoNormal style='margin-left:27.35pt;line-height:16.0pt;tab-stops:58.5pt 81.0pt'>
 			&nbsp;&nbsp;&nbsp;&nbsp;
             <span style='font-family:"Arial",sans-serif'>
-                <input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? "checked" : "")/><img id="ConductCausedByFailure_Yes" class='imgCheck' src="@(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? @imageChecked : @imageNotChecked)"/>  YES     &nbsp;or<span style=''>     </span>
-				<input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? "checked" : "")/><img id="ConductCausedByFailure_No" class='imgCheck' src="@(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>
+                <input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? "checked" : "")/><span id="ConductCausedByFailure_Yes" class='imgCheck' >@(formModel.ConductCausedByFailure_Yes.HasValue && formModel.ConductCausedByFailure_Yes.Value ? "[X]" : "not-checked")</span>  YES     &nbsp;or<span style=''>     </span>
+				<input type="checkbox" name="ConductCausedByFailureCBS" @(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? "checked" : "")/><span id="ConductCausedByFailure_No" class='imgCheck' >@(formModel.ConductCausedByFailure_No.HasValue && formModel.ConductCausedByFailure_No.Value ? "[X]" : "not-checked")</span>  NO<o:p></o:p>
             </span>
         </p>
 
@@ -164,7 +163,7 @@
         </p>
 
         <p class=MsoNormal style='margin-left:1in;line-height:16.0pt;mso-list:skip;tab-stops:.5in .75in'>          
-            <input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "checked" : "")/><img id="IsManifestationOfDisability" class='imgCheck' src="@(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? @imageChecked : @imageNotChecked)"/> 
+            <input type="checkbox" name="IsManifestationOfDisabilityCBS" @(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "checked" : "")/><span id="IsManifestationOfDisability" class='imgCheck' >@(formModel.IsManifestationOfDisability.HasValue && formModel.IsManifestationOfDisability.Value ? "[X]" : "not-checked")</span> 
             <span style='font-size:12.0pt;mso-bidi-font-size:10.0pt;font-family:"Arial",sans-serif'><span style=''>   </span></span><b>
                 <span style='font-family:"Arial",sans-serif'>IS</span>
             </b><span style='font-family:
@@ -180,7 +179,7 @@
         <p class=MsoNormal style='margin-left:1in;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
-            </span><input type="checkbox" name="StudentWillReturnCBS" @(formModel.StudentWillReturn.HasValue && formModel.StudentWillReturn.Value ? "checked" : "")/><img id="StudentWillReturn" class='imgCheck' src="@(formModel.StudentWillReturn.HasValue && formModel.StudentWillReturn.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" name="StudentWillReturnCBS" @(formModel.StudentWillReturn.HasValue && formModel.StudentWillReturn.Value ? "checked" : "")/><span id="StudentWillReturn" class='imgCheck' >@(formModel.StudentWillReturn.HasValue && formModel.StudentWillReturn.Value ? "[X]" : "not-checked")</span> <span style='font-family:"Arial",sans-serif'>
                 the student will be returned to the
                 placement specified in his/her IEP, unless: (a) the school and parent(s) agree to
                 a change of placement through the IEP process; or (b) the student is assigned
@@ -197,7 +196,7 @@
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
             </span>
-			<input type="checkbox" name="BehaviorPlan_NotManifest_DevelopCBS" @(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? "checked" : "")/><img id="BehaviorPlan_NotManifest_Develop" class='imgCheck' src="@(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? @imageChecked : @imageNotChecked)"/> 
+			<input type="checkbox" name="BehaviorPlan_NotManifest_DevelopCBS" @(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? "checked" : "")/><span id="BehaviorPlan_NotManifest_Develop" class='imgCheck' >@(formModel.BehaviorPlan_NotManifest_Develop.HasValue && formModel.BehaviorPlan_NotManifest_Develop.Value ? "[X]" : "not-checked")</span> 
 			<span style='font-family:"Arial",sans-serif'>
                 the team will conduct a functional
                 behavioral assessment (unless a functional behavioral assessment has already
@@ -211,7 +210,7 @@
         <p class=MsoNormal style='margin-left:1in;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
-            </span><input type="checkbox" name="ReviewBehaviorPlanCBS" @(formModel.ReviewBehaviorPlan.HasValue && formModel.ReviewBehaviorPlan.Value ? "checked" : "")/><img id="ReviewBehaviorPlan" class='imgCheck' src="@(formModel.ReviewBehaviorPlan.HasValue && formModel.ReviewBehaviorPlan.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" name="ReviewBehaviorPlanCBS" @(formModel.ReviewBehaviorPlan.HasValue && formModel.ReviewBehaviorPlan.Value ? "checked" : "")/><span id="ReviewBehaviorPlan" class='imgCheck' >@(formModel.ReviewBehaviorPlan.HasValue && formModel.ReviewBehaviorPlan.Value ? "[X]" : "not-checked")</span> <span style='font-family:"Arial",sans-serif'>
                 the team will review the existing behavior intervention plan and modify it, as necessary, to address the
                 behavior that resulted in the disciplinary removal.<o:p></o:p>
             </span>
@@ -232,7 +231,7 @@
         </p>
 
         <p class=MsoNormal style='line-height:19.0pt;mso-list:skip;tab-stops:.5in .75in'>
-            <input type="checkbox" name="IsNotManifestationOfDisabilityCBS" @(formModel.IsNotManifestationOfDisability.HasValue && formModel.IsNotManifestationOfDisability.Value ? "checked" : "")/><img id="IsNotManifestationOfDisability" class='imgCheck' src="@(formModel.IsNotManifestationOfDisability.HasValue && formModel.IsNotManifestationOfDisability.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+            <input type="checkbox" name="IsNotManifestationOfDisabilityCBS" @(formModel.IsNotManifestationOfDisability.HasValue && formModel.IsNotManifestationOfDisability.Value ? "checked" : "")/><span id="IsNotManifestationOfDisability" class='imgCheck' >@(formModel.IsNotManifestationOfDisability.HasValue && formModel.IsNotManifestationOfDisability.Value ? "[X]" : "not-checked")</span> <span style='font-family:"Arial",sans-serif'>
                 <span style=''>   </span><b>
                     IS
                     NOT
@@ -243,7 +242,7 @@
         <p class=MsoNormal style='margin-left:1in;line-height:16.0pt;'>
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
-            </span><input type="checkbox" name="DisciplinaryRemovalMayOccurCBS" @(formModel.DisciplinaryRemovalMayOccur.HasValue && formModel.DisciplinaryRemovalMayOccur.Value ? "checked" : "")/><img id="DisciplinaryRemovalMayOccur" class='imgCheck' src="@(formModel.DisciplinaryRemovalMayOccur.HasValue && formModel.DisciplinaryRemovalMayOccur.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" name="DisciplinaryRemovalMayOccurCBS" @(formModel.DisciplinaryRemovalMayOccur.HasValue && formModel.DisciplinaryRemovalMayOccur.Value ? "checked" : "")/><span id="DisciplinaryRemovalMayOccur" class='imgCheck' >@(formModel.DisciplinaryRemovalMayOccur.HasValue && formModel.DisciplinaryRemovalMayOccur.Value ? "[X]" : "not-checked")</span> <span style='font-family:"Arial",sans-serif'>
                 <span style=''>  </span>disciplinary
                 removal may occur, but the school district must continue to make a free
                 appropriate public education (FAPE) available to the student in a manner which
@@ -262,7 +261,7 @@
         <p class=MsoNormal style='margin-left:1.25in;;tab-stops:.5in 1.0in'>
             <span style='font-family:"Arial",sans-serif'>
                 &nbsp;
-            </span><input type="checkbox" name="BehaviorPlan_IsManifest_DevelopCBS" @(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? "checked" : "")/><img id="BehaviorPlan_IsManifest_Develop" class='imgCheck' src="@(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? @imageChecked : @imageNotChecked)"/> <span style='font-family:"Arial",sans-serif'>
+            </span><input type="checkbox" name="BehaviorPlan_IsManifest_DevelopCBS" @(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? "checked" : "")/><span id="BehaviorPlan_IsManifest_Develop" class='imgCheck' >@(formModel.BehaviorPlan_IsManifest_Develop.HasValue && formModel.BehaviorPlan_IsManifest_Develop.Value ? "[X]" : "not-checked")</span> <span style='font-family:"Arial",sans-serif'>
                 &nbsp;If appropriate, the school will conduct a
                 functional behavioral assessment and develop a behavior intervention plan
                 designed to address the behavior violation so that it does not recur.<o:p></o:p>
@@ -352,10 +351,10 @@
         <p class=MsoNormal style='line-height:23.0pt;tab-stops:81.0pt 117.0pt 2.0in 148.5pt'>
             <span style='font-family:"Arial",sans-serif'>
                 Attachments:<span style=''>      </span>
-				<input type="checkbox" name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")   /><img id="Attachments_Yes" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>YES<span style=''>     </span>or<span style=''>    </span>
-				<input type="checkbox"  name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "checked" : "")/><img id="Attachments_No" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? @imageChecked : @imageNotChecked)"/>  NO
-				@*<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  
-				<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><img id="Attachments" class='imgCheck' src="@(formModel.Attachments.HasValue && formModel.Attachments.Value ? @imageChecked : @imageNotChecked)"/>  NO<o:p></o:p>*@
+				<input type="checkbox" name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")   /><span id="Attachments_Yes" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>YES<span style=''>     </span>or<span style=''>    </span>
+				<input type="checkbox"  name="regFlag" @(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "checked" : "")/><span id="Attachments_No" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value == false ? "[X]" : "not-checked")</span>  NO
+				@*<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><span id="Attachments" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>  
+				<input type="checkbox" name="AttachmentsCBS" @(formModel.Attachments.HasValue && formModel.Attachments.Value ? "checked" : "")/><span id="Attachments" class='imgCheck' >@(formModel.Attachments.HasValue && formModel.Attachments.Value ? "[X]" : "not-checked")</span>  NO<o:p></o:p>*@
             </span>
         </p>
     </div>

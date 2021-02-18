@@ -74,10 +74,10 @@
         </p>
         
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><img id="OnBehalfOfStudent" class='imgCheck' src="@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on behalf of the above named student  
+            <input type="checkbox" @(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "checked" : "") /><span id="OnBehalfOfStudent" class='imgCheck' >@(formModel.OnBehalfOfStudent.HasValue && formModel.OnBehalfOfStudent.Value ? "[X]" : "not-checked")</span>&nbsp; on behalf of the above named student  
         </p>
         <p class=MsoNormal style='margin-bottom:0in;margin-bottom:.0001pt'>
-            <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><img id="OnMyOwnBehalf" class='imgCheck' src="@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? @imageChecked : @imageNotChecked)" />&nbsp; on my own behalf (adult student),
+            <input type="checkbox" @(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "checked" : "") /><span id="OnMyOwnBehalf" class='imgCheck' >@(formModel.OnMyOwnBehalf.HasValue && formModel.OnMyOwnBehalf.Value ? "[X]" : "not-checked")</span>&nbsp; on my own behalf (adult student),
         </p>       
         <p class=MsoNormal style='margin-top:10px;'>
             hereby revoke consent for <b><u>all special education and related services</u></b> for the above

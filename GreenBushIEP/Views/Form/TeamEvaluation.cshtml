@@ -131,8 +131,8 @@
 	</p>	
 	<p class=MsoNormal style='margin-left:1.5in'>
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>						
-			Yes <input type="checkbox" name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? "checked" : "")   /><img id="Regulation_flag_Yes" class='imgCheck' src="@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"  name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? "checked" : "")/><img id="Regulation_flag_No" class='imgCheck' src="@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;
+			Yes <input type="checkbox" name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? "checked" : "")   /><span id="Regulation_flag_Yes" class='imgCheck' >@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value ? "[X]" : "not-checked")</span>&nbsp;
+			No <input type="checkbox"  name="regFlag" @(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? "checked" : "")/><span id="Regulation_flag_No" class='imgCheck' >@(formModel.Regulation_flag.HasValue && formModel.Regulation_flag.Value == false ? "[X]" : "not-checked")</span>&nbsp;
 		</span>
 	</p>
 	<div class="section-break"></div>
@@ -156,8 +156,8 @@
 	</p>
 	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>			
-			Yes <input type="checkbox" @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? "checked" : "")   /><img id="SustainedResources_flag_Yes" class='imgCheck' src="@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"  @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? "checked" : "")/><img id="SustainedResources_flag_No" class='imgCheck' src="@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;			
+			Yes <input type="checkbox" @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? "checked" : "")   /><span id="SustainedResources_flag_Yes" class='imgCheck' >@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value ? "[X]" : "not-checked")</span>&nbsp;
+			No <input type="checkbox"  @(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? "checked" : "")/><span id="SustainedResources_flag_No" class='imgCheck' >@(formModel.SustainedResources_flag.HasValue && formModel.SustainedResources_flag.Value == false ? "[X]" : "not-checked")</span>&nbsp;			
 		</span>
 	</p>
 	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
@@ -275,8 +275,8 @@
 	</p>
 	<p class="voffset2" style='margin-left:1.0in;mso-add-space:auto;text-indent:.5in'>
 		<span style='font-size:12.0pt;line-height:115%;font-family:"Times New Roman",serif'>
-			Yes <input type="checkbox" @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? "checked" : "")   /><img id="ConvergentData_flag_Yes" class='imgCheck' src="@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;
-			No <input type="checkbox"  @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? "checked" : "")/><img id="ConvergentData_flag_No" class='imgCheck' src="@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? @imageChecked : @imageNotChecked)"/>&nbsp;
+			Yes <input type="checkbox" @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? "checked" : "")   /><span id="ConvergentData_flag_Yes" class='imgCheck' >@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value ? "[X]" : "not-checked")</span>&nbsp;
+			No <input type="checkbox"  @(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? "checked" : "")/><span id="ConvergentData_flag_No" class='imgCheck' >@(formModel.ConvergentData_flag.HasValue && formModel.ConvergentData_flag.Value == false ? "[X]" : "not-checked")</span>&nbsp;
 		</span>
 	</p>
 	<p style="margin-bottom:8px">

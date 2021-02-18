@@ -248,7 +248,7 @@
                         I, <textarea style="width:200px;height:35px" maxlength="200">@(formModel.DeliveriedByWho)</textarea><span id="DeliveriedByWho" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DeliveriedByWho)</span>,
                     </p>
                     <p class=MsoNormal style='text-indent:40.5pt;'>
-                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;hand delivered,
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><span id="DelieveredByHand" class='imgCheck' >@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "[X]" : "not-checked")</span>&nbsp;hand delivered,
                         <span>
                             <span>
                                 <span style='font-size:14.0pt'><span style='mso-spacerun:yes'>    </span></span>
@@ -256,12 +256,12 @@
                         </span>
                         <span>
                             <span class=MsoNormal>
-                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><span id="DelieveredByMail" class='imgCheck' >@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "[X]" : "not-checked")</span>&nbsp;mailed,<span style='mso-spacerun:yes'></span><span style='mso-spacerun:yes'>    </span>
                             </span>
                         </span>
                         <span>
                             <span class=MsoNormal>
-                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><span id="DelieveredByOther" class='imgCheck' >@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "[X]" : "not-checked")</span>&nbsp;other <textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
                             </span>
                         </span>
                     </p>

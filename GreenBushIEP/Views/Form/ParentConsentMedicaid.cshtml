@@ -1,22 +1,20 @@
 ﻿@{
-	var formModel = ViewData["formConsentMedicaid"] != null ? ViewData["formConsentMedicaid"] as GreenBushIEP.Models.tblFormParentConsent : new GreenBushIEP.Models.tblFormParentConsent();
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
-	string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
-	string building = Model.building;
+    var formModel = ViewData["formConsentMedicaid"] != null ? ViewData["formConsentMedicaid"] as GreenBushIEP.Models.tblFormParentConsent : new GreenBushIEP.Models.tblFormParentConsent();
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
+	
+    string kidsId = Model.studentInfo != null && Model.studentInfo.KIDSID != null ? Model.studentInfo.KIDSID.ToString() : "";
+    if (formModel.FormParentConsentId == 0)
+    {
+        formModel.School = Model.districtName;
+		formModel.BeginDate = Model.studentInfo.ReEvalConsentSigned;
+    }
 
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-
-	if (formModel.FormParentConsentId == 0)
-	{
-		formModel.School = building;
-	}
-
-	var beginDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.BeginDate.HasValue)
-	{
-		beginDate = String.Format("{0:MM/dd/yyyy}", formModel.BeginDate.Value);
-	}
+    var beginDate = "";
+    if (formModel.BeginDate.HasValue)
+    {
+        beginDate = String.Format("{0:MM/dd/yyyy}", formModel.BeginDate.Value);
+    }
 
 }
 
@@ -35,6 +33,7 @@
 	<p style='text-align:left;margin-top:15px'>
 		<span style='font-size:12.0pt;font-family:"Calibri",sans-serif;font-weight:bold'><u>Consent to Release Information</u></span>
 	</p>
+	<p><label>KIDSID:</label> @kidsId</p>
 
 	<p style='font-size:11.0pt; text-align:left; font-family:"Calibri",sans-serif'>
 		I consent for <textarea cols="50" rows="1" style="height:30px"  class="form-control" maxlength="200">@(formModel.School)</textarea><span id="School" style="display:none;font-size:11.0pt;text-decoration:underline" class="input-value">@(formModel.School)</span> 
@@ -61,11 +60,13 @@
 			<li>I understand that my child’s required therapy as described in my child’s IEP may be delivered either in-person or via a teletherapy platform.</li>
 		</ul>
 	</p>
-	<table border=0 cellspacing=0 cellpadding=0 width=0 style='margin-left:15px;margin-top:10px;border-collapse:collapse;'>
+	<table border=0 cellspacing=0 cellpadding=0 width=0 style='padding-top:10px;margin-left:15px;margin-top:10px;border-collapse:collapse;'>
 		<tr>
 			<td>
 				<p>
-					<input type="checkbox" @(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "checked" : "")/><img id="GiveConsent" class='imgCheck' src="@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? @imageChecked : @imageNotChecked)"/>
+					<input type="checkbox" @(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "checked" : "")/>
+					<span id="GiveConsent" class="imgCheck" >@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "[X]" : "not-checked")</span>
+					@*<span id="GiveConsent" class='imgCheck' >@(formModel.GiveConsent.HasValue && formModel.GiveConsent.Value ? "[X]" : "not-checked")</span>*@
 					&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px;font-size:11.0pt;'>I give consent for the school to release Education Records or information and to access Public Benefits as described above in order to submit claims to the Kansas Department of Health and Environment (KDHE)</span>
 				</p>
 			</td>
@@ -73,7 +74,9 @@
 		<tr>
 			<td>
 				<p style="margin-top:8px">
-					<input type="checkbox" @(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "checked" : "")/><img id="DoNotGiveConsent" class='imgCheck' src="@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? @imageChecked : @imageNotChecked)"/>
+					<input type="checkbox" @(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "checked" : "")/>
+					<span id="DoNotGiveConsent" class="imgCheck" >@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "[X]" : "not-checked")</span>
+					@*<span id="DoNotGiveConsent" class='imgCheck' >@(formModel.DoNotGiveConsent.HasValue && formModel.DoNotGiveConsent.Value ? "[X]" : "not-checked")</span>*@
 					&nbsp;&nbsp;<span style='font-family:"Calibri",sans-serif;margin-left:8px;font-size:11.0pt;'>I do not give consent</span><span style='font-family:"Calibri",sans-serif'><o:p></o:p></span>
 				</p>
 			</td>

@@ -171,9 +171,11 @@
         $('input:checkbox').change(function () {
 			if ($(this).is(":checked")) {				
                 $(this).addClass("menuitemshow");
-				$(this).next('img.imgCheck').attr("src", '@(@imageChecked)');               
+				$(this).next('img.imgCheck').attr("src", '@(@imageChecked)');   
+				$(this).next('span.imgCheck').text("[X]");               
             } else {
-				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');				
+				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');	
+				$(this).next('span.imgCheck').text("not-checked");               
 			}
         });
 

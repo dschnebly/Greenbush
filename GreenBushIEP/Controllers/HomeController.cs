@@ -4481,6 +4481,7 @@ namespace GreenbushIep.Controllers
                 {
                     result = System.Text.RegularExpressions.Regex.Replace(HTMLContent, @"\r\n?|\n", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"new-line-val", "<br/>");
+                    result = System.Text.RegularExpressions.Regex.Replace(result, @"not-checked", "[ &nbsp;]");
                 }
 
                 string cssTextResult = System.Text.RegularExpressions.Regex.Replace(cssText, @"\r\n?|\n", "");
@@ -4489,7 +4490,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"new-line-val", "<br/>");                    
+                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"new-line-val", "<br/>");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"not-checked", "[ &nbsp;&nbsp; ]");
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -4497,7 +4499,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent2))
                 {
                     string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"new-line-val", "<br/>");                    
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"new-line-val", "<br/>");
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"not-checked", "[ &nbsp;&nbsp; ]");
                     secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -4505,7 +4508,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent3))
                 {
                     string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-                    thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"new-line-val", "<br/>");                    
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"new-line-val", "<br/>");
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"not-checked", "[ &nbsp;&nbsp; ]");
                     thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -5143,6 +5147,10 @@ namespace GreenbushIep.Controllers
 
             List<HtmlNode> spans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.Id != "").ToList();
             List<HtmlNode> checkboxes = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("img") && o.HasClass("imgCheck")).ToList();
+            List<HtmlNode> checkboxesSpans = htmlDocument.DocumentNode.Descendants().Where(o => o.Name.Equals("span") && o.HasClass("imgCheck")).ToList();
+            if (checkboxesSpans.Count > 0)
+                checkboxes.AddRange(checkboxesSpans);
+
             string formNameStr = formName.ToUpper();
 
 
@@ -5501,6 +5509,7 @@ namespace GreenbushIep.Controllers
                 formMani.DisciplinaryRemovalMayOccur = GetCheckboxSingleInputValue("DisciplinaryRemovalMayOccur", checkboxes);
                 formMani.BehaviorPlan_NotManifest_Develop = GetCheckboxSingleInputValue("BehaviorPlan_NotManifest_Develop", checkboxes);
                 formMani.Attachments = GetCheckboxInputValue("Attachments_Yes", "Attachments_No", checkboxes);
+                formMani.ConductCausedByDisability_Yes = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
                 formMani.ConductCausedByDisability_No = GetCheckboxSingleInputValue("ConductCausedByDisability_No", checkboxes);
                 formMani.ConductCausedByFailure_Yes = GetCheckboxSingleInputValue("ConductCausedByFailure_Yes", checkboxes);
                 formMani.ConductCausedByFailure_No = GetCheckboxSingleInputValue("ConductCausedByFailure_No", checkboxes);
@@ -6425,13 +6434,27 @@ namespace GreenbushIep.Controllers
             HtmlNode input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
             if (input != null)
             {
-                valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+                if (input.Name == "span")
+                {
+                    valYes = input.InnerHtml != null && input.InnerHtml.Contains("[X]") ? "Y" : "";
+                }
+                else
+                {
+                    valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+                }
             }
 
             HtmlNode input2 = checkboxes.Where(o => o.Id == inputName2).FirstOrDefault();
             if (input2 != null)
             {
-                valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";
+                if (input2.Name == "span")
+                {
+                    valNo = input2.InnerHtml != null && input2.InnerHtml.Contains("[X]") ? "Y" : "";
+                }
+                else
+                {
+                    valNo = input2.OuterHtml != null && input2.OuterHtml.Contains("check_yes") ? "Y" : "";
+                }
             }
 
             if (valYes == "Y")
@@ -6456,7 +6479,15 @@ namespace GreenbushIep.Controllers
             HtmlNode input = checkboxes.Where(o => o.Id == inputName).FirstOrDefault();
             if (input != null)
             {
-                valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+
+                if (input.Name == "span")
+                {
+                    valYes = input.InnerHtml != null && input.InnerHtml.Contains("[X]") ? "Y" : "";
+                }
+                else
+                {
+                    valYes = input.OuterHtml != null && input.OuterHtml.Contains("check_yes") ? "Y" : "";
+                }
             }
 
             if (valYes == "Y")

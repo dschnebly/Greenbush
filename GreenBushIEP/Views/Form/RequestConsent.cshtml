@@ -5,8 +5,8 @@
     string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
     string districtContactName = Model.districtContact != null ? Model.districtContact.ContactName : "";
     string districtContactPhone = Model.districtContact != null ? Model.districtContact.Phone : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    
+    
     int numContacts = 0;
 
     List<GreenBushIEP.Models.tblStudentRelationship> contacts = (List<GreenBushIEP.Models.tblStudentRelationship>)Model.contacts;
@@ -121,10 +121,9 @@
             <tr>
                 <td valign=top style='width:505.45pt;border: none windowtext 1.0pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
-                        <b>
-                            <span style='font-size: 14px; font-family: "Courier New"; position: relative; top: 2px;'>
-                                <input type="checkbox" @(formModel.InitialEval.HasValue && formModel.InitialEval.Value ? "checked" : "") /><img id="InitialEval" class='imgCheck' src="@(formModel.InitialEval.HasValue && formModel.InitialEval.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
-                            </span>1
+                        <b>                           
+                                <input type="checkbox" @(formModel.InitialEval.HasValue && formModel.InitialEval.Value ? "checked" : "") /><span id="InitialEval" class='imgCheck' >@(formModel.InitialEval.HasValue && formModel.InitialEval.Value ? "[X]" : "not-checked")</span>&nbsp;
+                            <span>1</span>
                         </b>. <b>
                             The [ LEA ] proposes to conduct an initial evaluation.
                             (Parental Consent Required)
@@ -156,7 +155,7 @@
                     </div>
                     <p class=MsoNormal style='text-indent:.25in'>
                         <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.InitialEval_NoAdditional.HasValue && formModel.InitialEval_NoAdditional.Value ? "checked" : "") /><img id="InitialEval_NoAdditional" class='imgCheck' src="@(formModel.InitialEval_NoAdditional.HasValue && formModel.InitialEval_NoAdditional.Value ? @imageChecked : @imageNotChecked)" /></span>
+                            <input type="checkbox" @(formModel.InitialEval_NoAdditional.HasValue && formModel.InitialEval_NoAdditional.Value ? "checked" : "") /><span id="InitialEval_NoAdditional" class='imgCheck' >@(formModel.InitialEval_NoAdditional.HasValue && formModel.InitialEval_NoAdditional.Value ? "[X]" : "not-checked")</span>
                             <span style='font-family:"Courier New"'></span>&nbsp;No additional information is needed. 
                         </b>
                     </p>
@@ -176,9 +175,9 @@
                 <td valign=top style='width:505.45pt;border:none windowtext 1.0pt;  border-top:none;padding:0in 5.4pt 0in 5.4pt'>
                     <p class=MsoNormal>
                         <b>
-                            <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                <input type="checkbox" @(formModel.Reeval.HasValue && formModel.Reeval.Value ? "checked" : "") /><img id="Reeval" class='imgCheck' src="@(formModel.Reeval.HasValue && formModel.Reeval.Value ? @imageChecked : @imageNotChecked)" />&nbsp;
-                            </span>2
+                            
+                                <input type="checkbox" @(formModel.Reeval.HasValue && formModel.Reeval.Value ? "checked" : "") /><span id="Reeval" class='imgCheck' >@(formModel.Reeval.HasValue && formModel.Reeval.Value ? "[X]" : "not-checked")</span>&nbsp;
+                            <span>2</span>
                         </b>. <b>
                             The [ LEA ] proposes to conduct a reevaluation. (Parental
                             consent required)
@@ -215,7 +214,7 @@
                     </div>
                     <p class=MsoNormal style='margin-top:5px;margin-left: .25in;'>
                         <b>
-                            <span style='font-size:11.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.Reeval_NoAdditional.HasValue && formModel.Reeval_NoAdditional.Value ? "checked" : "") /><img id="Reeval_NoAdditional" class='imgCheck' src="@(formModel.Reeval_NoAdditional.HasValue && formModel.Reeval_NoAdditional.Value ? @imageChecked : @imageNotChecked)" /></span>&nbsp;&nbsp;No
+                            <input type="checkbox" @(formModel.Reeval_NoAdditional.HasValue && formModel.Reeval_NoAdditional.Value ? "checked" : "") /><span id="Reeval_NoAdditional" class='imgCheck' >@(formModel.Reeval_NoAdditional.HasValue && formModel.Reeval_NoAdditional.Value ? "[X]" : "not-checked")</span>&nbsp;&nbsp;No
                             additional information is needed. 
                         </b>
                     </p>
@@ -240,7 +239,7 @@
                 <td style='width:505.45pt;border:none windowtext 1.0pt;border-top:  none;padding:0in 5.4pt 0in 5.4pt;height:23.0pt'>
                     <p class=MsoNormal>
                         <b>
-                            <span style='font-size:14.0pt'><input type="checkbox" @(formModel.Refuse_InitialEval.HasValue && formModel.Refuse_InitialEval.Value ? "checked" : "") /><img id="Refuse_InitialEval" class='imgCheck' src="@(formModel.Refuse_InitialEval.HasValue && formModel.Refuse_InitialEval.Value ? @imageChecked : @imageNotChecked)" />&nbsp; </span>3.  The
+                            <span style='font-size:14.0pt'><input type="checkbox" @(formModel.Refuse_InitialEval.HasValue && formModel.Refuse_InitialEval.Value ? "checked" : "") /><span id="Refuse_InitialEval" class='imgCheck' >@(formModel.Refuse_InitialEval.HasValue && formModel.Refuse_InitialEval.Value ? "[X]" : "not-checked")</span>&nbsp; </span>3.  The
                             [LEA] refuses to conduct an initial evaluation. (Parental Consent Not
                             Required)
                         </b>
@@ -251,7 +250,7 @@
                 <td style='width:505.45pt;border:none windowtext 1.0pt;border-top:  none;padding:0in 5.4pt 0in 5.4pt;height:22pt'>
                     <p class=MsoNormal>
                         <b>
-                            <span style='font-size:14pt'><input type="checkbox" @(formModel.Refuse_Reeval.HasValue && formModel.Refuse_Reeval.Value ? "checked" : "") /><img id="Refuse_Reeval" class='imgCheck' src="@(formModel.Refuse_Reeval.HasValue && formModel.Refuse_Reeval.Value ? @imageChecked : @imageNotChecked)" />&nbsp; </span>4.  The
+                            <span style='font-size:14pt'><input type="checkbox" @(formModel.Refuse_Reeval.HasValue && formModel.Refuse_Reeval.Value ? "checked" : "") /><span id="Refuse_Reeval" class='imgCheck' >@(formModel.Refuse_Reeval.HasValue && formModel.Refuse_Reeval.Value ? "[X]" : "not-checked")</span>&nbsp; </span>4.  The
                             [LEA] refuses to conduct a reevaluation. (Parental Consent Not Required)
                         </b>
                     </p>
@@ -281,10 +280,12 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_HealthMotor.HasValue && formModel.NewData_HealthMotor.Value ? "checked" : "") /><img id="NewData_HealthMotor" class='imgCheck' src="@(formModel.NewData_HealthMotor.HasValue && formModel.NewData_HealthMotor.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></p>
+                        <p class=MsoNormal>
+                            <input type="checkbox" @(formModel.NewData_HealthMotor.HasValue && formModel.NewData_HealthMotor.Value ? "checked" : "") />
+                            <span id="NewData_HealthMotor" class='imgCheck' >@(formModel.NewData_HealthMotor.HasValue && formModel.NewData_HealthMotor.Value ? "[X]" : "not-checked")</span></p>
                     </td>
                     <td width=60 valign=top style='width:45.0pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? "checked" : "") /><img id="ExistingData_HealthMotor" class='imgCheck' src="@(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? "checked" : "") /><span id="ExistingData_HealthMotor" class='imgCheck' >@(formModel.ExistingData_HealthMotor.HasValue && formModel.ExistingData_HealthMotor.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453.5pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Health/Motor Ability -</b></p>
@@ -298,10 +299,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_Vision.HasValue && formModel.NewData_Vision.Value ? "checked" : "") /><img id="NewData_Vision" class='imgCheck' src="@(formModel.NewData_Vision.HasValue && formModel.NewData_Vision.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_Vision.HasValue && formModel.NewData_Vision.Value ? "checked" : "") /><span id="NewData_Vision" class='imgCheck' >@(formModel.NewData_Vision.HasValue && formModel.NewData_Vision.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_Vision.HasValue && formModel.ExistingData_Vision.Value ? "checked" : "") /><img id="ExistingData_Vision" class='imgCheck' src="@(formModel.ExistingData_Vision.HasValue && formModel.ExistingData_Vision.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_Vision.HasValue && formModel.ExistingData_Vision.Value ? "checked" : "") /><span id="ExistingData_Vision" class='imgCheck' >@(formModel.ExistingData_Vision.HasValue && formModel.ExistingData_Vision.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Vision -</b></p>
@@ -314,10 +315,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_Hearing.HasValue && formModel.NewData_Hearing.Value ? "checked" : "") /><img id="NewData_Hearing" class='imgCheck' src="@(formModel.NewData_Hearing.HasValue && formModel.NewData_Hearing.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_Hearing.HasValue && formModel.NewData_Hearing.Value ? "checked" : "") /><span id="NewData_Hearing" class='imgCheck' >@(formModel.NewData_Hearing.HasValue && formModel.NewData_Hearing.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_Hearing.HasValue && formModel.ExistingData_Hearing.Value ? "checked" : "") /><img id="ExistingData_Hearing" class='imgCheck' src="@(formModel.ExistingData_Hearing.HasValue && formModel.ExistingData_Hearing.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_Hearing.HasValue && formModel.ExistingData_Hearing.Value ? "checked" : "") /><span id="ExistingData_Hearing" class='imgCheck' >@(formModel.ExistingData_Hearing.HasValue && formModel.ExistingData_Hearing.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Hearing -</b></p>
@@ -330,10 +331,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_SEBStatus.HasValue && formModel.NewData_SEBStatus.Value ? "checked" : "") /><img id="NewData_SEBStatus" class='imgCheck' src="@(formModel.NewData_SEBStatus.HasValue && formModel.NewData_SEBStatus.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_SEBStatus.HasValue && formModel.NewData_SEBStatus.Value ? "checked" : "") /><span id="NewData_SEBStatus" class='imgCheck' >@(formModel.NewData_SEBStatus.HasValue && formModel.NewData_SEBStatus.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_SEBStatus.HasValue && formModel.ExistingData_SEBStatus.Value ? "checked" : "") /><img id="ExistingData_SEBStatus" class='imgCheck' src="@(formModel.ExistingData_SEBStatus.HasValue && formModel.ExistingData_SEBStatus.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_SEBStatus.HasValue && formModel.ExistingData_SEBStatus.Value ? "checked" : "") /><span id="ExistingData_SEBStatus" class='imgCheck' >@(formModel.ExistingData_SEBStatus.HasValue && formModel.ExistingData_SEBStatus.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Social/Emotional Status/Behavioral Status -</b></p>
@@ -348,10 +349,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_GenIntelligence.HasValue && formModel.NewData_GenIntelligence.Value ? "checked" : "") /><img id="NewData_GenIntelligence" class='imgCheck' src="@(formModel.NewData_GenIntelligence.HasValue && formModel.NewData_GenIntelligence.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_GenIntelligence.HasValue && formModel.NewData_GenIntelligence.Value ? "checked" : "") /><span id="NewData_GenIntelligence" class='imgCheck' >@(formModel.NewData_GenIntelligence.HasValue && formModel.NewData_GenIntelligence.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none; border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt; padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_GenIntelligence.HasValue && formModel.ExistingData_GenIntelligence.Value ? "checked" : "") /><img id="ExistingData_GenIntelligence" class='imgCheck' src="@(formModel.ExistingData_GenIntelligence.HasValue && formModel.ExistingData_GenIntelligence.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_GenIntelligence.HasValue && formModel.ExistingData_GenIntelligence.Value ? "checked" : "") /><span id="ExistingData_GenIntelligence" class='imgCheck' >@(formModel.ExistingData_GenIntelligence.HasValue && formModel.ExistingData_GenIntelligence.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>General Intelligence –</b></p>
@@ -365,10 +366,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_Academic.HasValue && formModel.NewData_Academic.Value ? "checked" : "") /><img id="NewData_Academic" class='imgCheck' src="@(formModel.NewData_Academic.HasValue && formModel.NewData_Academic.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_Academic.HasValue && formModel.NewData_Academic.Value ? "checked" : "") /><span id="NewData_Academic" class='imgCheck' >@(formModel.NewData_Academic.HasValue && formModel.NewData_Academic.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_Academic.HasValue && formModel.ExistingData_Academic.Value ? "checked" : "") /><img id="ExistingData_Academic" class='imgCheck' src="@(formModel.ExistingData_Academic.HasValue && formModel.ExistingData_Academic.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_Academic.HasValue && formModel.ExistingData_Academic.Value ? "checked" : "") /><span id="ExistingData_Academic" class='imgCheck' >@(formModel.ExistingData_Academic.HasValue && formModel.ExistingData_Academic.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Academic Performance –</b></p>
@@ -383,10 +384,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_Communicative.HasValue && formModel.NewData_Communicative.Value ? "checked" : "") /><img id="NewData_Communicative" class='imgCheck' src="@(formModel.NewData_Communicative.HasValue && formModel.NewData_Communicative.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_Communicative.HasValue && formModel.NewData_Communicative.Value ? "checked" : "") /><span id="NewData_Communicative" class='imgCheck' >@(formModel.NewData_Communicative.HasValue && formModel.NewData_Communicative.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_Communicative.HasValue && formModel.ExistingData_Communicative.Value ? "checked" : "") /><img id="ExistingData_Communicative" class='imgCheck' src="@(formModel.ExistingData_Communicative.HasValue && formModel.ExistingData_Communicative.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_Communicative.HasValue && formModel.ExistingData_Communicative.Value ? "checked" : "") /><span id="ExistingData_Communicative" class='imgCheck' >@(formModel.ExistingData_Communicative.HasValue && formModel.ExistingData_Communicative.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Communicative Status –</b></p>
@@ -401,10 +402,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_Transistion.HasValue && formModel.NewData_Transistion.Value ? "checked" : "") /><img id="NewData_Transistion" class='imgCheck' src="@(formModel.NewData_Transistion.HasValue && formModel.NewData_Transistion.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_Transistion.HasValue && formModel.NewData_Transistion.Value ? "checked" : "") /><span id="NewData_Transistion" class='imgCheck' >@(formModel.NewData_Transistion.HasValue && formModel.NewData_Transistion.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_Transistion.HasValue && formModel.ExistingData_Transistion.Value ? "checked" : "") /><img id="ExistingData_Transistion" class='imgCheck' src="@(formModel.ExistingData_Transistion.HasValue && formModel.ExistingData_Transistion.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_Transistion.HasValue && formModel.ExistingData_Transistion.Value ? "checked" : "") /><span id="ExistingData_Transistion" class='imgCheck' >@(formModel.ExistingData_Transistion.HasValue && formModel.ExistingData_Transistion.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in'>
                         <p class=MsoNormal><b>Transition Skills –</b></p>
@@ -417,10 +418,10 @@
                 </tr>
                 <tr style='page-break-inside:avoid;height:33.75pt'>
                     <td width=39 valign=top style='width:29.0pt;border:none windowtext 1.0pt;  border-top:none;padding:0in .05in 0in .05in;height:33pt'>
-                        <p class=MsoNormal><b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.NewData_OtherData.HasValue && formModel.NewData_OtherData.Value ? "checked" : "") /><img id="NewData_OtherData" class='imgCheck' src="@(formModel.NewData_OtherData.HasValue && formModel.NewData_OtherData.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.NewData_OtherData.HasValue && formModel.NewData_OtherData.Value ? "checked" : "") /><span id="NewData_OtherData" class='imgCheck' >@(formModel.NewData_OtherData.HasValue && formModel.NewData_OtherData.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=60 valign=top style='width:45pt;border-top:none;border-left:none;  border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in;height:34pt'>
-                        <p class=MsoNormal><b><span style='font-size:14pt; font-family:"Courier New"'><input type="checkbox" @(formModel.ExistingData_OtherData.HasValue && formModel.ExistingData_OtherData.Value ? "checked" : "") /><img id="ExistingData_OtherData" class='imgCheck' src="@(formModel.ExistingData_OtherData.HasValue && formModel.ExistingData_OtherData.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b></p>
+                        <p class=MsoNormal><b><input type="checkbox" @(formModel.ExistingData_OtherData.HasValue && formModel.ExistingData_OtherData.Value ? "checked" : "") /><span id="ExistingData_OtherData" class='imgCheck' >@(formModel.ExistingData_OtherData.HasValue && formModel.ExistingData_OtherData.Value ? "[X]" : "not-checked")</span></b></p>
                     </td>
                     <td width=605 valign=top style='width:453pt;border-top:none;border-left:  none;border-bottom:none windowtext 1.0pt;border-right:none windowtext 1.0pt;  padding:0in .05in 0in .05in;height:33pt'>
                         <p class=MsoNormal><b>Other Specify:</b></p>
@@ -493,16 +494,16 @@
                     </p>
 
                     <p style='text-indent:20.5pt;border:none;padding:0in;'>
-                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">hand delivered,</span>
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><span id="DelieveredByHand" class='imgCheck' >@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">hand delivered,</span>
 
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">mailed,</span>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><span id="DelieveredByMail" class='imgCheck' >@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">mailed,</span>
                             </span>
                         </span>
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><span id="DelieveredByOther" class='imgCheck' >@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
                             </span>
                         </span>
                     </p>
@@ -558,7 +559,7 @@
                         <p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
                             <b>
                                 <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                    <span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><img id="GivenConsent" class='imgCheck' src="@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? @imageChecked : @imageNotChecked)" />
+                                    <span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><span id="GivenConsent" class='imgCheck' >@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "[X]" : "not-checked")</span>
                                 </span>
                             </b><span class="MsoNormal">
                                 &nbsp;
@@ -579,7 +580,7 @@
                         <p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
                             <b>
                                 <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                    <span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><img id="RefuseConsent" class='imgCheck' src="@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? @imageChecked : @imageNotChecked)" />
+                                    <span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><span id="RefuseConsent" class='imgCheck' >@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "[X]" : "not-checked")</span>
                                 </span>
                             </b><span class="MsoNormal">
                                 &nbsp;
