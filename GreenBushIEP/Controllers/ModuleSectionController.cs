@@ -138,7 +138,7 @@ namespace GreenBushIEP.Controllers
                         CommunicationIEP.ProgressTowardGenEd = collection["ModuleCommunicationProgressTowardGenEd"] == "on" ? true : false;
                         CommunicationIEP.AreaOfNeed = (!string.IsNullOrEmpty(collection["ModuleCommunicationAreaOfNeed"])) ? true : false;
                         CommunicationIEP.Deaf = collection["ModuleCommunicationDeaf"] == "on" ? true : false;
-                        CommunicationIEP.LimitedEnglish = collection["ModuleCommunicationDeaf"] == "on" ? true : false;
+                        CommunicationIEP.LimitedEnglish = collection["ModuleCommunicationLimitedEnglish"] == "on" ? true : false;
                         CommunicationIEP.PLAAFP_Strengths = collection["PLAAFP_Strengths"].ToString();
                         CommunicationIEP.PLAAFP_Concerns = collection["PLAAFP_Concerns"].ToString();
                         CommunicationIEP.AreaOfNeedDescription = collection["ModuleCommunicationAreaOfNeedDescription"].ToString();

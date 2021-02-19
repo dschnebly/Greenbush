@@ -23,8 +23,7 @@
     string buildingCityStateZip = Model.buildingCityStZip;
     string buildingNeigborhood = Model.buildingNeigborhood;
     string primeD = Model.studentInfo.Primary_DisabilityCode;
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+   
     
 	string grade = Model.studentGradeText;
     
@@ -255,19 +254,19 @@
 	</p>
 	<p>
 		<b>
-			<input type="checkbox" name="AccessToInternetBasedActivities_YesCBS" @(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_Yes" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span>  </span>
-			<input type="checkbox" name="AccessToInternetBasedActivities_NoCBS" @(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_No" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N</span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_YesCBS" @(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? "checked" : "")/><span id="AccessToInternetBasedActivities_Yes" class='imgCheck' >@(formModel.AccessToInternetBasedActivities_Yes.HasValue && formModel.AccessToInternetBasedActivities_Yes.Value ? "[X]" : "not-checked")</span><span>&nbsp;Y<span>  </span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_NoCBS" @(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? "checked" : "")/><span id="AccessToInternetBasedActivities_No" class='imgCheck' >@(formModel.AccessToInternetBasedActivities_No.HasValue && formModel.AccessToInternetBasedActivities_No.Value ? "[X]" : "not-checked")</span>&nbsp;N</span>
 		</b>
 		<span>
 			<span>   </span>Internet-based online virtual activities:<span style='mso-spacerun:yes'>  </span><span style='mso-tab-count:1'></span>
-			<input type="checkbox" name="AccessToInternetBasedActivities_HomeCBS" @(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_Home" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Home<span style='mso-tab-count:1'> </span>
-			<input type="checkbox" name="AccessToInternetBasedActivities_HotSpotCBS" @(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? "checked" : "")/><img id="AccessToInternetBasedActivities_HotSpot" class='imgCheck' src="@(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Community location (Hot spot)
+			<input type="checkbox" name="AccessToInternetBasedActivities_HomeCBS" @(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? "checked" : "")/><span id="AccessToInternetBasedActivities_Home" class='imgCheck' >@(formModel.AccessToInternetBasedActivities_Home.HasValue && formModel.AccessToInternetBasedActivities_Home.Value ? "[X]" : "not-checked")</span>&nbsp;Home<span style='mso-tab-count:1'> </span>
+			<input type="checkbox" name="AccessToInternetBasedActivities_HotSpotCBS" @(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? "checked" : "")/><span id="AccessToInternetBasedActivities_HotSpot" class='imgCheck' >@(formModel.AccessToInternetBasedActivities_HotSpot.HasValue && formModel.AccessToInternetBasedActivities_HotSpot.Value ? "[X]" : "not-checked")</span>&nbsp;Community location (Hot spot)
 		</span>
 	</p>
 	<p>
 		<b>
-			<input type="checkbox" name="AccessToServiceDelivery_YesCBS" @(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? "checked" : "")/><img id="AccessToServiceDelivery_Yes" class='imgCheck' src="@(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
-			<input type="checkbox" name="AccessToServiceDelivery_NoCBS" @(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? "checked" : "")/><img id="AccessToServiceDelivery_No" class='imgCheck' src="@(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N<span style='mso-spacerun:yes'></span>
+			<input type="checkbox" name="AccessToServiceDelivery_YesCBS" @(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? "checked" : "")/><span id="AccessToServiceDelivery_Yes" class='imgCheck' >@(formModel.AccessToServiceDelivery_Yes.HasValue && formModel.AccessToServiceDelivery_Yes.Value ? "[X]" : "not-checked")</span><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToServiceDelivery_NoCBS" @(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? "checked" : "")/><span id="AccessToServiceDelivery_No" class='imgCheck' >@(formModel.AccessToServiceDelivery_No.HasValue && formModel.AccessToServiceDelivery_No.Value ? "[X]" : "not-checked")</span>&nbsp;N<span style='mso-spacerun:yes'></span>
 			</span>
 		</b>
 		<span>
@@ -276,8 +275,8 @@
 	</p>
 	<p>
 		<b>
-			<input type="checkbox" name="AccessToEmailCommunication_YesCBS" @(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? "checked" : "")/><img id="AccessToEmailCommunication_Yes" class='imgCheck' src="@(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
-			<input type="checkbox" name="AccessToEmailCommunication_NoCBS" @(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? "checked" : "")/><img id="AccessToEmailCommunication_No" class='imgCheck' src="@(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N</span>
+			<input type="checkbox" name="AccessToEmailCommunication_YesCBS" @(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? "checked" : "")/><span id="AccessToEmailCommunication_Yes" class='imgCheck' >@(formModel.AccessToEmailCommunication_Yes.HasValue && formModel.AccessToEmailCommunication_Yes.Value ? "[X]" : "not-checked")</span><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToEmailCommunication_NoCBS" @(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? "checked" : "")/><span id="AccessToEmailCommunication_No" class='imgCheck' >@(formModel.AccessToEmailCommunication_No.HasValue && formModel.AccessToEmailCommunication_No.Value ? "[X]" : "not-checked")</span>&nbsp;N</span>
 		</b>
 		<span>
 			<span style='mso-spacerun:yes'>   </span><span style='mso-tab-count:1'></span>Email communication, directions, instruction,	supports
@@ -285,8 +284,8 @@
 	</p>
 	<p>
 		<b>
-			<input type="checkbox" name="AccessToWorkPacket_YesCBS" @(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? "checked" : "")/><img id="AccessToWorkPacket_Yes" class='imgCheck' src="@(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
-			<input type="checkbox" name="AccessToWorkPacket_NoCBS" @(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? "checked" : "")/><img id="AccessToWorkPacket_No" class='imgCheck' src="@(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;N<span style='mso-spacerun:yes'></span><span style='mso-tab-count:1'>            </span>
+			<input type="checkbox" name="AccessToWorkPacket_YesCBS" @(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? "checked" : "")/><span id="AccessToWorkPacket_Yes" class='imgCheck' >@(formModel.AccessToWorkPacket_Yes.HasValue && formModel.AccessToWorkPacket_Yes.Value ? "[X]" : "not-checked")</span><span>&nbsp;Y<span style='mso-spacerun:yes'>  </span>
+			<input type="checkbox" name="AccessToWorkPacket_NoCBS" @(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? "checked" : "")/><span id="AccessToWorkPacket_No" class='imgCheck' >@(formModel.AccessToWorkPacket_No.HasValue && formModel.AccessToWorkPacket_No.Value ? "[X]" : "not-checked")</span>&nbsp;N<span style='mso-spacerun:yes'></span><span style='mso-tab-count:1'>            </span>
 			</span>
 		</b>
 		<span>
@@ -314,7 +313,7 @@
 	</p>
 	<p>
 		<b>
-			<span><input type="checkbox" name="ServicesOfferedCBS" @(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? "checked" : "")/><img id="ServicesOffered" class='imgCheck' src="@(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? @imageChecked : @imageNotChecked)"/></span>
+			<span><input type="checkbox" name="ServicesOfferedCBS" @(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? "checked" : "")/><span id="ServicesOffered" class='imgCheck' >@(formModel.ServicesOffered.HasValue && formModel.ServicesOffered.Value ? "[X]" : "not-checked")</span></span>
 		</b>
 		<span>
 			&nbsp;Have been <i>offered</i> to the parent(s)/guardian on behalf of the student*
@@ -322,7 +321,7 @@
 	</p>
 	<p>
 		<b>
-			<span><input type="checkbox" name="ServicesAcceptedCBS" @(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? "checked" : "")/><img id="ServicesAccepted" class='imgCheck' src="@(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? @imageChecked : @imageNotChecked)"/></span>
+			<span><input type="checkbox" name="ServicesAcceptedCBS" @(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? "checked" : "")/><span id="ServicesAccepted" class='imgCheck' >@(formModel.ServicesAccepted.HasValue && formModel.ServicesAccepted.Value ? "[X]" : "not-checked")</span></span>
 		</b>
 		<span>
 			&nbsp;Have been <i>accepted</i>	by the parent(s)/guardian on behalf of the student*
@@ -330,7 +329,7 @@
 	</p>
 	<p>
 		<b>
-			<span><input type="checkbox" name="ServicesDeclinededCBS" @(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? "checked" : "")/><img id="ServicesDeclineded" class='imgCheck' src="@(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? @imageChecked : @imageNotChecked)"/></span>
+			<span><input type="checkbox" name="ServicesDeclinededCBS" @(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? "checked" : "")/><span id="ServicesDeclineded" class='imgCheck' >@(formModel.ServicesDeclineded.HasValue && formModel.ServicesDeclineded.Value ? "[X]" : "not-checked")</span></span>
 		</b>
 		<span>&nbsp;Have been <i>declined</i> by the parent(s)/guardian on behalf of the student - </span><span><i>denoted in each section*</i></span>		
 	</p>
@@ -364,15 +363,15 @@
 	<p>
 		<b>
 			<span>
-				<input type="checkbox" name="Accommodations_HasNoCurrentCBS" @(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "checked" : "")/><img id="Accommodations_HasNoCurrent" class='imgCheck' src="@(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? @imageChecked : @imageNotChecked)"/> 
-				&nbsp;Student currently has no accommodations/modifications/supplementary aids in their IEP
+				<input type="checkbox" name="Accommodations_HasNoCurrentCBS" @(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "checked" : "")/><span id="Accommodations_HasNoCurrent" class='imgCheck' >@(formModel.Accommodations_HasNoCurrent.HasValue && formModel.Accommodations_HasNoCurrent.Value ? "[X]" : "not-checked")</span> 
+				<i>Student currently has no accommodations/modifications/supplementary aids in their IEP</i>
 			</span>
 		</b>
 	</p>
 	<p>
 			<span>
 				<b>
-					­<input type="checkbox" name="Accommodations_OfferedAndDeclinedCBS" @(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? "checked" : "")/><img id="Accommodations_OfferedAndDeclined" class='imgCheck' src="@(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/>
+					­<input type="checkbox" name="Accommodations_OfferedAndDeclinedCBS" @(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? "checked" : "")/><span id="Accommodations_OfferedAndDeclined" class='imgCheck' >@(formModel.Accommodations_OfferedAndDeclined.HasValue && formModel.Accommodations_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span>
 					<i>Accommodations/modifications/supplementary aids have been offered and declined by the parent or guardian</i>
 				</b>
 			</span>
@@ -501,13 +500,11 @@
 		</span>
 	</p>
 	<p>
-		<b>
-			<i>
+		<b>			
 				<span>
-					<input type="checkbox" name="Services_OfferedAndDeclinedCBS" @(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "checked" : "")/><img id="Services_OfferedAndDeclined" class='imgCheck' src="@(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/>
-					&nbsp;Services have been offered by the provider and declined by the parent/guardian
-				</span>
-			</i>
+					<input type="checkbox" name="Services_OfferedAndDeclinedCBS" @(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "checked" : "")/><span id="Services_OfferedAndDeclined" class='imgCheck' >@(formModel.Services_OfferedAndDeclined.HasValue && formModel.Services_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span>
+					<i>&nbsp;Services have been offered by the provider and declined by the parent/guardian</i>
+				</span>			
 		</b>
 	</p>
 	<p>
@@ -658,31 +655,29 @@
 			</u>
 		</b>
 	</p>
-	<p>
-		<b>
-			<span><input type="checkbox" name="Provider_WillContactPhoneCBS" @(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "checked" : "")/><img id="Provider_WillContactPhone" class='imgCheck' src="@(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? @imageChecked : @imageNotChecked)"/></span>
-		</b>
+	<p><span><input type="checkbox" name="Provider_WillContactPhoneCBS" @(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "checked" : "")/><span id="Provider_WillContactPhone" class='imgCheck' >@(formModel.Provider_WillContactPhone.HasValue && formModel.Provider_WillContactPhone.Value ? "[X]" : "not-checked")</span></span>
+		
 		<span>
 			&nbsp;Provider will contact the parent by phone:
 		</span>
 	</p>
 	<p style="margin-left:15px">
-		<span><input type="checkbox" name="Provider_WillContactPhone_WeeklyCBS" @(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? "checked" : "")/><img id="Provider_WillContactPhone_Weekly" class='imgCheck' src="@(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;weekly</span>
-		<span><input type="checkbox" name="Provider_WillContactPhone_BiweeklyCBS" @(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? "checked" : "")/><img id="Provider_WillContactPhone_Biweekly" class='imgCheck' src="@(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;bi-weekly</span>
+		<span><input type="checkbox" name="Provider_WillContactPhone_WeeklyCBS" @(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? "checked" : "")/><span id="Provider_WillContactPhone_Weekly" class='imgCheck' >@(formModel.Provider_WillContactPhone_Weekly.HasValue && formModel.Provider_WillContactPhone_Weekly.Value ? "[X]" : "not-checked")</span></span><span>&nbsp;weekly</span>
+		<span><input type="checkbox" name="Provider_WillContactPhone_BiweeklyCBS" @(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? "checked" : "")/><span id="Provider_WillContactPhone_Biweekly" class='imgCheck' >@(formModel.Provider_WillContactPhone_Biweekly.HasValue && formModel.Provider_WillContactPhone_Biweekly.Value ? "[X]" : "not-checked")</span></span><span>&nbsp;bi-weekly</span>
 	</p>
 	<p>
-		<span><input type="checkbox" name="Provider_WillContactEmailCBS" @(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? "checked" : "")/><img id="Provider_WillContactEmail" class='imgCheck' src="@(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? @imageChecked : @imageNotChecked)"/></span>
+		<span><input type="checkbox" name="Provider_WillContactEmailCBS" @(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? "checked" : "")/><span id="Provider_WillContactEmail" class='imgCheck' >@(formModel.Provider_WillContactEmail.HasValue && formModel.Provider_WillContactEmail.Value ? "[X]" : "not-checked")</span></span>
 		<span>			
 			&nbsp;Provider will contact the parent by email:
 		</span>
 	</p>
 	<p style="margin-left:15px">
-		<span><input type="checkbox" name="Provider_WillContactEmail_OnceWeekCBS" @(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? "checked" : "")/><img id="Provider_WillContactEmail_OnceWeek" class='imgCheck' src="@(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;1x per week</span>
-		<span><input type="checkbox" name="Provider_WillContactEmail_TwiceWeekCBS" @(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? "checked" : "")/><img id="Provider_WillContactEmail_TwiceWeek" class='imgCheck' src="@(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;2x per week</span>
-		<span><input type="checkbox" name="Provider_WillContactEmail_BiweeklyCBS" @(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? "checked" : "")/><img id="Provider_WillContactEmail_Biweekly" class='imgCheck' src="@(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? @imageChecked : @imageNotChecked)"/></span><span>&nbsp;bi-weekly</span>
+		<span><input type="checkbox" name="Provider_WillContactEmail_OnceWeekCBS" @(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? "checked" : "")/><span id="Provider_WillContactEmail_OnceWeek" class='imgCheck' >@(formModel.Provider_WillContactEmail_OnceWeek.HasValue && formModel.Provider_WillContactEmail_OnceWeek.Value ? "[X]" : "not-checked")</span></span><span>&nbsp;1x per week</span>
+		<span><input type="checkbox" name="Provider_WillContactEmail_TwiceWeekCBS" @(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? "checked" : "")/><span id="Provider_WillContactEmail_TwiceWeek" class='imgCheck' >@(formModel.Provider_WillContactEmail_TwiceWeek.HasValue && formModel.Provider_WillContactEmail_TwiceWeek.Value ? "[X]" : "not-checked")</span></span><span>&nbsp;2x per week</span>
+		<span><input type="checkbox" name="Provider_WillContactEmail_BiweeklyCBS" @(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? "checked" : "")/><span id="Provider_WillContactEmail_Biweekly" class='imgCheck' >@(formModel.Provider_WillContactEmail_Biweekly.HasValue && formModel.Provider_WillContactEmail_Biweekly.Value ? "[X]" : "not-checked")</span></span><span>&nbsp;bi-weekly</span>
 	</p>	
 	<p>
-		<span><input type="checkbox" name="Provider_ParentsContactCBS" @(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? "checked" : "")/><img id="Provider_ParentsContact" class='imgCheck' src="@(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? @imageChecked : @imageNotChecked)"/></span>
+		<span><input type="checkbox" name="Provider_ParentsContactCBS" @(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? "checked" : "")/><span id="Provider_ParentsContact" class='imgCheck' >@(formModel.Provider_ParentsContact.HasValue && formModel.Provider_ParentsContact.Value ? "[X]" : "not-checked")</span></span>
 		<span>&nbsp;Parent prefers to contact provider if needed</span>
 	</p>	
 	<p>
@@ -694,9 +689,9 @@
 			</u>
 		</b>
 	</p>	
-	<p>
-		<span><input type="checkbox" name="Goals_OfferedAndDeclinedCBS" @(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "checked" : "")/><img id="Goals_OfferedAndDeclined" class='imgCheck' src="@(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? @imageChecked : @imageNotChecked)"/></span>
+	<p>		
 		<b>
+			<input type="checkbox" name="Goals_OfferedAndDeclinedCBS" @(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "checked" : "")/><span id="Goals_OfferedAndDeclined" class='imgCheck' >@(formModel.Goals_OfferedAndDeclined.HasValue && formModel.Goals_OfferedAndDeclined.Value ? "[X]" : "not-checked")</span>
 			<i>
 				<span>
 					&nbsp;Opportunity for student to
@@ -728,9 +723,9 @@
 		<b>
 			<span>
 				How	will progress be tracked?<span style='mso-spacerun:yes'>   </span>
-				<input type="checkbox" name="Goal_TrackProgress_Engagement1CBS" @(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
-				<input type="checkbox" name="Goal_TrackProgress_Feedback1CBS" @(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
-				<input type="checkbox" name="Goal_TrackProgress_Other1CBS" @(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other1" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+				<input type="checkbox" name="Goal_TrackProgress_Engagement1CBS" @(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? "checked" : "")/><span id="Goal_TrackProgress_Engagement1" class='imgCheck' >@(formModel.Goal_TrackProgress_Engagement1.HasValue && formModel.Goal_TrackProgress_Engagement1.Value ? "[X]" : "not-checked")</span><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback1CBS" @(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? "checked" : "")/><span id="Goal_TrackProgress_Feedback1" class='imgCheck' >@(formModel.Goal_TrackProgress_Feedback1.HasValue && formModel.Goal_TrackProgress_Feedback1.Value ? "[X]" : "not-checked")</span><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other1CBS" @(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? "checked" : "")/><span id="Goal_TrackProgress_Other1" class='imgCheck' >@(formModel.Goal_TrackProgress_Other1.HasValue && formModel.Goal_TrackProgress_Other1.Value ? "[X]" : "not-checked")</span>&nbsp;other</span>				
 		</b>
 	</p>
 	
@@ -756,9 +751,9 @@
 	<p>
 		<b>
 			<span>How	will progress be tracked?</span>
-				<input type="checkbox" name="Goal_TrackProgress_Engagement2CBS" @(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
-				<input type="checkbox" name="Goal_TrackProgress_Feedback2CBS" @(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
-				<input type="checkbox" name="Goal_TrackProgress_Other2CBS" @(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other2" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+				<input type="checkbox" name="Goal_TrackProgress_Engagement2CBS" @(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? "checked" : "")/><span id="Goal_TrackProgress_Engagement2" class='imgCheck' >@(formModel.Goal_TrackProgress_Engagement2.HasValue && formModel.Goal_TrackProgress_Engagement2.Value ? "[X]" : "not-checked")</span><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback2CBS" @(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? "checked" : "")/><span id="Goal_TrackProgress_Feedback2" class='imgCheck' >@(formModel.Goal_TrackProgress_Feedback2.HasValue && formModel.Goal_TrackProgress_Feedback2.Value ? "[X]" : "not-checked")</span><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other2CBS" @(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? "checked" : "")/><span id="Goal_TrackProgress_Other2" class='imgCheck' >@(formModel.Goal_TrackProgress_Other2.HasValue && formModel.Goal_TrackProgress_Other2.Value ? "[X]" : "not-checked")</span>&nbsp;other</span>				
 		</b>
 	</p>
 	
@@ -785,9 +780,9 @@
 	<p>
 		<b>
 			<span>How	will progress be tracked?</span>
-				<input type="checkbox" name="Goal_TrackProgress_Engagement3CBS" @(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
-				<input type="checkbox" name="Goal_TrackProgress_Feedback3CBS" @(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
-				<input type="checkbox" name="Goal_TrackProgress_Other3CBS" @(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other3" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+				<input type="checkbox" name="Goal_TrackProgress_Engagement3CBS" @(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? "checked" : "")/><span id="Goal_TrackProgress_Engagement3" class='imgCheck' >@(formModel.Goal_TrackProgress_Engagement3.HasValue && formModel.Goal_TrackProgress_Engagement3.Value ? "[X]" : "not-checked")</span><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback3CBS" @(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? "checked" : "")/><span id="Goal_TrackProgress_Feedback3" class='imgCheck' >@(formModel.Goal_TrackProgress_Feedback3.HasValue && formModel.Goal_TrackProgress_Feedback3.Value ? "[X]" : "not-checked")</span><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other3CBS" @(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? "checked" : "")/><span id="Goal_TrackProgress_Other3" class='imgCheck' >@(formModel.Goal_TrackProgress_Other3.HasValue && formModel.Goal_TrackProgress_Other3.Value ? "[X]" : "not-checked")</span>&nbsp;other</span>				
 		</b>
 	</p>	
 	<p>
@@ -812,9 +807,9 @@
 	<p>
 		<b>
 			<span>How will progress be tracked?</span>
-				<input type="checkbox" name="Goal_TrackProgress_Engagement4CBS" @(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Engagement4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;student engagement</span>
-				<input type="checkbox" name="Goal_TrackProgress_Feedback4CBS" @(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Feedback4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? @imageChecked : @imageNotChecked)"/><span>&nbsp;parent feedback</span>
-				<input type="checkbox" name="Goal_TrackProgress_Other4CBS" @(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? "checked" : "")/><img id="Goal_TrackProgress_Other4" class='imgCheck' src="@(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;other</span>				
+				<input type="checkbox" name="Goal_TrackProgress_Engagement4CBS" @(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? "checked" : "")/><span id="Goal_TrackProgress_Engagement4" class='imgCheck' >@(formModel.Goal_TrackProgress_Engagement4.HasValue && formModel.Goal_TrackProgress_Engagement4.Value ? "[X]" : "not-checked")</span><span>&nbsp;student engagement</span>
+				<input type="checkbox" name="Goal_TrackProgress_Feedback4CBS" @(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? "checked" : "")/><span id="Goal_TrackProgress_Feedback4" class='imgCheck' >@(formModel.Goal_TrackProgress_Feedback4.HasValue && formModel.Goal_TrackProgress_Feedback4.Value ? "[X]" : "not-checked")</span><span>&nbsp;parent feedback</span>
+				<input type="checkbox" name="Goal_TrackProgress_Other4CBS" @(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? "checked" : "")/><span id="Goal_TrackProgress_Other4" class='imgCheck' >@(formModel.Goal_TrackProgress_Other4.HasValue && formModel.Goal_TrackProgress_Other4.Value ? "[X]" : "not-checked")</span>&nbsp;other</span>				
 		</b>
 	</p>
 	<p>

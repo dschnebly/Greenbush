@@ -145,8 +145,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "")/><img id="NeedsBeenConsidered_Yes" class='imgCheck' src="@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
-						<input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "")/><img id="NeedsBeenConsidered_No" class='imgCheck' src="@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "")/><span id="NeedsBeenConsidered_Yes" class='imgCheck' >@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span> Yes  
+						<input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "")/><span id="NeedsBeenConsidered_No" class='imgCheck' >@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -165,8 +165,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="BehaviorImpede_YesCBS" @(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? "checked" : "")/><img id="BehaviorImpede_Yes" class='imgCheck' src="@(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
-						<input type="checkbox" name="BehaviorImpede_NoCBS" @(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? "checked" : "")/><img id="BehaviorImpede_No" class='imgCheck' src="@(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="BehaviorImpede_YesCBS" @(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? "checked" : "")/><span id="BehaviorImpede_Yes" class='imgCheck' >@(formModel.BehaviorImpede_Yes.HasValue && formModel.BehaviorImpede_Yes.Value ? "[X]" : "not-checked")</span> Yes  
+						<input type="checkbox" name="BehaviorImpede_NoCBS" @(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? "checked" : "")/><span id="BehaviorImpede_No" class='imgCheck' >@(formModel.BehaviorImpede_No.HasValue && formModel.BehaviorImpede_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -189,8 +189,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><img id="InstructionInBraille_Yes" class='imgCheck' src="@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
-						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><img id="InstructionInBraille_No" class='imgCheck' src="@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><span id="InstructionInBraille_Yes" class='imgCheck' >@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "[X]" : "not-checked")</span> Yes  
+						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><span id="InstructionInBraille_No" class='imgCheck' >@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -209,8 +209,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><img id="InstructionInBraille_Yes" class='imgCheck' src="@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
-						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><img id="InstructionInBraille_No" class='imgCheck' src="@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="InstructionInBraille_YesCBS" @(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "checked" : "")/><span id="InstructionInBraille_Yes" class='imgCheck' >@(formModel.InstructionInBraille_Yes.HasValue && formModel.InstructionInBraille_Yes.Value ? "[X]" : "not-checked")</span> Yes 
+						<input type="checkbox" name="InstructionInBraille_NoCBS" @(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "checked" : "")/><span id="InstructionInBraille_No" class='imgCheck' >@(formModel.InstructionInBraille_No.HasValue && formModel.InstructionInBraille_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -229,8 +229,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.35pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="LimitedEnglish_YesCBS" @(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? "checked" : "")/><img id="LimitedEnglish_Yes" class='imgCheck' src="@(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes  
-						<input type="checkbox" name="LimitedEnglish_NoCBS" @(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? "checked" : "")/><img id="LimitedEnglish_No" class='imgCheck' src="@(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="LimitedEnglish_YesCBS" @(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? "checked" : "")/><span id="LimitedEnglish_Yes" class='imgCheck' >@(formModel.LimitedEnglish_Yes.HasValue && formModel.LimitedEnglish_Yes.Value ? "[X]" : "not-checked")</span> Yes  
+						<input type="checkbox" name="LimitedEnglish_NoCBS" @(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? "checked" : "")/><span id="LimitedEnglish_No" class='imgCheck' >@(formModel.LimitedEnglish_No.HasValue && formModel.LimitedEnglish_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -253,8 +253,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="CommunicationNeeds_YesCBS" @(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? "checked" : "")/><img id="CommunicationNeeds_Yes" class='imgCheck' src="@(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
-						<input type="checkbox" name="CommunicationNeeds_NoCBS" @(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? "checked" : "")/><img id="CommunicationNeeds_No" class='imgCheck' src="@(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="CommunicationNeeds_YesCBS" @(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? "checked" : "")/><span id="CommunicationNeeds_Yes" class='imgCheck' >@(formModel.CommunicationNeeds_Yes.HasValue && formModel.CommunicationNeeds_Yes.Value ? "[X]" : "not-checked")</span> Yes 
+						<input type="checkbox" name="CommunicationNeeds_NoCBS" @(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? "checked" : "")/><span id="CommunicationNeeds_No" class='imgCheck' >@(formModel.CommunicationNeeds_No.HasValue && formModel.CommunicationNeeds_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>
@@ -275,8 +275,8 @@
 				<td>
 					<p class=MsoNormal align=center style='margin-top:0in;margin-right:1.25pt;  margin-bottom:0in;margin-left:0in;margin-bottom:.0001pt;text-align:center'>
 						<span style='font-size:10.0pt;line-height:107%'>
-						<input type="checkbox" name="AssistiveTech_YesCBS" @(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? "checked" : "")/><img id="AssistiveTech_Yes" class='imgCheck' src="@(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? @imageChecked : @imageNotChecked)"/> Yes 
-						<input type="checkbox" name="AssistiveTech_NoCBS" @(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? "checked" : "")/><img id="AssistiveTech_No" class='imgCheck' src="@(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? @imageChecked : @imageNotChecked)"/> No</span>
+						<input type="checkbox" name="AssistiveTech_YesCBS" @(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? "checked" : "")/><span id="AssistiveTech_Yes" class='imgCheck' >@(formModel.AssistiveTech_Yes.HasValue && formModel.AssistiveTech_Yes.Value ? "[X]" : "not-checked")</span> Yes 
+						<input type="checkbox" name="AssistiveTech_NoCBS" @(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? "checked" : "")/><span id="AssistiveTech_No" class='imgCheck' >@(formModel.AssistiveTech_No.HasValue && formModel.AssistiveTech_No.Value ? "[X]" : "not-checked")</span> No</span>
 					</p>
 				</td>
 				<td>

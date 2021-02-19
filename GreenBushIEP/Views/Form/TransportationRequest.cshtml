@@ -188,46 +188,46 @@
 
 	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? "checked" : "")/><img id="WheelChair" class='imgCheck' src="@(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Wheelchair
+			<input type="checkbox" @(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? "checked" : "")/><span id="WheelChair" class='imgCheck' >@(formModel.WheelChair.HasValue && formModel.WheelChair.Value ? "[X]" : "not-checked")</span>&nbsp;Wheelchair&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? "checked" : "")/><img id="CarSeat" class='imgCheck' src="@(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Car Seat
+			<input type="checkbox" @(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? "checked" : "")/><span id="CarSeat" class='imgCheck' >@(formModel.CarSeat.HasValue && formModel.CarSeat.Value ? "[X]" : "not-checked")</span>&nbsp;Car Seat&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? "checked" : "")/><img id="SeatBelt" class='imgCheck' src="@(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Seat Belt
+			<input type="checkbox" @(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? "checked" : "")/><span id="SeatBelt" class='imgCheck' >@(formModel.SeatBelt.HasValue && formModel.SeatBelt.Value ? "[X]" : "not-checked")</span>&nbsp;Seat Belt&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? "checked" : "")/><img id="ChestHarness" class='imgCheck' src="@(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Chest Harness
+			<input type="checkbox" @(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? "checked" : "")/><span id="ChestHarness" class='imgCheck' >@(formModel.ChestHarness.HasValue && formModel.ChestHarness.Value ? "[X]" : "not-checked")</span>&nbsp;Chest Harness&nbsp;
 		</label>
 	</p>
 
 	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.BusLift.HasValue && formModel.BusLift.Value ? "checked" : "")/><img id="BusLift" class='imgCheck' src="@(formModel.BusLift.HasValue && formModel.BusLift.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Bus Lift
+			<input type="checkbox" @(formModel.BusLift.HasValue && formModel.BusLift.Value ? "checked" : "")/><span id="BusLift" class='imgCheck' >@(formModel.BusLift.HasValue && formModel.BusLift.Value ? "[X]" : "not-checked")</span>&nbsp;Bus Lift&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? "checked" : "")/><img id="BoosterSeat" class='imgCheck' src="@(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Booster Seat
+			<input type="checkbox" @(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? "checked" : "")/><span id="BoosterSeat" class='imgCheck' >@(formModel.BoosterSeat.HasValue && formModel.BoosterSeat.Value ? "[X]" : "not-checked")</span>&nbsp;Booster Seat&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.Tray.HasValue && formModel.Tray.Value ? "checked" : "")/><img id="Tray" class='imgCheck' src="@(formModel.Tray.HasValue && formModel.Tray.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Tray
+			<input type="checkbox" @(formModel.Tray.HasValue && formModel.Tray.Value ? "checked" : "")/><span id="Tray" class='imgCheck' >@(formModel.Tray.HasValue && formModel.Tray.Value ? "[X]" : "not-checked")</span>&nbsp;Tray&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? "checked" : "")/><img id="PersonalCareAttendant" class='imgCheck' src="@(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Personal Care Attendant
+			<input type="checkbox" @(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? "checked" : "")/><span id="PersonalCareAttendant" class='imgCheck' >@(formModel.PersonalCareAttendant.HasValue && formModel.PersonalCareAttendant.Value ? "[X]" : "not-checked")</span>&nbsp;Personal Care Attendant&nbsp;
 		</label>
 	</p>
 	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? "checked" : "")/><img id="AdductorInPlace" class='imgCheck' src="@(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Adductor in Place
+			<input type="checkbox" @(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? "checked" : "")/><span id="AdductorInPlace" class='imgCheck' >@(formModel.AdductorInPlace.HasValue && formModel.AdductorInPlace.Value ? "[X]" : "not-checked")</span>&nbsp;Adductor in Place&nbsp;
 		</label>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.Communication.HasValue && formModel.Communication.Value ? "checked" : "")/><img id="Communication" class='imgCheck' src="@(formModel.Communication.HasValue && formModel.Communication.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Communication
+			<input type="checkbox" @(formModel.Communication.HasValue && formModel.Communication.Value ? "checked" : "")/><span id="Communication" class='imgCheck' >@(formModel.Communication.HasValue && formModel.Communication.Value ? "[X]" : "not-checked")</span>&nbsp;Communication
 		</label>
 		
 		
 	</p>
 	<p style='margin-bottom:0in;margin-bottom:.0001pt'>
 		<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-			<input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "")/><img id="Other" class='imgCheck' src="@(formModel.Other.HasValue && formModel.Other.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Other Specify:
+			<input type="checkbox" @(formModel.Other.HasValue && formModel.Other.Value ? "checked" : "")/><span id="Other" class='imgCheck' >@(formModel.Other.HasValue && formModel.Other.Value ? "[X]" : "not-checked")</span>&nbsp;Other Specify:
 		</label>
 		<textarea maxlength="2000" style="width:250px;height:30px">@(formModel.Other_Desc)</textarea><span id="Other_Desc" style="display:none;font-size:11.0pt" class="input-value ">@(formModel.Other_Desc)</span>
 	</p>

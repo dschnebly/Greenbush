@@ -168,7 +168,7 @@
             <tr>
                 <td width=342 valign=top style='width:256.5pt;border:solid windowtext 1.0pt;  border-top:none;mso-border-alt:solid windowtext .5pt;  padding:0in 5.4pt 0in 5.4pt'>
                     <p style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" name="Services_Not_ModOrDisc_NonAttendCBS" @(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_NonAttend" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_Not_ModOrDisc_NonAttendCBS" @(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? "checked" : "") /><span id="Services_Not_ModOrDisc_NonAttend" class='imgCheck' >@(formModel.Services_Not_ModOrDisc_NonAttend.HasValue && formModel.Services_Not_ModOrDisc_NonAttend.Value ? "[X]" : "not-checked")</span>
                         <span class="IepNormal">
                             NON ATTENDANCE: The member of the IEP team noted above will not attend the IEP meeting as both the school and the parent agree that the team member’s attendance at this meeting is not necessary.<o:p></o:p>
                         </span>
@@ -177,7 +177,7 @@
                         <span style='font-size:9.0pt;  font-family:"Calibri",sans-serif'><o:p>&nbsp;</o:p></span>
                     </p>
                     <p style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" name="Services_Not_ModOrDisc_PartialAttendCBX" @(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_PartialAttend" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? @imageChecked : @imageNotChecked)" /><span style='font-size:10.0pt;font-family:"Arial",sans-serif'></span>
+                        <input type="checkbox" name="Services_Not_ModOrDisc_PartialAttendCBX" @(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? "checked" : "") /><span id="Services_Not_ModOrDisc_PartialAttend" class='imgCheck' >@(formModel.Services_Not_ModOrDisc_PartialAttend.HasValue && formModel.Services_Not_ModOrDisc_PartialAttend.Value ? "[X]" : "not-checked")</span><span style='font-size:10.0pt;font-family:"Arial",sans-serif'></span>
                         <span class="IepNormal">
                             PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed: <textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.Services_Not_ModOrDisc_IssueDiscussed)</textarea><span id="Services_Not_ModOrDisc_IssueDiscussed" style="display:none;font-size:11.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value">@(formModel.Services_Not_ModOrDisc_IssueDiscussed)</span>
                         </span>
@@ -190,13 +190,13 @@
                 </td>
                 <td width=372 valign=top style='width:279.0pt;border-top:none;border-left:  none;border-bottom:solid windowtext 1.0pt;border-right:solid windowtext 1.0pt;mso-border-alt:solid windowtext .5pt;padding:0in 5.4pt 0in 5.4pt'>
                     <p style='margin-left:.25in;  text-indent:-.25in;mso-list:l1 level1 lfo1'>
-                        <input type="checkbox" name="Services_MayBe_ModOrDisc_NonAttendCBX" @(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_NonAttend" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_NonAttendCBX" @(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? "checked" : "") /><span id="Services_MayBe_ModOrDisc_NonAttend" class='imgCheck' >@(formModel.Services_MayBe_ModOrDisc_NonAttend.HasValue && formModel.Services_MayBe_ModOrDisc_NonAttend.Value ? "[X]" : "not-checked")</span>
                         <span class="IepNormal">
                             NON ATTENDANCE: The member of the IEP team noted above is excused from attending this IEP meeting, providing that the member submits written input related to the development of the IEP to both the parent and to the other members of the team prior to the meeting.
                         </span>
                     </p>
                     <p style='margin-left:.25in;  text-indent:-.25in;'>
-                        <input type="checkbox" name="Services_MayBe_ModOrDisc_PartialAttendCBX" @(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_PartialAttend" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? @imageChecked : @imageNotChecked)" /><span style='font-size:10.0pt;font-family:"Arial",sans-serif'></span>
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_PartialAttendCBX" @(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? "checked" : "") /><span id="Services_MayBe_ModOrDisc_PartialAttend" class='imgCheck' >@(formModel.Services_MayBe_ModOrDisc_PartialAttend.HasValue && formModel.Services_MayBe_ModOrDisc_PartialAttend.Value ? "[X]" : "not-checked")</span><span style='font-size:10.0pt;font-family:"Arial",sans-serif'></span>
                         <span class="IepNormal">
                             PARTIAL ATTENDANCE: The member of the IEP team noted above will attend the portion of the IEP meeting in which the following issues are discussed: <textarea cols="20" rows="1" maxlength="200" data-val="72">@(formModel.Services_MayBe_ModOrDisc_IssueDiscussed)</textarea><span id="Services_MayBe_ModOrDisc_IssueDiscussed" style="display:none;font-size:10.0pt;font-family:'Calibri',sans-serif;font-style: italic;" class="input-value">@(formModel.Services_MayBe_ModOrDisc_IssueDiscussed)</span>
                         </span>
@@ -210,11 +210,11 @@
                         <span class=IepNormal>
                             I<span></span>
                         </span>
-                        <input type="checkbox" name="Services_Not_ModOrDisc_AgreeCBX" @(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_Not_ModOrDisc_AgreeCBX" @(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? "checked" : "") /><span id="Services_Not_ModOrDisc_Agree" class='imgCheck' >@(formModel.Services_Not_ModOrDisc_Agree.HasValue && formModel.Services_Not_ModOrDisc_Agree.Value ? "[X]" : "not-checked")</span>
                         <span class=IepNormal>
                             agree<span>  </span>
                         </span>
-                        <input type="checkbox" name="Services_Not_ModOrDisc_DisagreeCBX" @(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? "checked" : "") /><img id="Services_Not_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_Not_ModOrDisc_DisagreeCBX" @(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? "checked" : "") /><span id="Services_Not_ModOrDisc_Disagree" class='imgCheck' >@(formModel.Services_Not_ModOrDisc_Disagree.HasValue && formModel.Services_Not_ModOrDisc_Disagree.Value ? "[X]" : "not-checked")</span>
                         <span class=IepNormal>
                             <span></span>disagree <br>
                             with the above marked statement:
@@ -227,11 +227,11 @@
                         <span class=IepNormal>
                             I<span></span>
                         </span>
-                        <input type="checkbox" name="Services_MayBe_ModOrDisc_AgreeCBX" @(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_Agree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_AgreeCBX" @(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? "checked" : "") /><span id="Services_MayBe_ModOrDisc_Agree" class='imgCheck' >@(formModel.Services_MayBe_ModOrDisc_Agree.HasValue && formModel.Services_MayBe_ModOrDisc_Agree.Value ? "[X]" : "not-checked")</span>
                         <span class=IepNormal>
                             consent<span></span>
                         </span>
-                        <input type="checkbox" name="Services_MayBe_ModOrDisc_DisagreeCBX" @(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? "checked" : "") /><img id="Services_MayBe_ModOrDisc_Disagree" class='imgCheck' src="@(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? @imageChecked : @imageNotChecked)" />
+                        <input type="checkbox" name="Services_MayBe_ModOrDisc_DisagreeCBX" @(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? "checked" : "") /><span id="Services_MayBe_ModOrDisc_Disagree" class='imgCheck' >@(formModel.Services_MayBe_ModOrDisc_Disagree.HasValue && formModel.Services_MayBe_ModOrDisc_Disagree.Value ? "[X]" : "not-checked")</span>
                         <span class=IepNormal>
                             do not
                             consent <br>

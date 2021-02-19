@@ -118,19 +118,19 @@
         </p>
 
         <p class="MsoNormal" style='margin-top:.1in;margin-right:7.9pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildSPEDEligible.HasValue && formModel.ChildSPEDEligible.Value ? "checked" : "") /><img id="ChildSPEDEligible" class='imgCheck' src="@(formModel.ChildSPEDEligible.HasValue && formModel.ChildSPEDEligible.Value ? @imageChecked : @imageNotChecked)" /></span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChildSPEDEligible.HasValue && formModel.ChildSPEDEligible.Value ? "checked" : "") /><span id="ChildSPEDEligible" class='imgCheck' >@(formModel.ChildSPEDEligible.HasValue && formModel.ChildSPEDEligible.Value ? "[X]" : "not-checked")</span></span></b>
             <span class=MsoNormal>Whether your child was eligible for special education</span>
         </p>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:7.9pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SPEDNeeded.HasValue && formModel.SPEDNeeded.Value ? "checked" : "") /><img id="SPEDNeeded" class='imgCheck' src="@(formModel.SPEDNeeded.HasValue && formModel.SPEDNeeded.Value ? @imageChecked : @imageNotChecked)" /></span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.SPEDNeeded.HasValue && formModel.SPEDNeeded.Value ? "checked" : "") /><span id="SPEDNeeded" class='imgCheck' >@(formModel.SPEDNeeded.HasValue && formModel.SPEDNeeded.Value ? "[X]" : "not-checked")</span></span>
             </b><span class="MsoNormal">Special education and related services needed by your child<o:p></o:p></span>
         </p>
 
         <p class=MsoNormal style='margin-top:0in;margin-right:7.9pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SPEDPlacement.HasValue && formModel.SPEDPlacement.Value ? "checked" : "") /><img id="SPEDPlacement" class='imgCheck' src="@(formModel.SPEDPlacement.HasValue && formModel.SPEDPlacement.Value ? @imageChecked : @imageNotChecked)" /></span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.SPEDPlacement.HasValue && formModel.SPEDPlacement.Value ? "checked" : "") /><span id="SPEDPlacement" class='imgCheck' >@(formModel.SPEDPlacement.HasValue && formModel.SPEDPlacement.Value ? "[X]" : "not-checked")</span></span>
             </b><span class="MsoNormal">
                 The appropriate educational placement to provide special education and related
                 services identified in your child’s Individualized Education Program (IEP)
@@ -139,7 +139,7 @@
 
         <p class=MsoNormal style='margin-top:0in;margin-right:7.9pt;margin-bottom:0in;margin-left:.25in;margin-bottom:.0001pt;text-indent:-.25in'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ModificationsThatEnableSPED.HasValue && formModel.ModificationsThatEnableSPED.Value ? "checked" : "") /><img id="ModificationsThatEnableSPED" class='imgCheck' src="@(formModel.ModificationsThatEnableSPED.HasValue && formModel.ModificationsThatEnableSPED.Value ? @imageChecked : @imageNotChecked)" /></span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ModificationsThatEnableSPED.HasValue && formModel.ModificationsThatEnableSPED.Value ? "checked" : "") /><span id="ModificationsThatEnableSPED" class='imgCheck' >@(formModel.ModificationsThatEnableSPED.HasValue && formModel.ModificationsThatEnableSPED.Value ? "[X]" : "not-checked")</span></span>
             </b><span class="MsoNormal">
                 Any	additions, changes or modifications to the special education and related
                 services or educational placement that are needed to enable your child to meet the
@@ -160,7 +160,7 @@
         </p>
 
         <p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.Identification_Section.HasValue && formModel.Identification_Section.Value ? "checked" : "") /><img id="Identification_Section" class='imgCheck' src="@(formModel.Identification_Section.HasValue && formModel.Identification_Section.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.Identification_Section.HasValue && formModel.Identification_Section.Value ? "checked" : "") /><span id="Identification_Section" class='imgCheck' >@(formModel.Identification_Section.HasValue && formModel.Identification_Section.Value ? "[X]" : "not-checked")</span>&nbsp;</span></b>
             <b>
                 <span class=MsoNormal>
                     A.<span>  </span><u>IDENTIFICATION/ELIGIBILITY</u> (Parental Consent <u>Not</u> Required)
@@ -170,32 +170,32 @@
 
         <p class=MsoNormal style='margin-right:7.9pt;text-indent:22.5pt'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildIsEligible.HasValue && formModel.ChildIsEligible.Value ? "checked" : "") /><img id="ChildIsEligible" class='imgCheck' src="@(formModel.ChildIsEligible.HasValue && formModel.ChildIsEligible.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChildIsEligible.HasValue && formModel.ChildIsEligible.Value ? "checked" : "") /><span id="ChildIsEligible" class='imgCheck' >@(formModel.ChildIsEligible.HasValue && formModel.ChildIsEligible.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b>
                 <span style='font-size:11.0pt;color:black'> </span>YOUR	CHILD <i>IS</i> ELIGIBLE FOR SPECIAL EDUCATION<o:p></o:p>
             </b>
         </p>
         <p class=MsoNormal style='margin-top:0in;margin-right:7.9pt;margin-bottom:0in;margin-left:.75in;margin-bottom:.0001pt'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? "checked" : "") /><img id="ChildMeetsCriteria" class='imgCheck' src="@(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? "checked" : "") /><span id="ChildMeetsCriteria" class='imgCheck' >@(formModel.ChildMeetsCriteria.HasValue && formModel.ChildMeetsCriteria.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b>Your child meets the criteria as a child with an exceptionality
         </p>
         <p class=MsoNormal style='text-align:center'><b>and</b></p>
         <p class=MsoNormal style='margin-left:.75in'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? "checked" : "") /><img id="SPEDNecessary" class='imgCheck' src="@(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? "checked" : "") /><span id="SPEDNecessary" class='imgCheck' >@(formModel.SPEDNecessary.HasValue && formModel.SPEDNecessary.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b>Special	education services are necessary to enable your child to receive educational benefits in accordance with his/her abilities or capabilities
         </p>
         <p class=MsoNormal style='text-indent:22.5pt;margin-top:5px'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildNotElgible.HasValue && formModel.ChildNotElgible.Value ? "checked" : "") /><img id="ChildNotElgible" class='imgCheck' src="@(formModel.ChildNotElgible.HasValue && formModel.ChildNotElgible.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChildNotElgible.HasValue && formModel.ChildNotElgible.Value ? "checked" : "") /><span id="ChildNotElgible" class='imgCheck' >@(formModel.ChildNotElgible.HasValue && formModel.ChildNotElgible.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b>
                 <span style='font-size:11.0pt;color:black'></span>YOUR CHILD <i>IS NOT</i> ELIGIBLE FOR SPECIAL EDUCATION
             </b>
         </p>
         <p class=MsoNormal style='margin-left:.75in'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? "checked" : "") /><img id="ChildDoesNotMeetCriteria" class='imgCheck' src="@(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? "checked" : "") /><span id="ChildDoesNotMeetCriteria" class='imgCheck' >@(formModel.ChildDoesNotMeetCriteria.HasValue && formModel.ChildDoesNotMeetCriteria.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b><span style='font-size:11.0pt;color:black'></span></b>Your child does not meet the criteria as a child with an exceptionality.
         </p>
 
@@ -204,13 +204,13 @@
         </p>
 
         <p class=MsoNormal style='margin-left:1.0in;text-indent:-.25in'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SPEDNotNecessary.HasValue && formModel.SPEDNotNecessary.Value ? "checked" : "") /><img id="SPEDNotNecessary" class='imgCheck' src="@(formModel.SPEDNotNecessary.HasValue && formModel.SPEDNotNecessary.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>			</b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.SPEDNotNecessary.HasValue && formModel.SPEDNotNecessary.Value ? "checked" : "") /><span id="SPEDNotNecessary" class='imgCheck' >@(formModel.SPEDNotNecessary.HasValue && formModel.SPEDNotNecessary.Value ? "[X]" : "not-checked")</span>&nbsp;</span>			</b>
             <span class=MsoNormal></span>Special education services are not necessary to enable your child to receive educational benefits in accordance with his/her abilities or capabilities
         </p>
 
         <p class='MsoNormal page-break' style='margin-right:8.0pt;mso-line-height-alt:12.0pt'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.InitialServices_Section.HasValue && formModel.InitialServices_Section.Value ? "checked" : "") /><img id="InitialServices_Section" class='imgCheck' src="@(formModel.InitialServices_Section.HasValue && formModel.InitialServices_Section.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.InitialServices_Section.HasValue && formModel.InitialServices_Section.Value ? "checked" : "") /><span id="InitialServices_Section" class='imgCheck' >@(formModel.InitialServices_Section.HasValue && formModel.InitialServices_Section.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b>
                 <span class=MsoNormal>B.<span> </span></span><u>
                     INITIAL
@@ -226,7 +226,7 @@
         </p>
 
         <p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChangesInService_Section.HasValue && formModel.ChangesInService_Section.Value ? "checked" : "") /><img id="ChangesInService_Section" class='imgCheck' src="@(formModel.ChangesInService_Section.HasValue && formModel.ChangesInService_Section.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChangesInService_Section.HasValue && formModel.ChangesInService_Section.Value ? "checked" : "") /><span id="ChangesInService_Section" class='imgCheck' >@(formModel.ChangesInService_Section.HasValue && formModel.ChangesInService_Section.Value ? "[X]" : "not-checked")</span>&nbsp;</span></b>
             <b>
                 <span class=MsoNormal>
                     C.<span>  </span><u>CHANGE IN SERVICES</u>
@@ -235,7 +235,7 @@
         </p>
         <p class=MsoBlockText style='margin-left:22.5pt;'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChangeInService.HasValue && formModel.ChangeInService.Value ? "checked" : "") /><img id="ChangeInService" class='imgCheck' src="@(formModel.ChangeInService.HasValue && formModel.ChangeInService.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChangeInService.HasValue && formModel.ChangeInService.Value ? "checked" : "") /><span id="ChangeInService" class='imgCheck' >@(formModel.ChangeInService.HasValue && formModel.ChangeInService.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
                 <span class=MsoNormal>CHANGE IN SERVICES (</span><span class=MsoNormal>Parental Consent <u>Not</u> Required)</span>
             </b>
         </p>
@@ -248,7 +248,7 @@
 
         <p class=MsoBlockText style='margin-left:22.5pt;'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.MaterialChangeInService.HasValue && formModel.MaterialChangeInService.Value ? "checked" : "") /><img id="MaterialChangeInService" class='imgCheck' src="@(formModel.MaterialChangeInService.HasValue && formModel.MaterialChangeInService.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.MaterialChangeInService.HasValue && formModel.MaterialChangeInService.Value ? "checked" : "") /><span id="MaterialChangeInService" class='imgCheck' >@(formModel.MaterialChangeInService.HasValue && formModel.MaterialChangeInService.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b>
                 <span class=MsoNormal>
                     MATERIAL
@@ -266,7 +266,7 @@
         </p>
 
         <p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChangeInPlacement_Section.HasValue && formModel.ChangeInPlacement_Section.Value ? "checked" : "") /><img id="ChangeInPlacement_Section" class='imgCheck' src="@(formModel.ChangeInPlacement_Section.HasValue && formModel.ChangeInPlacement_Section.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChangeInPlacement_Section.HasValue && formModel.ChangeInPlacement_Section.Value ? "checked" : "") /><span id="ChangeInPlacement_Section" class='imgCheck' >@(formModel.ChangeInPlacement_Section.HasValue && formModel.ChangeInPlacement_Section.Value ? "[X]" : "not-checked")</span>&nbsp;</span></b>
             <b>
                 <span class=MsoNormal>
                     D.<span>  </span><u>CHANGE IN PLACEMENT</u>
@@ -275,7 +275,7 @@
         </p>
         <p class=MsoNormal style='margin-top:0in;margin-right:-1.0pt;margin-bottom:0in;margin-left:22.5pt;margin-bottom:.0001pt;mso-line-height-alt:12.0pt'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.ChangeInPlacements.HasValue && formModel.ChangeInPlacements.Value ? "checked" : "") /><img id="ChangeInPlacements" class='imgCheck' src="@(formModel.ChangeInPlacements.HasValue && formModel.ChangeInPlacements.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.ChangeInPlacements.HasValue && formModel.ChangeInPlacements.Value ? "checked" : "") /><span id="ChangeInPlacements" class='imgCheck' >@(formModel.ChangeInPlacements.HasValue && formModel.ChangeInPlacements.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
                 <span class="MsoNormal">CHANGE IN PLACEMENT (Parental Consent <u>Not</u> Required)</span>
             </b>
         </p>
@@ -288,7 +288,7 @@
         </p>
         <p class=MsoBlockText style='margin-left:22.5pt;'>
             <b>
-                <span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.SubstantialChangeInPlacement.HasValue && formModel.SubstantialChangeInPlacement.Value ? "checked" : "") /><img id="SubstantialChangeInPlacement" class='imgCheck' src="@(formModel.SubstantialChangeInPlacement.HasValue && formModel.SubstantialChangeInPlacement.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span>
+                <span style='font-size:14.0pt;'><input type="checkbox" @(formModel.SubstantialChangeInPlacement.HasValue && formModel.SubstantialChangeInPlacement.Value ? "checked" : "") /><span id="SubstantialChangeInPlacement" class='imgCheck' >@(formModel.SubstantialChangeInPlacement.HasValue && formModel.SubstantialChangeInPlacement.Value ? "[X]" : "not-checked")</span>&nbsp;</span>
             </b><b>
                 <span class="MsoNormal">SUBSTANTIAL CHANGE IN PLACEMENT (Parental Consent Required)</span>
             </b>
@@ -302,11 +302,11 @@
             </span>
         </p>
         <p class=MsoNormal style='margin-right:7.9pt;margin-top:8px'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? "checked" : "") /><img id="OtherChanges" class='imgCheck' src="@(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? "checked" : "") /><span id="OtherChanges" class='imgCheck' >@(formModel.OtherChanges.HasValue && formModel.OtherChanges.Value ? "[X]" : "not-checked")</span>&nbsp;</span></b>
             <b><span class="MsoNormal">E. Other changes to IEP, not involving services or PLACEMENT (Parental Consent <u>Not</u> Required)</span></b>
         </p>
         <p class=MsoNormal style='margin-right:7.9pt;margin-top:8px;margin-left:.25in;text-indent:-.25in'>
-            <b><span style='font-size:14.0pt;font-family:"Courier New"'><input type="checkbox" @(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? "checked" : "") /><img id="LEARefusesToChangeIdentification" class='imgCheck' src="@(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? @imageChecked : @imageNotChecked)" />&nbsp;</span></b>
+            <b><span style='font-size:14.0pt;'><input type="checkbox" @(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? "checked" : "") /><span id="LEARefusesToChangeIdentification" class='imgCheck' >@(formModel.LEARefusesToChangeIdentification.HasValue && formModel.LEARefusesToChangeIdentification.Value ? "[X]" : "not-checked")</span>&nbsp;</span></b>
             <b>
                 <span class="MsoNormal" style="margin-left:.005in;text-indent:-.007in;">
                     F. The [LEA] refuses to initiate or change the identification, educational placement, or provision of special education and related services as explained below. (Parental Consent <u>Not</u> Required)
@@ -401,16 +401,16 @@
                     </p>
 
                     <p style='text-indent:20.5pt;border:none;padding:0in;'>
-                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><img id="DelieveredByHand" class='imgCheck' src="@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">hand delivered,</span>
+                        <input type="checkbox" @(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "checked" : "") /><span id="DelieveredByHand" class='imgCheck' >@(formModel.DelieveredByHand.HasValue && formModel.DelieveredByHand.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">hand delivered,</span>
 
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><img id="DelieveredByMail" class='imgCheck' src="@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">mailed,</span>
+                                <input type="checkbox" @(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "checked" : "") /><span id="DelieveredByMail" class='imgCheck' >@(formModel.DelieveredByMail.HasValue && formModel.DelieveredByMail.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">mailed,</span>
                             </span>
                         </span>
                         <span>
                             <span>
-                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><img id="DelieveredByOther" class='imgCheck' src="@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? @imageChecked : @imageNotChecked)" />&nbsp;<span class="MsoNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
+                                <input type="checkbox" @(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "checked" : "") /><span id="DelieveredByOther" class='imgCheck' >@(formModel.DelieveredByOther.HasValue && formModel.DelieveredByOther.Value ? "[X]" : "not-checked")</span>&nbsp;<span class="MsoNormal">other</span><textarea style="width:200px;height:35px" maxlength="200" placeholder="(specify)">@(formModel.DelieveredByOtherDesc)</textarea> <span id="DelieveredByOtherDesc" style="display:none;text-decoration:underline" class="input-value MsoNormal">@(formModel.DelieveredByOtherDesc)</span>
                             </span>
                         </span>
                     </p>
@@ -471,8 +471,8 @@
                         </p>
                         <p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
                             <b>
-                                <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                    <span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><img id="GivenConsent" class='imgCheck' src="@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? @imageChecked : @imageNotChecked)" />
+                                <span style='font-size:14.0pt;'>
+                                    <span></span><input type="checkbox" @(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "checked" : "") /><span id="GivenConsent" class='imgCheck' >@(formModel.GivenConsent.HasValue && formModel.GivenConsent.Value ? "[X]" : "not-checked")</span>
                                 </span>
                             </b><span class="MsoNormal">
                                 &nbsp;
@@ -496,8 +496,8 @@
                         </p>
                         <p class=MsoNormal style='text-indent:.25in;border:none;padding:0in;'>
                             <b>
-                                <span style='font-size:14.0pt;font-family:"Courier New"'>
-                                    <span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><img id="RefuseConsent" class='imgCheck' src="@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? @imageChecked : @imageNotChecked)" />
+                                <span style='font-size:14.0pt;'>
+                                    <span></span><input type="checkbox" @(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "checked" : "") /><span id="RefuseConsent" class='imgCheck' >@(formModel.RefuseConsent.HasValue && formModel.RefuseConsent.Value ? "[X]" : "not-checked")</span>
                                 </span>
                             </b><span class="MsoNormal">
                                 &nbsp;

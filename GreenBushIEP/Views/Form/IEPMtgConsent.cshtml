@@ -1,9 +1,7 @@
 ﻿@{
 	var formModel = ViewData["formMtgConsent"] != null ? ViewData["formMtgConsent"] as GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite : new GreenBushIEP.Models.tblFormIEPMeetingConsentToInvite();
 
-    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";
-    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    string schoolDistrict = Model.studentInfo != null && Model.studentInfo.AssignedUSD != null ? Model.studentInfo.AssignedUSD : "";    
 
 }
 <div class="module-page savdDraftAllowed">
@@ -22,11 +20,11 @@
             <span style="text-decoration:underline;"><textarea cols="50" rows="1" maxlength="200">@(formModel.ParticipatingAgency)</textarea><span id="ParticipatingAgency" style="display:none" class="input-value">@(formModel.ParticipatingAgency)</span></span> (Participating Agency):					   
         </p>
         <p>
-            <span><input type="checkbox" name="ProvideTransitionServiceCbx" @(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "checked" : "")/><img id="ProvideTransitionService" class='imgCheck' src="@(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? @imageChecked : @imageNotChecked)"/></span>&nbsp;may be providing or paying for certain transition services for my child;
+            <span><input type="checkbox" name="ProvideTransitionServiceCbx" @(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "checked" : "")/><span id="ProvideTransitionService" class='imgCheck' >@(formModel.ProvideTransitionService.HasValue && formModel.ProvideTransitionService.Value ? "[X]" : "not-checked")</span></span>&nbsp;may be providing or paying for certain transition services for my child;
         </p>
         <p align="center">- OR -</p>
         <p>
-			<span><input type="checkbox" name="FurtherInformedCbx" @(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "checked" : "")/><img id="FurtherInformed" class='imgCheck' src="@(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? @imageChecked : @imageNotChecked)"/></span>&nbsp;may be providing or paying for certain transition services for my child (or me) and  </p>
+			<span><input type="checkbox" name="FurtherInformedCbx" @(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "checked" : "")/><span id="FurtherInformed" class='imgCheck' >@(formModel.FurtherInformed.HasValue && formModel.FurtherInformed.Value ? "[X]" : "not-checked")</span></span>&nbsp;may be providing or paying for certain transition services for my child (or me) and  </p>
         <p>I have been further informed that:</p>
         <ul>
             <li>

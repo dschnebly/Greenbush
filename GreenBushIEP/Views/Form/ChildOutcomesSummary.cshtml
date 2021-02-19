@@ -1,8 +1,7 @@
 ﻿@{
 	var formModel = ViewData["childOutcome"] != null ? ViewData["childOutcome"] as GreenBushIEP.Models.tblFormChildOutcome : new GreenBushIEP.Models.tblFormChildOutcome();
 	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
-	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
-	var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+	
 
 	var ratingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
 	if (formModel.RatingDate.HasValue)
@@ -104,22 +103,22 @@
 	</p>
 	<p class=MsoBodyText>
 		<label class="checkbox-inline" style="font-weight:normal">
-			<input type="checkbox" @(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? "checked" : "")/><img id="FamilyInfo_ReceivedInTeamMeeting" class='imgCheck' src="@(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Received in team meeting
+			<input type="checkbox" @(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? "checked" : "")/><span id="FamilyInfo_ReceivedInTeamMeeting" class='imgCheck' >@(formModel.FamilyInfo_ReceivedInTeamMeeting.HasValue && formModel.FamilyInfo_ReceivedInTeamMeeting.Value ? "[X]" : "not-checked")</span>&nbsp;Received in team meeting
 		</label>
 	</p>
 	<p class=MsoBodyText>
 		<label class="checkbox-inline" style="font-weight:normal">
-			<input type="checkbox" @(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? "checked" : "")/><img id="FamilyInfo_CollectedSeperately" class='imgCheck' src="@(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Collected separately 
+			<input type="checkbox" @(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? "checked" : "")/><span id="FamilyInfo_CollectedSeperately" class='imgCheck' >@(formModel.FamilyInfo_CollectedSeperately.HasValue && formModel.FamilyInfo_CollectedSeperately.Value ? "[X]" : "not-checked")</span>&nbsp;Collected separately 
 		</label>
 	</p>
 	<p class=MsoBodyText>
 		<label class="checkbox-inline" style="font-weight:normal">
-			<input type="checkbox" @(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? "checked" : "")/><img id="FamilyInfo_IncoporatedIntoAssessment" class='imgCheck' src="@(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Incorporated into assessment(s) 
+			<input type="checkbox" @(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? "checked" : "")/><span id="FamilyInfo_IncoporatedIntoAssessment" class='imgCheck' >@(formModel.FamilyInfo_IncoporatedIntoAssessment.HasValue && formModel.FamilyInfo_IncoporatedIntoAssessment.Value ? "[X]" : "not-checked")</span>&nbsp;Incorporated into assessment(s) 
 		</label>
 	</p>
 	<p class=MsoBodyText>
 		<label class="checkbox-inline" style="font-weight:normal">
-			<input type="checkbox" @(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? "checked" : "")/><img id="FamilyInfo_NotIncluded" class='imgCheck' src="@(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Not included
+			<input type="checkbox" @(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? "checked" : "")/><span id="FamilyInfo_NotIncluded" class='imgCheck' >@(formModel.FamilyInfo_NotIncluded.HasValue && formModel.FamilyInfo_NotIncluded.Value ? "[X]" : "not-checked")</span>&nbsp;Not included
 		</label>
 	</p>
 	<p class=MsoBodyText>
@@ -191,27 +190,27 @@
 		</tr>
 		<tr>
 			<td style="width:14%;text-align:center">				
-						1 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><span id="SocialEmotional_ShowAgeAppropriateBehavior_1" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 1 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">				
-						2 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			<td style="width:14%;text-align:center">			
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><span id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 2 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						3 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
-						<img id="SocialEmotional_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="SocialEmotional_ShowAgeAppropriateBehavior_3" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 3 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						4 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
-						<img id="SocialEmotional_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="SocialEmotional_ShowAgeAppropriateBehavior_4" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 4 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">
-						5 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><span id="SocialEmotional_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 5 ? "[X]" : "not-checked")</span>					
 			</td>
-			<td style="width:14%;">				
-						6 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			<td style="width:14%;text-align:center">			
+						6 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><span id="SocialEmotional_ShowAgeAppropriateBehavior_6" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 6 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">
-						7 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="SocialEmotional_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><span id="SocialEmotional_ShowAgeAppropriateBehavior_7" class='imgCheck' >@(formModel.SocialEmotional_ShowAgeAppropriateBehavior == 7 ? "[X]" : "not-checked")</span>					
 			</td>
 		</tr>
 	</table>
@@ -282,9 +281,9 @@
 	</p>
 	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "checked" : "")/><span id="SocialEmotional_ShownNewBehaviors_Yes" class='imgCheck' >@(formModel.SocialEmotional_ShownNewBehaviors_Yes.HasValue && formModel.SocialEmotional_ShownNewBehaviors_Yes.Value ? "[X]" : "not-checked")</span>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -296,9 +295,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="SocialEmotional_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
+					<input type="checkbox" @(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "checked" : "")/><span id="SocialEmotional_ShownNewBehaviors_No" class='imgCheck' >@(formModel.SocialEmotional_ShownNewBehaviors_No.HasValue && formModel.SocialEmotional_ShownNewBehaviors_No.Value ? "[X]" : "not-checked")</span>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>
@@ -358,27 +357,27 @@
 		</tr>
 		<tr>
 			<td style="width:14%;text-align:center">				
-						1 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><span id="AquireUsing_ShowAgeAppropriateBehavior_1" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 1 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">				
-						2 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			<td style="width:14%;text-align:center">			
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><span id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 2 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						3 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
-						<img id="AquireUsing_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="AquireUsing_ShowAgeAppropriateBehavior_3" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 3 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						4 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
-						<img id="AquireUsing_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="AquireUsing_ShowAgeAppropriateBehavior_4" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 4 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">
-						5 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><span id="AquireUsing_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 5 ? "[X]" : "not-checked")</span>					
 			</td>
-			<td style="width:14%;">				
-						6 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			<td style="width:14%;text-align:center">			
+						6 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><span id="AquireUsing_ShowAgeAppropriateBehavior_6" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 6 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">
-						7 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="AquireUsing_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><span id="AquireUsing_ShowAgeAppropriateBehavior_7" class='imgCheck' >@(formModel.AquireUsing_ShowAgeAppropriateBehavior == 7 ? "[X]" : "not-checked")</span>					
 			</td>
 		</tr>
 	</table>	
@@ -441,9 +440,9 @@
 	</p>
 	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "checked" : "")/><span id="AquireUsing_ShownNewBehaviors_Yes" class='imgCheck' >@(formModel.AquireUsing_ShownNewBehaviors_Yes.HasValue && formModel.AquireUsing_ShownNewBehaviors_Yes.Value ? "[X]" : "not-checked")</span>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -455,9 +454,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AquireUsing_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
+					<input type="checkbox" @(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "checked" : "")/><span id="AquireUsing_ShownNewBehaviors_No" class='imgCheck' >@(formModel.AquireUsing_ShownNewBehaviors_No.HasValue && formModel.AquireUsing_ShownNewBehaviors_No.Value ? "[X]" : "not-checked")</span>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>
@@ -521,27 +520,27 @@
 		</tr>
 		<tr>
 			<td style="width:14%;text-align:center">				
-						1 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_1" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? @imageChecked : @imageNotChecked)"/>
+						1 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? "checked" : "")/><span id="AppropriateAction_ShowAgeAppropriateBehavior_1" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 1 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">				
-						2 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? @imageChecked : @imageNotChecked)"/>				
+			<td style="width:14%;text-align:center">			
+						2 <input type="checkbox" class="cirlce_check"  @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? "checked" : "")/><span id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 2 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						3 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 3 ? "checked" : "")/>
-						<img id="AppropriateAction_ShowAgeAppropriateBehavior_3" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 3 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="AppropriateAction_ShowAgeAppropriateBehavior_3" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 3 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">				
+			<td style="width:14%;text-align:center">			
 						4 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 4 ? "checked" : "")/>
-						<img id="AppropriateAction_ShowAgeAppropriateBehavior_4" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 4 ? @imageChecked : @imageNotChecked)"/>				
+						<span id="AppropriateAction_ShowAgeAppropriateBehavior_4" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 4 ? "[X]" : "not-checked")</span>				
 			</td>
-			<td style="width:14%;">
-						5 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						5 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? "checked" : "")/><span id="AppropriateAction_ShowAgeAppropriateBehavior_2" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 5 ? "[X]" : "not-checked")</span>					
 			</td>
-			<td style="width:14%;">				
-						6 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_6" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? @imageChecked : @imageNotChecked)"/>
+			<td style="width:14%;text-align:center">			
+						6 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? "checked" : "")/><span id="AppropriateAction_ShowAgeAppropriateBehavior_6" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 6 ? "[X]" : "not-checked")</span>
 			</td>
-			<td style="width:14%;">
-						7 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><img id="AppropriateAction_ShowAgeAppropriateBehavior_7" class='imgCheck' src="@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? @imageChecked : @imageNotChecked)"/>					
+			<td style="width:14%;text-align:center">
+						7 <input type="checkbox" class="cirlce_check" @(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? "checked" : "")/><span id="AppropriateAction_ShowAgeAppropriateBehavior_7" class='imgCheck' >@(formModel.AppropriateAction_ShowAgeAppropriateBehavior == 7 ? "[X]" : "not-checked")</span>					
 			</td>
 		</tr>
 	</table>	
@@ -611,9 +610,9 @@
 	</p>	
 	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_Yes" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;Yes
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "checked" : "")/><span id="AppropriateAction_ShownNewBehaviors_Yes" class='imgCheck' >@(formModel.AppropriateAction_ShownNewBehaviors_Yes.HasValue && formModel.AppropriateAction_ShownNewBehaviors_Yes.Value ? "[X]" : "not-checked")</span>&nbsp;Yes
 				</label>
 			</td>
 			<td>
@@ -625,9 +624,9 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background-color:#ffcc99">
+			<td style="background-color:#ffcc99;padding:3px;">
 				<label class="checkbox-inline" style="font-size:11pt;font-weight:normal">
-					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "checked" : "")/><img id="AppropriateAction_ShownNewBehaviors_No" class='imgCheck' src="@(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? @imageChecked : @imageNotChecked)"/>&nbsp;No
+					<input type="checkbox" @(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "checked" : "")/><span id="AppropriateAction_ShownNewBehaviors_No" class='imgCheck' >@(formModel.AppropriateAction_ShownNewBehaviors_No.HasValue && formModel.AppropriateAction_ShownNewBehaviors_No.Value ? "[X]" : "not-checked")</span>&nbsp;No
 				</label>
 			<td>
 				<p>2</p>
