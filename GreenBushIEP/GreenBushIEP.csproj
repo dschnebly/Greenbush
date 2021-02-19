@@ -1168,7 +1168,6 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
-    <Content Include="Views\ILP\HtmlPage1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -1314,6 +1313,7 @@
     <Content Include="Views\ILP\_EducationPlanModule.cshtml" />
     <Content Include="Views\ILP\_ProgressCreditModule.cshtml" />
     <Content Include="Views\ILP\_DocumentStorageModule.cshtml" />
+    <Content Include="Views\ILP\EditLearner.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

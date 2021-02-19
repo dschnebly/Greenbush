@@ -1,0 +1,821 @@
+﻿@model GreenBushIEP.Models.LearnerDetailsViewModel
+
+@{
+    ViewBag.Title = "Create Learner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            outline: none;
+            background: white;
+            cursor: inherit;
+            display: block;
+        }
+
+    .btn-circle {
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        padding: 6px 0;
+        font-size: 12px;
+        line-height: 1.428571429;
+        border-radius: 15px;
+        border-width: 1px;
+    }
+
+        .btn-circle:focus {
+            outline: none;
+        }
+
+        .btn-circle.btn-lg {
+            width: 50px;
+            height: 50px;
+            padding: 10px 16px;
+            font-size: 18px;
+            line-height: 1.33;
+            border-radius: 25px;
+            margin-bottom: 10px;
+        }
+
+        .btn-circle.btn-xl {
+            width: 70px;
+            height: 70px;
+            padding: 10px 16px;
+            font-size: 24px;
+            line-height: 1.33;
+            border-radius: 35px;
+            margin-bottom: 10px;
+        }
+
+    .wizard {
+        margin: 20px auto;
+        background: #fff;
+    }
+
+        .wizard .nav-tabs {
+            position: relative;
+            margin-bottom: 0;
+            border-bottom-color: #e0e0e0;
+        }
+
+        .wizard > div.wizard-inner {
+            position: relative;
+        }
+
+    .connecting-line {
+        height: 2px;
+        background: #e0e0e0;
+        position: absolute;
+        width: 70%;
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        top: 50%;
+        z-index: 1;
+    }
+
+    .wizard .nav-tabs > li.active > a, .wizard .nav-tabs > li.active > a:hover, .wizard .nav-tabs > li.active > a:focus {
+        color: #555555;
+        cursor: default;
+        border: 0;
+        border-bottom-color: transparent;
+    }
+
+    span.round-tab {
+        width: 70px;
+        height: 70px;
+        line-height: 70px;
+        display: inline-block;
+        border-radius: 100px;
+        background: #fff;
+        border: 2px solid #e0e0e0;
+        z-index: 2;
+        position: absolute;
+        left: 0;
+        text-align: center;
+        font-size: 25px;
+    }
+
+        span.round-tab i {
+            color: #555555;
+        }
+
+    .wizard li.active span.round-tab {
+        background: #fff;
+        border: 2px solid #5bc0de;
+    }
+
+        .wizard li.active span.round-tab i {
+            color: #5bc0de;
+        }
+
+    span.round-tab:hover {
+        color: #333;
+        border: 2px solid #333;
+    }
+
+    .wizard .nav-tabs > li {
+        width: 20%;
+    }
+
+    .wizard li:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 0;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 5px solid transparent;
+        border-bottom-color: #5bc0de;
+        transition: 0.1s ease-in-out;
+    }
+
+    .wizard li.active:after {
+        content: " ";
+        position: absolute;
+        left: 46%;
+        opacity: 1;
+        margin: 0 auto;
+        bottom: 0px;
+        border: 10px solid transparent;
+        border-bottom-color: #5bc0de;
+    }
+
+    .wizard .nav-tabs > li a {
+        width: 70px;
+        height: 70px;
+        margin: 20px auto;
+        border-radius: 100%;
+        padding: 0;
+    }
+
+        .wizard .nav-tabs > li a:hover {
+            background: transparent;
+        }
+
+    .wizard .tab-pane {
+        position: relative;
+        padding-top: 20px;
+    }
+
+    .wizard h3 {
+        margin-top: 0;
+    }
+
+    .step11 .step22 .step33 .row {
+        padding-bottom: 5px;
+    }
+
+    .unselect_img {
+        width: 18px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .active-header {
+        -moz-border-radius: 5px 5px 0 0;
+        -webkit-border-radius: 5px 5px 0 0;
+        border-radius: 5px 5px 0 0;
+        background: #F53B27;
+    }
+
+        .active-header:after {
+            content: "\f068";
+            font-family: 'FontAwesome';
+            float: right;
+            margin: 5px;
+            font-weight: 400;
+        }
+
+    .inactive-header {
+        background: #333;
+    }
+
+        .inactive-header:after {
+            content: "\f067";
+            font-family: 'FontAwesome';
+            float: right;
+            margin: 4px 5px;
+            font-weight: 400;
+        }
+
+    .saveandcontinue li button,
+    .saveandcontinue li a {
+        font-size: 18px;
+        line-height: 1.3333333;
+        padding: 10px 16px;
+    }
+
+    .saveandcontinue {
+        padding-top: 15px;
+    }
+
+    .search-choice span {
+        line-height: 2.7;
+        font-size: 14px;
+    }
+
+    .vertical-align {
+        display: flex;
+        align-items: center;
+    }
+
+    .avatar {
+        margin-bottom: 15px;
+    }
+
+    .multiselect-container {
+        position: absolute;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .multiselect-container .input-group {
+            margin: 5px;
+        }
+
+        .multiselect-container > li {
+            padding: 0;
+        }
+
+            .multiselect-container > li > a.multiselect-all label {
+                font-weight: bold;
+            }
+
+            .multiselect-container > li > label.multiselect-group {
+                margin: 0;
+                padding: 3px 20px 3px 10px;
+                height: 100%;
+                font-weight: bold;
+            }
+
+            .multiselect-container > li > a > label {
+                margin: 0;
+                height: 100%;
+                cursor: pointer;
+                font-weight: normal;
+            }
+
+                .multiselect-container > li > a > label.radio,
+                .multiselect-container > li > a > label.checkbox {
+                    margin: 0;
+                }
+
+                .multiselect-container > li > a > label > input[type="checkbox"] {
+                    margin-bottom: 5px;
+                }
+
+    .btn-group > .btn-group:nth-child(2) > .multiselect.btn {
+        border-top-left-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+    .dropdown-menu > li > a {
+        padding: 6px 40px;
+    }
+
+    .dropdown-toggle {
+        padding: 10px 16px;
+        font-size: 18px;
+        line-height: 1.33;
+        border-radius: 0; /* 6px; */
+    }
+
+    .dropdown-toggle {
+        font-size: 14px;
+        min-height: 49px;
+    }
+
+    #AddNewContact:hover {
+        -webkit-animation: pulse 1s ease 0s;
+        -o-animation: pulse 1s ease 0s;
+        -moz-animation: pulse 1s ease 0s;
+        animation: pulse 1s ease 0s;
+    }
+
+    .remove-contact {
+        position: relative;
+        top: 25px;
+        left: 15px;
+    }
+
+    .checkbox label:after,
+    .radio label:after {
+        content: '';
+        display: table;
+        clear: both;
+    }
+
+    .checkbox .cr,
+    .radio .cr {
+        position: relative;
+        display: inline-block;
+        border: 1px solid #a9a9a9;
+        border-radius: .25em;
+        width: 1.3em;
+        height: 1.3em;
+        float: left;
+        margin-right: .5em;
+    }
+
+    .radio .cr {
+        border-radius: 50%;
+    }
+
+        .checkbox .cr .cr-icon,
+        .radio .cr .cr-icon {
+            position: absolute;
+            font-size: .8em;
+            line-height: 0;
+            top: 50%;
+            left: 20%;
+        }
+
+        .radio .cr .cr-icon {
+            margin-left: 0.04em;
+        }
+
+    .checkbox label input[type="checkbox"],
+    .radio label input[type="radio"] {
+        display: none;
+    }
+
+        .checkbox label input[type="checkbox"] + .cr > .cr-icon,
+        .radio label input[type="radio"] + .cr > .cr-icon {
+            transform: scale(3) rotateZ(-20deg);
+            opacity: 0;
+            transition: all .3s ease-in;
+        }
+
+        .checkbox label input[type="checkbox"]:checked + .cr > .cr-icon,
+        .radio label input[type="radio"]:checked + .cr > .cr-icon {
+            transform: scale(1) rotateZ(0deg);
+            opacity: 1;
+        }
+
+        .checkbox label input[type="checkbox"]:disabled + .cr,
+        .radio label input[type="radio"]:disabled + .cr {
+            opacity: .5;
+        }
+
+    .onoffswitch1 {
+        position: relative;
+        width: 110px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .onoffswitch1-checkbox {
+        display: none;
+    }
+
+    .onoffswitch1-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #999999;
+        border-radius: 30px;
+    }
+
+    .onoffswitch1-inner {
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        -moz-transition: margin 0.3s ease-in 0s;
+        -webkit-transition: margin 0.3s ease-in 0s;
+        -o-transition: margin 0.3s ease-in 0s;
+        transition: margin 0.3s ease-in 0s;
+    }
+
+        .onoffswitch1-inner:before, .onoffswitch1-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 45px;
+            padding: 0;
+            line-height: 45px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 45px;
+            box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+        }
+
+        .onoffswitch1-inner:before {
+            content: "Female";
+            padding-left: 10px;
+            background-color: #ffb6c1;
+            color: #FFFFFF;
+            border-radius: 45px 0 0 45px;
+        }
+
+        .onoffswitch1-inner:after {
+            content: "Male";
+            padding-right: 10px;
+            background-color: #2FCCFF;
+            color: #FFFFFF;
+            text-align: right;
+            border-radius: 0 45px 45px 0;
+        }
+
+    .onoffswitch1-switch {
+        display: block;
+        width: 30px;
+        margin: 0px;
+        background: #FFFFFF;
+        border: 2px solid #999999;
+        border-radius: 30px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 80px;
+        -moz-transition: all 0.3s ease-in 0s;
+        -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s;
+        transition: all 0.3s ease-in 0s;
+        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        box-shadow: 0 1px 1px white inset;
+    }
+
+    .onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch1-checkbox:checked + .onoffswitch1-label .onoffswitch1-switch {
+        right: 0px;
+    }
+
+    .onoffswitch2 {
+        position: relative;
+        width: 110px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+    }
+
+    .onoffswitch2-checkbox {
+        display: none;
+    }
+
+    .onoffswitch2-label {
+        display: block;
+        overflow: hidden;
+        cursor: pointer;
+        border: 2px solid #999999;
+        border-radius: 30px;
+    }
+
+    .onoffswitch2-inner {
+        display: block;
+        width: 200%;
+        margin-left: -100%;
+        -moz-transition: margin 0.3s ease-in 0s;
+        -webkit-transition: margin 0.3s ease-in 0s;
+        -o-transition: margin 0.3s ease-in 0s;
+        transition: margin 0.3s ease-in 0s;
+    }
+
+        .onoffswitch2-inner:before, .onoffswitch2-inner:after {
+            display: block;
+            float: left;
+            width: 50%;
+            height: 45px;
+            padding: 0;
+            line-height: 45px;
+            font-size: 14px;
+            color: white;
+            font-family: Trebuchet, Arial, sans-serif;
+            font-weight: bold;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            border-radius: 45px;
+            box-shadow: 0px 15px 0px rgba(0,0,0,0.08) inset;
+        }
+
+        .onoffswitch2-inner:before {
+            content: "YES";
+            padding-left: 10px;
+            background-color: #2FCCFF;
+            color: #FFFFFF;
+            border-radius: 45px 0 0 45px;
+        }
+
+        .onoffswitch2-inner:after {
+            content: "NO";
+            padding-right: 10px;
+            background-color: #FFFFFF;
+            color: #999999;
+            text-align: right;
+            border-radius: 0 45px 45px 0;
+        }
+
+    .onoffswitch2-switch {
+        display: block;
+        width: 30px;
+        margin: 0px;
+        background: #FFFFFF;
+        border: 2px solid #999999;
+        border-radius: 30px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 80px;
+        -moz-transition: all 0.3s ease-in 0s;
+        -webkit-transition: all 0.3s ease-in 0s;
+        -o-transition: all 0.3s ease-in 0s;
+        transition: all 0.3s ease-in 0s;
+        background-image: -moz-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: -webkit-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: -o-linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        background-image: linear-gradient(center top, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 80%);
+        box-shadow: 0 1px 1px white inset;
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-inner {
+        margin-left: 0;
+    }
+
+    .onoffswitch2-checkbox:checked + .onoffswitch2-label .onoffswitch2-switch {
+        right: 0px;
+    }
+
+    .required {
+        color: #C9302C;
+    }
+
+    .norequired {
+        border: 1px solid #aaa;
+    }
+
+    .contact-tooltip {
+        border: 2px solid #9F6000;
+    }
+
+    @@media( max-width : 585px ) {
+
+        .wizard {
+            width: 90%;
+            height: auto !important;
+        }
+
+        span.round-tab {
+            font-size: 16px;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard .nav-tabs > li a {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+        }
+
+        .wizard li.active:after {
+            content: " ";
+            position: absolute;
+            left: 35%;
+        }
+
+        .add-contact {
+            position: relative;
+            top: -40px;
+        }
+    }
+
+    @@-webkit-keyframes pulse {
+        0% {
+            -webkit-transform: scale(1);
+        }
+
+        50% {
+            -webkit-transform: scale(1.2);
+        }
+
+        100% {
+            -webkit-transform: scale(1);
+        }
+    }
+
+    @@-o-keyframes pulse {
+        0% {
+            -o-transform: scale(1);
+        }
+
+        50% {
+            -o-transform: scale(1.2);
+        }
+
+        100% {
+            -o-transform: scale(1);
+        }
+    }
+
+    @@-moz-keyframes pulse {
+        0% {
+            -moz-transform: scale(1);
+        }
+
+        50% {
+            -moz-transform: scale(1.2);
+        }
+
+        100% {
+            -moz-transform: scale(1);
+        }
+    }
+
+    @@keyframes pulse {
+        0% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.2);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
+</style>
+
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/chosen.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <ul class="breadcrumb" style="margin-top: 18px;">
+                <li>@Html.ActionLink((string)(ViewBag.RoleName + " Portal").ToString(), "Portal", "Home", null, new { style = "font-size: 30px;", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                <li class="active" style="font-size: 20px;">@ViewBag.Title</li>
+            </ul>
+        </div>
+        <div class="col-md-2 pull-right">
+            @Html.ActionLink(" ", "Index", "ILP", null, new { id = "backtoportal", title = "Cancel action and go back to my current users list", role = "button", @class = "glyphicon glyphicon-arrow-left btn btn-info pull-right", data_ftrans = "slide reverse ", data_ajax = "false", style = "margin-top:20px; margin-bottom:10px; font-size:20px; font-weight:bold; background-color: #337ab7 !important;" })
+        </div>
+    </div>
+    <div id="step1" class="tab-pane active" role="tabpanel">
+        <div class="row">
+            <div class="col-md-5 checkbox">
+                <label style="padding-left: 0;"><input type="checkbox" id="nokidsId" @(ViewBag.isNoKidsId ? "checked=checked" : string.Empty )><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>KIDS ID not available</label>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("EidtLearner", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("studentId", 0)
+            <div class="step11">
+                <div class="row">
+                    <div class="col-md-3">
+                        <label class="required" for="kidsid">KIDS ID</label>
+                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", disabled = "disabled", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
+                        @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-3">
+                        <div class="bootstrap-iso">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <label class="required" for="dob">Birthdate</label>
+                                    @Html.EditorFor(model => model.student.DateOfBirth, new { htmlAttributes = new { @Value = @Model.student.DateOfBirth.ToString("MM/dd/yyyy"), @class = "form-control required sdob", placeholder = "mm/dd/yyyy  e.g. 08/25/1977", type = "text", id = "dob", @Name = "dob", data_validate = "true" } })
+                                    @Html.ValidationMessage("dob", "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="studentPlacement">Program</label>
+                        <select name="studentPlacement" id="studentPlacement" class="form-control chosen-select" multiple="multiple">
+                            @if (Model.programs != null)
+                            {
+                                foreach (var program in Model.programs)
+                                {
+                                    <option value="@program.ProgramCode">@program.ProgramName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Gender</label>
+                        <div class="onoffswitch1">
+                            <input type="checkbox" name="gender" class="onoffswitch1-checkbox" id="gender" @(Model.info.Gender == "F" ? "checked" : string.Empty)>
+                            <label class="onoffswitch1-label" for="gender">
+                                <span class="onoffswitch1-inner"></span>
+                                <span class="onoffswitch1-switch"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label class="required" for="firstname">First Name</label>
+                        @Html.EditorFor(model => model.student.FirstName, new { htmlAttributes = new { @class = "form-control", id = "firstname", Name = "firstname", placeholder = "Legal First Name", data_validate = "true" } })
+                        @Html.ValidationMessageFor(model => model.student.FirstName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        <label for="middlename">Middle Name</label>
+                        @Html.EditorFor(model => model.student.MiddleName, new { htmlAttributes = new { @class = "form-control", id = "middlename", Name = "middlename", placeholder = "Legal Middle Name" } })
+                        @Html.ValidationMessageFor(model => model.student.MiddleName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-4">
+                        <label class="required" for="lastname">Last Name</label>
+                        @Html.EditorFor(model => model.student.LastName, new { htmlAttributes = new { @class = "form-control", id = "lastname", Name = "lastname", placeholder = "Legal Last Name", data_validate = "true" } })
+                        @Html.ValidationMessageFor(model => model.student.LastName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="primaryDisability">Primary Disability</label>
+                        <select class="form-control" name="primaryDisability" id="primaryDisability">
+                            @if (Model.primaryDisabilities != null)
+                            {
+                                foreach (var primary in Model.primaryDisabilities)
+                                {
+                                    var selected = (primary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                    <option value="@primary.DisabilityCode" @(selected)>@primary.DisabilityDescription</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="secondaryDisability">Secondary Disability</label>
+                        <select class="form-control" name="secondaryDisability" id="secondaryDisability">
+                            @if (Model.secondaryDisabilities != null)
+                            {
+                                foreach (var secondary in Model.secondaryDisabilities)
+                                {
+                                    var selected = (secondary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                    <option value="@secondary.DisabilityCode" @(selected)>@secondary.DisabilityDescription</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="email">Learner Email</label>
+                        @Html.EditorFor(model => model.student.Email, new { htmlAttributes = new { @class = "form-control norequired", id = "email", Name = "email", placeholder = "User email" } })
+                        @Html.ValidationMessageFor(model => model.student.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-md-6">
+                        <label class="required" for="misDistrict">Attending Location</label>
+                        <select name="misDistrict" class="form-control" data-placeholder="Choose a location..." id="misDistrict" style="max-height: 49px;" data-validate="true" required>
+                            @if (Model.allLocations != null)
+                            {
+                                foreach (var location in Model.allLocations)
+                                {
+                                    string selected = Model.selectedLocations.Contains(location) ? "selected=selected" : "";
+                                    <option value="@location.LocationID" @selected>@location.LocationName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <ul class="list-inline pull-right saveandcontinue">
+                <li>@Html.ActionLink("Cancel", "Index", "ILP", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
+                <li><button type="button" class="btn btn-info next-step" id="submitLearner" style="background-color: #337ab7 !important;">Save Changes</button></li>
+            </ul>
+        }
+    </div>
+</div>
+
+<var data-reload="true" data-src="/Scripts/createlearner.js"></var>
+
+@section scripts {
+    @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
+    @Scripts.Render("~/Scripts/fasw.transitions.js")
+    @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
+    @Scripts.Render("~/Scripts/createlearner.js")
+}
