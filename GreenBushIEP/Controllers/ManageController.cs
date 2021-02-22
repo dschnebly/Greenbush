@@ -2204,12 +2204,65 @@ namespace GreenBushIEP.Controllers
 
                     Console.Write(exceptionMessage);
                 }
-
             }
 
             return Json(new { Result = "error", Message = "There was an error while trying to create the user. Please try again or contact your administrator." });
         }
 
+        [HttpGet]
+        public ActionResult EditLearner(int id, bool backToStudentILP = false)
+        {
+            LearnerDetailsViewModel model = new LearnerDetailsViewModel();
+
+            tblUser learner = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
+            if(learner != null)
+            {
+                model.student.UserID = id;
+                model.student.FirstName = learner.FirstName;
+                model.student.MiddleName = learner.MiddleName;
+                model.student.LastName = learner.LastName;
+                model.student.City = learner.City;
+                model.student.State = learner.State;
+                model.student.Email = learner.Email;
+                model.student.RoleID = "10";
+                model.student.ImageURL = learner.ImageURL;
+                model.student.Address1 = learner.Address1;
+                model.student.Address2 = learner.Address2;
+                model.student.Zip = learner.Zip;
+            }
+
+            tblStudentInfo studentinfo = db.tblStudentInfoes.Where(i => i.UserID == id).FirstOrDefault();
+            if (studentinfo != null)
+            {
+                model.student.KidsID = studentinfo.KIDSID;
+                model.student.DateOfBirth = studentinfo.DateOfBirth;
+                model.student.USD = studentinfo.USD;
+                model.student.BuildingID = studentinfo.BuildingID;
+                model.student.NeighborhoodBuildingID = studentinfo.NeighborhoodBuildingID;
+                model.info = studentinfo;
+            }
+
+            model.locations = (from l in db.vw_ILP_Locations join ul in db.tbl_ILP_UserLocations on l.LocationID equals ul.LocationID where model.submitter.UserID == ul.UserID select l).Distinct().ToList();
+            model.allLocations = db.vw_ILP_Locations.ToList();
+            model.programs = db.tbl_ILP_Programs.ToList();
+            model.selectedPrograms = (from p in db.tbl_ILP_Programs join u in db.tbl_ILP_UserPrograms on p.ProgramCode equals u.ProgramCode where u.UserID == id select p).Distinct().ToList();
+            model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
+            model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
+            model.statusCode = db.tblStatusCodes.ToList();
+            model.grades = db.tblGrades.ToList();
+            model.races = db.tblRaces.ToList();
+            model.submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
+            if (model.student.USD != null)
+            {
+                var attendingLocations = model.student.USD.Split(',').ToList();
+                model.selectedLocations = db.vw_ILP_Locations.Where(o => attendingLocations.Contains(o.LocationID)).Distinct().ToList();
+            }
+
+            ViewBag.isNoKidsId = model.student.KidsID == 0;
+
+            return View("~/Views/ILP/EditLearner.cshtml", model);
+        }
 
         // GET: Manage/CreateStudent
         [HttpGet]
@@ -2718,6 +2771,7 @@ namespace GreenBushIEP.Controllers
             {
                 student = new Student()
             };
+
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             if (student != null)
             {

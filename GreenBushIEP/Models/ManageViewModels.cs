@@ -395,6 +395,7 @@ namespace GreenBushIEP.Models
             allLocations= new List<vw_ILP_Locations>();
             selectedLocations = new List<vw_ILP_Locations>();
             programs = new List<tbl_ILP_Programs>();
+            selectedPrograms = new List<tbl_ILP_Programs>();
             primaryDisabilities = new List<vw_PrimaryDisabilities>();
             secondaryDisabilities = new List<vw_SecondaryDisabilities>();
             statusCode = new List<tblStatusCode>();
@@ -413,6 +414,7 @@ namespace GreenBushIEP.Models
         public List<vw_ILP_Locations> selectedLocations { get; set; }
         public List<tblStatusCode> statusCode { get; set; }
         public List<tbl_ILP_Programs> programs { get; set; }
+        public List<tbl_ILP_Programs> selectedPrograms { get; set; }
         public List<vw_PrimaryDisabilities> primaryDisabilities { get; set; }
         public List<vw_SecondaryDisabilities> secondaryDisabilities { get; set; }
         public List<tblStatusCode> statusCodes { get; set; }
