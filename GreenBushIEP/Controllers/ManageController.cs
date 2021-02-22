@@ -2245,6 +2245,7 @@ namespace GreenBushIEP.Controllers
             model.locations = (from l in db.vw_ILP_Locations join ul in db.tbl_ILP_UserLocations on l.LocationID equals ul.LocationID where model.submitter.UserID == ul.UserID select l).Distinct().ToList();
             model.allLocations = db.vw_ILP_Locations.ToList();
             model.programs = db.tbl_ILP_Programs.ToList();
+            model.selectedPrograms = (from p in db.tbl_ILP_Programs join u in db.tbl_ILP_UserPrograms on p.ProgramCode equals u.ProgramCode where u.UserID == id select p).Distinct().ToList();
             model.primaryDisabilities = db.vw_PrimaryDisabilities.ToList();
             model.secondaryDisabilities = db.vw_SecondaryDisabilities.ToList();
             model.statusCode = db.tblStatusCodes.ToList();

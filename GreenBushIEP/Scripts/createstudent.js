@@ -436,7 +436,6 @@ function createStudentContacts() {
 	
 }
 
-
 function editStudentContacts() {	
 
 		$.ajax({
@@ -494,6 +493,17 @@ function editStudentContacts() {
 	
 }
 
+$("#btnPrimaryContactContinue").on("click", function () {
+    $('#primaryContactErrorModal').modal('toggle');
+
+    var studentId = $("#id").val();
+    if (studentId > 0) {
+        editStudentContacts();
+    }
+    else {
+        createStudentContacts();
+    }    
+});
 $("#next2").on("click", function () {
 
     var theForm = document.getElementById("createNewStudent");
@@ -568,19 +578,6 @@ $("#next3").on("click", function () {
 
     }
 });
-
-$("#btnPrimaryContactContinue").on("click", function () {
-    $('#primaryContactErrorModal').modal('toggle');
-
-    var studentId = $("#id").val();
-    if (studentId > 0) {
-        editStudentContacts();
-    }
-    else {
-        createStudentContacts();
-    }    
-});
-
 $("#next4").on("click", function () {
 	if (tabValidates()) {
 		//var theForm = document.getElementById("editStudentContacts");
@@ -593,7 +590,6 @@ $("#next4").on("click", function () {
 		}
 	}    
 });
-
 $("#next5").on("click", function () {
 
     var theForm = document.getElementById("editStudent");
@@ -649,7 +645,6 @@ $("#next6").on("click", function () {
 
     }
 });
-
 $("#next7").on("click", function () {
 
 	if (tabValidates()) {
@@ -670,7 +665,6 @@ $("#next7").on("click", function () {
 	}
     
 });
-
 $("#next8").on("click", function () {
 
 
@@ -732,4 +726,3 @@ jQuery.fn.extend({
         return listrap;
     }
 });
-

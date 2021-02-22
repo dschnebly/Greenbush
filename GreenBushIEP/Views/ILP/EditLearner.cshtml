@@ -5,6 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/chosen.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
+}
+
 <style>
     .btn-file {
         position: relative;
@@ -667,12 +673,6 @@
     }
 </style>
 
-@section stylesheets {
-    @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/chosen.css")
-    @Styles.Render("~/Content/jquery-ui.min.css")
-}
-
 <div class="container">
     <div class="row">
         <div class="col-md-10">
@@ -716,12 +716,13 @@
                     </div>
                     <div class="col-md-4">
                         <label for="studentPlacement">Program</label>
-                        <select name="studentPlacement" id="studentPlacement" class="form-control chosen-select" multiple="multiple">
+                        <select name="studentPlacement" id="studentPlacement" class="form-control chosen-select" multiple="multiple" data-placeholder="Choose a program...">
                             @if (Model.programs != null)
                             {
                                 foreach (var program in Model.programs)
                                 {
-                                    <option value="@program.ProgramCode">@program.ProgramName</option>
+                                    string selected = Model.selectedPrograms.Contains(program) ? "selected=selected" : "";
+                                    <option value="@program.ProgramCode" @selected>@program.ProgramName</option>
                                 }
                             }
                         </select>
