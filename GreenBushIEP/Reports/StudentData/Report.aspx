@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<div class="row"  style="margin-bottom: 15px;">
-		<h2>Student Data Report</h2>
+		<h2>Student Data and Status Report</h2>
 	</div>
 	<div class="row"  style="margin-bottom: 15px;">
 		<div class="col-md-12" style="margin-bottom: 12px;">
