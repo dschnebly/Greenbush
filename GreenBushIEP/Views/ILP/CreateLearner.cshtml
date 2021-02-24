@@ -578,6 +578,25 @@
         border: 2px solid #9F6000;
     }
 
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -686,12 +705,14 @@
         </div>
     </div>
     <div id="step1" class="tab-pane active" role="tabpanel">
+        <div class="ajax-loader">
+            <img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
+        </div>
         <div class="row">
             <div class="col-md-5 checkbox">
                 <label style="padding-left: 0;"><input type="checkbox" id="nokidsId"><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>KIDS ID not available</label>
             </div>
         </div>
-
         @using (Html.BeginForm("CreateLearner", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -810,7 +831,10 @@
         }
     </div>
 </div>
+<br />
+<br />
 
+<!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/createlearner.js"></var>
 
 @section scripts {

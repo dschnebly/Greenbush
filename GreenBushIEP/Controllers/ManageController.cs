@@ -2007,9 +2007,7 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //check if we already created this student
-
                     tblUser student = new tblUser();
-
                     if (studentId != 0)
                     {
                         student = db.tblUsers.Where(u => u.UserID == studentId).FirstOrDefault();
@@ -2215,7 +2213,7 @@ namespace GreenBushIEP.Controllers
             LearnerDetailsViewModel model = new LearnerDetailsViewModel();
 
             tblUser learner = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
-            if(learner != null)
+            if (learner != null)
             {
                 model.student.UserID = id;
                 model.student.FirstName = learner.FirstName;
@@ -2259,9 +2257,109 @@ namespace GreenBushIEP.Controllers
                 model.selectedLocations = db.vw_ILP_Locations.Where(o => attendingLocations.Contains(o.LocationID)).Distinct().ToList();
             }
 
-            ViewBag.isNoKidsId = model.student.KidsID == 0;
-
             return View("~/Views/ILP/EditLearner.cshtml", model);
+        }
+
+        [HttpPost]
+        public ActionResult EditLearner(FormCollection collection)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    long learnerId = Convert.ToInt64(collection["studentId"]);
+                    long kidsID = Convert.ToInt64(collection["kidsid"]);
+                    tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+
+                    tblUser learner = db.tblUsers.Where(u => u.UserID == learnerId).FirstOrDefault();
+                    if (learner != null)
+                    {
+                        learner.FirstName = collection["firstname"];
+                        learner.MiddleName = collection["middlename"];
+                        learner.LastName = collection["lastname"];
+                        learner.Email = string.IsNullOrEmpty(collection["email"]) ? null : collection["email"].ToString();
+                    }
+
+                    // KIDSid is still new and fresh
+                    tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
+                    if (exsistingStudent != null  && exsistingStudent.UserID != learnerId)
+                    {
+                        return Json(new { Result = "error", Message = "The student or kidsId is already in the Greenbush system. Please contact Greenbush." });
+                    }
+
+                    //Remove the buildings.
+                    tblStudentInfo learnerInfo = db.tblStudentInfoes.Where(s => s.UserID == learnerId).FirstOrDefault();
+                    if (learnerInfo != null)
+                    {
+                        // remove all the buildingId. Blow it all away.
+                        db.tblBuildingMappings.RemoveRange(db.tblBuildingMappings.Where(b => b.UserID == learnerId));
+
+                        learnerInfo.KIDSID = kidsID;
+                        learnerInfo.DateOfBirth = Convert.ToDateTime(collection["dob"]);
+                        learnerInfo.Gender = (string.IsNullOrEmpty(collection["gender"])) ? "M" : "F";
+                        learnerInfo.Primary_DisabilityCode = collection["primaryDisability"] != null ? collection["primaryDisability"].ToString() : "";
+                        learnerInfo.Secondary_DisabilityCode = collection["secondaryDisability"] != null ? collection["secondaryDisability"].ToString() : "";
+                        learnerInfo.USD = collection["misDistrict"];
+                        learnerInfo.Update_Date = DateTime.Now;
+
+                        db.SaveChanges();
+                    }
+
+                    // map the buildings in the building mapping table
+                    try
+                    {
+                        db.tblBuildingMappings.Add(new tblBuildingMapping() { BuildingID = "0", USD = learnerInfo.USD, UserID = learnerInfo.UserID, Create_Date = DateTime.Now });
+                        db.SaveChanges();
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while trying to edit the user. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    // map the user to userPrograms
+                    try
+                    {
+                        string programValues = collection["studentPlacement"];
+
+                        if (!string.IsNullOrEmpty(programValues))
+                        {
+                            string[] programArray = programValues.Split(',');
+
+                            //remove the existing programs
+                            List<tbl_ILP_UserPrograms> fullList = db.tbl_ILP_UserPrograms.Where(o => o.UserID == learnerId).ToList();
+                            db.tbl_ILP_UserPrograms.RemoveRange(fullList);
+                            db.SaveChanges();
+
+                            // add the new programs
+                            foreach (string program in programArray)
+                            {
+                                tbl_ILP_UserPrograms prog = new tbl_ILP_UserPrograms
+                                {
+                                    ProgramCode = program,
+                                    UserID = learner.UserID,
+                                    LocationID = null
+                                };
+
+                                db.tbl_ILP_UserPrograms.Add(prog);
+                                db.SaveChanges();
+                            }
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        return Json(new { Result = "error", Message = "There was an error while adding the user to the UserPrograms table. \n\n" + e.InnerException.ToString() });
+                    }
+
+                    return Json(new { Result = "success", Message = learner.UserID });
+                }
+                catch (Exception e)
+                {
+
+                    return Json(new { Result = "error", Message = "There was an error while adding the user to the UserPrograms table. \n\n" + e.InnerException.ToString() });
+                }
+            }
+
+            return Json(new { Result = "error", Message = "There was an error while trying to edit the user. Please try again or contact your administrator." });
         }
 
         // GET: Manage/CreateStudent

@@ -1,6 +1,21 @@
 ﻿$(document).ready(function () {
 
-    init();
+    $(".sdob").datepicker({
+        dateFormat: "mm/dd/yy",
+        changeMonth: true,
+        changeYear: true
+    });
+
+    $(".chosen-select").chosen({
+        disable_search_threshold: 10,
+        no_results_text: "Oops, nothing found!",
+        width: "100%"
+    });
+
+    $("#submitForm").on('click', function () {
+        var numForms = document.forms.length;
+        document.forms[numForms - 1].submit();
+    });
 
     // attach event
     // fires when an avatar is uploaded
@@ -36,62 +51,87 @@
             $("#kidsid").val("0000000000");
         }
     });
+
+    $("#submitEditLearner").on("click", function () {
+
+        if ($("#misDistrict").val() === "" || $("#misDistrict").val() === null) {
+            $("#misDistrict_chosen").addClass('contact-tooltip');
+
+            return alert("Attending Location is required.");
+        } else {
+            $("#misDistrict_chosen").removeClass('contact-tooltip');
+        }
+
+        if (tabValidates()) {
+            $(".ajax-loader").show();
+
+            $.ajax({
+                url: '/Manage/EditLEarner',
+                type: 'POST',
+                data: $("#editLearner").serialize(),
+                success: function (data) {
+                    if (data.Result === "success") {
+                        window.location.href = "/ILP/Index";
+                    } else {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data) {
+                    alert("There was an error when attempt to connect to the server.");
+                },
+                complete: function () {
+                    $(".ajax-loader").hide();
+                }
+            });
+        }
+    });
+
+    $("#submitLearner").on("click", function () {
+
+        var theForm = document.getElementById("createNewStudent");
+
+        if ($("#misDistrict").val() === "" || $("#misDistrict").val() === null) {
+            $("#misDistrict_chosen").addClass('contact-tooltip');
+
+            return alert("Attending Location is required.");
+        } else {
+            $("#misDistrict_chosen").removeClass('contact-tooltip');
+        }
+
+        if (tabValidates()) {
+            $(".ajax-loader").show();
+
+            $.ajax({
+                url: '/Manage/CreateLearner',
+                type: 'POST',
+                data: $("#createNewStudent").serialize(),
+                success: function (data) {
+                    if (data.Result === "success") {
+                        window.location.href = "/ILP/Index";
+                    } else {
+                        alert(data.Message);
+                    }
+                },
+                error: function (data) {
+                    alert("There was an error when attempt to connect to the server.");
+                },
+                complete: function () {
+                    $(".ajax-loader").hide();
+                }
+            });
+        }
+    });
 });
 
-function init() {
-
-    $(".sdob").datepicker({
-        dateFormat: "mm/dd/yy",
-        changeMonth: true,
-        changeYear: true
-    });
-
-    $(".chosen-select").chosen({
-        disable_search_threshold: 10,
-        no_results_text: "Oops, nothing found!",
-        width: "100%"
-    });
-
-    $("#submitForm").on('click', function () {
-        var numForms = document.forms.length;
-        document.forms[numForms - 1].submit();
-    });
-}
-
-$("#submitLearner").on("click", function () {
-
-    var theForm = document.getElementById("createNewStudent");
-
-    if ($("#misDistrict").val() === "" || $("#misDistrict").val() === null) {
-        $("#misDistrict_chosen").addClass('contact-tooltip');
-
-        return alert("Attending Location is required.");
-    } else {
-        $("#misDistrict_chosen").removeClass('contact-tooltip');
-    }
-
-    if (tabValidates()) {
-        $.ajax({
-            url: '/Manage/CreateLearner',
-            type: 'POST',
-            data: $("#createNewStudent").serialize(),
-            success: function (data) {
-                if (data.Result === "success") {
-                    window.location.href = "/ILP/Index";
-                } else {
-                    alert(data.Message);
-                }
-            },
-            error: function (data) {
-                alert("There was an error when attempt to connect to the server.");
-            }
-        });
+// once the page is fully loaded, hide the ajax loading icon.
+document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === "complete") {
+        $(".ajax-loader").hide();
     }
 });
 
 function tabValidates() {
     var validates = true;
-    //var stepId = $('.wizard .nav-tabs li.active a').attr('href');
     var $inputs = $("#step1 :input[data-validate='true']");
 
     $inputs.each(function () {
