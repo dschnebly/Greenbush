@@ -1,4 +1,17 @@
 ﻿
+<style>
+    label {
+        font-family: DM Serif Text;
+        font-size: 13pt;
+        font-weight: 600;
+    }
+
+    input, button, select, textarea {
+        font-family: Josefin Sans;
+        font-size: 14pt !important;
+    }
+</style>
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
     <button type="button" class="print-module" id="printModuleBtn"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
@@ -8,5 +21,91 @@
     </h4>
 </div>
 <div class="modal-body">
-    <p>Filler Text</p>
+    @using (Html.BeginForm("CreateEducationHistory", "ILP", FormMethod.Post, new { }))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label for="IntialPlan">Date of Intial Plan Development:&nbsp;&nbsp;</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input id="IntialPlan" name="IntialPlan" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("MM/dd/yyyy"))" style="z-index: 99999; max-width: 135px;">
+                    </div>
+                </div>
+                <div class="form-group col-md-3  col-md-push-1">
+                    <label for="IntialPlan">Date of Intial Plan Development:&nbsp;&nbsp;</label>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        <input id="PlannedGraduation" name="PlannedGraduation" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(DateTime.Now.ToString("MM/dd/yyyy"))" style="z-index: 99999; max-width: 135px;">
+                    </div>
+                </div>
+            </div>
+            <fieldset class="form-group">
+                <label style="padding: 18px 0 15px;">What are my skills, strengths and abilities:&nbsp;&nbsp;</label>
+                <div class="form-check">
+                    <textarea class="form-control standard-font-size" id="StrengthAbilites" name="StrengthAbilites" rows="3" placeholder="Describe your strengths and abilities"></textarea>
+                </div>
+                <label style="padding: 10px 0 1px;">What are my interests:&nbsp;&nbsp;</label>
+                <div class="form-check">
+                    <textarea class="form-control standard-font-size" id="Interest" name="Interest" rows="3" placeholder="Describe your interest"></textarea>
+                </div>
+            </fieldset>
+            <fieldset class="form-group">
+                <label class="standard-font-size" style="padding: 18px 0 15px;">What is important to me?  What are my core values and principles?</label>
+                <div class="form-check">
+                    <textarea class="form-control standard-font-size" name="ImporantValuesPrinciples" id="ImporantValuesPrinciples" rows="3"></textarea>
+                </div>
+            </fieldset>
+            <div class="col-md-12" style="text-align:center; margin-top: 15px;">
+                <div class="form-group">
+                    <button type="submit" class="formbtn btn btn-primary btn-lg"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
+                    <button type="button" class="formbtn btn btn-success btn-lg" id="saveBehaviorCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+<br />
+<br />
+
+<script>
+    (function () {
+        $(".dtField:not([readonly])").datepicker({
+            dateFormat: "mm/dd/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+5",
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                return [day != 0 && day != 6]; //day != 0/6 disables all Sundays and Saturdays
+            }
+        });
+
+        ////////
+        // Extensions
+        ///////
+        // datepicker doesn't line up correctly. This fixes the problem.
+        $.extend($.datepicker, {
+            _checkOffset: function (inst, offset, isFixed) {
+                if (!isFixed) {
+                    return checkOffset.apply(this, arguments);
+                }
+
+                let isRTL = this._get(inst, "isRTL");
+                let obj = inst.input[0];
+
+                while (obj && (obj.type === "hidden" || obj.nodeType !== 1 || $.expr.filters.hidden(obj))) {
+                    obj = obj[isRTL ? "previousSibling" : "nextSibling"];
+                }
+
+                let rect = obj.getBoundingClientRect();
+
+                return {
+                    top: rect.top + 40,
+                    left: rect.left,
+                };
+            }
+        });
+    })();
+</script>

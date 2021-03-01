@@ -3,8 +3,8 @@
     // attach event
     // fires when user clicks a button
     $(".module-section").on("click", function (e) {
-        var stId = $("#stid").val();
-        var ilpId = $("#studentIEPId").val();
+        var stId = $("#studentIEPId").val();
+        var ilpId = $("#ILPid").val();
         var ModuleView = $(e.currentTarget).data("view");
 
         $('.ajax-loader').css("visibility", "visible");
@@ -13,7 +13,7 @@
             type: 'GET',
             url: '/ILP/LoadModuleSection',
             data: {
-                studentId: 99999, //stId,
+                studentId: stId, //stId,
                 ilpId: ilpId,
                 view: ModuleView
             },
