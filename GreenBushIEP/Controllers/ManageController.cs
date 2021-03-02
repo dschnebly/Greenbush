@@ -3104,7 +3104,10 @@ namespace GreenBushIEP.Controllers
 
                     //check if exit
                     tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
-                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive";
+                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive" 
+                        && info.StatusCode != "0"  
+                        && info.StatusCode != "1"
+                        && info.StatusCode != "2";
                     if (isExit && !info.ExitDate.HasValue)
                     {
                         return Json(new { Result = "error", Message = "Please enter an Exit date." });
