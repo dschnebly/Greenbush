@@ -78,29 +78,32 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult LearnerProcedures(int stid, int? iepID = null, int? rtnId = null)
+        public ActionResult LearnerProcedures(int stid, int? rtnId = null)
         {
             StudentProcedureViewModel model = new StudentProcedureViewModel();
 
             tblUser currentUser = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-            tblUser student = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
-            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == student.UserID).FirstOrDefault();
+            tblUser learner = db.tblUsers.Where(u => u.UserID == stid).FirstOrDefault();
+            tblStudentInfo info = db.tblStudentInfoes.Where(i => i.UserID == learner.UserID).FirstOrDefault();
             tblBuilding building = db.tblBuildings.Where(b => b.BuildingID == info.BuildingID).FirstOrDefault();
             tblDistrict district = db.tblDistricts.Where(d => d.USD == building.USD).FirstOrDefault();
-            tblStudentRelationship relationship = db.tblStudentRelationships.Where(r => r.UserID == stid && r.PrimaryContact == 1).FirstOrDefault();
 
             ViewBag.UserRoleId = currentUser.RoleID;
             //ViewBag.ReturnBtn = rtnId.HasValue ? string.Format("/Home/TeacherStudentsRole/{0}", rtnId.Value) : ""; //re-route back button
 
-            if (student != null)
+            if (learner != null)
             {
-                model.student = student;
+                model.student = learner;
                 model.birthDate = info.DateOfBirth;
-                model.isDoc = district.DOC;
-                model.isGiftedOnly = info.isGifted && info.Primary_DisabilityCode == "ND" && info.Secondary_DisabilityCode == "ND";
-
-
                 model.KIDSID = info.KIDSID.ToString();
+
+                //We need a ILPModel to get us what we need
+                tblIEP ILP = db.tblIEPs.Where(u => u.UserID == learner.UserID).FirstOrDefault();
+                if(ILP != null)
+                {
+                    ViewBag.ILPid = ILP.IEPid;
+                }
+
                 //model.PRIMARYPARENT = relationship != null;
                 //model.STUDENTGRADE = theIEP.studentGrade;
                 //model.STUDENTCODE = theIEP.studentCode;
@@ -173,6 +176,12 @@ namespace GreenBushIEP.Controllers
             {
                 return Json(new { Result = "error", Message = e.Message.ToString() }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public ActionResult CreateEducationHistory()
+        {
+            return RedirectToAction("LearnerProcedures", new { stid = 4352 });
         }
     }
 }

@@ -204,6 +204,8 @@
         if ($("#confirmDeletion").val() === "DELETE") {
             var userId = $(e.currentTarget).parent().parent().find("input[name='id']").val();
 
+            $(".ajax-loader").show();
+
             $.ajax({
                 type: "POST",
                 url: "/Manage/DeleteILPUser",
@@ -212,7 +214,6 @@
                 },
                 dataType: "json",
                 success: function (data) {
-                    debugger;
                     var currentUser = $("div.list-group-item[data-id='" + userId + "']");
                     $(currentUser).remove();
 
@@ -226,6 +227,11 @@
                     $("#alertMessage").fadeTo(2000, 500).slideUp(500, function () {
                         $("#alertMessage").slideUp(500);
                     });
+                },
+                complete: function (data) {
+                    $(".ajax-loader").hide();
+                    //A function to be called when the request finishes 
+                    // (after success and error callbacks are executed). 
                 }
             });
         }
@@ -257,5 +263,12 @@
         while (i--) {
             filterCollection[i].classList.add("hidden");
         }
+    }
+});
+
+// once the page is fully loaded, hide the ajax loading icon.
+document.addEventListener('readystatechange', event => {
+    if (event.target.readyState === "complete") {
+        $(".ajax-loader").hide();
     }
 });

@@ -1,14 +1,8 @@
 ﻿@model GreenBushIEP.Models.LearnerDetailsViewModel
 
 @{
-    ViewBag.Title = "Create Learner";
+    ViewBag.Title = "Edit Learner";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-@section stylesheets {
-    @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/chosen.css")
-    @Styles.Render("~/Content/jquery-ui.min.css")
 }
 
 <style>
@@ -584,6 +578,33 @@
         border: 2px solid #9F6000;
     }
 
+    .ajax-loader {
+        visibility: hidden;
+        background-color: rgba(255,255,255,0.7);
+        position: absolute;
+        z-index: 100 !important;
+        width: 108%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+        .ajax-loader img {
+            position: fixed; /* or absolute */
+            top: 45%;
+            left: 40%;
+        }
+
+    .completed-loader-hidden {
+        visibility: hidden;
+    }
+
+    .completed-loader-visible {
+        visibility: visible;
+    }
+
     @@media( max-width : 585px ) {
 
         .wizard {
@@ -673,6 +694,12 @@
     }
 </style>
 
+@section stylesheets {
+    @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/chosen.css")
+    @Styles.Render("~/Content/jquery-ui.min.css")
+}
+
 <div class="container">
     <div class="row">
         <div class="col-md-10">
@@ -686,21 +713,18 @@
         </div>
     </div>
     <div id="step1" class="tab-pane active" role="tabpanel">
-        <div class="row">
-            <div class="col-md-5 checkbox">
-                <label style="padding-left: 0;"><input type="checkbox" id="nokidsId" @(ViewBag.isNoKidsId ? "checked=checked" : string.Empty )><span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>KIDS ID not available</label>
-            </div>
+        <div class="ajax-loader">
+            <img src="../../Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
         </div>
-
-        @using (Html.BeginForm("EidtLearner", "Manage", null, FormMethod.Post, new { id = "createNewStudent", @class = "newstudent" }))
+        @using (Html.BeginForm("EditLearner", "Manage", null, FormMethod.Post, new { id = "editLearner", @class = "editLearner" }))
         {
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            @Html.Hidden("studentId", 0)
+            @Html.Hidden("studentId", Model.student.UserID)
             <div class="step11">
                 <div class="row">
                     <div class="col-md-3">
                         <label class="required" for="kidsid">KIDS ID</label>
-                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", disabled = "disabled", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
+                        @Html.EditorFor(model => model.student.KidsID, new { htmlAttributes = new { @class = "form-control", @Name = "kidsid", id = "kidsid", placeholder = "Kansas ID number", pattern = "[\\d]{9}", type = "number", maxlength = "10", oninput = "javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);", data_validate = "true", min = "1", max = "9999999999", step = "1", onkeydown = "javascript: return event.keyCode == 69 || event.keyCode == 16 || event.keyCode == 107 || event.keyCode == 109 || event.keyCode == 187 || event.keyCode == 189 ? false : true" } })
                         @Html.ValidationMessage("kidsid", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-md-3">
@@ -763,7 +787,7 @@
                             {
                                 foreach (var primary in Model.primaryDisabilities)
                                 {
-                                    var selected = (primary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                    string selected = Model.info.Primary_DisabilityCode == primary.DisabilityCode ? "selected=selected" : "";
                                     <option value="@primary.DisabilityCode" @(selected)>@primary.DisabilityDescription</option>
                                 }
                             }
@@ -776,7 +800,7 @@
                             {
                                 foreach (var secondary in Model.secondaryDisabilities)
                                 {
-                                    var selected = (secondary.DisabilityCode == "ND") ? "selected" : string.Empty;
+                                    string selected = Model.info.Secondary_DisabilityCode == secondary.DisabilityCode ? "selected=selected" : "";
                                     <option value="@secondary.DisabilityCode" @(selected)>@secondary.DisabilityDescription</option>
                                 }
                             }
@@ -806,12 +830,15 @@
             </div>
             <ul class="list-inline pull-right saveandcontinue">
                 <li>@Html.ActionLink("Cancel", "Index", "ILP", null, new { role = "button", @class = "btn btn-default prev-step", data_ftrans = "slide reverse ", data_ajax = "false" })</li>
-                <li><button type="button" class="btn btn-info next-step" id="submitLearner" style="background-color: #337ab7 !important;">Save Changes</button></li>
+                <li><button type="button" class="btn btn-info next-step" id="submitEditLearner" style="background-color: #337ab7 !important;">Save Changes</button></li>
             </ul>
         }
     </div>
 </div>
+<br />
+<br />
 
+<!-- loading the file even though it's an ajax call -->
 <var data-reload="true" data-src="/Scripts/createlearner.js"></var>
 
 @section scripts {

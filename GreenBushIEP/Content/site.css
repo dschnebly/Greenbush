@@ -1,4 +1,7 @@
-﻿.logOffName {
+﻿@import url('https://fonts.google.com/specimen/DM+Serif+Text?preview.text_type=custom#standard-styles');
+@import url('https://fonts.google.com/specimen/Josefin+Sans?query=Josefin+Sans&preview.text_type=custom');
+
+.logOffName {
     font-size: 11px;
 }
 
