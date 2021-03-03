@@ -4890,18 +4890,6 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-                //if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
-                //{
-                //	selectedProvider = "0";
-
-                //	if (user.TeacherID != null)
-                //	{
-                //		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
-                //		selectedProvider = teacherProvider.ProviderID.ToString();
-
-                //	}					
-                //}
-
                 if (!string.IsNullOrEmpty(selectedDistrict))
                 {
 
@@ -4919,19 +4907,28 @@ namespace GreenBushIEP.Controllers
                     if (string.IsNullOrEmpty(selectedProvider))
                     {
                         //get based on user id and district and building
+                        var sList = new List<TeacherView>();
                         var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)
                         .Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
                         .OrderBy(o => o.Name).ToList();
+                                                
 
-                        //students.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+                        foreach (var student in students)
+                        {
+                            if (!sList.Any(o => o.UserID == student.UserID))
+                            {
+                                sList.Add(student);
+                            }
+                        }
 
-                        return Json(new { Result = "success", StudentList = students }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "success", StudentList = sList.OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
                         //get based on selected teachers
                         selectedProvider = selectedProvider.TrimEnd(',');
                         var studentList = new List<TeacherView>();
+                        var sList = new List<TeacherView>();
 
                         List<string> myProviders = string.IsNullOrEmpty(selectedProvider) ? new List<string>() : selectedProvider.Split(',').ToList();
 
@@ -4947,9 +4944,15 @@ namespace GreenBushIEP.Controllers
                             studentList.AddRange(students);
                         }
 
-                        //studentList.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+                        foreach (var student in studentList)
+                        {
+                            if (!sList.Any(o => o.UserID == student.UserID))
+                            {
+                                sList.Add(student);
+                            }
+                        }
 
-                        return Json(new { Result = "success", StudentList = studentList.Distinct().OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "success", StudentList = sList.OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
 
                     }
 

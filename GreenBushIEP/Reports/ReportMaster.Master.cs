@@ -203,6 +203,7 @@ namespace GreenBushIEP.Report
 
 		}
 
+		
 		public static void ProviderList(HtmlSelect providerDD, string selectedDistricts, HtmlInputHidden providerValsInput)
 		{
 			var selectedProvider = providerValsInput.Value;
@@ -551,19 +552,32 @@ namespace GreenBushIEP.Report
 				selectedDistrict = null;
 
 			tblUser user = GreenBushIEP.Report.ReportMaster.db.tblUsers.SingleOrDefault(o => o.Email == userName);
-					
+
 
 			if (string.IsNullOrEmpty(selectedProvider))
 			{
 				//get based on user id and district and building
-				var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)
-					
-				.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
-				.OrderBy(o => o.LastName).ThenBy(o => o.FirstName).Distinct().ToList();
+				var sList = new List<Student>();
 
-				students.Insert(0, new Student() { LastName = "All", UserID = -1 });
+				var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)	
+					.Select(u => new Student() { UserID = u.UserID, LastName = u.LastName + ", " + u.FirstName })
+					.OrderBy(o => o.LastName)
+					.ThenBy(o => o.FirstName)
+					.ToList();
 
-				return students;
+				
+					foreach(var student in students)
+					{
+						if(!sList.Any(o => o.UserID == student.UserID))
+						{ 
+							sList.Add(student);
+						}
+					}
+
+					sList.Insert(0, new Student() { LastName = "All", UserID = -1 });
+
+				return sList;
+
 
 			}
 			else

@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GreenBushIEP.Reports.ProgressReport {
-    
-    
-    public partial class Report {
-        
+namespace GreenBushIEP.Reports.ProgressReport
+{
+
+
+    public partial class Report
+    {
+
         /// <summary>
         /// statusDD control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect statusDD;
-        
+
         /// <summary>
         /// districtDD control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect districtDD;
-        
+
         /// <summary>
         /// buildingDD control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
-        
+
         /// <summary>
         /// providerDD control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect providerDD;
-        
+
         /// <summary>
         /// providerVals control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden providerVals;
-        
+
         /// <summary>
         /// studentDD control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect studentDD;
-        
+
         /// <summary>
         /// studentVals control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputHidden studentVals;
-        
+
         /// <summary>
         /// cbPrintGoal control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cbPrintGoal;
-        
+
         /// <summary>
         /// cbPrintGoalBenchmarks control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cbPrintGoalBenchmarks;
-        
+
         /// <summary>
         /// quarters control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlSelect quarters;
-        
+
         /// <summary>
         /// Button1 control.
         /// </summary>
@@ -110,15 +112,17 @@ namespace GreenBushIEP.Reports.ProgressReport {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button Button1;
-        
+
         /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new GreenBushIEP.Report.ReportMaster Master {
-            get {
+        public new GreenBushIEP.Report.ReportMaster Master
+        {
+            get
+            {
                 return ((GreenBushIEP.Report.ReportMaster)(base.Master));
             }
         }

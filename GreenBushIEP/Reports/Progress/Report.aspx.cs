@@ -27,7 +27,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
 				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
-
+				
 				var sid =  Request.QueryString["sid"];
 				
 				if (!string.IsNullOrEmpty(sid))
@@ -41,6 +41,7 @@ namespace GreenBushIEP.Reports.ProgressReport
 				GreenBushIEP.Report.ReportMaster.BuildingList(this.buildingDD, this.districtDD.Value);
 				GreenBushIEP.Report.ReportMaster.ProviderList(this.providerDD, this.districtDD.Value, this.providerVals);
 				GreenBushIEP.Report.ReportMaster.StudentListByProvider(this.studentDD, this.districtDD.Value, this.buildingDD.Value, this.providerVals.Value, this.studentVals);
+				
 			}
 
 		}
@@ -73,17 +74,21 @@ namespace GreenBushIEP.Reports.ProgressReport
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);			
 			string studentFilter = this.studentVals.Value == "-1" ? "" : studentVals.Value;
 
-			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher || user.RoleID == GreenBushIEP.Report.ReportMaster.nurse)
+            providerIds = this.providerVals.Value;			
+
+			if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
 			{
 				teacherIds = user.UserID.ToString();
-			}
 
-			if (string.IsNullOrEmpty(providerIds))
-			{
-				providerIds = GreenBushIEP.Report.ReportMaster.GetProviderFilter(this.providerDD, districtFilter, this.providerVals);
-			}
+				if(!string.IsNullOrEmpty(user.TeacherID))
+                {
+					var providerObj = GreenBushIEP.Report.ReportMaster.GetProviderByProviderCode(user.TeacherID);
+					providerIds = providerObj != null ? providerObj.ProviderID.ToString() : "";
+				}
+			}			
 
 			DataTable dt = GetData(districtFilter, providerIds, buildingFilter, status, teacherIds, studentFilter);
+			
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);		
 			
 			ReportParameter p1 = new ReportParameter("pPrintGoal", cbPrintGoal.ToString());
@@ -102,7 +107,6 @@ namespace GreenBushIEP.Reports.ProgressReport
 		private DataTable GetData(string districtFilter, string providerIds, string buildingID, string status, string teacherIds, string studentIds)
 		{
 			DataSet ds = new DataSet();
-
 
 			using (var context = new IndividualizedEducationProgramEntities())
 			{

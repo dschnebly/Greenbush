@@ -6,10 +6,12 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 	<% 
 		string toggleElement = "style ='margin-bottom: 11px;'";
-
-		if (this.Master.GetUserLevel == "4" || this.Master.GetUserLevel == "6" )
+		
+		if (this.Master.GetUserLevel == "4" )
 		{
+			//level 2 should only see their own provider id/teacher id
 			toggleElement = "style='display:none'";
+		    
 		}
 	%>
 
@@ -60,6 +62,7 @@
 				<input type="hidden" id="providerVals" runat="server" />
 			</div>
 		</div>
+
 		<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="student">Student</label>
