@@ -122,23 +122,18 @@
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.Common.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.DataVisualization, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.DataVisualization.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.Design, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.Design.DLL</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.Common.10.0.40219.1\lib\Microsoft.ReportViewer.ProcessingObjectModel.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebDesign, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.WebForms.10.0.40219.1\lib\Microsoft.ReportViewer.WebForms.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WinForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WinForms.DLL</HintPath>
