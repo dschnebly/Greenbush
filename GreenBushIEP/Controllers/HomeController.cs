@@ -86,7 +86,7 @@ namespace GreenbushIep.Controllers
                     user = OWNER,
                     districts = (from district in db.tblDistricts select district).Distinct().ToList(),
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(OWNER.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(OWNER.UserID, null, null, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
                 };
 

@@ -3481,7 +3481,9 @@ namespace GreenBushIEP.Controllers
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
 
-                    if (submitter.RoleID == "1" || submitter.RoleID == "7")
+                    if (submitter.RoleID == "1" 
+                        || submitter.RoleID == "7"
+                        || submitter.RoleID == "2")
                     {
                         user.Archive = collection["isArchived"] != null;
                     }
@@ -3963,7 +3965,8 @@ namespace GreenBushIEP.Controllers
                 string selectedBuilding = BuildingId == "-1" ? null : BuildingId;
                 int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
                 int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1;
-                //bool? searchArchieve = submitter.RoleID == "1" ? true : false;
+                //bool? searchArchive = submitter.RoleID == "1" ? true : false;
+                
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
                 {
