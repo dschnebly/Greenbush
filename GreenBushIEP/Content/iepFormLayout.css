@@ -1,6 +1,14 @@
-﻿.multiContacts {
-	margin-top: 10px;	
-	/*margin-left:-75px;*/
+﻿.transition-page {
+	margin-bottom: 45px;
+	display: none;
+}
+
+.alert-dange {
+	margin-top: 20px;
+}
+
+.multiContacts {
+	margin-top: 10px;
 }
 
 hr.sectionBreak {

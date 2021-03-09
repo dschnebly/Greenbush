@@ -6,6 +6,25 @@ h3 {
     margin-bottom: 0;
 }
 
+/*h5 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+h6 {
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.concerns {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+.moduleDateField {
+    max-width: 125px;
+}*/
+
 .transition-page {
     position: relative;
 }
@@ -48,6 +67,22 @@ h3 {
     margin: 10px 0 0;
 }
 
+/*.tooltip-help span {
+    font-size: 30px;
+}
+
+#myModalLabel {
+    font-size: 30px;
+}
+
+    #myModalLabel i {
+        font-size: smaller;
+    }
+
+    #myModalLabel span {
+        font-size: 16px;
+    }
+*/
 .user-info-block .navigation {
     float: left;
     width: 100%;
@@ -265,7 +300,6 @@ dd {
         position: relative;
         line-height: 2.5em;
         text-indent: 3.25em;
-        /*margin-top: 2em;*/
         cursor: pointer;
         -webkit-user-select: none;
         -moz-user-select: none;
