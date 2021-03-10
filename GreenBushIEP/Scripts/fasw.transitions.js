@@ -35,7 +35,7 @@ function ft(params) {
             r = new ActiveXObject("Microsoft.XMLHTTP");
         }
         if (r !== undefined) {
-            r.onreadystatechange = function () { Ol(r, t, o); };
+            r.onreadystatechange = function () { Ol(r, t, o); }; // long time
             r.open("GET", url, true);
             r.send("");
         }
@@ -87,10 +87,9 @@ function ft(params) {
         setTimeout(function () {
             document.body.innerHTML = d2.innerHTML;
             window.scrollTo(0, 0);
-
-            cBa();
             Reload();
-        }, 706);
+            cBa();
+        }, 505);
     }
 
     function slideTo(href, effect, pushstate) {

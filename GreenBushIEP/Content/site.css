@@ -6,7 +6,7 @@
 }
 
 .btn-info {
-    background-color: #01D28E !important;
+    background-color: #45906d !important;
     border: none !important;
 }
 
@@ -129,11 +129,12 @@ hr {
         top: -10px;
     }
 
-.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
-    top: -10px;
-}
+/*********************************/
+/*********************************/
+/***         SWITCH            ***/
+/*********************************/
+/*********************************/
 
-/*********   SWITCHES   **********/
 .falsetrueswitch {
     position: relative;
     width: 90px;
@@ -223,14 +224,14 @@ hr {
     right: 68px;
 }
 
-
-
 .truefalseswitch {
     position: relative;
     width: 90px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .truefalseswitch-checkbox {
@@ -314,7 +315,6 @@ hr {
     right: 0px;
 }
 
-
 /*********************************/
 /*********************************/
 /***         HOME PAGE         ***/
@@ -364,6 +364,7 @@ hr {
     #output.alert-danger {
         background: red;
         color: #fff;
+        display: none;
     }
 
 /*********************************/
@@ -408,9 +409,6 @@ hr {
     margin: 10px, 0;
 }
 
-.main-btn {
-}
-
 @media print {
     #Message {
         display: none;
@@ -432,7 +430,7 @@ hr {
         display: none;
     }
 
-    .deleteNote { 
+    .deleteNote {
         display: none;
     }
 }
@@ -576,6 +574,7 @@ tbody > tr {
 /***         Contact PAGE      ***/
 /*********************************/
 /*********************************/
+
 .contact-form {
     margin-top: 15px;
 }
@@ -660,7 +659,6 @@ tbody > tr {
     margin-top: 150px;
 }
 
-
 .standard-font-size {
     font-size: 18px;
 }
@@ -680,6 +678,7 @@ tbody > tr {
 /*==================================================
 =            Teacher's Students List               =
 ==================================================*/
+
 
 
 
@@ -713,7 +712,6 @@ tbody > tr {
     }
 }
 
-
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
     .form-horizontal .control-label {
@@ -731,7 +729,6 @@ tbody > tr {
     }
 }
 
-
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
     .login-container {
@@ -744,8 +741,4 @@ tbody > tr {
     .input-group-addon {
         display: none;
     }
-}
-
-/* Custom, iPhone Retina */
-@media only screen and (max-width : 320px) {
 }
