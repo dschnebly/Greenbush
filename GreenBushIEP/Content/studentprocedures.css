@@ -216,7 +216,7 @@ dd {
 }
 
 .iep, .iep > .well {
-    background-color: #01D28E !important;
+    background-color: #B6C391 !important;
 }
 
     .iep > .well label {
@@ -224,7 +224,7 @@ dd {
     }
 
 .filter, .filter > .well .options button {
-    border: 1px solid #01D28E;
+    border: 1px solid #45906D;
     position: relative;
 }
 

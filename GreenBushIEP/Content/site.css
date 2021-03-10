@@ -1,12 +1,9 @@
-﻿@import url('https://fonts.google.com/specimen/DM+Serif+Text?preview.text_type=custom#standard-styles');
-@import url('https://fonts.google.com/specimen/Josefin+Sans?query=Josefin+Sans&preview.text_type=custom');
-
-.logOffName {
+﻿.logOffName {
     font-size: 11px;
 }
 
 .btn-info {
-    background-color: #01D28E !important;
+    background-color: #45906d !important;
     border: none !important;
 }
 
@@ -432,7 +429,7 @@ hr {
         display: none;
     }
 
-    .deleteNote { 
+    .deleteNote {
         display: none;
     }
 }
