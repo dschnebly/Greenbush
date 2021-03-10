@@ -659,16 +659,14 @@
         "cBa": function () {
             init();
 
+            //callback function
             var ajax = document.querySelector(".ajax-loader");
             if (ajax != null) {
                 ajax.classList.add("fadeIntoYou");
             }
-
-          //document.querySelector(".ajax-loader").style.display = "";
-        } //callback function
+        }
     };
     new ft(params);
-
 });
 
 
@@ -743,6 +741,7 @@ function _showNotifications() {
     $("#dashboardNotification").modal();
     
 }
+
 function _showAlert(message, positive) {
 
     var successFade = 9000;

@@ -1,693 +1,711 @@
 ﻿$(function () {
 
-    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
-    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
-        $("#modal-studentPlanning").modal('show');
-    }
-
-    /* tooltips */
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger: 'manual'
-    });
-
-    $('.tooltip-help').on('click', function () {
-        $('[data-toggle="tooltip"]').tooltip('toggle');
-    });
-
-    if ($('ul#iepStatusList li').length === 0) {
-        $('ul#iepStatusList').hide();
-    }
-
-    $('#modal-studentTeamGoals').on('hidden.bs.modal', function () {
-        $('[data-toggle="tooltip"]').tooltip('hide');
-    });
-
-    $('#modal-studentGoals').on('hidden.bs.modal', function () {
-        $('[data-toggle="tooltip"]').tooltip('hide');
-    });
-
-    $('#modal-studentStrategies').on('hidden.bs.modal', function () {
-        $('[data-toggle="tooltip"]').tooltip('hide');
-    });
-
-    $('#modal-studentAccommodations').on('hidden.bs.modal', function () {
-        $('[data-toggle="tooltip"]').tooltip('hide');
-    });
-    /* end tooltips */
-
-
-    // Attach Event
-    // fires when the "form" evaluation consent button was clicked. *if the teacher wants to reprint the consent form
-    $('#EvaluationConsent').not('.bound').addClass('bound').on("click", function (e) {
-        var id = getUrlParameter('stid');
-
-        $('.ajax-loader').css("visibility", "visible");
-        window.location.href = '/Home/RequestConsent/' + id;
-    });
-
-    // Attach Event
-    // fires when the "form" notice of meeting button was clicked.
-    $('#NoticeOfMeeting').not('.bound').addClass('bound').on("click", function (e) {
-        var id = getUrlParameter('stid');
-        window.location.href = '/Home/NoticeOfMeeting/' + id;
-    });
-
-    // Attach Event
-    // fires when the user prints the IEP
-    $('#printIEP').not('.bound').addClass('bound').on("click", function (e) {
-        var stid = getUrlParameter('stid');
-        var iepId = $("#studentIEPId").val();
-        window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
-    });
-
-    // Attach Event
-    // fires when the user clicks the button to view student info
-    $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
-        var stid = getUrlParameter('stid');
-        var iepId = $("#studentIEPId").val();
-        window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
-    });
-
-    // Attach Event
-    // fires when the user clicks the button to see the student forms
-    $('#viewForms').not('.bound').addClass('bound').on("click", function (e) {
-        $('.ajax-loader').css("visibility", "visible");
-        var stid = getUrlParameter('stid');
-        location.href = "/Home/IEPFormModule?studentId=" + stid + "&home=true";
-    });
-
-    $('.navbar-toggle').click(function () {
-        $('.navbar-nav').toggleClass('slide-in');
-        $('.side-body').toggleClass('body-slide-in');
-        $('#search').removeClass('in').addClass('collapse').slideUp(200);
-        $('.absolute-wrapper').toggleClass('slide-in');
-    });
-
-    // Attach Event
-    // when the user clicks the Save Dates button
-    $("#IEPDates").on("click", function () {
-        var stId = $("#stid").val();
-        var iepId = $("#studentIEPId").val();
-        var startDate = $("#IEPBeginDate").val().toString('MM/dd/yyyy');
-        var meetingDate = $("#IEPMeetingDate").val().toString('MM/dd/yyyy');
-        var birthDate = $("#studentBirthDate").val();
-
-        var a = new Date(startDate);
-        var b = new Date(a);
-        var c = new Date(birthDate);
-        b.setDate(a.getDate() + 365); // the endDate is 365 days from the startDate
-        var daysToStart = (a - c) / 1000 / 60 / 60 / 24;
-        var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
-        var startDiff = parseInt(daysToStart / 365);
-        var endDiff = parseInt(daysToEnd / 365);
-
-        if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
-            $("#IEPBeginDate").addClass("date-error");
-
-            return alert("The Annual Initiation Date was not in the correct format or some other related problem. Please try again.");
+    function init() {
+        // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+        if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+            $("#modal-studentPlanning").modal('show');
         }
 
-        //If the student is over 21 or under 3, notify the teacher but let them save regardless.
-        if (startDiff < 3) {
-            $("#IEPBeginDate").addClass("date-error");
+        /* tooltips */
+        $('[data-toggle="tooltip"]').tooltip({
+            trigger: 'manual'
+        });
 
-            if (!confirm('The student will be younger than 3 when this IEP starts. Please be aware that this could be an issue.')) {
-                return;
-            }
+        $('.tooltip-help').on('click', function () {
+            $('[data-toggle="tooltip"]').tooltip('toggle');
+        });
+
+        if ($('ul#iepStatusList li').length === 0) {
+            $('ul#iepStatusList').hide();
         }
 
-        if (endDiff > 21) {
-            $("#IEPBeginDate").addClass("date-error");
+        $('#modal-studentTeamGoals').on('hidden.bs.modal', function () {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+        });
 
-            if (!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.')) {
-                return;
-            }
-        }
+        $('#modal-studentGoals').on('hidden.bs.modal', function () {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+        });
 
-        var dayStart = a.getUTCDay(); //start date
-        var dayEnd = b.getUTCDay(); //end date
-        // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
-        if (dayStart === 0 || dayStart === 6) {
-            $("#IEPBeginDate").addClass("date-error");
-            return alert("Please select a Weekday for the Annual Initiation Date.");
-        } else {
-            $("#IEPBeginDate").removeClass("date-error");
-        }
+        $('#modal-studentStrategies').on('hidden.bs.modal', function () {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+        });
 
-        $("#IEPBeginDate").attr('disabled', true);
-        $('.ajax-loader').css("visibility", "visible");
-        $(".ajax-loader img").css("visibility", "visible");
+        $('#modal-studentAccommodations').on('hidden.bs.modal', function () {
+            $('[data-toggle="tooltip"]').tooltip('hide');
+        });
+        /* end tooltips */
 
-        $.ajax({
-            type: 'GET',
-            url: '/Home/UpdateIEPDates',
-            data: {
-                Stid: stId,
-                IepId: iepId,
-                IEPStartDate: startDate,
-                IEPMeetingDate: meetingDate
-            },
-            dataType: 'json',
-            success: function (data) {
-                if (data.Result === 'success') {
+        // Attach Event
+        // fires when the "form" evaluation consent button was clicked. *if the teacher wants to reprint the consent form
+        $('#EvaluationConsent').not('.bound').addClass('bound').on("click", function (e) {
+            var id = getUrlParameter('stid');
 
-                    location.reload();
+            $('.ajax-loader').css("visibility", "visible");
+            window.location.href = '/Home/RequestConsent/' + id;
+        });
 
-                } else {
+        // Attach Event
+        // fires when the "form" notice of meeting button was clicked.
+        $('#NoticeOfMeeting').not('.bound').addClass('bound').on("click", function (e) {
+            var id = getUrlParameter('stid');
+            window.location.href = '/Home/NoticeOfMeeting/' + id;
+        });
 
-                    $(".ajax-loader img").css("visibility", "hidden");
-                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
-                        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
-                    });
-                }
-            },
-            error: function (data) {
+        // Attach Event
+        // fires when the user prints the IEP
+        $('#printIEP').not('.bound').addClass('bound').on("click", function (e) {
+            var stid = getUrlParameter('stid');
+            var iepId = $("#studentIEPId").val();
+            window.location.href = '/Home/PrintIEP/?stid=' + stid + '&iepId=' + iepId;
+        });
+
+        // Attach Event
+        // fires when the user clicks the button to view student info
+        $('#printStudentInfo').not('.bound').addClass('bound').on("click", function (e) {
+            var stid = getUrlParameter('stid');
+            var iepId = $("#studentIEPId").val();
+            window.location.href = '/Home/PrintStudentInfo/?stid=' + stid + '&iepId=' + iepId;
+        });
+
+        // Attach Event
+        // fires when the user clicks the button to see the student forms
+        $('#viewForms').not('.bound').addClass('bound').on("click", function (e) {
+            $('.ajax-loader').css("visibility", "visible");
+            var stid = getUrlParameter('stid');
+            location.href = "/Home/IEPFormModule?studentId=" + stid + "&home=true";
+        });
+
+        $('.navbar-toggle').click(function () {
+            $('.navbar-nav').toggleClass('slide-in');
+            $('.side-body').toggleClass('body-slide-in');
+            $('#search').removeClass('in').addClass('collapse').slideUp(200);
+            $('.absolute-wrapper').toggleClass('slide-in');
+        });
+
+        // Attach Event
+        // when the user clicks the Save Dates button
+        $("#IEPDates").on("click", function () {
+            var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
+            var startDate = $("#IEPBeginDate").val().toString('MM/dd/yyyy');
+            var meetingDate = $("#IEPMeetingDate").val().toString('MM/dd/yyyy');
+            var birthDate = $("#studentBirthDate").val();
+
+            var a = new Date(startDate);
+            var b = new Date(a);
+            var c = new Date(birthDate);
+            b.setDate(a.getDate() + 365); // the endDate is 365 days from the startDate
+            var daysToStart = (a - c) / 1000 / 60 / 60 / 24;
+            var daysToEnd = (b - c) / 1000 / 60 / 60 / 24;
+            var startDiff = parseInt(daysToStart / 365);
+            var endDiff = parseInt(daysToEnd / 365);
+
+            if (Number.isNaN(startDiff) || Number.isNaN(endDiff)) {
                 $("#IEPBeginDate").addClass("date-error");
 
-                alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-            },
-            complete: function () {
-                $("#IEPBeginDate").attr('disabled', false);
+                return alert("The Annual Initiation Date was not in the correct format or some other related problem. Please try again.");
             }
-        });
-    });
 
-    $("#IEPBeginDate").datepicker({
-        dateFormat: "mm/dd/yy",
-        changeYear: true,
-        changeMonth: true,
-        yearRange: "-1:+2",
-        beforeShowDay: function (date) {
-            var day = date.getDay();
-            var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-        }
-    });
+            //If the student is over 21 or under 3, notify the teacher but let them save regardless.
+            if (startDiff < 3) {
+                $("#IEPBeginDate").addClass("date-error");
 
-    $("#IEPMeetingDate").datepicker({
-        dateFormat: "mm/dd/yy",
-        changeYear: true,
-        changeMonth: true,
-        yearRange: "-1:+2",
-        beforeShowDay: function (date) {
-            var day = date.getDay();
-            var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-        }
-    });
-
-    $("#HealthHearingDate").datepicker({
-        dateFormat: "mm/dd/yy",
-        changeYear: true,
-        changeMonth: true,
-        yearRange: "-4:+2",
-        beforeShowDay: function (date) {
-            var day = date.getDay();
-            var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-        }
-    });
-
-    $("#HealthVisionDate").datepicker({
-        dateFormat: "mm/dd/yy",
-        changeYear: true,
-        changeMonth: true,
-        yearRange: "-4:+2",
-        beforeShowDay: function (date) {
-            var day = date.getDay();
-            var string = jQuery.datepicker.formatDate('d-m-yy', date);
-            return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-        }
-    });
-
-    // Attach Event
-    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button start the questions..
-    $("#makeIEPActive").on("click", function () {
-        var answer = confirm("Are you sure you want to make this IEP Active?");
-        if (answer) {
-
-            $("#betterCheckYourWork").modal('show');
-
-            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
-                var id = ev.relatedTarget.id;
-                var StId = $("#stid").val();
-                var IEPid = $("#iepId").val();
-                switch (id) {
-                    case "0":
-                        $("#betterCheckYourWorkPrevious").addClass("hidden");
-                        break;
-                    case "1":
-                        $("#betterCheckYourWorkContinue").addClass("hidden");
-                        $("#betterCheckYourWorkComplete").removeClass("hidden");
-                        break;
-                    case "savegrade":
-                        var Grade = $("#studentCarouselGrade").val();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentIEPGrade',
-                            async: true,
-                            data: {
-                                grade: Grade,
-                                stid: StId,
-                                iepId: IEPid
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("grade done");
-                            },
-                            error: function (data) {
-                                console.log("grade error");
-                            }
-                        });
-                        break;
-                    case "savecode":
-                        var Code = $("#studentCarouselCode").val();
-                        var data = {
-                            code: Code,
-                            stid: StId,
-                            iepId: IEPid
-                        };
-                        console.log(data);
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentCode',
-                            async: true,
-                            data: {
-                                code: Code,
-                                stid: StId,
-                                iepId: IEPid
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("code done");
-                            },
-                            error: function (data) {
-                                console.log("code error");
-                            }
-                        });
-                        break;
-                    default:
-                        $("#betterCheckYourWorkContinue").removeClass("hidden");
-                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
-                        $("#betterCheckYourWorkComplete").addClass("hidden");
+                if (!confirm('The student will be younger than 3 when this IEP starts. Please be aware that this could be an issue.')) {
+                    return;
                 }
-            });
-        };
-    });
-
-    // Attach Event
-    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button and have answered all the "Check Yo Self" questions..
-    $("#betterCheckYourWorkComplete").on("click", function () {
-        if ($("#makeIEPActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled.
-
-        var iepType = $(this).data("iep");
-
-        $("#betterCheckYourWork").modal('hide');
-        $('.ajax-loader').css("visibility", "visible");
-        $(".ajax-loader img").css("visibility", "visible");
-
-        var stId = $("#stid").val();
-        var iepId = $("#studentIEPId").val();
-        var theUrl;
-        switch (iepType) {
-            case "admendment":
-                theUrl = "/Home/UpdateIEPAmendmentToActive";
-                break;
-            case "annual":
-                theUrl = "/Home/UpdateIEPAnnualToActive";
-                break;
-            default:
-                theUrl = "/Home/UpdateIEPStatusToActive";
-                break;
-        }
-
-        $.ajax({
-            type: 'GET',
-            url: theUrl,
-            data: {
-                Stid: stId,
-                IEPid: iepId
-            },
-            dataType: 'json',
-            success: function (data) {
-                if (data.Result === 'success') {
-                    location.reload(true);
-                }
-            },
-            error: function (data) {
-                alert(data.Message);
-
-                $('.ajax-loader').css("visibility", "hidden");
-                $(".ajax-loader img").css("visibility", "hidden");
             }
-        });
-    });
 
-    // Attach Event
-    // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
-    $("#makeIEPAmendment").on("click", function () {
-        if ($("#makeIEPAmendment").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
+            if (endDiff > 21) {
+                $("#IEPBeginDate").addClass("date-error");
 
-        var answer = confirm("Are you sure you want to make an Amendment to this IEP?");
-        if (answer) {
+                if (!confirm('The student will be older than 21 when this IEP ends. Please be aware that this could be an issue.')) {
+                    return;
+                }
+            }
+
+            var dayStart = a.getUTCDay(); //start date
+            var dayEnd = b.getUTCDay(); //end date
+            // Days in JS range from 0-6 where 0 is Sunday and 6 is Saturday
+            if (dayStart === 0 || dayStart === 6) {
+                $("#IEPBeginDate").addClass("date-error");
+                return alert("Please select a Weekday for the Annual Initiation Date.");
+            } else {
+                $("#IEPBeginDate").removeClass("date-error");
+            }
+
+            $("#IEPBeginDate").attr('disabled', true);
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
 
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
-
             $.ajax({
                 type: 'GET',
-                url: '/Manage/CreateIEPAmendment',
+                url: '/Home/UpdateIEPDates',
                 data: {
                     Stid: stId,
                     IepId: iepId,
-                    amend: true
+                    IEPStartDate: startDate,
+                    IEPMeetingDate: meetingDate
                 },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+
+                        location.reload();
+
                     } else {
-                        alert(data.Message);
-                        location.reload(true);
+
+                        $(".ajax-loader img").css("visibility", "hidden");
+                        $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                            $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                        });
                     }
                 },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError);
+                error: function (data) {
+                    $("#IEPBeginDate").addClass("date-error");
+
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
                 },
                 complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
+                    $("#IEPBeginDate").attr('disabled', false);
                 }
             });
-        }
-    });
+        });
 
-    // Attach Event
-    // if the user is an MIS or ADMIN the Initiation Date is today or later AND then when they click the url button..
-    $("#makeIEPAnnual").on("click", function () {
-        if ($("#makeIEPAnnual").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
+        $("#IEPBeginDate").datepicker({
+            dateFormat: "mm/dd/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+            }
+        });
 
-        var answer = confirm("Are you sure you want to make an Annual IEP?");
-        if (answer) {
+        $("#IEPMeetingDate").datepicker({
+            dateFormat: "mm/dd/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+            }
+        });
+
+        $("#HealthHearingDate").datepicker({
+            dateFormat: "mm/dd/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-4:+2",
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+            }
+        });
+
+        $("#HealthVisionDate").datepicker({
+            dateFormat: "mm/dd/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-4:+2",
+            beforeShowDay: function (date) {
+                var day = date.getDay();
+                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+            }
+        });
+
+        // Attach Event
+        // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button start the questions..
+        $("#makeIEPActive").on("click", function () {
+            var answer = confirm("Are you sure you want to make this IEP Active?");
+            if (answer) {
+
+                $("#betterCheckYourWork").modal('show');
+
+                $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                    var id = ev.relatedTarget.id;
+                    var StId = $("#stid").val();
+                    var IEPid = $("#iepId").val();
+                    switch (id) {
+                        case "0":
+                            $("#betterCheckYourWorkPrevious").addClass("hidden");
+                            break;
+                        case "1":
+                            $("#betterCheckYourWorkContinue").addClass("hidden");
+                            $("#betterCheckYourWorkComplete").removeClass("hidden");
+                            break;
+                        case "savegrade":
+                            var Grade = $("#studentCarouselGrade").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentIEPGrade',
+                                async: true,
+                                data: {
+                                    grade: Grade,
+                                    stid: StId,
+                                    iepId: IEPid
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("grade done");
+                                },
+                                error: function (data) {
+                                    console.log("grade error");
+                                }
+                            });
+                            break;
+                        case "savecode":
+                            var Code = $("#studentCarouselCode").val();
+                            var data = {
+                                code: Code,
+                                stid: StId,
+                                iepId: IEPid
+                            };
+                            console.log(data);
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentCode',
+                                async: true,
+                                data: {
+                                    code: Code,
+                                    stid: StId,
+                                    iepId: IEPid
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("code done");
+                                },
+                                error: function (data) {
+                                    console.log("code error");
+                                }
+                            });
+                            break;
+                        default:
+                            $("#betterCheckYourWorkContinue").removeClass("hidden");
+                            $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                            $("#betterCheckYourWorkComplete").addClass("hidden");
+                    }
+                });
+            };
+        });
+
+        // Attach Event
+        // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button and have answered all the "Check Yo Self" questions..
+        $("#betterCheckYourWorkComplete").on("click", function () {
+            if ($("#makeIEPActive").hasClass("disabled")) {
+                return false;
+            } // the link is disabled.
+
+            var iepType = $(this).data("iep");
+
+            $("#betterCheckYourWork").modal('hide');
             $('.ajax-loader').css("visibility", "visible");
             $(".ajax-loader img").css("visibility", "visible");
 
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
+            var theUrl;
+            switch (iepType) {
+                case "admendment":
+                    theUrl = "/Home/UpdateIEPAmendmentToActive";
+                    break;
+                case "annual":
+                    theUrl = "/Home/UpdateIEPAnnualToActive";
+                    break;
+                default:
+                    theUrl = "/Home/UpdateIEPStatusToActive";
+                    break;
+            }
 
             $.ajax({
                 type: 'GET',
-                url: '/Manage/CreateIEPAnnual',
+                url: theUrl,
                 data: {
                     Stid: stId,
-                    IepId: iepId
+                    IEPid: iepId
                 },
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
-                    } else {
-                        alert(data.Message);
-                        location.reload(true);
-                    }
-                },
-                error: function (xhr, ajaxOptions, thrownError) {
-                    alert(xhr.status);
-                    alert(thrownError);
-                },
-                complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
-                }
-            });
-        }
-    });
-
-    // Attach Event
-    // if the user is the OWNER or MIS and they choose to make the iep Inactive
-    $("#makeIEPInActive").on("click", function () {
-        if ($("#makeIEPInActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
-
-        var answer = confirm("Are you sure you want to set this DRAFT to inactive?");
-        if (answer) {
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
-
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
-
-            $.ajax({
-                type: 'GET',
-                url: '/Home/UpdateIEPStatusToInActive',
-                data: {
-                    Stid: stId,
-                    IepId: iepId
-                },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.Result === 'success') {
-
-                        if (data.ActiveIEP != 0) {
-                            window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.ActiveIEP;
-                        }
-                        else {
-                            location.href = "/Home/Portal";
-                        }
-                    } else {
-                        alert(data.Message);
                         location.reload(true);
                     }
                 },
                 error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-                },
-                complete: function () {
+                    alert(data.Message);
+
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
             });
-        }
-    });
+        });
 
-    // Attach Event
-    // if the iep is an amendment and they make it active
-    $("#makeIEPAmendmentActive").on("click", function () {
-        if ($("#makeIEPAmendmentActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
+        // Attach Event
+        // if the user is an MIS or ADMIN the Initiation Date is today or later AND the iep status is "draft"; then when they click the url button..
+        $("#makeIEPAmendment").on("click", function () {
+            if ($("#makeIEPAmendment").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
 
-        var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
-        if (answer) {
+            var answer = confirm("Are you sure you want to make an Amendment to this IEP?");
+            if (answer) {
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
 
-            $("#betterCheckYourWork").modal('show');
+                var stId = $("#stid").val();
+                var iepId = $("#studentIEPId").val();
 
-            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
-                var id = ev.relatedTarget.id;
-                switch (id) {
-                    case "0":
-                        $("#betterCheckYourWorkPrevious").addClass("hidden");
-                        break;
-                    case "1":
-                        $("#betterCheckYourWorkContinue").addClass("hidden");
-                        $("#betterCheckYourWorkComplete").removeClass("hidden");
-                        break;
-                    case "savegrade":
-                        var Grade = $("#studentCarouselGrade").val();
-                        var StId = $("#stid").val();
-                        var IEPid = $("#studentIEPId").val();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentIEPGrade',
-                            async: true,
-                            data: {
-                                grade: Grade,
-                                stid: StId,
-                                iepId: IEPid
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("grade done");
-                            },
-                            error: function (data) {
-                                console.log("grade error");
-                            }
-                        });
-                        break;
-                    case "savecode":
-                        var Code = $("#studentCarouselCode").val();
-                        var StId = $("#stid").val();
-                        var IEPid = $("#studentIEPId").val();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentCode',
-                            async: true,
-                            data: {
-                                code: Code,
-                                stid: StId,
-                                iepId: IEPid
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("code done");
-                            },
-                            error: function (data) {
-                                console.log("code error");
-                            }
-                        });
-                        break;
-                    default:
-                        $("#betterCheckYourWorkContinue").removeClass("hidden");
-                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
-                        $("#betterCheckYourWorkComplete").addClass("hidden");
-                }
-            });
-        };
-    });
-
-    $("#makeIEPAnnualActive").on("click", function () {
-        if ($("#makeIEPAnnualActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
-
-        var answer = confirm("Are you sure you want to set this ANNUAL to active?");
-        if (answer) {
-
-            $("#betterCheckYourWork").modal('show');
-
-            $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
-                var id = ev.relatedTarget.id;
-                console.log(id);
-                switch (id) {
-                    case "0":
-                        $("#betterCheckYourWorkPrevious").addClass("hidden");
-                        break;
-                    case "1":
-                        $("#betterCheckYourWorkContinue").addClass("hidden");
-                        $("#betterCheckYourWorkComplete").removeClass("hidden");
-                        break;
-                    case "savegrade":
-                        var Grade = $("#studentCarouselGrade").val();
-                        var StId = $("#stid").val();
-                        var IEPid = $("#studentIEPId").val();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentIEPGrade',
-                            async: true,
-                            data: {
-                                grade: Grade,
-                                stid: StId,
-                                iepId: IEPid
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("grade done");
-                            },
-                            error: function (data) {
-                                console.log("grade error");
-                            }
-                        });
-                        break;
-                    case "savecode":
-                        var Code = $("#studentCarouselCode").val();
-                        var StId = $("#stid").val();
-
-                        $.ajax({
-                            type: 'POST',
-                            url: '/Home/UpdateStudentCode',
-                            async: true,
-                            data: {
-                                code: Code,
-                                stid: StId
-                            },
-                            dataType: 'json',
-                            success: function (data) {
-                                console.log("code done");
-                            },
-                            error: function (data) {
-                                console.log("code error");
-                            }
-                        });
-                        break;
-                    default:
-                        $("#betterCheckYourWorkContinue").removeClass("hidden");
-                        $("#betterCheckYourWorkPrevious").removeClass("hidden");
-                        $("#betterCheckYourWorkComplete").addClass("hidden");
-                }
-            });
-        };
-    });
-
-    // Attach Event
-    // if the owner or mis reverts the draft back to active
-    $("#revertToDraft").on("click", function () {
-        if ($("#makeIEPInActive").hasClass("disabled")) {
-            return false;
-        } // the link is disabled
-
-        var answer = confirm("Are you sure you want to revert this IEP from ACTIVE to DRAFT?");
-        if (answer) {
-
-            $('#reasonsRevertDraft').modal('show');
-        }
-    });
-
-    $("#saveRevertDraft").on('click', function () {
-        console.log($("#yourReasoning").val());
-        if ($("#yourReasoning").val().length > 0) {
-
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
-
-            var stId = $("#stid").val();
-            var iepId = $("#studentIEPId").val();
-            var reasons = $("#yourReasoning").val();
-
-            $.ajax({
-                type: 'GET',
-                url: '/Home/UpdateRevertIEPtoDraft',
-                data: {
-                    Stid: stId,
-                    IepId: iepId,
-                    MyReason: reasons
-                },
-                dataType: 'json',
-                success: function (data) {
-                    if (data.Result === 'success') {
-                        location.reload(true);
-                    } else {
-                        alert(data.Message);
-                        location.reload(true);
+                $.ajax({
+                    type: 'GET',
+                    url: '/Manage/CreateIEPAmendment',
+                    data: {
+                        Stid: stId,
+                        IepId: iepId,
+                        amend: true
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Result === 'success') {
+                            window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+                        } else {
+                            alert(data.Message);
+                            location.reload(true);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    },
+                    complete: function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
                     }
-                },
-                error: function (data) {
-                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
-                },
-                complete: function () {
-                    $('.ajax-loader').css("visibility", "hidden");
-                    $(".ajax-loader img").css("visibility", "hidden");
-                }
-            });
-        }
-        else {
-            alert("This field cannot be blank.");
-        }
-    });
+                });
+            }
+        });
+
+        // Attach Event
+        // if the user is an MIS or ADMIN the Initiation Date is today or later AND then when they click the url button..
+        $("#makeIEPAnnual").on("click", function () {
+            if ($("#makeIEPAnnual").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
+
+            var answer = confirm("Are you sure you want to make an Annual IEP?");
+            if (answer) {
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var stId = $("#stid").val();
+                var iepId = $("#studentIEPId").val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Manage/CreateIEPAnnual',
+                    data: {
+                        Stid: stId,
+                        IepId: iepId
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Result === 'success') {
+                            window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+                        } else {
+                            alert(data.Message);
+                            location.reload(true);
+                        }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        alert(xhr.status);
+                        alert(thrownError);
+                    },
+                    complete: function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+                    }
+                });
+            }
+        });
+
+        // Attach Event
+        // if the user is the OWNER or MIS and they choose to make the iep Inactive
+        $("#makeIEPInActive").on("click", function () {
+            if ($("#makeIEPInActive").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
+
+            var answer = confirm("Are you sure you want to set this DRAFT to inactive?");
+            if (answer) {
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var stId = $("#stid").val();
+                var iepId = $("#studentIEPId").val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/UpdateIEPStatusToInActive',
+                    data: {
+                        Stid: stId,
+                        IepId: iepId
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Result === 'success') {
+
+                            if (data.ActiveIEP != 0) {
+                                window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.ActiveIEP;
+                            }
+                            else {
+                                location.href = "/Home/Portal";
+                            }
+                        } else {
+                            alert(data.Message);
+                            location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                    },
+                    complete: function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+                    }
+                });
+            }
+        });
+
+        // Attach Event
+        // if the iep is an amendment and they make it active
+        $("#makeIEPAmendmentActive").on("click", function () {
+            if ($("#makeIEPAmendmentActive").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
+
+            var answer = confirm("Are you sure you want to set this AMENDMENT to active?");
+            if (answer) {
+
+                $("#betterCheckYourWork").modal('show');
+
+                $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                    var id = ev.relatedTarget.id;
+                    switch (id) {
+                        case "0":
+                            $("#betterCheckYourWorkPrevious").addClass("hidden");
+                            break;
+                        case "1":
+                            $("#betterCheckYourWorkContinue").addClass("hidden");
+                            $("#betterCheckYourWorkComplete").removeClass("hidden");
+                            break;
+                        case "savegrade":
+                            var Grade = $("#studentCarouselGrade").val();
+                            var StId = $("#stid").val();
+                            var IEPid = $("#studentIEPId").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentIEPGrade',
+                                async: true,
+                                data: {
+                                    grade: Grade,
+                                    stid: StId,
+                                    iepId: IEPid
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("grade done");
+                                },
+                                error: function (data) {
+                                    console.log("grade error");
+                                }
+                            });
+                            break;
+                        case "savecode":
+                            var Code = $("#studentCarouselCode").val();
+                            var StId = $("#stid").val();
+                            var IEPid = $("#studentIEPId").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentCode',
+                                async: true,
+                                data: {
+                                    code: Code,
+                                    stid: StId,
+                                    iepId: IEPid
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("code done");
+                                },
+                                error: function (data) {
+                                    console.log("code error");
+                                }
+                            });
+                            break;
+                        default:
+                            $("#betterCheckYourWorkContinue").removeClass("hidden");
+                            $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                            $("#betterCheckYourWorkComplete").addClass("hidden");
+                    }
+                });
+            };
+        });
+
+        $("#makeIEPAnnualActive").on("click", function () {
+            if ($("#makeIEPAnnualActive").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
+
+            var answer = confirm("Are you sure you want to set this ANNUAL to active?");
+            if (answer) {
+
+                $("#betterCheckYourWork").modal('show');
+
+                $('#carousel-questions').on('slide.bs.carousel', function onSlide(ev) {
+                    var id = ev.relatedTarget.id;
+                    console.log(id);
+                    switch (id) {
+                        case "0":
+                            $("#betterCheckYourWorkPrevious").addClass("hidden");
+                            break;
+                        case "1":
+                            $("#betterCheckYourWorkContinue").addClass("hidden");
+                            $("#betterCheckYourWorkComplete").removeClass("hidden");
+                            break;
+                        case "savegrade":
+                            var Grade = $("#studentCarouselGrade").val();
+                            var StId = $("#stid").val();
+                            var IEPid = $("#studentIEPId").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentIEPGrade',
+                                async: true,
+                                data: {
+                                    grade: Grade,
+                                    stid: StId,
+                                    iepId: IEPid
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("grade done");
+                                },
+                                error: function (data) {
+                                    console.log("grade error");
+                                }
+                            });
+                            break;
+                        case "savecode":
+                            var Code = $("#studentCarouselCode").val();
+                            var StId = $("#stid").val();
+
+                            $.ajax({
+                                type: 'POST',
+                                url: '/Home/UpdateStudentCode',
+                                async: true,
+                                data: {
+                                    code: Code,
+                                    stid: StId
+                                },
+                                dataType: 'json',
+                                success: function (data) {
+                                    console.log("code done");
+                                },
+                                error: function (data) {
+                                    console.log("code error");
+                                }
+                            });
+                            break;
+                        default:
+                            $("#betterCheckYourWorkContinue").removeClass("hidden");
+                            $("#betterCheckYourWorkPrevious").removeClass("hidden");
+                            $("#betterCheckYourWorkComplete").addClass("hidden");
+                    }
+                });
+            };
+        });
+
+        // Attach Event
+        // if the owner or mis reverts the draft back to active
+        $("#revertToDraft").on("click", function () {
+            if ($("#makeIEPInActive").hasClass("disabled")) {
+                return false;
+            } // the link is disabled
+
+            var answer = confirm("Are you sure you want to revert this IEP from ACTIVE to DRAFT?");
+            if (answer) {
+
+                $('#reasonsRevertDraft').modal('show');
+            }
+        });
+
+        $("#saveRevertDraft").on('click', function () {
+            console.log($("#yourReasoning").val());
+            if ($("#yourReasoning").val().length > 0) {
+
+                $('.ajax-loader').css("visibility", "visible");
+                $(".ajax-loader img").css("visibility", "visible");
+
+                var stId = $("#stid").val();
+                var iepId = $("#studentIEPId").val();
+                var reasons = $("#yourReasoning").val();
+
+                $.ajax({
+                    type: 'GET',
+                    url: '/Home/UpdateRevertIEPtoDraft',
+                    data: {
+                        Stid: stId,
+                        IepId: iepId,
+                        MyReason: reasons
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        if (data.Result === 'success') {
+                            location.reload(true);
+                        } else {
+                            alert(data.Message);
+                            location.reload(true);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                    },
+                    complete: function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                        $(".ajax-loader img").css("visibility", "hidden");
+                    }
+                });
+            }
+            else {
+                alert("This field cannot be blank.");
+            }
+        });
+    }
+    init();
+
+    //SET UP FOR TRANSITIONS
+    var params =	//All params are optional, you can just assign {} 
+    {
+        "navB": "slide",	//Effect for navigation button, leave it empty to disable it
+        "but": true,		//Flag to enable transitions on button, false by default
+        "cBa": function () {
+            init();
+
+            var ajax = document.querySelector(".ajax-loader");
+            if (ajax != null) {
+                ajax.classList.add("fadeIntoYou");
+            }
+        }	//callback function
+    };
+    new ft(params);
 });
 
 
