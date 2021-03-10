@@ -1892,7 +1892,7 @@ namespace GreenBushIEP.Controllers
                         string subject = string.Format("Referral Request {0}", existingReferalReq.ReferralType == "Incoming" ? "(Incoming)" : "");
                         StringBuilder sb = new StringBuilder();
                         sb.Append("The following new Referral Request has been created. Please log into the IEP Backpack to review the details.<br/><br/>");
-                        sb.AppendFormat("<b>Submitted by:</b> {0}, {1}<br/><br/>", submitter.FirstName, submitter.LastName);
+                        sb.AppendFormat("<b>Submitted by:</b> {0} {1}<br/><br/>", submitter.FirstName, submitter.LastName);
                         sb.Append(summaryText);
                         sb.Append("<br/><br/>Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance.<br/>URL: https://greenbushbackpack.org ");
                         mailMessage.IsBodyHtml = true;
