@@ -1,12 +1,9 @@
-﻿@import url('https://fonts.google.com/specimen/DM+Serif+Text?preview.text_type=custom#standard-styles');
-@import url('https://fonts.google.com/specimen/Josefin+Sans?query=Josefin+Sans&preview.text_type=custom');
-
-.logOffName {
+﻿.logOffName {
     font-size: 11px;
 }
 
 .btn-info {
-    background-color: #45906d !important;
+    background-color: #01D28E !important;
     border: none !important;
 }
 
@@ -129,12 +126,11 @@ hr {
         top: -10px;
     }
 
-/*********************************/
-/*********************************/
-/***         SWITCH            ***/
-/*********************************/
-/*********************************/
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+    top: -10px;
+}
 
+/*********   SWITCHES   **********/
 .falsetrueswitch {
     position: relative;
     width: 90px;
@@ -224,14 +220,14 @@ hr {
     right: 68px;
 }
 
+
+
 .truefalseswitch {
     position: relative;
     width: 90px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .truefalseswitch-checkbox {
@@ -315,6 +311,7 @@ hr {
     right: 0px;
 }
 
+
 /*********************************/
 /*********************************/
 /***         HOME PAGE         ***/
@@ -364,7 +361,6 @@ hr {
     #output.alert-danger {
         background: red;
         color: #fff;
-        display: none;
     }
 
 /*********************************/
@@ -407,6 +403,9 @@ hr {
 
 #Message {
     margin: 10px, 0;
+}
+
+.main-btn {
 }
 
 @media print {
@@ -574,7 +573,6 @@ tbody > tr {
 /***         Contact PAGE      ***/
 /*********************************/
 /*********************************/
-
 .contact-form {
     margin-top: 15px;
 }
@@ -659,6 +657,7 @@ tbody > tr {
     margin-top: 150px;
 }
 
+
 .standard-font-size {
     font-size: 18px;
 }
@@ -678,7 +677,6 @@ tbody > tr {
 /*==================================================
 =            Teacher's Students List               =
 ==================================================*/
-
 
 
 
@@ -712,6 +710,7 @@ tbody > tr {
     }
 }
 
+
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
     .form-horizontal .control-label {
@@ -729,6 +728,7 @@ tbody > tr {
     }
 }
 
+
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
     .login-container {
@@ -741,4 +741,8 @@ tbody > tr {
     .input-group-addon {
         display: none;
     }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
 }
