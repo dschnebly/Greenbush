@@ -5,7 +5,7 @@
 	Layout = "";
 	var studentFullName = string.Format("{0} {1}", @Model.studentFirstName, Model.studentLastName);
 	var primeContact = Model.studentDetails.contacts.OrderByDescending(o => o.PrimaryContact).Take(1).FirstOrDefault();
-	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus == IEPStatus.DRAFT ? true : false;
+	var isDraft = Model.current != null && Model.current.IepStatus != null && Model.current.IepStatus.ToUpper() == IEPStatus.DRAFT ? true : false;
 	var iepType = string.Format("{0}", Model.anyStudentIEPActive && !Model.current.Amendment ? "ANNUAL" : Model.anyStudentIEPActive && Model.current.Amendment ? "AMENDMENT" : string.Empty);
 	var genderPronoun = Model.studentDetails.gender == "Female" ? "her" : Model.studentDetails.gender == "Male" ? "his" : "his/her";		
 	var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
@@ -106,7 +106,7 @@
 		</tr>
 		<tr>
 			<td><label>Grade:</label></td>
-			<td>@(Model.studentDetails.grade)</td>
+			<td>@(isDraft ? Model.studentDetails.gradeCurrent : Model.studentDetails.grade)</td>
 			<td><label>Fund Source:</label></td>
 			<td>@Model.studentDetails.placementCodeDesc</td>
 		</tr>
@@ -270,8 +270,8 @@
 			<td>@(Model.studentDetails.studentAgeAtIEP > 0 ? Model.studentDetails.studentAgeAtIEP.ToString() : "")</td>
 		</tr>
 		<tr>
-			<td><label>Grade:</label></td>
-			<td>@(Model.studentDetails.grade)</td>
+			<td><label>Grade:</label></td>			
+			<td>@(isDraft ? Model.studentDetails.gradeCurrent : Model.studentDetails.grade)</td>
 			<td><label><span>@(string.IsNullOrEmpty(iepType) ? "Annual" : char.ToUpper(iepType[0]) + iepType.Substring(1).ToLower())</span> Date:</label></td>
 			<td style="width:150px;">@(Model.current.MeetingDate != null ? Model.current.MeetingDate.Value.ToShortDateString() : "")</td>
 		</tr>
