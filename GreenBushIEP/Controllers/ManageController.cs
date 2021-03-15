@@ -4140,6 +4140,29 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult CreateIEPAnnualPrecheck(int Stid, int Iepid)
+        {
+            string message = "";
+            try
+            {                
+
+                bool existingDraft = db.tblIEPs.Any(i => i.UserID == Stid && i.Amendment == true && i.IepStatus.ToUpper() == IEPStatus.DRAFT);
+
+                if(existingDraft)
+                {
+                    message = "There is currently an open Amendment. The new Annual will be a copy of the most current Active IEP. Are you sure you want to make an Annual IEP?";
+                }             
+
+                return Json(new { Result = "success", Message = message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult CreateIEPAnnual(int Stid, int Iepid)
         {
             try

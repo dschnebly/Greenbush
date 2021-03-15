@@ -398,17 +398,12 @@
             return false;
         } // the link is disabled
 
-        var answer = confirm("Are you sure you want to make an Annual IEP?");
-        if (answer) {
-            $('.ajax-loader').css("visibility", "visible");
-            $(".ajax-loader img").css("visibility", "visible");
-
             var stId = $("#stid").val();
             var iepId = $("#studentIEPId").val();
 
             $.ajax({
                 type: 'GET',
-                url: '/Manage/CreateIEPAnnual',
+                url: '/Manage/CreateIEPAnnualPrecheck',
                 data: {
                     Stid: stId,
                     IepId: iepId
@@ -416,10 +411,16 @@
                 dataType: 'json',
                 success: function (data) {
                     if (data.Result === 'success') {
-                        window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+                        var confirmMessage = "Are you sure you want to make an Annual IEP?";
+
+                        if (data.Message != "") {
+                            confirmMessage = data.Message;
+                        }
+                        
+                        _createAnnual(stId, iepId, confirmMessage);
+                        
                     } else {
-                        alert(data.Message);
-                        location.reload(true);
+                        alert(data.Message);                        
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -430,8 +431,7 @@
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
-            });
-        }
+            });        
     });
 
     // Attach Event
@@ -740,6 +740,43 @@ function printModule(divOverride) {
     }
 
     window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;
+}
+
+function _createAnnual(stId, iepId, message) {
+
+    var answer = confirm(message);
+    if (answer) {
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
+
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/CreateIEPAnnual',
+            data: {
+                Stid: stId,
+                IepId: iepId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result === 'success') {
+                    window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+                } else {
+                    alert(data.Message);
+                    location.reload(true);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            },
+            complete: function () {
+                $('.ajax-loader').css("visibility", "hidden");
+                $(".ajax-loader img").css("visibility", "hidden");
+            }
+        });
+    }
+
+    return false;
 }
 
 function createDateString(newDate) {
@@ -1529,3 +1566,4 @@ $("#truefalseSwitchIntelligenceNoConcern").click(function (event) {
         $('.isIntelligenceConcern').removeClass("noConcerns").fadeIn();
     }
 });
+
