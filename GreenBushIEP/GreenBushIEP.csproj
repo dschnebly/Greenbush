@@ -702,6 +702,15 @@
       <DependentUpon>Report.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\HealthPlan\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\HealthPlan\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\IEPDue\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -967,6 +976,9 @@
     </Content>
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
+    <Content Include="Reports\HealthPlan\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\IEPDue\Report.aspx" />
     <Content Include="Reports\KIDSID\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1352,6 +1364,9 @@
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\HealthPlan\rptHealthPlan.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">
