@@ -6,25 +6,6 @@ h3 {
     margin-bottom: 0;
 }
 
-/*h5 {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-h6 {
-    font-weight: bold;
-    font-size: 17px;
-}
-
-.concerns {
-    font-size: 16px;
-    font-weight: normal;
-}
-
-.moduleDateField {
-    max-width: 125px;
-}*/
-
 .transition-page {
     position: relative;
 }
@@ -67,22 +48,6 @@ h6 {
     margin: 10px 0 0;
 }
 
-/*.tooltip-help span {
-    font-size: 30px;
-}
-
-#myModalLabel {
-    font-size: 30px;
-}
-
-    #myModalLabel i {
-        font-size: smaller;
-    }
-
-    #myModalLabel span {
-        font-size: 16px;
-    }
-*/
 .user-info-block .navigation {
     float: left;
     width: 100%;
@@ -666,7 +631,7 @@ body.modal-open .modal {
 }
 
 .ajax-loader {
-    visibility: hidden;
+    visibility: visible;
     background-color: rgba(255,255,255,0.7);
     position: absolute;
     z-index: 100 !important;

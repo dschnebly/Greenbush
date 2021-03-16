@@ -1,6 +1,8 @@
-﻿$(function () {
+﻿// jquery onload equivalent
+$(function () {
 
     function init() {
+
         // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
         if ($("#modal-studentPlanning").hasClass('needsPlan')) {
             $("#modal-studentPlanning").modal('show');
@@ -14,6 +16,7 @@
         $('.tooltip-help').on('click', function () {
             $('[data-toggle="tooltip"]').tooltip('toggle');
         });
+
 
         if ($('ul#iepStatusList li').length === 0) {
             $('ul#iepStatusList').hide();
@@ -692,22 +695,50 @@
     init();
 
     //SET UP FOR TRANSITIONS
-    var params =	//All params are optional, you can just assign {} 
+    var params = //All params are optional, you can just assign {} 
     {
-        "navB": "slide",	//Effect for navigation button, leave it empty to disable it
-        "but": true,		//Flag to enable transitions on button, false by default
+        "navB": "slide", //Effect for navigation button, leave it empty to disable it
+        "but": true, //Flag to enable transitions on button, false by default
         "cBa": function () {
             init();
 
+            //callback function
             var ajax = document.querySelector(".ajax-loader");
             if (ajax != null) {
-                ajax.classList.add("fadeIntoYou");
+                ajax.classList.add("hidden");
             }
-        }	//callback function
+        }
     };
     new ft(params);
 });
 
+// $(document).ready equivalent
+document.addEventListener("DOMContentLoaded", function (event) {
+    $(".ajax-loader").css("visibility", "hidden");
+
+    //async load the dates.
+    var  = $("studentIEPId").val();
+});
+
+var moduleFormSerialize = '';
+
+// Prevents the user from using the back button
+window.history.pushState({
+    page: 1
+}, "", "");
+
+window.onpopstate = function (event) {
+
+    // "event" object seems to contain value only when the back button is clicked
+    // and if the pop state event fires due to clicks on a button
+    // or a link it comes up as "undefined" 
+
+    if (event) {
+        // Code to handle back button or prevent from navigation
+        event.preventDefault();
+        history.go(1);
+    }
+};
 
 function getParameterByName(name, url) {
     if (!url) {
@@ -720,6 +751,8 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+
 
 $('input[type=radio][name=optionsExtendedSchoolYear]').change(function () {
     if (this.value === 'option1') {
@@ -789,26 +822,6 @@ function formatDate(date) {
     return ([year, month, day].join('-')).toString();
 }
 
-var moduleFormSerialize = '';
-
-// Prevents the user from using the back button
-window.history.pushState({
-    page: 1
-}, "", "");
-
-window.onpopstate = function (event) {
-
-    // "event" object seems to contain value only when the back button is clicked
-    // and if the pop state event fires due to clicks on a button
-    // or a link it comes up as "undefined" 
-
-    if (event) {
-        // Code to handle back button or prevent from navigation
-        event.preventDefault();
-        history.go(1);
-    }
-};
-
 /** fixing the bootstrap modal overlay bug and setting up events. **/
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
@@ -863,7 +876,7 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
             return false; // breaks us out of the $.each loop.
         }
     });
-    
+
     allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
     allCompleted ? $("#makeIEPAmendmentActive").removeClass("disabled") : $("#makeIEPAmendmentActive").addClass("disabled");
     allCompleted ? $("#makeIEPAnnualActive").removeClass("disabled") : $("#makeIEPAnnualActive").addClass("disabled");

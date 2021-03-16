@@ -40,6 +40,12 @@
     margin-top: 55px;
 }
 
+.fadeIntoYou {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
 .jumbotron {
     position: absolute;
     top: 0;

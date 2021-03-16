@@ -133,12 +133,6 @@ h4.panel-title {
     background-color: #fff;
 }
 
-.fadeIntoYou {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;
-}
-
 .StudentActionIcons {
     margin-left: 10px;
 }
