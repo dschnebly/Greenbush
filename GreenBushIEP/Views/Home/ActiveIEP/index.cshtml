@@ -305,6 +305,8 @@
             </ul>
             <div id="missingIEPDates" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visible" : "hidden")"></div>
         </div>
+        <input type="hidden" value="@(ViewBag.studentDistrict)" name="studentUSD" id="studentUSD" />
+        <input type="hidden" value="@(Model.studentIEP.iepStartTime.Value.Year)" name="studentYear" id="studentYear" />
     </div>
     <!-- Modal fullscreen Student Planning -->
     <div id="modal-studentPlanning" class="modal modal-fullscreen fade-scale @((Model.hasplan) ? String.Empty : "needsPlan" )" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">

@@ -1222,6 +1222,7 @@ namespace GreenbushIep.Controllers
 
             ViewBag.UserRoleId = currentUser.RoleID;
             ViewBag.ReturnBtn = rtnId.HasValue ? string.Format("/Home/TeacherStudentsRole/{0}", rtnId.Value) : ""; //re-route back button
+            ViewBag.studentDistrict = district.USD ?? "101";
 
             if (student != null)
             {

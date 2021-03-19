@@ -175,29 +175,29 @@ $(function () {
             });
         });
 
-        $("#IEPBeginDate").datepicker({
-            dateFormat: "mm/dd/yy",
-            changeYear: true,
-            changeMonth: true,
-            yearRange: "-1:+2",
-            beforeShowDay: function (date) {
-                var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-            }
-        });
+        //$("#IEPBeginDate").datepicker({
+        //    dateFormat: "mm/dd/yy",
+        //    changeYear: true,
+        //    changeMonth: true,
+        //    yearRange: "-1:+2",
+        //    beforeShowDay: function (date) {
+        //        var day = date.getDay();
+        //        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+        //        return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+        //    }
+        //});
 
-        $("#IEPMeetingDate").datepicker({
-            dateFormat: "mm/dd/yy",
-            changeYear: true,
-            changeMonth: true,
-            yearRange: "-1:+2",
-            beforeShowDay: function (date) {
-                var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d-m-yy', date);
-                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-            }
-        });
+        //$("#IEPMeetingDate").datepicker({
+        //    dateFormat: "mm/dd/yy",
+        //    changeYear: true,
+        //    changeMonth: true,
+        //    yearRange: "-1:+2",
+        //    beforeShowDay: function (date) {
+        //        var day = date.getDay();
+        //        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+        //        return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+        //    }
+        //});
 
         $("#HealthHearingDate").datepicker({
             dateFormat: "mm/dd/yy",
@@ -716,8 +716,76 @@ $(function () {
 document.addEventListener("DOMContentLoaded", function (event) {
     $(".ajax-loader").css("visibility", "hidden");
 
-    //async load the dates.
-    var  = $("studentIEPId").val();
+    var unavailableDates = [];
+    var studentUSD = $("#studentUSD").val();
+    var studentYear = $("#studentYear").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/Home/GetCalendarViewByBuilding',
+        data: {
+            SchoolYear: studentYear,
+            usd: studentUSD,
+            bId: 0,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.Result === 'success') {
+                var i = data.calendarEvents.length - 1
+                while (i >= 0) {
+                    if (data.calendarEvents[i].calendarDate != null) {
+                        var currentTime = new Date(parseInt(data.calendarEvents[i].calendarDate.substr(6)));
+                        var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                        var day = ("0" + currentTime.getDate()).slice(-2);
+                        var year = currentTime.getFullYear();
+                        var date = day + '-' + month + '-' + year;
+                        unavailableDates.push(date);
+                    }
+                    i--;
+                }
+                console.log(unavailableDates);
+            }
+        }
+    }).done(function () {
+
+        $("#IEPBeginDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                if ($.inArray(dmy, unavailableDates) != -1) {
+                    return [false, "", "unAvailable"];
+                } else {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
+                }
+            }
+        });
+
+        $("#IEPMeetingDate").datepicker({
+            dateFormat: 'dd-mm-yy',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+                if ($.inArray(dmy, unavailableDates) != -1) {
+                    console.log("found");
+                    return [false, "", "unAvailable"];
+                } else {
+                    console.log("nope");
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
+                }
+            }
+        });
+    }).fail(function () {
+        alert("An error occured either when our server or your connection.");
+    });
 });
 
 var moduleFormSerialize = '';
