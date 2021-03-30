@@ -651,7 +651,6 @@ $(function () {
         });
 
         $("#saveRevertDraft").on('click', function () {
-            console.log($("#yourReasoning").val());
             if ($("#yourReasoning").val().length > 0) {
 
                 $('.ajax-loader').css("visibility", "visible");
@@ -743,13 +742,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     }
                     i--;
                 }
-                console.log(unavailableDates);
             }
         }
     }).done(function () {
 
         $("#IEPBeginDate").datepicker({
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'dd/mm/yy',
             changeYear: true,
             changeMonth: true,
             yearRange: "-1:+2",
@@ -759,30 +757,31 @@ document.addEventListener("DOMContentLoaded", function (event) {
                     return [false, "", "unAvailable"];
                 } else {
                     var day = date.getDay();
-                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    var string = jQuery.datepicker.formatDate('d/m/yy', date);
                     return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
                 }
             }
         });
 
         $("#IEPMeetingDate").datepicker({
-            dateFormat: 'dd-mm-yy',
+            dateFormat: 'dd/mm/yy',
             changeYear: true,
             changeMonth: true,
             yearRange: "-1:+2",
             beforeShowDay: function (date) {
                 dmy = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
                 if ($.inArray(dmy, unavailableDates) != -1) {
-                    console.log("found");
+                    //                    console.log("found");
                     return [false, "", "unAvailable"];
                 } else {
-                    console.log("nope");
+                    //                    console.log("nope");
                     var day = date.getDay();
-                    var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                    var string = jQuery.datepicker.formatDate('d/m/yy', date);
                     return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
                 }
             }
         });
+
     }).fail(function () {
         alert("An error occured either when our server or your connection.");
     });

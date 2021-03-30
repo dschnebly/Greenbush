@@ -7,13 +7,13 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/ownerportal.css")
+    @Styles.Render("~/Content/misportal.css")
     @Styles.Render("~/Content/chosen.css")
 }
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
-    @Scripts.Render("~/Scripts/owner.js?v1.3")
+    @Scripts.Render("~/Scripts/owner.js")
 }
 
 <div class="container">
@@ -128,8 +128,8 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="filterActive" id="filterActive">
-                            <option value="0" selected>All</option>
-                            <option value="1">Active IEP</option>
+                            <option value="0">All</option>
+                            <option value="1" selected>Active IEP</option>
                             <option value="2">Inactive IEP</option>
                         </select>
                     </div>
@@ -141,7 +141,7 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="statusActive" id="statusActive">
-                            <option value="" >All</option>
+                            <option value="">All</option>
                             <option value="1" selected>Active</option>
                             <option value="0">Inactive</option>
                         </select>
@@ -159,65 +159,65 @@
 
                     @foreach (var user in Model.members)
                     {
-                        <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "")" data-id="@(user.UserID)">
+                        <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "")  " data-id="@(user.UserID)" >
 
                             @switch (user.RoleID)
                             {
                                 case "2": //MIS
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                    <i class="fas fa-cog" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                         <span class="far fa-building" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 case "3": //ADMIN
                                     <i class="far fa-user" aria-hidden="true"></i>
                                     <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                         <span class="far fa-building" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 case "4": //Teacher
                                     <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        @user.FirstName @user.MiddleName  @user.LastName
+                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                         <span class="far fa-building" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 case "6": //Nurse
                                     <i class="fa fa-magnet" aria-hidden="true"></i>
                                     <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        @user.FirstName @user.MiddleName  @user.LastName
+                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
                                     </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
                                         <span class="far fa-building" aria-hidden="true"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 default:
                                     <i class="fa fa-child" aria-hidden="true"></i>
-                                    <text>@user.FirstName  @user.MiddleName @user.LastName</text>
+                                    <span>@user.FirstName @user.MiddleName  @user.LastName</span>
 
                                     if (user.hasIEP)
                                     {
-                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                        <a href="/Home/StudentProcedures?stid=@(user.UserID)" data-id="@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
                                     }
@@ -228,10 +228,12 @@
                                         </button>
                                     }
 
-                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right" data-ftrans="slide" id="viewFormsBtn">
+                                    <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
                                         <span class="glyphicon glyphicon-folder-open"></span>
                                     </a>
-
+                                    <a href="/Home/MISNotes?stid=@(user.UserID)" title="Edit an existing student" role="button" class="btn btn-info btn-action pull-right" data-ftrans="slide">
+                                        <span class="far fa-comment-alt"></span>
+                                    </a>
                                     <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
                                         <span class="glyphicon glyphicon glyphicon-trash"></span>
                                     </button>
@@ -249,39 +251,44 @@
     </div>
 </div>
 
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/owner.js"></var>
+
 <!-- Modal -->
-<div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            @Html.Hidden("id", Model.user.UserID.ToString())
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Assign this User to Buildings</h4>
-            </div>
-            <div class="modal-body">
-                <div class="col-md-12 district-selection">
-                    <label for="selectedDistrict">Your District:&nbsp;</label>
-                    <select id="selectedDistrict"></select>
+<div class="modal-dialog">
+    <div class="modal fadeInUp" id="assignBuilding" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                @Html.Hidden("id", Model.user.UserID.ToString())
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                    <h4 class="modal-title custom_align">Assign this User to Buildings</h4>
                 </div>
-                <div class="dual-list list-right col-md-12">
-                    <div class="well">
-                        <div class="row">
-                            <div class="col-md-2">
-                                <div class="btn-group">
-                                    <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                <div class="modal-body">
+                    <div class="col-md-12 district-selection">
+                        <label for="selectedDistrict">Your District:&nbsp;</label>
+                        <select id="selectedDistrict"></select>
+                    </div>
+                    <div class="dual-list list-right col-md-12">
+                        <div class="well">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="btn-group">
+                                        <a class="btn btn-default selector" title="select all"><i class="glyphicon glyphicon-unchecked"></i></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <input type="text" name="SearchBuildingList" class="form-control" placeholder="search" />
+                                        <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-10">
-                                <div class="input-group">
-                                    <input type="text" name="SearchBuildingList" class="form-control" placeholder="search" />
-                                    <span class="input-group-addon glyphicon glyphicon-search"></span>
-                                </div>
-                            </div>
+                            <ul id="selectBuildings" class="list-group"></ul>
                         </div>
-                        <ul id="selectBuildings" class="list-group"></ul>
                     </div>
                 </div>
-                <div class="modal-footer owner-modal-footer">
+                <div class="modal-footer assignBuilding-modal-footer">
                     <button type="button" class="btn btn-default btn-lg" data-dismiss="modal" id="savetheseBuildingsToThisUser">Save</button>
                     <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Cancel</button>
                 </div>
@@ -291,13 +298,13 @@
 </div>
 <!-- end modal -->
 <!-- Modal -->
-<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" sstyle="overflow-y: scroll;">
     <div class="modal-dialog">
         <div class="modal-content">
-            @Html.Hidden("id", 0)
+            @Html.Hidden("id", Model.user.UserID.ToString())
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="DeleteHeading">Delete this User</h4>
+                <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
@@ -318,13 +325,13 @@
 </div>
 <!-- end modal -->
 <!-- Modal -->
-<div class="modal fadeInUp" id="initIEP" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+<div class="modal fadeInUp" id="initIEP" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             @Html.Hidden("id", Model.user.UserID.ToString())
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                <h4 class="modal-title custom_align" id="Heading">Begin this student's IEP</h4>
+                <h4 class="modal-title custom_align">Begin this student's IEP</h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-danger">
