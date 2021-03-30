@@ -19,11 +19,23 @@
 
 h3 a {
     margin: 0 5px;
+    font-family: 'PT Sans' sans-serif;
+    font-size: 21pt;
+    color: #444;
+}
+
+h3 small {
+    color: #444;
 }
 
 hr {
     margin-top: 0;
     margin-bottom: 20px;
+}
+
+.user-head img {
+    min-width: 85px;
+    border: 2px solid #ddd;
 }
 
 .list-group {
@@ -87,9 +99,7 @@ hr {
 }
 
 .panel-primary > .panel-heading {
-    padding: 8px 15px;
-    background-color: #45906d !important;
-    border-color: #45906d !important;
+	padding: 8px 15px;
 }
 
 .panel-primary {
@@ -97,20 +107,21 @@ hr {
 }
 
 .panel-title {
-    display: inline-block !important;
-    color: #fff !important;
-    font-weight: 600 !important;
+	display: inline-block !important;
+	color: #444 !important;	
+	font-weight: 600 !important;
 }
 
 h4.panel-title {
-    display: inline-block !important;
-    color: #666 !important;
+	display: inline-block !important;
+	color: #666 !important;	
 }
 
 .btn-filter {
     position: relative;
     bottom: 1px;
     margin-right: 5px;
+    font-weight: 600;
 }
 
 .form-group label {
@@ -168,10 +179,6 @@ h4.panel-title {
 /*//////////////////////////////////////
 ///  User Toggle Buttons Starts Here
 //////////////////////////////////////*/
-
-.notification {
-    color: #a94442;
-}
 
 .btn-circle {
     width: 30px;
