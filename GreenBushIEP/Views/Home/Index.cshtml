@@ -27,14 +27,14 @@
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Email, new { @class = "col-md-3 col-xs-11 control-label" })
                                     <div class="col-md-9 col-xs-11 input-group ">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Recipient's email or username", @id = "Email", @type = "email" })
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control show-autofill-new", @placeholder = "Recipient's email or username", @id = "Email", @type = "email" })
                                         <span class="input-group-addon" id="basic-addon2">@@example.com</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     @Html.LabelFor(m => m.Password, new { @class = "col-md-3 col-xs-11 control-label" })
                                     <div class="col-md-9 col-xs-11 input-group">
-                                        @Html.TextBoxFor(m => m.Password, new { @id = "Password", @type = "password", @placeholder = "Recipient's password", @class = "form-control" })
+                                        @Html.TextBoxFor(m => m.Password, new { @id = "Password", @type = "password", @placeholder = "Recipient's password", @class = "form-control show-autofill-new" })
                                     </div>
                                 </div>
                                 <div class="form-group">

@@ -19,6 +19,13 @@
 
 h3 a {
     margin: 0 5px;
+    font-family: 'PT Sans' sans-serif;
+    font-size: 21pt;
+    color: #444;
+}
+
+h3 small {
+    color: #444;
 }
 
 hr {
@@ -26,8 +33,9 @@ hr {
     margin-bottom: 20px;
 }
 
-.alert-danger {
-    background-color: #EAE8E9;
+.user-head img {
+    min-width: 85px;
+    border: 2px solid #ddd;
 }
 
 .list-group {
@@ -92,9 +100,6 @@ hr {
 
 .panel-primary > .panel-heading {
 	padding: 8px 15px;
-	background-color: #01D28E !important;
-	border-color: #01D28E !important;
-	
 }
 
 .panel-primary {
@@ -103,7 +108,7 @@ hr {
 
 .panel-title {
 	display: inline-block !important;
-	color: #fff !important;	
+	color: #444 !important;	
 	font-weight: 600 !important;
 }
 
@@ -116,6 +121,7 @@ h4.panel-title {
     position: relative;
     bottom: 1px;
     margin-right: 5px;
+    font-weight: 600;
 }
 
 .form-group label {

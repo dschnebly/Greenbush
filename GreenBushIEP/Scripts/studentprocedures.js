@@ -179,7 +179,7 @@
             yearRange: "-1:+2",
             beforeShowDay: function (date) {
                 var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                var string = jQuery.datepicker.formatDate('d/m/yy', date);
                 return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
             }
         });
@@ -191,7 +191,7 @@
             yearRange: "-1:+2",
             beforeShowDay: function (date) {
                 var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d-m-yy', date);
+                var string = jQuery.datepicker.formatDate('d/m/yy', date);
                 return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
             }
         });

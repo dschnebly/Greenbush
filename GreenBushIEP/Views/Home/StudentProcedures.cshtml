@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-4 student-details">
                 <div class="student-information">
-                    <a href="/Manage/EditStudent?id=@(Model.student.UserID.ToString())&backToStudentIEP=true" title="Edit an existing student" data-ftrans="slide">
+                    <a href="/Manage/EditStudent?id=@(Model.student.UserID.ToString())&backToStudentIEP=true" title="Edit an existing student" data-ftrans="slide reverse">
                         <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" title="@(Model.student.FirstName.ToTitleCase() + " " + Model.student.LastName.ToTitleCase())" class="img-circle edit-student" height="95" width="95" />
                     </a>
                     <div class="student-identity edit-student">
