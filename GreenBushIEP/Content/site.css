@@ -1,5 +1,4 @@
-﻿
-.logOffName {
+﻿.logOffName {
     font-size: 11px;
 }
 
@@ -50,6 +49,12 @@
 
 .body-content {
     margin-top: 55px;
+}
+
+.fadeIntoYou {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
 }
 
 .jumbotron {
@@ -196,6 +201,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 /*********************************/
 /*********************************/
 
+/*********   SWITCHES   **********/
 .falsetrueswitch {
     position: relative;
     width: 90px;
@@ -285,14 +291,14 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     right: 68px;
 }
 
+
+
 .truefalseswitch {
     position: relative;
     width: 90px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    display: inline-block;
-    vertical-align: middle;
 }
 
 .truefalseswitch-checkbox {
@@ -376,6 +382,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     right: 0px;
 }
 
+
 /*********************************/
 /*********************************/
 /***         HOME PAGE         ***/
@@ -428,7 +435,6 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     #output.alert-danger {
         background: red;
         color: #fff;
-        display: none;
     }
 
 /*********************************/
@@ -640,7 +646,6 @@ tbody > tr {
 /***         Contact PAGE      ***/
 /*********************************/
 /*********************************/
-
 .contact-form {
     margin-top: 15px;
 }
@@ -725,6 +730,7 @@ tbody > tr {
     margin-top: 150px;
 }
 
+
 .standard-font-size {
     font-size: 18px;
 }
@@ -780,68 +786,9 @@ h4.panel-title {
     color: #3D8DE4;
 }
 
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
-    line-height: 1.428571429;
-    border-radius: 15px;
-}
-
-    .btn-circle:focus {
-        outline: none;
-    }
-
-    .btn-circle.btn-xl {
-        width: 70px;
-        height: 70px;
-        padding: 10px 16px;
-        font-size: 24px;
-        line-height: 1.33;
-        border-radius: 35px;
-        margin-bottom: 10px;
-    }
-
-#add-student-user i {
-    padding: 0;
-}
-
-#user-toggle {
-    margin-right: 20px;
-}
-
-    #user-toggle .user-toggle-item {
-        display: inline-block;
-    }
-
-#mySettings, #add-system-user, #add-student-user, #reports, #referrals {
-    margin-left: 15px;
-}
-
-    #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover {
-        -webkit-animation: pulse 1s ease 0s;
-        -o-animation: pulse 1s ease 0s;
-        -moz-animation: pulse 1s ease 0s;
-        animation: pulse 1s ease 0s;
-    }
-
-    #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
-        vertical-align: -webkit-baseline-middle;
-        padding-left: 0;
-    }
-
-
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
-
-.fadeIntoYou {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;
-}
 
 @-webkit-keyframes slideOutLeft {
     from {
@@ -869,6 +816,7 @@ h4.panel-title {
     }
 }
 
+
 /* Medium Devices, Desktops */
 @media only screen and (max-width : 992px) {
     .form-horizontal .control-label {
@@ -886,6 +834,7 @@ h4.panel-title {
     }
 }
 
+
 /* Small Devices, Tablets */
 @media only screen and (max-width : 768px) {
     .login-container {
@@ -898,4 +847,8 @@ h4.panel-title {
     .input-group-addon {
         display: none;
     }
+}
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
 }

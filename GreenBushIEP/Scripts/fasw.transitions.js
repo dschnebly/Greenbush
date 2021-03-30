@@ -35,7 +35,7 @@ function ft(params) {
             r = new ActiveXObject("Microsoft.XMLHTTP");
         }
         if (r !== undefined) {
-            r.onreadystatechange = function () { Ol(r, t, o); }; // long time
+            r.onreadystatechange = function () { Ol(r, t, o); };
             r.open("GET", url, true);
             r.send("");
         }
@@ -87,9 +87,10 @@ function ft(params) {
         setTimeout(function () {
             document.body.innerHTML = d2.innerHTML;
             window.scrollTo(0, 0);
-            Reload();
+
             cBa();
-        }, 505);
+            Reload();
+        }, 706);
     }
 
     function slideTo(href, effect, pushstate) {
@@ -97,10 +98,10 @@ function ft(params) {
         var d1 = d.d1;
         var d2 = d.d2;
         aDL(href, d2,
-                function () {
-                    if (pushstate && window.history.pushState) window.history.pushState("", "", href);
-                    timeOuts(effect, d1, d2);
-                }
+            function () {
+                if (pushstate && window.history.pushState) window.history.pushState("", "", href);
+                timeOuts(effect, d1, d2);
+            }
         );
     }
 

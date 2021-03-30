@@ -314,6 +314,8 @@
             </ul>
             <div id="missingIEPDates" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "visible" : "hidden")"></div>
         </div>
+        <input type="hidden" value="@(ViewBag.studentDistrict)" name="studentUSD" id="studentUSD" />
+        <input type="hidden" value="@(Model.studentIEP.iepStartTime.Value.Year)" name="studentYear" id="studentYear" />
     </div>
 
     <!-- Modal fullscreen Student Planning -->
@@ -774,7 +776,7 @@
 </div>
 
 <!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/studentprocedures.js?v1.3"></var>
+<var data-reload="true" data-src="/Scripts/studentprocedures.js"></var>
 
 @section scripts {
     @Scripts.Render("~/Scripts/fasw.transitions.js")
