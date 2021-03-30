@@ -437,6 +437,25 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
         color: #fff;
     }
 
+
+.btn-circle.btn-xl {
+    width: 70px;
+    height: 70px;
+    padding: 10px 16px;
+    font-size: 24px;
+    line-height: 1.33;
+    border-radius: 35px;
+    margin-bottom: 10px;
+}
+
+#user-toggle .user-toggle-item {
+    display: inline-block;
+}
+
+#mySettings, #add-system-user, #add-student-user, #reports, #referrals {
+    margin-left: 15px;
+}
+
 /*********************************/
 /*********************************/
 /***        MISNote PAGE         ***/
@@ -541,7 +560,9 @@ tbody > tr {
 }
 
     .user-head .inbox-avatar img {
-        border-radius: 30px;
+        border-radius: 45%;
+        min-width: 85px;
+        min-height: 65px;
         border: 2px solid #ddd;
     }
 
