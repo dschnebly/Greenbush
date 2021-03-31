@@ -5328,6 +5328,7 @@ namespace GreenbushIep.Controllers
                 conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
                 conf.Conclusions = GetInputValue("txtConclusions", spans);
                 conf.PlacementCode = GetInputValue("PlacementCode", spans);
+                conf.TeacherName = GetInputValue("TeacherName", spans);
 
                 if (conf.FormConferenceSummaryId == 0)
                 {

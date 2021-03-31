@@ -25,5 +25,6 @@ namespace GreenBushIEP.Models
         public Nullable<System.DateTime> Create_Date { get; set; }
         public Nullable<System.DateTime> Update_Date { get; set; }
         public string PlacementCode { get; set; }
+        public string TeacherName { get; set; }
     }
 }
