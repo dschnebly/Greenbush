@@ -3416,16 +3416,12 @@
 							</tr>
 						</thead>
 						<tbody class="PTAGDisplay">
-							<tr>
-								<th>Quarter</th>
+							<tr>								
 								<th>Date Assessed</th>
 								<th>Progress</th>
 								<th>Notes</th>
 							</tr>
-							<tr class="PTAGDisplay">
-								<td>
-									<label>1<sup>st</sup>&nbsp;&nbsp;</label>
-								</td>
+							<tr class="PTAGDisplay">								
 								<td>
 									<span>@(studentGoal.ProgressDate_Quarter1.ToString("MM-dd-yyyy"))</span>
 								</td>
@@ -3437,10 +3433,7 @@
                                 </td>
 									
 							</tr>
-							<tr class="PTAGDisplay">
-								<td>
-									<label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-								</td>
+							<tr class="PTAGDisplay">								
 								<td>
 									<span>@(studentGoal.ProgressDate_Quarter2.ToString("MM-dd-yyyy"))</span>
 								</td>
@@ -3451,10 +3444,7 @@
                                     @studentGoal.ProgressDescription_Quarter2
                                 </td>
 							</tr>
-							<tr class="PTAGDisplay">
-								<td>
-									<label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-								</td>
+							<tr class="PTAGDisplay">							
 								<td>
 									<span>@(studentGoal.ProgressDate_Quarter3.ToString("MM-dd-yyyy"))</span>
 								</td>
@@ -3465,10 +3455,7 @@
                                     @studentGoal.ProgressDescription_Quarter3
                                 </td>
 							</tr>
-							<tr class="PTAGDisplay">
-								<td>
-									<label>4<sup>th</sup>&nbsp;&nbsp;</label>
-								</td>
+							<tr class="PTAGDisplay">								
 								<td>
 									<span>@(studentGoal.ProgressDate_Quarter4.ToString("MM-dd-yyyy"))</span>
 								</td>
@@ -3504,7 +3491,7 @@
 							<td class="text-center" style="font-size:11pt" colspan="2">@gb.ObjectiveBenchmark</td>
 						</tr>
 						<tr>									
-							<th>How Measured</th>			
+							<th style="width:200px">How Measured</th>			
 							<th>Reports of Progress</th>
 						</tr>
 						<tr class="PTAGDisplay">																	
@@ -3542,10 +3529,7 @@
 							<td>
 									<table class="table table-responsive table-bordered">												
 									<tbody class="PTAGDisplay">													
-										<tr>
-											<td>
-												<label>1<sup>st</sup>&nbsp;&nbsp;</label>
-											</td>
+										<tr>											
 											<td>
 												<span>@(gb.ProgressDate_Quarter1.HasValue ? gb.ProgressDate_Quarter1.Value.ToString("MM-dd-yyyy") : "")</span>
 											</td>
@@ -3566,9 +3550,7 @@
 									
 										</tr>
 										<tr class="PTAGDisplay">
-											<td>
-												<label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-											</td>
+											
 											<td>
 												<span>@(gb.ProgressDate_Quarter2.HasValue ? gb.ProgressDate_Quarter2.Value.ToString("MM-dd-yyyy") : "")</span>
 											</td>																												
@@ -3589,9 +3571,7 @@
 										</tr>
 
 										<tr class="PTAGDisplay">
-											<td>
-												<label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-											</td>
+										
 											<td>
 												<span>@(gb.ProgressDate_Quarter3.HasValue ? gb.ProgressDate_Quarter3.Value.ToString("MM-dd-yyyy") : "")</span>
 											</td>														
@@ -3611,9 +3591,7 @@
 											</td>
 										</tr>
 										<tr class="PTAGDisplay">
-											<td>
-												<label>4<sup>th</sup>&nbsp;&nbsp;</label>
-											</td>
+											
 											<td>
 												<span>@(gb.ProgressDate_Quarter4.HasValue ? gb.ProgressDate_Quarter4.Value.ToString("MM-dd-yyyy") : "")</span>
 											</td>														
