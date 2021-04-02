@@ -1963,6 +1963,7 @@ namespace GreenbushIep.Controllers
 
                 ViewBag.studentName = student.FirstName + " " + student.LastName;
                 ViewBag.isMIS = mis.UserID == teacher.UserID;
+                ViewBag.isOwner = teacher.UserID == 1;
 
                 List<tblProvider> providers = (from p in db.tblProviders
                                                join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID

@@ -4,13 +4,11 @@
     <title>@ViewBag.Title</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @RenderSection("stylesheets", false)
 </head>
 <body>
-    <div class="navbar navbar-light bg-light navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -19,13 +17,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <img src="~/Content/greenbush_logo.png" width="45" height="45" class="pull-left" style="margin: auto 0; margin-right: 12px; margin-left: 2px; height: 40px; width: 40px; margin-top: 5px;" alt="Greenbush Logo" />
-                @Html.ActionLink("GREENBUSH", "Portal", "Account", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Greenbush", "Portal", "Account", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse pull-right">
+            <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "WhichBackpack", "Account")</li>
                     <li><a href="http://help.greenbushbackpack.org/support/home" target="_blank">Help</a></li>
-                    <li>@Html.ActionLink("Contact Us", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @{
                         if (User.Identity.IsAuthenticated)
                         {

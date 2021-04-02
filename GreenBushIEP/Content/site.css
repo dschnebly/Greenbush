@@ -3,19 +3,8 @@
 }
 
 .btn-info {
-    color: #7B7B7B;
-    border: 1px solid #7B7B7B !important;
-    background-color: #EBEBEB !important;
-    border: 1px solid #7B7B7B !important;
-    background: -webkit-linear-gradient(#F8F8F8,#E6E6E6);
-    background: -moz-linear-gradient(#F8F8F8,#E6E6E6);
-    background: -o-linear-gradient(#F8F8F8,#E6E6E6);
-    background: linear-gradient(#F8F8F8,#E6E6E6);
-    -webkit-transition: background 1s ease-out;
-    -moz-transition: background 1s ease-out;
-    -o-transition: background 1s ease-out;
-    transition: background 1s ease-out;
-    border-color: #7B7B7B;
+    background-color: #45906d !important;
+    border: none !important;
 }
 
 .control-label {
@@ -51,20 +40,14 @@
     margin-top: 55px;
 }
 
-.fadeIntoYou {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s 2s, opacity 2s linear;
-}
-
 .jumbotron {
-    position: fixed;
-    top: 100px;
+    position: absolute;
+    top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     margin: auto;
-    background: url(/Content/Images/IEPBackpackBackgroundImage.jpg) no-repeat fixed;
+    background: url(/Content/Images/IEPBackpackBackgroundImage.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -88,7 +71,6 @@ footer {
     background-color: #fff; /*#bababa; */
     color: #484848;
     padding: 8px;
-    height: 45px;
 }
 
 body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom {
@@ -106,15 +88,7 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     }
 
 hr {
-    margin-top: 5px !important;
     margin-bottom: 0 !important;
-    border-top: 1px solid #C3C3C3;
-    padding-bottom: 15px;
-}
-
-.navbar {
-    border-bottom: 10px solid #23D28F;
-    background-color: #ffffff;
 }
 
 .navbar-icon-top .navbar-nav .nav-link > .fa {
@@ -131,35 +105,9 @@ hr {
         top: -10px;
     }
 
-.navbar-nav > li > a {
-    font-size: 14px;
-    color: #444444;
-    font-weight: 600;
-    font-family: 'PT Sans', sans-serif;
-}
-
 .navbar-icon-top .navbar-nav .nav-link > .fa {
     top: 3px;
     line-height: 12px;
-}
-
-a.navbar-brand {
-    font-family: 'PT Sans', sans-serif;
-    color: #444;
-    font-size: 16pt;
-    letter-spacing: 5px;
-    font-weight: 600;
-}
-
-.filterListofUsers {
-    background-color: #fff;
-    color: #444;
-    font-weight: bold
-}
-
-.userActionBtn {
-    background-color: #01D28E !important;
-    color: #ffffff !important;
 }
 
 .updates {
@@ -178,28 +126,9 @@ a.navbar-brand {
         top: -10px;
     }
 
-#basic-addon2 {
-    font-family: 'PT Sans', sans-serif;
-    color: #444;
+.navbar-icon-top .navbar-nav .nav-link > .fa > .badge {
+    top: -10px;
 }
-
-footer p {
-    margin: 0 0 10px;
-    font-size: 14px;
-    color: #444444;
-    font-weight: 600;
-    font-family: 'PT Sans', sans-serif;
-}
-
-input:-webkit-autofill, input:focus:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0 100px rgb(255, 248, 196) inset;
-}
-
-/*********************************/
-/*********************************/
-/***         SWITCH            ***/
-/*********************************/
-/*********************************/
 
 /*********   SWITCHES   **********/
 .falsetrueswitch {
@@ -399,12 +328,11 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     }
 
 .create-account {
+    font-size: 12px;
     text-decoration: underline;
     float: right !important;
     position: relative;
     right: -15px;
-    font-size: 9pt;
-    font-weight: 600;
 }
 
 #iep-header-image {
@@ -415,9 +343,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 
     #iep-header-image img {
         margin: 0 auto;
-        width: 42%;
-        margin-left: 24%;
-        margin-bottom: 1%;
+        width: 55%;
     }
 
 #output {
@@ -479,6 +405,9 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     margin: 10px, 0;
 }
 
+.main-btn {
+}
+
 @media print {
     #Message {
         display: none;
@@ -537,13 +466,11 @@ tbody > tr {
 .user-head .inbox-avatar {
     float: left;
     width: 65px;
-    margin-right: 25px;
+    margin-right: 15px;
 }
 
     .user-head .inbox-avatar img {
-        border-radius: 45%;
-        min-width: 85px;
-        min-height: 65px;
+        border-radius: 30px;
         border: 2px solid #ddd;
     }
 
@@ -747,44 +674,11 @@ tbody > tr {
     color: #C9302C;
 }
 
-.panel-primary > .panel-heading {
-    padding: 8px 15px;
-    background: -webkit-linear-gradient(#F8F8F8,#E6E6E6);
-    background: -moz-linear-gradient(#F8F8F8,#E6E6E6);
-    background: -o-linear-gradient(#F8F8F8,#E6E6E6);
-    background: linear-gradient(#F8F8F8,#E6E6E6);
-    -webkit-transition: background 1s ease-out;
-    -moz-transition: background 1s ease-out;
-    -o-transition: background 1s ease-out;
-    transition: background 1s ease-out;
-    border-color: #DDDDDD;
-}
+/*==================================================
+=            Teacher's Students List               =
+==================================================*/
 
-.panel-primary {
-    border-color: #d0d8b8 !important;
-}
 
-.panel-title {
-    display: inline-block !important;
-    color: #444 !important;
-    font-weight: 600 !important
-}
-
-h4.panel-title {
-    display: inline-block !important;
-    color: #666 !important;
-}
-
-.form-group input[type=text]:focus {
-    background-color: #FFF8C4;
-}
-
-/*//////////////////////////////////////
-///  User Toggle Buttons Starts Here
-//////////////////////////////////////*/
-.notification {
-    color: #3D8DE4;
-}
 
 /*==================================================
 =            Bootstrap 3 Media Queries             =

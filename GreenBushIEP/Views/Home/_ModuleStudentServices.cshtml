@@ -329,7 +329,7 @@
             @foreach (var service in Model.studentServices)
             {
                 var needsIN = (Model.studentServices.IndexOf(service) == Model.studentServices.Count - 1) ? "in" : "";
-                bool canEditDelete = Model.isOriginalIEPService ? service.StartDate.Date >= Model.MeetingDate.Date || Model.primaryProviderId == 1 : true;
+                bool canEditDelete = Model.isOriginalIEPService ? service.StartDate.Date >= Model.MeetingDate.Date || ViewBag.isOwner : true;
 
                 string serviceTitle = "Student Service";
                 if (!string.IsNullOrEmpty(service.ServiceCode) && Model.serviceTypes != null)
