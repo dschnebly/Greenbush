@@ -21,8 +21,8 @@
     <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-folder-open small" aria-hidden="true"></i>&nbsp;Forms</h4>
     <h5 class="formStudentName">@(Model.StudentName)</h5>
 </div>
-<div class="alert alert-danger" id="alertMessage" role="alert">
-    <span class="moreinfo"><strong>Results!</strong></span>
+ <div class="alert alert-danger" role="alert" id="alertMessage" style="display:none;">
+    <span class="moreinfo"></span>
 </div>
 <div class="modal-body" style="margin-bottom:40px;">
     @Html.Hidden("stid", Model.StudentId)

@@ -529,6 +529,7 @@
           <Property Name="Create_Date" Type="datetime" />
           <Property Name="Update_Date" Type="datetime" />
           <Property Name="PlacementCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="tblFormContinuousLearningPlan">
           <Key>
@@ -4456,6 +4457,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="Create_Date" Type="DateTime" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Precision="3" />
           <Property Name="PlacementCode" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblFormContinuousLearningPlan">
           <Key>
@@ -7617,6 +7619,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblFormConferenceSummaries">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormConferenceSummary">
               <MappingFragment StoreEntitySet="tblFormConferenceSummary">
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
                 <ScalarProperty Name="PlacementCode" ColumnName="PlacementCode" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
