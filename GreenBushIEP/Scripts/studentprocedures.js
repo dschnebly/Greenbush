@@ -1,6 +1,8 @@
-﻿$(function () {
+﻿// jquery onload equivalent
+$(function () {
 
     function init() {
+
         // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
         if ($("#modal-studentPlanning").hasClass('needsPlan')) {
             $("#modal-studentPlanning").modal('show');
@@ -14,6 +16,7 @@
         $('.tooltip-help').on('click', function () {
             $('[data-toggle="tooltip"]').tooltip('toggle');
         });
+
 
         if ($('ul#iepStatusList li').length === 0) {
             $('ul#iepStatusList').hide();
@@ -172,29 +175,29 @@
             });
         });
 
-        $("#IEPBeginDate").datepicker({
-            dateFormat: "mm/dd/yy",
-            changeYear: true,
-            changeMonth: true,
-            yearRange: "-1:+2",
-            beforeShowDay: function (date) {
-                var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d/m/yy', date);
-                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-            }
-        });
+        //$("#IEPBeginDate").datepicker({
+        //    dateFormat: "mm/dd/yy",
+        //    changeYear: true,
+        //    changeMonth: true,
+        //    yearRange: "-1:+2",
+        //    beforeShowDay: function (date) {
+        //        var day = date.getDay();
+        //        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+        //        return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+        //    }
+        //});
 
-        $("#IEPMeetingDate").datepicker({
-            dateFormat: "mm/dd/yy",
-            changeYear: true,
-            changeMonth: true,
-            yearRange: "-1:+2",
-            beforeShowDay: function (date) {
-                var day = date.getDay();
-                var string = jQuery.datepicker.formatDate('d/m/yy', date);
-                return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
-            }
-        });
+        //$("#IEPMeetingDate").datepicker({
+        //    dateFormat: "mm/dd/yy",
+        //    changeYear: true,
+        //    changeMonth: true,
+        //    yearRange: "-1:+2",
+        //    beforeShowDay: function (date) {
+        //        var day = date.getDay();
+        //        var string = jQuery.datepicker.formatDate('d-m-yy', date);
+        //        return [day !== 0 && day !== 6]; //day != 0/6 disables all Sundays and Saturdays
+        //    }
+        //});
 
         $("#HealthHearingDate").datepicker({
             dateFormat: "mm/dd/yy",
@@ -648,7 +651,6 @@
         });
 
         $("#saveRevertDraft").on('click', function () {
-            console.log($("#yourReasoning").val());
             if ($("#yourReasoning").val().length > 0) {
 
                 $('.ajax-loader').css("visibility", "visible");
@@ -692,22 +694,125 @@
     init();
 
     //SET UP FOR TRANSITIONS
-    var params =	//All params are optional, you can just assign {} 
+    var params = //All params are optional, you can just assign {} 
     {
-        "navB": "slide",	//Effect for navigation button, leave it empty to disable it
-        "but": true,		//Flag to enable transitions on button, false by default
+        "navB": "slide", //Effect for navigation button, leave it empty to disable it
+        "but": true, //Flag to enable transitions on button, false by default
         "cBa": function () {
             init();
 
+            //callback function
             var ajax = document.querySelector(".ajax-loader");
             if (ajax != null) {
-                ajax.classList.add("fadeIntoYou");
+                ajax.classList.add("hidden");
             }
-        }	//callback function
+        }
     };
     new ft(params);
 });
 
+// $(document).ready equivalent
+document.addEventListener("DOMContentLoaded", function (event) {
+    $(".ajax-loader").css("visibility", "hidden");
+
+    var unavailableDates = [];
+    var studentUSD = $("#studentUSD").val();
+    var studentYear = $("#studentYear").val();
+
+    $.ajax({
+        type: 'GET',
+        url: '/Home/GetCalendarViewByBuilding',
+        data: {
+            SchoolYear: studentYear,
+            usd: studentUSD,
+            bId: 0,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.Result === 'success') {
+                var i = data.calendarEvents.length - 1
+                while (i >= 0) {
+                    if (data.calendarEvents[i].calendarDate != null) {
+                        var currentTime = new Date(parseInt(data.calendarEvents[i].calendarDate.substr(6)));
+                        var month = ("0" + (currentTime.getMonth() + 1)).slice(-2);
+                        var day = ("0" + currentTime.getDate()).slice(-2);
+                        var year = currentTime.getFullYear();
+                        var date = month + '/' + day + '/' + year;
+                        unavailableDates.push(date);
+                    }
+                    i--;
+                }
+            }
+        }
+    }).done(function () {
+
+        $("#IEPBeginDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                var day = ("0" + date.getDate()).slice(-2);
+                var year = date.getFullYear();
+                var dmy = month + '/' + day + '/' + year;
+                if ($.inArray(dmy + "", unavailableDates) > -1) {
+                    return [false, "", "unAvailable"];
+                } else {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+                    return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
+                }
+            }
+        });
+
+        console.log(unavailableDates);
+        console.log("----------------");
+
+        $("#IEPMeetingDate").datepicker({
+            dateFormat: 'mm/dd/yy',
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "-1:+2",
+            beforeShowDay: function (date) {
+                var month = ("0" + (date.getMonth() + 1)).slice(-2);
+                var day = ("0" + date.getDate()).slice(-2);
+                var year = date.getFullYear();
+                var dmy = month + '/' + day + '/' + year;
+                if ($.inArray(dmy + "", unavailableDates) > -1) {
+                    return [false, "", "unAvailable"];
+                } else {
+                    var day = date.getDay();
+                    var string = jQuery.datepicker.formatDate('dd/mm/yy', date);
+                    return (day !== 0 && day !== 6) ? [true, "", "Available"] : [false, "", "unAvailable"];
+                }
+            }
+        });
+
+    }).fail(function () {
+        alert("An error occured either when our server or your connection.");
+    });
+});
+
+var moduleFormSerialize = '';
+
+// Prevents the user from using the back button
+window.history.pushState({
+    page: 1
+}, "", "");
+
+window.onpopstate = function (event) {
+
+    // "event" object seems to contain value only when the back button is clicked
+    // and if the pop state event fires due to clicks on a button
+    // or a link it comes up as "undefined" 
+
+    if (event) {
+        // Code to handle back button or prevent from navigation
+        event.preventDefault();
+        history.go(1);
+    }
+};
 
 function getParameterByName(name, url) {
     if (!url) {
@@ -720,6 +825,8 @@ function getParameterByName(name, url) {
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
+
+
 
 $('input[type=radio][name=optionsExtendedSchoolYear]').change(function () {
     if (this.value === 'option1') {
@@ -789,26 +896,6 @@ function formatDate(date) {
     return ([year, month, day].join('-')).toString();
 }
 
-var moduleFormSerialize = '';
-
-// Prevents the user from using the back button
-window.history.pushState({
-    page: 1
-}, "", "");
-
-window.onpopstate = function (event) {
-
-    // "event" object seems to contain value only when the back button is clicked
-    // and if the pop state event fires due to clicks on a button
-    // or a link it comes up as "undefined" 
-
-    if (event) {
-        // Code to handle back button or prevent from navigation
-        event.preventDefault();
-        history.go(1);
-    }
-};
-
 /** fixing the bootstrap modal overlay bug and setting up events. **/
 $(window).on('shown.bs.modal', function (e) {
     var moduleId = e.target.id;
@@ -863,7 +950,7 @@ $('#moduleSection').on('hide.bs.modal', function (e) {
             return false; // breaks us out of the $.each loop.
         }
     });
-    
+
     allCompleted ? $("#makeIEPActive").removeClass("disabled") : $("#makeIEPActive").addClass("disabled");
     allCompleted ? $("#makeIEPAmendmentActive").removeClass("disabled") : $("#makeIEPAmendmentActive").addClass("disabled");
     allCompleted ? $("#makeIEPAnnualActive").removeClass("disabled") : $("#makeIEPAnnualActive").addClass("disabled");
@@ -1503,8 +1590,8 @@ $("#myonoffswitch4").click(function (event) {
 $("#truefalseSwitchHealthConcerns").click(function (event) {
     if ($(event.target).is(':checked')) {
         $('.isHealthConcern').addClass("noConcerns").fadeOut();
-    } else {
-        $('.isHealthConcern').removeClass("noConcerns").fadeIn();
+      } else {
+      $('.isHealthConcern').removeClass("noConcerns").fadeIn();
     }
 });
 
