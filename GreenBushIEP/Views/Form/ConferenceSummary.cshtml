@@ -2,8 +2,7 @@
     var formModel = ViewData["conferenceSummary"] != null ? ViewData["conferenceSummary"] as GreenBushIEP.Models.tblFormConferenceSummary : new GreenBushIEP.Models.tblFormConferenceSummary();
 
     string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
-    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";
-    string teacherFormattedName = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yy") : "";    
     string usdName = Model.studentInfo != null ? Model.studentInfo.AssignedUSD : "";
     string placement = Model.studentInfo != null ? Model.studentInfo.PlacementCode : "";
     int numContacts = 0;
@@ -19,6 +18,11 @@
     if (!string.IsNullOrEmpty(formModel.PlacementCode))
     {
         placement = formModel.PlacementCode;
+    }
+
+    if(formModel.FormConferenceSummaryId == 0)
+    {        
+        formModel.TeacherName  = Model.teacher != null ? Model.teacher.FirstName + " " + Model.teacher.LastName : "";
     }
 
 }
@@ -68,7 +72,7 @@
         </p>
         <p class="voffset3" style="font-weight:normal">
             <span style="font-weight:bold">Teacher:</span>
-            <u>@(teacherFormattedName.Length > 40 ? teacherFormattedName : String.Format(teacherFormattedName).PadRight(40 - String.Format(teacherFormattedName).Length, ' ').Replace(" ", "\u00A0"))</u> <span style="font-weight:bold">Building Administrator:</span>
+            <u><textarea cols="40" rows="1" maxlength="200">@(formModel.TeacherName)</textarea><span id="TeacherName" style="display:none" class="input-value">@(formModel.TeacherName)</span></u> <span style="font-weight:bold">Building Administrator:</span>
             <u><textarea cols="25" rows="1" data-val="25" maxlength="200">@(formModel.BuildingAdministrator)</textarea><span id="txtBuildingAdministrator" style="display:none" class="input-value">@(formModel.BuildingAdministrator)</span></u>
         </p>
         <p class="voffset3" style="font-weight:normal">

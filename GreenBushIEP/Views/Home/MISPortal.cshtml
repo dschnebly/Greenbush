@@ -20,7 +20,7 @@
     <h2>@ViewBag.Title</h2>
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" class="img-responsive img-circle" alt="My Avatar">
+            <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" class="img-responsive" alt="My Avatar">
         </a>       
     </div>
     <h3>
@@ -34,21 +34,21 @@
     <div class="row">
         <div class="col-md-12">
             <div id="user-toggle" class="pull-right">
-
+               
                 <div class="user-toggle-item">
-                    <a id="add-student-user" class="btn btn-circle btn-xl userActionBtn" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
+                    <a id="add-student-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/CreateStudent"><i class="fa fa-child" title="Create a New Student" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <a id="add-system-user" class="btn btn-circle btn-xl userActionBtn" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
+                    <a id="add-system-user" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Create"><i class="fa fa-user-plus" title="Create New System User" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <a id="mySettings" class="btn btn-circle btn-xl userActionBtn" data-ftrans="slide" href="/Home/MySettings"><i class="fa fa-cogs" title="Adjust My Settings" data-toggle="tooltip"></i></a>
+                    <a id="mySettings" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/MySettings"><i class="fa fa-cogs" title="Adjust My Settings" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <a id="reports" class="btn btn-circle btn-xl userActionBtn" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
+                    <a id="reports" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Home/Reports"><i class="fa fa-file" title="Reports" data-toggle="tooltip"></i></a>
                 </div>
                 <div class="user-toggle-item">
-                    <a id="referrals" class="btn btn-circle btn-xl userActionBtn" data-ftrans="slide" href="/Manage/Referrals"><i class="fa fa-address-book" title="View Referrals" data-toggle="tooltip"></i></a>
+                    <a id="referrals" class="btn btn-primary btn-circle btn-xl" data-ftrans="slide" href="/Manage/Referrals"><i class="fa fa-address-book" title="View Referrals" data-toggle="tooltip"></i></a>
                 </div>
 
             </div>
@@ -62,7 +62,7 @@
         <div class="panel-heading">
             <h3 class="panel-title">Users </h3>
             <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option></select>
-            <button class="btn btn-default btn btn-sm btn-filter pull-right filterListofUsers"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
+            <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
         </div>
         <div class="row showFilters hidden">
             <div class="col-xs-12 col-md-3 pull-left">
@@ -262,9 +262,6 @@
         </div>
     </div>
 </div>
-
-<!-- loading the file even though it's an ajax call -->
-<var data-reload="true" data-src="/Scripts/misportal.js"></var>
 
 <!-- Modal -->
 <div class="modal-dialog">

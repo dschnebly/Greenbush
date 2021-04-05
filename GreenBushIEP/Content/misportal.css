@@ -19,13 +19,6 @@
 
 h3 a {
     margin: 0 5px;
-    font-family: 'PT Sans' sans-serif;
-    font-size: 21pt;
-    color: #444;
-}
-
-h3 small {
-    color: #444;
 }
 
 hr {
@@ -33,9 +26,8 @@ hr {
     margin-bottom: 20px;
 }
 
-.user-head img {
-    min-width: 85px;
-    border: 2px solid #ddd;
+.alert-danger {
+    background-color: #EAE8E9;
 }
 
 .list-group {
@@ -99,7 +91,9 @@ hr {
 }
 
 .panel-primary > .panel-heading {
-	padding: 8px 15px;
+    padding: 8px 15px;
+    background-color: #01D28E !important;
+    border-color: #01D28E !important;
 }
 
 .panel-primary {
@@ -107,21 +101,20 @@ hr {
 }
 
 .panel-title {
-	display: inline-block !important;
-	color: #444 !important;	
-	font-weight: 600 !important;
+    display: inline-block !important;
+    color: #fff !important;
+    font-weight: 600 !important;
 }
 
 h4.panel-title {
-	display: inline-block !important;
-	color: #666 !important;	
+    display: inline-block !important;
+    color: #666 !important;
 }
 
 .btn-filter {
     position: relative;
     bottom: 1px;
     margin-right: 5px;
-    font-weight: 600;
 }
 
 .form-group label {
@@ -142,6 +135,49 @@ h4.panel-title {
     font-weight: 600;
     padding: 3px;
     background-color: #fff;
+}
+
+/*//////////////////////////////////////
+///  User Toggle Buttons Starts Here
+//////////////////////////////////////*/
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    line-height: 1.428571429;
+    border-radius: 15px;
+}
+
+    .btn-circle:focus {
+        outline: none;
+    }
+
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        font-size: 24px;
+        line-height: 1.33;
+        border-radius: 35px;
+        margin-bottom: 10px;
+    }
+
+#user-toggle .user-toggle-item {
+    display: inline-block;
+}
+
+#mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
+    vertical-align: -webkit-baseline-middle;
+    padding-left: 0;
+}
+
+.panel-primary > .panel-heading {
+    padding: 8px 15px;
+    background-color: #45906d !important;
+    border-color: #45906d !important;
 }
 
 .StudentActionIcons {
@@ -175,63 +211,6 @@ h4.panel-title {
 .popover-content textarea::-moz-placeholder {
     color: lightgray;
 }
-
-/*//////////////////////////////////////
-///  User Toggle Buttons Starts Here
-//////////////////////////////////////*/
-
-.btn-circle {
-    width: 30px;
-    height: 30px;
-    text-align: center;
-    padding: 6px 0;
-    font-size: 12px;
-    line-height: 1.428571429;
-    border-radius: 15px;
-}
-
-    .btn-circle:focus {
-        outline: none;
-    }
-
-    .btn-circle.btn-xl {
-        width: 70px;
-        height: 70px;
-        padding: 10px 16px;
-        font-size: 24px;
-        line-height: 1.33;
-        border-radius: 35px;
-        margin-bottom: 10px;
-    }
-
-#add-student-user i {
-    padding: 0;
-}
-
-#user-toggle {
-    margin-right: 20px;
-}
-
-    #user-toggle .user-toggle-item {
-        display: inline-block;
-    }
-
-#mySettings, #add-system-user, #add-student-user, #reports, #referrals {
-    margin-left: 15px;
-}
-
-    #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover {
-        -webkit-animation: pulse 1s ease 0s;
-        -o-animation: pulse 1s ease 0s;
-        -moz-animation: pulse 1s ease 0s;
-        animation: pulse 1s ease 0s;
-    }
-
-    #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
-        vertical-align: -webkit-baseline-middle;
-        padding-left: 0;
-    }
-
 
 @keyframes pulse {
     0% {

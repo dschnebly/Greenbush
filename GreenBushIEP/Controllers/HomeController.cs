@@ -1963,6 +1963,7 @@ namespace GreenbushIep.Controllers
 
                 ViewBag.studentName = student.FirstName + " " + student.LastName;
                 ViewBag.isMIS = mis.UserID == teacher.UserID;
+                ViewBag.isOwner = teacher.UserID == 1;
 
                 List<tblProvider> providers = (from p in db.tblProviders
                                                join d in db.tblProviderDistricts on p.ProviderID equals d.ProviderID
@@ -5328,6 +5329,7 @@ namespace GreenbushIep.Controllers
                 conf.ReasonForConfrence = GetInputValue("txtReasonForConfrence", spans);
                 conf.Conclusions = GetInputValue("txtConclusions", spans);
                 conf.PlacementCode = GetInputValue("PlacementCode", spans);
+                conf.TeacherName = GetInputValue("TeacherName", spans);
 
                 if (conf.FormConferenceSummaryId == 0)
                 {

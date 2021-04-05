@@ -1,4 +1,5 @@
 ﻿$(function () {
+
     function init() {
         $(".chosen-select").chosen({ width: "95%", disable_search_threshold: 10 });
 
@@ -544,22 +545,31 @@
         // attach event
         // event is fired when hiearachy view is clicked
         function initHref() {
-            $('div.list-group-item').each(function (index) {
+            $(".launchListOfStudents").on("click", function (e) {
+                e.preventDefault();
 
-                $(this).not('.bound').addClass('bound').on("click", function (e) { // one sweet bit of code.
+                $(".ajax-loader").show();
+                $(".ajax-loader img").show();
+            });
 
-                    //if (!($(e.target).is('i') || $(e.target).is('text'))) { return; } // only fire if the name or the icon was clicked.
-                    if (!$(e.target).is('i')) { return; }  // only fire if the icon was clicked.
+            $("div.list-group-item").each(function (index) { // one sweet bit of code.
+
+                $(this).not(".bound").addClass("bound").on("click", function (e) {
+
+                    if (!($(e.target).is("i") || $(e.target).is("text"))) {
+                        return;
+                    } // only fire if the name or the icon was clicked.
 
                     var div = $(this);
                     var userId = div.data("id");
 
-                    if (div.next().hasClass('list-group')) {
-                        div.toggleClass('subactivated');
+                    if (div.next().hasClass("list-group")) {
+                        div.toggleClass("subactivated");
                         div.next().toggle();
-                    }
-                    else {
-                        if ($(e.target).hasClass("clickEventDisabled")) { return; }
+                    } else {
+                        if ($(e.target).hasClass("clickEventDisabled")) {
+                            return;
+                        }
 
                         $(e.target).addClass("clickEventDisabled");
                     }
