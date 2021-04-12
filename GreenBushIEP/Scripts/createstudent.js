@@ -667,7 +667,6 @@ $("#next7").on("click", function () {
 });
 $("#next8").on("click", function () {
 
-
     var activeTeachers = $(".listrap").listrap().getSelection();
     var teacherIds = [];
     var studentId = $("#createStudentAssignments").find("input[name='studentId']").val();

@@ -183,21 +183,6 @@ label[for=IEPMeetingDate] {
             bottom: 2px;
         }
 
-.btn-group-primary .dropdown-menu {
-    background-color: #214680 !important;
-}
-
-    .btn-group-primary .dropdown-menu li > a {
-        color: #fff;
-        font-size: 12px;
-    }
-
-        .btn-group-primary .dropdown-menu li > a:hover,
-        .btn-group-primary .dropdown-menu li > a:focus {
-            background-color: #214680 !important;
-            color: #ffffff;
-            text-decoration: underline;
-        }
 
 .btn-bordered-warning:focus,
 .btn-bordered-warning:hover {

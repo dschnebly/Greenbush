@@ -3401,10 +3401,15 @@ namespace GreenBushIEP.Controllers
                 }
             }
 
-            return RedirectToAction("Portal", "Home");
+            if (collection["backToStudentIEP"] != null && Convert.ToBoolean(collection["backToStudentIEP"]))
+            {
+                return RedirectToAction("StudentProcedures", "Home", new { stid = studentId });
+            }
+            else
+            {
+                return RedirectToAction("Portal", "Home");
+            }
         }
-
-
 
         // GET: Manage/Edit/5
         [HttpGet]
