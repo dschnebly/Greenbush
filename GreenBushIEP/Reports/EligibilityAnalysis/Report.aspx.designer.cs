@@ -33,6 +33,33 @@ namespace GreenBushIEP.Reports.EligibiltyAnalysis
         protected global::System.Web.UI.HtmlControls.HtmlSelect buildingDD;
 
         /// <summary>
+        /// cbEthnicity control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cbEthnicity;
+
+        /// <summary>
+        /// cbGender control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cbGender;
+
+        /// <summary>
+        /// cbGrade control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlInputCheckBox cbGrade;
+
+        /// <summary>
         /// Button1 control.
         /// </summary>
         /// <remarks>

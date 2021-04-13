@@ -62,12 +62,15 @@ namespace GreenBushIEP.Reports.EligibiltyAnalysis
 			ReportParameter p1 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));			
 			ReportParameter p5 = new ReportParameter("Building", buildingName);
 			ReportParameter p6 = new ReportParameter("District", districtName);
-
+			ReportParameter pGrade = new ReportParameter("ShowGrade", cbGrade.Checked ? "Y" : "N");
+			ReportParameter pEthnicity= new ReportParameter("ShowEthnicity", cbEthnicity.Checked ? "Y" : "N");
+			ReportParameter pGender = new ReportParameter("ShowGender", cbGender.Checked ? "Y" : "N");
+			
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/EligibilityAnalysis/rptEligibiltyAnalysis.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
 		
 
-			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p5, p6 });
+			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p5, p6, pGrade, pEthnicity, pGender });
 			MReportViewer.LocalReport.Refresh();
 		}
 

@@ -9131,6 +9131,8 @@ namespace GreenBushIEP.Reports {
             
             private global::System.Data.DataColumn columnSecondary_DisabilityCode;
             
+            private global::System.Data.DataColumn columnRace;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public up_ReportEligibiltyAnalysisDataTable() {
@@ -9222,6 +9224,14 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public global::System.Data.DataColumn RaceColumn {
+                get {
+                    return this.columnRace;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -9257,7 +9267,7 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
-            public up_ReportEligibiltyAnalysisRow Addup_ReportEligibiltyAnalysisRow(string Gender, string AssignedUSD, int Grade, string USD, string BuildingName, string Primary_DisabilityCode, string Secondary_DisabilityCode) {
+            public up_ReportEligibiltyAnalysisRow Addup_ReportEligibiltyAnalysisRow(string Gender, string AssignedUSD, int Grade, string USD, string BuildingName, string Primary_DisabilityCode, string Secondary_DisabilityCode, string Race) {
                 up_ReportEligibiltyAnalysisRow rowup_ReportEligibiltyAnalysisRow = ((up_ReportEligibiltyAnalysisRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Gender,
@@ -9266,7 +9276,8 @@ namespace GreenBushIEP.Reports {
                         USD,
                         BuildingName,
                         Primary_DisabilityCode,
-                        Secondary_DisabilityCode};
+                        Secondary_DisabilityCode,
+                        Race};
                 rowup_ReportEligibiltyAnalysisRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowup_ReportEligibiltyAnalysisRow);
                 return rowup_ReportEligibiltyAnalysisRow;
@@ -9296,6 +9307,7 @@ namespace GreenBushIEP.Reports {
                 this.columnBuildingName = base.Columns["BuildingName"];
                 this.columnPrimary_DisabilityCode = base.Columns["Primary_DisabilityCode"];
                 this.columnSecondary_DisabilityCode = base.Columns["Secondary_DisabilityCode"];
+                this.columnRace = base.Columns["Race"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -9315,6 +9327,8 @@ namespace GreenBushIEP.Reports {
                 base.Columns.Add(this.columnPrimary_DisabilityCode);
                 this.columnSecondary_DisabilityCode = new global::System.Data.DataColumn("Secondary_DisabilityCode", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnSecondary_DisabilityCode);
+                this.columnRace = new global::System.Data.DataColumn("Race", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnRace);
                 this.columnGender.MaxLength = 10;
                 this.columnAssignedUSD.MaxLength = 50;
                 this.columnUSD.AllowDBNull = false;
@@ -16804,6 +16818,22 @@ namespace GreenBushIEP.Reports {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public string Race {
+                get {
+                    try {
+                        return ((string)(this[this.tableup_ReportEligibiltyAnalysis.RaceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'Race\' in table \'up_ReportEligibiltyAnalysis\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableup_ReportEligibiltyAnalysis.RaceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public bool IsGenderNull() {
                 return this.IsNull(this.tableup_ReportEligibiltyAnalysis.GenderColumn);
             }
@@ -16872,6 +16902,18 @@ namespace GreenBushIEP.Reports {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
             public void SetSecondary_DisabilityCodeNull() {
                 this[this.tableup_ReportEligibiltyAnalysis.Secondary_DisabilityCodeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public bool IsRaceNull() {
+                return this.IsNull(this.tableup_ReportEligibiltyAnalysis.RaceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
+            public void SetRaceNull() {
+                this[this.tableup_ReportEligibiltyAnalysis.RaceColumn] = global::System.Convert.DBNull;
             }
         }
         
