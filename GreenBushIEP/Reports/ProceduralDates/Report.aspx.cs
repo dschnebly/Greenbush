@@ -107,7 +107,7 @@ namespace GreenBushIEP.Reports.ProceduralDates
 			using (var ctx = new IndividualizedEducationProgramEntities())
 			{
 				//Execute stored procedure as a function
-				var list = ctx.up_ReportProceduralDates(districtFilter, teacherIds, buildingID);
+				var list = ctx.up_ReportProceduralDates(districtFilter, teacherIds, buildingID, null, null);
 
 				foreach (var cs in list)
 					dt.Rows.Add(cs.DateType, cs.EvalDate, cs.StudentFirstName, cs.StudentLastName, cs.Teachers, cs.USD, cs.BuildingName);

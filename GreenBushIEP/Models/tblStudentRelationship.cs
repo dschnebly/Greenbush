@@ -32,5 +32,6 @@ namespace GreenBushIEP.Models
         public Nullable<int> ModifiedBy { get; set; }
         public System.DateTime Create_Date { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public bool canEmail { get; set; }
     }
 }

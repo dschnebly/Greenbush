@@ -17,6 +17,13 @@
 				message += "(" + $("#draftIepsCount").val() + ") Draft IEPs"
 			}
 
+			if ($("#evalsDueCount").length > 0) {
+				if (message != "") {
+					message += " and ";
+				}
+				message += "(" + $("#evalsDueCount").val() + ") 3 Year Evals Coming Due"
+			}
+
 			if (message != "") {
 				message = "<a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
 				_showAlert(message, false);
@@ -26,6 +33,10 @@
 		$("#notificationBtn").on("click", function () {
 			_showNotifications();
 			return false;
+		});
+
+		$("#iepsEvalListBtn").on("click", function () {
+			$("#iepsEvalList").fadeToggle("fast", "linear");
 		});
 
 		$("#iepsDueListBtn").on("click", function () {

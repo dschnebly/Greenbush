@@ -119,8 +119,10 @@ namespace GreenbushIep.Controllers
                 //dashboard notify
                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
+                
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
@@ -151,6 +153,7 @@ namespace GreenbushIep.Controllers
                 //dashboard notify
                  model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -248,6 +251,7 @@ namespace GreenbushIep.Controllers
                 //dashboard notify
                 model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -5016,9 +5020,21 @@ namespace GreenbushIep.Controllers
 
         }
 
+        private List<NotificationViewModel> GetEvalsDue(string studentIds)
+        {
+            return db.up_ReportProceduralDates(null, null, null, studentIds, 60).Where(o => o.DateType == "3 YEAR").OrderBy(o => o.EvalDate).Select(u => new NotificationViewModel()
+            {
+                StudentId = u.UserID,
+                StudentFirstName = u.StudentFirstName,
+                StudentLastName = u.StudentLastName,
+                EvalType = u.DateType
+            }).ToList();
+
+        }
+
         private List<NotificationViewModel> GetIepsDue(string studentIds)
         {
-            return db.up_ReportIEPSDue(null, null, null, studentIds).Select(u => new NotificationViewModel()
+            return db.up_ReportIEPSDue(null, null, null, studentIds, 60).Select(u => new NotificationViewModel()
             {
                 StudentId = u.UserID,
                 StudentFirstName = u.StudentFirstName,

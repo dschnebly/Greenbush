@@ -7,7 +7,7 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/misportal.css?v1.1")
+    @Styles.Render("~/Content/misportal.css?v1.2")
     @Styles.Render("~/Content/chosen.css")
 }
 
@@ -21,7 +21,7 @@
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of users</small>
     </h3>
-     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
+     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
     {
         <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>    
     }
@@ -295,13 +295,13 @@
 </div>
 <!-- end modal -->
 
- @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary {{ "evalsDue", Model.evalsDue }, { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
 
 
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.10")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.11")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

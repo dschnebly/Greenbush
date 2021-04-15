@@ -26,8 +26,15 @@
                 message += "(" + $("#draftIepsCount").val() + ") Draft IEPs"
             }
 
+            if ($("#evalsDueCount").length > 0) {
+                if (message != "") {
+                    message += " and ";
+                }
+                message += "(" + $("#evalsDueCount").val() + ") 3 Year Evals Coming Due"
+            }
+
             if (message != "") {
-                message = "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button><a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
+                message = "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button><a href='#' class='notification' onclick='_showNotifications();' /><i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
                 _showAlert(message, false);
             }
         }
@@ -36,6 +43,10 @@
             _showNotifications();
             return false;
         });        
+
+        $("#iepsEvalListBtn").on("click", function () {
+            $("#iepsEvalList").fadeToggle("fast", "linear");
+        });
 
         $("#iepsDueListBtn").on("click", function () {
             $("#iepsDueList").fadeToggle("fast", "linear");
