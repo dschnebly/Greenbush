@@ -27,6 +27,22 @@
                 </select>
             </div>
         </div>
+        <div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				<label for="startDate">Start Date</label>
+			</div>
+			<div class="col-md-6" >
+					<input id="startDate" runat="server" name="startDate" title="Start Date" type="text" class="dtField" value="" style="z-index: 99999; " >
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-bottom: 12px;">
+			<div class="col-md-2" >
+				<label for="endDate">End Date</label>
+			</div>
+			<div class="col-md-6" >
+					<input id="endDate" runat="server" name="startDate" title="Start Date" type="text" class="dtField" value="" style="z-index: 99999; " >
+			</div>
+		</div>
         <div class="col-md-12 voffset2">
             <div class="col-md-2">
                 <label for="building">Display Options</label>
