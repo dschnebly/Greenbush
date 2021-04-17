@@ -2998,6 +2998,7 @@ namespace GreenbushIep.Controllers
                 new SelectListItem { Text = "Child Outcomes Summary", Value = "ChildOutcomesSummary" },
                 new SelectListItem { Text = "Transition Referral", Value = "TransitionReferral" },
                 new SelectListItem { Text = "10 Day Waiver", Value = "TenDayWaiver" },
+                new SelectListItem { Text = "Electronic Communication", Value = "ElectronicCommunication" },
             };
 
             return forms.OrderBy(x => x.Text).ToList();

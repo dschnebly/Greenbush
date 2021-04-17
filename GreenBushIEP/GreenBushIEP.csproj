@@ -1334,6 +1334,7 @@
     <Content Include="Views\ILP\_EducationPlanModule.cshtml" />
     <Content Include="Views\ILP\_ProgressCreditModule.cshtml" />
     <Content Include="Views\ILP\_DocumentStorageModule.cshtml" />
+    <Content Include="Views\Form\ElectronicCommunication.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

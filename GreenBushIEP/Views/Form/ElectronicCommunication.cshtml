@@ -1,0 +1,37 @@
+﻿@{
+  var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");	
+}
+<div class="module-page">
+	<div>
+		<h1 style="font-weight:bold;font-size:16pt;margin-bottom:10px">PARTICIAPTION OF PARENT/GUARDIAN</h1>		
+	</div>
+	
+	<div>	  
+		<input type="checkbox" name="AttendCbx" /><img id="Attend" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>Attended IEP Meeting</span><br/>
+		<input type="checkbox" name="ViaCbx" /><img id="Via" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>Participation via ____________________________________________</span><br/>
+		<input type="checkbox" name="DidNotCbx" /><img id="DidNot" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>Did not respond</span><br/>
+
+	  
+	</div>
+	<p style="margin-top:10px;">Will the student be 17 years old during the year of this IEP?</p>
+	<div>
+		<input type="checkbox" /><img id="YesAge" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>Yes &nbsp;</span> <input name="NoCbx" type="checkbox" /><img id="NoAge" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>No &nbsp;</span>
+	</div>
+	<p style="margin-top:10px;">I have been informed that at age 18 all rights afforded to parents under special education law will be transferred to the student unless parents obtain legal guardianship.</p>
+	
+	<p style="margin-top:40px">Student Signature _____________________________________ Date __________________</p>
+	<p style="margin-top:50px"> Parent Signature ______________________________________ Date ___________________</p>
+
+	<div style="padding-top:20px">
+		<p>Parent(s) were given a copy of parental rights  _________________ Parent's Initials</p>
+		<p>Parent(s) received a copy of IEP ___________________ date ______________ Initials</p>
+		<p>If parent did not attend, date copy of IEP sent ___________________ </p>
+	</div>
+	<div style="margin-top:25px">
+		<input type="checkbox" name="PreferYesCbx" /><img id="PreferYes" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I prefer to receive special education documents electronically at the email address given</span><br/>
+		<input type="checkbox" name="PreferNoCbx" /><img id="PreferNo" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I do not want to receive special education documents electronically</span>
+	</div>
+	<p style="margin-top:30px">Email Address _________________________________</p>
+	<p style="margin-top:40px">Parent Signature _______________________________________  Date ____________________</p>
+</div>
+<br/><br/>
