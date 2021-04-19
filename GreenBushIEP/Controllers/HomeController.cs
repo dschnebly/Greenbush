@@ -1265,7 +1265,6 @@ namespace GreenbushIep.Controllers
                         theIEP.isAllCompleted = false;
                     }
                 }
-
             }
 
             switch (model.studentIEP.iepStatusType)

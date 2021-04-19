@@ -2,14 +2,14 @@
 
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle" style="font-size: 30px;"></span></button>
-    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Progress');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>    
+    <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Progress');"><span class="glyphicon glyphicon-print" style="font-size: 27px;padding-right:8px" title="Print Module"></span></button>
     <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign" style="font-size: 30px;"></span></button>
     <h4 class="modal-title pull-left" id="myModalLabel" style="font-size: 30px;"><i class="glyphicon glyphicon-stats" aria-hidden="true" style="font-size: smaller; "></i>&nbsp;Progress Report</h4>
     <div class="module-user-name">@(ViewBag.studentName)</div>
 </div>
 <div class="alert alert-danger" id="alertMessage" role="alert" style="display: none;">
     <strong class="moreinfo">Oh snap!</strong>
- </div>
+</div>
 <div class="modal-body">
     @if (Model.studentGoals.Count > 0)
     {
@@ -43,27 +43,23 @@
                     <div class="panel-group" id="accordion@(studentGoal.goal.Title)">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-								
-                                <h4 class="panel-title">
+                                <h4 class="panel-title" style="display: inline !important;">
                                     <a data-toggle="collapse" data-parent="#accordion@(studentGoal.goal.goalID)" href="#collapse@(studentGoal.goal.goalID)">
                                         <input type="hidden" name="GoalId" value="@(studentGoal.goal.goalID)" />
                                         <i class="fas fa-trophy"></i><span class="studentGoalLabel" style="margin-left:5px;">@(studentGoal.goal.Title)</span>
                                     </a>
-									<span class="pull-right small">Include in Print? <input type="checkbox" style="vertical-align:bottom" data-val=@(studentGoal.goal.goalID) name="printGoal" checked/></span>
+                                    <span class="pull-right small">Include in Print? <input type="checkbox" style="vertical-align:bottom" data-val=@(studentGoal.goal.goalID) name="printGoal" checked /></span>
                                 </h4>
-								
                             </div>
                             <div id="collapse@(studentGoal.goal.goalID)" class="panel-collapse collapse @(needsIN)">
                                 <div class="panel-body">
-
                                     <label class="standard-font-size">@(sgText)</label><br />
                                     <label class="standard-font-size">Measurable Annual Goal</label><br />
                                     <div class="form-group">
                                         <p class="standard-font-size">@(studentGoal.goal.AnnualGoal)</p>
                                     </div>
-
                                     <div class="form-group">
-                                        <table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
+                                        @*<table class="table table-bordered table-responsive" style="margin-bottom: 0; background-color: #eee;">
                                             <thead class="thead-inverse">
                                                 <tr class="ProgressAnnualGoal">
                                                     <th class="text-center standard-font-size" colspan="4">Progress Towards Annual Goal</th>
@@ -117,6 +113,8 @@
                                                             <span class="input-group-addon add-on addComment" data-value="reportOfAnnualGoalComments20"><span class="glyphicon glyphicon-edit"></span></span>
                                                         </div>
                                                     </td>
+                                                </tr>
+                                                <tr>
                                                     <td>
                                                         <div class="input-group input-append">
                                                             <select class="form-control" name="ReportAnnualGoal30">
@@ -140,7 +138,6 @@
                                                 </tr>
                                                 <tr class="hidden">
                                                     <td colspan="4">
-
                                                         <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
                                                         <div class="form-group shortTermComments">
                                                             <textarea name="reportOfAnnualGoalComments10" placeholder="Enter your comment about the 1st annual reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" maxlength="1000">@(studentGoal.goal.ProgressDescription_Quarter1)</textarea>
@@ -151,7 +148,7 @@
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                        </table>
+                                        </table>*@
                                         <br />
                                         <br />
                                         <label class="standard-font-size">Goal Short Term Benchmark(s)</label>
@@ -307,8 +304,6 @@
 <div class="completed-loader completed-loader-hidden"></div>
 <div class="ajax-loader">
     <img src="/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content">
-    @*<strong class="success"><i class="glyphicon glyphicon-ok" />&nbsp;&nbsp;You successfully saved the data!</strong>
-    <strong class="failure"><i class="glyphicon glyphicon-remove" />&nbsp;&nbsp;Unable to save the data. Please try again.</strong>*@
 </div>
 <script>
     function initProgressReport() {
@@ -326,33 +321,33 @@
                 var data = progressGoal.closest("form").serialize();
 
                 $.post('/ModuleSection/' + postMethod, data)
-                .done(function (results) {
-                    $(".ajax-loader img").css("visibility", "hidden");
-					$(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-						$('.ajax-loader').css("visibility", "hidden");
-						$("#alertMessage").addClass('alert-success').removeClass('alert-danger');
-						$("#alertMessage .moreinfo").html('The report was successfully saved.');
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
+                    .done(function (results) {
+                        $(".ajax-loader img").css("visibility", "hidden");
+                        $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                            $('.ajax-loader').css("visibility", "hidden");
+                            $("#alertMessage").addClass('alert-success').removeClass('alert-danger');
+                            $("#alertMessage .moreinfo").html('The report was successfully saved.');
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
                         });
-                    });
 
-                    $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
-                    $(window).trigger("saving.bs.modal");
-                })
-                .fail(function (error) {
-                    $(".ajax-loader img").css("visibility", "hidden");
-                    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
-						$('.ajax-loader').css("visibility", "hidden");
-						$("#alertMessage").addClass('alert-danger').removeClass('alert-success');
-                        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
-                        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-                            $("#alertMessage").slideUp(500);
+                        $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
+                        $(window).trigger("saving.bs.modal");
+                    })
+                    .fail(function (error) {
+                        $(".ajax-loader img").css("visibility", "hidden");
+                        $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                            $('.ajax-loader').css("visibility", "hidden");
+                            $("#alertMessage").addClass('alert-danger').removeClass('alert-success');
+                            $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                            $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                                $("#alertMessage").slideUp(500);
+                            });
                         });
-                    });
 
-                    $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
-                });
+                        $('.completed-loader').addClass('completed-loader-hidden').removeClass('completed-loader-visible');
+                    });
             });
 
             //* Binding */
