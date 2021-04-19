@@ -2015,7 +2015,7 @@ namespace GreenbushIep.Controllers
                     model.IEPStatus = iep.IepStatus.ToUpper();
                 }
 
-                if (isReadOnly)
+                if (isReadOnly && !ViewBag.IsOwner)
                 {
                     return PartialView("ActiveIEP/_StudentServices", model);
                 }

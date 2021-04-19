@@ -766,8 +766,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-        console.log(unavailableDates);
-        console.log("----------------");
+        //console.log(unavailableDates);
+        //console.log("----------------");
 
         $("#IEPMeetingDate").datepicker({
             dateFormat: 'mm/dd/yy',
@@ -779,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
                 var day = ("0" + date.getDate()).slice(-2);
                 var year = date.getFullYear();
                 var dmy = month + '/' + day + '/' + year;
-                if ($.inArray(dmy+"", unavailableDates) > -1) {
+                if ($.inArray(dmy + "", unavailableDates) > -1) {
                     return [false, "", "unAvailable"];
                 } else {
                     var day = date.getDay();
@@ -789,8 +789,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-    }).fail(function () {
-        alert("An error occured either when our server or your connection.");
     });
 });
 

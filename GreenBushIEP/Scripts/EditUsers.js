@@ -1,4 +1,4 @@
-﻿$(document).ready(function () {
+﻿$(function () {
 
     //// attach event
     //// sets up drop down list of buildings a user is in.
@@ -111,7 +111,6 @@
             }
         });
     });
-
 
     // attach event
     // fires when the user chooses a district

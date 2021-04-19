@@ -195,7 +195,7 @@ namespace GreenBushIEP.Models
                 isGoalCompleted = studentGoals.Count > 0 ? studentGoals.All(g => g.Completed) : studentHasGoals ? false : allModulesCompleted;
                 isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
                 isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : studentHasAccommodations ? false : allModulesCompleted;
-                isBehaviorCompleted = db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed  : !(studentSocial != null && (studentSocial.BehaviorInterventionPlan));
+                isBehaviorCompleted = studentSocial != null && studentSocial.BehaviorInterventionPlan ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null && db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : true;
                 isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted && isContingencyCompleted;
                 isTransitionCompleted = transitions.Count > 0 ? transitions.Any(o => o.Completed) : false;
 

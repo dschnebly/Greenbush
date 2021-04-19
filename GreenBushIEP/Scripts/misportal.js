@@ -2,14 +2,14 @@
 
     function init() {
 
-        if ($("#dashboardNotification").length > 0 && ($("#showBannerNotification").val() == "1") ) {            
+        if ($("#dashboardNotification").length > 0 && ($("#showBannerNotification").val() == "1")) {
             var message = "";
 
             if ($("#dueIepsCount").length > 0) {
-                message = "(" + $("#dueIepsCount").val() +") IEPs Coming Due"
+                message = "(" + $("#dueIepsCount").val() + ") IEPs Coming Due"
             }
 
-            if ($("#draftIepsCount").length > 0) {               
+            if ($("#draftIepsCount").length > 0) {
                 if (message != "") {
                     message += " and ";
                 }
@@ -25,7 +25,7 @@
         $("#notificationBtn").on("click", function () {
             _showNotifications();
             return false;
-        });        
+        });
 
         $("#iepsDueListBtn").on("click", function () {
             $("#iepsDueList").fadeToggle("fast", "linear");
@@ -172,14 +172,14 @@
                 async: false,
                 success: function (data) {
                     if (data.Result === "success") {
-                        
+
                         var results = data.Message;
-						if (results.members.length > 0) {
-							filterList(results.members);
-						}
-						else {
-							hideAllUsers(null);
-						}
+                        if (results.members.length > 0) {
+                            filterList(results.members);
+                        }
+                        else {
+                            hideAllUsers(null);
+                        }
                     } else {
                         alert("doh");
                     }
@@ -222,13 +222,13 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-						} else {
-							hideAllUsers(null);
-						}
+                        } else {
+                            hideAllUsers(null);
+                        }
 
-						if (results.buildings != null && results.buildings.length > 0) {
-							filterBuildingList(results.buildings);
-						}
+                        if (results.buildings != null && results.buildings.length > 0) {
+                            filterBuildingList(results.buildings);
+                        }
 
 
                     } else {
@@ -273,9 +273,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-						} else {
-							hideAllUsers(null);
-						}
+                        } else {
+                            hideAllUsers(null);
+                        }
                     } else {
                         alert("doh");
                     }
@@ -326,9 +326,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-						} else {
-							hideAllUsers(null);
-						}
+                        } else {
+                            hideAllUsers(null);
+                        }
                     } else {
                         alert("doh");
                     }
@@ -376,9 +376,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-						} else {
-							hideAllUsers(null);
-						}
+                        } else {
+                            hideAllUsers(null);
+                        }
                     } else {
                         alert("doh");
                     }
@@ -426,9 +426,9 @@
                         var results = data.Message;
                         if (results.members.length > 0) {
                             filterList(results.members);
-						} else {
-							hideAllUsers(null);
-						}
+                        } else {
+                            hideAllUsers(null);
+                        }
                     } else {
                         alert("doh");
                     }
@@ -662,13 +662,12 @@
             //callback function
             var ajax = document.querySelector(".ajax-loader");
             if (ajax != null) {
-                ajax.classList.add("fadeIntoYou");
+                ajax.style.display = 'none';
             }
         }
     };
     new ft(params);
 });
-
 
 function filterList(members) {
  
@@ -676,7 +675,7 @@ function filterList(members) {
     studentDropDown.find('option').remove().end();  
     studentDropDown.append($('<option>', { value: "-1" }).text("All Users"));
 
-    console.time();
+    //console.time();
    
     let container = document.querySelector(".list-group-root");
     hideAllUsers(container);
@@ -702,7 +701,7 @@ function filterList(members) {
         }
     }
 
-    console.timeEnd();
+    //console.timeEnd();
 
     studentDropDown.trigger("chosen:updated");
 }
@@ -789,9 +788,4 @@ jQuery.fn.extend({
     }
 });
 
-// once the page is fully loaded, hide the ajax loading icon.
-document.addEventListener('readystatechange', event => {
-    if (event.target.readyState === "complete") {
-        $(".ajax-loader").hide();
-    }
-});
+window.addEventListener('DOMContentLoaded', function () { $(".ajax-loader").hide(); });
