@@ -4442,7 +4442,12 @@ namespace GreenbushIep.Controllers
             if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent) || !string.IsNullOrEmpty(HTMLContent2) || !string.IsNullOrEmpty(HTMLContent3))
             {
                 string logoImage = Server.MapPath("../Content/IEPBackpacklogo_black2.png");
-                iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+                iTextSharp.text.Image imgfoot = null;
+
+                if (System.IO.File.Exists(logoImage))
+                {
+                    imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+                }                
 
 
                 int.TryParse(studentId, out int id);
@@ -4753,15 +4758,18 @@ namespace GreenbushIep.Controllers
                             ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 20f, 750f, 0);
                         }
 
-                        //Footer
-                        //Phrase logoPhrase = new Phrase(string.Format("{0}", "IEP Backpack"), blackFont);
-                        imgfoot.SetAbsolutePosition(250f, 10f);
-                        imgfoot.ScalePercent(30);
-                        stamper.GetOverContent(i).AddImage(imgfoot);
+                        if (imgfoot != null)
+                        {
+                            //Footer
+                            //Phrase logoPhrase = new Phrase(string.Format("{0}", "IEP Backpack"), blackFont);
+                            imgfoot.SetAbsolutePosition(250f, 10f);
+                            imgfoot.ScalePercent(30);
+                            stamper.GetOverContent(i).AddImage(imgfoot);
 
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                        }
                     }
                 }
                 fileOut = stream.ToArray();
