@@ -3882,12 +3882,12 @@ namespace GreenbushIep.Controllers
                 {
                     StringBuilder sb = new StringBuilder();
 
-                    bool checkPrevious = false;
+                    bool checkPrevious = true;
 
                     foreach (var item in query)
                     {
                         //this is either a new iep or a new annual iep, we will need to resend any services for the fy
-                        checkPrevious = item.iep.OriginalIEPid == null;
+                        //checkPrevious = item.iep.OriginalIEPid == null;
 
                         IEP theIEP = new IEP()
                         {
@@ -3957,7 +3957,13 @@ namespace GreenbushIep.Controllers
                                                       select iep).Distinct().ToList();
 
                             //if an iep has been amended, exclude those ieps
-                            List<int> excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.AmendingIEPid.Value).ToList();
+                            List<int> excludeIEPS = otherIEPs.Where(o => o.AmendingIEPid.HasValue).Select(o => o.AmendingIEPid.Value).ToList();
+
+                            //check if the active iep amended an iep
+                            if(theIEP.current.AmendingIEPid.HasValue)
+                            {
+                                excludeIEPS.Add(theIEP.current.AmendingIEPid.Value);
+                            }
 
                             List<tblService> otherServices = (from iep in db.tblIEPs
                                                               join student in db.tblUsers
