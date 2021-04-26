@@ -766,8 +766,8 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-        console.log(unavailableDates);
-        console.log("----------------");
+        //console.log(unavailableDates);
+        //console.log("----------------");
 
         $("#IEPMeetingDate").datepicker({
             dateFormat: 'mm/dd/yy',
