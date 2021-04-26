@@ -4221,8 +4221,23 @@ namespace GreenbushIep.Controllers
                     //END DATE CHECK
                     //need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
                     //to be the last valid day before the begin date of the new iep
-                    if (studentIEP.current.MeetingDate <= service.EndDate)
+
+                    
+                    if (studentIEP.current.Amendment)
                     {
+                        //on amendments we need to look up its original iep meeting date and use that to compare
+                        if (studentIEP.current.OriginalIEPid != null)
+                        {
+                            tblIEP currentIEPOriginalIEP = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
+                            if (currentIEPOriginalIEP.MeetingDate <= service.EndDate)
+                            {
+                                serviceEndDateOverride = SpedProEndDateCheck(currentIEPOriginalIEP.MeetingDate, service);
+                            }
+
+                        }
+                    }
+                    else if(studentIEP.current.MeetingDate <= service.EndDate)
+                    { 
                         //need to end 1 day prior to the new annual beginning date or next available valid date
                         serviceEndDateOverride = SpedProEndDateCheck(studentIEP.current.MeetingDate, service);
                     }
