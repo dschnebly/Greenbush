@@ -789,8 +789,6 @@ document.addEventListener("DOMContentLoaded", function (event) {
             }
         });
 
-    }).fail(function () {
-        alert("An error occured either when our server or your connection.");
     });
 });
 

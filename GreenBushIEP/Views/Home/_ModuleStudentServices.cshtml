@@ -15,6 +15,7 @@
 
     .panel-group {
         margin-bottom: 12px;
+        color: #333;
     }
 
     .collapsing .service-disabled {
@@ -147,7 +148,7 @@
                             <input type="hidden" name="completed" value="false" />
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h4 class="panel-title">
+                                    <h4 class="panel-title" style="display: block !important;">
                                         <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0">
                                             <span class="studentGoalLabel">Student Service</span>
                                             <i class="glyphicon glyphicon-ok isServiceCompleted thisServiceNotCompleted"></i>
@@ -351,7 +352,7 @@
                                 <input type="hidden" name="completed" value="@(service.Completed.ToString().ToLower())" />
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
-                                        <h4 class="panel-title">
+                                        <h4 class="panel-title" style="display: block !important;">
                                             <a data-toggle="collapse" data-parent="#accordion[@service.ServiceID]" href="#collapse@(service.ServiceID)" class="@(needsIN == "in" ? "" : "collapsed")">
                                                 <span class="studentGoalLabel" style="margin-left:5px;">@(serviceTitle)</span>
                                                 <i class="glyphicon glyphicon-ok isServiceCompleted @(service.Completed != true ? "thisServiceNotCompleted" : string.Empty )"></i>
@@ -1274,13 +1275,13 @@
                 maxDaysPerWeek.prop("max", data.DaysPerWeek);
                 maxMinutesPerDay.prop("max", data.MinutesPerDay);
 
-                if (maxDaysPerWeek.val() > data.DaysPerWeek) {
-                    maxDaysPerWeek.prop("value", data.DaysPerWeek);
-                }
+                //if (maxDaysPerWeek.val() > data.DaysPerWeek) {
+                //    maxDaysPerWeek.prop("value", data.DaysPerWeek);
+                //}
 
-                if (maxMinutesPerDay.val() > data.MinutesPerDay) {
-                    maxMinutesPerDay.prop("value", data.MinutesPerDay);
-                }
+                //if (maxMinutesPerDay.val() > data.MinutesPerDay) {
+                //    maxMinutesPerDay.prop("value", data.MinutesPerDay);
+                //}
             }
         });
     }

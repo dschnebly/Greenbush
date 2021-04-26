@@ -361,4 +361,7 @@
 </div>
 <!-- end modal -->
 
+<!-- loading the file even though it's an ajax call -->
+<var data-reload="true" data-src="/Scripts/createstudent.js"></var>
+
  @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })

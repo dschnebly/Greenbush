@@ -2014,7 +2014,7 @@ namespace GreenbushIep.Controllers
                     model.IEPStatus = iep.IepStatus.ToUpper();
                 }
 
-                if (isReadOnly && !ViewBag.isOwner)
+                if (isReadOnly && !ViewBag.IsOwner)
                 {
                     return PartialView("ActiveIEP/_StudentServices", model);
                 }
@@ -3882,12 +3882,12 @@ namespace GreenbushIep.Controllers
                 {
                     StringBuilder sb = new StringBuilder();
 
-                    bool checkPrevious = false;
+                    bool checkPrevious = true;
 
                     foreach (var item in query)
                     {
                         //this is either a new iep or a new annual iep, we will need to resend any services for the fy
-                        checkPrevious = item.iep.OriginalIEPid == null;
+                        //checkPrevious = item.iep.OriginalIEPid == null;
 
                         IEP theIEP = new IEP()
                         {
@@ -3957,7 +3957,13 @@ namespace GreenbushIep.Controllers
                                                       select iep).Distinct().ToList();
 
                             //if an iep has been amended, exclude those ieps
-                            List<int> excludeIEPS = otherIEPs.Where(o => o.OriginalIEPid != null).Select(o => o.AmendingIEPid.Value).ToList();
+                            List<int> excludeIEPS = otherIEPs.Where(o => o.AmendingIEPid.HasValue).Select(o => o.AmendingIEPid.Value).ToList();
+
+                            //check if the active iep amended an iep
+                            if(theIEP.current.AmendingIEPid.HasValue)
+                            {
+                                excludeIEPS.Add(theIEP.current.AmendingIEPid.Value);
+                            }
 
                             List<tblService> otherServices = (from iep in db.tblIEPs
                                                               join student in db.tblUsers
@@ -4442,7 +4448,12 @@ namespace GreenbushIep.Controllers
             if (!string.IsNullOrEmpty(HTMLContent) || !string.IsNullOrEmpty(StudentHTMLContent) || !string.IsNullOrEmpty(HTMLContent2) || !string.IsNullOrEmpty(HTMLContent3))
             {
                 string logoImage = Server.MapPath("../Content/IEPBackpacklogo_black2.png");
-                iTextSharp.text.Image imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+                iTextSharp.text.Image imgfoot = null;
+
+                if (System.IO.File.Exists(logoImage))
+                {
+                    imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
+                }                
 
 
                 int.TryParse(studentId, out int id);
@@ -4753,15 +4764,18 @@ namespace GreenbushIep.Controllers
                             ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(studentName, blackFont), 20f, 750f, 0);
                         }
 
-                        //Footer
-                        //Phrase logoPhrase = new Phrase(string.Format("{0}", "IEP Backpack"), blackFont);
-                        imgfoot.SetAbsolutePosition(250f, 10f);
-                        imgfoot.ScalePercent(30);
-                        stamper.GetOverContent(i).AddImage(imgfoot);
+                        if (imgfoot != null)
+                        {
+                            //Footer
+                            //Phrase logoPhrase = new Phrase(string.Format("{0}", "IEP Backpack"), blackFont);
+                            imgfoot.SetAbsolutePosition(250f, 10f);
+                            imgfoot.ScalePercent(30);
+                            stamper.GetOverContent(i).AddImage(imgfoot);
 
-                        ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
-                        //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                            ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_LEFT, new Phrase(string.Format("Page {0} of {1}", i.ToString(), pages.ToString()), blackFont), 25f, 15f, 0);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, logoPhrase, 365f, 15f, 0);
+                            //ColumnText.ShowTextAligned(stamper.GetUnderContent(i), Element.ALIGN_RIGHT, new Phrase(string.Format("Date Printed: {0}", DateTime.Now.ToShortDateString()), blackFont), 568f, 15f, 0);
+                        }
                     }
                 }
                 fileOut = stream.ToArray();
