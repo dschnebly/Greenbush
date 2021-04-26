@@ -614,7 +614,15 @@
     {
         "navB": "slide",	//Effect for navigation button, leave it empty to disable it
         "but": true,		//Flag to enable transitions on button, false by default
-        "cBa": function () { init(); }	//callback function
+        "cBa": function () {
+            init();
+
+            //callback function
+            var ajax = document.querySelector(".ajax-loader");
+            if (ajax != null) {
+                ajax.style.display = 'none';
+            }
+        }
     };
     new ft(params);
 });
@@ -696,9 +704,4 @@ jQuery.fn.extend({
     }
 });
 
-// once the page is fully loaded, hide the ajax loading icon.
-document.addEventListener('readystatechange', event => {
-    if (event.target.readyState === "complete") {
-        $(".ajax-loader").hide();
-    }
-});
+window.addEventListener('DOMContentLoaded', function () { $(".ajax-loader").hide(); });

@@ -662,13 +662,12 @@
             //callback function
             var ajax = document.querySelector(".ajax-loader");
             if (ajax != null) {
-                ajax.classList.add("fadeIntoYou");
+                ajax.style.display = 'none';
             }
         }
     };
     new ft(params);
 });
-
 
 function filterList(members) {
 
@@ -676,8 +675,8 @@ function filterList(members) {
     studentDropDown.find('option').remove().end();
     studentDropDown.append($('<option>', { value: "-1" }).text("All Users"));
 
-    console.time();
-
+    //console.time();
+   
     let container = document.querySelector(".list-group-root");
     hideAllUsers(container);
 
@@ -702,7 +701,7 @@ function filterList(members) {
         }
     }
 
-    console.timeEnd();
+    //console.timeEnd();
 
     studentDropDown.trigger("chosen:updated");
 }
@@ -789,9 +788,4 @@ jQuery.fn.extend({
     }
 });
 
-// once the page is fully loaded, hide the ajax loading icon.
-document.addEventListener('readystatechange', event => {
-    if (event.target.readyState === "complete") {
-        $(".ajax-loader").hide();
-    }
-});
+window.addEventListener('DOMContentLoaded', function () { $(".ajax-loader").hide(); });
