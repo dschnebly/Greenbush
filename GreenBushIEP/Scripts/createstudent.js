@@ -516,7 +516,6 @@ $("#next2").on("click", function () {
         $("#misDistrict_chosen").removeClass('contact-tooltip');
     }
 
-
     if (tabValidates()) {
         $.ajax({
             url: '/Manage/CreateStudent',
@@ -531,7 +530,6 @@ $("#next2").on("click", function () {
                     $($active).next().find('a[data-toggle="tab"]').click();
 
                     // create a new student id and add it to the contacts form here.
-
                     $('*[name*=studentId]').each(function () {
                         $(this).val(data.Message);
                     });
@@ -666,7 +664,6 @@ $("#next7").on("click", function () {
     
 });
 $("#next8").on("click", function () {
-
 
     var activeTeachers = $(".listrap").listrap().getSelection();
     var teacherIds = [];

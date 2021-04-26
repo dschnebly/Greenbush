@@ -670,9 +670,9 @@
 });
 
 function filterList(members) {
- 
+
     let studentDropDown = $("#filterName");
-    studentDropDown.find('option').remove().end();  
+    studentDropDown.find('option').remove().end();
     studentDropDown.append($('<option>', { value: "-1" }).text("All Users"));
 
     //console.time();
@@ -707,56 +707,56 @@ function filterList(members) {
 }
 
 function hideAllUsers(container) {
-	// hides all the users in the list.
+    // hides all the users in the list.
 
     // if null was sent then query the root
-	if (container == null) {
-		container = document.querySelector(".list-group-root");
-	}
+    if (container == null) {
+        container = document.querySelector(".list-group-root");
+    }
 
     const filterCollection = container.querySelectorAll(".list-group-item");
-	let i = filterCollection.length;
-	while (i--) {
-		filterCollection[i].classList.add("hidden");
-	}
+    let i = filterCollection.length;
+    while (i--) {
+        filterCollection[i].classList.add("hidden");
+    }
 }
 
 function filterBuildingList(buildingList) {
-	var buildingElement = $("#userBuildings");
-	buildingElement.find('option').remove().end();	
+    var buildingElement = $("#userBuildings");
+    buildingElement.find('option').remove().end();
 
-	var buildingHtml = buildingElement.html();
-	buildingHtml += "<option value='-1'>All</option>";
+    var buildingHtml = buildingElement.html();
+    buildingHtml += "<option value='-1'>All</option>";
 
-	//district only
-	$.each(buildingList, function (key, value) {
-		buildingHtml += "<option data-district='" + value.BuildingUSD +"' value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
-	});
+    //district only
+    $.each(buildingList, function (key, value) {
+        buildingHtml += "<option data-district='" + value.BuildingUSD + "' value='" + value.BuildingID + "'>" + value.BuildingName + "</option>";
+    });
 
-	buildingElement.html(buildingHtml);
+    buildingElement.html(buildingHtml);
 }
 
 function _showNotifications() {
     $("#dashboardNotification").modal();
-    
+
 }
 
 function _showAlert(message, positive) {
 
     var successFade = 9000;
-        $("#alertMessage").removeClass("hidden");
+    $("#alertMessage").removeClass("hidden");
 
-        if (positive) {
-            $("#alertMessage").removeClass("alert alert-danger").addClass("alert alert-info");
-            $("#alertMessage").addClass("alert alert-info animated fadeInUp");
-            $("#alertMessage .moreinfo").html(message);
-        }
-        else {            
-            $("#alertMessage").removeClass("alert alert-info").show();
-            $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
-            $("#alertMessage").html(message);
-        }      
-    
+    if (positive) {
+        $("#alertMessage").removeClass("alert alert-danger").addClass("alert alert-info");
+        $("#alertMessage").addClass("alert alert-info animated fadeInUp");
+        $("#alertMessage .moreinfo").html(message);
+    }
+    else {
+        $("#alertMessage").removeClass("alert alert-info").show();
+        $("#alertMessage").addClass("alert alert-danger animated fadeInUp");
+        $("#alertMessage").html(message);
+    }
+
 }
 
 jQuery.fn.extend({

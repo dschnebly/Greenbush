@@ -6,6 +6,10 @@ h3 {
     margin-bottom: 0;
 }
 
+body {
+    font-family: 'PT Sans', sans-serif;
+}
+
 .transition-page {
     position: relative;
 }
@@ -15,7 +19,7 @@ h3 {
 }
 
 .student-details {
-    height: 205px;
+    height: 170px;
 }
 
 .user-info-block .navigation {
@@ -50,12 +54,20 @@ h3 {
 
 .user-info-block .navigation {
     float: left;
-    width: 100%;
+    width: 94%;
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid #428BCA;
-    border-top: 1px solid #428BCA;
+    border-bottom: 1px solid #E1E1E1;
+    border-top: 1px solid #E1E1E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.student-city {
+    font-weight: bold;
+    font-size: 13pt;
 }
 
 .navigation li {
@@ -120,9 +132,29 @@ h3 {
     padding-left: 5px;
 }
 
+label[for=IEPBeginDate] {
+    color: #676767;
+}
+
+label[for=IEPMeetingDate] {
+    color: #676767;
+}
+
 #backtoportal {
     font-size: 20px;
     font-weight: bold;
+    background-color: #23D28F;
+    color: #666;
+    margin-right: 60px;
+}
+
+.edit-student h2 {
+    margin-bottom: 0;
+}
+
+.edit-student h2 {
+    margin-top: 0px;
+    font-size: 26pt;
 }
 
 .noConsentOverlay {
@@ -150,6 +182,12 @@ h3 {
             position: relative;
             bottom: 2px;
         }
+
+
+.btn-bordered-warning:focus,
+.btn-bordered-warning:hover {
+    color: #337ab7;
+}
 
 #student-goals {
     margin: 40px 0;
@@ -195,11 +233,11 @@ dd {
 }
 
 .iep, .iep > .well {
-    background-color: #B6C391 !important;
+    background-color: #70d699 !important;
 }
 
     .iep > .well label {
-        color: #fff;
+        color: #666666;
     }
 
 .filter, .filter > .well .options button {
@@ -210,6 +248,18 @@ dd {
     .filter > .well {
         background-color: transparent;
     }
+
+.otherIep, .legal {
+    background: -webkit-linear-gradient(#F8F8F8,#E6E6E6);
+    background: -moz-linear-gradient(#F8F8F8,#E6E6E6);
+    background: -o-linear-gradient(#F8F8F8,#E6E6E6);
+    background: linear-gradient(#F8F8F8,#E6E6E6);
+    -webkit-transition: background 1s ease-out;
+    -moz-transition: background 1s ease-out;
+    -o-transition: background 1s ease-out;
+    transition: background 1s ease-out;
+    border: 1px solid #707070;
+}
 
 .radio input[type="radio"], .radio-inline input[type="radio"], .checkbox input[type="checkbox"], .checkbox-inline input[type="checkbox"] .progress {
     margin-bottom: 5px;
@@ -607,6 +657,8 @@ body.modal-open .modal {
 #studentPlanBtn, #printStudentInfo, #printIEP, #viewForms {
     font-size: 16px;
     margin: 3px 0 3px 3px;
+    color: #529AE6;
+    font-weight: bold;  
 }
 
 .ajax-loader {

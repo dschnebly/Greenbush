@@ -1588,8 +1588,8 @@ $("#myonoffswitch4").click(function (event) {
 $("#truefalseSwitchHealthConcerns").click(function (event) {
     if ($(event.target).is(':checked')) {
         $('.isHealthConcern').addClass("noConcerns").fadeOut();
-    } else {
-        $('.isHealthConcern').removeClass("noConcerns").fadeIn();
+      } else {
+      $('.isHealthConcern').removeClass("noConcerns").fadeIn();
     }
 });
 
