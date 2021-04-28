@@ -8,40 +8,14 @@
         border: 1px solid #e3e3e3;
     }
 
-    .media-date {
-        position: absolute;
-        right: 25px;
-        top: 25px;
-    }
-
-        .media-date li {
-            padding: 0;
-        }
-
-            .media-date li:first-child:before {
-                content: '';
-            }
-
-            .media-date li:before {
-                content: '.';
-                margin-left: -2px;
-                margin-right: 2px;
-            }
-
-    .media-replied {
-        margin: 0 0 14px 50px;
-    }
-
-        .media-replied .media-heading {
-            padding-left: 6px;
-        }
-
-    .well {
-        padding: 3px 8px 8px 8px !important
-    }
-
     .StudentGoalBenchmark {
         margin-bottom: 25px;
+    }
+
+    #loading-icon {
+        position: fixed;
+        top: 45%;
+        left: 40%;
     }
 </style>
 
@@ -353,6 +327,7 @@
             }
         }
     }
+    <img src="~/Content/Images/loading-icon.gif" id="loading-icon" class="img-responsive hidden" alt="loading content" />
 </div>
 <script>
     function initProgressReport() {
@@ -361,7 +336,7 @@
             /* Binding */
             /* when the teacher saves the form */
             $(this).find(".SaveReport").on('click', function () {
-                $(".ajax-loader").css("visibility", "visible");
+                $("#loading-icon").removeClass("hidden");
 
                 var progressGoal = $(this).closest('.progressGoalReport');
                 var postMethod = progressGoal.closest("form").attr('action').split("/").pop();
@@ -379,6 +354,7 @@
                             });
                         });
 
+                        $("#loading-icon").addClass("hidden");
                         $(window).trigger("saving.bs.modal");
                     })
                     .fail(function (error) {
@@ -391,6 +367,8 @@
                                 $("#alertMessage").slideUp(500);
                             });
                         });
+
+                        $("#loading-icon").addClass("hidden");
                     });
             });
 

@@ -2280,11 +2280,14 @@ namespace GreenbushIep.Controllers
                     IsValidDate(service.SchoolYear, service.EndDate.Value.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
 
-
                 if (isValidStartDate && isValidServiceStartDate && isValidEndDate && isValidServiceEndDate)
                 {
-                    //save the service
-                    db.SaveChanges();
+                    //save the services
+                    string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID + ""; // just so we know if we are adding or editing a service in the auditlog.
+
+                    AuditLog audit = new AuditLog(studentId, iepId, ModifiedBy, db) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
+                    audit.SaveChanges();
+
                     StudentSerivceId = service.ServiceID;
                     isSuccess = true;
                 }
@@ -2300,19 +2303,15 @@ namespace GreenbushIep.Controllers
                     {
                         errorMessage += "The End Date must be a valid date within the selected Fiscal Year. " + validDates + "<br/>";
                     }
-
                 }
             }
 
             if (isSuccess)
             {
-                //return Json Dummie.
                 return Json(new { Result = "success", Message = "The service has been saved.", key = StudentSerivceId }, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
-            }
+
+            return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
@@ -3960,7 +3959,7 @@ namespace GreenbushIep.Controllers
                             List<int> excludeIEPS = otherIEPs.Where(o => o.AmendingIEPid.HasValue).Select(o => o.AmendingIEPid.Value).ToList();
 
                             //check if the active iep amended an iep
-                            if(theIEP.current.AmendingIEPid.HasValue)
+                            if (theIEP.current.AmendingIEPid.HasValue)
                             {
                                 excludeIEPS.Add(theIEP.current.AmendingIEPid.Value);
                             }
@@ -4453,7 +4452,7 @@ namespace GreenbushIep.Controllers
                 if (System.IO.File.Exists(logoImage))
                 {
                     imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
-                }                
+                }
 
 
                 int.TryParse(studentId, out int id);
