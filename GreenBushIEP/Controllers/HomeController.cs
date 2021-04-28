@@ -2282,9 +2282,8 @@ namespace GreenbushIep.Controllers
 
                 if (isValidStartDate && isValidServiceStartDate && isValidEndDate && isValidServiceEndDate)
                 {
-                    //save the services
-                    string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID + ""; // just so we know if we are adding or editing a service in the auditlog.
-
+                    // just so we know if we are adding or editing a service in the auditlog.
+                    string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID.ToString();
                     AuditLog audit = new AuditLog(studentId, iepId, ModifiedBy, db) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
                     audit.SaveChanges();
 
@@ -2318,11 +2317,16 @@ namespace GreenbushIep.Controllers
         [Authorize]
         public ActionResult DeleteStudentService(int studentServiceId)
         {
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             tblService service = db.tblServices.Where(s => s.ServiceID == studentServiceId).FirstOrDefault();
             if (service != null)
             {
+                tblIEP iep = db.tblIEPs.Where(i => i.IEPid == service.IEPid).FirstOrDefault();
                 db.tblServices.Remove(service);
-                db.SaveChanges();
+
+                AuditLog audit = new AuditLog(iep.UserID, service.IEPid, teacher.UserID, db) { TableName = "tblService", ColumnName = "All Columns", Created = service.Create_Date, SessionID = HttpContext.Session.SessionID, Value = "Delete service " + service.ServiceID.ToString() };
+                audit.SaveChanges();
 
                 return Json(new { Result = "success", Message = "The Service has been delete." }, JsonRequestBehavior.AllowGet);
             }

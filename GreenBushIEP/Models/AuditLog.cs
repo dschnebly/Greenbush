@@ -14,6 +14,8 @@ namespace GreenBushIEP.Models
         public string ColumnName { get; set; }
         public string Value { get; set; }
         public string SessionID { get; set; }
+        
+        public DateTime Created { get; set; }
 
 
         private int ModifiedBy { get; set; }
@@ -49,6 +51,7 @@ namespace GreenBushIEP.Models
             log.Value = Value;
             log.SessionID = SessionID;
             log.ModifiedBy = ModifiedBy;
+            log.Create_Date = Created;
             log.Update_Date = DateTime.Now;
 
             this.Context.tblAuditLogs.Add(log);
