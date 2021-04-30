@@ -2284,7 +2284,7 @@ namespace GreenbushIep.Controllers
                 {
                     // just so we know if we are adding or editing a service in the auditlog.
                     string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID.ToString();
-                    AuditLog audit = new AuditLog(studentId, iepId, ModifiedBy, db) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
+                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
                     audit.SaveChanges();
 
                     StudentSerivceId = service.ServiceID;
@@ -2325,7 +2325,7 @@ namespace GreenbushIep.Controllers
                 tblIEP iep = db.tblIEPs.Where(i => i.IEPid == service.IEPid).FirstOrDefault();
                 db.tblServices.Remove(service);
 
-                AuditLog audit = new AuditLog(iep.UserID, service.IEPid, teacher.UserID, db) { TableName = "tblService", ColumnName = "All Columns", Created = service.Create_Date, SessionID = HttpContext.Session.SessionID, Value = "Delete service " + service.ServiceID.ToString() };
+                AuditLog audit = new AuditLog(iep.UserID, teacher.UserID, db, service.IEPid) { TableName = "tblService", ColumnName = "All Columns", Created = service.Create_Date, SessionID = HttpContext.Session.SessionID, Value = "Delete service " + service.ServiceID.ToString() };
                 audit.SaveChanges();
 
                 return Json(new { Result = "success", Message = "The Service has been delete." }, JsonRequestBehavior.AllowGet);

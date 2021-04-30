@@ -14,19 +14,19 @@ namespace GreenBushIEP.Models
         public string ColumnName { get; set; }
         public string Value { get; set; }
         public string SessionID { get; set; }
-        
+
         public DateTime Created { get; set; }
 
 
         private int ModifiedBy { get; set; }
         private tblAuditLog log { get; set; }
 
-        public AuditLog(int studentId, int iepId, int modifiedBy, IndividualizedEducationProgramEntities db)
+        public AuditLog(int studentId, int modifiedBy, IndividualizedEducationProgramEntities db, int? iepId)
         {
 
             this.Context = db;
             this.StudentId = studentId;
-            this.IEPid = iepId;
+            this.IEPid = iepId ?? 0;
             this.ModifiedBy = modifiedBy;
 
             log = new tblAuditLog
