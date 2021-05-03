@@ -2097,12 +2097,15 @@ namespace GreenbushIep.Controllers
             validDates = "";
 
             //start date must be within the school year
-            IQueryable<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == buildingId && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear);
+            IQueryable<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == buildingId && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear).OrderBy(o => o.calendarDate);
+            
+            tblCalendar firstDaySchoolYear = null;
+            tblCalendar lastDaySchoolYear = null;
 
             if (availableCalendarDays != null)
             {
-                tblCalendar firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth).FirstOrDefault();
-                tblCalendar lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
+                firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth).FirstOrDefault();
+                lastDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == endMonth).OrderByDescending(o => o.Day).FirstOrDefault();
 
                 //keep looking for first day
                 if (firstDaySchoolYear == null)
@@ -2284,7 +2287,7 @@ namespace GreenbushIep.Controllers
                 {
                     // just so we know if we are adding or editing a service in the auditlog.
                     string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID.ToString();
-                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
+                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { Created=service.Create_Date, TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
                     audit.SaveChanges();
 
                     StudentSerivceId = service.ServiceID;
