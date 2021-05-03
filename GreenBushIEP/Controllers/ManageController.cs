@@ -104,7 +104,10 @@ namespace GreenBushIEP.Controllers
 
                 // Add to Database
                 db.tblUsers.Add(user);
-                db.SaveChanges();
+                string TypeOfUser = ConvertToRoleName(user.RoleID);
+                AuditLog audit = new AuditLog(user.UserID, submitter.UserID, db, null) { TableName = "tblUser", ColumnName = "All Columns", Created = DateTime.Now, SessionID = HttpContext.Session.SessionID, Value = "Created a new " + TypeOfUser };
+                audit.SaveChanges();
+
 
                 List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
@@ -2468,9 +2471,9 @@ namespace GreenBushIEP.Controllers
                             if (studentId == 0)
                             {
                                 db.tblUsers.Add(student);
+                                AuditLog audit = new AuditLog(student.UserID, submitter.UserID, db, null) { TableName = "tblUsers", ColumnName = "All Columns", Created = DateTime.Now, SessionID = HttpContext.Session.SessionID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName };
+                                audit.SaveChanges();
                             }
-                            db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = student.UserID, Value = "Created User " + submitter.FirstName + " " + submitter.LastName });
-                            db.SaveChanges();
                         }
                     }
                     catch (Exception e)
@@ -2506,7 +2509,6 @@ namespace GreenBushIEP.Controllers
                     studentInfo.PlacementCode = collection["studentPlacement"];
                     studentInfo.ClaimingCode = true; // set to default true unless they change it on the second page.
                     studentInfo.isGifted = collection["Is_Gifted"] != null && collection["Is_Gifted"] == "on";
-
 
                     // map the buildings in the building mapping table
                     try
@@ -2941,8 +2943,6 @@ namespace GreenBushIEP.Controllers
                 model.selectedDistrict = db.tblDistricts.Where(o => attendingDistricts.Contains(o.USD)).ToList();
             }
 
-
-
             string districtList = string.Join(", ", model.districts.Select(o => o.USD).Distinct());
 
             ViewBag.SelectedDistrictBuildings = (from b in db.vw_BuildingList
@@ -3082,7 +3082,8 @@ namespace GreenBushIEP.Controllers
 
             try
             {
-                db.SaveChanges();
+                AuditLog audit = new AuditLog(student.UserID, submitter.UserID, db, null) { TableName = "tblUsers", ColumnName = "All Columns", Created = DateTime.Now, SessionID = HttpContext.Session.SessionID, Value = "Edit User " + submitter.FirstName + " " + submitter.LastName };
+                audit.SaveChanges();
             }
             catch (Exception e)
             {
@@ -3502,6 +3503,8 @@ namespace GreenBushIEP.Controllers
                         user.Password = hash.Hash;
                         user.Salt = hash.Salt;
 
+                        //db.SaveChanges();
+                        db.tblAuditLogs.Add(new tblAuditLog() { Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", ModifiedBy = submitter.UserID, UserID = user.UserID, Value = "Created User " + user.FirstName + " " + user.LastName });
                         db.SaveChanges();
                     }
                 }
@@ -3824,10 +3827,9 @@ namespace GreenBushIEP.Controllers
                     user.Archive = true;
 
                     tblUser submitter = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
-                    db.tblAuditLogs.Add(new tblAuditLog() { UserID = user.UserID, ModifiedBy = submitter.UserID, Create_Date = DateTime.Now, Update_Date = DateTime.Now, TableName = "tblUsers", Value = "Archived User " + user.FirstName + " " + user.LastName });
+                    AuditLog audit = new AuditLog(user.UserID, submitter.UserID, db, null) { TableName = "tblUsers", ColumnName = "All Columns", Created = DateTime.Now, SessionID = HttpContext.Session.SessionID, Value = "Archived User " + submitter.FirstName + " " + submitter.LastName };
+                    audit.SaveChanges();
 
-                    //db.tblUsers.Remove(user);
-                    db.SaveChanges();
                     return Json(new { Result = "success", Message = "<strong>Success!</strong> The user was successfully deleted from the system." });
                 }
 

@@ -2280,11 +2280,13 @@ namespace GreenbushIep.Controllers
                     IsValidDate(service.SchoolYear, service.EndDate.Value.ToShortDateString(), service.BuildingID, out isValidEndDate, out isValidServiceEndDate, out validDates);
                 }
 
-
                 if (isValidStartDate && isValidServiceStartDate && isValidEndDate && isValidServiceEndDate)
                 {
-                    //save the service
-                    db.SaveChanges();
+                    // just so we know if we are adding or editing a service in the auditlog.
+                    string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID.ToString();
+                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
+                    audit.SaveChanges();
+
                     StudentSerivceId = service.ServiceID;
                     isSuccess = true;
                 }
@@ -2300,30 +2302,31 @@ namespace GreenbushIep.Controllers
                     {
                         errorMessage += "The End Date must be a valid date within the selected Fiscal Year. " + validDates + "<br/>";
                     }
-
                 }
             }
 
             if (isSuccess)
             {
-                //return Json Dummie.
                 return Json(new { Result = "success", Message = "The service has been saved.", key = StudentSerivceId }, JsonRequestBehavior.AllowGet);
             }
-            else
-            {
-                return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
-            }
+
+            return Json(new { Result = "false", Message = errorMessage }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
         [Authorize]
         public ActionResult DeleteStudentService(int studentServiceId)
         {
+            tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
+
             tblService service = db.tblServices.Where(s => s.ServiceID == studentServiceId).FirstOrDefault();
             if (service != null)
             {
+                tblIEP iep = db.tblIEPs.Where(i => i.IEPid == service.IEPid).FirstOrDefault();
                 db.tblServices.Remove(service);
-                db.SaveChanges();
+
+                AuditLog audit = new AuditLog(iep.UserID, teacher.UserID, db, service.IEPid) { TableName = "tblService", ColumnName = "All Columns", Created = service.Create_Date, SessionID = HttpContext.Session.SessionID, Value = "Delete service " + service.ServiceID.ToString() };
+                audit.SaveChanges();
 
                 return Json(new { Result = "success", Message = "The Service has been delete." }, JsonRequestBehavior.AllowGet);
             }
@@ -3960,7 +3963,7 @@ namespace GreenbushIep.Controllers
                             List<int> excludeIEPS = otherIEPs.Where(o => o.AmendingIEPid.HasValue).Select(o => o.AmendingIEPid.Value).ToList();
 
                             //check if the active iep amended an iep
-                            if(theIEP.current.AmendingIEPid.HasValue)
+                            if (theIEP.current.AmendingIEPid.HasValue)
                             {
                                 excludeIEPS.Add(theIEP.current.AmendingIEPid.Value);
                             }
@@ -4221,8 +4224,23 @@ namespace GreenbushIep.Controllers
                     //END DATE CHECK
                     //need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
                     //to be the last valid day before the begin date of the new iep
-                    if (studentIEP.current.MeetingDate <= service.EndDate)
+
+                    
+                    if (studentIEP.current.Amendment)
                     {
+                        //on amendments we need to look up its original iep meeting date and use that to compare
+                        if (studentIEP.current.OriginalIEPid != null)
+                        {
+                            tblIEP currentIEPOriginalIEP = db.tblIEPs.Where(o => o.IEPid == studentIEP.current.OriginalIEPid).FirstOrDefault();
+                            if (currentIEPOriginalIEP.MeetingDate <= service.EndDate)
+                            {
+                                serviceEndDateOverride = SpedProEndDateCheck(currentIEPOriginalIEP.MeetingDate, service);
+                            }
+
+                        }
+                    }
+                    else if(studentIEP.current.MeetingDate <= service.EndDate)
+                    { 
                         //need to end 1 day prior to the new annual beginning date or next available valid date
                         serviceEndDateOverride = SpedProEndDateCheck(studentIEP.current.MeetingDate, service);
                     }
@@ -4453,7 +4471,7 @@ namespace GreenbushIep.Controllers
                 if (System.IO.File.Exists(logoImage))
                 {
                     imgfoot = iTextSharp.text.Image.GetInstance(logoImage);
-                }                
+                }
 
 
                 int.TryParse(studentId, out int id);
