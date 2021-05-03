@@ -9,7 +9,7 @@
 <div class="modal-body standard-font-size">
     <div class="funkyradio">
         <div class="funkyradio-success">
-            <input type="checkbox" id="ModuleSocialNoConcern" name="ModuleSocialNoConcern" @(Model.NoConcerns ? "checked" : String.Empty) /disabled>
+            <input type="checkbox" id="ModuleSocialNoConcern" name="ModuleSocialNoConcern" @(Model.NoConcerns ? "checked" : String.Empty) disabled />
             <label for="ModuleSocialNoConcern">No Concerns</label>
         </div>
         <div class="funkyradio-primary">
@@ -18,7 +18,7 @@
         </div>
         <div class="funkyradio-primary">
             <input type="checkbox" name="ModuleSocialAreaOfNeed" id="ModuleSocialAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) disabled />
-            <label for="ModuleSocialAreaOfNeed">Area of Need which Impacts Performance in General Education</label>
+            <label for="ModuleSocialAreaOfNeed">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
         </div>
         <div class="funkyradio-primary">
             <input type="checkbox" name="ModuleSocialMentalHealthDiagnosis" id="ModuleSocialMentalHealthDiagnosis" @(Model.MentalHealthDiagnosis ? "checked" : String.Empty) disabled />
@@ -53,7 +53,7 @@
         </div>
     </fieldset>
     <fieldset class="form-group">
-        <label style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+        <label style="padding: 25px 0 15px;">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
         <div class="form-check">
             <p>@(Model.AreaOfNeedDescription)</p>
         </div>

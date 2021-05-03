@@ -19,7 +19,7 @@
         </div>
         <div class="funkyradio-primary">
             <input type="checkbox" name="ModuleCommunicationAreaOfNeed" id="ModuleCommunicationAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) disabled />
-            <label for="ModuleCommunicationAreaOfNeed" class="standard-font-size">Area of Need which impacts performance in General Education</label>
+            <label for="ModuleCommunicationAreaOfNeed" class="standard-font-size">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
         </div>
         <div class="funkyradio-primary">
             <input type="checkbox" name="ModuleCommunicationDeaf" id="ModuleCommunicationDeaf" @(Model.Deaf ? "checked" : String.Empty) disabled />
@@ -44,7 +44,7 @@
         </div>
     </fieldset>
     <fieldset class="form-group">
-        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+        <label class="standard-font-size" style="padding: 25px 0 15px;">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
         <div class="form-check">
             <p>@(Model.AreaOfNeedDescription)</p>
         </div>

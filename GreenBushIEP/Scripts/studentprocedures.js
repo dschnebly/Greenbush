@@ -1,5 +1,7 @@
 ﻿$(function () {
 
+    $('.ajax-loader').css("visibility", "hidden");
+
     // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
     if ($("#modal-studentPlanning").hasClass('needsPlan')) {
         $("#modal-studentPlanning").modal('show');
