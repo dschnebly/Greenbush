@@ -2113,7 +2113,7 @@ namespace GreenbushIep.Controllers
                     for (int i = 1; i < 3; i++)
                     {
                         startMonth++;
-                        firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).FirstOrDefault();
+                        firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).OrderBy(c => c.calendarDate).FirstOrDefault();
                         if (firstDaySchoolYear != null)
                         {
                             break;
