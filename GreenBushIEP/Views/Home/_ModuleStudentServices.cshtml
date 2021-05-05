@@ -188,14 +188,14 @@
                                                 <label for="Frequency">Initiation Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(ViewBag.ServiceStartDate.ToString("MM/dd/yyyy"))" style="z-index: 99999; ">
+                                                    <input id="serviceStartDate" name="serviceStartDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@(ViewBag.ServiceStartDate.ToString("mm/dd/yyyy"))" style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                             <div class="col-md-3 serviceFadeIn">
                                                 <label for="Frequency">End Date</label>
                                                 <div class="input-group">
                                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@if(Model.IEPStatus != "ANNUAL") { DateTime.Now.ToString("MM/dd/yyyy"); }" style="z-index: 99999; ">
+                                                    <input id="serviceEndDate" name="serviceEndDate" title="" type="text" class="form-control dtField" aria-describedby="basic-addon1" value="@if(Model.IEPStatus != "ANNUAL") { DateTime.Now.ToString("mm/dd/yyyy"); }" style="z-index: 99999; ">
                                                 </div>
                                             </div>
                                         </div>
@@ -314,7 +314,7 @@
                                                 <div class="form-group">
                                                     <br />
                                                     <button type="button" class="formbtn btn btn-primary btn-lg saveService"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                                                    <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                                    <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -379,7 +379,7 @@
                                                                     <option value="@(building.BuildingID)" @(service.BuildingID == building.BuildingID ? "selected" : "" )>@(building.BuildingName)</option>
                                                                 }
                                                             }
-                                                            @if (Model.previousAttendanceBuildings.Count > 0)
+                                                            @if(Model.previousAttendanceBuildings.Count > 0)
                                                             {
                                                                 foreach (var previousBuilding in Model.previousAttendanceBuildings)
                                                                 {
@@ -542,7 +542,7 @@
                                                     <div class="form-group">
                                                         <br />
                                                         <button type="button" class="formbtn btn btn-primary btn-lg saveService"><i class="glyphicon glyphicon-floppy-disk"></i>&nbsp;Save Draft</button>
-                                                        <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
+                                                        <button type="button" class="formbtn btn btn-success btn-lg saveCompletedService" id="saveHealthCompleted"><i class="glyphicon glyphicon-check"></i>&nbsp;Save &amp; Complete</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -996,6 +996,7 @@
             $(this).find(".saveCompletedService").on('click', function (e) {
 
                 $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
+
                     //remove disabled from dropdowns to allow value to be sent to server
                     $(element).find("select:disabled").removeAttr("disabled").addClass("addDisable");
 
@@ -1009,6 +1010,7 @@
 
 
                     var success = checkAlLCompleted($(this).closest('.oneStudentService'), $(this).find('form').serialize(), asyncCallBack, isLastIndex);
+
                     if (success != undefined && !success) {
                         $(this).find(".collapse").collapse('show');
                         return false; // breaks
@@ -1069,7 +1071,7 @@
 
                                     // end date is predefined to the end of the school year for that calendar.
                                     var fiscalEndDate = new Date(lastFiscalDayofYear.Year, lastFiscalDayofYear.Month - 1, lastFiscalDayofYear.Day)
-                                    serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('MM/dd/yyyy', fiscalEndDate))
+                                    serviceContainer.find("input[name='serviceEndDate']").attr("value", jQuery.datepicker.formatDate('mm/d/yy', fiscalEndDate))
 
                                     // init our calendar
                                     serviceContainer.find('.dtField:not([readonly])').each(function () {
@@ -1343,28 +1345,26 @@
         var pDate = iepDateElement.val();
         var iepDateObj = new Date(pDate);
 
-
         if (!isDate(sDate)) {
             _showAlert("The Student Service Initiation date must be a valid date.", false);
             startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
-            return isValid;
+            return false;
         }
 
         if (!isDate(eDate)) {
             _showAlert("The Student Service End date must be a valid date.", false);
             startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
-            return isValid;
+            return false;
         }
 
         //start date must be after IEP start date
         var isAfterIEP = _validateStartDate(startDateObj, iepDateObj);
         if (!isAfterIEP) {
-            console.log("invalid dates");
             startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
-            return isValid;
+            return false;
         }
 
         ////start date must be after the start of the IEPdate
@@ -1372,7 +1372,7 @@
             _showAlert("The service Initiation date must be after the start after the current IEP date " + iepDateElement.val(), false);
             startDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
-            return isValid;
+            return false;
         }
 
         ////end date must be after
@@ -1380,11 +1380,12 @@
             _showAlert("The End date must be after the Initiation date.", false);
             endDateElement.closest(".input-group").addClass("has-error");
             isValid = false;
-            return isValid;
+            return false;
         }
 
         startDateElement.closest(".input-group").removeClass("has-error");
         endDateElement.closest(".input-group").removeClass("has-error");
+
         return isValid;
     }
 
@@ -1538,7 +1539,6 @@
         var form = studentService.find('form').serialize();
         var iepId = $("#studentIEPId").val();
 
-        console.log(iepId);
         if (iepId != undefined && iepId != "")
             form += "&iepId=" + iepId;
 
@@ -1549,8 +1549,8 @@
 
         //check dates are valid before saving
         var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), studentService.find("input[name='StudentServiceIepStartDate']"));
+
         //if isvalid, don't allow user to save
-        console.log("isvalid: " + isValid);
         if (!isValid) {
             _showAlert();
             return false;
