@@ -232,7 +232,7 @@
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;"><span class="glyphicon glyphicon-minus"></span></button>
                                                     </span>
-                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="1" min="1" max="60">
+                                                    <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="1" min="1" max="60" maxlength="3"  onkeydown="limitMinutes(this);" onkeyup="limitMinutes(this);">
                                                     <span class="input-group-btn">
                                                         <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;"><span class="glyphicon glyphicon-plus"></span></button>
                                                     </span>
@@ -455,7 +455,7 @@
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-default" data-dir="dwn" style="height: 49px;" @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-minus"></span></button>
                                                         </span>
-                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60" @(canEditDelete ? string.Empty : "readonly")>
+                                                        <input type="number" name="serviceMinutesPerDay" class="form-control text-center" value="@(service.Minutes)" min="1" max="60" maxlength="3" @(canEditDelete ? string.Empty : "readonly")  onkeydown="limitMinutes(this);" onkeyup="limitMinutes(this);">
                                                         <span class="input-group-btn">
                                                             <button type="button" class="btn btn-default" data-dir="up" style="height: 49px;" @(canEditDelete ? string.Empty : "readonly")><span class="glyphicon glyphicon-plus"></span></button>
                                                         </span>
@@ -947,6 +947,15 @@
 
                 //check dates are valid before saving
                 var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), studentService.find("input[name='StudentServiceIepStartDate']"));
+
+                //make sure minutes is not greater than 3 characters
+                var serviceMinutes = studentService.find("input[name='serviceMinutesPerDay']").val();
+                if (serviceMinutes != null && serviceMinutes != undefined && serviceMinutes.length > 3) {
+                    isValid = true;
+                    _showAlert("The Minutes per Day is greater than the max allowed limit of three digits. Please check it is correct.");
+                    return false;
+                }
+
 
                 //if isvalid, don't allow user to save
                 if (!isValid) {
@@ -1549,6 +1558,14 @@
         //check dates are valid before saving
         var isValid = _dateCheck(studentService.find("input[name='serviceStartDate']"), studentService.find("input[name='serviceEndDate']"), studentService.find("input[name='StudentServiceIepStartDate']"));
 
+         //make sure minutes is not greater than 3 characters
+         var serviceMinutes = studentService.find("input[name='serviceMinutesPerDay']").val();
+         if (serviceMinutes != null && serviceMinutes != undefined && serviceMinutes.length > 3) {
+             isValid = true;
+             _showAlert("The Minutes per Day is greater than the max allowed limit of three digits. Please check it is correct.");
+             return false;
+        }
+
         //if isvalid, don't allow user to save
         if (!isValid) {
             _showAlert();
@@ -1610,6 +1627,15 @@
                 alert("Error connecting to the database. Please try again or contact your administrator.");
             }
         });
+    }
+
+    function limitMinutes(element)
+    {
+        var max_chars = 3;
+
+        if(element.value.length > max_chars) {
+            element.value = element.value.substr(0, max_chars);
+        }
     }
 
 </script>
