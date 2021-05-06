@@ -55,7 +55,17 @@ namespace GreenBushIEP.Reports.BehaviorPlan
 			string buildingFilter = GreenBushIEP.Report.ReportMaster.GetBuildingFilter(this.buildingDD, User.Identity.Name);
 			string teacherIds = GreenBushIEP.Report.ReportMaster.GetTeacherFilter(this.teacherDD, user, buildingFilter, districtFilter, this.teacherVals);
 
-			DataTable dt = GetData(districtFilter, teacherIds, buildingFilter);
+			string fiscalYears = "";
+
+			foreach (ListItem li in fiscalYear.Items)
+			{
+				if (li.Selected)
+				{
+					fiscalYears += string.Format("{0},", li.Value);
+				}
+			}
+
+			DataTable dt = GetData(districtFilter, teacherIds, buildingFilter, fiscalYears);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
 			ReportDataSource rds2 = null;
 			if (this.buildingDD.Value != "-1")
@@ -78,7 +88,7 @@ namespace GreenBushIEP.Reports.BehaviorPlan
 			MReportViewer.LocalReport.Refresh();
 		}
 
-		private DataTable GetData(string districtFilter, string teacherIds, string buildingFilter)
+		private DataTable GetData(string districtFilter, string teacherIds, string buildingFilter, string fiscalYear)
 		{
 			DataSet ds = new DataSet();
 
@@ -93,7 +103,8 @@ namespace GreenBushIEP.Reports.BehaviorPlan
 					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
 					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingFilter;					
 					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
-					
+					cmd.Parameters.Add("@FiscalYear", SqlDbType.VarChar, 8000).Value = fiscalYear;
+
 					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
 					{
 						sda.Fill(ds);
