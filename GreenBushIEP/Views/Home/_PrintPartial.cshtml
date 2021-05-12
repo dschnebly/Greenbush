@@ -3296,7 +3296,6 @@
 	</div>	
 	<div class="text-center" style="font-size:14pt"><b>PROGRESS REPORT</b></div>
 	<p>This report shall inform the parents/guardians about the student's progress towards meeting the Annual Goals.</p>
-	<hr/>
 	<table class="table table-borderless" border="0">
 		<tr>
 			<td><label>Student's Name:</label></td>
@@ -3342,7 +3341,7 @@
 			<td></td>		
 		</tr>
 	</table>
-	<hr />
+	
 	<div>		
     @if (Model.studentGoals.Count > 0)
 	{
@@ -3403,27 +3402,23 @@
 			} //end switch
 
             <div>   
-					<h3 style="text-align:center;font-size:13pt;font-weight:bold">@(studentGoal.Title)</h3>
-					<label>Goal Type: </label><span>&nbsp;@(sgText)</span><br />
-					<label>Measurable Annual Goal: </label><span>&nbsp;@(studentGoal.AnnualGoal)</span><br />
-                    <label>Standards: </label><span>&nbsp;@(studentGoal.StateStandards)</span><br />
-					<label>Baseline: </label><span>&nbsp;@(studentGoal.Baseline)</span><br /><br />
-                   
-					<table class="table table-bordered table-responsive" cellpadding="5">
-						<thead class="thead-inverse">
-							<tr class="ProgressAnnualGoal">
-								<th class="text-center" style="font-size:11pt" colspan="4">Progress Towards Annual Goal</th>
-							</tr>
-						</thead>
+				<h3 style="text-align:center;font-size:13pt;font-weight:bold">@(studentGoal.Title)</h3>
+				<hr style="margin-bottom:5px;"/>
+					<p><label>Goal Type: </label><span>&nbsp;@(sgText)</span></p>
+					<p><label>Measurable Annual Goal: </label><span>&nbsp;@(studentGoal.AnnualGoal)</span></p>
+                    <p><label>Standards: </label><span>&nbsp;@(studentGoal.StateStandards)</span></p>
+					<p><label>Baseline: </label><span>&nbsp;@(studentGoal.Baseline)</span></p>
+                   <h3 style="text-align:center;font-weight:bold;font-size:11pt">Progress Towards Annual Goal)</h3>
+					<table class="table table-bordered table-responsive" cellpadding="5" border="1" style="border: 1px solid #f0f0f0;">						
 						<tbody class="PTAGDisplay">
 							<tr>								
-								<th>Date Assessed</th>
-								<th>Progress</th>
-								<th>Notes</th>
+								<th style="background-color:gainsboro">Date Assessed</th>
+								<th style="background-color:gainsboro">Progress</th>
+								<th style="background-color:gainsboro">Notes</th>
 							</tr>
 							<tr class="PTAGDisplay">								
 								<td>
-									<span>@(studentGoal.ProgressDate_Quarter1.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter1.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ1
@@ -3435,7 +3430,7 @@
 							</tr>
 							<tr class="PTAGDisplay">								
 								<td>
-									<span>@(studentGoal.ProgressDate_Quarter2.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter2.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ2
@@ -3446,7 +3441,7 @@
 							</tr>
 							<tr class="PTAGDisplay">							
 								<td>
-									<span>@(studentGoal.ProgressDate_Quarter3.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter3.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ3
@@ -3457,7 +3452,7 @@
 							</tr>
 							<tr class="PTAGDisplay">								
 								<td>
-									<span>@(studentGoal.ProgressDate_Quarter4.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter4.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ4
@@ -3466,12 +3461,9 @@
                                     @studentGoal.ProgressDescription_Quarter4
                                 </td>
 							</tr>
-
-
 						</tbody>
 					</table>
-                    <br />
-                    <br />
+                   
             </div>			
 			
             if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
@@ -3485,139 +3477,131 @@
 						var gbProgress3 = "";
 						var gbProgress4 = "";
 
-						<table class="table table-bordered table-responsive" style="margin-bottom: 0;">		
-						<tbody class="PTAGDisplay">
-						<tr class="ProgressAnnualGoal">
-							<td class="text-center" style="font-size:11pt" colspan="2">@gb.ObjectiveBenchmark</td>
-						</tr>
-						<tr>									
-							<th style="width:200px">How Measured</th>			
-							<th>Reports of Progress</th>
-						</tr>
-						<tr class="PTAGDisplay">																	
-							<td style="vertical-align:top;">
-								@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
-								{
-									var ddlText2 = "";
+					var ddlText2 = "";
+                    foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
+                    {
+                        
 
-									switch (gbMethod.EvaluationProcedureID)
-									{
-										case 1: { ddlText2 = "Written Observation"; break; }
-										case 2: { ddlText2 = "Written Performance"; break; }
-										case 3: { ddlText2 = "Oral Performance"; break; }
-										case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-										case 5: { ddlText2 = "Time Sample"; break; }
-										case 6: { ddlText2 = "Demonstration/Performance"; break; }
-										case 8: { ddlText2 = "Progress Monitoring"; break; }
-										case 7:
-											{
+                        switch (gbMethod.EvaluationProcedureID)
+                        {
+                            case 1: { ddlText2 = "Written Observation"; break; }
+                            case 2: { ddlText2 = "Written Performance"; break; }
+                            case 3: { ddlText2 = "Oral Performance"; break; }
+                            case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+                            case 5: { ddlText2 = "Time Sample"; break; }
+                            case 6: { ddlText2 = "Demonstration/Performance"; break; }
+                            case 8: { ddlText2 = "Progress Monitoring"; break; }
+                            case 7:
+                                {
 
-												if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
-												{
-													ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
-												}
-												else
-												{
-													ddlText2 = "Other";
-												}
-												break;
-											}
-									} //end switch
-									@ddlText2.Trim().TrimEnd(',')<br />
-								}
-							</td>										
-							<td>
-									<table class="table table-responsive table-bordered">												
-									<tbody class="PTAGDisplay">													
-										<tr>											
-											<td>
-												<span>@(gb.ProgressDate_Quarter1.HasValue ? gb.ProgressDate_Quarter1.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>
-											<td>															
-												@switch (gb.Progress_Quarter1)
-												{
-													case "1": { gbProgress = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress = "No progress made"; break; }
-													case "3": { gbProgress = "Little progress made"; break; }
-													case "4": { gbProgress = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress = "Objective met"; break; }
-												} 
-												@gbProgress
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter1
-											</td>													
-									
-										</tr>
-										<tr class="PTAGDisplay">
-											
-											<td>
-												<span>@(gb.ProgressDate_Quarter2.HasValue ? gb.ProgressDate_Quarter2.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>																												
-											<td>
-												@switch (gb.Progress_Quarter2)
-												{
-													case "1": { gbProgress2 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress2 = "No progress made"; break; }
-													case "3": { gbProgress2 = "Little progress made"; break; }
-													case "4": { gbProgress2 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress2 = "Objective met"; break; }
-												}
-												@gbProgress2
-											</td>														
-											<td>
-												@gb.ProgressDescription_Quarter2
-											</td>
-										</tr>
+                                    if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
+                                    {
+                                        ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
+                                    }
+                                    else
+                                    {
+                                        ddlText2 = "Other";
+                                    }
+                                    break;
+                                }
+                        } //end switch
+                        ddlText2.Trim().TrimEnd(',');
+                    }
+					<p>
+						@(string.Format("{0}{1}", string.IsNullOrEmpty(ddlText2) ? "" : ddlText2 + ": ", gb.ObjectiveBenchmark))
+					</p>	
 
-										<tr class="PTAGDisplay">
-										
-											<td>
-												<span>@(gb.ProgressDate_Quarter3.HasValue ? gb.ProgressDate_Quarter3.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>														
-											<td>
-												@switch (gb.Progress_Quarter3)
-												{
-													case "1": { gbProgress3 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress3 = "No progress made"; break; }
-													case "3": { gbProgress3 = "Little progress made"; break; }
-													case "4": { gbProgress3 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress3 = "Objective met"; break; }
-												}
-												@gbProgress3
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter3
-											</td>
-										</tr>
-										<tr class="PTAGDisplay">
-											
-											<td>
-												<span>@(gb.ProgressDate_Quarter4.HasValue ? gb.ProgressDate_Quarter4.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>														
-											<td>
-												@switch (gb.Progress_Quarter4)
-												{
-													case "1": { gbProgress4 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress4 = "No progress made"; break; }
-													case "3": { gbProgress4 = "Little progress made"; break; }
-													case "4": { gbProgress4 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress4 = "Objective met"; break; }
-												} 
-												@gbProgress4
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter4
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>									
-					</tbody>
-					</table>	
-					<br/>
-					<br/>
+                    <table class="table table-responsive table-bordered"  cellpadding="5" border="1" style=" border: 1px solid #f0f0f0;" >
+                        <tbody class="PTAGDisplay">
+                            <tr>
+                                <th style="background-color:gainsboro">Date Assessed</th>
+                                <th style="background-color:gainsboro">Progress</th>
+                                <th style="background-color:gainsboro">Notes</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter1.HasValue ? gb.ProgressDate_Quarter1.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter1)
+                                    {
+                                        case "1": { gbProgress = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress = "No progress made"; break; }
+                                        case "3": { gbProgress = "Little progress made"; break; }
+                                        case "4": { gbProgress = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress = "Objective met"; break; }
+                                    }
+                                    @gbProgress
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter1
+                                </td>
+
+                            </tr>
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter2.HasValue ? gb.ProgressDate_Quarter2.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter2)
+                                    {
+                                        case "1": { gbProgress2 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress2 = "No progress made"; break; }
+                                        case "3": { gbProgress2 = "Little progress made"; break; }
+                                        case "4": { gbProgress2 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress2 = "Objective met"; break; }
+                                    }
+                                    @gbProgress2
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter2
+                                </td>
+                            </tr>
+
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter3.HasValue ? gb.ProgressDate_Quarter3.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter3)
+                                    {
+                                        case "1": { gbProgress3 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress3 = "No progress made"; break; }
+                                        case "3": { gbProgress3 = "Little progress made"; break; }
+                                        case "4": { gbProgress3 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress3 = "Objective met"; break; }
+                                    }
+                                    @gbProgress3
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter3
+                                </td>
+                            </tr>
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter4.HasValue ? gb.ProgressDate_Quarter4.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter4)
+                                    {
+                                        case "1": { gbProgress4 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress4 = "No progress made"; break; }
+                                        case "3": { gbProgress4 = "Little progress made"; break; }
+                                        case "4": { gbProgress4 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress4 = "Objective met"; break; }
+                                    }
+                                    @gbProgress4
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter4
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+					
 					}									       
 			}
 		}
@@ -3641,8 +3625,8 @@
 					<td><b>Instr.<br />Provided<br />For</b></td>
 					<td style="width:30px"><b>Mins</b></td>
 					<td style="width:30px"><b>Days</b></td>
-					<td><b>Start Date</b></td>
-					<td><b>End Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />Start Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />End Date</b></td>
 					<td style="width:50px"><b>Freq</b></td>
 				</tr>
 

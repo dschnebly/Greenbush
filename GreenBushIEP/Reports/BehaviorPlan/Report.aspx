@@ -46,6 +46,21 @@
 				<input type="hidden" id="teacherVals" runat="server" />
 			</div>
 		</div>
+		<div class="col-md-12">
+            <div class="col-md-2">
+                <label for="fiscalYear">Fiscal Year</label>
+            </div>
+            <div class="col-md-6">
+                <select id="fiscalYear" style="border-color: #ccc; display: inline-block;" multiple="true" class="chosen-select" runat="server" data-placeholder="All Fiscal Years">
+                    <option value="2018">2017 - 2018</option>
+                    <option value="2019">2018 - 2019</option>
+                    <option value="2020">2019 - 2020</option>
+                    <option value="2021">2020 - 2021</option>
+                    <option value="2022">2021 - 2022</option>
+					<option value="2023">2022 - 2023</option>
+                </select>
+            </div>
+        </div>
 		<%--<div class="col-md-12" style="margin-bottom: 12px;">
 			<div class="col-md-2" >
 				<label for="providerDD">Provider</label>
