@@ -3202,12 +3202,18 @@ namespace GreenBushIEP.Controllers
                     }
 
                     //check if exit
-                    tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
-                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive" 
-                        && info.StatusCode != "0"  
-                        && info.StatusCode != "1"
-                        && info.StatusCode != "2";
-                    if (isExit && !info.ExitDate.HasValue)
+                    tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode
+                    && info.StatusCode != "2").FirstOrDefault();
+
+                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive";
+
+                    //Do not require Exit date when using Status 0,1,2(greenbush statuses)
+                    if (isExit
+                        && !info.ExitDate.HasValue
+                        && statusCodeObj.StatusCode != "0"
+                        && statusCodeObj.StatusCode != "1"
+                        && statusCodeObj.StatusCode != "2"
+                        )
                     {
                         return Json(new { Result = "error", Message = "Please enter an Exit date." });
                     }
@@ -3229,33 +3235,30 @@ namespace GreenBushIEP.Controllers
                     {
                         if (isExit)
                         {
-                            // keep an audit trail on the students that come and go due to real life circumstances 
-
-                            if (info.ExitDate.HasValue)
+                            // keep an audit trail on the students that come and go due to real life circumstances                                                         
+                            var archive = new tblArchiveIEPExit
                             {
-                                var archive = new tblArchiveIEPExit
-                                {
-                                    userID = studentId,
-                                    exitDate = info.ExitDate.Value,
-                                    exitNotes = info.ExitNotes,
-                                    BuildingID = info.BuildingID,
-                                    StatusCode = info.StatusCode,
-                                    USD = info.USD,
-                                    CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID,
-                                    Create_Date = DateTime.Now,
-                                    Update_Date = DateTime.Now
-                                };
+                                userID = studentId,
+                                exitDate = info.ExitDate.HasValue ? info.ExitDate.Value : DateTime.Now,
+                                exitNotes = info.ExitNotes,
+                                BuildingID = info.BuildingID,
+                                StatusCode = info.StatusCode,
+                                USD = info.USD,
+                                CreatedBy = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name).UserID,
+                                Create_Date = DateTime.Now,
+                                Update_Date = DateTime.Now
+                            };
 
-                                db.tblArchiveIEPExits.Add(archive);
-                                db.SaveChanges();
+                            db.tblArchiveIEPExits.Add(archive);
+                            db.SaveChanges();
 
-                                SendExitEmail(info.AssignedUSD
-                                    , string.Format("{0}, {1}", student.LastName, student.FirstName)
-                                    , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
-                                    , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
-                                    , info.ExitNotes
-                                    );
-                            }
+                            SendExitEmail(info.AssignedUSD
+                                , string.Format("{0}, {1}", student.LastName, student.FirstName)
+                                , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
+                                , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
+                                , info.ExitNotes
+                                );
+
                         }
                     }
                 }
