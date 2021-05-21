@@ -4205,7 +4205,7 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                db.uspCopyIEP(Iepid, user.UserID, false);
+                db.uspCopyIEP(Iepid, user.UserID, false).ToList().First();
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
@@ -4215,6 +4215,8 @@ namespace GreenBushIEP.Controllers
                 if (studentDetails != null)
                 {
                     annual.StatusCode = studentDetails.StatusCode;
+                    annual.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                    annual.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     db.SaveChanges();
 
                 }
@@ -4244,6 +4246,8 @@ namespace GreenBushIEP.Controllers
                 if (studentDetails != null)
                 {
                     amendment.StatusCode = studentDetails.StatusCode;
+                    amendment.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                    amendment.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     db.SaveChanges();
                 }
 

@@ -252,12 +252,16 @@ namespace GreenBushIEP.Models
                 StateAssessment = string.Empty,
                 IsActive = true,
                 Grade = studentDetails.Grade ?? -4,
-                StatusCode = studentDetails.StatusCode
+                StatusCode = studentDetails.StatusCode,
+                Primary_DisabilityCode = studentDetails.Primary_DisabilityCode,
+                Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode
             };
 
             if (studentDetails != null)
             {
                 current.StatusCode = studentDetails.StatusCode;
+                current.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                current.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
             }
 
             try

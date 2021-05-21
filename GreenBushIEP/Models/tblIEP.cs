@@ -43,5 +43,7 @@ namespace GreenBushIEP.Models
         public string StatusCode { get; set; }
         public Nullable<int> Grade { get; set; }
         public Nullable<int> PrimaryProviderID { get; set; }
+        public string Primary_DisabilityCode { get; set; }
+        public string Secondary_DisabilityCode { get; set; }
     }
 }

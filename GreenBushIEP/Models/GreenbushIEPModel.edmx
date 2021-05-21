@@ -1572,6 +1572,8 @@
           <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="Grade" Type="int" />
           <Property Name="PrimaryProviderID" Type="int" />
+          <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" />
+          <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -2668,6 +2670,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
@@ -3161,6 +3164,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="FiscalYear" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
           <Parameter Name="BuildingID" Mode="In" Type="Int32" />
@@ -5491,6 +5495,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Grade" Type="Int32" />
           <Property Name="PrimaryProviderID" Type="Int32" />
+          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -8668,6 +8674,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
+                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
                 <ScalarProperty Name="PrimaryProviderID" ColumnName="PrimaryProviderID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />

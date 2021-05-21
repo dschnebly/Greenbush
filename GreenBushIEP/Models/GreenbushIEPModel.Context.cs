@@ -160,7 +160,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
         }
     
-        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId)
+        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId, string fiscalYear)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -174,7 +174,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("TeacherId", teacherId) :
                 new ObjectParameter("TeacherId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter);
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter, fiscalYearParameter);
         }
     
         public virtual ObjectResult<up_ReportBuildings_Result> up_ReportBuildings(Nullable<int> buildingID)

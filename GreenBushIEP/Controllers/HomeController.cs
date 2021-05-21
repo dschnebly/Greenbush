@@ -1431,6 +1431,8 @@ namespace GreenbushIep.Controllers
                 if (studentRec != null)
                 {
                     studentAmmendIEP.StatusCode = studentRec.StatusCode;
+                    studentAmmendIEP.Primary_DisabilityCode = studentRec.Primary_DisabilityCode;
+                    studentAmmendIEP.Secondary_DisabilityCode = studentRec.Secondary_DisabilityCode;
                 }
 
                 try
@@ -1475,6 +1477,8 @@ namespace GreenbushIep.Controllers
                     if (studentDetails != null)
                     {
                         studentAnnualIEP.StatusCode = studentDetails.StatusCode;
+                        studentAnnualIEP.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                        studentAnnualIEP.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     }
 
                     db.SaveChanges();
@@ -1543,7 +1547,7 @@ namespace GreenbushIep.Controllers
                     if(iepDraft.IepStatus == IEPStatus.DRAFT && iepDraft.FiledOn != null)
                     {
                         iepDraft.FiledOn = null; //reset spedpro status so it will download again
-                    }
+                    }                    
 
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
@@ -4199,6 +4203,8 @@ namespace GreenbushIep.Controllers
             {
                 string serviceEndDateOverride = "";
                 int primaryProviderId = 0;
+                string primaryDisability = studentIEP.current.Primary_DisabilityCode;
+                string secondaryDisability = studentIEP.current.Secondary_DisabilityCode;
 
                 if (count == 25)
                 {
@@ -4216,6 +4222,10 @@ namespace GreenbushIep.Controllers
                     tblIEP serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
 
                     primaryProviderId = serviceIEP.PrimaryProviderID.HasValue ? serviceIEP.PrimaryProviderID.Value : 0;
+
+                    //look up disability information from the original iep
+                    primaryDisability = serviceIEP.Primary_DisabilityCode;
+                    secondaryDisability = serviceIEP.Secondary_DisabilityCode;
 
                     if (serviceIEP.OriginalIEPid != null)
                     {
@@ -4299,10 +4309,10 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
                 //4 primary disablity
-                sb.AppendFormat("\t{0}", studentIEP.studentDetails.primaryDisability);
+                sb.AppendFormat("\t{0}", primaryDisability);
 
                 //5 secondary disablity
-                sb.AppendFormat("\t{0}", studentIEP.studentDetails.secondaryDisability);
+                sb.AppendFormat("\t{0}", secondaryDisability);
 
                 //6 gifted
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.isGifted ? "1" : "0");
