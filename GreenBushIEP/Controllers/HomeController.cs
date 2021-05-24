@@ -145,7 +145,7 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList()
+                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 //dashboard notify
@@ -169,75 +169,85 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
             {
-                List<Student> users = (from u in db.tblUsers
-                                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                                       where o.AdminID == teacher.UserID
-                                       select new Student()
-                                       {
-                                           UserID = u.UserID,
-                                           FirstName = u.FirstName,
-                                           MiddleName = u.MiddleName,
-                                           LastName = u.LastName,
-                                           City = u.City,
-                                           State = u.State,
-                                           Email = u.Email,
-                                           Password = null,
-                                           ImageURL = u.ImageURL,
-                                           Archive = u.Archive,
-                                       }).Distinct().ToList();
+                //List<Student> users = (from u in db.tblUsers
+                //                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+                //                       where o.AdminID == teacher.UserID
+                //                       select new Student()
+                //                       {
+                //                           UserID = u.UserID,
+                //                           FirstName = u.FirstName,
+                //                           MiddleName = u.MiddleName,
+                //                           LastName = u.LastName,
+                //                           City = u.City,
+                //                           State = u.State,
+                //                           Email = u.Email,
+                //                           Password = null,
+                //                           ImageURL = u.ImageURL,
+                //                           Archive = u.Archive,
+                //                       }).Distinct().ToList();
 
-                List<tblStudentInfo> info = (from i in db.tblStudentInfoes
-                                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
-                                             where o.AdminID == teacher.UserID
-                                             select i).Distinct().ToList();
+                //List<tblStudentInfo> info = (from i in db.tblStudentInfoes
+                //                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
+                //                             where o.AdminID == teacher.UserID
+                //                             select i).Distinct().ToList();
 
-                List<Student> students = (from user in users
-                                          join i in info
-                                          on user.UserID equals i.UserID
-                                          where !(user.Archive ?? false)
-                                          select new Student()
-                                          {
-                                              UserID = user.UserID,
-                                              FirstName = user.FirstName,
-                                              MiddleName = user.MiddleName,
-                                              LastName = user.LastName,
-                                              City = user.City,
-                                              State = user.State,
-                                              Email = user.Email,
-                                              Password = user.Password,
-                                              USD = user.USD,
-                                              BuildingID = user.BuildingID,
-                                              ImageURL = user.ImageURL,
-                                              KidsID = i.KIDSID,
-                                              DateOfBirth = i.DateOfBirth,
-                                              CreatedBy = i.CreatedBy,
-                                              Status = i.StatusCode
-                                          }).Distinct().ToList();
+                //List<Student> students = (from user in users
+                //                          join i in info
+                //                          on user.UserID equals i.UserID
+                //                          where !(user.Archive ?? false)
+                //                          select new Student()
+                //                          {
+                //                              UserID = user.UserID,
+                //                              FirstName = user.FirstName,
+                //                              MiddleName = user.MiddleName,
+                //                              LastName = user.LastName,
+                //                              City = user.City,
+                //                              State = user.State,
+                //                              Email = user.Email,
+                //                              Password = user.Password,
+                //                              USD = user.USD,
+                //                              BuildingID = user.BuildingID,
+                //                              ImageURL = user.ImageURL,
+                //                              KidsID = i.KIDSID,
+                //                              DateOfBirth = i.DateOfBirth,
+                //                              CreatedBy = i.CreatedBy,
+                //                              Status = i.StatusCode
+                //                          }).Distinct().ToList();
 
-                //get IEP Date
-                foreach (Student student in students)
+                ////get IEP Date
+                //foreach (Student student in students)
+                //{
+                //    IEP theIEP = new IEP(student.UserID);
+                //    student.hasIEP = (theIEP.current != null) && theIEP.current.IEPid != 0;
+                //    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
+                //    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
+                //    {
+                //        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                //    }
+                //}
+
+                //StudentViewModel model = new StudentViewModel
+                //{
+                //    Teacher = teacher,
+                //    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
+                //    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
+                //    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList(),
+                //    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
+                //};
+
+
+                PortalViewModel model = new PortalViewModel
                 {
-                    IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = (theIEP.current != null) && theIEP.current.IEPid != 0;
-                    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
-                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
-                    {
-                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-                    }
-                }
-
-                StudentViewModel model = new StudentViewModel
-                {
-                    Teacher = teacher,
-                    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
+                    user = teacher,
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList(),
-                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
+                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
+                    members = db.uspUserAssignedList(teacher.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
-                model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -256,70 +266,80 @@ namespace GreenbushIep.Controllers
             tblUser nurse = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (nurse != null)
             {
-                List<Student> users = (from u in db.tblUsers
-                                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                                       where o.AdminID == nurse.UserID
-                                       select new Student()
-                                       {
-                                           UserID = u.UserID,
-                                           FirstName = u.FirstName,
-                                           MiddleName = u.MiddleName,
-                                           LastName = u.LastName,
-                                           City = u.City,
-                                           State = u.State,
-                                           Email = u.Email,
-                                           Password = null,
-                                           ImageURL = u.ImageURL,
-                                           Archive = u.Archive,
-                                       }).Distinct().ToList();
 
-                List<tblStudentInfo> info = (from i in db.tblStudentInfoes
-                                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
-                                             where o.AdminID == nurse.UserID
-                                             select i).Distinct().ToList();
+                //List<Student> users = (from u in db.tblUsers
+                //                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
+                //                       where o.AdminID == nurse.UserID
+                //                       select new Student()
+                //                       {
+                //                           UserID = u.UserID,
+                //                           FirstName = u.FirstName,
+                //                           MiddleName = u.MiddleName,
+                //                           LastName = u.LastName,
+                //                           City = u.City,
+                //                           State = u.State,
+                //                           Email = u.Email,
+                //                           Password = null,
+                //                           ImageURL = u.ImageURL,
+                //                           Archive = u.Archive,
+                //                       }).Distinct().ToList();
 
-                List<Student> students = (from user in users
-                                          join i in info
-                                          on user.UserID equals i.UserID
-                                          where !(user.Archive ?? false)
+                //List<tblStudentInfo> info = (from i in db.tblStudentInfoes
+                //                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
+                //                             where o.AdminID == nurse.UserID
+                //                             select i).Distinct().ToList();
 
-                                          select new Student()
-                                          {
-                                              UserID = user.UserID,
-                                              FirstName = user.FirstName,
-                                              MiddleName = user.MiddleName,
-                                              LastName = user.LastName,
-                                              City = user.City,
-                                              State = user.State,
-                                              Email = user.Email,
-                                              Password = user.Password,
-                                              USD = user.USD,
-                                              BuildingID = user.BuildingID,
-                                              ImageURL = user.ImageURL,
-                                              KidsID = i.KIDSID,
-                                              DateOfBirth = i.DateOfBirth,
-                                              CreatedBy = i.CreatedBy,
-                                              Status = i.StatusCode
-                                          }).Distinct().ToList();
+                //List<Student> students = (from user in users
+                //                          join i in info
+                //                          on user.UserID equals i.UserID
+                //                          where !(user.Archive ?? false)
 
-                //get IEP Date
-                foreach (Student student in students)
+                //                          select new Student()
+                //                          {
+                //                              UserID = user.UserID,
+                //                              FirstName = user.FirstName,
+                //                              MiddleName = user.MiddleName,
+                //                              LastName = user.LastName,
+                //                              City = user.City,
+                //                              State = user.State,
+                //                              Email = user.Email,
+                //                              Password = user.Password,
+                //                              USD = user.USD,
+                //                              BuildingID = user.BuildingID,
+                //                              ImageURL = user.ImageURL,
+                //                              KidsID = i.KIDSID,
+                //                              DateOfBirth = i.DateOfBirth,
+                //                              CreatedBy = i.CreatedBy,
+                //                              Status = i.StatusCode
+                //                          }).Distinct().ToList();
+
+                ////get IEP Date
+                //foreach (Student student in students)
+                //{
+                //    IEP theIEP = new IEP(student.UserID);
+                //    student.hasIEP = (theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE) && (theIEP.current.IsActive);
+                //    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
+                //    {
+                //        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
+                //    }
+                //}
+
+                //StudentViewModel model = new StudentViewModel
+                //{
+                //    Teacher = nurse,
+                //    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
+                //    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList(),
+                //    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList(),
+                //    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
+                //};
+
+                PortalViewModel model = new PortalViewModel
                 {
-                    IEP theIEP = new IEP(student.UserID);
-                    student.hasIEP = (theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE) && (theIEP.current.IsActive);
-                    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
-                    {
-                        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-                    }
-                }
-
-                StudentViewModel model = new StudentViewModel
-                {
-                    Teacher = nurse,
-                    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
+                    user = nurse,
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList(),
-                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
+                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
+                    members = db.uspUserAssignedList(nurse.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 return View(model);

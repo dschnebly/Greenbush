@@ -124,6 +124,8 @@ namespace GreenBushIEP.Models
         public bool isAssigned;
         public string StatusCode;
         public int StatusActive;
+        public DateTime? IEPDate;
+        public DateTime? BirthDate;
     }
 
     public class ILPPortalViewModel
