@@ -1276,7 +1276,11 @@
                                                 <Width>7.46113in</Width>
                                                 <ZIndex>3</ZIndex>
                                                 <Visibility>
-                                                  <Hidden>=IIF(Parameters!pPrintGoalBenchmark.Value = True, False, True)</Hidden>
+                                                  <Hidden>=IIF(Parameters!pPrintGoalBenchmark.Value = True, 
+
+IIF( IsNothing(Fields!goalBenchmarkID.Value), True, False)
+
+, True)</Hidden>
                                                 </Visibility>
                                                 <Style>
                                                   <Border>
@@ -1876,6 +1880,7 @@
                                                     </TablixMember>
                                                   </TablixMembers>
                                                 </TablixRowHierarchy>
+                                                <NoRowsMessage>No data found.</NoRowsMessage>
                                                 <DataSetName>DataSet1</DataSetName>
                                                 <Top>4.1118in</Top>
                                                 <Left>0.12157in</Left>
@@ -1883,7 +1888,11 @@
                                                 <Width>7.53537in</Width>
                                                 <ZIndex>5</ZIndex>
                                                 <Visibility>
-                                                  <Hidden>=IIF(Parameters!pPrintGoalBenchmark.Value = True, False, True)</Hidden>
+                                                  <Hidden>=IIF(Parameters!pPrintGoalBenchmark.Value = True, 
+
+IIF( IsNothing(Fields!goalBenchmarkID.Value), True, False)
+
+, True)</Hidden>
                                                 </Visibility>
                                                 <Style>
                                                   <Border>
