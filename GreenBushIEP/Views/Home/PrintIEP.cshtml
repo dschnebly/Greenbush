@@ -56,19 +56,18 @@
         </div>
 		@if (ViewBag.IsStudentInfo != null)
 		{			
-				@Html.Partial("~/Views/Home/_PrintStudentInfo.cshtml", @Model)
+				@Html.Partial("~/Views/Home/Print/_PrintStudentInfo.cshtml", @Model)
 		}
 		else
 		{
-			@Html.Partial("~/Views/Home/_PrintPartial.cshtml", @Model)
+			@Html.Partial("~/Views/Home/Print/_PrintPartial.cshtml", @Model)
 		}
 
 
     </div><!--end container-->
    </div><!--end transition-->
 
-<!-- loading the file even though it's an ajax call -->
-@*<var data-reload="true" data-src="/Scripts/printIEP.js"></var>*@
+
 @section scripts {
     @Scripts.Render("~/Scripts/printIEP.js")    
 }

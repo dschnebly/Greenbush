@@ -1,0 +1,173 @@
+﻿@using GreenBushIEP.Models
+@model GreenBushIEP.Models.IEP
+
+
+@if (Model.studentDetails.printGoals)
+{
+    string module = ViewData["module"].ToString();
+
+    if (Model.studentGoals != null && Model.studentGoals.Count > 0)
+    {
+        var studentGoals = Model.studentGoals.FindAll(o => o.Module == module);
+
+        if (studentGoals != null && studentGoals.Count > 0)
+        {
+             <div class="voffset1">
+                    <label>Student Goal(s):</label>
+             </div>
+
+            foreach (var sGoal in studentGoals)
+            {
+                var progQ1 = "";
+                var progQ2 = "";
+                var progQ3 = "";
+                var progQ4 = "";
+                var evalText = "";
+
+                var ddlText = "";
+                switch (sGoal.Module)
+                {
+                    case "1": { ddlText = "Health"; break; }
+                    case "2": { ddlText = "Motor"; break; }
+                    case "3": { ddlText = "Communication"; break; }
+                    case "4": { ddlText = "Social-Emotional"; break; }
+                    case "5": { ddlText = "General Intelligence"; break; }
+                    case "6": { ddlText = "Academic Performance"; break; }
+                    case "7": { ddlText = "Reading"; break; }
+                    case "8": { ddlText = "Math"; break; }
+                    case "9": { ddlText = "Written Language"; break; }
+                } //end switch
+
+                switch (sGoal.Progress_Quarter1)
+                {
+                    case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ1 = "Goal Met (indicate date)"; break; }
+                } //end switch
+
+                switch (sGoal.Progress_Quarter2)
+                {
+                    case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ2 = "Goal Met (indicate date)"; break; }
+                } //end switch
+
+                switch (sGoal.Progress_Quarter3)
+                {
+                    case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ3 = "Goal Met (indicate date)"; break; }
+                } //end switch
+
+                switch (sGoal.Progress_Quarter4)
+                {
+                    case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
+                    case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
+                    case "3": { progQ4 = "Goal Met (indicate date)"; break; }
+                } //end switch
+
+
+                <div class="voffset1">
+                    <label>@sGoal.Title</label>
+                </div>
+
+                <div class="form-group">
+                    <label>Measurable Annual Goal:</label>
+                    @if (!string.IsNullOrEmpty(sGoal.Baseline))
+                    {
+
+                        if (Model.isServerRender)
+                        {
+                            <p>@(sGoal.AnnualGoal.Replace(System.Environment.NewLine, "break-line-val"))</p>
+                        }
+                        else
+                        {
+                            <p>@(Html.Raw(sGoal.AnnualGoal.Replace(System.Environment.NewLine, "<br/>")))</p>
+                        }
+                    }
+                </div>
+                <div class="form-group">
+                    <label>Goal Baseline:</label>
+                    @if (!string.IsNullOrEmpty(sGoal.Baseline))
+                    {
+
+                        if (Model.isServerRender)
+                        {
+                            <p>@(sGoal.Baseline.Replace(System.Environment.NewLine, "break-line-val"))</p>
+                        }
+                        else
+                        {
+                            <p>@(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))</p>
+                        }
+                    }
+                </div>
+                <div class="form-group">
+                    <label>State Standards:</label>
+                    @if (!string.IsNullOrEmpty(sGoal.Baseline))
+                    {
+
+                        if (Model.isServerRender)
+                        {
+                            <p>@(sGoal.StateStandards.Replace(System.Environment.NewLine, "break-line-val"))</p>
+                        }
+                        else
+                        {
+                            <p>@(Html.Raw(sGoal.StateStandards.Replace(System.Environment.NewLine, "<br/>")))</p>
+                        }
+                    }
+                </div>
+                <div class="form-group">
+                    <label>Evaluation Procedure:</label><p>
+                        @foreach (var ep in Model.studentGoalEvalProcs.FindAll(g => g.goalID == sGoal.goalID))
+                        {
+                            switch (ep.evaluationProcedureID)
+                            {
+                                case 1: { evalText = "Written Observation"; break; }
+                                case 2: { evalText = "Written Performance"; break; }
+                                case 3: { evalText = "Oral Performance"; break; }
+                                case 4: { evalText = "Criterion-Referenced Test"; break; }
+                                case 5: { evalText = "Time Sample"; break; }
+                                case 6: { evalText = "Demonstration/Performance"; break; }
+                                case 8: { evalText = "Progress Monitoring"; break; }
+                                case 7:
+                                    {
+
+                                        if (!string.IsNullOrEmpty(ep.OtherDescription))
+                                        {
+                                            evalText = "Other: " + ep.OtherDescription;
+                                        }
+                                        else
+                                        {
+                                            evalText = "Other";
+                                        }
+                                        break;
+                                    }
+                            } //end switch
+                            @evalText<br />
+                        }
+                    </p>
+                </div>
+
+                if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count > 0)
+                {                    
+                    <div class="voffset1">
+                        <label>Short Term Benchmark(s)</label>
+                    </div>
+
+                    foreach (var gb in Model.studentGoalBenchmarks.FindAll(o => o.goalID == sGoal.goalID))
+                    {
+                        <div class="StudentGoalBenchmarks">                           
+                            <div class="form-group" style="padding:2px;">
+                                <span>@gb.ObjectiveBenchmark</span>
+                            </div>
+                            
+                        </div>
+                    }//end foreach short term bench
+                }
+
+            }//end for goals
+        }
+    }
+
+}
+
