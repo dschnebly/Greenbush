@@ -2285,7 +2285,7 @@ namespace GreenBushIEP.Controllers
 
                     // KIDSid is still new and fresh
                     tblStudentInfo exsistingStudent = db.tblStudentInfoes.Where(i => i.KIDSID == kidsID && kidsID != 000000000).FirstOrDefault();
-                    if (exsistingStudent != null  && exsistingStudent.UserID != learnerId)
+                    if (exsistingStudent != null && exsistingStudent.UserID != learnerId)
                     {
                         return Json(new { Result = "error", Message = "The student or kidsId is already in the Greenbush system. Please contact Greenbush." });
                     }
@@ -3203,8 +3203,8 @@ namespace GreenBushIEP.Controllers
 
                     //check if exit
                     tblStatusCode statusCodeObj = db.tblStatusCodes.Where(o => o.StatusCode == info.StatusCode).FirstOrDefault();
-                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive" 
-                        && info.StatusCode != "0"  
+                    bool isExit = statusCodeObj != null && statusCodeObj.Type.ToLower() == "inactive"
+                        && info.StatusCode != "0"
                         && info.StatusCode != "1"
                         && info.StatusCode != "2";
                     if (isExit && !info.ExitDate.HasValue)
@@ -3487,7 +3487,7 @@ namespace GreenBushIEP.Controllers
                     user.LastName = collection["LastName"];
                     user.Email = collection["userEmail"];
 
-                    if (submitter.RoleID == "1" 
+                    if (submitter.RoleID == "1"
                         || submitter.RoleID == "7"
                         || submitter.RoleID == "2")
                     {
@@ -3973,7 +3973,7 @@ namespace GreenBushIEP.Controllers
                 int? searchUserId = userId.HasValue && userId.Value > -1 ? userId.Value : -1;
                 int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1;
                 //bool? searchArchive = submitter.RoleID == "1" ? true : false;
-                
+
 
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
                 {
@@ -4162,7 +4162,6 @@ namespace GreenBushIEP.Controllers
 
             return Json(new { Result = "error", Message = "An error happened while removing the user from your list. Please contact your admin." });
         }
-
 
         // POST: Manage/RemoveFromTeacherList
         [HttpPost]

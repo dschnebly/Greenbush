@@ -445,7 +445,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 /*********************************/
 /*********************************/
 
-.ajax-loader {
+.ajax-loader, .ajax-filter {
     background-color: #ffffff;
     background-color: rgba(255,255,255,0.7);
     position: fixed;
@@ -457,7 +457,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
     right: 0;
 }
 
-    .ajax-loader img {
+    .ajax-loader img, .ajax-filter img {
         position: fixed;
         top: 45%;
         left: 40%;

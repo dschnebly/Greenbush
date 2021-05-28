@@ -902,6 +902,7 @@
     <Content Include="Content\Images\processing.gif" />
     <Content Include="Content\Images\radio_no.png" />
     <Content Include="Content\Images\radio_yes.png" />
+    <Content Include="Content\Images\search.gif" />
     <Content Include="Content\Images\student1.jpg" />
     <Content Include="Content\Images\student2.jpg" />
     <Content Include="Content\Images\student3.jpg" />

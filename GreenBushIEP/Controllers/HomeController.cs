@@ -107,12 +107,15 @@ namespace GreenbushIep.Controllers
             if (MIS != null)
             {
 
+                List<tblDistrict> allDistricts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList();
+                string usd = allDistricts.FirstOrDefault().USD;
+
                 PortalViewModel model = new PortalViewModel
                 {
                     user = MIS,
-                    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == MIS.UserID select district).Distinct().ToList(),
+                    districts = allDistricts,
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(MIS.UserID, null, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(MIS.UserID, usd, null, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
@@ -169,73 +172,6 @@ namespace GreenbushIep.Controllers
             tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (teacher != null)
             {
-                //List<Student> users = (from u in db.tblUsers
-                //                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                //                       where o.AdminID == teacher.UserID
-                //                       select new Student()
-                //                       {
-                //                           UserID = u.UserID,
-                //                           FirstName = u.FirstName,
-                //                           MiddleName = u.MiddleName,
-                //                           LastName = u.LastName,
-                //                           City = u.City,
-                //                           State = u.State,
-                //                           Email = u.Email,
-                //                           Password = null,
-                //                           ImageURL = u.ImageURL,
-                //                           Archive = u.Archive,
-                //                       }).Distinct().ToList();
-
-                //List<tblStudentInfo> info = (from i in db.tblStudentInfoes
-                //                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
-                //                             where o.AdminID == teacher.UserID
-                //                             select i).Distinct().ToList();
-
-                //List<Student> students = (from user in users
-                //                          join i in info
-                //                          on user.UserID equals i.UserID
-                //                          where !(user.Archive ?? false)
-                //                          select new Student()
-                //                          {
-                //                              UserID = user.UserID,
-                //                              FirstName = user.FirstName,
-                //                              MiddleName = user.MiddleName,
-                //                              LastName = user.LastName,
-                //                              City = user.City,
-                //                              State = user.State,
-                //                              Email = user.Email,
-                //                              Password = user.Password,
-                //                              USD = user.USD,
-                //                              BuildingID = user.BuildingID,
-                //                              ImageURL = user.ImageURL,
-                //                              KidsID = i.KIDSID,
-                //                              DateOfBirth = i.DateOfBirth,
-                //                              CreatedBy = i.CreatedBy,
-                //                              Status = i.StatusCode
-                //                          }).Distinct().ToList();
-
-                ////get IEP Date
-                //foreach (Student student in students)
-                //{
-                //    IEP theIEP = new IEP(student.UserID);
-                //    student.hasIEP = (theIEP.current != null) && theIEP.current.IEPid != 0;
-                //    student.IEPDate = DateTime.Now.ToString("MM-dd-yyyy");
-                //    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
-                //    {
-                //        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-                //    }
-                //}
-
-                //StudentViewModel model = new StudentViewModel
-                //{
-                //    Teacher = teacher,
-                //    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
-                //    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
-                //    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList(),
-                //    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
-                //};
-
-
                 PortalViewModel model = new PortalViewModel
                 {
                     user = teacher,
@@ -266,73 +202,6 @@ namespace GreenbushIep.Controllers
             tblUser nurse = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (nurse != null)
             {
-
-                //List<Student> users = (from u in db.tblUsers
-                //                       join o in db.tblOrganizationMappings on u.UserID equals o.UserID
-                //                       where o.AdminID == nurse.UserID
-                //                       select new Student()
-                //                       {
-                //                           UserID = u.UserID,
-                //                           FirstName = u.FirstName,
-                //                           MiddleName = u.MiddleName,
-                //                           LastName = u.LastName,
-                //                           City = u.City,
-                //                           State = u.State,
-                //                           Email = u.Email,
-                //                           Password = null,
-                //                           ImageURL = u.ImageURL,
-                //                           Archive = u.Archive,
-                //                       }).Distinct().ToList();
-
-                //List<tblStudentInfo> info = (from i in db.tblStudentInfoes
-                //                             join o in db.tblOrganizationMappings on i.UserID equals o.UserID
-                //                             where o.AdminID == nurse.UserID
-                //                             select i).Distinct().ToList();
-
-                //List<Student> students = (from user in users
-                //                          join i in info
-                //                          on user.UserID equals i.UserID
-                //                          where !(user.Archive ?? false)
-
-                //                          select new Student()
-                //                          {
-                //                              UserID = user.UserID,
-                //                              FirstName = user.FirstName,
-                //                              MiddleName = user.MiddleName,
-                //                              LastName = user.LastName,
-                //                              City = user.City,
-                //                              State = user.State,
-                //                              Email = user.Email,
-                //                              Password = user.Password,
-                //                              USD = user.USD,
-                //                              BuildingID = user.BuildingID,
-                //                              ImageURL = user.ImageURL,
-                //                              KidsID = i.KIDSID,
-                //                              DateOfBirth = i.DateOfBirth,
-                //                              CreatedBy = i.CreatedBy,
-                //                              Status = i.StatusCode
-                //                          }).Distinct().ToList();
-
-                ////get IEP Date
-                //foreach (Student student in students)
-                //{
-                //    IEP theIEP = new IEP(student.UserID);
-                //    student.hasIEP = (theIEP.current.IepStatus != IEPStatus.PLAN || theIEP.current.IepStatus != IEPStatus.ARCHIVE) && (theIEP.current.IsActive);
-                //    if (theIEP != null && theIEP.current != null && theIEP.current.begin_date.HasValue)
-                //    {
-                //        student.IEPDate = theIEP.current.begin_date.Value.ToShortDateString();
-                //    }
-                //}
-
-                //StudentViewModel model = new StudentViewModel
-                //{
-                //    Teacher = nurse,
-                //    Students = students.OrderBy(u => u.LastName).ThenBy(u => u.FirstName).ToList(),
-                //    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList(),
-                //    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList(),
-                //    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
-                //};
-
                 PortalViewModel model = new PortalViewModel
                 {
                     user = nurse,
@@ -577,6 +446,65 @@ namespace GreenbushIep.Controllers
             }
 
             return Json(new { Result = "error", id = providerId, errors = "Unknown error." }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult FilterMyUserList(FormCollection collection)
+        {
+            tblUser submitter = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
+            if (submitter != null)
+            {
+                string selectedRoleID = collection["userRoles"];
+                int selectedUserId = Convert.ToInt32(collection["filterName"]);
+                string selectedDistrict = collection["userDistricts"] == "-1" ? null : collection["userDistricts"];
+                string selectedBuilding = collection["userBuildings"] == "-1" ? null : collection["userBuildings"];
+                int searchUserId = Convert.ToInt32(collection["filterName"]) == -1 ? 0 : Convert.ToInt32(collection["filterName"]);
+                int? searchHasIEP = Convert.ToInt32(collection["filterActive"]) == 1 ? 1 : Convert.ToInt32(collection["filterActive"]) == 2 ? 0 : -1;
+                int statusActive = collection["statusActive"] == "0" ? 0 : collection["statusActive"] == "1" ? 1 : -1;
+                //bool? searchArchive = submitter.RoleID == "1" ? true : false;
+
+                PortalViewModel model = new PortalViewModel
+                {
+                    user = submitter,
+                    districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == submitter.UserID select district).Distinct().ToList(),
+                    buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID select building).Distinct().ToList(),
+                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
+                };
+
+                if(selectedRoleID != "-1")
+                {
+                    model.members = model.members.Where(u => u.RoleID == selectedRoleID).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                }
+
+                if (selectedUserId > 0)
+                {
+                    model.members = model.members.Where(u => u.UserID == selectedUserId).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                }
+
+                if(searchHasIEP > -1 && selectedRoleID == "5")
+                {
+                    bool hasIEP = searchHasIEP == 1;
+                    model.members = model.members.Where(u => u.hasIEP == hasIEP).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                }
+
+                if (statusActive > -1  && selectedRoleID == "5")
+                {
+                    model.members = model.members.Where(u => u.StatusActive == statusActive).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                }
+
+                ViewData["selectedUserRoles"] = selectedRoleID;
+                ViewData["selectedFilterName"] = searchUserId;
+                ViewData["selectedDistricts"] = collection["userDistricts"];
+                ViewData["selectedBuildings"] = selectedBuilding;
+                ViewData["selectedFilterActive"] = searchHasIEP;
+                ViewData["selectedStatusActive"] = statusActive;
+
+                return View("MISPortal", model);
+            }
+
+            // Unknow error happened.
+            return RedirectToAction("Index", "Home", null);
         }
 
         [HttpGet]

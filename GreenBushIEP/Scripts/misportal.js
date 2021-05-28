@@ -117,6 +117,7 @@
                 var userId = $(e.currentTarget).parent().parent().find("input[name='id']").val();
 
                 $(".ajax-loader").show();
+
                 $.ajax({
                     type: "GET",
                     url: "/Home/UnlockStudentIEP",
@@ -157,44 +158,47 @@
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole,
-                    userId: userId
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+            //$(".ajax-loader").show();
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        }
-                        else {
-                            hideAllUsers(null);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("Not connected to the network!");
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole,
+            //        userId: userId
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            }
+            //            else {
+            //                hideAllUsers(null);
+            //            }
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("Not connected to the network!");
+
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
@@ -204,48 +208,51 @@
             var selectedBuilding = $("#userBuildings option:selected").val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+           // $(".ajax-loader").show();
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        } else {
-                            hideAllUsers(null);
-                        }
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                        if (results.buildings != null && results.buildings.length > 0) {
-                            filterBuildingList(results.buildings);
-                        }
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            } else {
+            //                hideAllUsers(null);
+            //            }
+
+            //            if (results.buildings != null && results.buildings.length > 0) {
+            //                filterBuildingList(results.buildings);
+            //            }
 
 
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("ERROR!!!");
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("ERROR!!!");
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
@@ -255,42 +262,45 @@
             var selectedBuilding = $(this).val() + "";
             var selectedRole = $("#userRoles option:selected").val() + "";
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+            //$(".ajax-loader").show();
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        } else {
-                            hideAllUsers(null);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("ERROR!!!");
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            } else {
+            //                hideAllUsers(null);
+            //            }
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("ERROR!!!");
+
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
@@ -301,7 +311,10 @@
             var selectedRole = $(this).val() + "";
             var selectedStatus = $("#statusActive option:selected").val() + "";
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
+
+/*            $(".ajax-loader").show();*/
 
             if (selectedRole === "5") {
                 $(".activeIEPCol").removeClass("hidden");
@@ -309,41 +322,41 @@
                 $(".activeIEPCol").addClass("hidden");
             }
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole,
-                    statusActive: selectedStatus
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole,
+            //        statusActive: selectedStatus
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        } else {
-                            hideAllUsers(null);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("ERROR!!!");
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            } else {
+            //                hideAllUsers(null);
+            //            }
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("ERROR!!!");
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
@@ -356,44 +369,47 @@
             var selectedActive = $("#filterActive option:selected").val() + "";
             var selectedStatus = this.value;
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole,
-                    activeType: selectedActive,
-                    statusActive: selectedStatus
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+            //$(".ajax-loader").show();
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        } else {
-                            hideAllUsers(null);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("Not connected to the network!");
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole,
+            //        activeType: selectedActive,
+            //        statusActive: selectedStatus
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            } else {
+            //                hideAllUsers(null);
+            //            }
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("Not connected to the network!");
+
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
@@ -406,44 +422,47 @@
             var selectedActive = this.value;
             var selectedStatus = $("#statusActive option:selected").val() + "";
 
-            $(".ajax-loader").show();
+            $(".ajax-filter").removeClass("hidden");
+            $("#filterMyUserList").submit();
 
-            $.ajax({
-                type: "POST",
-                url: "/Manage/FilterUserList",
-                dataType: "json",
-                data: {
-                    DistrictId: selectedDistrict,
-                    BuildingId: selectedBuilding,
-                    RoleId: selectedRole,
-                    activeType: selectedActive,
-                    statusActive: selectedStatus
-                },
-                async: false,
-                success: function (data) {
-                    if (data.Result === "success") {
+            //$(".ajax-loader").show();
 
-                        var results = data.Message;
-                        if (results.members.length > 0) {
-                            filterList(results.members);
-                        } else {
-                            hideAllUsers(null);
-                        }
-                    } else {
-                        alert("doh");
-                    }
-                },
-                error: function (data) {
-                    alert("Not connected to the network!");
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Manage/FilterUserList",
+            //    dataType: "json",
+            //    data: {
+            //        DistrictId: selectedDistrict,
+            //        BuildingId: selectedBuilding,
+            //        RoleId: selectedRole,
+            //        activeType: selectedActive,
+            //        statusActive: selectedStatus
+            //    },
+            //    async: false,
+            //    success: function (data) {
+            //        if (data.Result === "success") {
 
-                    console.log(data);
-                },
-                complete: function (data) {
-                    $(".ajax-loader").hide();
-                    //A function to be called when the request finishes 
-                    // (after success and error callbacks are executed). 
-                }
-            });
+            //            var results = data.Message;
+            //            if (results.members.length > 0) {
+            //                filterList(results.members);
+            //            } else {
+            //                hideAllUsers(null);
+            //            }
+            //        } else {
+            //            alert("doh");
+            //        }
+            //    },
+            //    error: function (data) {
+            //        alert("Not connected to the network!");
+
+            //        console.log(data);
+            //    },
+            //    complete: function (data) {
+            //        $(".ajax-loader").hide();
+            //        //A function to be called when the request finishes 
+            //        // (after success and error callbacks are executed). 
+            //    }
+            //});
         });
 
         // attach event
