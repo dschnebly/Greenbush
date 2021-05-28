@@ -1578,6 +1578,7 @@
                                                                 <PaddingBottom>2pt</PaddingBottom>
                                                               </Style>
                                                             </Textbox>
+                                                            <rd:Selected>true</rd:Selected>
                                                           </CellContents>
                                                         </TablixCell>
                                                         <TablixCell>
@@ -1703,6 +1704,7 @@
                                                                 <PaddingBottom>2pt</PaddingBottom>
                                                               </Style>
                                                             </Textbox>
+                                                            <rd:Selected>true</rd:Selected>
                                                           </CellContents>
                                                         </TablixCell>
                                                         <TablixCell>
@@ -1828,6 +1830,7 @@
                                                                 <PaddingBottom>2pt</PaddingBottom>
                                                               </Style>
                                                             </Textbox>
+                                                            <rd:Selected>true</rd:Selected>
                                                           </CellContents>
                                                         </TablixCell>
                                                         <TablixCell>
@@ -1953,6 +1956,7 @@
                                                                 <PaddingBottom>2pt</PaddingBottom>
                                                               </Style>
                                                             </Textbox>
+                                                            <rd:Selected>true</rd:Selected>
                                                           </CellContents>
                                                         </TablixCell>
                                                         <TablixCell>
@@ -2214,7 +2218,11 @@
                                                           </TablixHeader>
                                                           <TablixMembers>
                                                             <TablixMember>
-                                                              <Group Name="Details3" />
+                                                              <Group Name="Details3">
+                                                                <GroupExpressions>
+                                                                  <GroupExpression>=Fields!goalBenchmarkID.Value</GroupExpression>
+                                                                </GroupExpressions>
+                                                              </Group>
                                                               <TablixMembers>
                                                                 <TablixMember>
                                                                   <Visibility>
