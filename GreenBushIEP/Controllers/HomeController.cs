@@ -81,12 +81,15 @@ namespace GreenbushIep.Controllers
             tblUser OWNER = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
             if (OWNER != null)
             {
+                List<tblDistrict> allDistricts = db.tblDistricts.Distinct().ToList();
+                string usd = allDistricts.FirstOrDefault().USD;
+
                 PortalViewModel model = new PortalViewModel
                 {
                     user = OWNER,
-                    districts = (from district in db.tblDistricts select district).Distinct().ToList(),
+                    districts = allDistricts,
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(OWNER.UserID, null, null, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(OWNER.UserID, usd, null, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
                 };
 
@@ -472,6 +475,8 @@ namespace GreenbushIep.Controllers
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
+
+
                 if(selectedRoleID != "-1")
                 {
                     model.members = model.members.Where(u => u.RoleID == selectedRoleID).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
@@ -480,6 +485,11 @@ namespace GreenbushIep.Controllers
                 if (selectedUserId > 0)
                 {
                     model.members = model.members.Where(u => u.UserID == selectedUserId).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                }
+                else
+                {
+                    model.districts = db.tblDistricts.Distinct().ToList();
+                    model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } select building).Distinct().ToList();
                 }
 
                 if(searchHasIEP > -1 && selectedRoleID == "5")
