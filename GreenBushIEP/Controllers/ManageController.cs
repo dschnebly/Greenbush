@@ -3977,7 +3977,6 @@ namespace GreenBushIEP.Controllers
                 int? searchHasIEP = activeType.HasValue && activeType == 1 ? 1 : activeType.HasValue && activeType == 2 ? 0 : -1;
                 //bool? searchArchive = submitter.RoleID == "1" ? true : false;
 
-
                 Dictionary<string, object> NewPortalObject = new Dictionary<string, object>
                 {
                     { "selectedDistrict", DistrictId },

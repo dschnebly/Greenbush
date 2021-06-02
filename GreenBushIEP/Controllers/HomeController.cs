@@ -464,53 +464,78 @@ namespace GreenbushIep.Controllers
                 int searchUserId = Convert.ToInt32(collection["filterName"]) == -1 ? 0 : Convert.ToInt32(collection["filterName"]);
                 int? searchHasIEP = Convert.ToInt32(collection["filterActive"]) == 1 ? 1 : Convert.ToInt32(collection["filterActive"]) == 2 ? 0 : -1;
                 int statusActive = collection["statusActive"] == "0" ? 0 : collection["statusActive"] == "1" ? 1 : -1;
-                //bool? searchArchive = submitter.RoleID == "1" ? true : false;
 
                 PortalViewModel model = new PortalViewModel
                 {
                     user = submitter,
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == submitter.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == submitter.UserID select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, false).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
-
-
-                if(selectedRoleID != "-1")
+                // owner - because he's special.
+                if (submitter.UserID == 1)
                 {
-                    model.members = model.members.Where(u => u.RoleID == selectedRoleID).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                    model.districts = db.tblDistricts.Distinct().ToList();
+                    model.buildings = (from building in db.tblBuildings select building).Distinct().ToList();
                 }
 
-                if (selectedUserId > 0)
+                if (selectedDistrict != null)
                 {
-                    model.members = model.members.Where(u => u.UserID == selectedUserId).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                    model.buildings = model.buildings.Where(b => b.USD == selectedDistrict).ToList();
+                }
+
+                if (selectedRoleID != "999")
+                {
+                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
+
+                    if (searchUserId > 0)
+                    {
+                        model.members = model.members.Where(u => u.UserID == searchUserId).ToList();
+                    }
+
+                    if (selectedRoleID != "-1")
+                    {
+                        model.members = model.members.Where(u => u.RoleID == selectedRoleID).ToList();
+                    }
+
+                    if (searchHasIEP.HasValue && searchHasIEP != -1 && selectedRoleID == "5")
+                    {
+                        bool hasIEP = searchHasIEP == 1;
+                        model.members = model.members.Where(u => u.hasIEP == hasIEP).ToList();
+                    }
+
+                    if (statusActive == 1 && selectedRoleID == "5") //educational status
+                    {
+                        model.members = model.members.Where(u => u.StatusActive == statusActive).ToList();
+                    }
+
                 }
                 else
                 {
-                    model.districts = db.tblDistricts.Distinct().ToList();
-                    model.buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } select building).Distinct().ToList();
-                }
+                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
 
-                if(searchHasIEP > -1 && selectedRoleID == "5")
-                {
-                    bool hasIEP = searchHasIEP == 1;
-                    model.members = model.members.Where(u => u.hasIEP == hasIEP).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
-                }
-
-                if (statusActive > -1  && selectedRoleID == "5")
-                {
-                    model.members = model.members.Where(u => u.StatusActive == statusActive).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, KidsID = u.KidsID, BirthDate = u.BirthDate, StatusCode = u.StatusCode, StatusActive = u.StatusActive, hasIEP = u.hasIEP, IEPDate = u.IEPDate, isAssigned = u.isAssigned, RoleID = u.RoleID }).ToList();
+                    if (searchUserId > 0)
+                    {
+                        model.members = model.members.Where(u => u.UserID == searchUserId).ToList();
+                    }
                 }
 
                 ViewData["selectedUserRoles"] = selectedRoleID;
                 ViewData["selectedFilterName"] = searchUserId;
-                ViewData["selectedDistricts"] = collection["userDistricts"];
+                ViewData["selectedDistricts"] = selectedDistrict;
                 ViewData["selectedBuildings"] = selectedBuilding;
                 ViewData["selectedFilterActive"] = searchHasIEP;
                 ViewData["selectedStatusActive"] = statusActive;
 
-                return View("MISPortal", model);
+                if (submitter.RoleID == owner)
+                {
+                    return View("OwnerPortal", model);
+                }
+                else
+                {
+                    return View("MISPortal", model);
+                }
             }
 
             // Unknow error happened.
@@ -2056,7 +2081,7 @@ namespace GreenbushIep.Controllers
 
             //start date must be within the school year
             IQueryable<tblCalendar> availableCalendarDays = db.tblCalendars.Where(c => c.BuildingID == buildingId && (c.canHaveClass == true && c.NoService == false) && c.SchoolYear == fiscalYear).OrderBy(o => o.calendarDate);
-            
+
             tblCalendar firstDaySchoolYear = null;
             tblCalendar lastDaySchoolYear = null;
 
@@ -2245,7 +2270,7 @@ namespace GreenbushIep.Controllers
                 {
                     // just so we know if we are adding or editing a service in the auditlog.
                     string action = service.ServiceID == 0 ? "Adding new service" : "Editing service " + service.ServiceID.ToString();
-                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { Created=service.Create_Date, TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
+                    AuditLog audit = new AuditLog(studentId, ModifiedBy, db, iepId) { Created = service.Create_Date, TableName = "tblService", ColumnName = "All Columns", SessionID = HttpContext.Session.SessionID, Value = action };
                     audit.SaveChanges();
 
                     StudentSerivceId = service.ServiceID;
@@ -3167,8 +3192,6 @@ namespace GreenbushIep.Controllers
                         theIEP.studentGoalBenchmarkMethods.AddRange(db.tblGoalBenchmarkMethods.Where(g => benchmarkIds.Contains(g.goalBenchmarkID)).ToList());
                     }
                 }
-
-
 
                 tblBehavior studentBehavior = db.tblBehaviors.Where(g => g.IEPid == theIEP.current.IEPid).FirstOrDefault();
                 theIEP.studentBehavior = GetBehaviorModel(student.UserID, theIEP.current.IEPid);
@@ -4186,7 +4209,7 @@ namespace GreenbushIep.Controllers
                     //need to look if the iep was ended earlier than expected and replaced with a new Annual - if so we need to correct the end date
                     //to be the last valid day before the begin date of the new iep
 
-                    
+
                     if (studentIEP.current.Amendment)
                     {
                         //on amendments we need to look up its original iep meeting date and use that to compare
@@ -4200,8 +4223,8 @@ namespace GreenbushIep.Controllers
 
                         }
                     }
-                    else if(studentIEP.current.MeetingDate <= service.EndDate)
-                    { 
+                    else if (studentIEP.current.MeetingDate <= service.EndDate)
+                    {
                         //need to end 1 day prior to the new annual beginning date or next available valid date
                         serviceEndDateOverride = SpedProEndDateCheck(studentIEP.current.MeetingDate, service);
                     }

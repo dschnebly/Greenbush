@@ -50,7 +50,7 @@
         <div class="panel panel-primary filterable">
             <div class="panel-heading">
                 <h3 class="panel-title">Users </h3>
-                <select name="userRoles" id="userRoles"><option value="-1">All Roles</option><option value="2">Level 4</option><option value="3">Level 3</option><option value="4">Level 2</option><option value="6">Level 1</option><option value="5">Student</option><option value="999">Unassigned</option></select>
+                <select name="userRoles" id="userRoles"><option value="-1" @(ViewData["selectedUserRoles"] == null || Convert.ToInt32(ViewData["selectedUserRoles"]) == -1 ? "selected=selected" : string.Empty)>All Roles</option><option value="3" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 3 ? "selected=selected" : string.Empty)>Level 3</option><option value="4" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 4 ? "selected=selected" : string.Empty)>Level 2</option><option value="6" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 6 ? "selected=selected" : string.Empty)>Level 1</option><option value="5" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 5 ? "selected=selected" : string.Empty)>Student</option><option value="999" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 999 ? "selected=selected" : string.Empty)>Unassigned</option></select>
                 <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
             </div>
             <div class="row showFilters">
@@ -63,16 +63,17 @@
                                 <option value="-1">All Users</option>
                                 @foreach (var user in Model.members)
                                 {
+                                    int selectedUserId = ViewData["selectedFilterName"] != null && Convert.ToInt32(ViewData["selectedFilterName"]) > 0 ? Convert.ToInt32(ViewData["selectedFilterName"]) : -1;
                                     if (user.RoleID == "5")
                                     {
                                         if (Model.activeEducationalStatuses.Contains(user.StatusCode))
                                         {
-                                            <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
+                                            <option value="@(user.UserID)" @(selectedUserId == user.UserID ? "selected='selected'" : "" )>@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
                                         }
                                     }
                                     else
                                     {
-                                        <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName)</option>
+                                        <option value="@(user.UserID)" @(selectedUserId == user.UserID ? "selected='selected'" : "" )>@(user.LastName), @(user.FirstName) @(user.MiddleName)</option>
                                     }
                                 }
                             </select>
@@ -88,9 +89,9 @@
                                 <option value="-1">All District</option>
                                 @if (Model.districts.Count > 0)
                                 {
+                                    string selectedDistrictUSD = ViewData["selectedDistricts"] == null ? Model.districts.First().USD : ViewData["selectedDistricts"].ToString();
                                     foreach (var district in Model.districts)
                                     {
-                                        string selectedDistrictUSD = ViewData["selectedDistricts"] == null ? Model.districts.First().USD : ViewData["selectedDistricts"].ToString();
                                         <option @(district.USD == selectedDistrictUSD ? "selected='selected'" : string.Empty) value="@(district.USD)">@(district.DistrictName)</option>
                                     }
                                 }
@@ -111,9 +112,19 @@
                                 <option value="-1">All Buildings</option>
                                 @if (Model.buildings.Count > 0)
                                 {
-                                    foreach (var building in Model.buildings)
+                                    if (ViewData["selectedDistricts"] != null)
                                     {
-                                        <option value="@building.BuildingID" data-district="@building.USD">@building.BuildingName</option>
+                                        foreach (var building in Model.buildings.Where(b => b.USD == ViewData["selectedDistricts"].ToString()))
+                                        {
+                                            <option value="@building.BuildingID" data-district="@building.USD" @(ViewData["selectedBuildings"] != null && ViewData["selectedBuildings"].ToString() == building.BuildingID ? "selected='selected'" : "" )>@building.BuildingName</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        foreach (var building in Model.buildings)
+                                        {
+                                            <option value="@building.BuildingID" data-district="@building.USD" @(ViewData["selectedBuildings"] != null && ViewData["selectedBuildings"].ToString() == building.BuildingID ? "selected='selected'" : "" )>@building.BuildingName</option>
+                                        }
                                     }
                                 }
                                 else
@@ -124,7 +135,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2 activeIEPCol hidden">
+                <div class="col-xs-12 col-md-2 activeIEPCol @(ViewData["selectedUserRoles"] != null && ViewData["selectedUserRoles"].ToString() == "5" ? "" : "hidden")">
                     <div class="form-group">
                         <label for="filterActive">IEP Status</label>
                         <div class="input-group">
