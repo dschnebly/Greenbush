@@ -686,6 +686,13 @@
       <DependentUpon>Report.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\CaseloadByProvider\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CaseloadByProvider\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DraftIEP\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -979,6 +986,7 @@
     <Content Include="Reports\BehaviorPlan\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\CaseloadByProvider\Report.aspx" />
     <Content Include="Reports\DraftIEP\Report.aspx" />
     <Content Include="Reports\EligibilityAnalysis\Report.aspx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -1371,6 +1379,7 @@
     <EmbeddedResource Include="Reports\BehaviorPlan\rptBehaviorPlan.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CaseloadByProvider\rptCaseloadByProvider.rdlc" />
     <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
     <EmbeddedResource Include="Reports\EligibilityAnalysis\rptEligibiltyAnalysis.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

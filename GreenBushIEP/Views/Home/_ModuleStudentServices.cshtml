@@ -1003,6 +1003,14 @@
 
             $(this).find(".saveCompletedService").on('click', function (e) {
 
+                var primaryProvider = $("#primaryServiceProvider").val();
+                if (primaryProvider == "-1") {
+                     _showAlert("Please select a Primary Provider before continuing.", false);
+                     return false; 
+                }
+
+
+
                 $.each($(".oneStudentService").not("#defaultStudentService"), function (index, element) {
 
                     //remove disabled from dropdowns to allow value to be sent to server
