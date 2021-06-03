@@ -29,6 +29,8 @@ namespace GreenbushIep.Controllers
         private const string teacher = "4"; //level 2
         private const string student = "5";
         private const string nurse = "6"; //level 1
+        private const string principal = "11";
+        private const string superintendent = "12";
 
         private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
@@ -63,7 +65,7 @@ namespace GreenbushIep.Controllers
                 {
                     return RedirectToAction("TeacherPortal", new { logon = logon });
                 }
-                else if (User.IsInRole(nurse))
+                else if (User.IsInRole(nurse) || User.IsInRole(principal) || User.IsInRole(superintendent))
                 {
                     return RedirectToAction("NursePortal");
                 }
@@ -199,7 +201,7 @@ namespace GreenbushIep.Controllers
             return RedirectToAction("Index", "Home", null);
         }
 
-        [Authorize(Roles = nurse)]
+        [Authorize(Roles = nurse + "," + principal + "," + superintendent)]
         public ActionResult NursePortal(int? userId)
         {
             tblUser nurse = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);

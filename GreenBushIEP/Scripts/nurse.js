@@ -334,13 +334,21 @@
     }
     init();
 
-    //SET UP 
-    var params =	//All params are optional, you can just assign {} 
-    {
-        "navB": "slide",	//Effect for navigation button, leave it empty to disable it
-        "but": false,		//Flag to enable transitions on button, false by default
-        "cBa": function () { init(); } //callback function
-    };
+	//SET UP FOR TRANSITIONS
+	var params = //All params are optional, you can just assign {} 
+	{
+		"navB": "slide", //Effect for navigation button, leave it empty to disable it
+		"but": true, //Flag to enable transitions on button, false by default
+		"cBa": function () {
+			init();
+
+			//callback function
+			var ajax = document.querySelector(".ajax-loader");
+			if (ajax != null) {
+				ajax.style.display = 'none';
+			}
+		}
+	};
 	new ft(params);
 
 	function _getStudentName(value) {
@@ -371,3 +379,5 @@ jQuery.fn.extend({
         return listrap;
     }
 });
+
+window.addEventListener('DOMContentLoaded', function () { $(".ajax-loader").hide(); });

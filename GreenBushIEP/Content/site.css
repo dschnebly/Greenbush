@@ -945,20 +945,20 @@ h4.panel-title {
     display: inline-block;
 }
 
-#mySettings, #add-system-user, #add-student-user, #reports, #referrals {
+#mySettings, #add-system-user, #add-student-user, #reports, #referrals, #add-referral-user {
     margin-left: 15px;
     background-color: #01D28E !important;
     border: 0;
 }
 
-    #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover {
+    #mySettings:hover, #add-system-user:hover, #add-student-user:hover, #reports:hover, #referrals:hover, #add-referral-user:hover {
         -webkit-animation: pulse 1s ease 0s;
         -o-animation: pulse 1s ease 0s;
         -moz-animation: pulse 1s ease 0s;
         animation: pulse 1s ease 0s;
     }
 
-    #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i {
+    #mySettings i, #add-system-user i, #add-student-user i, #reports i, #referrals i, #add-referral-user i {
         vertical-align: -webkit-baseline-middle;
         padding-left: 0;
     }

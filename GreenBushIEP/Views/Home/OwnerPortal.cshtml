@@ -148,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-md-2 activeIEPCol hidden">
+                <div class="col-xs-12 col-md-2 activeIEPCol @(ViewData["selectedUserRoles"] != null && ViewData["selectedUserRoles"].ToString() == "5" ? "" : "hidden")">
                     <div class="form-group">
                         <label for="filterActive">Educational Status</label>
                         <div class="input-group">
