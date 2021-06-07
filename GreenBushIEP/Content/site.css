@@ -229,7 +229,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 }
 
 .falsetrueswitch-label {
-    display: block;
+    display: block !important;
     overflow: hidden;
     cursor: pointer;
     border: 2px solid #999999;
