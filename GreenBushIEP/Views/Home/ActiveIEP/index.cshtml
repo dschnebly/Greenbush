@@ -220,7 +220,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="ui-state-default filter planning iep" id="ContingencyWidget">
+                @*<li class="ui-state-default filter planning iep" id="ContingencyWidget">
                     <div class="hero-widget well module-completed">
                         <div class="icon">
                             <i class="fas fa-head-side-mask"></i>
@@ -232,7 +232,7 @@
                             <button type="button" class="btn btn-default btn-lg contingency-section" data-view="ContingencyModule"><i class="glyphicon glyphicon-search"></i> View</button>
                         </div>
                     </div>
-                </li>
+                </li>*@
                 <li class="ui-state-default filter planning otherIep @(Model.hasAccommodations && !Model.studentIEP.isAccommodationsCompleted  ? "needsAttention" : string.Empty)" id="AccommodationWidget">
                     <div class="hero-widget well @(Model.studentIEP.isAccommodationsCompleted ? "module-completed" : string.Empty ) @(Model.hasAccommodations ? "needsAttention" : string.Empty)">
                         <i class="glyphicon glyphicon-flag pull-right needsAttentionIcon @(Model.hasAccommodations && !Model.studentIEP.isAccommodationsCompleted ? string.Empty : "hidden")" aria-hidden="true"></i>

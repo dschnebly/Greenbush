@@ -51,7 +51,7 @@
             <div class="panel-heading">
                 <h3 class="panel-title">Users </h3>
                 <select name="userRoles" id="userRoles"><option value="-1" @(ViewData["selectedUserRoles"] == null || Convert.ToInt32(ViewData["selectedUserRoles"]) == -1 ? "selected=selected" : string.Empty)>All Roles</option><option value="3" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 3 ? "selected=selected" : string.Empty)>Level 3</option><option value="4" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 4 ? "selected=selected" : string.Empty)>Level 2</option><option value="6" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 6 ? "selected=selected" : string.Empty)>Level 1</option><option value="5" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 5 ? "selected=selected" : string.Empty)>Student</option><option value="999" @(ViewData["selectedUserRoles"] != null && Convert.ToInt32(ViewData["selectedUserRoles"]) == 999 ? "selected=selected" : string.Empty)>Unassigned</option></select>
-                <button class="btn btn-default btn btn-sm btn-filter pull-right"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
+                <button class="btn btn-default btn btn-sm btn-filter pull-right" type="button"><span class="glyphicon glyphicon-option-vertical"></span> Filter</button>
             </div>
             <div class="row showFilters">
                 <div class="col-xs-12 col-md-3 pull-left">
