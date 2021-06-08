@@ -228,8 +228,15 @@
                                         <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                         break;
                                     default:
+                                        string htmlContent = "Start Date: ";
+                                        htmlContent += user.hasIEP ? Convert.ToDateTime(user.IEPDate).ToString("MM/dd/yyyy") : "No Active IEP";
+                                        htmlContent += "<br/>";
+                                        htmlContent += "Evaluation Date: ";
+                                        htmlContent += user.ReEvaluationDate != null ? user.ReEvaluationDate.Value.ToString("MM/dd/yyyy") : user.InitalEvaluationDate != null ? user.InitalEvaluationDate.Value.ToString("MM/dd/yyyy") : "No Date";
+
                                         <i class="fa fa-child" aria-hidden="true"></i>
-                                        <text>@user.FirstName  @user.MiddleName @user.LastName</text>
+                                        <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+                                        <i class="fas fa-angle-double-right tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
 
                                         if (user.hasIEP)
                                         {

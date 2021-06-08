@@ -56,6 +56,11 @@
             $(".showFilters").toggleClass("hidden");
         });
 
+        $(".tip-auto").tooltip({
+            placement: 'auto',
+            html: true
+        });
+
         // attach event
         // fires when an delete button is pressed next to listed user.
         $('#deleteUser').on('show.bs.modal', function (e) {

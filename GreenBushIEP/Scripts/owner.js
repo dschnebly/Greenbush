@@ -506,6 +506,11 @@
             }
         });
 
+        $(".tip-auto").tooltip({
+            placement: 'auto',
+            html: true
+        });
+
         // attach event
         // fires when an start button in pressed on a student IEP
         $('#initIEP').on('show.bs.modal', function (e) {

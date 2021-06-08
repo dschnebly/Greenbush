@@ -21,9 +21,9 @@
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of users</small>
     </h3>
-     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
+    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
     {
-        <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>    
+        <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>
     }
     <hr>
     <div class="row">
@@ -60,10 +60,10 @@
                             {
                                 if (user.RoleID == "5")
                                 {
-                                   if (Model.activeEducationalStatuses.Contains(user.StatusCode))
-                                   {
-                                    <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
-                                   }
+                                    if (Model.activeEducationalStatuses.Contains(user.StatusCode))
+                                    {
+                                        <option value="@(user.UserID)">@(user.LastName), @(user.FirstName) @(user.MiddleName) &dash; @(user.KidsID)</option>
+                                    }
                                 }
                                 else
                                 {
@@ -188,8 +188,15 @@
                                     <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
                                     break;
                                 default:
+                                    string htmlContent = "Start Date: ";
+                                    htmlContent += user.hasIEP ? Convert.ToDateTime(user.IEPDate).ToString("MM/dd/yyyy") : "No Active IEP";
+                                    htmlContent += "<br/>";
+                                    htmlContent += "Evaluation Date: ";
+                                    htmlContent += user.ReEvaluationDate != null ? user.ReEvaluationDate.Value.ToString("MM/dd/yyyy") : user.InitalEvaluationDate != null ? user.InitalEvaluationDate.Value.ToString("MM/dd/yyyy") : "No Date";
+
                                     <i class="fa fa-child" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                    <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+                                    <i class="fas fa-angle-double-right tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
 
                                     if (user.hasIEP)
                                     {
@@ -277,7 +284,7 @@
 </div>
 <!-- end modal -->
 
- @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
+@Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification } })
 
 
 

@@ -125,6 +125,8 @@ namespace GreenBushIEP.Models
         public string StatusCode;
         public int StatusActive;
         public DateTime? IEPDate;
+        public DateTime? ReEvaluationDate;
+        public DateTime? InitalEvaluationDate;
         public DateTime? BirthDate;
     }
 

@@ -55,6 +55,11 @@
             template: "<div class='popover' role='tooltip'><div class='arrow'></div><h3 class='popover-title'></h3><div class='popover-content'></div><center><a href='#' class='btn btn-class'>Add Note <i class='glyphicon glyphicon-plus'></i></a></center></div>"
         });
 
+        $(".tip-auto").tooltip({
+            placement: 'auto',
+            html: true
+        });
+
         // filter to only active students
         var filterCollection = $(".list-group-root").find(".list-group-item");
 

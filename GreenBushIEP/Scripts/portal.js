@@ -70,6 +70,11 @@
             $(".ajax-loader img").show();
         });
 
+        $(".tip-auto").tooltip({
+            placement: 'auto',
+            html: true
+        });
+
         // attach event
         // finds all launchIEP on the page and fires when the link is clicked.
         $('.launchIEP').each(function (index) {
