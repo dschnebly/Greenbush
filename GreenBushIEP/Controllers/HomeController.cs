@@ -507,7 +507,7 @@ namespace GreenbushIep.Controllers
                         model.members = model.members.Where(u => u.hasIEP == hasIEP).ToList();
                     }
 
-                    if (statusActive == 1 && selectedRoleID == "5") //educational status
+                    if (statusActive != -1 && selectedRoleID == "5") //educational status
                     {
                         model.members = model.members.Where(u => u.StatusActive == statusActive).ToList();
                     }
