@@ -196,8 +196,7 @@
 
                                     <i class="fa fa-child" aria-hidden="true"></i>
                                     <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-                                    <i class="fas fa-angle-double-right tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
-
+                                    <i class="fas fa-ellipsis-v tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
                                     if (user.hasIEP)
                                     {
                                         <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">

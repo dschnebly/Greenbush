@@ -115,7 +115,7 @@ hr {
 }
 
 .navbar {
-    border-bottom: 10px solid #23D28F;
+    border-bottom: 10px solid #929D75;
     background-color: #ffffff;
 }
 
@@ -959,7 +959,7 @@ h4.panel-title {
 
 #mySettings, #add-system-user, #add-student-user, #reports, #referrals, #add-referral-user {
     margin-left: 15px;
-    background-color: #01D28E !important;
+    background-color: #929D75 !important;
     border: 0;
 }
 
