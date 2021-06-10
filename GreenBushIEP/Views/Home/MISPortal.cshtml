@@ -165,8 +165,8 @@
                         <div class="input-group">
                             <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                             <select class="form-control" name="statusActive" id="statusActive">
-                                <option value="" @(ViewData["selectedStatusActive"] == null || Convert.ToInt32(ViewData["selectedStatusActive"]) == -1 ? "selected='selected'" : "" )>All</option>
-                                <option value="1" @(ViewData["selectedStatusActive"] != null && Convert.ToInt32(ViewData["selectedStatusActive"]) == 1 ? "selected='selected'" : "" )>Active</option>
+                                <option value="" @(ViewData["selectedStatusActive"] != null && Convert.ToInt32(ViewData["selectedStatusActive"]) == -1 ? "selected='selected'" : "" )>All</option>
+                                <option value="1" @(ViewData["selectedStatusActive"] == null || Convert.ToInt32(ViewData["selectedStatusActive"]) == 1 ? "selected='selected'" : "" )>Active</option>
                                 <option value="0" @(ViewData["selectedStatusActive"] != null && Convert.ToInt32(ViewData["selectedStatusActive"]) == 0 ? "selected='selected'" : "" )>Inactive</option>
                             </select>
                         </div>

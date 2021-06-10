@@ -124,9 +124,9 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="filterActive" id="filterActive">
-                            <option value="0">All</option>
-                            <option value="1" selected>Active IEP</option>
-                            <option value="2">Inactive IEP</option>
+                            <option value="0" @(ViewData["selectedFilterActive"] == null || Convert.ToInt32(ViewData["selectedFilterActive"]) == -1 ? "selected='selected'" : "" )>All</option>
+                            <option value="1" @(ViewData["selectedFilterActive"] != null && Convert.ToInt32(ViewData["selectedFilterActive"]) == 1 ? "selected='selected'" : "" )>Active IEP</option>
+                            <option value="2" @(ViewData["selectedFilterActive"] != null && Convert.ToInt32(ViewData["selectedFilterActive"]) == 0 ? "selected='selected'" : "" )>Inactive IEP</option>
                         </select>
                     </div>
                 </div>
@@ -137,9 +137,9 @@
                     <div class="input-group">
                         <span class="input-group-addon danger"><span class="fa fa-building-o"></span></span>
                         <select class="form-control" name="statusActive" id="statusActive">
-                            <option value="">All</option>
-                            <option value="1" selected>Active</option>
-                            <option value="0">Inactive</option>
+                            <option value="" @(ViewData["selectedStatusActive"] != null && Convert.ToInt32(ViewData["selectedStatusActive"]) == -1 ? "selected='selected'" : "" )>All</option>
+                            <option value="1" @(ViewData["selectedStatusActive"] == null || Convert.ToInt32(ViewData["selectedStatusActive"]) == 1 ? "selected='selected'" : "" )>Active</option>
+                            <option value="0" @(ViewData["selectedStatusActive"] != null && Convert.ToInt32(ViewData["selectedStatusActive"]) == 0 ? "selected='selected'" : "" )>Inactive</option>
                         </select>
                     </div>
                 </div>

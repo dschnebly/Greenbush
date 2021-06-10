@@ -489,7 +489,7 @@ namespace GreenbushIep.Controllers
 
                 if (selectedRoleID != "999")
                 {
-                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
+                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId > 0)
                     {
