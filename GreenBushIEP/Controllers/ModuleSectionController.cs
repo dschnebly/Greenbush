@@ -772,9 +772,16 @@ namespace GreenBushIEP.Controllers
                         }
                     }
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();
 
-                    return Json(new { success = true, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
+                        return Json(new { success = true, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
+                    }
+                    catch(Exception ex)
+                    {
+                        return Json(new { success = false, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
+                    }
                 }
                 else
                 {
@@ -807,7 +814,10 @@ namespace GreenBushIEP.Controllers
 
                     db.tblAccommodations.Add(newAccomodation);
 
-                    db.SaveChanges();
+                    try
+                    {
+                        db.SaveChanges();                        
+                    
 
                     //add modules
                     if (model.SelectedModules != null)
@@ -821,6 +831,11 @@ namespace GreenBushIEP.Controllers
                     }
 
                     return Json(new { success = true, id = newAccomodation.AccommodationID, iep = newAccomodation.IEPid, isNew = true });
+                    }
+                    catch (Exception ex)
+                    {
+                        return Json(new { success = false, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = true });
+                    }
                 }
             }
 

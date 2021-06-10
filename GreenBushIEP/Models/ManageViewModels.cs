@@ -93,6 +93,8 @@ namespace GreenBushIEP.Models
         public List<tblBuilding> buildings { get; set; }
         public List<StudentIEPViewModel> members { get; set; }
         public List<NotificationViewModel> draftIeps { get; set; }
+
+        public List<NotificationViewModel> evalsDue { get; set; }
         public List<NotificationViewModel> dueIeps { get; set; }
         public bool showDashboardNotification { get; set; }
 
@@ -105,6 +107,7 @@ namespace GreenBushIEP.Models
             buildings = new List<tblBuilding>();
             members = new List<StudentIEPViewModel>();
             draftIeps = new List<NotificationViewModel>();
+            evalsDue = new List<NotificationViewModel>();
             dueIeps = new List<NotificationViewModel>();
             showDashboardNotification = false;
             activeEducationalStatuses = new List<string>();
@@ -166,6 +169,7 @@ namespace GreenBushIEP.Models
         public string StudentLastName { get; set; }
         public string StudentFirstName { get; set; }
         public int Days { get; set; }
+        public string EvalType { get; set; }
     }
 
     public class UserOrganizationViewModel
@@ -266,6 +270,8 @@ namespace GreenBushIEP.Models
         public string Address2 { get; set; }
         public string Zip { get; set; }
         public string IEPDate { get; set; }
+
+        public string ReEvalDate { get; set; }
         public bool hasIEP { get; set; }
         public string FormattedName
         {
@@ -291,6 +297,7 @@ namespace GreenBushIEP.Models
         public List<tblBuilding> buildings { get; set; }
         public List<NotificationViewModel> draftIeps { get; set; }
         public List<NotificationViewModel> dueIeps { get; set; }
+        public List<NotificationViewModel> evalsDue { get; set; }
         public bool showDashboardNotification { get; set; }
         public List<string> activeEducationalStatuses { get; set; }
         public StudentViewModel()
@@ -299,6 +306,7 @@ namespace GreenBushIEP.Models
             buildings = new List<tblBuilding>();
             draftIeps = new List<NotificationViewModel>();
             dueIeps = new List<NotificationViewModel>();
+            evalsDue = new List<NotificationViewModel>();
             showDashboardNotification = false;
         }
     }

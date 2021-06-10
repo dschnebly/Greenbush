@@ -2699,44 +2699,62 @@ namespace GreenBushIEP.Controllers
                     // blow away any previous contacts because this is a bug and prevents duplicate parents.
                     db.tblStudentRelationships.RemoveRange(db.tblStudentRelationships.Where(r => r.UserID == studentId));
                     db.SaveChanges();
+                                     
 
+                    List<string> uniqueKeys = new List<string>();
                     int j = 0;
-                    int loopCounter = 1;
-                    while (++j < collection.Count - 1)
+                    string num = "-1";
+                    while (++j < collection.AllKeys.Length)
                     {
-                        tblStudentRelationship contact = new tblStudentRelationship()
+
+                        string nameColl = collection.AllKeys[j];
+                        int start = nameColl.IndexOf('[');
+                        int end = nameColl.IndexOf(']');
+                        string val = nameColl.Substring(start + 1, (end - 1) - start);
+
+                        if (num != val)
+                        {
+                            uniqueKeys.Add(val);
+                        }
+
+                        num = val;
+
+                        j++;
+                    }
+
+
+                    foreach (string keyVal in uniqueKeys)
+                    {
+                        string labelName = string.Format("contacts[{0}].", keyVal);
+                        tblStudentRelationship contact = new tblStudentRelationship
                         {
                             RealtionshipID = 0,
                             UserID = studentId,
-                            FirstName = collection[j].ToString(),
-                            LastName = collection[++j].ToString(),
-                            Realtionship = collection[++j].ToString(),
-                            Address1 = collection[++j].ToString(),
-                            Address2 = collection[++j].ToString(),
-                            City = collection[++j].ToString(),
-                            State = collection[++j].ToString(),
-                            Zip = collection[++j].ToString(),
-                            Phone = collection[++j].ToString(),
-                            Email = collection[++j].ToString(),
-                            Create_Date = DateTime.Now,
+                            FirstName = collection[string.Format("{0}ContactFirstName", labelName)] != null ? collection[string.Format("{0}ContactFirstName", labelName)].ToString() : "",
+                            LastName = collection[string.Format("{0}ContactLastName", labelName)] != null ? collection[string.Format("{0}ContactLastName", labelName)].ToString() : "",
+                            Realtionship = collection[string.Format("{0}ContactRelationship", labelName)] != null ? collection[string.Format("{0}ContactRelationship", labelName)].ToString() : "",
+                            Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)] != null ? collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString() : "",
+                            Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)] != null ? collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString() : "",
+                            City = collection[string.Format("{0}ContactCity", labelName)] != null ? collection[string.Format("{0}ContactCity", labelName)].ToString() : "",
+                            State = collection[string.Format("{0}ContactState", labelName)] != null ? collection[string.Format("{0}ContactState", labelName)].ToString() : "",
+                            Zip = collection[string.Format("{0}ContactZipCode", labelName)] != null ? collection[string.Format("{0}ContactZipCode", labelName)].ToString() : "",
+                            Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)] != null ? collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString() : "",
+                            Email = collection[string.Format("{0}ContactEmail", labelName)] != null ? collection[string.Format("{0}ContactEmail", labelName)].ToString() : "",
                             CreatedBy = submitter.UserID,
-                            ModifiedBy = submitter.UserID,
+                            Create_Date = DateTime.Now,
                             Update_Date = DateTime.Now,
+                            ModifiedBy = submitter.UserID,
                         };
 
-                        /////////////////////////////
-                        // This whole if block is due to the fact that checkbox false values are NOT passed to our collection
-                        // and the checkbox is the last value in the collection fields.
-                        /////////////////////////////
-                        if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
+                        if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
                         {
-                            if (collection.GetKey(j) == string.Format("contacts[{0}].PrimaryContact", loopCounter))
-                            {
-                                contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
-                            }
-                            else { j--; }
+                            contact.PrimaryContact = 1;
                         }
 
+                        if (collection[string.Format("{0}CanEmail", labelName)] != null)
+                        {
+                            contact.canEmail = true;
+                        }
                         try
                         {
                             db.tblStudentRelationships.Add(contact);
@@ -2745,9 +2763,7 @@ namespace GreenBushIEP.Controllers
                         catch (Exception e)
                         {
                             return Json(new { Result = "error", Message = "There was an error while trying to add the student's contacts. \n\n" + e.InnerException.ToString() });
-                        }
-
-                        loopCounter++;
+                        }                       
                     }
 
                     //get teachers list
@@ -2920,7 +2936,8 @@ namespace GreenBushIEP.Controllers
                         Realtionship = relationship.Realtionship,
                         UserID = relationship.UserID,
                         RealtionshipID = relationship.RealtionshipID,
-                        PrimaryContact = relationship.PrimaryContact
+                        PrimaryContact = relationship.PrimaryContact,
+                        canEmail = relationship.canEmail
                     });
                 }
             }
@@ -3252,13 +3269,13 @@ namespace GreenBushIEP.Controllers
                             db.tblArchiveIEPExits.Add(archive);
                             db.SaveChanges();
 
-                            SendExitEmail(info.AssignedUSD
-                                , string.Format("{0}, {1}", student.LastName, student.FirstName)
-                                , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
-                                , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
-                                , info.ExitNotes
-                                );
-
+                                SendExitEmail(info.AssignedUSD
+                                    , string.Format("{0}, {1}", student.LastName, student.FirstName)
+                                    , info.ExitDate.HasValue ? info.ExitDate.Value.ToShortDateString() : ""
+                                    , string.Format("({0}) {1}", info.StatusCode, statusCodeObj.Description)
+                                    , info.ExitNotes
+                                    );
+                            
                         }
                     }
                 }
@@ -3297,46 +3314,62 @@ namespace GreenBushIEP.Controllers
                         db.tblStudentRelationships.RemoveRange(relationships);
                         db.SaveChanges();
                     }
-
-                    int j = 0;
-                    while (++j < collection.Count - 1)
+                   
+                    List<string> uniqueKeys = new List<string>();
+                    int i = 0;
+                    string num = "-1";
+                    while (++i < collection.AllKeys.Length)
                     {
-                        int startIndex = collection.GetKey(j).ToString().IndexOf("[") + 1;
-                        int endIndex = collection.GetKey(j).ToString().IndexOf("]");
-                        string relId = collection.GetKey(j).ToString().Substring(startIndex, endIndex - startIndex);
 
-                        tblStudentRelationship contact = new tblStudentRelationship()
+                        string nameColl = collection.AllKeys[i];
+                        int start = nameColl.IndexOf('[');
+                        int end = nameColl.IndexOf(']');
+                        string val = nameColl.Substring(start + 1, (end - 1) - start);
+
+                        if (num != val)
+                        {
+                            uniqueKeys.Add(val);
+                        }
+
+                        num = val;
+
+                        i++;
+                    }
+
+
+                    foreach (string keyVal in uniqueKeys)
+                    {
+                        string labelName = string.Format("contact[{0}].", keyVal);
+                        tblStudentRelationship contact = new tblStudentRelationship
                         {
                             RealtionshipID = 0,
                             UserID = studentId,
-                            FirstName = collection[j].ToString(),
-                            LastName = collection[++j].ToString(),
-                            Realtionship = collection[++j].ToString(),
-                            Address1 = collection[++j].ToString(),
-                            Address2 = collection[++j].ToString(),
-                            City = collection[++j].ToString(),
-                            State = collection[++j].ToString(),
-                            Zip = collection[++j].ToString(),
-                            Phone = collection[++j].ToString(),
-                            Email = collection[++j].ToString(),
+                            FirstName = collection[string.Format("{0}ContactFirstName", labelName)] != null ? collection[string.Format("{0}ContactFirstName", labelName)].ToString() : "",
+                            LastName = collection[string.Format("{0}ContactLastName", labelName)] != null ? collection[string.Format("{0}ContactLastName", labelName)].ToString() : "",
+                            Realtionship = collection[string.Format("{0}ContactRelationship", labelName)] != null ? collection[string.Format("{0}ContactRelationship", labelName)].ToString() : "",
+                            Address1 = collection[string.Format("{0}ContactStreetAddress1", labelName)] != null ? collection[string.Format("{0}ContactStreetAddress1", labelName)].ToString() : "",
+                            Address2 = collection[string.Format("{0}ContactStreetAddress2", labelName)] != null ? collection[string.Format("{0}ContactStreetAddress2", labelName)].ToString() : "",
+                            City = collection[string.Format("{0}ContactCity", labelName)] != null ? collection[string.Format("{0}ContactCity", labelName)].ToString() : "",
+                            State = collection[string.Format("{0}ContactState", labelName)] != null ? collection[string.Format("{0}ContactState", labelName)].ToString() : "",
+                            Zip = collection[string.Format("{0}ContactZipCode", labelName)] != null ? collection[string.Format("{0}ContactZipCode", labelName)].ToString() : "",
+                            Phone = collection[string.Format("{0}ContactPhoneNumber", labelName)] != null ? collection[string.Format("{0}ContactPhoneNumber", labelName)].ToString() : "",
+                            Email = collection[string.Format("{0}ContactEmail", labelName)] != null ? collection[string.Format("{0}ContactEmail", labelName)].ToString() : "",
                             CreatedBy = submitter.UserID,
                             Create_Date = DateTime.Now,
                             Update_Date = DateTime.Now,
                             ModifiedBy = submitter.UserID,
                         };
 
-                        /////////////////////////////
-                        // This whole if block is due to the fact that checkbox false values are NOT passed to our collection
-                        // and the checkbox is the last value in the collection fields.
-                        /////////////////////////////
-                        if (++j <= collection.Count - 1) // test if this is the end of the collection i.e. out of range issues.
+                        if (collection[string.Format("{0}PrimaryContact", labelName)] != null)
                         {
-                            if (collection.GetKey(j) == string.Format("contact[{0}].PrimaryContact", relId))
-                            {
-                                contact.PrimaryContact = collection[j] == "on" ? 1 : 0;
-                            }
-                            else { j--; }
+                            contact.PrimaryContact = 1;
                         }
+
+                        if (collection[string.Format("{0}CanEmail", labelName)] != null)
+                        {
+                            contact.canEmail = true;
+                        }
+
 
                         try
                         {
@@ -4303,13 +4336,36 @@ namespace GreenBushIEP.Controllers
 
         [HttpGet]
         [Authorize]
+        public ActionResult CreateIEPAnnualPrecheck(int Stid, int Iepid)
+        {
+            string message = "";
+            try
+            {                
+
+                bool existingDraft = db.tblIEPs.Any(i => i.UserID == Stid && i.Amendment == true && i.IepStatus.ToUpper() == IEPStatus.DRAFT);
+
+                if(existingDraft)
+                {
+                    message = "There is currently an open Amendment. The new Annual will be a copy of the most current Active IEP. Are you sure you want to make an Annual IEP?";
+                }             
+
+                return Json(new { Result = "success", Message = message }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                return Json(new { Result = "error", Message = message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
         public ActionResult CreateIEPAnnual(int Stid, int Iepid)
         {
             try
             {
                 tblUser user = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                db.uspCopyIEP(Iepid, user.UserID, false);
+                db.uspCopyIEP(Iepid, user.UserID, false).ToList().First();
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
 
@@ -4319,6 +4375,8 @@ namespace GreenBushIEP.Controllers
                 if (studentDetails != null)
                 {
                     annual.StatusCode = studentDetails.StatusCode;
+                    annual.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                    annual.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     db.SaveChanges();
 
                 }
@@ -4348,6 +4406,8 @@ namespace GreenBushIEP.Controllers
                 if (studentDetails != null)
                 {
                     amendment.StatusCode = studentDetails.StatusCode;
+                    amendment.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                    amendment.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     db.SaveChanges();
                 }
 
@@ -5053,18 +5113,6 @@ namespace GreenBushIEP.Controllers
             {
                 tblUser user = db.tblUsers.FirstOrDefault(u => u.Email == User.Identity.Name);
 
-                //if (user.RoleID == GreenBushIEP.Report.ReportMaster.teacher)
-                //{
-                //	selectedProvider = "0";
-
-                //	if (user.TeacherID != null)
-                //	{
-                //		var teacherProvider = GetProviderByProviderCode(user.TeacherID);
-                //		selectedProvider = teacherProvider.ProviderID.ToString();
-
-                //	}					
-                //}
-
                 if (!string.IsNullOrEmpty(selectedDistrict))
                 {
 
@@ -5082,19 +5130,28 @@ namespace GreenBushIEP.Controllers
                     if (string.IsNullOrEmpty(selectedProvider))
                     {
                         //get based on user id and district and building
+                        var sList = new List<TeacherView>();
                         var students = db.uspUserListByProvider(user.UserID, selectedDistrict, selectedBuilding, null)
                         .Select(u => new TeacherView() { UserID = u.UserID, Name = u.LastName + ", " + u.FirstName })
                         .OrderBy(o => o.Name).ToList();
+                                                
 
-                        //students.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+                        foreach (var student in students)
+                        {
+                            if (!sList.Any(o => o.UserID == student.UserID))
+                            {
+                                sList.Add(student);
+                            }
+                        }
 
-                        return Json(new { Result = "success", StudentList = students }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "success", StudentList = sList.OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {
                         //get based on selected teachers
                         selectedProvider = selectedProvider.TrimEnd(',');
                         var studentList = new List<TeacherView>();
+                        var sList = new List<TeacherView>();
 
                         List<string> myProviders = string.IsNullOrEmpty(selectedProvider) ? new List<string>() : selectedProvider.Split(',').ToList();
 
@@ -5110,9 +5167,15 @@ namespace GreenBushIEP.Controllers
                             studentList.AddRange(students);
                         }
 
-                        //studentList.Insert(0, new TeacherView() { Name = "All", UserID = -1 });
+                        foreach (var student in studentList)
+                        {
+                            if (!sList.Any(o => o.UserID == student.UserID))
+                            {
+                                sList.Add(student);
+                            }
+                        }
 
-                        return Json(new { Result = "success", StudentList = studentList.Distinct().OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
+                        return Json(new { Result = "success", StudentList = sList.OrderBy(o => o.Name).ToList() }, JsonRequestBehavior.AllowGet);
 
                     }
 

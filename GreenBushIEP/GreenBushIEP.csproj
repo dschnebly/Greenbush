@@ -120,11 +120,11 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.Design, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.Design.DLL</HintPath>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.ReportViewer.11.0.3366.16\lib\Microsoft.ReportViewer.WebDesign.DLL</HintPath>
+    <Reference Include="Microsoft.ReportViewer.WebDesign, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.WebForms.150.900.148\lib\net40\Microsoft.ReportViewer.WebDesign.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -681,6 +681,13 @@
       <DependentUpon>Report.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="Reports\CaseloadByProvider\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports\CaseloadByProvider\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Reports\DraftIEP\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -688,12 +695,30 @@
     <Compile Include="Reports\DraftIEP\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\EligibilityAnalysis\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\EligibilityAnalysis\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\ESY\Report.aspx.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Reports\ESY\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\HealthPlan\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\HealthPlan\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
@@ -957,12 +982,19 @@
     <Content Include="Reports\BehaviorPlan\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Reports\CaseloadByProvider\Report.aspx" />
     <Content Include="Reports\DraftIEP\Report.aspx" />
+    <Content Include="Reports\EligibilityAnalysis\Report.aspx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\ESY\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\ExcessCostReport\Report.aspx" />
     <Content Include="Reports\ExceptionalityReport\Report.aspx" />
+    <Content Include="Reports\HealthPlan\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\IEPDue\Report.aspx" />
     <Content Include="Reports\KIDSID\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1255,10 +1287,10 @@
     <Content Include="Views\Home\ActiveIEP\_StudentServices.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_Accommodations.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_StudentTransition.cshtml" />
-    <Content Include="Views\Home\_PrintPartial.cshtml" />
+    <Content Include="Views\Home\Print\_PrintPartial.cshtml" />
     <Content Include="Views\Home\NursePortal.cshtml" />
     <Content Include="Views\Home\_GoalsProgress.cshtml" />
-    <Content Include="Views\Home\_PrintStudentInfo.cshtml" />
+    <Content Include="Views\Home\Print\_PrintStudentInfo.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Home\EditMe.cshtml" />
     <Content Include="Views\Home\ActiveIEP\_StudentGoals.cshtml" />
@@ -1295,6 +1327,19 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\ILP\Index.cshtml" />
+    <Content Include="Views\Account\ChooseYourBackpack.cshtml" />
+    <Content Include="Views\ILP\CreateUser.cshtml" />
+    <Content Include="Views\ILP\EditILPUser.cshtml" />
+    <Content Include="Views\ILP\CreateLearner.cshtml" />
+    <Content Include="Views\ILP\LearnerProcedures.cshtml" />
+    <Content Include="Views\ILP\_EducationHistoryModule.cshtml" />
+    <Content Include="Views\ILP\_AssessmentModule.cshtml" />
+    <Content Include="Views\ILP\_EducationPlanModule.cshtml" />
+    <Content Include="Views\ILP\_ProgressCreditModule.cshtml" />
+    <Content Include="Views\ILP\_DocumentStorageModule.cshtml" />
+    <Content Include="Views\Form\ElectronicCommunication.cshtml" />
+    <Content Include="Views\Home\Print\_PrintGoalPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1330,13 +1375,20 @@
     <EmbeddedResource Include="Reports\BehaviorPlan\rptBehaviorPlan.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reports\CaseloadByProvider\rptCaseloadByProvider.rdlc" />
     <EmbeddedResource Include="Reports\DraftIEP\rptDraftIEP.rdlc" />
+    <EmbeddedResource Include="Reports\EligibilityAnalysis\rptEligibiltyAnalysis.rdlc">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\ESY\rptESY.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\ExcessCostReport\rptExcessCostReport.rdlc" />
     <EmbeddedResource Include="Reports\ExceptionalityReport\rptExceptionalityReport.rdlc">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reports\HealthPlan\rptHealthPlan.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
     <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">

@@ -1572,6 +1572,8 @@
           <Property Name="StatusCode" Type="char" MaxLength="1" />
           <Property Name="Grade" Type="int" />
           <Property Name="PrimaryProviderID" Type="int" />
+          <Property Name="Primary_DisabilityCode" Type="char" MaxLength="2" />
+          <Property Name="Secondary_DisabilityCode" Type="char" MaxLength="2" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -2016,6 +2018,7 @@
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="canEmail" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTransitionAssessments">
           <Key>
@@ -2155,7 +2158,7 @@
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_BuildingList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_BuildingList">
           <Key>
             <PropertyRef Name="USD" />
@@ -2170,7 +2173,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingList
           <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsForAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_BuildingsForAttendance' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_BuildingsForAttendance">
           <Key>
             <PropertyRef Name="userID" />
@@ -2182,7 +2185,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_BuildingsFor
           <Property Name="BuildingName" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_GoalExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_GoalExport">
           <Key>
             <PropertyRef Name="ServiceCode" />
@@ -2212,7 +2215,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_GoalExport' 
           <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ILP_Locations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_ILP_Locations' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ILP_Locations">
           <Key>
             <PropertyRef Name="LocationID" />
@@ -2222,7 +2225,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ILP_Location
           <Property Name="LocationName" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleAccommodationFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_ModuleAccommodationFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ModuleAccommodationFlags">
           <Key>
             <PropertyRef Name="IEPid" />
@@ -2235,7 +2238,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleAccomm
           <Property Name="ModuleID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_ModuleGoalFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ModuleGoalFlags">
           <Key>
             <PropertyRef Name="IEPid" />
@@ -2248,7 +2251,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleGoalFl
           <Property Name="ModuleID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleOtherFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_ModuleOtherFlags' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ModuleOtherFlags">
           <Key>
             <PropertyRef Name="IEPid" />
@@ -2262,7 +2265,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ModuleOtherF
           <Property Name="ModuleID" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_PrimaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_PrimaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_PrimaryDisabilities">
           <Key>
             <PropertyRef Name="DisabilityCode" />
@@ -2271,7 +2274,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_PrimaryDisab
           <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_SecondaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_SecondaryDisabilities' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_SecondaryDisabilities">
           <Key>
             <PropertyRef Name="DisabilityCode" />
@@ -2280,7 +2283,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_SecondaryDis
           <Property Name="DisabilityDescription" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_ServiceExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_ServiceExport">
           <Key>
             <PropertyRef Name="ServiceCode" />
@@ -2322,7 +2325,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_ServiceExpor
           <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_StudentExport' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_StudentExport">
           <Key>
             <PropertyRef Name="StudentNumber" />
@@ -2365,7 +2368,7 @@ warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_StudentExpor
           <Property Name="isValidKIDSID" Type="bit" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram.dbo.vw_UserList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.vw_UserList' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="vw_UserList">
           <Key>
             <PropertyRef Name="UserID" />
@@ -2667,6 +2670,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
@@ -2694,6 +2698,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="StudentIds" Type="varchar(max)" Mode="In" />
+          <Parameter Name="NumDays" Type="int" Mode="In" />
         </Function>
         <Function Name="up_ReportKIDSID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -2708,6 +2713,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentIds" Type="varchar(max)" Mode="In" />
+          <Parameter Name="NumDays" Type="int" Mode="In" />
         </Function>
         <Function Name="up_ReportProceduralDatesTracking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -3157,6 +3164,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="FiscalYear" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="up_ReportBuildings" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportBuildings_Result)">
           <Parameter Name="BuildingID" Mode="In" Type="Int32" />
@@ -3184,6 +3192,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
             <Parameter Name="StudentIds" Mode="In" Type="String" />
+            <Parameter Name="NumDays" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportKIDSID" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportKIDSID_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -3198,6 +3207,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="DistrictId" Mode="In" Type="String" />
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="StudentIds" Mode="In" Type="String" />
+            <Parameter Name="NumDays" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="up_ReportProceduralDatesTracking" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportProceduralDatesTracking_Result)">
             <Parameter Name="DistrictId" Mode="In" Type="String" />
@@ -5484,6 +5495,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="StatusCode" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="Grade" Type="Int32" />
           <Property Name="PrimaryProviderID" Type="Int32" />
+          <Property Name="Primary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Secondary_DisabilityCode" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
         </EntityType>
         <EntityType Name="tblIEPSocial">
           <Key>
@@ -5936,6 +5949,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Create_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="canEmail" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="tblTransitionAssessment">
           <Key>
@@ -8661,6 +8675,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblIEPs">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblIEP">
               <MappingFragment StoreEntitySet="tblIEPs">
+                <ScalarProperty Name="Secondary_DisabilityCode" ColumnName="Secondary_DisabilityCode" />
+                <ScalarProperty Name="Primary_DisabilityCode" ColumnName="Primary_DisabilityCode" />
                 <ScalarProperty Name="PrimaryProviderID" ColumnName="PrimaryProviderID" />
                 <ScalarProperty Name="Grade" ColumnName="Grade" />
                 <ScalarProperty Name="StatusCode" ColumnName="StatusCode" />
@@ -9130,6 +9146,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblStudentRelationships">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblStudentRelationship">
               <MappingFragment StoreEntitySet="tblStudentRelationships">
+                <ScalarProperty Name="canEmail" ColumnName="canEmail" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />

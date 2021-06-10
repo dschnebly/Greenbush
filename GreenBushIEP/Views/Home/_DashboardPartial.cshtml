@@ -2,6 +2,7 @@
 @{
     List<GreenBushIEP.Models.NotificationViewModel> draftIeps = null;
     List<GreenBushIEP.Models.NotificationViewModel> dueIeps = null;
+    List<GreenBushIEP.Models.NotificationViewModel> evalsDue = null;
     bool showDashboardNotification = false;
 
     if (ViewData["showDashboardNotification"] != null)
@@ -16,6 +17,11 @@
     if (ViewData["dueIEPS"] != null)
     {
         dueIeps = ViewData["dueIEPS"] as List<GreenBushIEP.Models.NotificationViewModel>;
+    }
+
+      if (ViewData["evalsDue"] != null)
+    {
+        evalsDue = ViewData["evalsDue"] as List<GreenBushIEP.Models.NotificationViewModel>;
     }
 }
 <!-- Modal -->
@@ -77,6 +83,34 @@
                                     <div class="list-group-item">
                                         <span title="@(draftIep.Days) day(s) in Draft">@draftIep.StudentLastName, @draftIep.StudentFirstName </span>  
                                         <a href="#" data-id="@(draftIep.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
+                                                <span class="glyphicon glyphicon-log-out"></span>
+                                         </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (evalsDue != null && evalsDue.Count > 0)
+                {
+                    <input id="evalsDueCount" type="hidden" value="@(evalsDue.Count)"/>                   
+                    <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion[0]" href="#collapse0" id="iepsEvalListBtn">
+                                                <span class="studentGoalLabel" style="margin-left:5px;">3-Year Evaluation Due (@(evalsDue.Count))</span>                                                
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    
+                        <div id="iepsEvalList" class="panel panel-collapse collapse">                    
+                            <div class="list-group list-group-root well">
+                                @foreach (var eval in evalsDue)
+                                {
+                                    <div class="list-group-item">
+                                        <span title="Within 60 day(s)">@eval.StudentLastName, @eval.StudentFirstName </span>  
+                                        <a href="#" data-id="@(eval.StudentId)" title="Launch the IEP for this student" role="button"  class="btn btn-info btn-action pull-right dashboardIEP ">
                                                 <span class="glyphicon glyphicon-log-out"></span>
                                          </a>
                                     </div>

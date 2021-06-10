@@ -2,6 +2,17 @@
 	function init() {
         $(".chosen-select").chosen({ width: "100%" });
 
+        $(".studentIEPDetails").each(function (index, element) {
+            var contentElementId = $(element).data().target;
+            var contentHtml = $(contentElementId).html();            
+            $(element).popover({
+                content: contentHtml,
+                html: true,                
+                trigger: 'hover'
+
+            });
+        });
+
         if ($("#dashboardNotification").length > 0 && ($("#showBannerNotification").val() == "1")) {  
             var message = "";
 
@@ -16,6 +27,13 @@
                 message += "(" + $("#draftIepsCount").val() + ") Draft IEPs"
             }
 
+            if ($("#evalsDueCount").length > 0) {
+                if (message != "") {
+                    message += " and ";
+                }
+                message += "(" + $("#evalsDueCount").val() + ") 3 Year Evals Coming Due"
+            }
+
             if (message != "") {
                 message = "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button><a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
                 _showAlert(message, false);
@@ -25,6 +43,10 @@
         $("#notificationBtn").on("click", function () {
             _showNotifications();
             return false;
+        });
+
+        $("#iepsEvalListBtn").on("click", function () {
+            $("#iepsEvalList").fadeToggle("fast", "linear");
         });
 
         $("#iepsDueListBtn").on("click", function () {

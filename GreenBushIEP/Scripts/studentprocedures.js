@@ -1,12 +1,12 @@
 ﻿// jquery onload equivalent
 $(function () {
 
-    function init() {
+    $('.ajax-loader').css("visibility", "hidden");
 
-        // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
-        if ($("#modal-studentPlanning").hasClass('needsPlan')) {
-            $("#modal-studentPlanning").modal('show');
-        }
+    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+        $("#modal-studentPlanning").modal('show');
+    }
 
         /* tooltips */
         $('[data-toggle="tooltip"]').tooltip({
@@ -401,41 +401,41 @@ $(function () {
                 return false;
             } // the link is disabled
 
-            var answer = confirm("Are you sure you want to make an Annual IEP?");
-            if (answer) {
-                $('.ajax-loader').css("visibility", "visible");
-                $(".ajax-loader img").css("visibility", "visible");
+            var stId = $("#stid").val();
+            var iepId = $("#studentIEPId").val();
 
-                var stId = $("#stid").val();
-                var iepId = $("#studentIEPId").val();
+            $.ajax({
+                type: 'GET',
+                url: '/Manage/CreateIEPAnnualPrecheck',
+                data: {
+                    Stid: stId,
+                    IepId: iepId
+                },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        var confirmMessage = "Are you sure you want to make an Annual IEP?";
 
-                $.ajax({
-                    type: 'GET',
-                    url: '/Manage/CreateIEPAnnual',
-                    data: {
-                        Stid: stId,
-                        IepId: iepId
-                    },
-                    dataType: 'json',
-                    success: function (data) {
-                        if (data.Result === 'success') {
-                            window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
-                        } else {
-                            alert(data.Message);
-                            location.reload(true);
+                        if (data.Message != "") {
+                            confirmMessage = data.Message;
                         }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                        alert(xhr.status);
-                        alert(thrownError);
-                    },
-                    complete: function () {
-                        $('.ajax-loader').css("visibility", "hidden");
-                        $(".ajax-loader img").css("visibility", "hidden");
+                        
+                        _createAnnual(stId, iepId, confirmMessage);
+                        
+                    } else {
+                        alert(data.Message);                        
                     }
-                });
-            }
-        });
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                },
+                complete: function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $(".ajax-loader img").css("visibility", "hidden");
+                }
+            });        
+    });
 
         // Attach Event
         // if the user is the OWNER or MIS and they choose to make the iep Inactive
@@ -863,6 +863,43 @@ function printModule(divOverride) {
     }
 
     window.location.href = '/Home/PrintIEPSection/?stid=' + stid + '&iepId=' + iepId + "&section=" + divOverride + "&goalsToPrint=" + getGoalsToPrint;
+}
+
+function _createAnnual(stId, iepId, message) {
+
+    var answer = confirm(message);
+    if (answer) {
+        $('.ajax-loader').css("visibility", "visible");
+        $(".ajax-loader img").css("visibility", "visible");
+
+        $.ajax({
+            type: 'GET',
+            url: '/Manage/CreateIEPAnnual',
+            data: {
+                Stid: stId,
+                IepId: iepId
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result === 'success') {
+                    window.location.href = '/Home/StudentProcedures/?stid=' + stId + '&iepID=' + data.Message;
+                } else {
+                    alert(data.Message);
+                    location.reload(true);
+                }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+                alert(xhr.status);
+                alert(thrownError);
+            },
+            complete: function () {
+                $('.ajax-loader').css("visibility", "hidden");
+                $(".ajax-loader img").css("visibility", "hidden");
+            }
+        });
+    }
+
+    return false;
 }
 
 function createDateString(newDate) {
@@ -1632,3 +1669,4 @@ $("#truefalseSwitchIntelligenceNoConcern").click(function (event) {
         $('.isIntelligenceConcern').removeClass("noConcerns").fadeIn();
     }
 });
+

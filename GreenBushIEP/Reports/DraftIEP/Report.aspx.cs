@@ -3,6 +3,7 @@ using Microsoft.Reporting.WebForms;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -58,48 +59,43 @@ namespace GreenBushIEP.Reports.DraftIEP
 			
 			DataTable dt = GetData(districtFilter, teacherIds, buildingFilter);
 			ReportDataSource rds = new ReportDataSource("DataSet1", dt);
-			ReportDataSource rds2 = null;
-			if (this.buildingDD.Value != "-1")
-			{
-				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData(buildingFilter);
-				rds2 = new ReportDataSource("DataSet2", dt2);
-			}
-			else
-			{
-				DataTable dt2 = GreenBushIEP.Report.ReportMaster.GetBuildingData("-1");
-				rds2 = new ReportDataSource("DataSet2", dt2);
-			}
+			
 			ReportParameter p1 = new ReportParameter("TeacherNames", teacherNames.Trim().Trim(','));
 			ReportParameter p2 = new ReportParameter("PrintedBy", GreenBushIEP.Report.ReportMaster.CurrentUser(User.Identity.Name));
 			ReportParameter p3 = new ReportParameter("Building", buildingName);
 			MReportViewer.LocalReport.ReportPath = Server.MapPath("~/Reports/DraftIEP/rptDraftIEP.rdlc");
 			MReportViewer.LocalReport.DataSources.Add(rds);
-			MReportViewer.LocalReport.DataSources.Add(rds2);
+			
 			MReportViewer.LocalReport.SetParameters(new ReportParameter[] { p1, p2, p3 });
 			MReportViewer.LocalReport.Refresh();
 		}
 
 		private DataTable GetData(string districtFilter, string teacherIds, string buildingID)
 		{
-			DataTable dt = new DataTable();
-			dt.Columns.Add("begin_date", typeof(string));
-			dt.Columns.Add("end_Date", typeof(string));
-			dt.Columns.Add("StudentFirstName", typeof(string));
-			dt.Columns.Add("StudentLastName", typeof(string));
-			dt.Columns.Add("ProviderName", typeof(string));
-			dt.Columns.Add("DraftDays", typeof(string));
-			
 
-			using (var ctx = new IndividualizedEducationProgramEntities())
+			DataSet ds = new DataSet();
+
+			using (var context = new IndividualizedEducationProgramEntities())
 			{
-				//Execute stored procedure as a function
-				var list = ctx.up_ReportDraftIEPS(districtFilter, teacherIds, buildingID, null);
+				string connStr = context.Database.Connection.ConnectionString.ToString();
+				using (SqlConnection conn = new SqlConnection(connStr))
+				using (SqlCommand cmd = new SqlCommand("up_ReportDraftIEPS", conn))
+				{
+					cmd.CommandType = CommandType.StoredProcedure;
 
-				foreach (var cs in list)
-					dt.Rows.Add(cs.begin_date, cs.end_Date, cs.StudentFirstName, cs.StudentLastName, cs.ProviderName, cs.DraftDays);
+					cmd.Parameters.Add("@DistrictId", SqlDbType.VarChar, 8000).Value = districtFilter;
+					cmd.Parameters.Add("@BuildingId", SqlDbType.VarChar, 8000).Value = buildingID;
+					cmd.Parameters.Add("@TeacherId", SqlDbType.VarChar, 8000).Value = teacherIds;
+					
+
+					using (SqlDataAdapter sda = new SqlDataAdapter(cmd))
+					{
+						sda.Fill(ds);
+					}
+				}
 			}
 
-			return dt;
+			return ds.Tables[0];
 		}
 	}
 }

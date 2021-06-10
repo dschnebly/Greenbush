@@ -8,8 +8,8 @@
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
     @Styles.Render("~/Content/jquery-ui.min.css")
-	@Styles.Render("~/Content/reports.css")
-  
+    @Styles.Render("~/Content/reports.css")
+
 }
 
 <div class="transition-page">
@@ -19,7 +19,7 @@
     <hr />
 
     <ul class="breadcrumb">
-        <li><i class="fa fa-file" aria-hidden="true" style="font-size: 30px;"></i>&nbsp;&nbsp;<a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Reports</a></li>        
+        <li><i class="fa fa-file" aria-hidden="true" style="font-size: 30px;"></i>&nbsp;&nbsp;<a data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" style="font-size: 30px;">Reports</a></li>
     </ul>
 
     <div class="container" style="overflow:hidden; margin: 0 auto 75px;">
@@ -32,7 +32,7 @@
                     </tr>
                 </thead>
                 <tbody>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Behavior Plan</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnBehaviorPlan" onclick="return window.location.href = '/Reports/BehaviorPlan/Report.aspx';"><i class="fa fa-print"></i> View</button>
@@ -41,34 +41,46 @@
                     <tr>
                         <td><label class="text-muted">Caseloads by Provider</label></td>
                         <td>
-                            <button type="button" class="btn btn-default btn-lg printForm" id="btnCaseLoad" onclick="return window.location.href = '/Reports/ProviderCaseload/Report.aspx';"><i class="fa fa-print"></i> View</button>
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnCaseLoad" onclick="return window.location.href = '/Reports/CaseloadByProvider/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Draft IEPs Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnDraft" onclick="return window.location.href = '/Reports/DraftIEP/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-						<tr>
+                    <tr>
+                        <td><label class="text-muted">Eligibility Analysis</label></td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnEligibiliyAnalysis" onclick="return window.location.href = '/Reports/EligibilityAnalysis/Report.aspx';"><i class="fa fa-print"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><label class="text-muted">ESY Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnESY" onclick="return window.location.href = '/Reports/ESY/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Exceptionality Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnExp" onclick="return window.location.href = '/Reports/ExceptionalityReport/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Excess Cost Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnExcess" onclick="return window.location.href = '/Reports/ExcessCostReport/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
+                        <td><label class="text-muted">Health Plan</label></td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-lg printForm" id="btnHealthPlan" onclick="return window.location.href = '/Reports/HealthPlan/Report.aspx';"><i class="fa fa-print"></i> View</button>
+                        </td>
+                    </tr>
+                    <tr>
                         <td><label class="text-muted">IEPs Coming Due</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Reports/IEPDue/Report.aspx';"><i class="fa fa-print"></i> View</button>
@@ -92,19 +104,19 @@
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Reports/ProceduralDates/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Procedural Dates: Indicator 11 - 60 Day Tracking Report </label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnStudents" onclick="return window.location.href = '/Reports/ProceduralDatesTracking/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Progress Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnProgress" onclick="return window.location.href = '/Reports/Progress/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Service Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Reports/ServiceReport/Report.aspx';"><i class="fa fa-print"></i> View</button>
@@ -116,19 +128,19 @@
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnProDates" onclick="return window.location.href = '/Home/SpedProReport';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
-                        <td><label class="text-muted">Student Data and Status Report</label></td>
+                    <tr>
+                        <td><label class="text-muted">Student Data Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnStudents" onclick="return window.location.href = '/Reports/StudentData/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					<tr>
+                    <tr>
                         <td><label class="text-muted">Student Information Report</label></td>
                         <td>
                             <button type="button" class="btn btn-default btn-lg printForm" id="btnStudentInfo" onclick="return window.location.href = '/Reports/StudentInfo/Report.aspx';"><i class="fa fa-print"></i> View</button>
                         </td>
                     </tr>
-					
+
                 </tbody>
             </table>
             <div class="ajax-loader">

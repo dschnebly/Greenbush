@@ -438,7 +438,7 @@
         }
 	</style>
 	<div id="divContingencyPlan">
-		<h3 class="text-center">CONTINGENCY PLAN</h3>
+		<h3 class="text-center"><b>CONTINGENCY PLAN</b></h3>
 		<p>This IEP has been written for in-school, in-person services. However, due to the COVID-19 Pandemic, IEP teams will need to consider what supports and services will need to be in place if there is an interruption in students being able to attend the full-time brick and mortar school or if a parent/guardian chooses for their child to participate in remote learning. IEP teams will need to determine where any changes are needed to the services and supports of the IEP in order for the student to participate in remote learning whether by a school closure or parent choice. The services and supports specified in this section of the IEP are specifically related to a contingency or remote learning plan</p>
 		<div style="margin-bottom:15px;">
 			<p>
@@ -462,21 +462,20 @@
         <div class="collapse" @(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse ? "style=display:block;" : string.Empty) id="collapseRemoteDistrict">
             <div>
                 <h5><b>Nature of Proposed Temporary Plan:</b></h5>               
-                <p >When a school building is closed due to a COVID-19 outbreak, but is serving its students remotely, the school must ensure that each student with an exceptionality also has equal access to the same opportunities, including, to the extent possible under these unprecedented circumstances, a free appropriate public education. School districts must provide a FAPE consistent with the need to protect the health and safety of students with exceptionalities and those individuals providing education, specialized instruction, and related services to these students. In this unique and ever-changing environment, these exceptional circumstances may affect how all educational and related services and supports are provided. Each team needs to consider the prompts below. The services and supports should be clearly articulated, understood, and agreed upon.</p>
-                 <ol>
-                    <li>Services<br /><pre>
+                <p>When a school building is closed due to a COVID-19 outbreak, but is serving its students remotely, the school must ensure that each student with an exceptionality also has equal access to the same opportunities, including, to the extent possible under these unprecedented circumstances, a free appropriate public education. School districts must provide a FAPE consistent with the need to protect the health and safety of students with exceptionalities and those individuals providing education, specialized instruction, and related services to these students. In this unique and ever-changing environment, these exceptional circumstances may affect how all educational and related services and supports are provided. Each team needs to consider the prompts below. The services and supports should be clearly articulated, understood, and agreed upon.</p>
+                 
+                    <p>1. Services</p><p>
 						@if (Model.isServerRender)
 						{
-
 							@(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse && !string.IsNullOrEmpty(Model.studentDetails.contingencyPlan.Services) ? Model.studentDetails.contingencyPlan.Services.Replace(System.Environment.NewLine, "break-line-val") : string.Empty)
                         }
                         else
                         {
 							@(Html.Raw(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse && !string.IsNullOrEmpty(Model.studentDetails.contingencyPlan.Services) ? Model.studentDetails.contingencyPlan.Services.Replace(System.Environment.NewLine, "<br/>") : string.Empty))
                         }
-						</pre></li>
-                    <li>Accommodations<br /> 
-					 <pre>
+						</p>
+                    <p>2. Accommodations</p>
+					 <p>
 						@if (Model.isServerRender)
 						{
 
@@ -486,9 +485,9 @@
                         {
 							@(Html.Raw(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse && !string.IsNullOrEmpty(Model.studentDetails.contingencyPlan.Accommodations) ? Model.studentDetails.contingencyPlan.Accommodations.Replace(System.Environment.NewLine, "<br/>") : string.Empty))
                         }
-					</pre></li>
-                    <li>Goals<br /> 
-						<pre>
+					</p>
+					<p>3. Goals</p>                    
+						<p>
 						@if (Model.isServerRender)
 						{
 
@@ -498,8 +497,9 @@
                         {
 							@(Html.Raw(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse && !string.IsNullOrEmpty(Model.studentDetails.contingencyPlan.Goals) ? Model.studentDetails.contingencyPlan.Goals.Replace(System.Environment.NewLine, "<br/>") : "The IEP team has reviewed the IEP goals to ensure that the child has the opportunity to advance appropriately toward their annual IEP goals when following this contingency plan."))
                         }
-						</pre></li>
-                    <li>Other Considerations<br /> <pre>
+						</p>
+                    <p>4. Other Considerations</p>
+					<p>
 						@if (Model.isServerRender)
 						{
 
@@ -509,8 +509,8 @@
                         {
 							@(Html.Raw(Model.studentDetails.contingencyPlan.RemoteLearning_DistrictResponse && !string.IsNullOrEmpty(Model.studentDetails.contingencyPlan.OtherConsiderations) ? Model.studentDetails.contingencyPlan.OtherConsiderations.Replace(System.Environment.NewLine, "<br/>") : string.Empty))
                         }
-						</pre></li>
-                </ol>
+						</p>
+                
             </div>
         </div>
 		}
@@ -576,7 +576,7 @@
 @if (@Model.studentDetails.printHealth)
 {
 	<div id="divHealth">
-	<h3 class="text-center">HEALTH</h3>
+	<h3 class="text-center"><b>HEALTH</b></h3>
 	@if (!Model.studentHealth.NoConcerns)
 		{
 			if (Model.studentHealth.ProgressTowardGenEd)
@@ -664,7 +664,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -718,12 +718,11 @@
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
+				{					
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>					
 				}
 			</fieldset>
+			@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "1" } })
 			}
 			else
 			{
@@ -750,7 +749,7 @@
 @if (@Model.studentDetails.printMotor)
 {
 	<div id="divMotor">
-		<h3 class="text-center">MOTOR</h3>
+		<h3 class="text-center"><b>MOTOR</b></h3>
 		@if (!Model.studentMotor.NoConcerns)
 		{
 
@@ -816,7 +815,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -873,13 +872,12 @@
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>											
-					</div>
+				{					
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>																
 				}
 			</fieldset>
-					}
+			@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "2" } })
+		}
 		else
 		{
 			<div class="text-center">
@@ -902,12 +900,11 @@
         }
 	</div><!--end motor-->
 }
-
 						
 @if (@Model.studentDetails.printComm)
 {
 	<div id="divComm">
-	<h3 class="text-center">COMMUNICATION</h3>
+	<h3 class="text-center"><b>COMMUNICATION</b></h3>
 	@if (!Model.studentCommunication.NoConcerns)
 	{
 		if (Model.studentCommunication.ProgressTowardGenEd)
@@ -962,7 +959,7 @@
 		</fieldset>
 		<fieldset class="form-group">
 			<div class="form-group-label">
-				<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+				<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 			</div>
 			<p>
 				@if (Model.isServerRender)
@@ -1019,11 +1016,10 @@
 			}
 			@if (!string.IsNullOrEmpty(textNeedMetBy))
 			{
-				<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>											
-				</div>
+				<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>														
 			}
 		</fieldset>
+		@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "3" } })
         }
         else
         { 
@@ -1048,10 +1044,11 @@
 
 	</div>
 }
+
 @if (@Model.studentDetails.printSocial)
 {
 	<div id="divSocial">	
-		<h3 class="text-center">SOCIAL AND EMOTIONAL</h3>
+		<h3 class="text-center"><b>SOCIAL AND EMOTIONAL</b></h3>
 		@if (!Model.studentSocial.NoConcerns)
 		{
 			if (Model.studentSocial.ProgressTowardGenEd)
@@ -1107,7 +1104,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;">Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -1161,12 +1158,11 @@
 					}
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-						<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
+				{					
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>					
 				}
 			</fieldset>
+			@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "4" } })
 			}
 			else
 			{
@@ -1189,10 +1185,11 @@
 			}
 	</div>
 }
+
 @if (@Model.studentDetails.printGeneral)
 {
 	<div id="divGI">	
-		<h3 class="text-center">GENERAL INTELLIGENCE</h3>
+		<h3 class="text-center"><b>GENERAL INTELLIGENCE</b></h3>
 		@if (Model.studentIntelligence.AreaOfNeed == true | Model.studentIntelligence.ProgressTowardGenEd)
 		{
 			if (Model.studentIntelligence.ProgressTowardGenEd)
@@ -1232,7 +1229,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -1245,6 +1242,7 @@
 					}
 				</p>
 			</fieldset>
+			@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "5" } })
 		}
 		else
 		{
@@ -1273,9 +1271,9 @@
 {
 	<div id="divAcademic">
 	<div>
-	<h3 class="text-center">ACADEMIC PEFORMANCE</h3>		
+	<h3 class="text-center"><b>ACADEMIC PEFORMANCE</b></h3>		
 
-		<h3 class="text-center">READING</h3>
+		<h3 class="text-center"><b>READING</b></h3>
 			@if (!Model.studentReading.NoConcerns)
 		{
 
@@ -1318,7 +1316,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -1373,12 +1371,13 @@
 
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
-				{
-					<div class="form-check form-group-label">
-							<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
+				{					
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>					
 				}
 			</fieldset>
+
+			  @Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "7" } })
+
 			}
 			else
 			{
@@ -1402,7 +1401,7 @@
 	</div>
 	<hr />
 	<div>
-		<h3 class="text-center">MATH</h3>
+		<h3 class="text-center"><b>MATH</b></h3>
 		@if (!Model.studentMath.NoConcerns)
 		{
 
@@ -1444,7 +1443,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -1500,11 +1499,11 @@
 				}
 				@if (!string.IsNullOrEmpty(textNeedMetBy))
 				{
-					<div class="form-check form-group-label">
-							<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-					</div>
+					<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>				
 				}
-			</fieldset>
+			</fieldset>			
+
+				@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "8" } })
 			}
 			else
 			{
@@ -1528,7 +1527,7 @@
 
 	</div> <hr />
 	<div>
-		<h3 class="text-center">WRITTEN LANGUAGE</h3>
+		<h3 class="text-center"><b>WRITTEN LANGUAGE</b></h3>
 		@if (!Model.studentWritten.NoConcerns)
 		{
 
@@ -1573,7 +1572,7 @@
 			</fieldset>
 			<fieldset class="form-group">
 				<div class="form-group-label">
-					<label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+					<label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
 				</div>
 				<p>
 					@if (Model.isServerRender)
@@ -1628,12 +1627,11 @@
 
 			}
 			@if (!string.IsNullOrEmpty(textNeedMetBy))
-			{
-				<div class="form-check form-group-label">
-					<div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-				</div>
+			{				
+				<p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>				
 			}
 			</fieldset>
+				@Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "9" } })
 			}
 			else
 			{
@@ -1656,7 +1654,7 @@
 		
 	</div><hr />
           <div>
-              <h3 class="text-center">ACADEMIC/FUNCTIONAL PERFORMANCE </h3>
+              <h3 class="text-center"><b>ACADEMIC/FUNCTIONAL PERFORMANCE</b></h3>
               @if (!Model.studentAcademic.NoConcerns)
               {
                   if (Model.studentAcademic.ProgressTowardGenEd)
@@ -1697,7 +1695,7 @@
                   </fieldset>
                   <fieldset class="form-group">
                       <div class="form-group-label">
-                          <label style="padding: 0px 0 2px;"> Area of Need which Impacts Performance</label>
+                          <label style="padding: 0px 0 2px;"> Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum:</label>
                       </div>
                       <p>
                           @if (Model.isServerRender)
@@ -1752,18 +1750,15 @@
 
                       }
                       @if (!string.IsNullOrEmpty(textNeedMetBy))
-                      {
-                          <div class="form-check form-group-label">
-                              <div style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</div>
-                          </div>
+                      {                          
+                          <p style="display: @(textNeedMetBy == string.Empty ? "none" : "block")">This need will be met @(!textNeedMetBy.EndsWith(".") ? @Html.Raw(string.Format("{0}.", textNeedMetBy)) : @Html.Raw(textNeedMetBy))</p>                          
                       }
                   </fieldset>
+				  @Html.Partial("~/Views/Home/Print/_PrintGoalPartial.cshtml", Model, new ViewDataDictionary { { "module", "6" } })
               }
               else
               {
                   <p class="text-center">The Team has no concerns about @Model.studentFirstName in the area of Academic Performance at this time.</p>
-
-
               }
 
               @if (!string.IsNullOrEmpty(Model.studentAcademic.Notes))
@@ -3063,202 +3058,6 @@
 	</div><!--end other consid-->
 }
 
-@if (@Model.studentDetails.printGoals)
-{
-	<div id="divGoals">	
-		<h3 class="text-center">GOALS</h3>
-		@if (Model.studentGoals != null && Model.studentGoals.Count > 0)
-		{
-			foreach (var sGoal in Model.studentGoals)
-			{
-				var progQ1 = "";
-				var progQ2 = "";
-				var progQ3 = "";
-				var progQ4 = "";
-				var evalText = "";
-
-				var ddlText = "";
-				switch (sGoal.Module)
-				{
-					case "1": { ddlText = "Health"; break; }
-					case "2": { ddlText = "Motor"; break; }
-					case "3": { ddlText = "Communication"; break; }
-					case "4": { ddlText = "Social-Emotional"; break; }
-					case "5": { ddlText = "General Intelligence"; break; }
-					case "6": { ddlText = "Academic Performance"; break; }
-					case "7": { ddlText = "Reading"; break; }
-					case "8": { ddlText = "Math"; break; }
-					case "9": { ddlText = "Written Language"; break; }
-				} //end switch
-
-				switch (sGoal.Progress_Quarter1)
-				{
-					case "1": { progQ1 = "Anticipate Meeting Goal"; break; }
-					case "2": { progQ1 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-					case "3": { progQ1 = "Goal Met (indicate date)"; break; }
-				} //end switch
-
-				switch (sGoal.Progress_Quarter2)
-				{
-					case "1": { progQ2 = "Anticipate Meeting Goal"; break; }
-					case "2": { progQ2 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-					case "3": { progQ2 = "Goal Met (indicate date)"; break; }
-				} //end switch
-
-				switch (sGoal.Progress_Quarter3)
-				{
-					case "1": { progQ3 = "Anticipate Meeting Goal"; break; }
-					case "2": { progQ3 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-					case "3": { progQ3 = "Goal Met (indicate date)"; break; }
-				} //end switch
-
-				switch (sGoal.Progress_Quarter4)
-				{
-					case "1": { progQ4 = "Anticipate Meeting Goal"; break; }
-					case "2": { progQ4 = "Do Not Anticipate Meeting Goal (note reason)"; break; }
-					case "3": { progQ4 = "Goal Met (indicate date)"; break; }
-				} //end switch
-
-				
-				<div class="voffset1">
-					<label for="StudentGoalTitle">Student Goal</label>
-				</div>
-				<div class="form-group">
-					<div class="input-group">
-						<span data-bind="bs-drp-sel-label"><b>@ddlText</b></span><p>@sGoal.Title</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label>Measurable Annual Goal:</label>
-					@if (!string.IsNullOrEmpty(sGoal.Baseline))
-					{
-
-						if (Model.isServerRender)
-						{
-							<p>@(sGoal.AnnualGoal.Replace(System.Environment.NewLine, "break-line-val"))</p>
-						}
-						else
-						{
-							<p>@(Html.Raw(sGoal.AnnualGoal.Replace(System.Environment.NewLine, "<br/>")))</p>
-						}
-					}								
-				</div>
-				<div class="form-group">
-					<label>Goal Baseline</label>
-					@if (!string.IsNullOrEmpty(sGoal.Baseline))
-					{
-
-						if (Model.isServerRender)
-						{
-							<p>@(sGoal.Baseline.Replace(System.Environment.NewLine, "break-line-val"))</p>
-						}
-						else
-						{
-							<p>@(Html.Raw(sGoal.Baseline.Replace(System.Environment.NewLine, "<br/>")))</p>
-						}
-					}
-				</div>
-				<div class="form-group">
-					<label>State Standards</label>								
-					@if (!string.IsNullOrEmpty(sGoal.Baseline))
-					{
-
-						if (Model.isServerRender)
-						{
-							<p>@(sGoal.StateStandards.Replace(System.Environment.NewLine, "break-line-val"))</p>
-						}
-						else
-						{
-							<p>@(Html.Raw(sGoal.StateStandards.Replace(System.Environment.NewLine, "<br/>")))</p>
-						}
-					}
-				</div>
-				<div class="form-group">
-					<label>Evaluation Procedure</label><p>
-					@foreach (var ep in Model.studentGoalEvalProcs.Where(g => g.goalID == sGoal.goalID))
-					{
-						switch (ep.evaluationProcedureID)
-						{
-							case 1: { evalText = "Written Observation"; break; }
-							case 2: { evalText = "Written Performance"; break; }
-							case 3: { evalText = "Oral Performance"; break; }
-							case 4: { evalText = "Criterion-Referenced Test"; break; }
-							case 5: { evalText = "Time Sample"; break; }
-							case 6: { evalText = "Demonstration/Performance"; break; }
-							case 8: { evalText = "Progress Monitoring"; break; }
-							case 7:
-								{
-
-									if (!string.IsNullOrEmpty(ep.OtherDescription))
-									{
-										evalText = "Other: " + ep.OtherDescription;
-									}
-									else
-									{
-										evalText = "Other";
-									}
-									break;
-								}
-						} //end switch
-						@evalText<br />
-					}
-					</p>
-				</div>
-
-				if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
-				{
-					foreach (var gb in Model.studentGoalBenchmarks.Where(o => o.goalID == sGoal.goalID).ToList())
-					{
-						<div class="StudentGoalBenchmarks">
-							<label style="margin-top:5px">Short Term Benchmark(s)</label>
-							<div class="form-group" style="padding:2px;">
-								<span>@gb.ObjectiveBenchmark</span>
-							</div>
-							<div>
-								<label>Method(s)</label><br />
-								@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
-								{
-									var ddlText2 = "";
-
-									switch (gbMethod.EvaluationProcedureID)
-									{
-										case 1: { ddlText2 = "Written Observation"; break; }
-										case 2: { ddlText2 = "Written Performance"; break; }
-										case 3: { ddlText2 = "Oral Performance"; break; }
-										case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-										case 5: { ddlText2 = "Time Sample"; break; }
-										case 6: { ddlText2 = "Demonstration/Performance"; break; }
-										case 8: { ddlText2 = "Progress Monitoring"; break; }
-										case 7:
-											{
-
-												if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
-												{
-													ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
-												}
-												else
-												{
-													ddlText2 = "Other";
-												}
-												break;
-											}
-									} //end switch
-									@ddlText2.Trim().TrimEnd(',')<br />
-								}
-							</div>
-						</div>
-					}//end foreach short term bench
-				}
-
-						
-			}//end for goals
-		}
-		else
-		{
-			<p class="text-center">The Team has no goals for @Model.studentFirstName at this time.</p>
-		}
-	</div><!--end section break-->
-}
 
 @if (@Model.studentDetails.printProgressReport)
 {
@@ -3296,7 +3095,6 @@
 	</div>	
 	<div class="text-center" style="font-size:14pt"><b>PROGRESS REPORT</b></div>
 	<p>This report shall inform the parents/guardians about the student's progress towards meeting the Annual Goals.</p>
-	<hr/>
 	<table class="table table-borderless" border="0">
 		<tr>
 			<td><label>Student's Name:</label></td>
@@ -3342,7 +3140,7 @@
 			<td></td>		
 		</tr>
 	</table>
-	<hr />
+	
 	<div>		
     @if (Model.studentGoals.Count > 0)
 	{
@@ -3403,31 +3201,23 @@
 			} //end switch
 
             <div>   
-					<h3 style="text-align:center;font-size:13pt;font-weight:bold">@(studentGoal.Title)</h3>
-					<label>Goal Type: </label><span>&nbsp;@(sgText)</span><br />
-					<label>Measurable Annual Goal: </label><span>&nbsp;@(studentGoal.AnnualGoal)</span><br />
-                    <label>Standards: </label><span>&nbsp;@(studentGoal.StateStandards)</span><br />
-					<label>Baseline: </label><span>&nbsp;@(studentGoal.Baseline)</span><br /><br />
-                   
-					<table class="table table-bordered table-responsive" cellpadding="5">
-						<thead class="thead-inverse">
-							<tr class="ProgressAnnualGoal">
-								<th class="text-center" style="font-size:11pt" colspan="4">Progress Towards Annual Goal</th>
-							</tr>
-						</thead>
+				<h3 style="text-align:center;font-size:13pt;font-weight:bold">@(studentGoal.Title)</h3>
+				<hr style="margin-bottom:5px;"/>
+					<p><label>Goal Type: </label><span>&nbsp;@(sgText)</span></p>
+					<p><label>Measurable Annual Goal: </label><span>&nbsp;@(studentGoal.AnnualGoal)</span></p>
+                    <p><label>Standards: </label><span>&nbsp;@(studentGoal.StateStandards)</span></p>
+					<p><label>Baseline: </label><span>&nbsp;@(studentGoal.Baseline)</span></p>
+                    <h3 style="text-align:center;font-weight:bold;font-size:11pt">Progress Towards Annual Goal</h3>
+					<table class="table table-bordered table-responsive" cellpadding="5" border="1" style="border: 1px solid #f0f0f0;">						
 						<tbody class="PTAGDisplay">
-							<tr>
-								<th>Quarter</th>
-								<th>Date Assessed</th>
-								<th>Progress</th>
-								<th>Notes</th>
+							<tr>								
+								<th style="background-color:gainsboro">Date Assessed</th>
+								<th style="background-color:gainsboro">Progress</th>
+								<th style="background-color:gainsboro">Notes</th>
 							</tr>
-							<tr class="PTAGDisplay">
+							<tr class="PTAGDisplay">								
 								<td>
-									<label>1<sup>st</sup>&nbsp;&nbsp;</label>
-								</td>
-								<td>
-									<span>@(studentGoal.ProgressDate_Quarter1.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter1.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ1
@@ -3437,12 +3227,9 @@
                                 </td>
 									
 							</tr>
-							<tr class="PTAGDisplay">
+							<tr class="PTAGDisplay">								
 								<td>
-									<label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-								</td>
-								<td>
-									<span>@(studentGoal.ProgressDate_Quarter2.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter2.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ2
@@ -3451,12 +3238,9 @@
                                     @studentGoal.ProgressDescription_Quarter2
                                 </td>
 							</tr>
-							<tr class="PTAGDisplay">
+							<tr class="PTAGDisplay">							
 								<td>
-									<label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-								</td>
-								<td>
-									<span>@(studentGoal.ProgressDate_Quarter3.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter3.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ3
@@ -3465,12 +3249,9 @@
                                     @studentGoal.ProgressDescription_Quarter3
                                 </td>
 							</tr>
-							<tr class="PTAGDisplay">
+							<tr class="PTAGDisplay">								
 								<td>
-									<label>4<sup>th</sup>&nbsp;&nbsp;</label>
-								</td>
-								<td>
-									<span>@(studentGoal.ProgressDate_Quarter4.ToString("MM-dd-yyyy"))</span>
+									<span>@(studentGoal.ProgressDate_Quarter4.ToString("MM/dd/yyyy"))</span>
 								</td>
 								<td>
                                     @progQ4
@@ -3481,8 +3262,7 @@
 							</tr>
 						</tbody>
 					</table>
-                    <br />
-                    <br />
+                   
             </div>			
 			
             if (Model.studentGoalBenchmarks != null && Model.studentGoalBenchmarks.Count() > 0)
@@ -3496,148 +3276,131 @@
 						var gbProgress3 = "";
 						var gbProgress4 = "";
 
-						<table class="table table-bordered table-responsive" style="margin-bottom: 0;">		
-						<tbody class="PTAGDisplay">
-						<tr class="ProgressAnnualGoal">
-							<td class="text-center" style="font-size:11pt" colspan="2">@gb.ObjectiveBenchmark</td>
-						</tr>
-						<tr>									
-							<th>How Measured</th>			
-							<th>Reports of Progress</th>
-						</tr>
-						<tr class="PTAGDisplay">																	
-							<td style="vertical-align:top;">
-								@foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
-								{
-									var ddlText2 = "";
+					var ddlText2 = "";
+                    foreach (var gbMethod in Model.studentGoalBenchmarkMethods.Where(o => o.goalBenchmarkID == gb.goalBenchmarkID).Distinct())
+                    {
+                        
 
-									switch (gbMethod.EvaluationProcedureID)
-									{
-										case 1: { ddlText2 = "Written Observation"; break; }
-										case 2: { ddlText2 = "Written Performance"; break; }
-										case 3: { ddlText2 = "Oral Performance"; break; }
-										case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
-										case 5: { ddlText2 = "Time Sample"; break; }
-										case 6: { ddlText2 = "Demonstration/Performance"; break; }
-										case 8: { ddlText2 = "Progress Monitoring"; break; }
-										case 7:
-											{
+                        switch (gbMethod.EvaluationProcedureID)
+                        {
+                            case 1: { ddlText2 = "Written Observation"; break; }
+                            case 2: { ddlText2 = "Written Performance"; break; }
+                            case 3: { ddlText2 = "Oral Performance"; break; }
+                            case 4: { ddlText2 = "Criterion-Referenced Test"; break; }
+                            case 5: { ddlText2 = "Time Sample"; break; }
+                            case 6: { ddlText2 = "Demonstration/Performance"; break; }
+                            case 8: { ddlText2 = "Progress Monitoring"; break; }
+                            case 7:
+                                {
 
-												if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
-												{
-													ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
-												}
-												else
-												{
-													ddlText2 = "Other";
-												}
-												break;
-											}
-									} //end switch
-									@ddlText2.Trim().TrimEnd(',')<br />
-								}
-							</td>										
-							<td>
-									<table class="table table-responsive table-bordered">												
-									<tbody class="PTAGDisplay">													
-										<tr>
-											<td>
-												<label>1<sup>st</sup>&nbsp;&nbsp;</label>
-											</td>
-											<td>
-												<span>@(gb.ProgressDate_Quarter1.HasValue ? gb.ProgressDate_Quarter1.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>
-											<td>															
-												@switch (gb.Progress_Quarter1)
-												{
-													case "1": { gbProgress = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress = "No progress made"; break; }
-													case "3": { gbProgress = "Little progress made"; break; }
-													case "4": { gbProgress = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress = "Objective met"; break; }
-												} 
-												@gbProgress
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter1
-											</td>													
-									
-										</tr>
-										<tr class="PTAGDisplay">
-											<td>
-												<label>2<sup>nd</sup>&nbsp;&nbsp;</label>
-											</td>
-											<td>
-												<span>@(gb.ProgressDate_Quarter2.HasValue ? gb.ProgressDate_Quarter2.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>																												
-											<td>
-												@switch (gb.Progress_Quarter2)
-												{
-													case "1": { gbProgress2 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress2 = "No progress made"; break; }
-													case "3": { gbProgress2 = "Little progress made"; break; }
-													case "4": { gbProgress2 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress2 = "Objective met"; break; }
-												}
-												@gbProgress2
-											</td>														
-											<td>
-												@gb.ProgressDescription_Quarter2
-											</td>
-										</tr>
+                                    if (!string.IsNullOrEmpty(gbMethod.OtherDescription))
+                                    {
+                                        ddlText2 = "Other: " + gbMethod.OtherDescription + ", ";
+                                    }
+                                    else
+                                    {
+                                        ddlText2 = "Other";
+                                    }
+                                    break;
+                                }
+                        } //end switch
+                        ddlText2.Trim().TrimEnd(',');
+                    }
+					<p>
+						@(string.Format("{0}{1}", string.IsNullOrEmpty(ddlText2) ? "" : ddlText2 + ": ", gb.ObjectiveBenchmark))
+					</p>	
 
-										<tr class="PTAGDisplay">
-											<td>
-												<label>3<sup>rd</sup>&nbsp;&nbsp;</label>
-											</td>
-											<td>
-												<span>@(gb.ProgressDate_Quarter3.HasValue ? gb.ProgressDate_Quarter3.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>														
-											<td>
-												@switch (gb.Progress_Quarter3)
-												{
-													case "1": { gbProgress3 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress3 = "No progress made"; break; }
-													case "3": { gbProgress3 = "Little progress made"; break; }
-													case "4": { gbProgress3 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress3 = "Objective met"; break; }
-												}
-												@gbProgress3
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter3
-											</td>
-										</tr>
-										<tr class="PTAGDisplay">
-											<td>
-												<label>4<sup>th</sup>&nbsp;&nbsp;</label>
-											</td>
-											<td>
-												<span>@(gb.ProgressDate_Quarter4.HasValue ? gb.ProgressDate_Quarter4.Value.ToString("MM-dd-yyyy") : "")</span>
-											</td>														
-											<td>
-												@switch (gb.Progress_Quarter4)
-												{
-													case "1": { gbProgress4 = "Not applicable during this grading period"; break; }
-													case "2": { gbProgress4 = "No progress made"; break; }
-													case "3": { gbProgress4 = "Little progress made"; break; }
-													case "4": { gbProgress4 = "Progress made; Objective not yet met"; break; }
-													case "5": { gbProgress4 = "Objective met"; break; }
-												} 
-												@gbProgress4
-											</td>
-											<td>
-												@gb.ProgressDescription_Quarter4
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</td>
-						</tr>									
-					</tbody>
-					</table>	
-					<br/>
-					<br/>
+                    <table class="table table-responsive table-bordered"  cellpadding="5" border="1" style=" border: 1px solid #f0f0f0;" >
+                        <tbody class="PTAGDisplay">
+                            <tr>
+                                <th style="background-color:gainsboro">Date Assessed</th>
+                                <th style="background-color:gainsboro">Progress</th>
+                                <th style="background-color:gainsboro">Notes</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter1.HasValue ? gb.ProgressDate_Quarter1.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter1)
+                                    {
+                                        case "1": { gbProgress = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress = "No progress made"; break; }
+                                        case "3": { gbProgress = "Little progress made"; break; }
+                                        case "4": { gbProgress = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress = "Objective met"; break; }
+                                    }
+                                    @gbProgress
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter1
+                                </td>
+
+                            </tr>
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter2.HasValue ? gb.ProgressDate_Quarter2.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter2)
+                                    {
+                                        case "1": { gbProgress2 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress2 = "No progress made"; break; }
+                                        case "3": { gbProgress2 = "Little progress made"; break; }
+                                        case "4": { gbProgress2 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress2 = "Objective met"; break; }
+                                    }
+                                    @gbProgress2
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter2
+                                </td>
+                            </tr>
+
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter3.HasValue ? gb.ProgressDate_Quarter3.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter3)
+                                    {
+                                        case "1": { gbProgress3 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress3 = "No progress made"; break; }
+                                        case "3": { gbProgress3 = "Little progress made"; break; }
+                                        case "4": { gbProgress3 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress3 = "Objective met"; break; }
+                                    }
+                                    @gbProgress3
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter3
+                                </td>
+                            </tr>
+                            <tr class="PTAGDisplay">
+
+                                <td>
+                                    <span>@(gb.ProgressDate_Quarter4.HasValue ? gb.ProgressDate_Quarter4.Value.ToString("MM/dd/yyyy") : "")</span>
+                                </td>
+                                <td>
+                                    @switch (gb.Progress_Quarter4)
+                                    {
+                                        case "1": { gbProgress4 = "Not applicable during this grading period"; break; }
+                                        case "2": { gbProgress4 = "No progress made"; break; }
+                                        case "3": { gbProgress4 = "Little progress made"; break; }
+                                        case "4": { gbProgress4 = "Progress made; Objective not yet met"; break; }
+                                        case "5": { gbProgress4 = "Objective met"; break; }
+                                    }
+                                    @gbProgress4
+                                </td>
+                                <td>
+                                    @gb.ProgressDescription_Quarter4
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+					
 					}									       
 			}
 		}
@@ -3661,8 +3424,8 @@
 					<td><b>Instr.<br />Provided<br />For</b></td>
 					<td style="width:30px"><b>Mins</b></td>
 					<td style="width:30px"><b>Days</b></td>
-					<td><b>Start Date</b></td>
-					<td><b>End Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />Start Date</b></td>
+					<td style="width:70px"><b>Anticipated<br />End Date</b></td>
 					<td style="width:50px"><b>Freq</b></td>
 				</tr>
 

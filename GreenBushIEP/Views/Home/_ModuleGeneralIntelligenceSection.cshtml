@@ -27,7 +27,7 @@
             </div>
             <div class="funkyradio-primary">
                 <input type="checkbox" name="ModuleIntelligenceAreaOfNeed" id="ModuleIntelligenceAreaOfNeed" @(Model.AreaOfNeed == true ? "checked" : String.Empty) />
-                <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size">Area of Need which impacts performance in General Education</label>
+                <label for="ModuleIntelligenceAreaOfNeed" class="standard-font-size">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
             </div>
         </div>
         <fieldset class="form-group">
@@ -44,7 +44,7 @@
             </div>
         </fieldset>
         <fieldset class="form-group">
-            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of Need which Impacts Performance</label>
+            <label class="standard-font-size" style="padding: 25px 0 15px;">Area of need (exceptionality) which impacts the student’s ability to access and progress in the general education curriculum</label>
             <div class="form-check">
                 <textarea class="form-control standard-font-size" name="ModuleIntelligenceAreaOfNeedDescription" id="ModuleIntelligenceAreaOfNeedDescription" rows="3">@(Model.AreaOfNeedDescription)</textarea>
             </div>

@@ -7,7 +7,7 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-    @Styles.Render("~/Content/misportal.css?v1.1")
+    @Styles.Render("~/Content/misportal.css?v1.2")
     @Styles.Render("~/Content/chosen.css")
 }
 
@@ -21,7 +21,7 @@
     <h3>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of users</small>
     </h3>
-    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
+     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
     {
         <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>
     }
@@ -199,6 +199,24 @@
                                     <i class="fas fa-ellipsis-v tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
                                     if (user.hasIEP)
                                     {
+                                        if (user.iepBeginDate.HasValue || user.reevalDate.HasValue)
+                                        {
+                                            <i class="fa fa-angle-double-right studentIEPDetails text-muted" data-toggle="popover" data-target="#spanDetails@(user.UserID)"></i>
+                                             <span id="spanDetails@(user.UserID)" style="display:none">
+                                                @if (user.iepBeginDate.HasValue)
+                                                {
+                                                     <text><b>IEP Date: </b></text> @user.iepBeginDate.Value.ToShortDateString()
+                                                }
+                                                @if (user.reevalDate.HasValue)
+                                                {
+                                                    if (user.iepBeginDate.HasValue)
+                                                    {
+                                                     <br/>
+                                                    }
+                                                     <text><b>Re-Eval Date: </b></text> @user.reevalDate.Value.ToShortDateString()
+                                                }
+                                              </span>
+                                        }
                                         <a href="/Home/StudentProcedures?stid=@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
                                             <span class="glyphicon glyphicon-log-out"></span>
                                         </a>
@@ -283,13 +301,13 @@
 </div>
 <!-- end modal -->
 
-@Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification } })
+ @Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary {{ "evalsDue", Model.evalsDue }, { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
 
 
 
 @section scripts {
     @Scripts.Render("~/Scripts/bootstrap-mutliselect.js")
     @Scripts.Render("~/Scripts/fasw.transitions.min.js")
-    @Scripts.Render("~/Scripts/adminportal.js?v1.9")
+    @Scripts.Render("~/Scripts/adminportal.js?v1.11")
     @Scripts.Render("~/Scripts/jquery.maskedinput.min.js")
 }

@@ -160,7 +160,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.CreateQuery<uf_Split_Result>("[IndividualizedEducationProgramEntities].[uf_Split](@MYSTR, @DELIMITER)", mYSTRParameter, dELIMITERParameter);
         }
     
-        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId)
+        public virtual ObjectResult<up_ReportBehaviorPlan_Result> up_ReportBehaviorPlan(string districtId, string buildingId, string teacherId, string fiscalYear)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -174,7 +174,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("TeacherId", teacherId) :
                 new ObjectParameter("TeacherId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter);
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportBehaviorPlan_Result>("up_ReportBehaviorPlan", districtIdParameter, buildingIdParameter, teacherIdParameter, fiscalYearParameter);
         }
     
         public virtual ObjectResult<up_ReportBuildings_Result> up_ReportBuildings(Nullable<int> buildingID)
@@ -249,7 +253,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportExcessCost_Result>("up_ReportExcessCost", districtIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportIEPSDue_Result> up_ReportIEPSDue(string districtId, string teacherId, string buildingId, string studentIds)
+        public virtual ObjectResult<up_ReportIEPSDue_Result> up_ReportIEPSDue(string districtId, string teacherId, string buildingId, string studentIds, Nullable<int> numDays)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -267,7 +271,11 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("StudentIds", studentIds) :
                 new ObjectParameter("StudentIds", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter);
+            var numDaysParameter = numDays.HasValue ?
+                new ObjectParameter("NumDays", numDays) :
+                new ObjectParameter("NumDays", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportIEPSDue_Result>("up_ReportIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter, numDaysParameter);
         }
     
         public virtual ObjectResult<up_ReportKIDSID_Result> up_ReportKIDSID(string districtId, string buildingId, string teacherId)
@@ -300,7 +308,7 @@ namespace GreenBushIEP.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportNoIEP_Result>("up_ReportNoIEP", districtIdParameter, buildingIdParameter);
         }
     
-        public virtual ObjectResult<up_ReportProceduralDates_Result> up_ReportProceduralDates(string districtId, string teacherId, string buildingId)
+        public virtual ObjectResult<up_ReportProceduralDates_Result> up_ReportProceduralDates(string districtId, string teacherId, string buildingId, string studentIds, Nullable<int> numDays)
         {
             var districtIdParameter = districtId != null ?
                 new ObjectParameter("DistrictId", districtId) :
@@ -314,7 +322,15 @@ namespace GreenBushIEP.Models
                 new ObjectParameter("BuildingId", buildingId) :
                 new ObjectParameter("BuildingId", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result>("up_ReportProceduralDates", districtIdParameter, teacherIdParameter, buildingIdParameter);
+            var studentIdsParameter = studentIds != null ?
+                new ObjectParameter("StudentIds", studentIds) :
+                new ObjectParameter("StudentIds", typeof(string));
+    
+            var numDaysParameter = numDays.HasValue ?
+                new ObjectParameter("NumDays", numDays) :
+                new ObjectParameter("NumDays", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportProceduralDates_Result>("up_ReportProceduralDates", districtIdParameter, teacherIdParameter, buildingIdParameter, studentIdsParameter, numDaysParameter);
         }
     
         public virtual ObjectResult<up_ReportProceduralDatesTracking_Result> up_ReportProceduralDatesTracking(string districtId, string teacherId, string buildingId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)

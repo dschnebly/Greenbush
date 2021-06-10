@@ -1468,19 +1468,19 @@
                                                 <div class="col-sm-4 nopadding">
                                                     <div class="form-group">
                                                         <label for="contactFirstName">First Name</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].FirstName" name="contact[@(contact.RealtionshipID.ToString())].FirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactFirstName" name="contact[@(contact.RealtionshipID.ToString())].ContactFirstName" placeholder="First Name" type="text" value="@(contact.FirstName)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-5 nopadding">
                                                     <div class="form-group">
                                                         <label>Last Name</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].LastName" name="contact[@(contact.RealtionshipID.ToString())].LastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactLastName" name="contact[@(contact.RealtionshipID.ToString())].ContactLastName" placeholder="Last Name" type="text" value="@(contact.LastName)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 nopadding">
                                                     <div class="form-group">
                                                         <label>Relationship</label>
-                                                        <select name="contact[@(contact.RealtionshipID.ToString())].Realtionship" class="form-control text-box single-line" data-validate="true">
+                                                        <select name="contact[@(contact.RealtionshipID.ToString())].ContactRealtionship" id="contact[@(contact.RealtionshipID.ToString())].ContactRealtionship" class="form-control text-box single-line" data-validate="true">
                                                             <option value="parent" selected=@(contact.Realtionship == "parent")>Parent</option>
                                                             <option value="foster" selected=@(contact.Realtionship == "foster")>Foster Parent</option>
                                                             <option value="guardian" selected=@(contact.Realtionship == "guardian")>Guardian</option>
@@ -1495,25 +1495,25 @@
                                                 <div class="col-sm-4 nopadding">
                                                     <div class="form-group">
                                                         <label>Street Address</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Address1" name="contact[@(contact.RealtionshipID.ToString())].Address1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress1" name="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress1" placeholder="Street Address" type="text" value="@(contact.Address1)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3 nopadding">
                                                     <div class="form-group">
                                                         <label>Apt/Ste/Rm</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Address2" name="contact[@(contact.RealtionshipID.ToString())].Address2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress2" name="contact[@(contact.RealtionshipID.ToString())].ContactStreetAddress2" placeholder="Apartment/Suite/Room" type="text" value="@(contact.Address2)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label>City</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].City" name="contact[@(contact.RealtionshipID.ToString())].City" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactCity" name="contact[@(contact.RealtionshipID.ToString())].ContactCity" placeholder="City" type="text" value="@(contact.City)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-1 nopadding">
                                                     <div class="form-group">
                                                         <label>State</label>
-                                                        <select name="contact[@(contact.RealtionshipID.ToString())].ContactState" class="form-control text-box single-line" data-validate="true">
+                                                        <select name="contact[@(contact.RealtionshipID.ToString())].ContactState" id="contact[@(contact.RealtionshipID.ToString())].ContactState" class="form-control text-box single-line" data-validate="true">
                                                             <option value="AL" selected=@(contact.State == "AL")>AL</option>
                                                             <option value="AK" selected=@(contact.State == "AK")>AK</option>
                                                             <option value="AZ" selected=@(contact.State == "AZ")>AZ</option>
@@ -1571,7 +1571,7 @@
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label>Zip Code</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].Zip" name="contact[@(contact.RealtionshipID.ToString())].Zip" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" data-validate="true" id="contact[@(contact.RealtionshipID.ToString())].ContactZipCode" name="contact[@(contact.RealtionshipID.ToString())].ContactZipCode" placeholder="Zip Code" type="text" value="@(contact.Zip)" aria-invalid="false">
                                                     </div>
                                                 </div>
                                             </div>
@@ -1579,22 +1579,28 @@
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <label>Phone Number</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Phone" name="contact[@(contact.RealtionshipID.ToString())].Phone" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactPhoneNumber" name="contact[@(contact.RealtionshipID.ToString())].ContactPhoneNumber" pattern="\d{3}[-]\d{3}[-]\d{4}" placeholder="Phone Number" type="text" value="@(contact.Phone)" aria-invalid="false">
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4 nopadding">
+                                                <div class="col-sm-3 nopadding">
                                                     <div class="form-group">
                                                         <label>Email</label>
-                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].Email" name="contact[@(contact.RealtionshipID.ToString())].Email" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
+                                                        <input class="form-control text-box single-line text-box single-line valid" id="contact[@(contact.RealtionshipID.ToString())].ContactEmail" name="contact[@(contact.RealtionshipID.ToString())].ContactEmail" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" type="text" value="@(contact.Email)" aria-invalid="false">
                                                     </div>
                                                 </div>
+                                                <div class="col-sm-2 nopadding">
+                                                    <div class="form-group">
+                                                        <input name="contact[@(contact.RealtionshipID.ToString())].CanEmail" type="checkbox" class="form-control text-box single-line canEmailCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.canEmail ? "checked" : "" ) />
+                                                        <label style="float: left; position: relative; bottom: 15px; left: 20%;">Allow Electronic Notices</label>
+                                                    </div>
+                                                </div>                                                
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
                                                         <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
                                                     </div>
                                                 </div>
-                                                <div class="col-sm-4 nopadding">
+                                                <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <button type="button" class="btn-circle btn-lg pull-right remove-contact btn-danger"><i class="glyphicon glyphicon-minus"></i></button>
                                                     </div>
@@ -1708,19 +1714,19 @@
         <div class="col-sm-4 nopadding">
             <div class="form-group">
                 <label>First Name</label>
-                <input name="contact[#].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
+                <input name="contact[#].ContactFirstName" id="contact[#].ContactFirstName" class="form-control text-box single-line" placeholder="First Name" type="text" data-validate="true" />
             </div>
         </div>
         <div class="col-sm-5 nopadding">
             <div class="form-group">
                 <label>Last Name</label>
-                <input name="contact[#].ContactLastName" class="form-control text-box single-line" placeholder="Last Name" type="text" data-validate="true" />
+                <input name="contact[#].ContactLastName" id="contact[#].ContactLastName" class="form-control text-box single-line" placeholder="Last Name" type="text" data-validate="true" />
             </div>
         </div>
         <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Relationship</label>
-                <select name="contact[#].ContactRelationship" class="form-control text-box single-line" data-validate="true">
+                <select name="contact[#].ContactRelationship" id="contact[#].ContactRelationship" class="form-control text-box single-line" data-validate="true">
                     <option value="parent" selected="selected">Parent</option>
                     <option value="foster">Foster Parent</option>
                     <option value="guardian">Guardian</option>
@@ -1735,25 +1741,25 @@
         <div class="col-sm-4 nopadding">
             <div class="form-group">
                 <label>Street Address</label>
-                <input name="contact[#].ContactStreetAddress1" class="form-control text-box single-line" id="ContacStreetAddress1" placeholder="Street Address" type="text" data-validate="true" />
+                <input name="contact[#].ContactStreetAddress1" id="contact[#].ContactStreetAddress1" class="form-control text-box single-line" id="ContacStreetAddress1" placeholder="Street Address" type="text" data-validate="true" />
             </div>
         </div>
         <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Apt/Ste/Rm</label>
-                <input name="contact[#].ContactStreetAddress2" class="form-control text-box single-line" id="ContactStreetAddress2" placeholder="Apartment/Suite/Room" type="text" />
+                <input name="contact[#].ContactStreetAddress2" id="contact[#].ContactStreetAddress2" class="form-control text-box single-line" id="ContactStreetAddress2" placeholder="Apartment/Suite/Room" type="text" />
             </div>
         </div>
         <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <label>City</label>
-                <input name="contact[#].ContactCity" class="form-control text-box single-line" id="ContactCity" placeholder="Contact City" type="text" data-validate="true" />
+                <input name="contact[#].ContactCity" id="contact[#].ContactCity" class="form-control text-box single-line" id="ContactCity" placeholder="Contact City" type="text" data-validate="true" />
             </div>
         </div>
         <div class="col-sm-1 nopadding">
             <div class="form-group">
                 <label>State</label>
-                <select name="contact[#].ContactState" class="form-control text-box single-line" data-validate="true">
+                <select name="contact[#].ContactState" id="contact[#].ContactState" class="form-control text-box single-line" data-validate="true">
                     <option value="AL">AL</option>
                     <option value="AK">AK</option>
                     <option value="AZ">AZ</option>
@@ -1811,7 +1817,7 @@
         <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <label>Zip Code</label>
-                <input name="contact[#].ContactZipCode" class="form-control text-box single-line" id="ContactZipCode" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" />
+                <input name="contact[#].ContactZipCode" id="contact[#].ContactZipCode" class="form-control text-box single-line" id="ContactZipCode" placeholder="Zip Code" type="number" pattern="(\d{5}([\-]\d{4})?)" data-validate="true" />
             </div>
         </div>
     </div>
@@ -1819,22 +1825,28 @@
         <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <label>Phone Number</label>
-                <input name="contact[#].ContactPhoneNumber" type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
+                <input name="contact[#].ContactPhoneNumber"  id="contact[#].ContactPhoneNumber"  type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
             </div>
         </div>
-        <div class="col-sm-4 nopadding">
+        <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Email</label>
-                <input name="contact[#].ContactEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
+                <input name="contact[#].ContactEmail" id="contact[#].ContactEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
             </div>
         </div>
         <div class="col-sm-2 nopadding">
             <div class="form-group">
-                <input name="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" />
+                <input name="contact[#].CanEmail" id="contact[#].CanEmail" type="checkbox" class="form-control text-box single-line canEmailCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" />
+                <label style="float: left; position: relative; bottom: 15px; left: 20%;">Allow Electronic Notices</label>
+            </div>
+        </div>
+        <div class="col-sm-2 nopadding">
+            <div class="form-group">
+                <input name="contact[#].PrimaryContact" id="contact[#].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" />
                 <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
             </div>
         </div>
-        <div class="col-sm-4 nopadding">
+        <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <button type="button" class="btn-circle btn-lg btn-info pull-right contact-button remove-contact"><i class="glyphicon glyphicon-minus"></i></button>
             </div>

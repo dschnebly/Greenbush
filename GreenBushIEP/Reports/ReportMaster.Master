@@ -70,9 +70,9 @@
 			<asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
 				
 			</asp:ContentPlaceHolder>
-			<div  style="overflow-x:scroll">
+			<div style="overflow-x: scroll">
 				<rsweb:ReportViewer ID="ReportViewer1" runat="server" Width="1000" Height="900" ShowPrintButton="true" ShowExportControls="true" ></rsweb:ReportViewer>
-				</div>
+			<?
     	</div>
     </form>
 
@@ -112,6 +112,8 @@
 				return false;
 			});
 
+          
+
 			$('#ContentPlaceHolder1_statusDD').change(function (e) {
 				var selectedValues = $(this).val();
 				$("#ContentPlaceHolder1_studentStatusVals").val(selectedValues);
@@ -123,11 +125,9 @@
 				$("#ContentPlaceHolder1_studentVals").val(selectedValues);
 				return false;
 			});
-
-			//_getDistricts();
-
+			
 		});
-
+    
 		function _providerChange(dropdown) {			
 				var selectedValues = dropdown.val();
 				$("#ContentPlaceHolder1_providerVals").val(selectedValues);			
@@ -434,7 +434,7 @@
 
 				
 		//}
-	</script>
+    </script>
 	
 </body>
 </html>

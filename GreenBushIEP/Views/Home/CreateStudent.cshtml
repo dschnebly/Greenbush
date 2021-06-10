@@ -1255,8 +1255,8 @@
                                                             </optgroup>
                                                             <optgroup label="Inactive">
                                                                 @foreach (var code in Model.statusCode.Where(o => o.Type == "Inactive"))
-                                                                {
-                                                                    <option value="@code.StatusCode">@code.StatusCode - @code.Description</option>
+                                                                {                                                                    
+                                                                    <option value="@code.StatusCode" @(code.Description.ToUpper() =="PENDING" ? "selected" : "")>@code.StatusCode - @code.Description</option>
                                                                 }
                                                             </optgroup>
                                                         }
@@ -1557,13 +1557,19 @@
         <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <label>Phone Number</label>
-                <input name="contacts[#].ContactPhoneNumber" type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
+                <input name="contacts[#].ContactPhoneNumber" id="contacts[#].ContactPhoneNumber" type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
             </div>
         </div>
-        <div class="col-sm-4 nopadding">
+        <div class="col-sm-3 nopadding">
             <div class="form-group">
                 <label>Email</label>
                 <input name="contacts[#].ContactEmail" type="email" class="form-control text-box single-line" value="" placeholder="placeholder@gmail.com" pattern="[a-z0-9._%+-]+@("@")[a-z0-9.-]+\.[a-z]{2,4}$" />
+            </div>
+        </div>
+        <div class="col-sm-2 nopadding">
+            <div class="form-group">
+                <input name="contacts[#].CanEmail" id="contact[#].CanEmail" type="checkbox" class="form-control text-box single-line canEmailCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" />
+                <label style="float: left; position: relative; bottom: 15px; left: 20%;">Allow Electronic Notices</label>
             </div>
         </div>
         <div class="col-sm-2 nopadding">
@@ -1572,7 +1578,7 @@
                 <label style="float: left; position: relative; bottom: 15px; left: 20%;">Primary Contact</label>
             </div>
         </div>
-        <div class="col-sm-4 nopadding">
+        <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <button type="button" class="btn-circle btn-lg btn-info pull-right contact-button remove-contact"><i class="glyphicon glyphicon-minus"></i></button>
             </div>

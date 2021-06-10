@@ -127,8 +127,10 @@ namespace GreenbushIep.Controllers
                 //dashboard notify
                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
+                
                 // show the latest updated version changes
                 ViewBag.UpdateCount = VersionCompare.GetVersionCount(MIS);
 
@@ -157,8 +159,9 @@ namespace GreenbushIep.Controllers
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -187,8 +190,9 @@ namespace GreenbushIep.Controllers
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -1392,6 +1396,8 @@ namespace GreenbushIep.Controllers
                 if (studentRec != null)
                 {
                     studentAmmendIEP.StatusCode = studentRec.StatusCode;
+                    studentAmmendIEP.Primary_DisabilityCode = studentRec.Primary_DisabilityCode;
+                    studentAmmendIEP.Secondary_DisabilityCode = studentRec.Secondary_DisabilityCode;
                 }
 
                 try
@@ -1436,6 +1442,8 @@ namespace GreenbushIep.Controllers
                     if (studentDetails != null)
                     {
                         studentAnnualIEP.StatusCode = studentDetails.StatusCode;
+                        studentAnnualIEP.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                        studentAnnualIEP.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
                     }
 
                     db.SaveChanges();
@@ -1504,7 +1512,7 @@ namespace GreenbushIep.Controllers
                     if (iepDraft.IepStatus == IEPStatus.DRAFT && iepDraft.FiledOn != null)
                     {
                         iepDraft.FiledOn = null; //reset spedpro status so it will download again
-                    }
+                    }                    
 
                     // start switching the flag.
                     iepDraft.IepStatus = IEPStatus.ACTIVE;
@@ -2098,7 +2106,7 @@ namespace GreenbushIep.Controllers
                     for (int i = 1; i < 3; i++)
                     {
                         startMonth++;
-                        firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).OrderBy(c => c.calendarDate).FirstOrDefault();
+                        firstDaySchoolYear = availableCalendarDays.Where(o => o.SchoolYear == fiscalYear && o.Month == startMonth && o.Year == fiscalYear - 1).OrderBy(o => o.calendarDate).FirstOrDefault();
                         if (firstDaySchoolYear != null)
                         {
                             break;
@@ -2152,6 +2160,7 @@ namespace GreenbushIep.Controllers
             bool isValidServiceStartDate = true;
             bool isValidEndDate = false;
             bool isValidServiceEndDate = true;
+           
             bool isSuccess = false;
             string validDates = "";
             string errorMessage = "There was a problem saving the service";
@@ -2966,6 +2975,7 @@ namespace GreenbushIep.Controllers
                 new SelectListItem { Text = "Child Outcomes Summary", Value = "ChildOutcomesSummary" },
                 new SelectListItem { Text = "Transition Referral", Value = "TransitionReferral" },
                 new SelectListItem { Text = "10 Day Waiver", Value = "TenDayWaiver" },
+                new SelectListItem { Text = "Electronic Communication", Value = "ElectronicCommunication" },
             };
 
             return forms.OrderBy(x => x.Text).ToList();
@@ -3811,7 +3821,7 @@ namespace GreenbushIep.Controllers
                                                              on student.UserID equals building.UserID
                                                          where
                                                          iep.IepStatus == iepStatus
-                                                         && (student.Archive == null || student.Archive == false)
+                                                         && (student.Archive == null || student.Archive == false)                                                         
                                                          && services.SchoolYear == fiscalYear
                                                          && (iep.FiledOn != null)
                                                          && services.ServiceCode != "NS"
@@ -4077,8 +4087,20 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", gradeCode);
             }
 
+            if(!string.IsNullOrEmpty(studentIEP.studentDetails.student.StatusCode) &&
+                (studentIEP.studentDetails.student.StatusCode == "2"))
+            {
+                errors.Add(new ExportErrorView()
+                {
+                    UserID = studentIEP.studentDetails.student.UserID.ToString(),
+                    KidsID = string.Format("KIDSID: {0}", studentIEP.studentDetails.student.KIDSID.ToString()),
+                    Description = string.Format(" {0}, {1} ERROR: {2} {3}", studentIEP.studentLastName, studentIEP.studentFirstName, "Invalid Status Code: ", studentIEP.studentDetails.student.StatusCode)
+                });
+            }
+
+
             //9 status code req
-            sb.AppendFormat("\t{0}", string.IsNullOrEmpty(studentIEP.current.StatusCode) ? studentIEP.studentDetails.student.StatusCode : studentIEP.current.StatusCode);
+            sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.StatusCode);
 
             //10 exit date
             sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.ExitDate.HasValue ? studentIEP.studentDetails.student.ExitDate.Value.ToShortDateString() : "");
@@ -4158,6 +4180,8 @@ namespace GreenbushIep.Controllers
             {
                 string serviceEndDateOverride = "";
                 int primaryProviderId = 0;
+                string primaryDisability = studentIEP.current.Primary_DisabilityCode;
+                string secondaryDisability = studentIEP.current.Secondary_DisabilityCode;
 
                 if (count == 25)
                 {
@@ -4175,6 +4199,10 @@ namespace GreenbushIep.Controllers
                     tblIEP serviceIEP = db.tblIEPs.Where(o => o.IEPid == service.IEPid).FirstOrDefault();
 
                     primaryProviderId = serviceIEP.PrimaryProviderID.HasValue ? serviceIEP.PrimaryProviderID.Value : 0;
+
+                    //look up disability information from the original iep
+                    primaryDisability = serviceIEP.Primary_DisabilityCode;
+                    secondaryDisability = serviceIEP.Secondary_DisabilityCode;
 
                     if (serviceIEP.OriginalIEPid != null)
                     {
@@ -4273,10 +4301,10 @@ namespace GreenbushIep.Controllers
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.neighborhoodBuilding.BuildingID);
 
                 //4 primary disablity
-                sb.AppendFormat("\t{0}", studentIEP.studentDetails.primaryDisability);
+                sb.AppendFormat("\t{0}", primaryDisability);
 
                 //5 secondary disablity
-                sb.AppendFormat("\t{0}", studentIEP.studentDetails.secondaryDisability);
+                sb.AppendFormat("\t{0}", secondaryDisability);
 
                 //6 gifted
                 sb.AppendFormat("\t{0}", studentIEP.studentDetails.student.isGifted ? "1" : "0");
@@ -4493,7 +4521,7 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:7pt;} table.servciesTable{width:98%;font-size:7pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;}  </style>";
+                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:7pt;} table.servciesTable{width:98%;font-size:7pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} ol.IepNormal, p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;}  </style>";
                 string result = "";
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {
@@ -4508,8 +4536,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(StudentHTMLContent))
                 {
                     string result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"\r\n?|\n", "");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"new-line-val", "<br/>");
-                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"not-checked", "[ &nbsp;&nbsp; ]");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(StudentHTMLContent, @"new-line-val", "<br/>");
+                    result2 = System.Text.RegularExpressions.Regex.Replace(result2, @"not-checked", "[ &nbsp;]");
                     studentFile = CreatePDFBytes(cssTextResult, result2, "studentInformationPage", imgfoot, "", isDraft, false);
                 }
 
@@ -4517,8 +4545,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent2))
                 {
                     string secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"\r\n?|\n", "");
-                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"new-line-val", "<br/>");
-                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"not-checked", "[ &nbsp;&nbsp; ]");
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent2, @"new-line-val", "<br/>");
+                    secondaryPage = System.Text.RegularExpressions.Regex.Replace(secondaryPage, @"not-checked", "[ &nbsp;]");
                     secondaryPageFile = CreatePDFBytes(cssTextResult, secondaryPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -4526,8 +4554,8 @@ namespace GreenbushIep.Controllers
                 if (!string.IsNullOrEmpty(HTMLContent3))
                 {
                     string thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"\r\n?|\n", "");
-                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"new-line-val", "<br/>");
-                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"not-checked", "[ &nbsp;&nbsp; ]");
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(HTMLContent3, @"new-line-val", "<br/>");
+                    thirdPage = System.Text.RegularExpressions.Regex.Replace(thirdPage, @"not-checked", "[ &nbsp;]");
                     thirdPageFile = CreatePDFBytes(cssTextResult, thirdPage, "module-page", imgfoot, studentName, isDraft, true);
                 }
 
@@ -5008,9 +5036,21 @@ namespace GreenbushIep.Controllers
 
         }
 
+        private List<NotificationViewModel> GetEvalsDue(string studentIds)
+        {
+            return db.up_ReportProceduralDates(null, null, null, studentIds, 60).Where(o => o.DateType == "3 YEAR").OrderBy(o => o.EvalDate).Select(u => new NotificationViewModel()
+            {
+                StudentId = u.UserID,
+                StudentFirstName = u.StudentFirstName,
+                StudentLastName = u.StudentLastName,
+                EvalType = u.DateType
+            }).ToList();
+
+        }
+
         private List<NotificationViewModel> GetIepsDue(string studentIds)
         {
-            return db.up_ReportIEPSDue(null, null, null, studentIds).Select(u => new NotificationViewModel()
+            return db.up_ReportIEPSDue(null, null, null, studentIds, 60).Select(u => new NotificationViewModel()
             {
                 StudentId = u.UserID,
                 StudentFirstName = u.StudentFirstName,
@@ -5076,7 +5116,7 @@ namespace GreenbushIep.Controllers
                     theIEP.isServerRender = true;
                 }
 
-                string data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+                string data = RenderRazorViewToString("~/Views/Home/Print/_PrintPartial.cshtml", theIEP);
 
                 string result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
                 result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");
@@ -5119,7 +5159,7 @@ namespace GreenbushIep.Controllers
                         theIEP.isServerRender = true;
                     }
 
-                    data = RenderRazorViewToString("~/Views/Home/_PrintPartial.cshtml", theIEP);
+                    data = RenderRazorViewToString("~/Views/Home/Print/_PrintPartial.cshtml", theIEP);
 
                     result = System.Text.RegularExpressions.Regex.Replace(data, @"\r\n?|\n|\t", "");
                     result = System.Text.RegularExpressions.Regex.Replace(result, @"break-line-val", "<br/>");

@@ -17,20 +17,31 @@
                 message += "(" + $("#draftIepsCount").val() + ") Draft IEPs"
             }
 
-            if (message != "") {
-                message = "<a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
-                _showAlert(message, false);
-            }
-        }
+			if ($("#evalsDueCount").length > 0) {
+				if (message != "") {
+					message += " and ";
+				}
+				message += "(" + $("#evalsDueCount").val() + ") 3 Year Evals Coming Due"
+			}
+
+			if (message != "") {
+				message = "<a href='#' class='notification' onclick = '_showNotifications();' > <i class='fa fa-bell' title='You have pending actions' data-toggle='tooltip'></i> You have " + message + "</a>";
+				_showAlert(message, false);
+			}
+		}
 
         $("#notificationBtn").on("click", function () {
             _showNotifications();
             return false;
         });
 
-        $("#iepsDueListBtn").on("click", function () {
-            $("#iepsDueList").fadeToggle("fast", "linear");
-        });
+		$("#iepsEvalListBtn").on("click", function () {
+			$("#iepsEvalList").fadeToggle("fast", "linear");
+		});
+
+		$("#iepsDueListBtn").on("click", function () {
+			$("#iepsDueList").fadeToggle("fast", "linear");
+		});
 
         $("#iepsDraftListBtn").on("click", function () {
             $("#iepsDraftList").fadeToggle("fast", "linear");

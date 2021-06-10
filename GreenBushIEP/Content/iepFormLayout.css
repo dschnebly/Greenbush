@@ -18,8 +18,8 @@ hr.sectionBreak {
 }
 
 input[type=checkbox] {
-	transform:scale(1.3);
-	margin:1px;
+	transform: scale(1.3);
+	margin: 1px;
 }
 
 .circles {
