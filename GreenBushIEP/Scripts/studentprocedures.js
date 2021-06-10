@@ -1,12 +1,18 @@
 ﻿// jquery onload equivalent
 $(function () {
 
-    $('.ajax-loader').css("visibility", "hidden");
+    function init() {
 
-    // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
-    if ($("#modal-studentPlanning").hasClass('needsPlan')) {
-        $("#modal-studentPlanning").modal('show');
-    }
+        // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+        if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+            $("#modal-studentPlanning").modal('show');
+        }
+
+
+        // If needsPlan is on the planning module than we need to pop that up before doing ANYTHING else.
+        if ($("#modal-studentPlanning").hasClass('needsPlan')) {
+            $("#modal-studentPlanning").modal('show');
+        }
 
         /* tooltips */
         $('[data-toggle="tooltip"]').tooltip({
@@ -419,11 +425,11 @@ $(function () {
                         if (data.Message != "") {
                             confirmMessage = data.Message;
                         }
-                        
+
                         _createAnnual(stId, iepId, confirmMessage);
-                        
+
                     } else {
-                        alert(data.Message);                        
+                        alert(data.Message);
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
@@ -434,8 +440,8 @@ $(function () {
                     $('.ajax-loader').css("visibility", "hidden");
                     $(".ajax-loader img").css("visibility", "hidden");
                 }
-            });        
-    });
+            });
+        });
 
         // Attach Event
         // if the user is the OWNER or MIS and they choose to make the iep Inactive
@@ -1625,8 +1631,8 @@ $("#myonoffswitch4").click(function (event) {
 $("#truefalseSwitchHealthConcerns").click(function (event) {
     if ($(event.target).is(':checked')) {
         $('.isHealthConcern').addClass("noConcerns").fadeOut();
-      } else {
-      $('.isHealthConcern').removeClass("noConcerns").fadeIn();
+    } else {
+        $('.isHealthConcern').removeClass("noConcerns").fadeIn();
     }
 });
 
