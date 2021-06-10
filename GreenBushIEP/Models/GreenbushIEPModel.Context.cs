@@ -685,5 +685,118 @@ namespace GreenBushIEP.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<uspUserAssignedList_Result>("uspUserAssignedList", userIDParameter, uSDParameter, buildingIDParameter, noBuildingParameter, isArchivedParameter);
         }
+    
+        public virtual ObjectResult<up_NotificationEvalsDue_Result> up_NotificationEvalsDue(string districtId, string buildingId, Nullable<int> numDays)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var numDaysParameter = numDays.HasValue ?
+                new ObjectParameter("NumDays", numDays) :
+                new ObjectParameter("NumDays", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_NotificationEvalsDue_Result>("up_NotificationEvalsDue", districtIdParameter, buildingIdParameter, numDaysParameter);
+        }
+    
+        public virtual ObjectResult<up_NotificationIEPSDue_Result> up_NotificationIEPSDue(string districtId, string teacherId, string buildingId, Nullable<int> numDays)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var numDaysParameter = numDays.HasValue ?
+                new ObjectParameter("NumDays", numDays) :
+                new ObjectParameter("NumDays", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_NotificationIEPSDue_Result>("up_NotificationIEPSDue", districtIdParameter, teacherIdParameter, buildingIdParameter, numDaysParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportCaseloadByProvider_Result> up_ReportCaseloadByProvider(string districtId, string providerId, string fiscalYear, string teacherId, string buildingId, string studentId)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var providerIdParameter = providerId != null ?
+                new ObjectParameter("ProviderId", providerId) :
+                new ObjectParameter("ProviderId", typeof(string));
+    
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var studentIdParameter = studentId != null ?
+                new ObjectParameter("StudentId", studentId) :
+                new ObjectParameter("StudentId", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportCaseloadByProvider_Result>("up_ReportCaseloadByProvider", districtIdParameter, providerIdParameter, fiscalYearParameter, teacherIdParameter, buildingIdParameter, studentIdParameter);
+        }
+    
+        public virtual int up_ReportEligibiltyAnalysis(string districtId, string buildingId, string teacherId, Nullable<System.DateTime> reportStartDate, Nullable<System.DateTime> reportEndDate)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var reportStartDateParameter = reportStartDate.HasValue ?
+                new ObjectParameter("ReportStartDate", reportStartDate) :
+                new ObjectParameter("ReportStartDate", typeof(System.DateTime));
+    
+            var reportEndDateParameter = reportEndDate.HasValue ?
+                new ObjectParameter("ReportEndDate", reportEndDate) :
+                new ObjectParameter("ReportEndDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("up_ReportEligibiltyAnalysis", districtIdParameter, buildingIdParameter, teacherIdParameter, reportStartDateParameter, reportEndDateParameter);
+        }
+    
+        public virtual ObjectResult<up_ReportHealthPlan_Result> up_ReportHealthPlan(string districtId, string buildingId, string teacherId, string fiscalYear)
+        {
+            var districtIdParameter = districtId != null ?
+                new ObjectParameter("DistrictId", districtId) :
+                new ObjectParameter("DistrictId", typeof(string));
+    
+            var buildingIdParameter = buildingId != null ?
+                new ObjectParameter("BuildingId", buildingId) :
+                new ObjectParameter("BuildingId", typeof(string));
+    
+            var teacherIdParameter = teacherId != null ?
+                new ObjectParameter("TeacherId", teacherId) :
+                new ObjectParameter("TeacherId", typeof(string));
+    
+            var fiscalYearParameter = fiscalYear != null ?
+                new ObjectParameter("FiscalYear", fiscalYear) :
+                new ObjectParameter("FiscalYear", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<up_ReportHealthPlan_Result>("up_ReportHealthPlan", districtIdParameter, buildingIdParameter, teacherIdParameter, fiscalYearParameter);
+        }
     }
 }

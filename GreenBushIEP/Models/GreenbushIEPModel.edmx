@@ -1865,7 +1865,7 @@
           </Key>
           <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="50" />
-          <Property Name="LevelName" Type="nvarchar" MaxLength="10" />
+          <Property Name="LevelName" Type="nvarchar" MaxLength="50" />
           <Property Name="BookID" Type="char" MaxLength="5" Nullable="false" />
         </EntityType>
         <EntityType Name="tblServiceFrequency">
@@ -2666,6 +2666,17 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Parameter Name="BuildingID" Type="nvarchar" Mode="In" />
           <Parameter Name="SchoolYear" Type="int" Mode="In" />
         </Function>
+        <Function Name="up_NotificationEvalsDue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="NumDays" Type="int" Mode="In" />
+        </Function>
+        <Function Name="up_NotificationIEPSDue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="NumDays" Type="int" Mode="In" />
+        </Function>
         <Function Name="up_ReportBehaviorPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
@@ -2675,11 +2686,26 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
         <Function Name="up_ReportBuildings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BuildingID" Type="int" Mode="In" />
         </Function>
+        <Function Name="up_ReportCaseloadByProvider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
+          <Parameter Name="ProviderId" Type="varchar" Mode="In" />
+          <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="StudentId" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="up_ReportDraftIEPS" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="TeacherId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
           <Parameter Name="StudentIds" Type="varchar(max)" Mode="In" />
+        </Function>
+        <Function Name="up_ReportEligibiltyAnalysis" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="ReportStartDate" Type="datetime" Mode="In" />
+          <Parameter Name="ReportEndDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="up_ReportESY" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -2692,6 +2718,12 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
         <Function Name="up_ReportExcessCost" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
           <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="up_ReportHealthPlan" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DistrictId" Type="varchar" Mode="In" />
+          <Parameter Name="BuildingId" Type="varchar" Mode="In" />
+          <Parameter Name="TeacherId" Type="varchar" Mode="In" />
+          <Parameter Name="FiscalYear" Type="varchar" Mode="In" />
         </Function>
         <Function Name="up_ReportIEPSDue" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="DistrictId" Type="varchar" Mode="In" />
@@ -3507,6 +3539,38 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="BuildingID" Mode="In" Type="String" />
             <Parameter Name="noBuilding" Mode="In" Type="Boolean" />
             <Parameter Name="isArchived" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="up_NotificationEvalsDue" ReturnType="Collection(IndividualizedEducationProgramModel.up_NotificationEvalsDue_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="NumDays" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="up_NotificationIEPSDue" ReturnType="Collection(IndividualizedEducationProgramModel.up_NotificationIEPSDue_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="NumDays" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportCaseloadByProvider" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportCaseloadByProvider_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="ProviderId" Mode="In" Type="String" />
+            <Parameter Name="FiscalYear" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="StudentId" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportEligibiltyAnalysis">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="ReportStartDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ReportEndDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="up_ReportHealthPlan" ReturnType="Collection(IndividualizedEducationProgramModel.up_ReportHealthPlan_Result)">
+            <Parameter Name="DistrictId" Mode="In" Type="String" />
+            <Parameter Name="BuildingId" Mode="In" Type="String" />
+            <Parameter Name="TeacherId" Mode="In" Type="String" />
+            <Parameter Name="FiscalYear" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="uf_Split_Result">
@@ -5800,7 +5864,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           </Key>
           <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="LevelName" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LevelName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="BookID" Type="String" Nullable="false" MaxLength="5" FixedLength="true" Unicode="false" />
           <NavigationProperty Name="tblBook" Relationship="IndividualizedEducationProgramModel.FK_tblRoles_BookID" FromRole="tblRole" ToRole="tblBook" />
           <NavigationProperty Name="tblUserRoles" Relationship="IndividualizedEducationProgramModel.FK_tblUserRoles_tblRoles" FromRole="tblRole" ToRole="tblUserRole" />
@@ -6563,6 +6627,45 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Type="DateTime" Name="InitialEvalConsentSigned" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="InitialEvalDetermination" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="DateOfBirth" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="up_NotificationEvalsDue_Result">
+          <Property Type="DateTime" Name="EvalDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="EvalCount" Nullable="true" />
+          <Property Type="String" Name="PrimaryProviderEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PrimaryProviderFirstName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="up_NotificationIEPSDue_Result">
+          <Property Type="Int32" Name="IepCount" Nullable="true" />
+          <Property Type="DateTime" Name="End_Date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PrimaryProviderEmail" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="PrimaryProviderFirstName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="up_ReportCaseloadByProvider_Result">
+          <Property Type="String" Name="ProviderName" Nullable="false" MaxLength="101" />
+          <Property Type="String" Name="LastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="FirstName" Nullable="true" MaxLength="255" />
+          <Property Type="Int32" Name="ProviderID" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="PrimaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="String" Name="SecondaryExceptionality" Nullable="false" MaxLength="105" />
+          <Property Type="Boolean" Name="isGifted" Nullable="false" />
+          <Property Type="DateTime" Name="MeetingDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ReEvalCompleted" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="up_ReportHealthPlan_Result">
+          <Property Type="String" Name="StudentFirstName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentLastName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="StudentMiddleName" Nullable="true" MaxLength="255" />
+          <Property Type="DateTime" Name="DateOfBirth" Nullable="false" Precision="23" />
+          <Property Type="String" Name="StudentBuildingID" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="BuildingName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="USD" Nullable="false" MaxLength="50" />
+          <Property Type="Int64" Name="KIDSID" Nullable="false" />
+          <Property Type="Boolean" Name="HealthCarePlan" Nullable="true" />
+          <Property Type="Boolean" Name="Concerns" Nullable="false" />
+          <Property Type="Int32" Name="FiscalYear" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -9523,6 +9626,62 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
                 <ScalarProperty Name="InitialEvalConsentSigned" ColumnName="InitialEvalConsentSigned" />
                 <ScalarProperty Name="InitialEvalDetermination" ColumnName="InitialEvalDetermination" />
                 <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_NotificationEvalsDue" FunctionName="IndividualizedEducationProgramModel.Store.up_NotificationEvalsDue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_NotificationEvalsDue_Result">
+                <ScalarProperty Name="EvalDate" ColumnName="EvalDate" />
+                <ScalarProperty Name="EvalCount" ColumnName="EvalCount" />
+                <ScalarProperty Name="PrimaryProviderEmail" ColumnName="PrimaryProviderEmail" />
+                <ScalarProperty Name="PrimaryProviderFirstName" ColumnName="PrimaryProviderFirstName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_NotificationIEPSDue" FunctionName="IndividualizedEducationProgramModel.Store.up_NotificationIEPSDue">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_NotificationIEPSDue_Result">
+                <ScalarProperty Name="IepCount" ColumnName="IepCount" />
+                <ScalarProperty Name="End_Date" ColumnName="End_Date" />
+                <ScalarProperty Name="PrimaryProviderEmail" ColumnName="PrimaryProviderEmail" />
+                <ScalarProperty Name="PrimaryProviderFirstName" ColumnName="PrimaryProviderFirstName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportCaseloadByProvider" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportCaseloadByProvider">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportCaseloadByProvider_Result">
+                <ScalarProperty Name="ProviderName" ColumnName="ProviderName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="ProviderID" ColumnName="ProviderID" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="PrimaryExceptionality" ColumnName="PrimaryExceptionality" />
+                <ScalarProperty Name="SecondaryExceptionality" ColumnName="SecondaryExceptionality" />
+                <ScalarProperty Name="isGifted" ColumnName="isGifted" />
+                <ScalarProperty Name="MeetingDate" ColumnName="MeetingDate" />
+                <ScalarProperty Name="ReEvalCompleted" ColumnName="ReEvalCompleted" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="up_ReportEligibiltyAnalysis" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportEligibiltyAnalysis" />
+          <FunctionImportMapping FunctionImportName="up_ReportHealthPlan" FunctionName="IndividualizedEducationProgramModel.Store.up_ReportHealthPlan">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="IndividualizedEducationProgramModel.up_ReportHealthPlan_Result">
+                <ScalarProperty Name="StudentFirstName" ColumnName="StudentFirstName" />
+                <ScalarProperty Name="StudentLastName" ColumnName="StudentLastName" />
+                <ScalarProperty Name="StudentMiddleName" ColumnName="StudentMiddleName" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="StudentBuildingID" ColumnName="StudentBuildingID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="BuildingName" ColumnName="BuildingName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="KIDSID" ColumnName="KIDSID" />
+                <ScalarProperty Name="HealthCarePlan" ColumnName="HealthCarePlan" />
+                <ScalarProperty Name="Concerns" ColumnName="Concerns" />
+                <ScalarProperty Name="FiscalYear" ColumnName="FiscalYear" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

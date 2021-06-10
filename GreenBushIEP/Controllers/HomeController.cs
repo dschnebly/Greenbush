@@ -125,9 +125,9 @@ namespace GreenbushIep.Controllers
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 
@@ -159,9 +159,9 @@ namespace GreenbushIep.Controllers
                 };
 
                 //dashboard notify
-                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
-                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Select(o => o.UserID)) : "");
+                 model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -190,9 +190,9 @@ namespace GreenbushIep.Controllers
                 };
 
                 //dashboard notify
-                model.draftIeps = GetDraftIeps(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
-                model.dueIeps = GetIepsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
-                model.evalsDue = GetEvalsDue(model.Students != null ? string.Join(",", model.Students.Select(o => o.UserID)) : "");
+                model.draftIeps = GetDraftIeps(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.dueIeps = GetIepsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
+                model.evalsDue = GetEvalsDue(model.members != null ? string.Join(",", model.members.Where(u => u.RoleID == student).Select(o => o.UserID)) : "");
                 model.showDashboardNotification = logon.HasValue && logon.Value == 1;
 
                 // show the latest updated version changes
@@ -5031,7 +5031,7 @@ namespace GreenbushIep.Controllers
                 StudentId = u.UserID,
                 StudentFirstName = u.StudentFirstName,
                 StudentLastName = u.StudentLastName,
-                Days = u.DraftDays.HasValue ? u.DraftDays.Value : 0
+                Days = u.DraftDays ?? 0
             }).ToList();
 
         }

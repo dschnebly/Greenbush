@@ -23,10 +23,10 @@
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newMIS.png" : "/Avatar/" + Model.user.ImageURL)" class="img-responsive" alt="My Avatar">
         </a>
     </div>
-    <h3>
-        <a href="/Manage/Edit/@(Model.user.UserID)" role="button" data-ftrans="slide">@ViewBag.DisplayName</a> <small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block"> - my current list of users</small>
-    </h3>
-    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
+    <h2>
+        <a href="/Manage/Edit/@(Model.user.UserID)" role="button" data-ftrans="slide">@ViewBag.DisplayName</a><small class="visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">- my current list of users</small>
+    </h2>
+    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0))
     {
         <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>
     }
@@ -188,91 +188,78 @@
                         {
                             <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "")  " data-id="@(user.UserID)">
 
-                            @switch (user.RoleID)
-                            {
-                                case "2": //MIS
-                                    <i class="fas fa-cog" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                case "3": //ADMIN
-                                    <i class="far fa-user" aria-hidden="true"></i>
-                                    <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                case "4": //Teacher
-                                    <i class="fa fa-graduation-cap" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                @switch (user.RoleID)
+                                {
+                                    case "2": //MIS
+                                        <i class="fas fa-cog" aria-hidden="true"></i>
                                         <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                case "6": //Nurse
-                                    <i class="fa fa-magnet" aria-hidden="true"></i>
-                                    <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
-                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
-                                    </a>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
-                                        <span class="far fa-building" aria-hidden="true"></span>
-                                    </button>
-                                    <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
-                                        <span class="glyphicon glyphicon glyphicon-trash"></span>
-                                    </button>
-                                    <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
-                                    break;
-                                default:
-                                    <i class="fa fa-child" aria-hidden="true"></i>
-                                    <span>@user.FirstName @user.MiddleName  @user.LastName</span>
-
-                                    if (user.hasIEP)
-                                    {
-                                        if (user.iepBeginDate.HasValue || user.reevalDate.HasValue)
-                                        {
-                                            <i class="fa fa-angle-double-right studentIEPDetails text-muted" data-toggle="popover" data-target="#spanDetails@(user.UserID)"></i>
-                                             <span id="spanDetails@(user.UserID)" style="display:none">
-                                                @if (user.iepBeginDate.HasValue)
-                                                {
-                                                     <text><b>IEP Date: </b></text> @user.iepBeginDate.Value.ToShortDateString()
-                                                }
-                                                @if (user.reevalDate.HasValue)
-                                                {
-                                                    if (user.iepBeginDate.HasValue)
-                                                    {
-                                                     <br/>
-                                                    }
-                                                    <text><b>Re-Eval Date: </b></text> @user.reevalDate.Value.ToShortDateString()
-                                                }
-                                              </span>
-                                        }
-
-                                        <a href="#" data-id="@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
-                                            <span class="glyphicon glyphicon-log-out"></span>
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
-                                            <span class="glyphicon glyphicon-unchecked"></span>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                            <span class="far fa-building" aria-hidden="true"></span>
                                         </button>
-                                    }
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        break;
+                                    case "3": //ADMIN
+                                        <i class="far fa-user" aria-hidden="true"></i>
+                                        <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                            <span class="far fa-building" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        break;
+                                    case "4": //Teacher
+                                        <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                                        <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                            <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                        </a>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                            <span class="far fa-building" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        break;
+                                    case "6": //Nurse
+                                        <i class="fa fa-magnet" aria-hidden="true"></i>
+                                        <a href="/Home/TeacherStudentsRole/@(user.UserID)" class="launchListOfStudents" data-ftrans="slide">
+                                            <text>@user.FirstName @user.MiddleName  @user.LastName</text>
+                                        </a>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#assignBuilding">
+                                            <span class="far fa-building" aria-hidden="true"></span>
+                                        </button>
+                                        <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#deleteUser">
+                                            <span class="glyphicon glyphicon glyphicon-trash"></span>
+                                        </button>
+                                        <a href="/Manage/Edit/@(user.UserID)" title="Edit an existing user" role="button" data-toggle="tooltip" class="btn btn-info btn-action pull-right edit-btn" data-ftrans="slide"><span class="glyphicon glyphicon-pencil"></span></a>
+                                        break;
+                                    default:
+                                        string htmlContent = "Start Date: ";
+                                        htmlContent += user.hasIEP ? Convert.ToDateTime(user.IEPDate).ToString("MM/dd/yyyy") : "No Active IEP";
+                                        htmlContent += "<br/>";
+                                        htmlContent += "Evaluation Date: ";
+                                        htmlContent += user.ReEvaluationDate != null ? user.ReEvaluationDate.Value.ToString("MM/dd/yyyy") : user.InitalEvaluationDate != null ? user.InitalEvaluationDate.Value.ToString("MM/dd/yyyy") : "No Date";
+
+                                        <i class="fa fa-child" aria-hidden="true"></i>
+                                        <span>@user.FirstName @user.MiddleName  @user.LastName</span>
+                                        <i class="fas fa-ellipsis-v tip-auto" data-toggle="myToolTip" data-placement="right" data-html="true" title="@(htmlContent)"></i>
+                                        if (user.hasIEP)
+                                        {
+                                            <a href="/Home/StudentProcedures?stid=@(user.UserID)" data-id="@(user.UserID)" title="Launch the IEP for this student" role="button" data-ftrans="slide" class="btn btn-info btn-action pull-right startIEP">
+                                                <span class="glyphicon glyphicon-log-out"></span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-info btn-action pull-right" data-id="@(user.UserID)" data-toggle="modal" data-target="#initIEP">
+                                                <span class="glyphicon glyphicon-unchecked"></span>
+                                            </button>
+                                        }
 
                                         <a href="/Home/IEPFormModule?studentId=@(user.UserID)" title="Forms" role="button" data-toggle="tooltip" class="viewForms btn btn-info btn-action pull-right viewFormsBtn" data-ftrans="slide">
                                             <span class="glyphicon glyphicon-folder-open"></span>
