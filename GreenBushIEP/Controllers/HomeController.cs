@@ -1473,6 +1473,7 @@ namespace GreenbushIep.Controllers
                 studentActiveIEP.IepStatus = IEPStatus.ARCHIVE;
                 studentActiveIEP.IsActive = false;
 
+
                 try
                 {
                     db.SaveChanges();
@@ -1487,6 +1488,14 @@ namespace GreenbushIep.Controllers
 
                 try
                 {
+                    tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+                    if (studentDetails != null)
+                    {
+                        studentAnnualIEP.StatusCode = studentDetails.StatusCode;
+                        studentAnnualIEP.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                        studentAnnualIEP.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
+                    }
+
                     db.SaveChanges();
                     return Json(new { Result = "success", Message = "The IEP status is Active." }, JsonRequestBehavior.AllowGet);
                 }
