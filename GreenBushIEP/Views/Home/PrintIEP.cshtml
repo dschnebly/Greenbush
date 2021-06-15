@@ -69,5 +69,20 @@
 
 
 @section scripts {
+    <script>
+        $( document ).ready(function() {
+            //setup up hidden checkbox images for printing to pdf
+            $('input:checkbox.iepCheckbox').change(function () {
+	            if ($(this).is(":checked")) {
+		            $(this).addClass("menuitemshow");
+		            $(this).next('img.imgCheck').attr("src", '@(@imageChecked)');
+		            $(this).next('span.imgCheck').text("[X]");
+	            } else {
+		            $(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');
+		            $(this).next('span.imgCheck').text("not-checked");
+	            }
+            });
+         });//end on ready
+    </script>
     @Scripts.Render("~/Scripts/printIEP.js")    
 }

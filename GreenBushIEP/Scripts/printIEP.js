@@ -28,6 +28,8 @@ document.getElementsByClassName('transition-page')[0].addEventListener('click', 
 	}
 });
 
+
+
 function hasClass(target, className) {
 	return new RegExp('(\\s|^)' + className + '(\\s|$)').test(target.className);
 }
