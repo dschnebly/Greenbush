@@ -20,6 +20,10 @@
     border-color: #7B7B7B;
 }
 
+    .btn-info:hover {
+        color: #22D190;
+    }
+
 .control-label {
     position: relative;
     top: 1vh;
