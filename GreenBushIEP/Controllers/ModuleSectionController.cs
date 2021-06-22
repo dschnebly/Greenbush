@@ -549,6 +549,7 @@ namespace GreenBushIEP.Controllers
                 model.Potential_HarmfulEffects_desc = collection["Potential_Harmful_Effects_Desc"];
                 model.Completed = Convert.ToBoolean(collection["Completed"]);
                 model.ExtendedSchoolYear_Necessary = collection["ExtendYear"];
+                model.EducationalPlacement = collection["EducationalPlacement"];
 
                 string dwa = collection["DistrictWideAssessments"];
                 switch (dwa)
@@ -677,6 +678,7 @@ namespace GreenBushIEP.Controllers
                     OC.Parental_RightsBook_flag = model.Parental_RightsBook_flag;
                     OC.Potential_HarmfulEffects_flag = model.Potential_HarmfulEffects_flag;
                     OC.Potential_HarmfulEffects_desc = model.Potential_HarmfulEffects_desc;
+                    OC.EducationalPlacement = model.EducationalPlacement;
                     OC.Completed = model.Completed;
                     OC.Create_Date = DateTime.Now;
                     OC.ModifiedBy = ModifiedBy;

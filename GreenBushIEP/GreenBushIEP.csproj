@@ -230,6 +230,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ILPController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -352,6 +353,9 @@
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblFormContinuousLearningPlan.cs">
+      <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblFormFileReview.cs">
       <DependentUpon>GreenbushIEPModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblFormIEPAmendment.cs">
@@ -1352,6 +1356,7 @@
     <Content Include="Views\ILP\_DocumentStorageModule.cshtml" />
     <Content Include="Views\Form\ElectronicCommunication.cshtml" />
     <Content Include="Views\Home\Print\_PrintGoalPartial.cshtml" />
+    <Content Include="Views\Form\IdeaGiftedFileReview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

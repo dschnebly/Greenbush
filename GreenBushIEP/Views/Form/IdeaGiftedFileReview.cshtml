@@ -1,0 +1,771 @@
+﻿@{
+    var formModel = ViewData["formFileReview"] != null ? ViewData["formFileReview"] as GreenBushIEP.Models.tblFormFileReview : new GreenBushIEP.Models.tblFormFileReview();
+	var imageRadioChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_yes.png");
+    var imageRadioNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_no.png");	
+
+}
+<div class="module-page savdDraftAllowed">
+    <div>
+        <p class="text-center">
+            <span style='font-size:18.0pt;font-style:normal'>IDEA & Gifted File Review</span>
+
+        </p>
+        <p>
+            This FORM provides the most current self-assessment questions included in the Kansas State Department of Education Special Education and Title Services Individuals with Disabilities Education Act (IDEA) & Gifted Requirements File Review.
+            <a href="https://www.ksde.org/Portals/0/ECSETS/KIAS/FileReviewSelfAssess-IDEA-Gifted.pdf">https://www.ksde.org/Portals/0/ECSETS/KIAS/FileReviewSelfAssess-IDEA-Gifted.pdf</a>
+        </p>
+    </div>
+    <div>        
+        <span class="FormAlign">
+			<b>Student Name (Last, First)</b></span>	
+        <textarea placeholder="Student Name" maxlength="100" style="width:125px;height:30px">@(formModel.StudentName)</textarea><span id="StudentName" style="display:none;" class="input-value ">@(formModel.StudentName)</span>
+
+    </div>
+    <div>
+        <label>District Number</label>
+        @*<textarea placeholder="Student Name" maxlength="100" style="width:125px;height:30px">@(formModel.StudentName)</textarea><span id="StudentName" style="display:none;" class="input-value ">@(formModel.StudentName)</span>*@
+
+    </div>
+    <div class="voffset2">
+
+        <p>
+            <b>
+                1. Was a copy of parent rights/procedural safeguards provided to both of the student’s
+                parents (or legal education decision-maker) and the student (if the student is 18 or older) in all
+                required instances and in the native language of the parents/adult student or other mode of
+                communication used by the parents/adult student?
+            </b>
+        </p>
+        <p class="small">
+            Select YES if DOCUMENTATION SHOWS ALL of the following:• A copy of parent rights/procedural safeguards was
+            provided to both of the student’s parents (or legal education decision-maker) and student (if 18 or older) in ALL required
+            instances.
+        </p><p class="small">
+            AND The parent rights/procedural safeguards provided were written in the native language or other mode of
+            communication used by the parents/adult student.
+        </p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="ParentRightsProvided" value="1" @(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="ParentRightsProvided" data-val="1" class='radioCheck'>@(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="ParentRightsProvided" value="2" @(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="ParentRightsProvided" data-val="2" class='radioCheck'>@(formModel.ParentRightsProvided.HasValue && formModel.ParentRightsProvided.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p><b>2. Were the assessments and other evaluation materials used to assess the student (for an initial evaluation or reevaluation) selected and administered so as not to be discriminatory on a racial or cultural basis?</b></p>
+        <p class="small">Select YES if DOCUMENTATION SHOWS that the assessments and other evaluation materials used to assess the student, for the initial evaluation or most recent reevaluation, were selected and administered so as not to be discriminatory on a racial or cultural basis.                                                                                                                                                                                             This information could be found in assessment technical manuals, a prior written notice form, an evaluation/eligibility report, teacher/provider notes, or other documentation in the education record.Staff who conduct assessments could cite relevant information from the assessment technical manual, or refer to that information in professional notes, or provide some other type of documentation about how those findings were taken into consideration.</p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessNotDiscrimatory" value="1" @(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessNotDiscrimatory" data-val="1" class='radioCheck'>@(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessNotDiscrimatory" value="2" @(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessNotDiscrimatory" data-val="2" class='radioCheck'>@(formModel.AssessNotDiscrimatory.HasValue && formModel.AssessNotDiscrimatory.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                Were the assessments and other evaluation materials used to assess the student (for an
+                initial evaluation or reevaluation) provided and administered in the student’s native language
+                or other mode of communication?
+            </b>
+        </p>
+        <p class="small">
+            Select YES if DOCUMENTATION SHOWS that the assessments and other evaluation materials used to assess the student,
+            for the initial evaluation or most recent reevaluation, were provided and administered in the student’s native language or
+            other mode of communication. OR• Select YES if DOCUMENTATION SHOWS that it was clearly not feasible to provide or
+            administer the assessments and other evaluation materials in the student’s native language or other mode of
+            communication.
+        </p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessNativeLanguage" value="1" @(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessNativeLanguage" data-val="1" class='radioCheck'>@(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessNativeLanguage" value="2" @(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessNativeLanguage" data-val="2" class='radioCheck'>@(formModel.AssessNativeLanguage.HasValue && formModel.AssessNativeLanguage.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                3. During the most recent evaluation or reevaluation of the student, was the student assessed
+                in ALL areas related to the suspected exceptionality, including, if appropriate, health, vision,
+                hearing, social and emotional status, general intelligence, academic performance,
+                communicative status, and motor abilities?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if documentation shows that during the most recent evaluation or reevaluation, the student was assessed in
+            ALL areas related to the suspected exceptionality, including, if appropriate, health, vision, hearing, social and emotional
+            status, general intelligence, academic performance, communicative status, and motor abilities. This information could be
+            found in communications or information provided by the parent, teacher notes and observations, Student Intervention
+            Team (SIT) notes/documents, discipline records, emergency safety intervention (ESI) records, health and vision
+            screenings, etc.
+        </p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessExceptionality" value="1" @(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessExceptionality" data-val="1" class='radioCheck'>@(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AssessExceptionality" value="2" @(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AssessExceptionality" data-val="2" class='radioCheck'>@(formModel.AssessExceptionality.HasValue && formModel.AssessExceptionality.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                4. If the parent was required to obtain a medical diagnosis as part of the evaluation or re-evaluation, did the public agency pay for it?
+            </b>
+        </p>
+
+        <p class="small">
+            Select YES if DOCUMENTATION SHOWS that the parent was required to obtain a medical diagnosis AND the public
+            agency paid for it. First review the education record for documentation indicating whether the parent was required to
+            obtain a medical diagnosis for the student as part of the evaluation or re-evaluation. If documentation shows that a
+            medical diagnosis was required, review the education record for documentation that the public agency paid for the
+            medical diagnosis or reimbursed the parent for the cost of obtaining the medical diagnosis. Select N/A if
+            DOCUMENTATION SHOWS: • This is a file for a gifted-only student. OR • The public agency did not require the parent to
+            obtain a medical diagnosis for the student as part of the evaluation or re-evaluation.
+        </p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="PublicAgencyPayForDx" value="1" @(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PublicAgencyPayForDx" data-val="1" class='radioCheck'>@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="PublicAgencyPayForDx" value="2" @(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PublicAgencyPayForDx" data-val="2" class='radioCheck'>@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                5. Upon completing the most recent evaluation or reevaluation of the student, did a team of
+                qualified professionals AND the parent determine whether the student is a student with an
+                exceptionality?
+            </b>
+        </p>
+        <p class="small">
+            Select YES if documentation shows that the most recent (initial or continued) eligibility determination was made by ALL
+            of the following: • A team of qualified professionals AND• The parent. SPECIAL NOTE: A team of qualified professionals
+            includes more than one professional. One professional alone (e.g., a school psychologist alone) is not a team of qualified
+            professionals
+        </p>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="QualifiedProfExceptionality" value="1" @(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="QualifiedProfExceptionality" data-val="1" class='radioCheck'>@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="QualifiedProfExceptionality" value="2" @(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="QualifiedProfExceptionality" data-val="2" class='radioCheck'>@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="QualifiedProfExceptionality" value="-1" @(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="QualifiedProfExceptionality" data-val="-1" class='radioCheck'>@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
+        <p>
+            <b>
+                6. If the student was suspected to have a specific learning disability, did the group
+                responsible for determining (initial or continued) eligibility include ALL of the following? •
+                The student’s parents; and • The student’s regular teacher; or if the student does not have a
+                regular teacher, a regular classroom teacher qualified to teach a student of his or her age; or
+                for a child of less than school age, an individual qualified by the SEA to teach a child of his or
+                her age; and • At least one person qualified to conduct individual diagnostic examinations of
+                children, such as a school psychologist, speech-language pathologist, or remedial reading
+                teacher
+
+            </b>
+        </p>
+       
+        <p class="small">
+            Select YES if DOCUMENTATION SHOWS that the group responsible for determining initial or continued eligibility
+            included ALL of the following:• The student’s parents;AND• The student’s regular teacher, or if the student does not have
+            a regular teacher, a regular classroom teacher qualified to teach a student of his or her age, or for a child of less than
+            school age, an individual qualified by theSEA to teach a child of his or her age;AND• At least one person qualified to
+            conduct individual diagnostic examinations of children, such as a school psychologist, speech language pathologist, or
+            remedial reading teacher. Select N/A if documentation shows: • This is a file for a gifted-only student. OR• This is a file
+            for a student who was not suspected to have a specific learning disability.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GroupContainQualified" value="1" @(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GroupContainQualified" data-val="1" class='radioCheck'>@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GroupContainQualified" value="2" @(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GroupContainQualified" data-val="2" class='radioCheck'>@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                7. When conducting the evaluation or reevaluation, did the eligibility team ensure that a
+                single procedure, measure or assessment was NOT used as the sole criterion for
+                determining whether the student has an exceptionality and for determining an appropriate
+                educational program for the student?
+
+            </b>
+        </p>
+     
+        <p class="small">
+            Select YES if documentation shows that a sole criterion was NOT used for determining whether the student has an
+            exceptionality or for determining an appropriate educational program for the student.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="NoSingleCriterionUsed" value="1" @(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="NoSingleCriterionUsed" data-val="1" class='radioCheck'>@(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="NoSingleCriterionUsed" value="2" @(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="NoSingleCriterionUsed" data-val="2" class='radioCheck'>@(formModel.NoSingleCriterionUsed.HasValue && formModel.NoSingleCriterionUsed.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                8. When interpreting evaluation data to determine if the student is or continues to be a
+                student with an exceptionality and the educational needs of the student, did the team of
+                qualified professionals and the parent draw upon, document, and carefully consider
+                information from a variety of sources including the following: (A) aptitude and achievement
+                tests; (B) parent input; (C) teacher recommendations;(D) physical condition; (E) social or
+                cultural background; and (F) adaptive behavior
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if DOCUMENTATION SHOWS that when determining initial or continued eligibility, the team of qualified
+            professionals and the parent drew upon, documented, and carefully considered information from ALL of the following
+            sources: • aptitude and achievement tests; AND • parent input; AND • teacher recommendations; AND • physical
+            condition; AND • social or cultural background; AND • adaptive behavior
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="CarefullyConsider" value="1" @(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="CarefullyConsider" data-val="1" class='radioCheck'>@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="CarefullyConsider" value="2" @(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="CarefullyConsider" data-val="2" class='radioCheck'>@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                9. Did the group responsible for determining the student’s (initial or continued) eligibility
+                ensure that NONE of the following were the determinant factor? • Lack of appropriate
+                instruction in reading, including the essential components of reading instruction (as defined
+                in section 1208(3) of the ESEA as such section was in effect on the day before the date of
+                enactment of the Every Student Succeeds Act (December 9, 2015)); or “The term ‘essential
+                components of reading instruction’ means explicit and systematic instruction in -- (A)
+                Phonemic awareness; (B) Phonics; (C) Vocabulary development; (D) Reading fluency,
+                including oral reading skills; and (E) Reading comprehension strategies” • Lack of
+                appropriate instruction in math; OR • Limited English proficiency
+
+            </b>
+        </p>
+        <p>
+            Select YES if documentation shows that NONE of the following were a determinant factor when determining the
+            student’s initial or continued eligibility: • Lack of appropriate instruction in reading including explicit and systematic
+            instruction in phonemic awareness, phonics, vocabulary development, reading fluency, oral reading skills, and reading
+            comprehension strategies. OR • Lack of appropriate instruction in math. OR • Limited English proficiency.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="NotDeterminant" value="1" @(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="NotDeterminant" data-val="1" class='radioCheck'>@(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="NotDeterminant" value="2" @(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="NotDeterminant" data-val="2" class='radioCheck'>@(formModel.NotDeterminant.HasValue && formModel.NotDeterminant.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                10. Does the IEP include a description of the student’s present level of academic
+                achievement as part of the Present Levels of Academic Achievement and Functional
+                Performance (PLAAFPs)?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if the PLAAFP in the IEP includes a description of the student’s current level of academic achievement.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AcademicLevelDesc" value="1" @(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AcademicLevelDesc" data-val="1" class='radioCheck'>@(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AcademicLevelDesc" value="2" @(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AcademicLevelDesc" data-val="2" class='radioCheck'>@(formModel.AcademicLevelDesc.HasValue && formModel.AcademicLevelDesc.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                11. Does the IEP include a description of the student’s present level of functional
+                performance as part of the PLAAFPs?
+
+            </b>
+        </p><p class="small">
+            Select YES if the PLAAFP in the IEP includes a description of the student’s current level of functional performance or a
+            statement that functional performance was considered and there are no current concerns.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="FunctionalLevelDesc" value="1" @(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="FunctionalLevelDesc" data-val="1" class='radioCheck'>@(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="FunctionalLevelDesc" value="2" @(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="FunctionalLevelDesc" data-val="2" class='radioCheck'>@(formModel.FunctionalLevelDesc.HasValue && formModel.FunctionalLevelDesc.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                12. Does the IEP describe how the student’s disability or giftedness affects the student’s
+                involvement and progress in the general education curriculum as part of the PLAAFPs? For
+                preschool children, as appropriate, does the IEP describe how the disability affects the
+                child’s participation in appropriate activities as part of the PLAAFPs?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if the PLAAFP in the IEP involvement and progress in the general curriculum. For preschool children, select
+            YES if the PLAAFP in the IEP describes how the disability affects the child’s participation in appropriate activities. a
+            specific description of how the student’s disability or giftedness affects the student’s
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="DescribeAffects" value="1" @(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="DescribeAffects" data-val="1" class='radioCheck'>@(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="DescribeAffects" value="2" @(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="DescribeAffects" data-val="2" class='radioCheck'>@(formModel.DescribeAffects.HasValue && formModel.DescribeAffects.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                13. Are all of the annual goals in the IEP designed to meet the student’s needs that result
+                from the student’s disability or giftedness, to enable the student to be involved in and make
+                progress in the general education or advanced curriculum?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if EVERY annual goal in the IEP is designed to meet the student’s needs that result from the student’s
+            disability or giftedness, to enable the student to be involved in and make progress in the general education or advanced
+            curriculum. SPECIAL NOTE: Students who take the alternate assessment must have annual goals that enable them to be
+            involved in and make appropriate progress in the general education curriculum. Any separate curriculum is
+            supplementary, not an alternate to Tier 1 grade-aligned standards-based instruction.Alternate achievement standards
+            are performance standards that align to the general education content standards at a reduced depth, breadth, and
+            complexity.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GoalsDesignedToMeet" value="1" @(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsDesignedToMeet" data-val="1" class='radioCheck'>@(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GoalsDesignedToMeet" value="2" @(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsDesignedToMeet" data-val="2" class='radioCheck'>@(formModel.GoalsDesignedToMeet.HasValue && formModel.GoalsDesignedToMeet.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                14. Are all of the annual goals in the IEP measurable?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if EVERY annual goal in the IEP is measurable.
+            16. Was the student’s progress toward meeting each annual IEP goal measured and reported
+            using the method and frequency described in the IEP?
+            Select YES if documentation shows ALL of the following: • The IEP includes a description of how the student’s progress
+            toward meeting EACH annual IEP goal will be measured. AND. • The IEP includes a description of when periodic reports
+            on the progress the student is making toward meeting each of the annual goals will be provided. AND • The student’s
+            progress toward meeting EACH annual IEP goal was both measured using the METHOD DESCRIBED in the IEP, AND
+            reported to the parent (or education decision-maker) according to the frequency/intervals described in the IEP
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GoalsMeasurable" value="1" @(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsMeasurable" data-val="1" class='radioCheck'>@(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GoalsMeasurable" value="2" @(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsMeasurable" data-val="2" class='radioCheck'>@(formModel.GoalsMeasurable.HasValue && formModel.GoalsMeasurable.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                15. If the IEP team has determined that the student with a disability must take an alternate
+                assessment instead of a particular state or districtwide assessment, was that determination
+                made in alignment with the KSDE Dynamic Learning Maps Participation Guidelines for
+                Kansas and does the IEP include BOTH of the following?: (A) A statement of why the student
+                cannot participate in the general state or district assessment; and (B) A statement of why
+                the particular alternate assessment selected is appropriate for the student.
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if documentation shows ALL of the following: • The student meets all of the criteria listed in the KSDE
+            Dynamic Learning Maps Participation Guidelines for Kansas; AND • The IEP includes a statement of why the student
+            cannot participate in the general state or district assessment; AND • The IEP includes a statement of why the particular
+            alternate assessment selected is appropriate for the student. Select N/A if: • This is a file for a gifted-only student; OR •
+            This is a file for a student who is convicted as an adult under State law and incarcerated in an adult prison; OR • The IEP
+            Team determined that the student with a disability will take a regularState or district-wide assessment.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AlternativeAssessment" value="1" @(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AlternativeAssessment" data-val="1" class='radioCheck'>@(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="AlternativeAssessment" value="2" @(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="AlternativeAssessment" data-val="2" class='radioCheck'>@(formModel.AlternativeAssessment.HasValue && formModel.AlternativeAssessment.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                16. Does the IEP include the projected date for the beginning of special education and
+                related services, supplementary aids and services (including accommodations), program
+                modifications and supports for school personnel?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if the IEP contains a projected beginning date for EACH of the special education and related services,
+            supplementary aids and services (including accommodations, program modifications, and supports for school
+            personnel that will be provided.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="IncludeProjectedDate" value="1" @(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="IncludeProjectedDate" data-val="1" class='radioCheck'>@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="IncludeProjectedDate" value="2" @(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="IncludeProjectedDate" data-val="2" class='radioCheck'>@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                17. Does the IEP include anticipated frequency, location and duration of special education
+                and related services, supplementary aids and services (including accommodations),
+                program modifications and supports for school personnel?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if the IEP contains the anticipated frequency, location, and duration for EACH of the special education and
+            related services, supplementary aids and services (including accommodations), program modifications, and supports
+            for school personnel
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="IncludeServices" value="1" @(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="IncludeServices" data-val="1" class='radioCheck'>@(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="IncludeServices" value="2" @(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="IncludeServices" data-val="2" class='radioCheck'>@(formModel.IncludeServices.HasValue && formModel.IncludeServices.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                18. Did the IEP team consider parent concerns for enhancing the education of their student
+                in developing, reviewing and revising the IEP?
+            </b>
+        </p>
+        <p class="small">
+            Select YES if the IEP or the education record contains documentation that the IEP team considered the concerns of the
+            parent for enhancing the education of their student in developing, reviewing and revising the IEP.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EnhanceEducation" value="1" @(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EnhanceEducation" data-val="1" class='radioCheck'>@(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EnhanceEducation" value="2" @(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EnhanceEducation" data-val="2" class='radioCheck'>@(formModel.EnhanceEducation.HasValue && formModel.EnhanceEducation.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                19. If the student’s behavior impedes the student’s learning or that of others, did the IEP
+                Team consider the use of positive behavioral interventions and supports, and other
+                strategies, to address that behavior when developing, reviewing or revising the IEP?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if documentation shows that when developing, reviewing or revising the IEP, the IEP Team considered the
+            use of positive behavior interventions and supports and other strategies to address the student’s behavior that impedes
+            the student’s or others’ learning. Select N/A if documentation shows that the student DOES NOT have behavior that
+            impedes the student’s or others’ learning.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="PostiveBehavioralIntervention" value="1" @(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PostiveBehavioralIntervention" data-val="1" class='radioCheck'>@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="PostiveBehavioralIntervention" value="2" @(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PostiveBehavioralIntervention" data-val="2" class='radioCheck'>@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                20. When developing, reviewing or revising the IEP, in the case of a student who has limited
+                English proficiency, did the IEP Team consider the language needs of the student as those
+                needs relate to the student’s IEP?
+
+            </b>
+        </p><p class="small">
+            Select YES if documentation shows that when developing, reviewing or revising the IEP, the IEP Team considered the
+            language needs of the student as those needs relate to the student’s IEP. Select N/A if documentation shows that the
+            student DOES NOT have limited English proficiency.
+        </p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EnglishProficiency" value="1" @(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EnglishProficiency" data-val="1" class='radioCheck'>@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EnglishProficiency" value="2" @(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EnglishProficiency" data-val="2" class='radioCheck'>@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                21. Was the student’s educational placement determined at least annually?
+
+            </b>
+        </p><p>
+            Select YES if the education record contains documentation that the student’s educational placement was determined at
+            least annually.</p>
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EducationalPlacement" value="1" @(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EducationalPlacement" data-val="1" class='radioCheck'>@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EducationalPlacement" value="2" @(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EducationalPlacement" data-val="2" class='radioCheck'>@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+        <p>
+            <b>
+                22. If the student’s LRE (least restrictive environment) placement is outside of the regular
+                education environment for any part of the school day (including nonacademic and
+                extracurricular services and activities), did the team first determine that the nature or
+                severity of the disability is such that placement in the regular education environment with
+                the use of supplementary aids and services could not be achieved satisfactorily?
+
+            </b>
+        </p>
+        <p class="small">
+            Select YES if: • The education record contains documentation showing the student is placed in the regular education
+            environment for the entire school day, including nonacademic and extracurricular services and activities. OR • The
+            education record contains documentation showing a) the team first considered placement in the regular environment
+            with supplementary aids and services, AND b) when placing the student outside of the regular environment the team
+            determined that the nature or severity of the student’s disability is such that placement in the regular education
+            environment with supplementary aids and services cannot be achieved satisfactorily. Select N/A if: • This is a file for a
+            gifted-only student. OR • This is a file for a student who: (a) has been convicted as an adult under state law and is
+            incarcerated in an adult prison; AND (b) the student’s IEP team has modified the student’s IEP or placement because
+            theState has demonstrated a bona fide security or compelling penological interest that cannot otherwise be
+            accommodated.
+        </p>        
+           <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="SeverityOfDisability" value="1" @(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="SeverityOfDisability" data-val="1" class='radioCheck'>@(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="SeverityOfDisability" value="2" @(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="SeverityOfDisability" data-val="2" class='radioCheck'>@(formModel.SeverityOfDisability.HasValue && formModel.SeverityOfDisability.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
+    </div>
+
+    <div>
+        <label>Comments</label>
+        <p>
+            For any NO answers, put the number of the question and a description of why NO was selected. Example: 20 - No parent
+            concerns were addressed within the IEP or other documentationForm
+        </p>
+        <textarea placeholder="Comment" maxlength="200" rows="4" cols="100">@(formModel.Comments)</textarea><span id="Comments" style="display:none;" class="input-value ">@(formModel.Comments)</span>
+    </div>
+</div>

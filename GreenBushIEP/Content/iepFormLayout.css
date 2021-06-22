@@ -46,6 +46,11 @@ input[type=checkbox] {
 	display: none
 }
 
+.radioCheck {
+	display: none
+}
+
+
 .fadeInToBackground {
 	background: #525659;
 	transition: background .25s ease-in-out;
@@ -75,7 +80,9 @@ input[type=checkbox] {
 	animation: scaleDownCenter .4s ease-in both;
 }
 
-
+span.FormAlign {
+	vertical-align:top;
+}
 
 /* Style Definitions */
 p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {

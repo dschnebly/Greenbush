@@ -56,5 +56,6 @@ namespace GreenBushIEP.Models
         public string Module { get; set; }
         public Nullable<int> ModifiedBy { get; set; }
         public System.DateTime Update_Date { get; set; }
+        public string EducationalPlacement { get; set; }
     }
 }
