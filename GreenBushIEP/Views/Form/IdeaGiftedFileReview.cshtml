@@ -82,7 +82,7 @@
         </div>
         <p>
             <b>
-                Were the assessments and other evaluation materials used to assess the student (for an
+                3. Were the assessments and other evaluation materials used to assess the student (for an
                 initial evaluation or reevaluation) provided and administered in the student’s native language
                 or other mode of communication?
             </b>
@@ -113,7 +113,7 @@
         </div>
         <p>
             <b>
-                3. During the most recent evaluation or reevaluation of the student, was the student assessed
+                4. During the most recent evaluation or reevaluation of the student, was the student assessed
                 in ALL areas related to the suspected exceptionality, including, if appropriate, health, vision,
                 hearing, social and emotional status, general intelligence, academic performance,
                 communicative status, and motor abilities?
@@ -147,7 +147,7 @@
         </div>
         <p>
             <b>
-                4. If the parent was required to obtain a medical diagnosis as part of the evaluation or re-evaluation, did the public agency pay for it?
+                5. If the parent was required to obtain a medical diagnosis as part of the evaluation or re-evaluation, did the public agency pay for it?
             </b>
         </p>
 
@@ -177,9 +177,18 @@
                 &nbsp;No
             </label>
         </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="PublicAgencyPayForDx" value="-1" @(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PublicAgencyPayForDx" data-val="-1" class='radioCheck'>@(formModel.PublicAgencyPayForDx.HasValue && formModel.PublicAgencyPayForDx.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                5. Upon completing the most recent evaluation or reevaluation of the student, did a team of
+                6. Upon completing the most recent evaluation or reevaluation of the student, did a team of
                 qualified professionals AND the parent determine whether the student is a student with an
                 exceptionality?
             </b>
@@ -207,18 +216,10 @@
                 &nbsp;No
             </label>
         </div>
-        <div class="radio">
-            <label style="font-weight:normal">
-                <input type="radio" name="QualifiedProfExceptionality" value="-1" @(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value == -1 ? "checked" : "")>                
-                <img class='imgCheck' src="@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
-                <span id="QualifiedProfExceptionality" data-val="-1" class='radioCheck'>@(formModel.QualifiedProfExceptionality.HasValue && formModel.QualifiedProfExceptionality.Value  == -1 ? "radio-yes" : "")</span>
-                
-                &nbsp;N/A
-            </label>
-        </div>
+        
         <p>
             <b>
-                6. If the student was suspected to have a specific learning disability, did the group
+                7. If the student was suspected to have a specific learning disability, did the group
                 responsible for determining (initial or continued) eligibility include ALL of the following? •
                 The student’s parents; and • The student’s regular teacher; or if the student does not have a
                 regular teacher, a regular classroom teacher qualified to teach a student of his or her age; or
@@ -256,9 +257,18 @@
                 &nbsp;No
             </label>
         </div>
+          <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="GroupContainQualified" value="-1" @(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GroupContainQualified" data-val="-1" class='radioCheck'>@(formModel.GroupContainQualified.HasValue && formModel.GroupContainQualified.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                7. When conducting the evaluation or reevaluation, did the eligibility team ensure that a
+                8. When conducting the evaluation or reevaluation, did the eligibility team ensure that a
                 single procedure, measure or assessment was NOT used as the sole criterion for
                 determining whether the student has an exceptionality and for determining an appropriate
                 educational program for the student?
@@ -289,7 +299,7 @@
         </div>
         <p>
             <b>
-                8. When interpreting evaluation data to determine if the student is or continues to be a
+                9. When interpreting evaluation data to determine if the student is or continues to be a
                 student with an exceptionality and the educational needs of the student, did the team of
                 qualified professionals and the parent draw upon, document, and carefully consider
                 information from a variety of sources including the following: (A) aptitude and achievement
@@ -321,9 +331,18 @@
                 &nbsp;No
             </label>
         </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="CarefullyConsider" value="-1" @(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="CarefullyConsider" data-val="-1" class='radioCheck'>@(formModel.CarefullyConsider.HasValue && formModel.CarefullyConsider.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                9. Did the group responsible for determining the student’s (initial or continued) eligibility
+                10. Did the group responsible for determining the student’s (initial or continued) eligibility
                 ensure that NONE of the following were the determinant factor? • Lack of appropriate
                 instruction in reading, including the essential components of reading instruction (as defined
                 in section 1208(3) of the ESEA as such section was in effect on the day before the date of
@@ -360,7 +379,7 @@
         </div>
         <p>
             <b>
-                10. Does the IEP include a description of the student’s present level of academic
+                11. Does the IEP include a description of the student’s present level of academic
                 achievement as part of the Present Levels of Academic Achievement and Functional
                 Performance (PLAAFPs)?
 
@@ -388,7 +407,7 @@
         </div>
         <p>
             <b>
-                11. Does the IEP include a description of the student’s present level of functional
+                12. Does the IEP include a description of the student’s present level of functional
                 performance as part of the PLAAFPs?
 
             </b>
@@ -415,7 +434,7 @@
         </div>
         <p>
             <b>
-                12. Does the IEP describe how the student’s disability or giftedness affects the student’s
+                13. Does the IEP describe how the student’s disability or giftedness affects the student’s
                 involvement and progress in the general education curriculum as part of the PLAAFPs? For
                 preschool children, as appropriate, does the IEP describe how the disability affects the
                 child’s participation in appropriate activities as part of the PLAAFPs?
@@ -446,7 +465,7 @@
         </div>
         <p>
             <b>
-                13. Are all of the annual goals in the IEP designed to meet the student’s needs that result
+                14. Are all of the annual goals in the IEP designed to meet the student’s needs that result
                 from the student’s disability or giftedness, to enable the student to be involved in and make
                 progress in the general education or advanced curriculum?
 
@@ -480,7 +499,7 @@
         </div>
         <p>
             <b>
-                14. Are all of the annual goals in the IEP measurable?
+                15. Are all of the annual goals in the IEP measurable?
 
             </b>
         </p>
@@ -513,7 +532,7 @@
         </div>
         <p>
             <b>
-                15. If the IEP team has determined that the student with a disability must take an alternate
+                16. If the IEP team has determined that the student with a disability must take an alternate
                 assessment instead of a particular state or districtwide assessment, was that determination
                 made in alignment with the KSDE Dynamic Learning Maps Participation Guidelines for
                 Kansas and does the IEP include BOTH of the following?: (A) A statement of why the student
@@ -549,7 +568,7 @@
         </div>
         <p>
             <b>
-                16. Does the IEP include the projected date for the beginning of special education and
+                17. Does the IEP include the projected date for the beginning of special education and
                 related services, supplementary aids and services (including accommodations), program
                 modifications and supports for school personnel?
 
@@ -577,9 +596,18 @@
                 &nbsp;No
             </label>
         </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="IncludeProjectedDate" value="-1" @(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="IncludeProjectedDate" data-val="-1" class='radioCheck'>@(formModel.IncludeProjectedDate.HasValue && formModel.IncludeProjectedDate.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                17. Does the IEP include anticipated frequency, location and duration of special education
+                18. Does the IEP include anticipated frequency, location and duration of special education
                 and related services, supplementary aids and services (including accommodations),
                 program modifications and supports for school personnel?
 
@@ -609,7 +637,7 @@
         </div>
         <p>
             <b>
-                18. Did the IEP team consider parent concerns for enhancing the education of their student
+                19. Did the IEP team consider parent concerns for enhancing the education of their student
                 in developing, reviewing and revising the IEP?
             </b>
         </p>
@@ -636,7 +664,7 @@
         </div>
         <p>
             <b>
-                19. If the student’s behavior impedes the student’s learning or that of others, did the IEP
+                20. If the student’s behavior impedes the student’s learning or that of others, did the IEP
                 Team consider the use of positive behavioral interventions and supports, and other
                 strategies, to address that behavior when developing, reviewing or revising the IEP?
 
@@ -667,7 +695,7 @@
         </div>
         <p>
             <b>
-                20. When developing, reviewing or revising the IEP, in the case of a student who has limited
+                21. When developing, reviewing or revising the IEP, in the case of a student who has limited
                 English proficiency, did the IEP Team consider the language needs of the student as those
                 needs relate to the student’s IEP?
 
@@ -694,9 +722,18 @@
                 &nbsp;No
             </label>
         </div>
+        <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EnglishProficiency" value="-1" @(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EnglishProficiency" data-val="-1" class='radioCheck'>@(formModel.EnglishProficiency.HasValue && formModel.EnglishProficiency.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                21. Was the student’s educational placement determined at least annually?
+                22. Was the student’s educational placement determined at least annually?
 
             </b>
         </p><p>
@@ -719,9 +756,18 @@
                 &nbsp;No
             </label>
         </div>
+         <div class="radio">
+            <label style="font-weight:normal">
+                <input type="radio" name="EducationalPlacement" value="-1" @(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="EducationalPlacement" data-val="-1" class='radioCheck'>@(formModel.EducationalPlacement.HasValue && formModel.EducationalPlacement.Value  == -1 ? "radio-yes" : "")</span>
+                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                22. If the student’s LRE (least restrictive environment) placement is outside of the regular
+                23. If the student’s LRE (least restrictive environment) placement is outside of the regular
                 education environment for any part of the school day (including nonacademic and
                 extracurricular services and activities), did the team first determine that the nature or
                 severity of the disability is such that placement in the regular education environment with
