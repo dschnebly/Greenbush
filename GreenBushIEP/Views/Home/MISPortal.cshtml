@@ -186,7 +186,7 @@
 
                         @foreach (var user in Model.members)
                         {
-                            <div class="list-group-item @(user.RoleID == "5" && user.StatusActive == 0 ? "hidden" : "")  " data-id="@(user.UserID)">
+                            <div class="list-group-item" data-id="@(user.UserID)">
 
                                 @switch (user.RoleID)
                                 {

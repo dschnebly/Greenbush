@@ -91,7 +91,7 @@ namespace GreenbushIep.Controllers
                     user = OWNER,
                     districts = allDistricts,
                     buildings = (from building in db.tblBuildings select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(OWNER.UserID, usd, null, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(OWNER.UserID, usd, null, null, true).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
                 };
 
@@ -120,7 +120,7 @@ namespace GreenbushIep.Controllers
                     user = MIS,
                     districts = allDistricts,
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == MIS.UserID select building).Distinct().ToList(),
-                    members = db.uspUserAssignedList(MIS.UserID, usd, null, null, false).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList(),
+                    members = db.uspUserAssignedList(MIS.UserID, usd, null, null, true).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList()
                 };
 
@@ -155,7 +155,7 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == ADMIN.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == ADMIN.UserID select building).Distinct().ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, false).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned , hasIEP = u.hasIEP ?? false }).ToList()
+                    members = db.uspUserAssignedList(ADMIN.UserID, null, null, null, true).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned , hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 //dashboard notify
@@ -186,7 +186,7 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == teacher.UserID select building).Distinct().ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    members = db.uspUserAssignedList(teacher.UserID, null, null, null, false).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList()
+                    members = db.uspUserAssignedList(teacher.UserID, null, null, null, true).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 //dashboard notify
@@ -217,7 +217,7 @@ namespace GreenbushIep.Controllers
                     districts = (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == nurse.UserID select district).Distinct().ToList(),
                     buildings = (from buildingMap in db.tblBuildingMappings join building in db.tblBuildings on new { buildingMap.USD, buildingMap.BuildingID } equals new { building.USD, building.BuildingID } where buildingMap.UserID == nurse.UserID select building).Distinct().ToList(),
                     activeEducationalStatuses = db.tblStatusCodes.Where(o => o.Type == "Active").Select(o => o.StatusCode).ToList(),
-                    members = db.uspUserAssignedList(nurse.UserID, null, null, null, false).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList()
+                    members = db.uspUserAssignedList(nurse.UserID, null, null, null, true).Where(u => u.StatusActive == 1).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, BirthDate = u.DateOfBirth, IEPDate = u.ActiveIEP_BeginDate, ReEvaluationDate = u.ReEvalConsentSigned, InitalEvaluationDate = u.InitialEvalConsentSigned, hasIEP = u.hasIEP ?? false }).ToList()
                 };
 
                 return View(model);
@@ -493,7 +493,7 @@ namespace GreenbushIep.Controllers
 
                 if (selectedRoleID != "999")
                 {
-                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
+                    model.members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId > 0)
                     {
@@ -538,9 +538,13 @@ namespace GreenbushIep.Controllers
                 {
                     return View("OwnerPortal", model);
                 }
-                else
+                else if(submitter.RoleID == mis)
                 {
                     return View("MISPortal", model);
+                }
+                else if (submitter.RoleID == admin)
+                {
+                    return View("AdminPortal", model);
                 }
             }
 
