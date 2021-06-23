@@ -1399,9 +1399,7 @@ namespace GreenbushIep.Controllers
 
                 if (studentRec != null)
                 {
-                    studentAmmendIEP.StatusCode = studentRec.StatusCode;
-                    studentAmmendIEP.Primary_DisabilityCode = studentRec.Primary_DisabilityCode;
-                    studentAmmendIEP.Secondary_DisabilityCode = studentRec.Secondary_DisabilityCode;
+                    studentAmmendIEP.StatusCode = studentRec.StatusCode;                   
                 }
 
                 try
@@ -1535,6 +1533,13 @@ namespace GreenbushIep.Controllers
 
                     try
                     {
+                        tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+                        if (studentDetails != null)
+                        {                            
+                            iepDraft.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                            iepDraft.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
+                        }
+                                                
                         db.SaveChanges();
 
                         return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
@@ -3195,6 +3200,9 @@ namespace GreenbushIep.Controllers
             //student goalds
             if (theIEP != null && theIEP.current != null)
             {
+                theIEP.current.Primary_DisabilityCode = GetDisability(theIEP.current.Primary_DisabilityCode);
+                theIEP.current.Secondary_DisabilityCode = GetDisability(theIEP.current.Secondary_DisabilityCode);
+
                 if (theIEP.studentGoalBenchmarks == null)
                 {
                     theIEP.studentGoalBenchmarks = new List<tblGoalBenchmark>();

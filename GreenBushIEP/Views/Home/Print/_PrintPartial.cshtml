@@ -309,9 +309,9 @@
 		</tr>
 		<tr>
 			<td><label>Primary Disability:</label></td>
-			<td>@(Model.studentDetails.primaryDisability)</td>
+			<td>@(isDraft && !Model.current.Amendment ? Model.studentDetails.primaryDisability :  Model.current.Primary_DisabilityCode)</td>
 			<td><label>Secondary Disability:</label></td>
-			<td>@(Model.studentDetails.secondaryDisability)</td>
+			<td>@(isDraft && !Model.current.Amendment ? Model.studentDetails.secondaryDisability :  Model.current.Secondary_DisabilityCode)</td>			
 		</tr>
 		<tr>
 			<td><label>Gifted:</label></td>
