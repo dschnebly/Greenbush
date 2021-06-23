@@ -6,12 +6,14 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
     var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");	
+	var imageRadioChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_yes.png");
+    var imageRadioNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/radio_no.png");	
 	
 }
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
-	@Styles.Render("~/Content/iepFormLayout.css")
+	@Styles.Render("~/Content/iepFormLayout.css?v1.1")
 }
 
 
@@ -177,6 +179,20 @@
 				$(this).next('img.imgCheck').attr("src", '@(@imageNotChecked)');	
 				$(this).next('span.imgCheck').text("not-checked");               
 			}
+		});
+
+		  //setup up hidden checkbox images for printing to pdf
+        $('input:radio').change(function () {
+			if ($(this).is(":checked")) {				
+                $(this).addClass("menuitemshow");
+				$(this).next('img.imgCheck').attr("src", '@(imageRadioChecked)');
+				$(this).siblings('span.radioCheck').text("radio-yes");
+				
+            } else {
+				$(this).next('img.imgCheck').attr("src", '@(imageRadioNotChecked)');	
+				$(this).siblings('span.radioCheck').text("");
+				
+			}			
         });
 
 		$("textarea").bind("paste", function(e){
@@ -346,6 +362,7 @@
 
 	function SaveText(e) {
 		var form1 = document.getElementById("frmPrint");
+		form1.action = "/Form/SaveForm";
 		var markup = document.getElementsByClassName("module-page")[0].innerHTML;
 		var hasDateError = false;
 	

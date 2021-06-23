@@ -1,27 +1,45 @@
 ﻿@{
-	var formModel = ViewData["childOutcome"] != null ? ViewData["childOutcome"] as GreenBushIEP.Models.tblFormChildOutcome : new GreenBushIEP.Models.tblFormChildOutcome();
-	string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
-	
+    var formModel = ViewData["childOutcome"] != null ? ViewData["childOutcome"] as GreenBushIEP.Models.tblFormChildOutcome : new GreenBushIEP.Models.tblFormChildOutcome();
+    string dobStr = Model.studentInfo != null ? Model.studentInfo.DateOfBirth.ToString("MM/dd/yyyy") : "";
 
-	var ratingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.RatingDate.HasValue)
-	{
-		ratingDate = String.Format("{0:MM/dd/yyyy}", formModel.RatingDate.Value);
-	}
 
-	var serviceDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
-	if (formModel.ServiceDate.HasValue)
-	{
-		serviceDate = String.Format("{0:MM/dd/yyyy}", formModel.ServiceDate.Value);
-	}
+    var ratingDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.RatingDate.HasValue)
+    {
+        ratingDate = String.Format("{0:MM/dd/yyyy}", formModel.RatingDate.Value);
+    }
+	else
+    {
+        ratingDate = null;
+    }
 
-	if (formModel.FormChildOutcomeID == 0)
-	{
-		formModel.FirstName = Model.student.FirstName;
-		formModel.LastName = Model.student.LastName;
-		formModel.MiddleName = Model.student.MiddleName;
-		formModel.KIDSID = Model.studentInfo.KIDSID;
-	}
+    var serviceDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.ServiceDate.HasValue)
+    {
+        serviceDate = String.Format("{0:MM/dd/yyyy}", formModel.ServiceDate.Value);
+    }
+    else
+    {
+        serviceDate = null;
+    }
+
+    var serviceEndDate = String.Format("{0:MM/dd/yyyy}", DateTime.Now);
+    if (formModel.ServiceEndDate.HasValue)
+    {
+        serviceEndDate = String.Format("{0:MM/dd/yyyy}", formModel.ServiceEndDate .Value);
+    }
+	else
+    {
+        serviceEndDate = null;
+    }
+
+    if (formModel.FormChildOutcomeID == 0)
+    {
+        formModel.FirstName = Model.student.FirstName;
+        formModel.LastName = Model.student.LastName;
+        formModel.MiddleName = Model.student.MiddleName;
+        formModel.KIDSID = Model.studentInfo.KIDSID;
+    }
 }
 <div class="module-page savdDraftAllowed">
 	<p class="MsoBodyText text-center">
@@ -31,16 +49,20 @@
 	</p>
 	
 	<p class=MsoBodyText>
-		<span>
-			Date of Rating: <u><textarea maxlength="10" style="width:125px;height:30px">@(ratingDate)</textarea><span id="RatingDate" style="display:none;" class="input-value isDate">@(ratingDate)</span></u>
-		</span>		
+		<span class="FormAlign">
+			Date of Rating: </span>	
+		<u><textarea maxlength="10" style="width:125px;height:30px">@(ratingDate)</textarea><span id="RatingDate" style="display:none;" class="input-value isDate">@(ratingDate)</span></u>
+			
 	</p>
 	<p>
-		<span>Date of Services: </span><u><textarea maxlength="10" style="width:125px;height:30px">@(serviceDate)</textarea><span id="ServiceDate" style="display:none;" class="input-value isDate">@(serviceDate)</span></u>
+		<span class="FormAlign">Date of First Day of Service: </span><u><textarea maxlength="10" style="width:125px;height:30px">@(serviceDate)</textarea><span id="ServiceDate" style="display:none;" class="input-value isDate">@(serviceDate)</span></u>
+	</p>	
+	<p>
+		<span class="FormAlign">Date of Last Day of Service: </span><u><textarea maxlength="10" style="width:125px;height:30px">@(serviceEndDate)</textarea><span id="ServiceEndDate" style="display:none;" class="input-value isDate">@(serviceEndDate)</span></u>
 	</p>	
 	<p class=MsoBodyText  style="font-size:12pt;margin-top:8px;font-weight:bold">Child Information:</p>
 	<p class=MsoBodyText>
-		<span>
+		<span class="FormAlign">
 			Legal Name: 
 		</span>
 		<span>
@@ -51,16 +73,17 @@
 	</p>
 
 	<p class=MsoBodyText>
-		<span>
+		<span class="FormAlign">
 			Date of birth:
 		</span>
 		<u><textarea maxlength="10" style="width:125px;height:30px">@(dobStr)</textarea><span id="DateOfBirth" style="display:none;" class="input-value isDate">@(dobStr)</span></u>
 	</p>
 
 	<p class=MsoBodyText>
-		<span>
-			KIDS ID#:<u><textarea maxlength="20" style="width:125px;height:30px">@(formModel.KIDSID)</textarea><span id="KIDSID" style="display:none;" class="input-value ">@(formModel.KIDSID)</span></u>
-		</span>
+		<span class="FormAlign">
+			KIDS ID#:</span>
+		<u><textarea maxlength="20" style="width:125px;height:30px">@(formModel.KIDSID)</textarea><span id="KIDSID" style="display:none;" class="input-value ">@(formModel.KIDSID)</span></u>
+		
 	</p>
 	<p class=MsoBodyText  style="font-size:12pt;margin-top:8px;font-weight:bold">Persons involved in deciding the summary ratings:</p>
 	<table class=MsoNormalTable border=1 cellspacing=5 cellpadding=15 style='width:100%;border: solid black 1pt'>

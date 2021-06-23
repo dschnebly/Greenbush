@@ -20,7 +20,7 @@
     border-color: #7B7B7B;
 }
 
-    .btn-info:hover {
+    .btn-info:hover, active {
         color: #22D190;
     }
 

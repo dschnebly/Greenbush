@@ -485,6 +485,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="Create_Date" Type="datetime" Nullable="false" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="ServiceEndDate" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormChildOutcomes_PersonsInvolved">
           <Key>
@@ -629,6 +630,49 @@
           <Property Name="Goals_Statement3" Type="nvarchar" MaxLength="2000" />
           <Property Name="Goals_Statement4" Type="nvarchar" MaxLength="2000" />
           <Property Name="District" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.tblFormFileReviews' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblFormFileReviews">
+          <Key>
+            <PropertyRef Name="FormFileReviewID" />
+            <PropertyRef Name="StudentName" />
+            <PropertyRef Name="FormDate" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="ModifiedBy" />
+          </Key>
+          <Property Name="FormFileReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentName" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FormDate" Type="datetime" Nullable="false" />
+          <Property Name="ParentRightsProvided" Type="int" />
+          <Property Name="AssessNotDiscrimatory" Type="int" />
+          <Property Name="AssessNativeLanguage" Type="int" />
+          <Property Name="AssessExceptionality" Type="int" />
+          <Property Name="PublicAgencyPayForDx" Type="int" />
+          <Property Name="QualifiedProfExceptionality" Type="int" />
+          <Property Name="GroupContainQualified" Type="int" />
+          <Property Name="NoSingleCriterionUsed" Type="int" />
+          <Property Name="CarefullyConsider" Type="int" />
+          <Property Name="NotDeterminant" Type="int" />
+          <Property Name="AcademicLevelDesc" Type="int" />
+          <Property Name="FunctionalLevelDesc" Type="int" />
+          <Property Name="DescribeAffects" Type="int" />
+          <Property Name="GoalsDesignedToMeet" Type="int" />
+          <Property Name="GoalsMeasurable" Type="int" />
+          <Property Name="GoalsProgress" Type="int" />
+          <Property Name="AlternativeAssessment" Type="int" />
+          <Property Name="IncludeProjectedDate" Type="int" />
+          <Property Name="IncludeServices" Type="int" />
+          <Property Name="EnhanceEducation" Type="int" />
+          <Property Name="PostiveBehavioralIntervention" Type="int" />
+          <Property Name="EnglishProficiency" Type="int" />
+          <Property Name="EducationalPlacement" Type="int" />
+          <Property Name="SeverityOfDisability" Type="int" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" Nullable="false" />
+          <Property Name="Create_Date" Type="datetime" />
+          <Property Name="Update_Date" Type="datetime" />
         </EntityType>
         <EntityType Name="tblFormIEPAmendment">
           <Key>
@@ -1716,6 +1760,7 @@
           <Property Name="Module" Type="nvarchar" MaxLength="50" />
           <Property Name="ModifiedBy" Type="int" />
           <Property Name="Update_Date" Type="datetime" Nullable="false" />
+          <Property Name="EducationalPlacement" Type="nvarchar" MaxLength="2000" />
         </EntityType>
         <EntityType Name="tblPermissions">
           <Key>
@@ -2949,6 +2994,42 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySet Name="tblUserRoles" EntityType="Self.tblUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormFileReviews" EntityType="Self.tblFormFileReviews" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblFormFileReviews].[FormFileReviewID] AS [FormFileReviewID], 
+    [tblFormFileReviews].[StudentName] AS [StudentName], 
+    [tblFormFileReviews].[FormDate] AS [FormDate], 
+    [tblFormFileReviews].[ParentRightsProvided] AS [ParentRightsProvided], 
+    [tblFormFileReviews].[AssessNotDiscrimatory] AS [AssessNotDiscrimatory], 
+    [tblFormFileReviews].[AssessNativeLanguage] AS [AssessNativeLanguage], 
+    [tblFormFileReviews].[AssessExceptionality] AS [AssessExceptionality], 
+    [tblFormFileReviews].[PublicAgencyPayForDx] AS [PublicAgencyPayForDx], 
+    [tblFormFileReviews].[QualifiedProfExceptionality] AS [QualifiedProfExceptionality], 
+    [tblFormFileReviews].[GroupContainQualified] AS [GroupContainQualified], 
+    [tblFormFileReviews].[NoSingleCriterionUsed] AS [NoSingleCriterionUsed], 
+    [tblFormFileReviews].[CarefullyConsider] AS [CarefullyConsider], 
+    [tblFormFileReviews].[NotDeterminant] AS [NotDeterminant], 
+    [tblFormFileReviews].[AcademicLevelDesc] AS [AcademicLevelDesc], 
+    [tblFormFileReviews].[FunctionalLevelDesc] AS [FunctionalLevelDesc], 
+    [tblFormFileReviews].[DescribeAffects] AS [DescribeAffects], 
+    [tblFormFileReviews].[GoalsDesignedToMeet] AS [GoalsDesignedToMeet], 
+    [tblFormFileReviews].[GoalsMeasurable] AS [GoalsMeasurable], 
+    [tblFormFileReviews].[GoalsProgress] AS [GoalsProgress], 
+    [tblFormFileReviews].[AlternativeAssessment] AS [AlternativeAssessment], 
+    [tblFormFileReviews].[IncludeProjectedDate] AS [IncludeProjectedDate], 
+    [tblFormFileReviews].[IncludeServices] AS [IncludeServices], 
+    [tblFormFileReviews].[EnhanceEducation] AS [EnhanceEducation], 
+    [tblFormFileReviews].[PostiveBehavioralIntervention] AS [PostiveBehavioralIntervention], 
+    [tblFormFileReviews].[EnglishProficiency] AS [EnglishProficiency], 
+    [tblFormFileReviews].[EducationalPlacement] AS [EducationalPlacement], 
+    [tblFormFileReviews].[SeverityOfDisability] AS [SeverityOfDisability], 
+    [tblFormFileReviews].[Comments] AS [Comments], 
+    [tblFormFileReviews].[CreatedBy] AS [CreatedBy], 
+    [tblFormFileReviews].[ModifiedBy] AS [ModifiedBy], 
+    [tblFormFileReviews].[Create_Date] AS [Create_Date], 
+    [tblFormFileReviews].[Update_Date] AS [Update_Date]
+    FROM [dbo].[tblFormFileReviews] AS [tblFormFileReviews]</DefiningQuery>
+          </EntitySet>
           <EntitySet Name="vw_BuildingList" EntityType="Self.vw_BuildingList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_BuildingList].[USD] AS [USD], 
@@ -3572,6 +3653,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
             <Parameter Name="TeacherId" Mode="In" Type="String" />
             <Parameter Name="FiscalYear" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="tblFormFileReviews" EntityType="IndividualizedEducationProgramModel.tblFormFileReview" />
           </EntityContainer>
         <ComplexType Name="uf_Split_Result">
           <Property Type="Int16" Name="idx" Nullable="true" />
@@ -4467,6 +4549,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="tblFormChildOutcomes_PersonsInvolved" Relationship="IndividualizedEducationProgramModel.FK_tblFormChildOutcomes_PersonsInvolved_FormChildOutcomeID" FromRole="tblFormChildOutcome" ToRole="tblFormChildOutcomes_PersonsInvolved" />
           <NavigationProperty Name="tblFormChildOutcomes_SupportingEvidence" Relationship="IndividualizedEducationProgramModel.FK_tblFormChildOutcomes_SupportingEvidence_FormChildOutcomeID" FromRole="tblFormChildOutcome" ToRole="tblFormChildOutcomes_SupportingEvidence" />
+          <Property Name="ServiceEndDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="tblFormChildOutcomes_PersonsInvolved">
           <Key>
@@ -5704,6 +5787,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Name="Module" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ModifiedBy" Type="Int32" />
           <Property Name="Update_Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EducationalPlacement" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="tblPermission">
           <Key>
@@ -6667,6 +6751,47 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <Property Type="Boolean" Name="Concerns" Nullable="false" />
           <Property Type="Int32" Name="FiscalYear" Nullable="true" />
         </ComplexType>
+        <EntityType Name="tblFormFileReview">
+          <Key>
+            <PropertyRef Name="FormFileReviewID" />
+            <PropertyRef Name="StudentName" />
+            <PropertyRef Name="FormDate" />
+            <PropertyRef Name="CreatedBy" />
+            <PropertyRef Name="ModifiedBy" />
+          </Key>
+          <Property Name="FormFileReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FormDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ParentRightsProvided" Type="Int32" />
+          <Property Name="AssessNotDiscrimatory" Type="Int32" />
+          <Property Name="AssessNativeLanguage" Type="Int32" />
+          <Property Name="AssessExceptionality" Type="Int32" />
+          <Property Name="PublicAgencyPayForDx" Type="Int32" />
+          <Property Name="QualifiedProfExceptionality" Type="Int32" />
+          <Property Name="GroupContainQualified" Type="Int32" />
+          <Property Name="NoSingleCriterionUsed" Type="Int32" />
+          <Property Name="CarefullyConsider" Type="Int32" />
+          <Property Name="NotDeterminant" Type="Int32" />
+          <Property Name="AcademicLevelDesc" Type="Int32" />
+          <Property Name="FunctionalLevelDesc" Type="Int32" />
+          <Property Name="DescribeAffects" Type="Int32" />
+          <Property Name="GoalsDesignedToMeet" Type="Int32" />
+          <Property Name="GoalsMeasurable" Type="Int32" />
+          <Property Name="GoalsProgress" Type="Int32" />
+          <Property Name="AlternativeAssessment" Type="Int32" />
+          <Property Name="IncludeProjectedDate" Type="Int32" />
+          <Property Name="IncludeServices" Type="Int32" />
+          <Property Name="EnhanceEducation" Type="Int32" />
+          <Property Name="PostiveBehavioralIntervention" Type="Int32" />
+          <Property Name="EnglishProficiency" Type="Int32" />
+          <Property Name="EducationalPlacement" Type="Int32" />
+          <Property Name="SeverityOfDisability" Type="Int32" />
+          <Property Name="Comments" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="ModifiedBy" Type="Int32" Nullable="false" />
+          <Property Name="Create_Date" Type="DateTime" Precision="3" />
+          <Property Name="Update_Date" Type="DateTime" Precision="3" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7654,6 +7779,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblFormChildOutcomes">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormChildOutcome">
               <MappingFragment StoreEntitySet="tblFormChildOutcomes">
+                <ScalarProperty Name="ServiceEndDate" ColumnName="ServiceEndDate" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -8914,6 +9040,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySetMapping Name="tblOtherConsiderations">
             <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblOtherConsideration">
               <MappingFragment StoreEntitySet="tblOtherConsiderations">
+                <ScalarProperty Name="EducationalPlacement" ColumnName="EducationalPlacement" />
                 <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
                 <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
                 <ScalarProperty Name="Module" ColumnName="Module" />
@@ -9685,6 +9812,44 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="tblFormFileReviews">
+            <EntityTypeMapping TypeName="IndividualizedEducationProgramModel.tblFormFileReview">
+              <MappingFragment StoreEntitySet="tblFormFileReviews">
+                <ScalarProperty Name="Update_Date" ColumnName="Update_Date" />
+                <ScalarProperty Name="Create_Date" ColumnName="Create_Date" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="SeverityOfDisability" ColumnName="SeverityOfDisability" />
+                <ScalarProperty Name="EducationalPlacement" ColumnName="EducationalPlacement" />
+                <ScalarProperty Name="EnglishProficiency" ColumnName="EnglishProficiency" />
+                <ScalarProperty Name="PostiveBehavioralIntervention" ColumnName="PostiveBehavioralIntervention" />
+                <ScalarProperty Name="EnhanceEducation" ColumnName="EnhanceEducation" />
+                <ScalarProperty Name="IncludeServices" ColumnName="IncludeServices" />
+                <ScalarProperty Name="IncludeProjectedDate" ColumnName="IncludeProjectedDate" />
+                <ScalarProperty Name="AlternativeAssessment" ColumnName="AlternativeAssessment" />
+                <ScalarProperty Name="GoalsProgress" ColumnName="GoalsProgress" />
+                <ScalarProperty Name="GoalsMeasurable" ColumnName="GoalsMeasurable" />
+                <ScalarProperty Name="GoalsDesignedToMeet" ColumnName="GoalsDesignedToMeet" />
+                <ScalarProperty Name="DescribeAffects" ColumnName="DescribeAffects" />
+                <ScalarProperty Name="FunctionalLevelDesc" ColumnName="FunctionalLevelDesc" />
+                <ScalarProperty Name="AcademicLevelDesc" ColumnName="AcademicLevelDesc" />
+                <ScalarProperty Name="NotDeterminant" ColumnName="NotDeterminant" />
+                <ScalarProperty Name="CarefullyConsider" ColumnName="CarefullyConsider" />
+                <ScalarProperty Name="NoSingleCriterionUsed" ColumnName="NoSingleCriterionUsed" />
+                <ScalarProperty Name="GroupContainQualified" ColumnName="GroupContainQualified" />
+                <ScalarProperty Name="QualifiedProfExceptionality" ColumnName="QualifiedProfExceptionality" />
+                <ScalarProperty Name="PublicAgencyPayForDx" ColumnName="PublicAgencyPayForDx" />
+                <ScalarProperty Name="AssessExceptionality" ColumnName="AssessExceptionality" />
+                <ScalarProperty Name="AssessNativeLanguage" ColumnName="AssessNativeLanguage" />
+                <ScalarProperty Name="AssessNotDiscrimatory" ColumnName="AssessNotDiscrimatory" />
+                <ScalarProperty Name="ParentRightsProvided" ColumnName="ParentRightsProvided" />
+                <ScalarProperty Name="FormDate" ColumnName="FormDate" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="FormFileReviewID" ColumnName="FormFileReviewID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -628,6 +628,7 @@ namespace GreenBushIEP.Models
         public tblFormChildOutcome childOutcome { get; set; }
         public tblFormTransitionReferral formTransReferral { get; set; }
 
+        public tblFormFileReview formFileReview { get; set; }
 
         public IEPFormFileViewModel()
         {

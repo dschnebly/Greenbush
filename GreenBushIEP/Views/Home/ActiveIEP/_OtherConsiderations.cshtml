@@ -91,38 +91,7 @@
             </div>
         </div>
         <hr />
-        @*<div class="row voffset2">
-            <div class="col-md-12">
-                <label>Transportation Plan</label>
-            </div>
-        </div>
-        <div class="row voffset2">
-            <div class="col-md-12">
-                <div class="form-check">
-                    <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="TransporationPlan" id="TP_No" value="1" @(Model.Transporation_NotEligible.HasValue && Model.Transporation_NotEligible.Value ? "checked" : String.Empty)>The student is not eligible for transportation.</label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="TransporationPlan" id="TP_Req" value="2" @(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value ? "checked" : String.Empty)>The nature of the student’s disability is such that transportation is required.</label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="TransporationPlan" id="TP_AOB" value="3" @(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value ? "checked" : String.Empty)>The IEP team has determined the student needs to attend a building other than their home school in order to receive special education services</label><br />
-                    <label class="radio-inline" style="font-size: 16px;"><input disabled type="radio" name="TransporationPlan" id="TP_Other" value="4" @(Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value ? "checked" : String.Empty)>Other</label><br />
-                </div>
-				@{
-					var showOther = false;
-					if ((Model.Transporation_Other_flag.HasValue && Model.Transporation_Other_flag.Value) ||
-						(Model.Transporation_AttendOtherBuilding.HasValue && Model.Transporation_AttendOtherBuilding.Value) ||
-						(Model.Transporation_Disability_flag.HasValue && Model.Transporation_Disability_flag.Value))
-					{
-						showOther = true;
-					}
-				}
-
-                <div class="form-check voffset2" id="TransporationPlan_TextArea">
-                    <div id="TP_Other_Desc" style="display: @(showOther ? "block;" : "none;")">
-                        <p>Description: @Model.Transporation_Other_desc</p>
-                    </div>
-                </div>
-				
-            </div>
-        </div>
-        <hr />*@
+      
         <div class="row voffset2">
             <div class="col-md-12">
                 <label>Regular Education Environment</label>
@@ -226,10 +195,12 @@
 
         <div class="row voffset2">
             <div class="col-md-12" style="font-size:16px">
-                <p>The parent(s)/legal education decision maker will be informed of (@studentName)'s progress in writing at least one time every quarter.</p>
-
+                <p>The parent(s)/legal education decision-maker will be informed of @studentName's progress in writing quarterly or concurrent with the issuance of district report cards.</p>
+                <p>The removal of children with disabilities from the regular educational environment (including extracurricular and nonacademic services and activities) occurs only if the nature or severity of the disability is such that education in regular classes using supplementary aids and services cannot be achieved satisfactorily.  Extracurricular and nonacademic services and activities may include but are not limited to meals, recess, transportation, athletics, clubs, and counseling services.</p>
+                <p>Based on current data, individualized student needs, identified goals, services, and supports, describe how and why the student's educational placement in the least restrictive environment was determined.</p>
+                <p>@(Model.EducationalPlacement)</p>
                 <p>The IEP team has reviewed this educational placement and/or services and considers it reasonably designed to deliver a Free Appropriate Public Education (FAPE) in the student’s least restrictive environment.</p>
-                <p>Further Clarification: The provision of the regularly-scheduled special education and related services is not possible due to events that are beyond the control of the school such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>
+                <p>Further Clarification: The provision of the regularly scheduled special education and related services is not possible due to events that are beyond the control of the school, such as school closure due to weather or other emergencies, emergency drills, or when the student is absent from school (this does not include suspension or expulsion of the student). This IEP follows the responsible school district calendar unless otherwise specifically noted.</p>               
             </div>
         </div>
         <div class="row">
