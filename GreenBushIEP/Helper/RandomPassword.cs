@@ -266,7 +266,7 @@ namespace GreenBushIEP.Helper
                 mailMessage.ReplyToList.Add(new System.Net.Mail.MailAddress("GreenbushIEP@greenbush.org"));
                 mailMessage.To.Add(user.Email);
                 mailMessage.Subject = "Your new Greenbush IEP password ";
-                mailMessage.Body = "You have been added as a user in IEP Backpack.  Your log in information is below.  Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance." + Environment.NewLine + Environment.NewLine + " URL: https://greenbushbackpack.org " + Environment.NewLine + " Password: " + password;
+                mailMessage.Body = "Welcome to IEP Backpack!" + Environment.NewLine + Environment.NewLine + " Log in at URL: https://greenbushbackpack.org " + Environment.NewLine + " using Password: " + password + Environment.NewLine + Environment.NewLine + "To change your password, log in with the password provided and click on your account name. Contact melanie.johnson@greenbush.org or (620) 724-6281 if you need any assistance.";
 
                 smtpClient.Send(mailMessage);
             }

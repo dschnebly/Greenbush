@@ -58,16 +58,15 @@ body {
     margin: 0;
     padding: 0;
     list-style: none;
-    border-bottom: 1px solid #E1E1E1;
-    border-top: 1px solid #E1E1E1;
+    border-bottom: 1px solid #D3D3D3;
+    border-top: 1px solid #D3D3D3;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .student-city {
-    font-weight: bold;
-    font-size: 13pt;
+    font-size: 14pt;
 }
 
 .navigation li {
@@ -133,19 +132,23 @@ body {
 }
 
 label[for=IEPBeginDate] {
-    color: #676767;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 label[for=IEPMeetingDate] {
-    color: #676767;
+    font-weight: bold;
+    font-size: 16px;
 }
 
 #backtoportal {
     font-size: 20px;
     font-weight: bold;
-    background-color: #B6C391;
-    color: #666;
+    color: #666 !important;
     margin-right: 60px;
+    background: none !important;
+    background-color: rgb(34, 209, 144) !important;
+    border: none !important;
 }
 
 .edit-student h2 {
@@ -207,6 +210,13 @@ label[for=IEPMeetingDate] {
     font-size: 25px;
     top: 2px;
     margin-top: -20px;
+}
+
+#IEPDates {
+    color: #444;
+    background-color: #fff;
+    font-weight: bold;
+    border: 2px solid #E6E6E6 !important;
 }
 
 dt {
@@ -643,7 +653,7 @@ body.modal-open .modal {
 }
 
 .btn-bordered-warning-status {
-    color: #337ab7;
+    color: #3C8DE3;
     background: #FFFFFF;
     border: 2px solid #337ab7;
     font-weight: bold;
@@ -657,8 +667,8 @@ body.modal-open .modal {
 #studentPlanBtn, #printStudentInfo, #printIEP, #viewForms {
     font-size: 16px;
     margin: 3px 0 3px 3px;
-    color: #529AE6;
-    font-weight: bold;  
+    color: #3C8DE3;
+    font-weight: bold;
 }
 
 .ajax-loader {

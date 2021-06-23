@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="col-md-2 pull-right">
-                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse " href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
+                <a class="glyphicon glyphicon-arrow-left btn btn-info pull-right" data-ajax="false" data-ftrans="slide reverse" href="/Home/Portal" id="backtoportal" role="button" title="Cancel action and go back to my current users list"></a>
             </div>
         </div>
         <div class="row">
@@ -39,12 +39,11 @@
                         <li>
                             @if (ViewBag.UserRoleId != "6")
                             {
-                                <button type="button" class="btn btn-link hidden" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning"><i class="fa fa-key"></i> Student Plan</button>
+                                <button type="button" class="btn btn-link hidden" id="studentPlanBtn" data-toggle="modal" data-target="#modal-studentPlanning"><i class="fa fa-thermometer-half" aria-hidden="true"></i> Student Plan</button>
                             }
-
-                            <button type="button" class="btn btn-link" id="printIEP"><i class="fa fa-print"></i> Print This IEP</button>
-                            <button type="button" class="btn btn-link" id="printStudentInfo"><i class="fa fa-print"></i> Print Student Info</button>
-                            <button type="button" class="btn btn-link" id="viewForms"><i class="fa fa-folder"></i> Student Forms</button>
+                            <button type="button" class="btn btn-link" id="viewForms"><i class="fa fa-file" aria-hidden="true"></i> Student Forms</button>
+                            <button type="button" class="btn btn-link" id="printIEP"><i class="fa fa-print" aria-hidden="true"></i> Print This IEP</button>
+                            <button type="button" class="btn btn-link" id="printStudentInfo"><i class="fa fa-print" aria-hidden="true"></i> Print Student Info</button>
                         </li>
                     </ul>
                 </div>

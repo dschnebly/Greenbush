@@ -8,21 +8,20 @@
 
 @section stylesheets {
     @Styles.Render("~/Content/transition.css")
+    @Styles.Render("~/Content/misportal.css")
     @Styles.Render("~/Content/chosen.css")
 }
-
-<h2>@ViewBag.Title</h2>
-<div class="user-head">
-    <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
-        <img width="64" hieght="60" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newTeacher.png" :  "/Avatar/" + Model.user.ImageURL  )" style="height: 62px;">
-    </a>
-</div>
-
 <div class="container">
-    <h3>
+    <h1>@ViewBag.Title</h1>
+    <div class="user-head">
+        <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
+            <img width="85" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newTeacher.png" :  "/Avatar/" + Model.user.ImageURL  )" class="img-responsive" alt="My Avatar">
+        </a>
+    </div>
+    <h2>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of students</small>
-    </h3>
-     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
+    </h2>
+    @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
     {
         <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>
     }
@@ -117,7 +116,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     @if (Model.members.Count > 0)
@@ -168,37 +166,38 @@
     <div class="ajax-loader">
         <img src="~/Content/Images/loading-icon.gif" class="img-responsive" alt="loading content" />
     </div>
-
-    <!-- Modal -->
-    <div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                @Html.Hidden("id", 0)
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                    <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="alert alert-danger">
-                        <span class="glyphicon glyphicon-warning-sign"></span> Deleting a user also deletes all data in your database associated with them. Is this what you want to do? <strong>(can't be undone)</strong><br />
-                        <br />
-                        Type DELETE to confirm<br />
-                        <input id="confirmDeletion" type="text" value="" />
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- end modal -->
 </div>
 
-@Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary {  { "evalsDue", Model.evalsDue }, { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification} })
+<!-- Modal -->
+<div class="modal fadeInUp" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="edit" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.Hidden("id", 0)
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                <h4 class="modal-title custom_align" id="Heading">Delete this User</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-danger">
+                    <span class="glyphicon glyphicon-warning-sign"></span> Deleting a user also deletes all data in your database associated with them. Is this what you want to do? <strong>(can't be undone)</strong><br />
+                    <br />
+                    Type DELETE to confirm<br />
+                    <input id="confirmDeletion" type="text" value="" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- end modal -->
+</div>
+
+@Html.Partial("~/Views/Home/_DashboardPartial.cshtml", null, new ViewDataDictionary { { "evalsDue", Model.evalsDue }, { "draftIEPS", Model.draftIeps }, { "dueIEPS", Model.dueIeps }, { "showDashboardNotification", Model.showDashboardNotification } })
 
 @section scripts {
     @Scripts.Render("~/Scripts/portal.js")

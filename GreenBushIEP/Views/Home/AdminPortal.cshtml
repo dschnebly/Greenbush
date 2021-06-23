@@ -12,15 +12,15 @@
 }
 
 <div class="container">
-    <h2>@ViewBag.Title</h2>
+    <h1>@ViewBag.Title</h1>
     <div class="user-head">
         <a href="/Manage/Edit/@(Model.user.UserID)" class="inbox-avatar" data-ftrans="slide">
             <img width="65" height="65" src="@(string.IsNullOrEmpty(Model.user.ImageURL) ? "/Content/Images/newAdmin.png" : "/Avatar/" + Model.user.ImageURL  )">
         </a>
     </div>
-    <h3>
+    <h2>
         <a href="/Manage/Edit/@(Model.user.UserID)" data-ftrans="slide">@ViewBag.DisplayName</a> <small> - my current list of users</small>
-    </h3>
+    </h2>
     @if ((Model.draftIeps != null && Model.draftIeps.Count > 0) || (Model.dueIeps != null && Model.dueIeps.Count > 0) || (Model.evalsDue != null && Model.evalsDue.Count > 0))
     {
         <a href="#" class="notification" data-ftrans="slide" id="notificationBtn"><i class="fa fa-bell" title="You have pending actions" data-toggle="tooltip"></i> Pending Notifications</a>

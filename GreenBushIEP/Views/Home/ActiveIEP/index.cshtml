@@ -37,9 +37,9 @@
                 <div class="user-info-block">
                     <ul class="navigation">
                         <li>
-                            <button type="button" class="btn btn-link" id="printIEP"> Print This IEP</button>
-                            <button type="button" class="btn btn-link" id="printStudentInfo"> Print Student Info</button>
-                            <button type="button" class="btn btn-link" id="viewForms"> Student Forms</button>
+                            <button type="button" class="btn btn-link" id="viewForms"><i class="fa fa-file" aria-hidden="true"></i> Student Forms</button>
+                            <button type="button" class="btn btn-link" id="printIEP"><i class="fa fa-print" aria-hidden="true"></i> Print This IEP</button>
+                            <button type="button" class="btn btn-link" id="printStudentInfo"><i class="fa fa-print" aria-hidden="true"></i> Print Student Info</button>
                         </li>
                     </ul>
                 </div>
@@ -83,7 +83,7 @@
                     <label class="btn btn-bordered-warning-status dropdown-toggle"><span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b></label>
                 }
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="form-group col-md-6">
                     <label for="IEPBeginDate">Annual Initiation Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPBeginDate" id="IEPBeginDate" class="@(Model.studentIEP.current.begin_date == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.iepStartTime != null ? Model.studentIEP.iepStartTime.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" disabled />

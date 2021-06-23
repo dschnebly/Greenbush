@@ -134,14 +134,58 @@
     .divOther {
         display: none;
     }
+
+
+    .sidenav {
+        height: 107%;
+        width: 0;
+        position: absolute;
+        top: -6.5%;
+        left: -15%;
+        background-color: #efefef;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 35px;
+        z-index: 9999;
+    }
+
+        .sidenav p, h4, ol, ul {
+            padding: 0 25px;
+        }
+
+        .sidenav a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #999;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidenav .closebtn {
+            position: absolute;
+            top: -5px;
+            right: 0px;
+            font-size: 36px;
+        }
+
+    #shrinkSideNav {
+        display: inline-block;
+        background-color: #fff;
+        width: 25px;
+        padding: 5px;
+        border: 1px solid #666;
+        position: sticky;
+        float: right;
+        top: 25%;
+    }
 </style>
 
-@*<link href="/Content/chosen.css" rel="stylesheet" />*@
 <div id="printModuleDiv">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span class="glyphicon glyphicon-remove-circle"></span></button>
-        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Goals');"><span class="glyphicon glyphicon-print" title="Print Module"></span></button>
-        <button type="button" class="tooltip-help" data-toggle="tooltip" data-placement="bottom" title="Follow the tooltips to learn how to user this form"><span class="glyphicon glyphicon-question-sign"></span></button>
+        <button type="button" class="print-module" id="printModuleBtn" onclick="printModule('Goals');"><span class="glyphicon glyphicon-print"></span></button>
+        <button type="button" onclick="openNav()" class="tooltip-help"><span class="glyphicon glyphicon-question-sign"></span></button>
         <h4 class="modal-title pull-left"><i class="fas fa-trophy" aria-hidden="true"></i>&nbsp;Student Goals</h4>
         <div class="module-user-name">@(ViewBag.studentName)</div>
     </div>
@@ -263,12 +307,12 @@
                             </tr>
                             <tr class="hidden">
                                 <td colspan="4">
-                                    <label for="shortTermComments" data-toggle="tooltip" data-placement="top" title="Enter a about the student's performance while attempt to reach this goal">Comments</label>
+                                    <label for="shortTermComments">Comments</label>
                                     <div class="form-group shortTermComments">
-                                        <textarea name="reportOfProgressShortTermComments10" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                        <textarea name="reportOfProgressShortTermComments20" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                        <textarea name="reportOfProgressShortTermComments30" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
-                                        <textarea name="reportOfProgressShortTermComments40" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50" data-toggle="tooltip" data-placement="bottom" title="50 character limit."></textarea>
+                                        <textarea name="reportOfProgressShortTermComments10" placeholder="Enter your comment about the 1st quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50"></textarea>
+                                        <textarea name="reportOfProgressShortTermComments20" placeholder="Enter your comment about the 2nd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50"></textarea>
+                                        <textarea name="reportOfProgressShortTermComments30" placeholder="Enter your comment about the 3rd quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50"></textarea>
+                                        <textarea name="reportOfProgressShortTermComments40" placeholder="Enter your comment about the 4th quarter reporting period" rows="4" style="width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" class="hidden" value="" maxlength="50"></textarea>
                                     </div>
                                 </td>
                             </tr>
@@ -338,20 +382,20 @@
                                                 </div>
                                                 <input type="text" name="StudentGoalTitle0" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" />
                                                 <span class="input-group-addon">
-                                                    <i class="far fa-handshake StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: 1" data-toggle="tooltip" data-placement="bottom" title="needs a service" data-original-title="This column indicates if a service will be required to achieve this goal."></i>
+                                                    <i class="far fa-handshake StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: 1"></i>
                                                     <input name="hasService0" value="true" type="hidden">
                                                 </span>
                                             </div>
                                         </div>
-                                        <label for="StudentGoalAnnualGoal" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                                        <label for="StudentGoalAnnualGoal" class="standard-font-size">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
                                         <div class="form-group">
-                                            <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal0" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit."></textarea>
+                                            <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal0" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500"></textarea>
                                         </div>
-                                        <label for="StudentGoalBaseline" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                        <label for="StudentGoalBaseline" class="standard-font-size">Goal Baseline</label><br />
                                         <div class="form-group">
                                             <textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline0" placeholder="Add a Goal Baseline"></textarea>
                                         </div>
-                                        <label for="StudentGoalStateStandards" class="standard-font-size" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
+                                        <label for="StudentGoalStateStandards" class="standard-font-size">State Standards</label>&nbsp;
                                         <a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
                                         <a href="https://community.ksde.org/Default.aspx?tabid=5276" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Math&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
                                         <a href="https://community.ksde.org/Default.aspx?tabid=5785" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Science&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
@@ -384,7 +428,7 @@
                                             </div>
                                         </div>
 
-                                        <button type="button" class="btn btn-default newObjectiveBenchmark" data-toggle="tooltip" data-placement="right" title="To add more than one short term objective, click this button." style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
+                                        <button type="button" class="btn btn-default newObjectiveBenchmark" style="margin-bottom: 10px; margin-top: 10px;">Add Short Term Benchmark(s)&nbsp;&nbsp;<span class="glyphicon glyphicon-plus"></span></button>
                                         <br />
                                         <label class="input-labels" style="font-size:16px;margin-top: 15px;margin-left: 5px;">Short Term Benchmark(s)</label>
 
@@ -460,20 +504,20 @@
                                                         </div>
                                                         <input type="text" name="StudentGoalTitle@(studentGoal.goal.goalID)" class="form-control StudentGoalTitle standard-font-size" placeholder="Goal Title" value="@(studentGoal.goal.Title)" />
                                                         <span class="input-group-addon">
-                                                            <i class="far fa-handshake StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? " 1.0" : "0.2" )" data-toggle="tooltip" data-placement="bottom" title="This column indicates if a service will be required to achieve this goal."></i>
+                                                            <i class="far fa-handshake StudentGoalNeedsService" aria-hidden="true" style="font-size:18px; opacity: @(studentGoal.goal.hasSerivce ? " 1.0" : "0.2" )"></i>
                                                             <input name="hasService@(studentGoal.goal.goalID)" value="@(studentGoal.goal.hasSerivce.ToString().ToLower())" type="hidden">
                                                         </span>
                                                     </div>
                                                 </div>
-                                                <label class="standard-font-size" for="StudentGoalAnnualGoal" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
+                                                <label class="standard-font-size" for="StudentGoalAnnualGoal">Measurable Annual Goal: <span style="font-size: 9pt; font-weight: normal;">(Please include Timeframe, Criteria, Behavior and Condition)</span></label><br />
                                                 <div class="form-group">
-                                                    <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500" data-toggle="tooltip" data-placement="bottom" title="500 character limit.">@(studentGoal.goal.AnnualGoal)</textarea>
+                                                    <textarea class="form-control StudentGoalAnnualGoal standard-font-size" name="StudentGoalAnnualGoal@(studentGoal.goal.goalID)" placeholder="Enter a measurable annual goal for this student" rows="5" data-validate="true" maxlength="500">@(studentGoal.goal.AnnualGoal)</textarea>
                                                 </div>
-                                                <label class="standard-font-size" for="StudentGoalBaseline" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">Goal Baseline</label><br />
+                                                <label class="standard-font-size" for="StudentGoalBaseline">Goal Baseline</label><br />
                                                 <div class="form-group">
                                                     <textarea class="form-control standard-font-size aStudentBaseLine" rows="5" name="StudentGoalBaseline@(studentGoal.goal.goalID)" placeholder="Add a Goal Baseline">@(studentGoal.goal.Baseline)</textarea>
                                                 </div>
-                                                <label class="standard-font-size" for="StudentGoalStateStandards" data-toggle="tooltip" data-placement="right" title="Enter a long term goal you would like the student to achieve.">State Standards</label>&nbsp;
+                                                <label class="standard-font-size" for="StudentGoalStateStandards">State Standards</label>&nbsp;
                                                 <a href="https://community.ksde.org/Default.aspx?tabid=5559" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">English&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
                                                 <a href="https://community.ksde.org/Default.aspx?tabid=5276" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Math&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
                                                 <a href="https://community.ksde.org/Default.aspx?tabid=5785" target="_blank" style="font-size: 8pt; margin-left: 0.8em;">Science&nbsp;<i class="glyphicon glyphicon-new-window"></i></a>
@@ -531,6 +575,82 @@
                     <h6 class="pull-right modified">last updated on @(ViewBag.modifiedByDate.ToString("MM/dd/yyyy a\\t h:mm ") + ViewBag.modifiedByDate.ToString("tt").ToLower()) by @(ViewBag.modifiedByFullName)</h6>
                 }
             </div>
+        </div>
+        <div id="mySidenav" class="sidenav">
+            <div id="shrinkSideNav" onclick="shrinkNav()"><i class="glyphicon glyphicon-step-backward"></i></div>
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+            <h4><b>IEP Section:</b> Student Goals</h4>
+            <p>
+                <b>Tool Tip:</b> Measurable annual goals are descriptions of what a child can reasonably be expected to accomplish within a 12- month period with the provision of special education (specially designed instruction) and related services. When selecting areas of need to address through annual goals, the IEP team’s focus should be on selecting goals from the most highly prioritized needs from the PLAAFPS.
+            </p>
+            <p>
+                Measurable annual goals must be related to meeting the child’s needs that result from the child’s exceptionality, to enable the child to be involved and progress in the general or advanced curriculum.  There is a direct relationship between the measurable annual goal, baseline data, and the needs identified in the PLAAFPs. Because the PLAAFPs are baseline data for the development of measurable annual goals, the same criteria used in establishing the PLAAFPs must also be used in setting the annual goal.
+            </p>
+            <p>
+                <u>Four critical components of a well-written goal are:</u>
+            </p>
+            <p>
+                <ul>
+                    <li><b>Timeframe</b> is usually specified in the number of weeks or a certain date for completion.</li>
+                    A year is the maximum allowed length for the timeframe.
+                    <li style="list-style: none;">
+                        <ol style="list-style-type:lower-alpha;">
+                            <li>In 36 instructional weeks…</li>
+                            <li>By November 19, 2021…</li>
+                            <li>By the end of the 2021–22 school year…</li>
+                        </ol>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <ul>
+                    <li><b>Conditions</b> specify the manner in which progress toward the goal is measured. Conditions are dependent on the behavior being measured and involve the application of skills or knowledge.</li>
+                    <li style="list-style: none;">
+                        <ol style="list-style:circle;">
+                            <li>When presented with 2nd-grade-level text…</li>
+                            <li>Given a mixed, 4th-grade-level math calculation probe…</li>
+                            <li>Given a story prompt and 30 minutes to write…</li>
+                            <li>When given a directive…</li>
+                        </ol>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <ul>
+                    <li><b>Behavior</b> clearly identifies the performance that is being monitored, usually reflects an action or can be directly observed, and is measurable.</li>
+                    <li style="list-style: none;">
+                        <ol style="list-style:circle;">
+                            <li>Sarah will read…</li>
+                            <li>Claude will correctly solve…</li>
+                            <li>Mary will score…</li>
+                            <li>Rex will follow a one-step direction…</li>
+                        </ol>
+                    </li>
+                </ul>
+            </p>
+            <p>
+                <ul>
+                    <li><b>Criterion</b> identifies how much, how often, or to what standards the behavior must occur in order to demonstrate that the goal has been reached. The goal criterion specifies the amount of growth the child is expected to make by the end of the annual goal period.</li>
+                    <li style="list-style: none;">
+                        <ol style="list-style:circle;">
+                            <li>96 words per minute with 5 or fewer errors.</li>
+                            <li>85% or more correct for all problems presented.</li>
+                            <li>4 or better when graded according to the 6-trait writing rubric.</li>
+                            <li>Within one minute without help, 3 times a day, for 2 weeks</li>
+                        </ol>
+                    </li>.
+                </ul>
+            </p>
+            <p>
+                <u>Example:</u>
+                <ul>
+                    <li><b>Identified Need from PLAAFP</b>: Todd, a 4th grader, is reading at the 5th percentile based on district 4th grade norms.</li>
+                    <li><b>Baseline Data from PLAAFP</b>: Currently reads 85 words per minute with 5 errors when given a first semester, a second grade-level passage</li>
+                    <li><b>Measurable Annual Goal</b>: In 36 weeks.Todd will read 120 words per minute with 0 errors when given a second semester, second grade level passage.</li>
+                </ul>
+            </p>
+            <br />
+            <br />
         </div>
         <div class="completed-loader @(Model.studentGoals.Count != 0 && Model.studentGoals.All(sg => sg.goal.Completed) ? " completed-loader-visible" : "completed-loader-hidden" )">
             <div class="text-center completed-checkbox">
@@ -794,12 +914,6 @@
                         $(this).find("form").find("input[name='completed']").val(true);
                         _saveGoal($(this), allGoals, true);
                     });
-
-                    //$(window).trigger("saving.bs.modal");
-                    //setTimeout(function () {
-                    //  $("#GoalWidget .hero-widget").addClass("module-completed");
-                    //$('#moduleSection').modal('hide');
-                    //}, 1200);
                 }
             });
 
@@ -939,128 +1053,115 @@
 
         var data = studentGoal.find('.goalForm').serialize();
         $.post('/ModuleSection/' + postMethod, data)
-			.done(function (results) {
-			    submitted++;
+            .done(function (results) {
+                submitted++;
 
-			    studentGoalId.val(results.GoalId);
+                studentGoalId.val(results.GoalId);
 
-			    //sync temp benchmarks with new database id
-			    if (results.GoalBenchmarks != null && results.GoalBenchmarks != undefined && results.GoalBenchmarks.length > 0)
-			    {
-			        var i;
+                //sync temp benchmarks with new database id
+                if (results.GoalBenchmarks != null && results.GoalBenchmarks != undefined && results.GoalBenchmarks.length > 0) {
+                    var i;
 
-			        //delete temps
-			        studentGoal.find("div.newbenchmarkDiv").remove();
+                    //delete temps
+                    studentGoal.find("div.newbenchmarkDiv").remove();
 
-			        for (i = 0; i < results.GoalBenchmarks.length; i++) {
-			            var id = results.GoalBenchmarks[i]["goalBenchmarkID"];
-			            var title = results.GoalBenchmarks[i]["ObjectiveBenchmark"];
+                    for (i = 0; i < results.GoalBenchmarks.length; i++) {
+                        var id = results.GoalBenchmarks[i]["goalBenchmarkID"];
+                        var title = results.GoalBenchmarks[i]["ObjectiveBenchmark"];
 
-			            var methods = "";
-			            var otherText = "";
+                        var methods = "";
+                        var otherText = "";
 
-			            if (results.BenchmarkMethods.length > 0) {
+                        if (results.BenchmarkMethods.length > 0) {
 
-			                for (j = 0; j < results.BenchmarkMethods.length; j++) {
-			                    var benchmarkMethodId = results.BenchmarkMethods[j]["goalBenchmarkID"];
+                            for (j = 0; j < results.BenchmarkMethods.length; j++) {
+                                var benchmarkMethodId = results.BenchmarkMethods[j]["goalBenchmarkID"];
 
-			                    if (benchmarkMethodId == id) {
+                                if (benchmarkMethodId == id) {
 
-			                        evalProc = results.BenchmarkMethods[j]["EvaluationProcedureID"];
-			                        methods += evalProc + ",";
+                                    evalProc = results.BenchmarkMethods[j]["EvaluationProcedureID"];
+                                    methods += evalProc + ",";
 
-			                        otherText = results.BenchmarkMethods[j]["OtherDescription"];
-			                    }
-			                }
+                                    otherText = results.BenchmarkMethods[j]["OtherDescription"];
+                                }
+                            }
 
-			                methods = methods.substring(0, methods.length - 1);
-			            }
+                            methods = methods.substring(0, methods.length - 1);
+                        }
 
-			            //re-add with new data
-			            var benchmarkCount = $('.StudentGoalBenchmark').not("#defaultObjective").length;
-			            var cloneBenchmark = $('#defaultObjective').clone().removeClass('hidden').removeAttr('id').removeClass("bound");
-			            cloneBenchmark.find("input[name='StudentGoalBenchmarkId0']").attr("name", "StudentGoalBenchmarkId" + id).val(id);
-			            cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + id).val(title);
-			            cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + id);
-			            cloneBenchmark.find("input[name='StudentGoalShorttermBenchmarkOther0']").attr("name", "StudentGoalShorttermBenchmarkOther" + id).val(otherText);
+                        //re-add with new data
+                        var benchmarkCount = $('.StudentGoalBenchmark').not("#defaultObjective").length;
+                        var cloneBenchmark = $('#defaultObjective').clone().removeClass('hidden').removeAttr('id').removeClass("bound");
+                        cloneBenchmark.find("input[name='StudentGoalBenchmarkId0']").attr("name", "StudentGoalBenchmarkId" + id).val(id);
+                        cloneBenchmark.find("input[name='StudentGoalBenchmarkTitle0']").attr("name", "StudentGoalBenchmarkTitle" + id).val(title);
+                        cloneBenchmark.find("input[name='StudentGoalBenchmarkHasTransition0']").attr("name", "StudentGoalBenchmarkHasTransition" + id);
+                        cloneBenchmark.find("input[name='StudentGoalShorttermBenchmarkOther0']").attr("name", "StudentGoalShorttermBenchmarkOther" + id).val(otherText);
 
-			            var shortTermMethods = cloneBenchmark.find("select[name='StudentGoalShorttermBenchmarkMethods0']").attr("name", "StudentGoalShorttermBenchmarkMethods" + id);
-			            shortTermMethods.chosen({ width: "100%", disable_search: true });
+                        var shortTermMethods = cloneBenchmark.find("select[name='StudentGoalShorttermBenchmarkMethods0']").attr("name", "StudentGoalShorttermBenchmarkMethods" + id);
+                        shortTermMethods.chosen({ width: "100%", disable_search: true });
 
 
-			            shortTermMethods.on('change', function (event) {
-			                var selectedMethods = $(this).val();
-			                if (selectedMethods.indexOf("7") > -1) {
-			                    $(this).parent().find(".divOther").show();
-			                }
-			                else {
-			                    $(this).parent().find(".divOther").hide();
-			                }
-			            });
+                        shortTermMethods.on('change', function (event) {
+                            var selectedMethods = $(this).val();
+                            if (selectedMethods.indexOf("7") > -1) {
+                                $(this).parent().find(".divOther").show();
+                            }
+                            else {
+                                $(this).parent().find(".divOther").hide();
+                            }
+                        });
 
-			            shortTermMethods.val(methods.split(',')).trigger("chosen:updated");
+                        shortTermMethods.val(methods.split(',')).trigger("chosen:updated");
 
-			            studentGoal.find('.StudentGoalBenchmarks').append(cloneBenchmark);
+                        studentGoal.find('.StudentGoalBenchmarks').append(cloneBenchmark);
 
-			            initObjective();
-			        }
+                        initObjective();
+                    }
 
-			    }
+                }
 
-			    if (numGoals > 0 && numGoals == submitted) {
-			        $(".ajax-loader img").css("visibility", "hidden");
-			        $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-			            $('.ajax-loader').css("visibility", "hidden");
-			        });
+                if (numGoals > 0 && numGoals == submitted) {
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
 
-			        if (isAllCompleted) {
-			            _newBenchmarks = null;
-			            $(window).trigger("saving.bs.modal");
-			            $("#GoalWidget .hero-widget").addClass("module-completed");
-			            $('#moduleSection').modal('hide');
-			        } else {
-			            $(window).trigger("saving.bs.modal");
-			        }
-			    }
-			    else {
+                    if (isAllCompleted) {
+                        _newBenchmarks = null;
+                        $(window).trigger("saving.bs.modal");
+                        $("#GoalWidget .hero-widget").addClass("module-completed");
+                        $('#moduleSection').modal('hide');
+                    } else {
+                        $(window).trigger("saving.bs.modal");
+                    }
+                }
+                else {
 
-			        $(".ajax-loader img").css("visibility", "hidden");
-			        $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
-			            $('.ajax-loader').css("visibility", "hidden");
-			        });
+                    $(".ajax-loader img").css("visibility", "hidden");
+                    $(".ajax-loader .success").show().fadeOut(1000, "linear", function () {
+                        $('.ajax-loader').css("visibility", "hidden");
+                    });
 
-			        $(window).trigger("saving.bs.modal");
-			    }
-			})
-			.fail(function (error) {
-			    $(".ajax-loader img").css("visibility", "hidden");
-			    $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
-			        $('.ajax-loader').css("visibility", "hidden");
-			        $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
-			        $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
-			            $("#alertMessage").slideUp(500);
-			        });
-			    });
-			    _newBenchmarks = null;
-			});
+                    $(window).trigger("saving.bs.modal");
+                }
+            })
+            .fail(function (error) {
+                $(".ajax-loader img").css("visibility", "hidden");
+                $(".ajax-loader .failure").show().fadeOut(1000, "linear", function () {
+                    $('.ajax-loader').css("visibility", "hidden");
+                    $("#alertMessage .moreinfo").html('There was an error while trying to save the data.');
+                    $("#alertMessage").fadeTo(3000, 500).slideUp(500, function () {
+                        $("#alertMessage").slideUp(500);
+                    });
+                });
+                _newBenchmarks = null;
+            });
 
 
     }//end save goal
 
     initGoal();
     initObjective();
-
-    /* Binding */
-    /* tooltips */
-    $('[data-toggle="tooltip"]').tooltip({
-        trigger: 'manual'
-    });
-
-    ///* Event */
-    ///* When a user clicks on the question mark icon we turn on tooltips */
-    $('.tooltip-help').on('click', function () {
-        $('[data-toggle="tooltip"]').tooltip('toggle');
-    });
 
     $("#isCompletedModule").on("click", function () {
         var IEPId = $("#studentIEPId").val();
@@ -1105,5 +1206,27 @@
                 $(this).collapse('hide');
             });
         }
-    })
+    });
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "25em";
+        document.getElementById("main").style.marginLeft = "25em";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+    }
+
+    function shrinkNav() {
+        let navWidth = document.getElementById("mySidenav").style.width;
+        if (navWidth == "25em") {
+            document.getElementById("mySidenav").style.width = "12em";
+            console.log(document.getElementById("shrinkSideNav").firstChild);
+            document.getElementById("shrinkSideNav").firstChild.classList.replace('glyphicon-step-backward', 'glyphicon-step-forward');
+        } else {
+            document.getElementById("mySidenav").style.width = "25em";
+            document.getElementById("shrinkSideNav").firstChild.classList.replace('glyphicon-step-forward', 'glyphicon-step-backward');
+        }
+    }
 </script>

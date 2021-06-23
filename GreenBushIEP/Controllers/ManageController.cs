@@ -108,7 +108,6 @@ namespace GreenBushIEP.Controllers
                 AuditLog audit = new AuditLog(user.UserID, submitter.UserID, db, null) { TableName = "tblUser", ColumnName = "All Columns", Created = DateTime.Now, SessionID = HttpContext.Session.SessionID, Value = "Created a new " + TypeOfUser };
                 audit.SaveChanges();
 
-
                 List<tblOrganizationMapping> districtMappings = new List<tblOrganizationMapping>();
                 List<tblBuildingMapping> buildingMappings = new List<tblBuildingMapping>();
                 List<string> districts = new List<string>();
@@ -4017,12 +4016,12 @@ namespace GreenBushIEP.Controllers
                     { "selectedRole", RoleId }
                 };
 
-                List<UserView> members = new List<UserView>();
+                List<StudentIEPViewModel> members = new List<StudentIEPViewModel>();
 
                 if (RoleId != "999")
                 {
                     //members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false }).ToList();
-                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, isAssigned = false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false, KidsID = u.KIDSID.ToString() }).ToList();
+                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, null).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
@@ -4042,13 +4041,13 @@ namespace GreenBushIEP.Controllers
 
                     if (statusActive.HasValue && RoleId == "5") //educational status
                     {
-                        members = members.Where(u => u.statusActive == statusActive).ToList();
+                        members = members.Where(u => u.StatusActive == statusActive).ToList();
                     }
                 }
                 else // Unassigned Users.
                 {
                     //members = db.uspUserList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, RoleID = u.RoleID, isAssigned = u.isAssgined ?? false, hasIEP = u.hasIEP ?? false }).ToList();
-                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new UserView() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, isAssigned = false, statusCode = u.StatusCode, statusActive = u.StatusActive, hasIEP = u.hasIEP ?? false, KidsID = u.KIDSID.ToString() }).ToList();
+                    members = db.uspUserAssignedList(submitter.UserID, selectedDistrict, selectedBuilding, null, true).Select(u => new StudentIEPViewModel() { UserID = u.UserID, FirstName = u.FirstName, LastName = u.LastName, MiddleName = u.MiddleName, RoleID = u.RoleID, KidsID = u.KIDSID.ToString(), StatusActive = u.StatusActive, StatusCode = u.StatusCode, hasIEP = u.hasIEP ?? false }).ToList();
 
                     if (searchUserId != -1)
                     {
