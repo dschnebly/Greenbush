@@ -3,7 +3,7 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Web.WebSockets;
+
 
 namespace GreenBushIEP.Models
 {
@@ -629,6 +629,8 @@ namespace GreenBushIEP.Models
         public tblFormTransitionReferral formTransReferral { get; set; }
 
         public tblFormFileReview formFileReview { get; set; }
+
+        public List<tblDistrict> districtList { get; set; }
 
         public IEPFormFileViewModel()
         {
