@@ -4399,14 +4399,15 @@ namespace GreenBushIEP.Controllers
 
                 tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == Stid).FirstOrDefault();
                 tblIEP amendment = db.tblIEPs.Where(i => i.UserID == Stid && i.Amendment == true && i.AmendingIEPid == IepId && i.IEPid == results.ToIEP).FirstOrDefault();
+                tblIEP originalIEP = db.tblIEPs.Where(i => i.UserID == Stid && i.IEPid == amendment.AmendingIEPid).FirstOrDefault();
 
                 int AmendmentId = amendment.IEPid;
 
                 if (studentDetails != null)
                 {
                     amendment.StatusCode = studentDetails.StatusCode;
-                    amendment.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
-                    amendment.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
+                    amendment.Primary_DisabilityCode = originalIEP.Primary_DisabilityCode;
+                    amendment.Secondary_DisabilityCode = originalIEP.Secondary_DisabilityCode;
                     db.SaveChanges();
                 }
 

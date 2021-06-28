@@ -15,6 +15,8 @@ namespace GreenBushIEP.Models
     public partial class tblFormFileReview
     {
         public int FormFileReviewID { get; set; }
+        public int StudentID { get; set; }
+        public string USD { get; set; }
         public string StudentName { get; set; }
         public System.DateTime FormDate { get; set; }
         public Nullable<int> ParentRightsProvided { get; set; }

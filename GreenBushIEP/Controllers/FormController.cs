@@ -9,32 +9,16 @@ using System.Web.Mvc;
 namespace GreenBushIEP.Controllers
 {
     public class FormController : Controller
-    {
-        private const string owner = "1"; //level 5
-        private const string mis = "2"; //level 4
-        private const string admin = "3"; //level 3
-        private const string teacher = "4"; //level 2
-        private const string student = "5";
-        private const string nurse = "6"; //level 1
-        private const string principal = "11";
-        private const string superintendent = "12";
+    {       
 
         private readonly IndividualizedEducationProgramEntities db = new IndividualizedEducationProgramEntities();
 
         [Authorize]
         [ValidateInput(false)]
         public ActionResult SaveForm(FormCollection collection)
-        {
-
-            string StudentHTMLContent = collection["studentText"];
-            string HTMLContent = collection["printText"];
-            string HTMLContent2 = collection["printText2"];
-            string HTMLContent3 = collection["printText3"];
-            string studentName = collection["studentName"];
-            string studentId = collection["studentId"];
-            string isArchive = collection["isArchive"];
-            string iepIDStr = collection["iepID"];
-            string isIEP = collection["isIEP"];
+        {            
+            string HTMLContent = collection["printText"];            
+            string studentId = collection["studentId"];            
             string formName = collection["formName"];
             string isSave = collection["isSave"];
             string fileName = collection["fileName"];
@@ -98,14 +82,12 @@ namespace GreenBushIEP.Controllers
                 case "TEAM EVALUATION REPORT":
                     SaveTeamEval(currentUser, sid, spans, checkboxes);
                     break;
-
                 case "SUMMARY OF PERFORMANCE":
                     SaveSOP(currentUser, sid, spans, checkboxes);
                     break;
                 case "CONFERENCE SUMMARY":
                     SaveConferenceSummary(currentUser, sid, spans, checkboxes);
                     break;
-
                 case "IEP AMENDMENT FORM":
                     SaveIEPAmendment(currentUser, sid, spans, checkboxes);
                     break;
@@ -136,7 +118,6 @@ namespace GreenBushIEP.Controllers
                 case "PRIOR WRITTEN NOTICE - EVALUATION -ENGLISH":
                     SavePWNEval(currentUser, sid, spans, checkboxes);
                     break;
-
                 case "PRIOR WRITTEN NOTICE - REVOCATION OF ALL SERVICES":
                     SavePWNRevAllServices(currentUser, sid, spans, checkboxes);
                     break;
@@ -169,13 +150,11 @@ namespace GreenBushIEP.Controllers
 
         private void SaveFileReview(tblUser currentUser, int sid, List<HtmlNode> spans, List<HtmlNode> checkboxes)
         {
-            //tblFormFileReview formFileReview = db.tblFormFileReviews.Any(o => o.StudentId == sid) ? db.tblFormFileReviews.FirstOrDefault(o => o.StudentId == sid) : new tblFormFileReview();
-            //formFileReview.StudentId = sid;
-
-            tblFormFileReview formFileReview = new tblFormFileReview();
-
-            formFileReview.StudentName = GetInputValue("StudentName", spans);
+            tblFormFileReview formFileReview = db.tblFormFileReviews.Any(o => o.StudentID == sid) ? db.tblFormFileReviews.FirstOrDefault(o => o.StudentID == sid) : new tblFormFileReview();
             
+            formFileReview.StudentID = sid;
+            formFileReview.StudentName = GetInputValue("StudentName", spans);
+            formFileReview.USD = GetInputValue("USD", spans);
             formFileReview.ParentRightsProvided =  GetRadioInputValue("ParentRightsProvided", spans);
             formFileReview.AssessNotDiscrimatory = GetRadioInputValue("AssessNotDiscrimatory", spans);
             formFileReview.AssessNativeLanguage = GetRadioInputValue("AssessNativeLanguage", spans);
@@ -208,6 +187,7 @@ namespace GreenBushIEP.Controllers
                 formFileReview.Create_Date = DateTime.Now;
                 formFileReview.ModifiedBy = currentUser.UserID;
                 formFileReview.Update_Date = DateTime.Now;
+                formFileReview.FormDate = DateTime.Now;
                 db.tblFormFileReviews.Add(formFileReview);
             }
             else
@@ -216,7 +196,7 @@ namespace GreenBushIEP.Controllers
                 formFileReview.Update_Date = DateTime.Now;
             }
 
-           // db.SaveChanges();
+            db.SaveChanges();
         }
         private void SaveTeamEval(tblUser currentUser, int sid, List<HtmlNode> spans, List<HtmlNode> checkboxes)
         {

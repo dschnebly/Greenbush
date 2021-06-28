@@ -631,17 +631,13 @@
           <Property Name="Goals_Statement4" Type="nvarchar" MaxLength="2000" />
           <Property Name="District" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IndividualizedEducationProgram_SB.dbo.tblFormFileReviews' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tblFormFileReviews">
           <Key>
             <PropertyRef Name="FormFileReviewID" />
-            <PropertyRef Name="StudentName" />
-            <PropertyRef Name="FormDate" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="ModifiedBy" />
           </Key>
           <Property Name="FormFileReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="USD" Type="nvarchar" MaxLength="50" />
           <Property Name="StudentName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="FormDate" Type="datetime" Nullable="false" />
           <Property Name="ParentRightsProvided" Type="int" />
@@ -2927,6 +2923,7 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySet Name="tblFormChildOutcomes_SupportingEvidence" EntityType="Self.tblFormChildOutcomes_SupportingEvidence" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormConferenceSummary" EntityType="Self.tblFormConferenceSummary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormContinuousLearningPlan" EntityType="Self.tblFormContinuousLearningPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFormFileReviews" EntityType="Self.tblFormFileReviews" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPAmendment" EntityType="Self.tblFormIEPAmendment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPMeetingConsentToInvite" EntityType="Self.tblFormIEPMeetingConsentToInvite" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFormIEPMeetingExcusal" EntityType="Self.tblFormIEPMeetingExcusal" Schema="dbo" store:Type="Tables" />
@@ -2994,42 +2991,6 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
           <EntitySet Name="tblUserRoles" EntityType="Self.tblUserRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblUsers" EntityType="Self.tblUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblVersionLog" EntityType="Self.tblVersionLog" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblFormFileReviews" EntityType="Self.tblFormFileReviews" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [tblFormFileReviews].[FormFileReviewID] AS [FormFileReviewID], 
-    [tblFormFileReviews].[StudentName] AS [StudentName], 
-    [tblFormFileReviews].[FormDate] AS [FormDate], 
-    [tblFormFileReviews].[ParentRightsProvided] AS [ParentRightsProvided], 
-    [tblFormFileReviews].[AssessNotDiscrimatory] AS [AssessNotDiscrimatory], 
-    [tblFormFileReviews].[AssessNativeLanguage] AS [AssessNativeLanguage], 
-    [tblFormFileReviews].[AssessExceptionality] AS [AssessExceptionality], 
-    [tblFormFileReviews].[PublicAgencyPayForDx] AS [PublicAgencyPayForDx], 
-    [tblFormFileReviews].[QualifiedProfExceptionality] AS [QualifiedProfExceptionality], 
-    [tblFormFileReviews].[GroupContainQualified] AS [GroupContainQualified], 
-    [tblFormFileReviews].[NoSingleCriterionUsed] AS [NoSingleCriterionUsed], 
-    [tblFormFileReviews].[CarefullyConsider] AS [CarefullyConsider], 
-    [tblFormFileReviews].[NotDeterminant] AS [NotDeterminant], 
-    [tblFormFileReviews].[AcademicLevelDesc] AS [AcademicLevelDesc], 
-    [tblFormFileReviews].[FunctionalLevelDesc] AS [FunctionalLevelDesc], 
-    [tblFormFileReviews].[DescribeAffects] AS [DescribeAffects], 
-    [tblFormFileReviews].[GoalsDesignedToMeet] AS [GoalsDesignedToMeet], 
-    [tblFormFileReviews].[GoalsMeasurable] AS [GoalsMeasurable], 
-    [tblFormFileReviews].[GoalsProgress] AS [GoalsProgress], 
-    [tblFormFileReviews].[AlternativeAssessment] AS [AlternativeAssessment], 
-    [tblFormFileReviews].[IncludeProjectedDate] AS [IncludeProjectedDate], 
-    [tblFormFileReviews].[IncludeServices] AS [IncludeServices], 
-    [tblFormFileReviews].[EnhanceEducation] AS [EnhanceEducation], 
-    [tblFormFileReviews].[PostiveBehavioralIntervention] AS [PostiveBehavioralIntervention], 
-    [tblFormFileReviews].[EnglishProficiency] AS [EnglishProficiency], 
-    [tblFormFileReviews].[EducationalPlacement] AS [EducationalPlacement], 
-    [tblFormFileReviews].[SeverityOfDisability] AS [SeverityOfDisability], 
-    [tblFormFileReviews].[Comments] AS [Comments], 
-    [tblFormFileReviews].[CreatedBy] AS [CreatedBy], 
-    [tblFormFileReviews].[ModifiedBy] AS [ModifiedBy], 
-    [tblFormFileReviews].[Create_Date] AS [Create_Date], 
-    [tblFormFileReviews].[Update_Date] AS [Update_Date]
-    FROM [dbo].[tblFormFileReviews] AS [tblFormFileReviews]</DefiningQuery>
-          </EntitySet>
           <EntitySet Name="vw_BuildingList" EntityType="Self.vw_BuildingList" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [vw_BuildingList].[USD] AS [USD], 
@@ -6754,12 +6715,10 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
         <EntityType Name="tblFormFileReview">
           <Key>
             <PropertyRef Name="FormFileReviewID" />
-            <PropertyRef Name="StudentName" />
-            <PropertyRef Name="FormDate" />
-            <PropertyRef Name="CreatedBy" />
-            <PropertyRef Name="ModifiedBy" />
           </Key>
           <Property Name="FormFileReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="USD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="StudentName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="FormDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ParentRightsProvided" Type="Int32" />
@@ -9846,6 +9805,8 @@ warning 6035: The relationship 'FK_tblRolePermissions_tblRoles' has columns that
                 <ScalarProperty Name="ParentRightsProvided" ColumnName="ParentRightsProvided" />
                 <ScalarProperty Name="FormDate" ColumnName="FormDate" />
                 <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="USD" ColumnName="USD" />
+                <ScalarProperty Name="StudentID" ColumnName="StudentID" />
                 <ScalarProperty Name="FormFileReviewID" ColumnName="FormFileReviewID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -1399,9 +1399,7 @@ namespace GreenbushIep.Controllers
 
                 if (studentRec != null)
                 {
-                    studentAmmendIEP.StatusCode = studentRec.StatusCode;
-                    studentAmmendIEP.Primary_DisabilityCode = studentRec.Primary_DisabilityCode;
-                    studentAmmendIEP.Secondary_DisabilityCode = studentRec.Secondary_DisabilityCode;
+                    studentAmmendIEP.StatusCode = studentRec.StatusCode;                   
                 }
 
                 try
@@ -1535,6 +1533,13 @@ namespace GreenbushIep.Controllers
 
                     try
                     {
+                        tblStudentInfo studentDetails = db.tblStudentInfoes.Where(o => o.UserID == stId).FirstOrDefault();
+                        if (studentDetails != null)
+                        {                            
+                            iepDraft.Primary_DisabilityCode = studentDetails.Primary_DisabilityCode;
+                            iepDraft.Secondary_DisabilityCode = studentDetails.Secondary_DisabilityCode;
+                        }
+                                                
                         db.SaveChanges();
 
                         return Json(new { Result = "success", Message = "IEP Status changed to Active." }, JsonRequestBehavior.AllowGet);
@@ -2788,7 +2793,7 @@ namespace GreenbushIep.Controllers
         {
             tblUser student = db.tblUsers.Where(u => u.UserID == id).FirstOrDefault();
             tblUser teacher = db.tblUsers.Where(u => u.Email == User.Identity.Name).FirstOrDefault();
-
+            
             var iep = db.tblIEPs.Where(u => u.UserID == id && u.IepStatus == IEPStatus.ACTIVE).FirstOrDefault();
 
             IEP theIEP = new IEP();
@@ -2800,7 +2805,9 @@ namespace GreenbushIep.Controllers
             {
                 studentId = id,
                 fileName = fileName,
-                ActiveIEP = theIEP
+                ActiveIEP = theIEP,
+                districtList =  (from org in db.tblOrganizationMappings join district in db.tblDistricts on org.USD equals district.USD where org.UserID == teacher.UserID select district).Distinct().ToList(),
+
             };
 
             List<SelectListItem> forms = GetForms();
@@ -2935,7 +2942,7 @@ namespace GreenbushIep.Controllers
                     viewModel.formTransReferral = db.tblFormTransitionReferrals.Where(o => o.StudentId == id).FirstOrDefault();
                     break;
                 case "IdeaGiftedFileReview":
-                    //viewModel.formFileReview = db.tblFormFileReviews.Where(o => o.StudentId == id).FirstOrDefault();
+                    viewModel.formFileReview = db.tblFormFileReviews.Where(o => o.StudentID == id).FirstOrDefault();
                     break;
 
             }
@@ -3193,6 +3200,9 @@ namespace GreenbushIep.Controllers
             //student goalds
             if (theIEP != null && theIEP.current != null)
             {
+                theIEP.current.Primary_DisabilityCode = GetDisability(theIEP.current.Primary_DisabilityCode);
+                theIEP.current.Secondary_DisabilityCode = GetDisability(theIEP.current.Secondary_DisabilityCode);
+
                 if (theIEP.studentGoalBenchmarks == null)
                 {
                     theIEP.studentGoalBenchmarks = new List<tblGoalBenchmark>();
@@ -4515,7 +4525,7 @@ namespace GreenbushIep.Controllers
 
                 tblUser teacher = db.tblUsers.SingleOrDefault(o => o.Email == User.Identity.Name);
 
-                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:7pt;} table.servciesTable{width:98%;font-size:7pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} ol.IepNormal, p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;} .radioCheck {color:white} </style>";
+                string cssText = @"<style>hr{color:whitesmoke;padding:0;margin:0;padding-top:2px;padding-bottom:2px;}h5{font-weight:500}.module-page{font-size:9pt;}.header{color:white;}img{margin-top:-10px;}.input-group-addon, .transitionGoalLabel, .transitionServiceLabel {font-weight:600;}.transitionServiceLabel, .underline{ text-decoration: underline;}.transition-break{page-break-before:always;}td { padding: 10px;}th {font-weight:600;} table {width:700px;border-spacing: 0px;border:none;font-size:9pt}.module-page, span {font-size:9pt;}label{font-weight:600;font-size:9pt}.text-center{text-align:center} h3 {font-weight:400;font-size:11pt;width:100%;text-align:center;padding:8px;}p {padding-top:5px;padding-bottom:5px;font-size:9pt}.section-break {page-break-after:always;color:white;background-color:white}.funkyradio {padding-bottom:15px;}.radio-inline {font-weight:normal;}div{padding-top:10px;}.form-check {padding-left:5px;}.dont-break {margin-top:10px;page-break-inside: avoid;} .form-group{margin-bottom:8px;} div.form-group-label{padding:0;padding-top:3px;padding-bottom:3px;} .checkbox{margin:0;padding:0} .timesfont{font-size:12pt;font-family:'Times New Roman',serif} .hidden {color:white} table.accTable{width:98%;font-size:7pt;} table.servciesTable{width:98%;font-size:7pt;} p.MsoNormal, li.MsoNormal, div.MsoNormal, span.MsoNormal {font-size:11pt; font-family: 'Times New Roman',serif;} ol.IepNormal, p.IepNormal, li.IepNormal, div.IepNormal, span.IepNormal {font-size:10pt; font-family: 'Helvetica Neue, Helvetica, Arial',serif;} .radio-label { font-weight:normal;vertical-align:text-top } </style>";
                 string result = "";
                 if (!string.IsNullOrEmpty(HTMLContent))
                 {

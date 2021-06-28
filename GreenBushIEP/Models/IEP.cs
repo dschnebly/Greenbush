@@ -186,7 +186,7 @@ namespace GreenBushIEP.Models
                 isIntelligenceCompleted = studentIntelligence != null ? studentIntelligence.Completed : false;
                 isAcademicCompleted = studentAcademic != null ? studentAcademic.Completed : false;
                 isOtherCompleted = studentOtherConsiderations != null ? studentOtherConsiderations.Completed : false;
-                isContingencyCompleted = studentContingencyPlan != null ? studentContingencyPlan.Completed == true : false;
+                //isContingencyCompleted = studentContingencyPlan != null ? studentContingencyPlan.Completed == true : false;
 
                 bool allModulesCompleted = (isHealthCompleted || studentHealth.NoConcerns) && (isMotorCompleted || studentMotor.NoConcerns) && (isCommunicationCompleted || studentCommunication.NoConcerns) && (isSocialCompleted || studentSocial.NoConcerns) && (isIntelligenceCompleted || !studentIntelligence.Concerns) && (isAcademicCompleted || studentAcademic.NoConcerns);
                 bool studentHasGoals = (studentHealth != null && (studentHealth.NeedMetByGoal ?? false)) || (studentMotor.NeedMetByGoal ?? false) || (studentCommunication.NeedMetByGoal ?? false) || (studentSocial.NeedMetByGoal ?? false) || (studentAcademic.NeedMetByGoal ?? false) || (studentWritten.NeedMetByGoal ?? false) || (studentReading.NeedMetByGoal ?? false) || (studentMath.NeedMetByGoal ?? false);
@@ -196,7 +196,7 @@ namespace GreenBushIEP.Models
                 isServiceCompleted = studentServices != null ? studentServices.All(s => s.Completed) && studentServices.Count > 0 : false;
                 isAccommodationsCompleted = accommodations.Count > 0 ? accommodations.All(g => g.Completed) : studentHasAccommodations ? false : allModulesCompleted;
                 isBehaviorCompleted = studentSocial != null && studentSocial.BehaviorInterventionPlan ? db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault() != null && db.tblBehaviors.Where(b => b.IEPid == current.IEPid).FirstOrDefault().Completed : true;
-                isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted && isContingencyCompleted;
+                isAllCompleted = isHealthCompleted & isMotorCompleted & isCommunicationCompleted && isSocialCompleted && isIntelligenceCompleted && isAcademicCompleted && isOtherCompleted && isGoalCompleted && isServiceCompleted && isAccommodationsCompleted && isBehaviorCompleted;
                 isTransitionCompleted = transitions.Count > 0 ? transitions.Any(o => o.Completed) : false;
 
                 bool healthNeeds = (studentHealth != null && (studentHealth.NeedMetByAccommodation.HasValue && studentHealth.NeedMetByAccommodation.Value));

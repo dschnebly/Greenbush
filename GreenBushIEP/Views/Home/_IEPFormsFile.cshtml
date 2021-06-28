@@ -67,6 +67,7 @@
                     <div class="col-md-12">						
                         @Html.Partial("~/Views/Form/" + Model.fileName + ".cshtml", Model.fileModel, new ViewDataDictionary {
 						   { "IEPObj", Model.ActiveIEP },
+						   { "Districts", Model.districtList },
 						   { "teamEval", Model.teamEval },
 						   { "summaryPerf", Model.summaryPerformance },
 						   { "conferenceSummary", Model.conferenceSummary },
@@ -87,7 +88,8 @@
 						   { "formTransRequest", Model.formTransRequest },
 						   { "continuousLearningPlan", Model.continuousLearningPlan },
 						   { "childOutcome", Model.childOutcome },
-						   { "formTransReferral", Model.formTransReferral }						   
+						   { "formTransReferral", Model.formTransReferral }	,					   
+						   { "formFileReview", Model.formFileReview }	
 					   })
                     </div>
                 </div>
@@ -193,7 +195,11 @@
 				$(this).siblings('span.radioCheck').text("");
 				
 			}			
-        });
+		});
+
+		$('select').change(function () {
+			$(this).next('span.input-value').text($(this).val());
+		});
 
 		$("textarea").bind("paste", function(e){
 			// access the clipboard using the api
