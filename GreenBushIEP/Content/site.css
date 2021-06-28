@@ -427,7 +427,7 @@ input:-webkit-autofill, input:focus:-webkit-autofill {
 
 #iep-header-image {
     position: absolute;
-    bottom: 65%;
+    top: 10%;
     width: 90%;
 }
 
