@@ -184,6 +184,32 @@
             $("#kidsid").val("0000000000");
         }
     });
+
+    $(".deleteAvatar").on("click", function () {
+        var answer = confirm("Delete this avatar?");
+        if (answer) {
+            let avatarId = $(this).data("avatarid");
+            $.ajax({
+                type: 'POST',
+                url: '/Manage/DeleteAvatar',
+                data: { AvatarId: avatarId },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.Result === 'success') {
+                        $("#avatarImage").attr('src', "/Content/Images/newUser.png");
+                        $(".deleteAvatar").addClass("hidden");
+                        $(".showAvatar").removeClass("hidden");
+                    } else {
+                        alert("There was an error when deleting the avatar image. Please contact your admin.");
+                    }
+                },
+                error: function (data) {
+                    console.log(data);
+                    alert("Unable to connect to the server or other related network problem. Please contact your admin.");
+                }
+            });
+        }
+    });
 });
 
 function editSignedDate(Id) {

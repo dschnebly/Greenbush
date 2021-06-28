@@ -1593,7 +1593,7 @@
                                                         <input name="contact[@(contact.RealtionshipID.ToString())].CanEmail" type="checkbox" class="form-control text-box single-line canEmailCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.canEmail ? "checked" : "" ) />
                                                         <label style="float: left; position: relative; bottom: 15px; left: 20%;">Allow Electronic Notices</label>
                                                     </div>
-                                                </div>                                                
+                                                </div>
                                                 <div class="col-sm-2 nopadding">
                                                     <div class="form-group">
                                                         <input name="contact[@(contact.RealtionshipID.ToString())].PrimaryContact" type="checkbox" class="form-control text-box single-line primaryContactCheckbox" style="width: 15%; position: relative; top: 20px; height: 49px;" @(contact.PrimaryContact == 1 ? "checked" : "" ) />
@@ -1680,7 +1680,10 @@
                                         <div class="col-md-12 col-md-offset-5">
                                             <img src="@(string.IsNullOrEmpty(Model.student.ImageURL) ? "/Content/Images/newUser.png" : "/Avatar/" + Model.student.ImageURL.ToString())" alt="Student's Avatar" title="Student's Avatar if desired.'" class="img-circle pull-left avatar" height="100" width="100" id="avatarImage" />
                                             <div class="input-group">
-                                                <span class="btn btn-default btn-file" style="top: 30px; left: 15px;">
+                                                <span class="deleteAvatar btn-file @(string.IsNullOrEmpty(Model.student.ImageURL) ? "hidden" : string.Empty )" style="top: 20px; left: 10px;" data-avatarId="@(Model.student.UserID)">
+                                                    <i class="btn glyphicon glyphicon-trash" style="font-size: 30px;"></i>
+                                                </span>
+                                                <span class="showAvatar btn btn-default btn-file @(!string.IsNullOrEmpty(Model.student.ImageURL) ? "hidden" : string.Empty )" style="top: 35px; left: 15px;">
                                                     Browse <input type="file" name="adminpersona" id="adminpersona" accept="image/gif, image/jpeg, image/png">
                                                 </span>
                                             </div>
@@ -1825,7 +1828,7 @@
         <div class="col-sm-2 nopadding">
             <div class="form-group">
                 <label>Phone Number</label>
-                <input name="contact[#].ContactPhoneNumber"  id="contact[#].ContactPhoneNumber"  type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
+                <input name="contact[#].ContactPhoneNumber" id="contact[#].ContactPhoneNumber" type="tel" class="form-control text-box single-line" pattern="\d{3}[\-]\d{3}[\-]\d{4}" placeholder="Phone Number">
             </div>
         </div>
         <div class="col-sm-3 nopadding">
