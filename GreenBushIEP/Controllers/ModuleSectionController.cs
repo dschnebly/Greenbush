@@ -782,6 +782,7 @@ namespace GreenBushIEP.Controllers
                     }
                     catch(Exception ex)
                     {
+                        Console.Write(ex.InnerException.ToString());
                         return Json(new { success = false, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = false });
                     }
                 }
@@ -836,6 +837,7 @@ namespace GreenBushIEP.Controllers
                     }
                     catch (Exception ex)
                     {
+                        Console.Write(ex.InnerException.ToString());
                         return Json(new { success = false, id = accommodation.AccommodationID, iep = accommodation.IEPid, isNew = true });
                     }
                 }

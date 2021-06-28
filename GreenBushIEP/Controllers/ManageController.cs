@@ -4352,7 +4352,7 @@ namespace GreenBushIEP.Controllers
             }
             catch (Exception e)
             {
-                return Json(new { Result = "error", Message = message }, JsonRequestBehavior.AllowGet);
+                return Json(new { Result = "error: " + e.InnerException.ToString(), Message = message }, JsonRequestBehavior.AllowGet);
             }
         }
 
