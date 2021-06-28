@@ -374,35 +374,63 @@
 			<td>________________________________</td>
 		</tr>
 	</table>
-	<div class="row dont-break">
+	<div class="row voffset2">		
+		<div class="col-md-12">
+			<label>Parental Notifications</label>
+		</div>
+	</div>
+	<div class="row dont-break voffset2">
 		<div class="col-md-12">
 			<fieldset class="form-group">
-				<label>Parental Notifications</label>
+	
 				@if (Model.studentOtherConsiderations.Parental_RightsBook_flag)
-				{
+                {
 					<p>The parent(s)/legal education decision maker were given/offered a copy of the Parental Rights Booklet in their native language.</p>
-				}
-				else
-				{
+                }
+                else
+                {
 					<p>The parent(s)/legal education decision maker were not given/offered a copy of the Parental Rights Booklet in their native language.</p>
-				}
+                }
 				<span style="font-size:9pt">_______  Initial Here</span>
 			</fieldset>
 		</div>
 		<div class="col-md-12">
 			<fieldset class="form-group">
 				@if (Model.studentOtherConsiderations.Parental_CopyIEP_flag)
-				{
+                {
 					<p>The parent(s)/legal education decision maker were given/offered a copy of the IEP.</p>
-				}
-				else
-				{
+                }
+                else
+                {
 					<p>The parent(s)/legal education decision maker were not given/offered a copy of the IEP.</p>
-				}
+                }
 				<span style="font-size:9pt">_______ Initial Here</span>
 			</fieldset>
 		</div>
 	</div>
+	
+	<div id="divElectronicCommunication"  class="row voffset2">		
+		<div class="col-md-12">
+			<label>Electronic Communication</label>
+		</div>
+	</div>
+	<div class="row voffset2">
+		<div class="col-md-12">
+			<fieldset class="form-group">				
+				@{            
+						foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
+						{
+								<div class="voffset1"1>
+									<input type="checkbox" name="PreferYesCbx" class="iepCheckbox" /><img id="PreferYes" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I prefer to receive special education documents electronically at the email address given</span><br/>
+									<input type="checkbox" name="PreferNoCbx" class="iepCheckbox" /><img id="PreferNo" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I do not want to receive special education documents electronically</span>
+								</div>
+								<p style="margin-top:30px">Email Address _________________________________</p>
+								<p style="margin-top:40px">Parent Signature _______________________________________  Date ____________________</p>            					
+						}
+				 }
+				</fieldset>
+		</div>
+	</div>	
 	<div class="row voffset2">
 		<div class="col-md-12">
 			<label>Parental Concerns/Input</label>
