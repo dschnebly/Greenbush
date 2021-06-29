@@ -190,6 +190,34 @@ namespace GreenBushIEP.Controllers
             }
         }
 
+        // GET: Manage/DeleteAvatar
+        [HttpPost]
+        public ActionResult DeleteAvatar(int AvatarId)
+        {
+            tblUser user = db.tblUsers.Where(u => u.UserID == AvatarId).FirstOrDefault();
+            if(user != null)
+            {
+                string fileName = user.ImageURL;
+                string path = Path.Combine(Server.MapPath("~/Avatar/"), fileName);
+
+                try
+                {
+                    System.IO.File.Delete(path);
+                }
+                catch(Exception e)
+                {
+                    return Json(new { Result = "error", Message = "Error while trying to delete your avatar. " + e.InnerException.ToString() });
+                }
+
+                user.ImageURL = null;
+                db.SaveChanges();
+
+                return Json(new { Result = "success", Message = "Avatar successfully removed." });
+            }
+
+            return Json(new { Result = "error", Message = "Contact an adminstrator for additional help" });
+        }
+
         // POST: Manage/Create
         [HttpPost]
         public ActionResult CreateILPUser(HttpPostedFileBase adminpersona, FormCollection collection)
