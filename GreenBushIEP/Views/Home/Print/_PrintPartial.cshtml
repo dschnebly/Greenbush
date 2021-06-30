@@ -56,6 +56,7 @@
 	</table>
 	<hr />
 	<table class="full">
+	
 		@if (Model.studentDetails.contacts.Any(o => o.PrimaryContact == 1))
 		{
 			foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
@@ -168,8 +169,7 @@
 					<td>(@history.edStatus) @history.iepType</td>
 					<td colspan="2"></td>
 				</tr>
-			}
-			
+			}			
 		}		
 		<tr>
 			<td class="voffset4"><label>Vision Screening:</label></td>
@@ -282,12 +282,12 @@
 			<td></td>
 		</tr>
 		@{
-			var pcCount = 1;
+			var primaryContactCount = 1;
 
 			foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
 			{
 				<tr>
-					<td><label>Contact @pcCount:</label></td>
+					<td><label>Contact @primaryContactCount:</label></td>
 					<td>@( primaryContact != null ? string.Format("{0} {1}", primaryContact.FirstName, primaryContact.LastName) : "")</td>
 					<td><label>Address:</label></td>
 					<td>@( primaryContact != null ? string.Format("{0} {1} {2}, {3} {4}", primaryContact.Address1, primaryContact.Address2, primaryContact.City, primaryContact.State, primaryContact.Zip) : "" )</td>
@@ -298,8 +298,24 @@
 					<td><label>Email:</label></td>
 					<td>@( primaryContact != null ? primaryContact.Email : "")</td>
 				</tr>
-				pcCount++;
-			}
+                primaryContactCount++;
+            }
+
+            if(primaryContactCount == 1)
+            {
+				<tr>
+					<td><label>Contact @primaryContactCount:</label></td>
+					<td></td>
+					<td><label>Address:</label></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td><label>Phone:</label></td>
+					<td></td>
+					<td><label>Email:</label></td>
+					<td></td>
+				</tr>
+            }
 		}
 		<tr>
 			<td><label>Neighborhood School:</label></td>
@@ -417,16 +433,22 @@
 	<div class="row voffset2">
 		<div class="col-md-12">
 			<fieldset class="form-group">				
-				@{            
-						foreach (var primaryContact in Model.studentDetails.contacts.Where(o => o.PrimaryContact == 1))
-						{
-								<div class="voffset1"1>
-									<input type="checkbox" name="PreferYesCbx" class="iepCheckbox" /><img id="PreferYes" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I prefer to receive special education documents electronically at the email address given</span><br/>
-									<input type="checkbox" name="PreferNoCbx" class="iepCheckbox" /><img id="PreferNo" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I do not want to receive special education documents electronically</span>
-								</div>
-								<p style="margin-top:30px">Email Address _________________________________</p>
-								<p style="margin-top:40px">Parent Signature _______________________________________  Date ____________________</p>            					
-						}
+				@{  
+					if(primaryContactCount > 1)
+                    {
+                       primaryContactCount--;
+                    }
+                   
+                    for(int j = 0; j < primaryContactCount; j++)
+                    {
+						<div class="voffset1">						
+							<input type="checkbox" name="PreferYesCbx" class="iepCheckbox" /><img id="PreferYes" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I prefer to receive special education documents electronically at the email address given</span><br/>
+							<input type="checkbox" name="PreferNoCbx" class="iepCheckbox" /><img id="PreferNo" class='imgCheck' src="@(imageNotChecked)"/>&nbsp;<span>I do not want to receive special education documents electronically</span>
+						</div>
+						<p style="margin-top:30px">Email Address _________________________________</p>
+						<p style="margin-top:40px">Parent Signature _______________________________________  Date ____________________</p>   
+						
+                    }                   
 				 }
 				</fieldset>
 		</div>
