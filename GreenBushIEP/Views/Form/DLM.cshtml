@@ -1,0 +1,295 @@
+﻿@{
+    var formModel = ViewData["formDLM"] != null ? ViewData["formDLM"] as GreenBushIEP.Models.tblFormIEPTeamConsideration : new GreenBushIEP.Models.tblFormIEPTeamConsideration();
+
+    string studentFormattedName = Model.student != null ? Model.student.FirstName + " " + Model.student.LastName : "";
+    var imageChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_yes.png");
+    var imageNotChecked = Request.Url.Scheme + "://" + Request.Url.Authority + Url.Content("~/Content/Images/check_no.png");
+    var IEPMeetingDate = "";
+    if (formModel.IEPMeetingDate.HasValue)
+    {
+        IEPMeetingDate = String.Format("{0:MM/dd/yyyy}", formModel.IEPMeetingDate.Value);
+    }
+}
+
+<div class="module-page savdDraftAllowed">
+    <div class="voffset2">
+        <p class=MsoNormal1 align=center style='text-align:center;margin-bottom:15px'>
+            <span style='font-size: 16pt;'><b>Dynamic Learning Maps </b></span>
+            <br />Participation Guidelines for Kansas
+        </p>
+    </div>
+    <div class=MsoNormal1>
+        <div style="float: left;">
+            <span>Name of Student:</span>  @(studentFormattedName)
+        </div>
+        <div style="float: right;">
+            <span>Date:</span>
+            <textarea style="height:30px;vertical-align: top;" maxlength="10">@(IEPMeetingDate)</textarea>
+            <span id="IEPMeetingDate" style="display:none" class="input-value isDate" data-val="59">@(IEPMeetingDate)</span>
+        </div>
+    </div>
+    <p class=MsoNormal1 style='padding-top:15px;clear:both'>
+        <b>
+            The student is eligible to participate in the DLM if <u>ALL</u> responses below are marked YES.
+        </b>
+    </p>
+    <table border="1" cellpadding="8" class="formTable">
+        <tr><th>CRITERIA</th><th>YES</th><th>NO</th><th>SUPPORTING EVIDENCE</th></tr>
+        <tr>
+            <td>
+                <p class=MsoNormal1>
+                    <b>1.</b> Cognitive assessment data supports a <b>most significant cognitive disability</b> (intellectual disability).
+                </p>
+                <p>
+                    <span style="font-weight:600">PARTICIPATION CRITERION DESCRIPTORS:</span><br /> Review of student records indicate a disability or multiple disabilities that significantly impact intellectual functioning. <b>Typically functioning 2 ½ or more Standard Deviations (SD) below the mean.</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class=MsoNormal1>
+                    <b>2.</b> Adaptive assessment data supports a <b>most significant deficit</b> in adaptive behavior
+                </p>
+                <p>
+                    <span style="font-weight:600">PARTICIPATION CRITERION DESCRIPTORS:</span><br /> Review of student records indicate a disability or multiple disabilities that significantly impact adaptive behavior (those skills and behaviors essential for someone to live independently and to function safely in daily life). <b>Typically functioning 2 ½ or more Standard Deviations (SD) below the mean.</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class=MsoNormal1>
+                    <b>3.</b> The student is primarily being instructed (or taught) using the DLM Essential Elements as content standards.
+                </p>
+                <p>
+                    <span style="font-weight:600">PARTICIPATION CRITERION DESCRIPTORS:</span><br /> Present levels and measurable goals listed in the IEP for this student are linked to the enrolled grade level DLM Essential Elements and address knowledge and skills that are appropriate and challenging for this student.
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class=MsoNormal1>
+                    <b>4.</b> The student requires extensive direct individualized instruction and substantial supports to achieve measurable gains in <u><b>ALL</b></u> grade-and age-appropriate curriculum at a reduced depth, breath and complexity
+                </p>
+                <p>
+                    <span style="font-weight:600">PARTICIPATION CRITERION DESCRIPTORS:</span><br />The student:<br /><br />
+                    <b>a.</b> Requires extensive, repeated, individualized instruction and support that is neither temporary nor limited to specific content areas.
+                    <b>AND</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <b>b.</b> Uses substantially adapted materials and individualized methods of accessing information in alternative ways to acquire, maintain, generalize, demonstrate and transfer skills across multiple settings
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <p class=MsoNormal1>
+                    <b>5.</b> <b>Parent/legal education decision-maker notification includes discussion of <u>ALL</u> of the following areas.</b>
+                </p>
+                <p>
+                    <span style="font-weight:600">PARTICIPATION CRITERION DESCRIPTORS:</span><br />The student:<br /><br />
+                    <b>-</b> The differences between the alternate achievement standards and academic content standards for the grade in which the student is enrolled, including any effects of State and local policies on the student’s education resulting from taking an alternate assessment aligned with alternate academic achievement standards;
+                    <b>AND</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <b> • </b> That the student’s achievement will be measured based on alternate achievement standards;
+                    <b>AND</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <b> • </b> How the student’s participation in alternate standards and assessment(s) may delay or otherwise affect the student from completing the requirements for a regular high school diploma;
+                    <b>AND</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <b> • </b> That the student will not be prevented from attempting to complete the requirements for a regular high school diploma.
+                    <b>AND</b>
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p>
+                    <b> • </b>The LEA provided the parent(s)/legal education decision-maker with <u><b>ALL</b></u> of the above information in an understandable and uniform format and in a written language or oral translation that the parent(s)/legal education decision-maker can understand
+
+                </p>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_YesCBS" @(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "checked" : "") /><span id="NeedsBeenConsidered_Yes" class='imgCheck'>@(formModel.NeedsBeenConsidered_Yes.HasValue && formModel.NeedsBeenConsidered_Yes.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <span>
+                    <input type="checkbox" name="NeedsBeenConsidered_NoCBS" @(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "checked" : "") /><span id="NeedsBeenConsidered_No" class='imgCheck'>@(formModel.NeedsBeenConsidered_No.HasValue && formModel.NeedsBeenConsidered_No.Value ? "[X]" : "not-checked")</span>
+                </span>
+            </td>
+            <td>
+                <div class=MsoNormal1>
+                    <textarea cols="50" rows="10" maxlength="2000">@(formModel.NeedsBeenConsidered_Desc)</textarea><span id="NeedsBeenConsidered_Desc" style="display:none" class="input-value">@(formModel.NeedsBeenConsidered_Desc)</span>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div style="padding-top:60px">
+        <p>
+            Parent/legal education decision-maker: <u>@(String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u>
+            Date: <u>@(String.Format("").PadRight(30 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u>
+        </p>
+    </div>
+    <div style="padding-top: 60px">
+        <p>
+            Parent/legal education decision-maker: <u>@(String.Format("").PadRight(60 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u>
+            Date: <u>@(String.Format("").PadRight(30 - String.Format("").Length, ' ').Replace(" ", "\u00A0"))</u>
+        </p>
+    </div>
+</div>
