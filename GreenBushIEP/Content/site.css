@@ -101,6 +101,10 @@ body.modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bottom
     margin-right: auto;
 }
 
+.modal-header {
+    border-bottom: 2px solid #e5e5e5 !important;
+}
+
 .breadcrumb {
     background-color: transparent;
     margin-bottom: 10px;

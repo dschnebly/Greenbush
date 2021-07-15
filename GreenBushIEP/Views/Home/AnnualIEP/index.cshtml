@@ -63,7 +63,7 @@
             </div>
         </div>
         <div class="row iepState">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 @if (ViewBag.UserRoleId == "1" || ViewBag.UserRoleId == "2" || ViewBag.UserRoleId == "3" || ViewBag.UserRoleId == "4")
                 {
                     <div class="btn-group">
@@ -116,7 +116,7 @@
                     <label class="btn btn-bordered-warning-status dropdown-toggle"><span class="glyphicon glyphicon-chevron-right"></span>@(Model.studentIEP.displayIEPStatus) &nbsp;&nbsp;<b class="caret"></b></label>
                 }
             </div>
-            <div class="col-md-7">
+            <div class="col-md-8">
                 <div class="form-group col-md-6">
                     <label for="IEPBeginDate">Annual Initiation Date:&nbsp;&nbsp;</label>
                     <input type="text" name="IEPBeginDate" id="IEPBeginDate" class="@(Model.studentIEP.current.begin_date == null || Model.studentIEP.current.MeetingDate == null ? "NoDates" : String.Empty)" value="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" data-old="@(Model.studentIEP.current.begin_date != null ? Model.studentIEP.current.begin_date.Value.ToString("MM/dd/yyyy") : DateTime.Now.ToString("MM/dd/yyyy"))" style="height:35px; max-width: 135px; padding-left: 5px;" @((Model.studentIEP.iepStatusType != IEPStatus.DRAFT && Model.studentIEP.iepStatusType != IEPStatus.AMENDMENT) ? "disabled" : String.Empty) />
