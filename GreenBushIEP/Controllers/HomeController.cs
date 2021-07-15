@@ -529,7 +529,7 @@ namespace GreenbushIep.Controllers
 
                 ViewData["selectedUserRoles"] = selectedRoleID;
                 ViewData["selectedFilterName"] = searchUserId;
-                ViewData["selectedDistricts"] = selectedDistrict;
+                ViewData["selectedDistricts"] = selectedDistrict == null ? "-1" : selectedDistrict;
                 ViewData["selectedBuildings"] = selectedBuilding;
                 ViewData["selectedFilterActive"] = searchHasIEP;
                 ViewData["selectedStatusActive"] = statusActive;
