@@ -25,9 +25,9 @@
         <textarea placeholder="Student Name" maxlength="200" style="width:200px;height:30px">@(formModel.StudentName)</textarea><span id="StudentName" style="display:none;" class="input-value ">@(formModel.StudentName)</span>
 
     </div>
-    <div>
+    <div class="is-required">
         <label>District Number:</label>
-        <select id="USD" name="USD">
+        <select id="USD" name="USD" >
                <option value="">Select USD</option>
             @{
                 if (ViewData["Districts"] != null)
@@ -494,14 +494,7 @@
             </b>
         </p>
         <p class="small">
-            Select YES if EVERY annual goal in the IEP is measurable.
-            16. Was the student’s progress toward meeting each annual IEP goal measured and reported
-            using the method and frequency described in the IEP?
-            Select YES if documentation shows ALL of the following: • The IEP includes a description of how the student’s progress
-            toward meeting EACH annual IEP goal will be measured. AND. • The IEP includes a description of when periodic reports
-            on the progress the student is making toward meeting each of the annual goals will be provided. AND • The student’s
-            progress toward meeting EACH annual IEP goal was both measured using the METHOD DESCRIBED in the IEP, AND
-            reported to the parent (or education decision-maker) according to the frequency/intervals described in the IEP
+            Select YES if EVERY annual goal in the IEP is measurable.            
         </p>
            <div class="radio">
            <label class="radio-label">
@@ -519,9 +512,37 @@
                 &nbsp;No
             </label>
         </div>
+           <p>
+            <b>
+                16. Was the student’s progress toward meeting each annual IEP goal measured and reported
+            using the method and frequency described in the IEP? </b>
+            </p>
+             <p class="small">Select YES if documentation shows ALL of the following: • The IEP includes a description of how the student’s progress
+            toward meeting EACH annual IEP goal will be measured. AND. • The IEP includes a description of when periodic reports
+            on the progress the student is making toward meeting each of the annual goals will be provided. AND • The student’s
+            progress toward meeting EACH annual IEP goal was both measured using the METHOD DESCRIBED in the IEP, AND
+            reported to the parent (or education decision-maker) according to the frequency/intervals described in the IEP           
+            </p>
+         <div class="radio">
+           <label class="radio-label">
+                <input type="radio" name="GoalsProgress" value="1" @(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value == 1 ? "checked" : "")>
+                <img class='imgCheck' src="@(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value  == 1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsProgress" data-val="1" class='radioCheck'>@(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value  == 1 ? "radio-yes" : "")</span>
+                &nbsp;Yes
+            </label>
+        </div>
+        <div class="radio">
+           <label class="radio-label">
+                <input type="radio" name="GoalsProgress" value="2" @(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value == 2 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value  == 2 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="GoalsProgress" data-val="2" class='radioCheck'>@(formModel.GoalsProgress.HasValue && formModel.GoalsProgress.Value  == 2 ? "radio-yes" : "")</span>
+                
+                &nbsp;No
+            </label>
+        </div>
         <p>
             <b>
-                16. If the IEP team has determined that the student with a disability must take an alternate
+                17. If the IEP team has determined that the student with a disability must take an alternate
                 assessment instead of a particular state or districtwide assessment, was that determination
                 made in alignment with the KSDE Dynamic Learning Maps Participation Guidelines for
                 Kansas and does the IEP include BOTH of the following?: (A) A statement of why the student
@@ -555,7 +576,7 @@
         </div>
         <p>
             <b>
-                17. Does the IEP include the projected date for the beginning of special education and
+                18. Does the IEP include the projected date for the beginning of special education and
                 related services, supplementary aids and services (including accommodations), program
                 modifications and supports for school personnel?
             </b>
@@ -591,7 +612,7 @@
         </div>
         <p>
             <b>
-                18. Does the IEP include anticipated frequency, location and duration of special education
+                19. Does the IEP include anticipated frequency, location and duration of special education
                 and related services, supplementary aids and services (including accommodations),
                 program modifications and supports for school personnel?
             </b>
@@ -619,7 +640,7 @@
         </div>
         <p>
             <b>
-                19. Did the IEP team consider parent concerns for enhancing the education of their student
+                20. Did the IEP team consider parent concerns for enhancing the education of their student
                 in developing, reviewing and revising the IEP?
             </b>
         </p>
@@ -645,7 +666,7 @@
         </div>
         <p>
             <b>
-                20. If the student’s behavior impedes the student’s learning or that of others, did the IEP
+                21. If the student’s behavior impedes the student’s learning or that of others, did the IEP
                 Team consider the use of positive behavioral interventions and supports, and other
                 strategies, to address that behavior when developing, reviewing or revising the IEP?
             </b>
@@ -672,9 +693,17 @@
                 &nbsp;No
             </label>
         </div>
+          <div class="radio">
+           <label class="radio-label">
+                <input type="radio" name="PostiveBehavioralIntervention" value="-1" @(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value == -1 ? "checked" : "")>                
+                <img class='imgCheck' src="@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == -1 ?  imageRadioChecked: imageRadioNotChecked)"/>
+                <span id="PostiveBehavioralIntervention" data-val="-1" class='radioCheck'>@(formModel.PostiveBehavioralIntervention.HasValue && formModel.PostiveBehavioralIntervention.Value  == -1 ? "radio-yes" : "")</span>                
+                &nbsp;N/A
+            </label>
+        </div>
         <p>
             <b>
-                21. When developing, reviewing or revising the IEP, in the case of a student who has limited
+                22. When developing, reviewing or revising the IEP, in the case of a student who has limited
                 English proficiency, did the IEP Team consider the language needs of the student as those
                 needs relate to the student’s IEP?
             </b>
@@ -709,7 +738,7 @@
         </div>
         <p>
             <b>
-                22. Was the student’s educational placement determined at least annually?
+                23. Was the student’s educational placement determined at least annually?
             </b>
         </p><p>
             Select YES if the education record contains documentation that the student’s educational placement was determined at
@@ -740,7 +769,7 @@
         </div>
         <p>
             <b>
-                23. If the student’s LRE (least restrictive environment) placement is outside of the regular
+                24. If the student’s LRE (least restrictive environment) placement is outside of the regular
                 education environment for any part of the school day (including nonacademic and
                 extracurricular services and activities), did the team first determine that the nature or
                 severity of the disability is such that placement in the regular education environment with

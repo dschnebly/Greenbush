@@ -89,7 +89,8 @@
 						   { "continuousLearningPlan", Model.continuousLearningPlan },
 						   { "childOutcome", Model.childOutcome },
 						   { "formTransReferral", Model.formTransReferral }	,					   
-						   { "formFileReview", Model.formFileReview }	
+						   { "formFileReview", Model.formFileReview }	,
+					       { "formDLM", Model.formIEPTeamConsider }
 					   })
                     </div>
                 </div>
@@ -269,20 +270,18 @@
 
 	function _showAlert(message, positive) {
 		if (positive) {
-			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
-				if (positive) {
-					$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
-				}
-				else {
-					$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
-				}
-
+			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {				
+				$("#alertMessage").removeClass('alert-danger').addClass('alert-success');
 				$("#alertMessage .moreinfo").html(message);
 				$("#alertMessage").show();
 			}
 		}
 		else {
-			alert(message);
+			if ($("#alertMessage").css('display') && $("#alertMessage").css('display') === 'none') {
+				$("#alertMessage").removeClass('alert-success').addClass('alert-danger');
+				$("#alertMessage .moreinfo").html(message);
+				$("#alertMessage").show();
+			}
 		}	
 		
 	}
@@ -383,7 +382,18 @@
 					hasDateError = true;
 				}
 			}
-		});		 
+		});
+
+		var fields = $(".is-required")
+				.find("select, textarea, input")
+				.serializeArray();
+
+		  $.each(fields, function (i, field) {
+			  if (!field.value) {
+				  _showAlert(field.name + " is required", false);					
+				  hasDateError = true;			  
+			  }
+		  });
 
 		if (!hasDateError) {
 

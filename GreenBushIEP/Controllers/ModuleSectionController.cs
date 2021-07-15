@@ -569,6 +569,8 @@ namespace GreenBushIEP.Controllers
                 }
 
                 string swa = collection["StateWideAssessments"];
+                
+                bool dlmFormRequired = false;
                 switch (swa)
                 {
                     case "1":
@@ -582,8 +584,15 @@ namespace GreenBushIEP.Controllers
                         break;
                     case "4":
                         model.StateAssesment_Alternative_flag = true;
+                        dlmFormRequired = true;
                         break;
                 }
+
+                if(dlmFormRequired)
+                {
+                    //check if dlm form has been filled out
+                }
+
 
                 string tp = collection["TransporationPlan"];
                 switch (tp)

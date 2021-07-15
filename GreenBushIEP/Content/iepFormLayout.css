@@ -178,6 +178,10 @@ ul {
 	margin-top: 15px;
 }
 
+.formTable th, td{
+	padding: 8px;
+}
+
 .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
 .table-borderless > tfoot > tr > td,

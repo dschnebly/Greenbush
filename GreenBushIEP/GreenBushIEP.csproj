@@ -745,6 +745,15 @@
     <Compile Include="Reports\IEPDue\Report.aspx.designer.cs">
       <DependentUpon>Report.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Reports\GiftedFileReview\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Reports\GiftedFileReview\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Reports\IndividualizedEducationProgramDataSet1.cs">
       <DependentUpon>IndividualizedEducationProgramDataSet1.xsd</DependentUpon>
     </Compile>
@@ -1012,6 +1021,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Reports\IEPDue\Report.aspx" />
+    <Content Include="Reports\GiftedFileReview\Report.aspx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Reports\KIDSID\Report.aspx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -1357,6 +1369,7 @@
     <Content Include="Views\Form\ElectronicCommunication.cshtml" />
     <Content Include="Views\Home\Print\_PrintGoalPartial.cshtml" />
     <Content Include="Views\Form\IdeaGiftedFileReview.cshtml" />
+    <Content Include="Views\Form\DLM.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1408,6 +1421,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Reports\IEPDue\rptIEPDue.rdlc" />
+    <EmbeddedResource Include="Reports\GiftedFileReview\rptGiftedFileReview.rdlc">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reports\KIDSID\rptKIDSID.rdlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
